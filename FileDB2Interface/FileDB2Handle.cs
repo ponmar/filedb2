@@ -18,10 +18,19 @@ namespace FileDB2Interface
             this.config = config;
         }
 
+        #region Files
+
         public List<FilesModel> GetFiles()
         {
             using var connection = CreateConnection();
             return connection.Query<FilesModel>("select * from files", new DynamicParameters()).ToList();
+        }
+
+        public List<FilesModel> SearchFiles(string criteria)
+        {
+            using var connection = CreateConnection();
+            var sql = "select * from files where (path like @criteria or description like @criteria)";
+            return connection.Query<FilesModel>(sql, new { criteria = "%" + criteria + "%" }).ToList();
         }
 
         public FilesModel GetFileById(int id)
@@ -40,10 +49,21 @@ namespace FileDB2Interface
             connection.Execute(sql, new { id = id });
         }
 
+        #endregion
+
+        #region Persons
+
         public List<PersonModel> GetPersons()
         {
             using var connection = CreateConnection();
             return connection.Query<PersonModel>("select * from persons", new DynamicParameters()).ToList();
+        }
+
+        public List<PersonModel> SearchPersons(string criteria)
+        {
+            using var connection = CreateConnection();
+            var sql = "select * from persons where (firstname like @criteria or lastname like @criteria or description like @criteria)";
+            return connection.Query<PersonModel>(sql, new { criteria = "%" + criteria + "%" }).ToList();
         }
 
         public PersonModel GetPersonById(int id)
@@ -71,11 +91,22 @@ namespace FileDB2Interface
             connection.Execute(sql, new { id = id });
         }
 
+        #endregion
+
+        #region Locations
+
         public List<LocationModel> GetLocations()
         {
             using var connection = CreateConnection();
             var output = connection.Query<LocationModel>("select * from locations", new DynamicParameters());
             return output.ToList();
+        }
+
+        public List<LocationModel> SearchLocations(string criteria)
+        {
+            using var connection = CreateConnection();
+            var sql = "select * from locations where (name like @criteria or description like @criteria)";
+            return connection.Query<LocationModel>(sql, new { criteria = "%" + criteria + "%" }).ToList();
         }
 
         public LocationModel GetLocationById(int id)
@@ -94,11 +125,22 @@ namespace FileDB2Interface
             connection.Execute(sql, new { id = id });
         }
 
+        #endregion
+
+        #region Tags
+
         public List<TagModel> GetTags()
         {
             using var connection = CreateConnection();
             var output = connection.Query<TagModel>("select * from tags", new DynamicParameters());
             return output.ToList();
+        }
+
+        public List<TagModel> SearchTags(string criteria)
+        {
+            using var connection = CreateConnection();
+            var sql = "select * from tags where (name like @criteria)";
+            return connection.Query<TagModel>(sql, new { criteria = "%" + criteria + "%" }).ToList();
         }
 
         public TagModel GetTagById(int id)
@@ -116,6 +158,8 @@ namespace FileDB2Interface
             var sql = "delete from tags where id = @id";
             connection.Execute(sql, new { id = id });
         }
+
+        #endregion
 
         private IDbConnection CreateConnection()
         {
