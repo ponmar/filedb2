@@ -33,6 +33,13 @@ namespace FileDB2Interface
             return connection.QueryFirst<FilesModel>("select * from files where id = @ID", parameters);
         }
 
+        public void DeleteFile(int id)
+        {
+            using IDbConnection connection = CreateConnection();
+            var sql = "delete from files where id = @id";
+            connection.Execute(sql, new { id = id });
+        }
+
         public List<PersonModel> GetPersons()
         {
             using var connection = CreateConnection();
@@ -80,6 +87,13 @@ namespace FileDB2Interface
             return connection.QueryFirst<LocationModel>("select * from locations where id = @ID", parameters);
         }
 
+        public void DeleteLocation(int id)
+        {
+            using IDbConnection connection = CreateConnection();
+            var sql = "delete from locations where id = @id";
+            connection.Execute(sql, new { id = id });
+        }
+
         public List<TagModel> GetTags()
         {
             using var connection = CreateConnection();
@@ -94,6 +108,13 @@ namespace FileDB2Interface
 
             using var connection = CreateConnection();
             return connection.QueryFirst<TagModel>("select * from tags where id = @ID", parameters);
+        }
+
+        public void DeleteTag(int id)
+        {
+            using IDbConnection connection = CreateConnection();
+            var sql = "delete from tags where id = @id";
+            connection.Execute(sql, new { id = id });
         }
 
         private IDbConnection CreateConnection()
