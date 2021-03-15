@@ -13,7 +13,16 @@ namespace FileDBTest
             };
 
             var handle = new FileDB2Handle(config);
+            
             var persons = handle.GetPersons();
+            var files = handle.GetFiles();
+            var tags = handle.GetTags();
+            var locations = handle.GetLocations();
+
+            var person = handle.GetPersonById(10);
+            var file = handle.GetFileById(10);
+            var tag = handle.GetTagById(10);
+            var location = handle.GetLocationById(10);
         }
     }
 }

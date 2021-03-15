@@ -24,10 +24,28 @@ namespace FileDB2Interface
             return connection.Query<FilesModel>("select * from files", new DynamicParameters()).ToList();
         }
 
+        public FilesModel GetFileById(int id)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@ID", id, DbType.Int32, ParameterDirection.Input);
+
+            using var connection = CreateConnection();
+            return connection.QueryFirst<FilesModel>("select * from files where id = @ID", parameters);
+        }
+
         public List<PersonModel> GetPersons()
         {
             using var connection = CreateConnection();
             return connection.Query<PersonModel>("select * from persons", new DynamicParameters()).ToList();
+        }
+
+        public PersonModel GetPersonById(int id)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@ID", id, DbType.Int32, ParameterDirection.Input);
+
+            using var connection = CreateConnection();
+            return connection.QueryFirst<PersonModel>("select * from persons where id = @ID", parameters);
         }
 
         public void InsertPerson(string firstname, string lastname, string description = null, string dateOfBirth = null, int profileFileId = 0)
@@ -53,11 +71,29 @@ namespace FileDB2Interface
             return output.ToList();
         }
 
+        public LocationModel GetLocationById(int id)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@ID", id, DbType.Int32, ParameterDirection.Input);
+
+            using var connection = CreateConnection();
+            return connection.QueryFirst<LocationModel>("select * from locations where id = @ID", parameters);
+        }
+
         public List<TagModel> GetTags()
         {
             using var connection = CreateConnection();
             var output = connection.Query<TagModel>("select * from tags", new DynamicParameters());
             return output.ToList();
+        }
+
+        public TagModel GetTagById(int id)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@ID", id, DbType.Int32, ParameterDirection.Input);
+
+            using var connection = CreateConnection();
+            return connection.QueryFirst<TagModel>("select * from tags where id = @ID", parameters);
         }
 
         private IDbConnection CreateConnection()
