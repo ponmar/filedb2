@@ -33,7 +33,10 @@ namespace FileDBTest
             //var fsDirectories = handle.ListAllDirectories();
             //var fsFiles = handle.ListAllFiles();
 
-            var missingFiles = handle.GetMissingFiles();
+            //var missingFiles = handle.GetFilesMissingInFilesystem();
+
+            var file = handle.GetFileById(20115);
+            handle.ParseFilesystemFileExif("x:/" + file.path, out var dateTaken, out var location);
         }
     }
 }

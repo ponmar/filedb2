@@ -7,6 +7,9 @@ using System.Linq;
 using Dapper;
 using FileDB2Interface.Model;
 using System.IO;
+using MetadataExtractor;
+using MetadataExtractor.Formats.Exif;
+using Directory = System.IO.Directory;
 
 namespace FileDB2Interface
 {
@@ -21,23 +24,49 @@ namespace FileDB2Interface
 
         #region Files collection
 
-        public string[] ListAllFiles()
+        public string[] ListAllFilesystemFiles()
         {
             var files = Directory.GetFiles(config.FilesRootDirectory, "*.*", SearchOption.AllDirectories);
             return PathsToInternalPaths(files);
         }
 
-        public string[] ListAllDirectories()
+        public string[] ListAllFilesystemDirectories()
         {
             var dirs = Directory.GetDirectories(config.FilesRootDirectory, "*.*", SearchOption.AllDirectories);
             return PathsToInternalPaths(dirs);
+        }
+
+        public bool ParseFilesystemFileExif(string path, out DateTime? dateTaken, out GeoLocation location)
+        {
+            try
+            {
+                var directories = ImageMetadataReader.ReadMetadata(path);
+
+                var subIfdDirectory = directories.OfType<ExifSubIfdDirectory>().FirstOrDefault();
+                dateTaken = subIfdDirectory?.GetDateTime(ExifDirectoryBase.TagDateTimeOriginal);
+
+                var gps = directories.OfType<GpsDirectory>().FirstOrDefault();
+                location = gps?.GetGeoLocation();
+
+                return true;
+            }
+            catch (IOException)
+            {
+            }
+            catch (ImageProcessingException)
+            {
+            }
+
+            dateTaken = null;
+            location = null;
+            return false;
         }
 
         #endregion
 
         #region Tools
 
-        public List<FilesModel> GetMissingFiles()
+        public List<FilesModel> GetFilesMissingInFilesystem()
         {
             var missingFiles = new List<FilesModel>();
             foreach (var file in GetFiles())
