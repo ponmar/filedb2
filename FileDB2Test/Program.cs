@@ -10,10 +10,11 @@ namespace FileDBTest
             var config = new FileDB2Config()
             {
                 Database = @"C:\Source\filedb2_db\test.db",
+                FilesRootDirectory = @"X:",
             };
 
             var handle = new FileDB2Handle(config);
-
+            /*
             var files = handle.GetFiles();
             var persons = handle.GetPersons();
             var locations = handle.GetLocations();
@@ -28,6 +29,9 @@ namespace FileDBTest
             var foundPersons = handle.SearchPersons("pontus");
             var foundLocations = handle.SearchLocations("enhagsvägen");
             var foundTags = handle.SearchTags("gokart");
+            */
+            var fsDirectories = handle.ListAllDirectories();
+            //var fsFiles = handle.ListAllFiles();
         }
     }
 }

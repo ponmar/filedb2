@@ -6,6 +6,7 @@ using System.Text;
 using System.Linq;
 using Dapper;
 using FileDB2Interface.Model;
+using System.IO;
 
 namespace FileDB2Interface
 {
@@ -17,6 +18,22 @@ namespace FileDB2Interface
         {
             this.config = config;
         }
+
+        #region Files collection
+
+        public string[] ListAllFiles()
+        {
+            var files = Directory.GetFiles(config.FilesRootDirectory, "*.*", SearchOption.AllDirectories);
+            return PathsToInternalPaths(files);
+        }
+
+        public string[] ListAllDirectories()
+        {
+            var dirs = Directory.GetDirectories(config.FilesRootDirectory, "*.*", SearchOption.AllDirectories);
+            return PathsToInternalPaths(dirs);
+        }
+
+        #endregion
 
         #region Files
 
@@ -165,6 +182,29 @@ namespace FileDB2Interface
         {
             var connectionString = $"Data Source={config.Database};Version=3;";
             return new SQLiteConnection(connectionString);
+        }
+
+        private string PathToInternalPath(string path)
+        {
+            if (path.StartsWith(config.FilesRootDirectory))
+            {
+                path = path.Substring(config.FilesRootDirectory.Length);
+            }
+            path = path.Replace('\\', '/');
+            while (path.StartsWith('/'))
+            {
+                path = path.Substring(1);
+            }
+            return path;
+        }
+
+        private string[] PathsToInternalPaths(string[] paths)
+        {
+            for (int i = 0; i < paths.Length; i++)
+            {
+                paths[i] = PathToInternalPath(paths[i]);
+            }
+            return paths;
         }
 
         // TODO: InsertFile, InsertLocation, InsertTag, ...
