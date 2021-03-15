@@ -35,6 +35,23 @@ namespace FileDB2Interface
 
         #endregion
 
+        #region Tools
+
+        public List<FilesModel> GetMissingFiles()
+        {
+            var missingFiles = new List<FilesModel>();
+            foreach (var file in GetFiles())
+            {
+                if (!File.Exists(InternalPathToPath(file.path)))
+                {
+                    missingFiles.Add(file);
+                }
+            }
+            return missingFiles;
+        }
+
+        #endregion
+
         #region Files
 
         public List<FilesModel> GetFiles()
@@ -182,6 +199,14 @@ namespace FileDB2Interface
         {
             var connectionString = $"Data Source={config.Database};Version=3;";
             return new SQLiteConnection(connectionString);
+        }
+
+        private string InternalPathToPath(string internalPath)
+        {
+            var path = Path.Join(config.FilesRootDirectory, internalPath);
+            path = path.Replace('\\', Path.DirectorySeparatorChar);
+            path = path.Replace('/', Path.DirectorySeparatorChar);
+            return path;
         }
 
         private string PathToInternalPath(string path)
