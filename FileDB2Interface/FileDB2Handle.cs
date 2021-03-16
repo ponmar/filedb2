@@ -122,34 +122,46 @@ namespace FileDB2Interface
             connection.Execute(sql, new { id = id });
         }
 
-        void AddFilePerson(int fileId, int personId)
+        public void InsertFilePerson(int fileId, int personId)
         {
-            // TODO
+            using var connection = CreateConnection();
+            var sql = "insert into filepersons (fileid, personid) values (@fileId, @locationId)";
+            connection.Execute(sql, new { fileId = fileId, personId = personId });
         }
 
-        void RemoveFilePerson(int fileId, int personId)
+        public void DeleteFilePerson(int fileId, int personId)
         {
-            // TODO
+            using IDbConnection connection = CreateConnection();
+            var sql = "delete from filepersons where fileid = @fileId and personid = @personId";
+            connection.Execute(sql, new { fileId = fileId, personId = personId });
         }
 
-        void AddFileLocation(int fileId, int locationId)
+        public void InsertFileLocation(int fileId, int locationId)
         {
-            // TODO
+            using var connection = CreateConnection();
+            var sql = "insert into filelocations (fileid, locationid) values (@fileId, @locationId)";
+            connection.Execute(sql, new { fileId = fileId, locationId = locationId });
         }
 
-        void RemoveFileLocation(int fileId, int locationId)
+        public void DeleteFileLocation(int fileId, int locationId)
         {
-            // TODO
+            using IDbConnection connection = CreateConnection();
+            var sql = "delete from filelocations where fileid = @fileId and locationid = @locationId";
+            connection.Execute(sql, new { fileId = fileId, locationId = locationId });
         }
 
-        void AddFileTag(int fileId, int tagId)
+        public void InsertFileTag(int fileId, int tagId)
         {
-            // TODO
+            using var connection = CreateConnection();
+            var sql = "insert into filetags (fileid, tagid) values (@fileId, @tagId)";
+            connection.Execute(sql, new { fileId = fileId, tagId = tagId });
         }
 
-        void RemoveFileTag(int fileId, int tagId)
+        public void DeleteFileTag(int fileId, int tagId)
         {
-            // TODO
+            using IDbConnection connection = CreateConnection();
+            var sql = "delete from filetags where fileid = @fileId and tagid = @tagId";
+            connection.Execute(sql, new { fileId = fileId, tagId = tagId });
         }
 
         #endregion
