@@ -338,12 +338,11 @@ namespace FileDB2Interface
             return connection.QueryFirst<LocationModel>("select * from [locations] where id = @ID", parameters);
         }
 
-        public void InsertLocation(string name, string description = null, double? latitude = null, double? longitude = null)
+        public void InsertLocation(string name, string description = null, GeoLocation geoLocation = null)
         {
             try
             {
-                var position = (latitude != null && longitude != null) ? $"{latitude} {longitude}".Replace(',', '.') : null;
-
+                var position = GeoLocationToString(geoLocation);
                 using var connection = CreateConnection();
                 var location = new LocationModel() { name = name, description = description, position = position };
                 var sql = "insert into [locations] (name, description, position) values (@name, @description, @position)";
@@ -383,12 +382,11 @@ namespace FileDB2Interface
             }
         }
 
-        public void UpdateLocationPosition(int id, double? latitude = null, double? longitude = null)
+        public void UpdateLocationPosition(int id, GeoLocation geoLocation = null)
         {
             try
             {
-                var position = (latitude != null && longitude != null) ? $"{latitude} {longitude}".Replace(',', '.') : null;
-
+                var position = GeoLocationToString(geoLocation);
                 using var connection = CreateConnection();
                 var sql = "update [locations] set position = @position where id = @id";
                 connection.Execute(sql, new { position = position, id = id });
@@ -508,6 +506,11 @@ namespace FileDB2Interface
                 paths[i] = PathToInternalPath(paths[i]);
             }
             return paths;
+        }
+
+        private string GeoLocationToString(GeoLocation geoLocation)
+        {
+            return geoLocation != null ? $"{geoLocation.Latitude} {geoLocation.Longitude}".Replace(',', '.') : null;
         }
 
         #endregion
