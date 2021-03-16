@@ -96,13 +96,13 @@ namespace FileDB2Interface
         public List<FilesModel> GetFiles()
         {
             using var connection = CreateConnection();
-            return connection.Query<FilesModel>("select * from files", new DynamicParameters()).ToList();
+            return connection.Query<FilesModel>("select * from [files]", new DynamicParameters()).ToList();
         }
 
         public List<FilesModel> SearchFiles(string criteria)
         {
             using var connection = CreateConnection();
-            var sql = "select * from files where (path like @criteria or description like @criteria)";
+            var sql = "select * from [files] where (path like @criteria or description like @criteria)";
             return connection.Query<FilesModel>(sql, new { criteria = "%" + criteria + "%" }).ToList();
         }
 
@@ -112,7 +112,7 @@ namespace FileDB2Interface
             parameters.Add("@ID", id, DbType.Int32, ParameterDirection.Input);
 
             using var connection = CreateConnection();
-            return connection.QueryFirst<FilesModel>("select * from files where id = @ID", parameters);
+            return connection.QueryFirst<FilesModel>("select * from [files] where id = @ID", parameters);
         }
 
         // TODO: add/import file
@@ -122,49 +122,49 @@ namespace FileDB2Interface
         public void DeleteFile(int id)
         {
             using IDbConnection connection = CreateConnection();
-            var sql = "delete from files where id = @id";
+            var sql = "delete from [files] where id = @id";
             connection.Execute(sql, new { id = id });
         }
 
         public void InsertFilePerson(int fileId, int personId)
         {
             using var connection = CreateConnection();
-            var sql = "insert into filepersons (fileid, personid) values (@fileId, @locationId)";
+            var sql = "insert into [filepersons] (fileid, personid) values (@fileId, @locationId)";
             connection.Execute(sql, new { fileId = fileId, personId = personId });
         }
 
         public void DeleteFilePerson(int fileId, int personId)
         {
             using IDbConnection connection = CreateConnection();
-            var sql = "delete from filepersons where fileid = @fileId and personid = @personId";
+            var sql = "delete from [filepersons] where fileid = @fileId and personid = @personId";
             connection.Execute(sql, new { fileId = fileId, personId = personId });
         }
 
         public void InsertFileLocation(int fileId, int locationId)
         {
             using var connection = CreateConnection();
-            var sql = "insert into filelocations (fileid, locationid) values (@fileId, @locationId)";
+            var sql = "insert into [filelocations] (fileid, locationid) values (@fileId, @locationId)";
             connection.Execute(sql, new { fileId = fileId, locationId = locationId });
         }
 
         public void DeleteFileLocation(int fileId, int locationId)
         {
             using IDbConnection connection = CreateConnection();
-            var sql = "delete from filelocations where fileid = @fileId and locationid = @locationId";
+            var sql = "delete from [filelocations] where fileid = @fileId and locationid = @locationId";
             connection.Execute(sql, new { fileId = fileId, locationId = locationId });
         }
 
         public void InsertFileTag(int fileId, int tagId)
         {
             using var connection = CreateConnection();
-            var sql = "insert into filetags (fileid, tagid) values (@fileId, @tagId)";
+            var sql = "insert into [filetags] (fileid, tagid) values (@fileId, @tagId)";
             connection.Execute(sql, new { fileId = fileId, tagId = tagId });
         }
 
         public void DeleteFileTag(int fileId, int tagId)
         {
             using IDbConnection connection = CreateConnection();
-            var sql = "delete from filetags where fileid = @fileId and tagid = @tagId";
+            var sql = "delete from [filetags] where fileid = @fileId and tagid = @tagId";
             connection.Execute(sql, new { fileId = fileId, tagId = tagId });
         }
 
@@ -175,13 +175,13 @@ namespace FileDB2Interface
         public List<PersonModel> GetPersons()
         {
             using var connection = CreateConnection();
-            return connection.Query<PersonModel>("select * from persons", new DynamicParameters()).ToList();
+            return connection.Query<PersonModel>("select * from [persons]", new DynamicParameters()).ToList();
         }
 
         public List<PersonModel> SearchPersons(string criteria)
         {
             using var connection = CreateConnection();
-            var sql = "select * from persons where (firstname like @criteria or lastname like @criteria or description like @criteria)";
+            var sql = "select * from [persons] where (firstname like @criteria or lastname like @criteria or description like @criteria)";
             return connection.Query<PersonModel>(sql, new { criteria = "%" + criteria + "%" }).ToList();
         }
 
@@ -191,7 +191,7 @@ namespace FileDB2Interface
             parameters.Add("@ID", id, DbType.Int32, ParameterDirection.Input);
 
             using var connection = CreateConnection();
-            return connection.QueryFirst<PersonModel>("select * from persons where id = @ID", parameters);
+            return connection.QueryFirst<PersonModel>("select * from [persons] where id = @ID", parameters);
         }
 
         public void InsertPerson(string firstname, string lastname, string description = null, string dateOfBirth = null, int? profileFileId = null)
@@ -200,7 +200,7 @@ namespace FileDB2Interface
             {
                 using var connection = CreateConnection();
                 var person = new PersonModel() { firstname = firstname, lastname = lastname, description = description, dateofbirth = dateOfBirth, profilefileid = profileFileId };
-                var sql = "insert into persons (firstname, lastname, description, dateofbirth, profilefileid) values (@firstname, @lastname, @description, @dateofbirth, @profilefileid)";
+                var sql = "insert into [persons] (firstname, lastname, description, dateofbirth, profilefileid) values (@firstname, @lastname, @description, @dateofbirth, @profilefileid)";
                 connection.Execute(sql, person);
             }
             catch (SQLiteException e)
@@ -214,7 +214,7 @@ namespace FileDB2Interface
         public void DeletePerson(int id)
         {
             using IDbConnection connection = CreateConnection();
-            var sql = "delete from persons where id = @id";
+            var sql = "delete from [persons] where id = @id";
             connection.Execute(sql, new { id = id });
         }
 
@@ -225,14 +225,14 @@ namespace FileDB2Interface
         public List<LocationModel> GetLocations()
         {
             using var connection = CreateConnection();
-            var output = connection.Query<LocationModel>("select * from locations", new DynamicParameters());
+            var output = connection.Query<LocationModel>("select * from [locations]", new DynamicParameters());
             return output.ToList();
         }
 
         public List<LocationModel> SearchLocations(string criteria)
         {
             using var connection = CreateConnection();
-            var sql = "select * from locations where (name like @criteria or description like @criteria)";
+            var sql = "select * from [locations] where (name like @criteria or description like @criteria)";
             return connection.Query<LocationModel>(sql, new { criteria = "%" + criteria + "%" }).ToList();
         }
 
@@ -242,7 +242,7 @@ namespace FileDB2Interface
             parameters.Add("@ID", id, DbType.Int32, ParameterDirection.Input);
 
             using var connection = CreateConnection();
-            return connection.QueryFirst<LocationModel>("select * from locations where id = @ID", parameters);
+            return connection.QueryFirst<LocationModel>("select * from [locations] where id = @ID", parameters);
         }
 
         public void InsertLocation(string name, string description = null, double? latitude = null, double? longitude = null)
@@ -253,7 +253,7 @@ namespace FileDB2Interface
 
                 using var connection = CreateConnection();
                 var location = new LocationModel() { name = name, description = description, position = position };
-                var sql = "insert into locations (name, description, position) values (@name, @description, @position)";
+                var sql = "insert into [locations] (name, description, position) values (@name, @description, @position)";
                 connection.Execute(sql, location);
             }
             catch (SQLiteException e)
@@ -267,7 +267,7 @@ namespace FileDB2Interface
         public void DeleteLocation(int id)
         {
             using IDbConnection connection = CreateConnection();
-            var sql = "delete from locations where id = @id";
+            var sql = "delete from [locations] where id = @id";
             connection.Execute(sql, new { id = id });
         }
 
@@ -278,14 +278,14 @@ namespace FileDB2Interface
         public List<TagModel> GetTags()
         {
             using var connection = CreateConnection();
-            var output = connection.Query<TagModel>("select * from tags", new DynamicParameters());
+            var output = connection.Query<TagModel>("select * from [tags]", new DynamicParameters());
             return output.ToList();
         }
 
         public List<TagModel> SearchTags(string criteria)
         {
             using var connection = CreateConnection();
-            var sql = "select * from tags where (name like @criteria)";
+            var sql = "select * from [tags] where (name like @criteria)";
             return connection.Query<TagModel>(sql, new { criteria = "%" + criteria + "%" }).ToList();
         }
 
@@ -295,7 +295,7 @@ namespace FileDB2Interface
             parameters.Add("@ID", id, DbType.Int32, ParameterDirection.Input);
 
             using var connection = CreateConnection();
-            return connection.QueryFirst<TagModel>("select * from tags where id = @ID", parameters);
+            return connection.QueryFirst<TagModel>("select * from [tags] where id = @ID", parameters);
         }
 
         public void InsertTag(string name)
@@ -304,7 +304,7 @@ namespace FileDB2Interface
             {
                 using var connection = CreateConnection();
                 var tag = new TagModel() { name = name };
-                var sql = "insert into locations (name) values (@name)";
+                var sql = "insert into [tags] (name) values (@name)";
                 connection.Execute(sql, tag);
             }
             catch (SQLiteException e)
@@ -318,7 +318,7 @@ namespace FileDB2Interface
         public void DeleteTag(int id)
         {
             using IDbConnection connection = CreateConnection();
-            var sql = "delete from tags where id = @id";
+            var sql = "delete from [tags] where id = @id";
             connection.Execute(sql, new { id = id });
         }
 
