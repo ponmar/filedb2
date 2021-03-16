@@ -190,13 +190,19 @@ namespace FileDB2Interface
             return connection.QueryFirst<PersonModel>("select * from persons where id = @ID", parameters);
         }
 
-        public void InsertPerson(string firstname, string lastname, string description = null, string dateOfBirth = null, int profileFileId = 0)
+        public void InsertPerson(string firstname, string lastname, string description = null, string dateOfBirth = null, int? profileFileId = null)
         {
-            using var connection = CreateConnection();
-            var person = new PersonModel() { firstname = firstname, lastname = lastname, description = description, dateofbirth = dateOfBirth, profilefileid = profileFileId };
-            // TODO: other sql without profileFileId if not used (is zero)?
-            var sql = "insert into persons (firstname, lastname, description, dateofbirth, profilefileid) values (@firstname, @lastname, @description, @dateofbirth, @profilefileid)";
-            connection.Execute(sql, person);
+            try
+            {
+                using var connection = CreateConnection();
+                var person = new PersonModel() { firstname = firstname, lastname = lastname, description = description, dateofbirth = dateOfBirth, profilefileid = profileFileId };
+                var sql = "insert into persons (firstname, lastname, description, dateofbirth, profilefileid) values (@firstname, @lastname, @description, @dateofbirth, @profilefileid)";
+                connection.Execute(sql, person);
+            }
+            catch (SQLiteException e)
+            {
+                throw new FileDB2Exception("SQL error", e);
+            }
         }
 
         public void DeletePerson(int id)
@@ -280,7 +286,7 @@ namespace FileDB2Interface
 
         private IDbConnection CreateConnection()
         {
-            var connectionString = $"Data Source={config.Database};Version=3;";
+            var connectionString = $"Data Source={config.Database};foreign keys = true";
             return new SQLiteConnection(connectionString);
         }
 

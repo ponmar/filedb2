@@ -37,8 +37,11 @@ namespace FileDBTest
 
                 //var missingFiles = handle.GetFilesMissingInFilesystem();
 
-                var file = handle.GetFileById(20115);
-                handle.ParseFilesystemFileExif("x:/" + file.path, out var dateTaken, out var location);
+                //var file = handle.GetFileById(20115);
+                //handle.ParseFilesystemFileExif("x:/" + file.path, out var dateTaken, out var location);
+
+                handle.InsertPerson("A", "C", "test", "yyyy-mm-dd", 1000000);
+                //handle.DeletePerson(89);
             }
             catch (FileDB2Exception e)
             {
