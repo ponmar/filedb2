@@ -239,6 +239,23 @@ namespace FileDB2Interface
             return connection.QueryFirst<LocationModel>("select * from locations where id = @ID", parameters);
         }
 
+        public void InsertLocation(string name, string description = null, double? latitude = null, double? longitude = null)
+        {
+            try
+            {
+                var position = (latitude != null && longitude != null) ? $"{latitude} {longitude}".Replace(',', '.') : null;
+
+                using var connection = CreateConnection();
+                var location = new LocationModel() { name = name, description = description, position = position };
+                var sql = "insert into locations (name, description, position) values (@name, @description, @position)";
+                connection.Execute(sql, location);
+            }
+            catch (SQLiteException e)
+            {
+                throw new FileDB2Exception("SQL error", e);
+            }
+        }
+
         public void DeleteLocation(int id)
         {
             using IDbConnection connection = CreateConnection();
@@ -271,6 +288,21 @@ namespace FileDB2Interface
 
             using var connection = CreateConnection();
             return connection.QueryFirst<TagModel>("select * from tags where id = @ID", parameters);
+        }
+
+        public void InsertTag(string name)
+        {
+            try
+            {
+                using var connection = CreateConnection();
+                var tag = new TagModel() { name = name };
+                var sql = "insert into locations (name) values (@name)";
+                connection.Execute(sql, tag);
+            }
+            catch (SQLiteException e)
+            {
+                throw new FileDB2Exception("SQL error", e);
+            }
         }
 
         public void DeleteTag(int id)
