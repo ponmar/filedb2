@@ -115,6 +115,10 @@ namespace FileDB2Interface
             return connection.QueryFirst<FilesModel>("select * from files where id = @ID", parameters);
         }
 
+        // TODO: add/import file
+
+        // TODO: update file
+
         public void DeleteFile(int id)
         {
             using IDbConnection connection = CreateConnection();
@@ -205,6 +209,8 @@ namespace FileDB2Interface
             }
         }
 
+        // TODO: update person
+
         public void DeletePerson(int id)
         {
             using IDbConnection connection = CreateConnection();
@@ -256,6 +262,8 @@ namespace FileDB2Interface
             }
         }
 
+        // TODO: update location
+
         public void DeleteLocation(int id)
         {
             using IDbConnection connection = CreateConnection();
@@ -304,6 +312,8 @@ namespace FileDB2Interface
                 throw new FileDB2Exception("SQL error", e);
             }
         }
+
+        // TODO: update tag
 
         public void DeleteTag(int id)
         {
@@ -354,11 +364,5 @@ namespace FileDB2Interface
         }
 
         #endregion
-
-        // TODO: InsertFile, InsertLocation, InsertTag, ...
-
-        // TODO: delete
-        // TODO: update
-        // TODO: import files
     }
 }
