@@ -20,6 +20,16 @@ namespace FileDB2Interface
         public FileDB2Handle(FileDB2Config config)
         {
             this.config = config;
+
+            if (!File.Exists(config.Database))
+            {
+                throw new FileDB2Exception($"Configuration file does not exist: {config.Database}");
+            }
+
+            if (!Directory.Exists(config.FilesRootDirectory))
+            {
+                throw new FileDB2Exception($"Root directory does not exist: {config.FilesRootDirectory}");
+            }
         }
 
         #region Files collection
@@ -110,6 +120,36 @@ namespace FileDB2Interface
             using IDbConnection connection = CreateConnection();
             var sql = "delete from files where id = @id";
             connection.Execute(sql, new { id = id });
+        }
+
+        void AddFilePerson(int fileId, int personId)
+        {
+            // TODO
+        }
+
+        void RemoveFilePerson(int fileId, int personId)
+        {
+            // TODO
+        }
+
+        void AddFileLocation(int fileId, int locationId)
+        {
+            // TODO
+        }
+
+        void RemoveFileLocation(int fileId, int locationId)
+        {
+            // TODO
+        }
+
+        void AddFileTag(int fileId, int tagId)
+        {
+            // TODO
+        }
+
+        void RemoveFileTag(int fileId, int tagId)
+        {
+            // TODO
         }
 
         #endregion
@@ -224,6 +264,8 @@ namespace FileDB2Interface
 
         #endregion
 
+        #region Helpers
+
         private IDbConnection CreateConnection()
         {
             var connectionString = $"Data Source={config.Database};Version=3;";
@@ -260,6 +302,8 @@ namespace FileDB2Interface
             }
             return paths;
         }
+
+        #endregion
 
         // TODO: InsertFile, InsertLocation, InsertTag, ...
 

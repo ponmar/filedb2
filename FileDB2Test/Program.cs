@@ -13,30 +13,37 @@ namespace FileDBTest
                 FilesRootDirectory = @"X:",
             };
 
-            var handle = new FileDB2Handle(config);
+            try
+            {
+                var handle = new FileDB2Handle(config);
 
-            //var files = handle.GetFiles();
-            //var persons = handle.GetPersons();
-            //var locations = handle.GetLocations();
-            //var tags = handle.GetTags();
+                //var files = handle.GetFiles();
+                //var persons = handle.GetPersons();
+                //var locations = handle.GetLocations();
+                //var tags = handle.GetTags();
 
-            //var file = handle.GetFileById(10);
-            //var person = handle.GetPersonById(10);
-            //var location = handle.GetLocationById(10);
-            //var tag = handle.GetTagById(10);
+                //var file = handle.GetFileById(10);
+                //var person = handle.GetPersonById(10);
+                //var location = handle.GetLocationById(10);
+                //var tag = handle.GetTagById(10);
 
-            //var foundFiles = handle.SearchFiles("jul");
-            //var foundPersons = handle.SearchPersons("pontus");
-            //var foundLocations = handle.SearchLocations("enhagsvägen");
-            //var foundTags = handle.SearchTags("gokart");
+                //var foundFiles = handle.SearchFiles("jul");
+                //var foundPersons = handle.SearchPersons("pontus");
+                //var foundLocations = handle.SearchLocations("enhagsvägen");
+                //var foundTags = handle.SearchTags("gokart");
 
-            //var fsDirectories = handle.ListAllDirectories();
-            //var fsFiles = handle.ListAllFiles();
+                //var fsDirectories = handle.ListAllDirectories();
+                //var fsFiles = handle.ListAllFiles();
 
-            //var missingFiles = handle.GetFilesMissingInFilesystem();
+                //var missingFiles = handle.GetFilesMissingInFilesystem();
 
-            var file = handle.GetFileById(20115);
-            handle.ParseFilesystemFileExif("x:/" + file.path, out var dateTaken, out var location);
+                var file = handle.GetFileById(20115);
+                handle.ParseFilesystemFileExif("x:/" + file.path, out var dateTaken, out var location);
+            }
+            catch (FileDB2Exception e)
+            {
+                Console.WriteLine("FileDB2 error: " + e.Message);
+            }
         }
     }
 }
