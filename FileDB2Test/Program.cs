@@ -17,7 +17,7 @@ namespace FileDBTest
             {
                 var handle = new FileDB2Handle(config);
 
-                //var files = handle.GetFiles();
+                var files = handle.GetFiles();
                 //var persons = handle.GetPersons();
                 //var locations = handle.GetLocations();
                 //var tags = handle.GetTags();
@@ -40,7 +40,7 @@ namespace FileDBTest
                 //var file = handle.GetFileById(20115);
                 //handle.ParseFilesystemFileExif("x:/" + file.path, out var dateTaken, out var location);
 
-                handle.InsertPerson("A", "C", "test", "yyyy-mm-dd", 1000000);
+                //handle.InsertPerson("A", "C", "test", "yyyy-mm-dd", 1000000);
                 //handle.DeletePerson(89);
             }
             catch (FileDB2Exception e)

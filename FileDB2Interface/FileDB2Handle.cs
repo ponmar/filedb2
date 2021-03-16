@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
-using System.Text;
 using System.Linq;
 using Dapper;
 using FileDB2Interface.Model;
@@ -115,9 +114,23 @@ namespace FileDB2Interface
             return connection.QueryFirst<FilesModel>("select * from [files] where id = @ID", parameters);
         }
 
-        // TODO: add/import file
+        // TODO: insert/import file/files
 
-        // TODO: update file
+        public void UpdateFileDescription(int id, string description)
+        {
+            try
+            {
+                using var connection = CreateConnection();
+                var sql = "update [files] set description = @description where id = @id";
+                connection.Execute(sql, new { description = description, id = id });
+            }
+            catch (SQLiteException e)
+            {
+                throw new FileDB2Exception("SQL error", e);
+            }
+        }
+
+        // TODO: UpdateFileDatetime(...)
 
         public void DeleteFile(int id)
         {
@@ -209,7 +222,76 @@ namespace FileDB2Interface
             }
         }
 
-        // TODO: update person
+        public void UpdatePersonFirstname(int id, string firstname)
+        {
+            try
+            {
+                using var connection = CreateConnection();
+                var sql = "update [persons] set firstname = @firstname where id = @id";
+                connection.Execute(sql, new { firstname = firstname, id = id });
+            }
+            catch (SQLiteException e)
+            {
+                throw new FileDB2Exception("SQL error", e);
+            }
+        }
+
+        public void UpdatePersonLastname(int id, string lastname)
+        {
+            try
+            {
+                using var connection = CreateConnection();
+                var sql = "update [persons] set lastname = @lastname where id = @id";
+                connection.Execute(sql, new { lastname = lastname, id = id });
+            }
+            catch (SQLiteException e)
+            {
+                throw new FileDB2Exception("SQL error", e);
+            }
+        }
+
+        public void UpdatePersonDescription(int id, string description)
+        {
+            try
+            {
+                using var connection = CreateConnection();
+                var sql = "update [persons] set description = @description where id = @id";
+                connection.Execute(sql, new { description = description, id = id });
+            }
+            catch (SQLiteException e)
+            {
+                throw new FileDB2Exception("SQL error", e);
+            }
+        }
+
+        public void UpdatePersonDateOfBirth(int id, DateTime dateOfBirth)
+        {
+            try
+            {
+                var dateOfBirthStr = dateOfBirth.ToString("yyyy-MM-dd");
+                using var connection = CreateConnection();
+                var sql = "update [persons] set dateofbirth = @dateOfBirthStr where id = @id";
+                connection.Execute(sql, new { dateOfBirthStr = dateOfBirthStr, id = id });
+            }
+            catch (SQLiteException e)
+            {
+                throw new FileDB2Exception("SQL error", e);
+            }
+        }
+
+        public void UpdatePersonProfileFileId(int id, int? profileFileId)
+        {
+            try
+            {
+                using var connection = CreateConnection();
+                var sql = "update [persons] set profilefileid = @profileFileId where id = @id";
+                connection.Execute(sql, new { profileFileId = profileFileId, id = id });
+            }
+            catch (SQLiteException e)
+            {
+                throw new FileDB2Exception("SQL error", e);
+            }
+        }
 
         public void DeletePerson(int id)
         {
@@ -262,7 +344,49 @@ namespace FileDB2Interface
             }
         }
 
-        // TODO: update location
+        public void UpdateLocationName(int id, string name)
+        {
+            try
+            {
+                using var connection = CreateConnection();
+                var sql = "update [locations] set name = @name where id = @id";
+                connection.Execute(sql, new { name = name, id = id });
+            }
+            catch (SQLiteException e)
+            {
+                throw new FileDB2Exception("SQL error", e);
+            }
+        }
+
+        public void UpdateLocationDescription(int id, string description)
+        {
+            try
+            {
+                using var connection = CreateConnection();
+                var sql = "update [locations] set description = @name where id = @id";
+                connection.Execute(sql, new { description = description, id = id });
+            }
+            catch (SQLiteException e)
+            {
+                throw new FileDB2Exception("SQL error", e);
+            }
+        }
+
+        public void UpdateLocationPosition(int id, double? latitude = null, double? longitude = null)
+        {
+            try
+            {
+                var position = (latitude != null && longitude != null) ? $"{latitude} {longitude}".Replace(',', '.') : null;
+
+                using var connection = CreateConnection();
+                var sql = "update [locations] set position = @position where id = @id";
+                connection.Execute(sql, new { position = position, id = id });
+            }
+            catch (SQLiteException e)
+            {
+                throw new FileDB2Exception("SQL error", e);
+            }
+        }
 
         public void DeleteLocation(int id)
         {
@@ -313,7 +437,19 @@ namespace FileDB2Interface
             }
         }
 
-        // TODO: update tag
+        public void UpdateTagName(int id, string name)
+        {
+            try
+            {
+                using var connection = CreateConnection();
+                var sql = "update [tags] set name = @name where id = @id";
+                connection.Execute(sql, new { name = name, id = id });
+            }
+            catch (SQLiteException e)
+            {
+                throw new FileDB2Exception("SQL error", e);
+            }
+        }
 
         public void DeleteTag(int id)
         {
