@@ -9,6 +9,9 @@ using System.IO;
 using MetadataExtractor;
 using MetadataExtractor.Formats.Exif;
 using Directory = System.IO.Directory;
+using log4net;
+using System.Reflection;
+using log4net.Config;
 
 namespace FileDB2Interface
 {
@@ -16,8 +19,13 @@ namespace FileDB2Interface
     {
         private readonly FileDB2Config config;
 
+        private static readonly ILog log = LogManager.GetLogger("FileDB2Handle");
+
         public FileDB2Handle(FileDB2Config config)
         {
+            var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
+            XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
+
             this.config = config;
 
             if (!File.Exists(config.Database))
@@ -29,6 +37,8 @@ namespace FileDB2Interface
             {
                 throw new FileDB2Exception($"Root directory does not exist: {config.FilesRootDirectory}");
             }
+
+            log.Info($"FileDB started with database {config.Database} and root directory {config.FilesRootDirectory}");
         }
 
         #region Files collection
@@ -114,7 +124,8 @@ namespace FileDB2Interface
             return connection.QueryFirst<FilesModel>("select * from [files] where id = @ID", parameters);
         }
 
-        // TODO: insert/import file/files
+        // TODO: insert file
+        // TODO: insert files (import all)
 
         public void UpdateFileDescription(int id, string description)
         {
