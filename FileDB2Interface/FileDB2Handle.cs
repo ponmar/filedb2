@@ -43,13 +43,13 @@ namespace FileDB2Interface
 
         #region Files collection
 
-        public string[] ListAllFilesystemFiles()
+        public List<string> ListAllFilesystemFiles()
         {
             var files = Directory.GetFiles(config.FilesRootDirectory, "*.*", SearchOption.AllDirectories);
             return PathsToInternalPaths(files);
         }
 
-        public string[] ListAllFilesystemDirectories()
+        public List<string> ListAllFilesystemDirectories()
         {
             var dirs = Directory.GetDirectories(config.FilesRootDirectory, "*.*", SearchOption.AllDirectories);
             return PathsToInternalPaths(dirs);
@@ -499,13 +499,9 @@ namespace FileDB2Interface
             return path;
         }
 
-        private string[] PathsToInternalPaths(string[] paths)
+        private List<string> PathsToInternalPaths(string[] paths)
         {
-            for (int i = 0; i < paths.Length; i++)
-            {
-                paths[i] = PathToInternalPath(paths[i]);
-            }
-            return paths;
+            return paths.Select(p => PathToInternalPath(p)).ToList();
         }
 
         private string GeoLocationToString(GeoLocation geoLocation)
