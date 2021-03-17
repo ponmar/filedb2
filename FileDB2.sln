@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileDB2Interface", "FileDB2
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileDB2Test", "FileDB2Test\FileDB2Test.csproj", "{D580E907-F680-4AE5-A4B1-58E5FE05840E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileDB2Browser", "FileDB2Browser\FileDB2Browser.csproj", "{AD7348A5-8874-44CD-977E-DF2FB0E5CE00}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{D580E907-F680-4AE5-A4B1-58E5FE05840E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D580E907-F680-4AE5-A4B1-58E5FE05840E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D580E907-F680-4AE5-A4B1-58E5FE05840E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD7348A5-8874-44CD-977E-DF2FB0E5CE00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD7348A5-8874-44CD-977E-DF2FB0E5CE00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD7348A5-8874-44CD-977E-DF2FB0E5CE00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD7348A5-8874-44CD-977E-DF2FB0E5CE00}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
