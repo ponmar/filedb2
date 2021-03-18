@@ -12,86 +12,114 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using FileDB2Browser.ModelView;
+using FileDB2Browser.ViewModel;
+using FileDB2Interface;
 
 namespace FileDB2Browser
 {
-    enum Page { Start, Files, Birthdays, Categories, Collection }
+    enum Page { Start, Files, Birthdays, Persons, Locations, Tags, Import }
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Page currentPage = Page.Start;
+        private Page currentPage;
+        private readonly FileDB2Handle fileDB2Handle;
 
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new StartModelView();
+            SetPage(Page.Start, true);
+
+            var config = new FileDB2Config()
+            {
+                Database = @"C:\Source\filedb2_db\test.db",
+                FilesRootDirectory = @"X:",
+            };
+
+            fileDB2Handle = new FileDB2Handle(config);
         }
 
-        private void Button_Click_StartPage(object sender, RoutedEventArgs e)
+        private void SetStartPage(object sender, RoutedEventArgs e)
         {
             SetPage(Page.Start);
         }
 
-        private void Button_Click_FilesPage(object sender, RoutedEventArgs e)
+        private void SetFilesPage(object sender, RoutedEventArgs e)
         {
             SetPage(Page.Files);
         }
 
-        private void Button_Click_BirthdaysPage(object sender, RoutedEventArgs e)
+        private void SetBirthdaysPage(object sender, RoutedEventArgs e)
         {
             SetPage(Page.Birthdays);
         }
 
-        private void Button_Click_CategoriesPage(object sender, RoutedEventArgs e)
+        private void SetPersonsPage(object sender, RoutedEventArgs e)
         {
-            SetPage(Page.Categories);
+            SetPage(Page.Persons);
         }
 
-        private void Button_Click_CollectionPage(object sender, RoutedEventArgs e)
+        private void SetLocationsPage(object sender, RoutedEventArgs e)
         {
-            SetPage(Page.Collection);
+            SetPage(Page.Locations);
         }
 
-        private void SetPage(Page page)
+        private void SetTagsPage(object sender, RoutedEventArgs e)
         {
-            if (page == currentPage)
-            {
-                return;
-            }
+            SetPage(Page.Tags);
+        }
 
-            currentPage = page;
-            PageStart.Visibility = Visibility.Collapsed;
-            PageFiles.Visibility = Visibility.Collapsed;
-            PageBirthdays.Visibility = Visibility.Collapsed;
-            PageCategories.Visibility = Visibility.Collapsed;
-            PageCollection.Visibility = Visibility.Collapsed;
+        private void SetImportPage(object sender, RoutedEventArgs e)
+        {
+            SetPage(Page.Import);
+        }
 
-            switch (page)
+        private void SetPage(Page page, bool force = false)
+        {
+            if (page != currentPage || force)
             {
-                case Page.Start:
-                    DataContext = new StartModelView();
-                    PageStart.Visibility = Visibility.Visible;
-                    break;
-                case Page.Files:
-                    DataContext = new FilesModelView();
-                    PageFiles.Visibility = Visibility.Visible;
-                    break;
-                case Page.Birthdays:
-                    DataContext = new BirthdaysModelView();
-                    PageBirthdays.Visibility = Visibility.Visible;
-                    break;
-                case Page.Categories:
-                    DataContext = new CategoriesModelView();
-                    PageCategories.Visibility = Visibility.Visible;
-                    break;
-                case Page.Collection:
-                    DataContext = new CollectionModelView();
-                    PageCollection.Visibility = Visibility.Visible;
-                    break;
+                currentPage = page;
+                StartPage.Visibility = Visibility.Collapsed;
+                FilesPage.Visibility = Visibility.Collapsed;
+                BirthdaysPage.Visibility = Visibility.Collapsed;
+                PersonsPage.Visibility = Visibility.Collapsed;
+                LocationsPage.Visibility = Visibility.Collapsed;
+                TagsPage.Visibility = Visibility.Collapsed;
+                ImportPage.Visibility = Visibility.Collapsed;
+
+                switch (page)
+                {
+                    case Page.Start:
+                        DataContext = new StartViewModel(fileDB2Handle);
+                        StartPage.Visibility = Visibility.Visible;
+                        break;
+                    case Page.Files:
+                        DataContext = new FilesViewModel(fileDB2Handle);
+                        FilesPage.Visibility = Visibility.Visible;
+                        break;
+                    case Page.Birthdays:
+                        DataContext = new BirthdaysViewModel(fileDB2Handle);
+                        BirthdaysPage.Visibility = Visibility.Visible;
+                        break;
+                    case Page.Persons:
+                        DataContext = new PersonsViewModel(fileDB2Handle);
+                        PersonsPage.Visibility = Visibility.Visible;
+                        break;
+                    case Page.Locations:
+                        DataContext = new LocationsViewModel(fileDB2Handle);
+                        LocationsPage.Visibility = Visibility.Visible;
+                        break;
+                    case Page.Tags:
+                        DataContext = new TagsViewModel(fileDB2Handle);
+                        TagsPage.Visibility = Visibility.Visible;
+                        break;
+                    case Page.Import:
+                        DataContext = new ImportViewModel(fileDB2Handle);
+                        ImportPage.Visibility = Visibility.Visible;
+                        break;
+                }
             }
         }
     }

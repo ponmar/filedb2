@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FileDB2Browser"
         mc:Ignorable="d"
-        Title="FileDB2" Height="600" Width="800" ResizeMode="CanResize">
+        Title="FileDB2" Height="768" Width="1024" ResizeMode="CanResize">
     <Window.Resources>
         <Style x:Key="PageButton" TargetType="Button">
             <Setter Property="Margin" Value="3"/>
@@ -32,29 +32,38 @@
 
         <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="0">
             <Label Style="{StaticResource PageButtonHeading}">Browse</Label>
-            <Button Style="{StaticResource PageButton}" Click="Button_Click_StartPage">Start</Button>
-            <Button Style="{StaticResource PageButton}" Click="Button_Click_FilesPage">Files</Button>
-            <Button Style="{StaticResource PageButton}" Click="Button_Click_BirthdaysPage">Birthdays</Button>
+            <Button Style="{StaticResource PageButton}" Click="SetStartPage">Start</Button>
+            <Button Style="{StaticResource PageButton}" Click="SetFilesPage">Files</Button>
+            <Button Style="{StaticResource PageButton}" Click="SetBirthdaysPage">Birthdays</Button>
             <Label Style="{StaticResource PageButtonHeading}">Data</Label>
-            <Button Style="{StaticResource PageButton}" Click="Button_Click_CategoriesPage">Categories</Button>
-            <Button Style="{StaticResource PageButton}" Click="Button_Click_CollectionPage">Collection</Button>
+            <Button Style="{StaticResource PageButton}" Click="SetPersonsPage">Persons</Button>
+            <Button Style="{StaticResource PageButton}" Click="SetLocationsPage">Locations</Button>
+            <Button Style="{StaticResource PageButton}" Click="SetTagsPage">Tags</Button>
+            <Label Style="{StaticResource PageButtonHeading}">Files</Label>
+            <Button Style="{StaticResource PageButton}" Click="SetImportPage">Import</Button>
         </StackPanel>
 
-        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" Visibility="Collapsed" Name="PageStart">
+        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" Visibility="Collapsed" Name="StartPage">
             <TextBlock>Start</TextBlock>
             <TextBlock Text="{Binding NumFiles}"/>
         </StackPanel>
-        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" Visibility="Collapsed" Name="PageFiles">
+        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" Visibility="Collapsed" Name="FilesPage">
             <TextBlock>Files</TextBlock>
         </StackPanel>
-        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" Visibility="Collapsed" Name="PageBirthdays">
+        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" Visibility="Collapsed" Name="BirthdaysPage">
             <TextBlock>Birthdays</TextBlock>
         </StackPanel>
-        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" Visibility="Collapsed" Name="PageCategories">
-            <TextBlock>Categories</TextBlock>
+        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" Visibility="Collapsed" Name="PersonsPage">
+            <TextBlock>Persons</TextBlock>
         </StackPanel>
-        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" Visibility="Collapsed" Name="PageCollection">
-            <TextBlock>Collection</TextBlock>
+        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" Visibility="Collapsed" Name="LocationsPage">
+            <TextBlock>Locations</TextBlock>
+        </StackPanel>
+        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" Visibility="Collapsed" Name="TagsPage">
+            <TextBlock>Tags</TextBlock>
+        </StackPanel>
+        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" Visibility="Collapsed" Name="ImportPage">
+            <TextBlock>Import</TextBlock>
         </StackPanel>
     </Grid>
 </Window>
