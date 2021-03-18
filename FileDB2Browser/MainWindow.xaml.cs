@@ -17,7 +17,7 @@ using FileDB2Interface;
 
 namespace FileDB2Browser
 {
-    enum Page { Start, Files, Birthdays, Persons, Locations, Tags, Import }
+    enum Page { Start, Find, Birthdays, Persons, Locations, Tags, Import }
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -46,9 +46,9 @@ namespace FileDB2Browser
             SetPage(Page.Start);
         }
 
-        private void SetFilesPage(object sender, RoutedEventArgs e)
+        private void SetFindPage(object sender, RoutedEventArgs e)
         {
-            SetPage(Page.Files);
+            SetPage(Page.Find);
         }
 
         private void SetBirthdaysPage(object sender, RoutedEventArgs e)
@@ -82,7 +82,7 @@ namespace FileDB2Browser
             {
                 currentPage = page;
                 StartPage.Visibility = Visibility.Collapsed;
-                FilesPage.Visibility = Visibility.Collapsed;
+                FindPage.Visibility = Visibility.Collapsed;
                 BirthdaysPage.Visibility = Visibility.Collapsed;
                 PersonsPage.Visibility = Visibility.Collapsed;
                 LocationsPage.Visibility = Visibility.Collapsed;
@@ -95,9 +95,9 @@ namespace FileDB2Browser
                         DataContext = new StartViewModel(fileDB2Handle);
                         StartPage.Visibility = Visibility.Visible;
                         break;
-                    case Page.Files:
-                        DataContext = new FilesViewModel(fileDB2Handle);
-                        FilesPage.Visibility = Visibility.Visible;
+                    case Page.Find:
+                        DataContext = new FindViewModel(fileDB2Handle);
+                        FindPage.Visibility = Visibility.Visible;
                         break;
                     case Page.Birthdays:
                         DataContext = new BirthdaysViewModel(fileDB2Handle);

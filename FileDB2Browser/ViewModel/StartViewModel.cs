@@ -9,8 +9,6 @@ namespace FileDB2Browser.ViewModel
 {
     public class StartViewModel
     {
-        public int NumFiles { get; } = 100;
-
         private readonly FileDB2Handle fileDB2Handle;
 
         public StartViewModel(FileDB2Handle fileDB2Handle)

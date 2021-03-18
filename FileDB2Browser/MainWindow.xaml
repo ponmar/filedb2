@@ -16,24 +16,20 @@
             <Setter Property="Margin" Value="0,15,0,0"/>
             <Setter Property="FontSize" Value="20"/>
             <Setter Property="HorizontalAlignment" Value="Center" />
-            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+
+        <Style x:Key="PageHeading" TargetType="Label">
+            <Setter Property="Margin" Value="0,15,0,0"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="HorizontalAlignment" Value="Center" />
         </Style>
     </Window.Resources>
-    
-    <Grid ShowGridLines="True">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto"></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"></RowDefinition>
-        </Grid.RowDefinitions>
-
-        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="0">
+    <DockPanel>
+        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="0" DockPanel.Dock="Left">
             <Label Style="{StaticResource PageButtonHeading}">Browse</Label>
             <Button Style="{StaticResource PageButton}" Click="SetStartPage">Start</Button>
-            <Button Style="{StaticResource PageButton}" Click="SetFilesPage">Files</Button>
+            <Button Style="{StaticResource PageButton}" Click="SetFindPage">Find</Button>
             <Button Style="{StaticResource PageButton}" Click="SetBirthdaysPage">Birthdays</Button>
             <Label Style="{StaticResource PageButtonHeading}">Data</Label>
             <Button Style="{StaticResource PageButton}" Click="SetPersonsPage">Persons</Button>
@@ -43,27 +39,33 @@
             <Button Style="{StaticResource PageButton}" Click="SetImportPage">Import</Button>
         </StackPanel>
 
-        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" Visibility="Collapsed" Name="StartPage">
-            <TextBlock>Start</TextBlock>
-            <TextBlock Text="{Binding NumFiles}"/>
-        </StackPanel>
-        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" Visibility="Collapsed" Name="FilesPage">
-            <TextBlock>Files</TextBlock>
-        </StackPanel>
-        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" Visibility="Collapsed" Name="BirthdaysPage">
-            <TextBlock>Birthdays</TextBlock>
-        </StackPanel>
-        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" Visibility="Collapsed" Name="PersonsPage">
-            <TextBlock>Persons</TextBlock>
-        </StackPanel>
-        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" Visibility="Collapsed" Name="LocationsPage">
-            <TextBlock>Locations</TextBlock>
-        </StackPanel>
-        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" Visibility="Collapsed" Name="TagsPage">
-            <TextBlock>Tags</TextBlock>
-        </StackPanel>
-        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" Visibility="Collapsed" Name="ImportPage">
-            <TextBlock>Import</TextBlock>
-        </StackPanel>
-    </Grid>
+        <Grid Margin="20">
+            <DockPanel Visibility="Collapsed" Name="StartPage">
+                <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Welcome to FileDB2!</Label>
+            </DockPanel>
+            <DockPanel Visibility="Collapsed" Name="FindPage">
+                <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Find</Label>
+            </DockPanel>
+            <DockPanel Visibility="Collapsed" Name="BirthdaysPage">
+                <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Birthdays</Label>
+            </DockPanel>
+            <DockPanel Visibility="Collapsed" Name="PersonsPage">
+                <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Persons</Label>
+                <ScrollViewer>
+                    <DataGrid ItemsSource="{Binding Persons}"/>
+                </ScrollViewer>
+            </DockPanel>
+            <DockPanel Visibility="Collapsed" Name="LocationsPage">
+                <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Locations</Label>
+                <DataGrid ItemsSource="{Binding Locations}" />
+            </DockPanel>
+            <DockPanel DockPanel.Dock="Top" Visibility="Collapsed" Name="TagsPage">
+                <Label Style="{StaticResource PageHeading}">Tags</Label>
+                <DataGrid ItemsSource="{Binding Tags}" />
+            </DockPanel>
+            <DockPanel Visibility="Collapsed" Name="ImportPage">
+                <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Import</Label>
+            </DockPanel>
+        </Grid>
+    </DockPanel>
 </Window>

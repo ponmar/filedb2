@@ -7,11 +7,11 @@ using FileDB2Interface;
 
 namespace FileDB2Browser.ViewModel
 {
-    public class FilesViewModel
+    public class FindViewModel
     {
         private readonly FileDB2Handle fileDB2Handle;
 
-        public FilesViewModel(FileDB2Handle fileDB2Handle)
+        public FindViewModel(FileDB2Handle fileDB2Handle)
         {
             this.fileDB2Handle = fileDB2Handle;
         }
