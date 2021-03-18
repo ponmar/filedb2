@@ -32,27 +32,28 @@
 
         <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="0">
             <Label Style="{StaticResource PageButtonHeading}">Browse</Label>
-            <Button Style="{StaticResource PageButton}">Start</Button>
-            <Button Style="{StaticResource PageButton}">Files</Button>
-            <Button Style="{StaticResource PageButton}">Birthdays</Button>
+            <Button Style="{StaticResource PageButton}" Click="Button_Click_StartPage">Start</Button>
+            <Button Style="{StaticResource PageButton}" Click="Button_Click_FilesPage">Files</Button>
+            <Button Style="{StaticResource PageButton}" Click="Button_Click_BirthdaysPage">Birthdays</Button>
             <Label Style="{StaticResource PageButtonHeading}">Data</Label>
-            <Button Style="{StaticResource PageButton}">Categories</Button>
-            <Button Style="{StaticResource PageButton}">Collection</Button>
+            <Button Style="{StaticResource PageButton}" Click="Button_Click_CategoriesPage">Categories</Button>
+            <Button Style="{StaticResource PageButton}" Click="Button_Click_CollectionPage">Collection</Button>
         </StackPanel>
 
-        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" Visibility="Collapsed">
+        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" Visibility="Collapsed" Name="PageStart">
             <TextBlock>Start</TextBlock>
+            <TextBlock Text="{Binding NumFiles}"/>
         </StackPanel>
-        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" Visibility="Collapsed">
+        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" Visibility="Collapsed" Name="PageFiles">
             <TextBlock>Files</TextBlock>
         </StackPanel>
-        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" Visibility="Collapsed">
+        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" Visibility="Collapsed" Name="PageBirthdays">
             <TextBlock>Birthdays</TextBlock>
         </StackPanel>
-        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" Visibility="Collapsed">
+        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" Visibility="Collapsed" Name="PageCategories">
             <TextBlock>Categories</TextBlock>
         </StackPanel>
-        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" Visibility="Collapsed">
+        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" Visibility="Collapsed" Name="PageCollection">
             <TextBlock>Collection</TextBlock>
         </StackPanel>
     </Grid>

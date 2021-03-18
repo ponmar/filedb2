@@ -17,7 +17,7 @@ namespace FileDBTest
             {
                 var handle = new FileDB2Handle(config);
 
-                var files = handle.GetFiles();
+                //var files = handle.GetFiles();
                 //var persons = handle.GetPersons();
                 //var locations = handle.GetLocations();
                 //var tags = handle.GetTags();
@@ -32,8 +32,8 @@ namespace FileDBTest
                 //var foundLocations = handle.SearchLocations("enhagsvägen");
                 //var foundTags = handle.SearchTags("gokart");
 
-                //var fsDirectories = handle.ListAllDirectories();
-                //var fsFiles = handle.ListAllFiles();
+                var fsDirectories = handle.ListAllFilesystemDirectories();
+                var fsFiles = handle.ListAllFilesystemFiles();
 
                 //var missingFiles = handle.GetFilesMissingInFilesystem();
 
