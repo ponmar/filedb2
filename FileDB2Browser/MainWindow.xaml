@@ -19,7 +19,7 @@
         </Style>
 
         <Style x:Key="PageHeading" TargetType="Label">
-            <Setter Property="Margin" Value="0,15,0,0"/>
+            <Setter Property="Margin" Value="0,0,0,0"/>
             <Setter Property="FontSize" Value="20"/>
             <Setter Property="HorizontalAlignment" Value="Center" />
         </Style>
@@ -41,7 +41,7 @@
         </StackPanel>
 
         <Border BorderThickness="2 2 2 2" BorderBrush="LightGray">
-            <Grid Margin="20">
+            <Grid Margin="20 5 20 5">
                 <DockPanel Visibility="Collapsed" Name="StartPage">
                     <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Welcome to FileDB2!</Label>
                 </DockPanel>
