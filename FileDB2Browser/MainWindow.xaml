@@ -37,44 +37,48 @@
             <Button Style="{StaticResource PageButton}" Click="SetTagsPage">Tags</Button>
             <Label Style="{StaticResource PageButtonHeading}">Files</Label>
             <Button Style="{StaticResource PageButton}" Click="SetImportPage">Import</Button>
+            <Button Style="{StaticResource PageButton}" Click="SetToolsPage">Tools</Button>
         </StackPanel>
 
         <Border BorderThickness="2 2 2 2" BorderBrush="LightGray">
-        <Grid Margin="20">
-            <DockPanel Visibility="Collapsed" Name="StartPage">
-                <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Welcome to FileDB2!</Label>
-            </DockPanel>
-            <DockPanel Visibility="Collapsed" Name="FindPage">
-                <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Find</Label>
-            </DockPanel>
-            <DockPanel Visibility="Collapsed" Name="BirthdaysPage">
-                <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Birthdays</Label>
-                <ScrollViewer>
-                    <DataGrid ItemsSource="{Binding Birthdays}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="false" CanUserDeleteRows="false"/>
-                </ScrollViewer>
-            </DockPanel>
-            <DockPanel Visibility="Collapsed" Name="PersonsPage">
-                <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Persons</Label>
-                <ScrollViewer>
-                    <DataGrid ItemsSource="{Binding Persons}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False"/>
-                </ScrollViewer>
-            </DockPanel>
-            <DockPanel Visibility="Collapsed" Name="LocationsPage">
-                <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Locations</Label>
-                <ScrollViewer>
-                    <DataGrid ItemsSource="{Binding Locations}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False"/>
-                </ScrollViewer>
-            </DockPanel>
-            <DockPanel Visibility="Collapsed" Name="TagsPage">
-                <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Tags</Label>
-                <ScrollViewer>
-                    <DataGrid ItemsSource="{Binding Tags}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False"/>
-                </ScrollViewer>
-            </DockPanel>
-            <DockPanel Visibility="Collapsed" Name="ImportPage">
-                <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Import</Label>
-            </DockPanel>
-        </Grid>
+            <Grid Margin="20">
+                <DockPanel Visibility="Collapsed" Name="StartPage">
+                    <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Welcome to FileDB2!</Label>
+                </DockPanel>
+                <DockPanel Visibility="Collapsed" Name="FindPage">
+                    <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Find</Label>
+                </DockPanel>
+                <DockPanel Visibility="Collapsed" Name="BirthdaysPage">
+                    <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Birthdays</Label>
+                    <ScrollViewer>
+                        <DataGrid ItemsSource="{Binding Birthdays}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="false" CanUserDeleteRows="false"/>
+                    </ScrollViewer>
+                </DockPanel>
+                <DockPanel Visibility="Collapsed" Name="PersonsPage">
+                    <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Persons</Label>
+                    <ScrollViewer>
+                        <DataGrid ItemsSource="{Binding Persons}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False"/>
+                    </ScrollViewer>
+                </DockPanel>
+                <DockPanel Visibility="Collapsed" Name="LocationsPage">
+                    <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Locations</Label>
+                    <ScrollViewer>
+                        <DataGrid ItemsSource="{Binding Locations}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False"/>
+                    </ScrollViewer>
+                </DockPanel>
+                <DockPanel Visibility="Collapsed" Name="TagsPage">
+                    <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Tags</Label>
+                    <ScrollViewer>
+                        <DataGrid ItemsSource="{Binding Tags}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False"/>
+                    </ScrollViewer>
+                </DockPanel>
+                <DockPanel Visibility="Collapsed" Name="ImportPage">
+                    <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Import</Label>
+                </DockPanel>
+                <DockPanel Visibility="Collapsed" Name="ToolsPage">
+                    <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Tools</Label>
+                </DockPanel>
+            </Grid>
         </Border>
     </DockPanel>
 </Window>

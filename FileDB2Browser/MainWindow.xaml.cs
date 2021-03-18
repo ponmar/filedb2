@@ -17,7 +17,7 @@ using FileDB2Interface;
 
 namespace FileDB2Browser
 {
-    enum Page { Start, Find, Birthdays, Persons, Locations, Tags, Import }
+    enum Page { Start, Find, Birthdays, Persons, Locations, Tags, Import, Tools }
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -76,6 +76,11 @@ namespace FileDB2Browser
             SetPage(Page.Import);
         }
 
+        private void SetToolsPage(object sender, RoutedEventArgs e)
+        {
+            SetPage(Page.Tools);
+        }
+
         private void SetPage(Page page, bool force = false)
         {
             if (page != currentPage || force)
@@ -88,6 +93,7 @@ namespace FileDB2Browser
                 LocationsPage.Visibility = Visibility.Collapsed;
                 TagsPage.Visibility = Visibility.Collapsed;
                 ImportPage.Visibility = Visibility.Collapsed;
+                ToolsPage.Visibility = Visibility.Collapsed;
 
                 switch (page)
                 {
@@ -118,6 +124,10 @@ namespace FileDB2Browser
                     case Page.Import:
                         DataContext = new ImportViewModel(fileDB2Handle);
                         ImportPage.Visibility = Visibility.Visible;
+                        break;
+                    case Page.Tools:
+                        DataContext = new ToolsViewModel(fileDB2Handle);
+                        ToolsPage.Visibility = Visibility.Visible;
                         break;
                 }
             }
