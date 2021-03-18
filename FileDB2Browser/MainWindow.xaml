@@ -9,12 +9,12 @@
     <Window.Resources>
         <Style x:Key="PageButton" TargetType="Button">
             <Setter Property="Margin" Value="3"/>
-            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Padding" Value="15"/>
         </Style>
 
         <Style x:Key="PageButtonHeading" TargetType="Label">
             <Setter Property="Margin" Value="0,15,0,0"/>
-            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontSize" Value="15"/>
             <Setter Property="HorizontalAlignment" Value="Center" />
         </Style>
 
@@ -31,7 +31,7 @@
             <Button Style="{StaticResource PageButton}" Click="SetStartPage">Home</Button>
             <Button Style="{StaticResource PageButton}" Click="SetFindPage">Find</Button>
             <Button Style="{StaticResource PageButton}" Click="SetBirthdaysPage">Birthdays</Button>
-            <Label Style="{StaticResource PageButtonHeading}">Data</Label>
+            <Label Style="{StaticResource PageButtonHeading}">Categories</Label>
             <Button Style="{StaticResource PageButton}" Click="SetPersonsPage">Persons</Button>
             <Button Style="{StaticResource PageButton}" Click="SetLocationsPage">Locations</Button>
             <Button Style="{StaticResource PageButton}" Click="SetTagsPage">Tags</Button>
@@ -39,6 +39,7 @@
             <Button Style="{StaticResource PageButton}" Click="SetImportPage">Import</Button>
         </StackPanel>
 
+        <Border BorderThickness="2 2 2 2" BorderBrush="LightGray">
         <Grid Margin="20">
             <DockPanel Visibility="Collapsed" Name="StartPage">
                 <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Welcome to FileDB2!</Label>
@@ -74,5 +75,6 @@
                 <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Import</Label>
             </DockPanel>
         </Grid>
+        </Border>
     </DockPanel>
 </Window>
