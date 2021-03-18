@@ -5,8 +5,55 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FileDB2Browser"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <StackPanel Orientation="Vertical">
-        
-    </StackPanel>
+        Title="FileDB2" Height="600" Width="800" ResizeMode="CanResize">
+    <Window.Resources>
+        <Style x:Key="PageButton" TargetType="Button">
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="Padding" Value="20"/>
+        </Style>
+
+        <Style x:Key="PageButtonHeading" TargetType="Label">
+            <Setter Property="Margin" Value="0,15,0,0"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+    </Window.Resources>
+    
+    <Grid ShowGridLines="True">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="0">
+            <Label Style="{StaticResource PageButtonHeading}">Browse</Label>
+            <Button Style="{StaticResource PageButton}">Start</Button>
+            <Button Style="{StaticResource PageButton}">Files</Button>
+            <Button Style="{StaticResource PageButton}">Birthdays</Button>
+            <Label Style="{StaticResource PageButtonHeading}">Data</Label>
+            <Button Style="{StaticResource PageButton}">Categories</Button>
+            <Button Style="{StaticResource PageButton}">Collection</Button>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" Visibility="Collapsed">
+            <TextBlock>Start</TextBlock>
+        </StackPanel>
+        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" Visibility="Collapsed">
+            <TextBlock>Files</TextBlock>
+        </StackPanel>
+        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" Visibility="Collapsed">
+            <TextBlock>Birthdays</TextBlock>
+        </StackPanel>
+        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" Visibility="Collapsed">
+            <TextBlock>Categories</TextBlock>
+        </StackPanel>
+        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" Visibility="Collapsed">
+            <TextBlock>Collection</TextBlock>
+        </StackPanel>
+    </Grid>
 </Window>

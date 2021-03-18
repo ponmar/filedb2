@@ -15,11 +15,15 @@ using System.Windows.Shapes;
 
 namespace FileDB2Browser
 {
+    enum Page { Start, Files, Birthdays, Categories, Collection }
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Page page = Page.Start;
+
         public MainWindow()
         {
             InitializeComponent();
