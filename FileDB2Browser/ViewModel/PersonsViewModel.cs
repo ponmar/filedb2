@@ -24,32 +24,8 @@ namespace FileDB2Browser.ViewModel
 
         public PersonsViewModel(FileDB2Handle fileDB2Handle)
         {
-            var persons = fileDB2Handle.GetPersons().Select(pm => new Person() { Firstname = pm.firstname, Lastname = pm.lastname, Description = pm.description, DateOfBirth = pm.dateofbirth, BornYearsAgo = GetBornYearsAgo(pm.dateofbirth) });
+            var persons = fileDB2Handle.GetPersons().Select(pm => new Person() { Firstname = pm.firstname, Lastname = pm.lastname, Description = pm.description, DateOfBirth = pm.dateofbirth, BornYearsAgo = Utils.GetBornYearsAgo(pm.dateofbirth) });
             Persons = new ObservableCollection<Person>(persons);
-        }
-
-        private string GetBornYearsAgo(string dateOfBirth)
-        {
-            if (dateOfBirth != null && DateTime.TryParse(dateOfBirth, out var result))
-            {
-                var now = DateTime.Now;
-                int yearsAgo = now.Year - result.Year;
-
-                try
-                {
-                    if (new DateTime(result.Year, now.Month, now.Day) < result)
-                    {
-                        yearsAgo--;
-                    }
-                }
-                catch (ArgumentOutOfRangeException)
-                {
-                    // Current date did not exist the year that person was born
-                }
-
-                return yearsAgo.ToString();
-            }
-            return string.Empty;
         }
     }
 }

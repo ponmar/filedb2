@@ -9,11 +9,8 @@ namespace FileDB2Browser.ViewModel
 {
     public class ImportViewModel
     {
-        private readonly FileDB2Handle fileDB2Handle;
-
         public ImportViewModel(FileDB2Handle fileDB2Handle)
         {
-            this.fileDB2Handle = fileDB2Handle;
         }
     }
 }
