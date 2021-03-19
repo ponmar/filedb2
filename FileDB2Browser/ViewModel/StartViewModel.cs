@@ -9,11 +9,14 @@ namespace FileDB2Browser.ViewModel
 {
     public class StartViewModel
     {
-        private readonly FileDB2Handle fileDB2Handle;
+        public string Database { get; }
+
+        public string FilesRootDirectory { get; }
 
         public StartViewModel(FileDB2Handle fileDB2Handle)
         {
-            this.fileDB2Handle = fileDB2Handle;
+            Database = fileDB2Handle.Config.Database;
+            FilesRootDirectory = fileDB2Handle.Config.FilesRootDirectory;
         }
     }
 }

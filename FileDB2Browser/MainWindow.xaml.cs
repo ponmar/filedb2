@@ -30,15 +30,15 @@ namespace FileDB2Browser
         public MainWindow()
         {
             InitializeComponent();
-            SetPage(Page.Start, true);
 
             var config = new FileDB2Config()
             {
-                Database = @"C:\Source\filedb2_db\test.db",
-                FilesRootDirectory = @"X:",
+                Database = @"C:\repos\filedb2_data\filedb2.db",
+                FilesRootDirectory = @"C:\repos\filedb2_data\files",
             };
 
             fileDB2Handle = new FileDB2Handle(config);
+            SetPage(Page.Start, true);
         }
 
         private void SetStartPage(object sender, RoutedEventArgs e)

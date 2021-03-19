@@ -17,7 +17,7 @@ namespace FileDB2Interface
 {
     public class FileDB2Handle
     {
-        private readonly FileDB2Config config;
+        public FileDB2Config Config { get; }
 
         private static readonly ILog log = LogManager.GetLogger("FileDB2Handle");
 
@@ -26,7 +26,7 @@ namespace FileDB2Interface
             var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
             XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
 
-            this.config = config;
+            Config = config;
 
             if (!File.Exists(config.Database))
             {
@@ -45,13 +45,13 @@ namespace FileDB2Interface
 
         public List<string> ListAllFilesystemFiles()
         {
-            var files = Directory.GetFiles(config.FilesRootDirectory, "*.*", SearchOption.AllDirectories);
+            var files = Directory.GetFiles(Config.FilesRootDirectory, "*.*", SearchOption.AllDirectories);
             return PathsToInternalPaths(files);
         }
 
         public List<string> ListAllFilesystemDirectories()
         {
-            var dirs = Directory.GetDirectories(config.FilesRootDirectory, "*.*", SearchOption.AllDirectories);
+            var dirs = Directory.GetDirectories(Config.FilesRootDirectory, "*.*", SearchOption.AllDirectories);
             return PathsToInternalPaths(dirs);
         }
 
@@ -473,13 +473,13 @@ namespace FileDB2Interface
 
         private IDbConnection CreateConnection()
         {
-            var connectionString = $"Data Source={config.Database};foreign keys = true";
+            var connectionString = $"Data Source={Config.Database};foreign keys = true";
             return new SQLiteConnection(connectionString);
         }
 
         private string InternalPathToPath(string internalPath)
         {
-            var path = Path.Join(config.FilesRootDirectory, internalPath);
+            var path = Path.Join(Config.FilesRootDirectory, internalPath);
             path = path.Replace('\\', Path.DirectorySeparatorChar);
             path = path.Replace('/', Path.DirectorySeparatorChar);
             return path;
@@ -487,9 +487,9 @@ namespace FileDB2Interface
 
         private string PathToInternalPath(string path)
         {
-            if (path.StartsWith(config.FilesRootDirectory))
+            if (path.StartsWith(Config.FilesRootDirectory))
             {
-                path = path.Substring(config.FilesRootDirectory.Length);
+                path = path.Substring(Config.FilesRootDirectory.Length);
             }
             path = path.Replace('\\', '/');
             while (path.StartsWith('/'))

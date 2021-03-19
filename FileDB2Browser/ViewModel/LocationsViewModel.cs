@@ -9,20 +9,23 @@ using FileDB2Interface.Model;
 
 namespace FileDB2Browser.ViewModel
 {
+    public class Location
+    {
+        public string Name { get; set; }
+
+        public string Description { get; set; }
+
+        public string Position { get; set; }
+    }
+
     public class LocationsViewModel
     {
-        private readonly FileDB2Handle fileDB2Handle;
-
-        public ObservableCollection<LocationModel> Locations { get; } = new ObservableCollection<LocationModel>();
+        public ObservableCollection<Location> Locations { get; }
 
         public LocationsViewModel(FileDB2Handle fileDB2Handle)
         {
-            this.fileDB2Handle = fileDB2Handle;
-
-            foreach (var location in fileDB2Handle.GetLocations())
-            {
-                Locations.Add(location);
-            }
+            var locations = fileDB2Handle.GetLocations().Select(lm => new Location() { Name = lm.name, Description = lm.description, Position = lm.position });
+            Locations = new ObservableCollection<Location>(locations);
         }
     }
 }

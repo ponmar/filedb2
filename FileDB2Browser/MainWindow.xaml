@@ -23,6 +23,15 @@
             <Setter Property="FontSize" Value="20"/>
             <Setter Property="HorizontalAlignment" Value="Center" />
         </Style>
+
+        <Style x:Key="PageGrid" TargetType="Grid">
+            <Setter Property="Margin" Value="5,5,5,5"/>
+            <Setter Property="HorizontalAlignment" Value="Center" />
+        </Style>
+
+        <Style x:Key="PageTextblock" TargetType="TextBlock">
+            <Setter Property="Margin" Value="5,5,5,5"/>
+        </Style>
     </Window.Resources>
 
     <DockPanel>
@@ -44,6 +53,24 @@
             <Grid Margin="20 5 20 5">
                 <DockPanel Visibility="Collapsed" Name="StartPage">
                     <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Welcome to FileDB2!</Label>
+                    <Grid Style="{StaticResource PageGrid}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextblock}">Database:</TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource PageTextblock}" Text="{Binding Database}"/>
+
+                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageTextblock}">Files root directory:</TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource PageTextblock}" Text="{Binding FilesRootDirectory}"/>
+
+                        <Label></Label>
+                    </Grid>
                 </DockPanel>
                 <DockPanel Visibility="Collapsed" Name="FindPage">
                     <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Find</Label>
