@@ -115,6 +115,13 @@ namespace FileDB2Interface
             return connection.Query<FilesModel>(sql, new { criteria = "%" + criteria + "%" }).ToList();
         }
 
+        public List<FilesModel> SearchFilesRandom(int numFiles)
+        {
+            using var connection = CreateConnection();
+            var sql = $"select * from [files] order by random() limit {numFiles}";
+            return connection.Query<FilesModel>(sql, new DynamicParameters()).ToList();
+        }
+
         public FilesModel GetFileById(int id)
         {
             var parameters = new DynamicParameters();

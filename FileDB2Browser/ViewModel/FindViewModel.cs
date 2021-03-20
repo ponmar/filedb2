@@ -45,14 +45,13 @@ namespace FileDB2Browser.ViewModel
         }
         private List<FilesModel> searchResult = null;
 
-        public int SearchNumberOfHits { get; private set; } = -1;
+        public int SearchNumberOfHits { get; private set; } = 0;
 
         public int TotalNumberOfFiles { get; }
 
         public void FindRandomFiles()
         {
-            // TODO: add SearchFilesRandom(10);
-            SearchResult = fileDB2Handle.SearchFiles("test");
+            SearchResult = fileDB2Handle.SearchFilesRandom(10);
         }
 
         public FindViewModel(FileDB2Handle fileDB2Handle)
