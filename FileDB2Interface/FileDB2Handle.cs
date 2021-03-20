@@ -30,7 +30,7 @@ namespace FileDB2Interface
 
             if (!File.Exists(config.Database))
             {
-                throw new FileDB2Exception($"Configuration file does not exist: {config.Database}");
+                throw new FileDB2Exception($"Database does not exist: {config.Database}");
             }
 
             if (!Directory.Exists(config.FilesRootDirectory))

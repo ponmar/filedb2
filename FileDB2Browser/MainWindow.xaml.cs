@@ -33,8 +33,8 @@ namespace FileDB2Browser
 
             var config = new FileDB2Config()
             {
-                Database = @"C:\repos\filedb2_data\filedb2.db",
-                FilesRootDirectory = @"C:\repos\filedb2_data\files",
+                Database = @"C:\source\filedb2_db\filedb2.db",
+                FilesRootDirectory = @"x:",
             };
 
             fileDB2Handle = new FileDB2Handle(config);

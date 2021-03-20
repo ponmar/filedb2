@@ -74,6 +74,9 @@
                 </DockPanel>
                 <DockPanel Visibility="Collapsed" Name="FindPage">
                     <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Find</Label>
+                    <StackPanel Orientation="Vertical">
+                        <Button Command="{Binding FindRandomFilesCommand}">Find 10 random files</Button>
+                    </StackPanel>
                 </DockPanel>
                 <DockPanel Visibility="Collapsed" Name="BirthdaysPage">
                     <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Birthdays</Label>
