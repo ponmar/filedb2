@@ -93,7 +93,33 @@
                 <DockPanel Visibility="Collapsed" Name="PersonsPage">
                     <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Persons</Label>
                     <ScrollViewer>
-                        <DataGrid ItemsSource="{Binding Persons}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" IsReadOnly="True"/>
+                        <Grid Style="{StaticResource PageGrid}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Row="0" Grid.Column="0">First name:</Label>
+                            <TextBox Grid.Row="0" Grid.Column="1" Width="50" Text="{Binding Firstname}"/>
+                            <Label Grid.Row="0" Grid.Column="2">Last name:</Label>
+                            <TextBox Grid.Row="0" Grid.Column="3" Width="50" Text="{Binding Lastname}"/>
+                            <Label Grid.Row="0" Grid.Column="4">Description:</Label>
+                            <TextBox Grid.Row="0" Grid.Column="5" Width="50" Text="{Binding Description}"/>
+                            <Label Grid.Row="0" Grid.Column="6">Date of birth:</Label>
+                            <TextBox Grid.Row="0" Grid.Column="7" Width="50" Text="{Binding DateOfBirth}"/>
+                            <Button Grid.Row="0" Grid.Column="8" Command="{Binding AddPersonCommand}">Add person</Button>
+                            <DataGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="9" ItemsSource="{Binding Persons}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" IsReadOnly="True"/>
+                        </Grid>
                     </ScrollViewer>
                 </DockPanel>
                 <!-- Locations page -->

@@ -239,6 +239,9 @@ namespace FileDB2Interface
 
         public void InsertPerson(string firstname, string lastname, string description = null, string dateOfBirth = null, int? profileFileId = null)
         {
+            // TODO: validate dateOfBirth
+            // TODO: validate profileFileId (it shall exist if not null)
+
             try
             {
                 using var connection = CreateConnection();
