@@ -215,6 +215,12 @@ namespace FileDB2Interface
             return connection.Query<PersonModel>("select * from [persons]", new DynamicParameters()).ToList();
         }
 
+        public List<PersonModel> GetPersonsFromFile(int fileId)
+        {
+            using var connection = CreateConnection();
+            return connection.Query<PersonModel>("select * from [persons] where id in (select personid from [filepersons] where fileid = @fileid)", new { fileid = fileId }).ToList();
+        }
+
         public int GetPersonCount()
         {
             using var connection = CreateConnection();
@@ -344,6 +350,12 @@ namespace FileDB2Interface
             return output.ToList();
         }
 
+        public List<LocationModel> GetLocationsFromFile(int fileId)
+        {
+            using var connection = CreateConnection();
+            return connection.Query<LocationModel>("select * from [locations] where id in (select locationid from [filelocations] where fileid = @fileid)", new { fileid = fileId }).ToList();
+        }
+
         public int GetLocationCount()
         {
             using var connection = CreateConnection();
@@ -442,6 +454,13 @@ namespace FileDB2Interface
             var output = connection.Query<TagModel>("select * from [tags]", new DynamicParameters());
             return output.ToList();
         }
+
+        public List<TagModel> GetTagsFromFile(int fileId)
+        {
+            using var connection = CreateConnection();
+            return connection.Query<TagModel>("select * from [tags] where id in (select tagid from [filetags] where fileid = @fileid)", new { fileid = fileId }).ToList();
+        }
+
         public int GetTagCount()
         {
             using var connection = CreateConnection();

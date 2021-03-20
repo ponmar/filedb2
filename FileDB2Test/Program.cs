@@ -9,7 +9,7 @@ namespace FileDBTest
         {
             var config = new FileDB2Config()
             {
-                Database = @"C:\Source\filedb2_db\test.db",
+                Database = @"C:\Source\filedb2_db\filedb2.db",
                 FilesRootDirectory = @"X:",
             };
 
@@ -32,8 +32,8 @@ namespace FileDBTest
                 //var foundLocations = handle.SearchLocations("enhagsvägen");
                 //var foundTags = handle.SearchTags("gokart");
 
-                var fsDirectories = handle.ListAllFilesystemDirectories();
-                var fsFiles = handle.ListAllFilesystemFiles();
+                //var fsDirectories = handle.ListAllFilesystemDirectories();
+                //var fsFiles = handle.ListAllFilesystemFiles();
 
                 //var missingFiles = handle.GetFilesMissingInFilesystem();
 
@@ -42,6 +42,8 @@ namespace FileDBTest
 
                 //handle.InsertPerson("A", "C", "test", "yyyy-mm-dd", 1000000);
                 //handle.DeletePerson(89);
+
+                var persons = handle.GetPersonsFromFile(8067);
             }
             catch (FileDB2Exception e)
             {

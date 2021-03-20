@@ -81,7 +81,13 @@
                         <TextBlock Text="{Binding SearchNumberOfHits}"/>
                         <TextBlock Text="{Binding SearchResultIndex}"/>
                         <TextBlock Text="{Binding TotalNumberOfFiles}"/>
+                        <TextBlock Text="{Binding CurrentFileInternalPath}"/>
                         <TextBlock Text="{Binding CurrentFilePath}"/>
+                        <TextBlock Text="{Binding CurrentFileDescription}"/>
+                        <TextBlock Text="{Binding CurrentFilePosition}"/>
+                        <TextBlock Text="{Binding CurrentFilePersons}"/>
+                        <TextBlock Text="{Binding CurrentFileLocations}"/>
+                        <TextBlock Text="{Binding CurrentFileTags}"/>
                         <Button Command="{Binding PrevFileCommand}">Prev</Button>
                         <Button Command="{Binding NextFileCommand}">Next</Button>
                     </StackPanel>

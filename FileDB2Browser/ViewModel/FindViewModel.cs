@@ -8,15 +8,6 @@ using FileDB2Interface.Model;
 
 namespace FileDB2Browser.ViewModel
 {
-    public class FileSearchResult
-    {
-        public string InternalPath { get; set; }
-        public string Path { get; set; }
-        public string Description { get; set; }
-        public DateTime? Datetime { get; set; }
-        public string Position { get; set; }
-    }
-
     public class FindViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
@@ -50,8 +41,7 @@ namespace FileDB2Browser.ViewModel
         }
         private ICommand findRandomFilesCommand;
 
-
-        private List<FileSearchResult> SearchResult
+        private List<FilesModel> SearchResult
         {
             get => searchResult;
             set
@@ -82,7 +72,7 @@ namespace FileDB2Browser.ViewModel
                 }
             }
         }
-        private List<FileSearchResult> searchResult = null;
+        private List<FilesModel> searchResult = null;
 
         public int SearchResultIndex
         {
@@ -104,6 +94,20 @@ namespace FileDB2Browser.ViewModel
 
         public bool HasSearchResult => SearchResult != null;
 
+        public string CurrentFileInternalPath
+        {
+            get => currentFileInternalPath;
+            private set
+            {
+                if (value != currentFileInternalPath)
+                {
+                    currentFileInternalPath = value;
+                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentFileInternalPath)));
+                }
+            }
+        }
+        private string currentFileInternalPath;
+
         public string CurrentFilePath
         {
             get => currentFilePath;
@@ -118,17 +122,81 @@ namespace FileDB2Browser.ViewModel
         }
         private string currentFilePath;
 
+        public string CurrentFileDescription
+        {
+            get => currentFileDescription;
+            private set
+            {
+                if (value != currentFileDescription)
+                {
+                    currentFileDescription = value;
+                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentFileDescription)));
+                }
+            }
+        }
+        private string currentFileDescription;
+
+        // TODO: add datetime property in string format? For example: 2015-07-15 19:01:47 (5 years ago)
+
+        public string CurrentFilePosition
+        {
+            get => currentFilePosition;
+            private set
+            {
+                if (value != currentFilePosition)
+                {
+                    currentFilePosition = value;
+                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentFilePosition)));
+                }
+            }
+        }
+        private string currentFilePosition;
+
+        public string CurrentFilePersons
+        {
+            get => currentFilePersons;
+            private set
+            {
+                if (value != currentFilePersons)
+                {
+                    currentFilePersons = value;
+                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentFilePersons)));
+                }
+            }
+        }
+        private string currentFilePersons;
+
+        public string CurrentFileLocations
+        {
+            get => currentFileLocations;
+            private set
+            {
+                if (value != currentFileLocations)
+                {
+                    currentFileLocations = value;
+                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentFileLocations)));
+                }
+            }
+        }
+        private string currentFileLocations;
+
+        public string CurrentFileTags
+        {
+            get => currentFileTags;
+            private set
+            {
+                if (value != currentFileTags)
+                {
+                    currentFileTags = value;
+                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentFileTags)));
+                }
+            }
+        }
+        private string currentFileTags;
+
         public void FindRandomFiles()
         {
-            var files = fileDB2Handle.SearchFilesRandom(10);
-            SearchResult = files.Select(fm => new FileSearchResult()
-            {
-                InternalPath = fm.path,
-                Path = fileDB2Handle.InternalPathToPath(fm.path),
-                Description = fm.description,
-                Datetime = Utils.InternalDatetimeToDatetime(fm.datetime),
-                Position = fm.position,
-            }).ToList();
+            SearchResult = fileDB2Handle.SearchFilesRandom(10);
         }
 
         public FindViewModel(FileDB2Handle fileDB2Handle)
@@ -153,14 +221,60 @@ namespace FileDB2Browser.ViewModel
                 index >= 0 && index < SearchResult.Count)
             {
                 SearchResultIndex = index;
-                CurrentFilePath = SearchResult[SearchResultIndex].Path;
+
+                var selection = SearchResult[SearchResultIndex];
+
+                CurrentFileInternalPath = fileDB2Handle.InternalPathToPath(selection.path);
+                CurrentFilePath = selection.path;
+                CurrentFileDescription = selection.description ?? string.Empty;
+                CurrentFilePosition = selection.position ?? string.Empty;
+                CurrentFilePersons = GetFilePersonsString(selection.id);
+                CurrentFileLocations = GetFileLocationsString(selection.id);
+                CurrentFileTags = GetFileTagsString(selection.id);
             }
         }
 
         private void ResetFile()
         {
             SearchResultIndex = -1;
+
+            CurrentFileInternalPath = string.Empty;
             CurrentFilePath = string.Empty;
+            CurrentFileDescription = string.Empty;
+            CurrentFilePosition = string.Empty;
+            CurrentFilePersons = string.Empty;
+        }
+
+        private string GetFilePersonsString(int fileId)
+        {
+            var persons = fileDB2Handle.GetPersonsFromFile(fileId);
+            var personStrings = persons.Select(p => $"{p.firstname} {p.lastname}{GetPersonAgeString(p)}");
+            return string.Join(", ", personStrings);
+        }
+
+        private string GetPersonAgeString(PersonModel person)
+        {
+            var age = Utils.GetBornYearsAgo(person.dateofbirth);
+            if (age != string.Empty)
+            {
+                age = $" ({age})";
+            }
+            return age;
+        }
+
+        private string GetFileLocationsString(int fileId)
+        {
+            // TODO: include gps position if available?
+            var locations = fileDB2Handle.GetLocationsFromFile(fileId);
+            var locationStrings = locations.Select(l => l.name);
+            return string.Join(", ", locationStrings);
+        }
+
+        private string GetFileTagsString(int fileId)
+        {
+            var tags = fileDB2Handle.GetTagsFromFile(fileId);
+            var tagStrings = tags.Select(t => t.name);
+            return string.Join(", ", tagStrings);
         }
     }
 }
