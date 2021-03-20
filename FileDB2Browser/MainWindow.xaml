@@ -84,6 +84,7 @@
                         <TextBlock Text="{Binding CurrentFileInternalPath}"/>
                         <TextBlock Text="{Binding CurrentFilePath}"/>
                         <TextBlock Text="{Binding CurrentFileDescription}"/>
+                        <TextBlock Text="{Binding CurrentFileDateTime}"/>
                         <TextBlock Text="{Binding CurrentFilePosition}"/>
                         <TextBlock Text="{Binding CurrentFilePersons}"/>
                         <TextBlock Text="{Binding CurrentFileLocations}"/>

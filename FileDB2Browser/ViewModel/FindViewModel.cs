@@ -137,6 +137,19 @@ namespace FileDB2Browser.ViewModel
         private string currentFileDescription;
 
         // TODO: add datetime property in string format? For example: 2015-07-15 19:01:47 (5 years ago)
+        public string CurrentFileDateTime
+        {
+            get => currentFiledateTime;
+            private set
+            {
+                if (value != currentFiledateTime)
+                {
+                    currentFiledateTime = value;
+                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentFileDateTime)));
+                }
+            }
+        }
+        private string currentFiledateTime;
 
         public string CurrentFilePosition
         {
@@ -227,6 +240,7 @@ namespace FileDB2Browser.ViewModel
                 CurrentFileInternalPath = fileDB2Handle.InternalPathToPath(selection.path);
                 CurrentFilePath = selection.path;
                 CurrentFileDescription = selection.description ?? string.Empty;
+                CurrentFileDateTime = GetFileDateTimeString(selection.datetime);
                 CurrentFilePosition = selection.position ?? string.Empty;
                 CurrentFilePersons = GetFilePersonsString(selection.id);
                 CurrentFileLocations = GetFileLocationsString(selection.id);
@@ -241,8 +255,30 @@ namespace FileDB2Browser.ViewModel
             CurrentFileInternalPath = string.Empty;
             CurrentFilePath = string.Empty;
             CurrentFileDescription = string.Empty;
+            CurrentFileDateTime = string.Empty;
             CurrentFilePosition = string.Empty;
             CurrentFilePersons = string.Empty;
+        }
+
+        private string GetFileDateTimeString(string datetimeString)
+        {
+            var datetime = Utils.InternalDatetimeToDatetime(datetimeString);
+            if (datetime == null)
+            {
+                return string.Empty;
+            }
+
+            var resultString = datetime.Value.ToString("yyyy-MM-dd HH:mm");
+            int yearsAgo = Utils.GetYearsAgo(datetime.Value);
+            if (yearsAgo == 0)
+            {
+                resultString = $"{resultString} (this year)";
+            }
+            else if (yearsAgo > 0)
+            {
+                resultString = $"{resultString} ({yearsAgo} years ago)";
+            }
+            return resultString;
         }
 
         private string GetFilePersonsString(int fileId)

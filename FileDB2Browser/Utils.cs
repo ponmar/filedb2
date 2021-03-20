@@ -8,6 +8,26 @@ namespace FileDB2Browser
 {
     public static class Utils
     {
+        public static int GetYearsAgo(DateTime dateTime)
+        {
+            var now = DateTime.Now;
+            int yearsAgo = now.Year - dateTime.Year;
+
+            try
+            {
+                if (new DateTime(dateTime.Year, now.Month, now.Day) < dateTime)
+                {
+                    yearsAgo--;
+                }
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                // Current date did not exist the year that person was born
+            }
+
+            return yearsAgo;
+        }
+
         public static string GetBornYearsAgo(string dateOfBirth)
         {
             if (InternalDatetimeToDatetime(dateOfBirth, out var result))
@@ -19,22 +39,7 @@ namespace FileDB2Browser
 
         public static string GetBornYearsAgo(DateTime dateOfBirth)
         {
-            var now = DateTime.Now;
-            int yearsAgo = now.Year - dateOfBirth.Year;
-
-            try
-            {
-                if (new DateTime(dateOfBirth.Year, now.Month, now.Day) < dateOfBirth)
-                {
-                    yearsAgo--;
-                }
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-                // Current date did not exist the year that person was born
-            }
-
-            return yearsAgo.ToString();
+            return GetYearsAgo(dateOfBirth).ToString();
         }
 
         public static int GetDaysToNextBirthday(DateTime birthday)
