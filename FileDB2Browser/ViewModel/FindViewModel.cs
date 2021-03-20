@@ -23,7 +23,24 @@ namespace FileDB2Browser.ViewModel
 
         private readonly FileDB2Handle fileDB2Handle;
 
-        private ICommand findRandomFilesCommand;
+        public ICommand PrevFileCommand
+        {
+            get
+            {
+                return prevFileCommand ??= new CommandHandler(() => PrevFile());
+            }
+        }
+        private ICommand prevFileCommand;
+
+        public ICommand NextFileCommand
+        {
+            get
+            {
+                return nextFileCommand ??= new CommandHandler(() => NextFile());
+            }
+        }
+        private ICommand nextFileCommand;
+
         public ICommand FindRandomFilesCommand
         {
             get
@@ -31,11 +48,13 @@ namespace FileDB2Browser.ViewModel
                 return findRandomFilesCommand ??= new CommandHandler(() => FindRandomFiles());
             }
         }
+        private ICommand findRandomFilesCommand;
 
-        public List<FileSearchResult> SearchResult
+
+        private List<FileSearchResult> SearchResult
         {
             get => searchResult;
-            private set
+            set
             {
                 if (searchResult != value)
                 {
@@ -43,25 +62,61 @@ namespace FileDB2Browser.ViewModel
                     if (searchResult != null)
                     {
                         SearchNumberOfHits = searchResult.Count;
+                        if (searchResult.Count > 0)
+                        {
+                            LoadFile(0);
+                        }
+                        else
+                        {
+                            ResetFile();
+                        }
                     }
                     else
                     {
                         SearchNumberOfHits = 0;
+                        ResetFile();
                     }
 
                     PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(SearchNumberOfHits)));
-                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(SearchResult)));
                     PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(HasSearchResult)));
                 }
             }
         }
         private List<FileSearchResult> searchResult = null;
 
+        public int SearchResultIndex
+        {
+            get => searchResultIndex;
+            private set
+            {
+                if (value != searchResultIndex)
+                {
+                    searchResultIndex = value;
+                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(SearchResultIndex)));
+                }
+            }
+        }
+        private int searchResultIndex = -1;
+
         public int SearchNumberOfHits { get; private set; } = 0;
 
         public int TotalNumberOfFiles { get; }
 
         public bool HasSearchResult => SearchResult != null;
+
+        public string CurrentFilePath
+        {
+            get => currentFilePath;
+            private set
+            {
+                if (value != currentFilePath)
+                {
+                    currentFilePath = value;
+                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentFilePath)));
+                }
+            }
+        }
+        private string currentFilePath;
 
         public void FindRandomFiles()
         {
@@ -80,6 +135,32 @@ namespace FileDB2Browser.ViewModel
         {
             this.fileDB2Handle = fileDB2Handle;
             TotalNumberOfFiles = fileDB2Handle.GetFileCount();
+        }
+
+        public void PrevFile()
+        {
+            LoadFile(SearchResultIndex - 1);
+        }
+
+        public void NextFile()
+        {
+            LoadFile(SearchResultIndex + 1);
+        }
+
+        private void LoadFile(int index)
+        {
+            if (SearchResult != null &&
+                index >= 0 && index < SearchResult.Count)
+            {
+                SearchResultIndex = index;
+                CurrentFilePath = SearchResult[SearchResultIndex].Path;
+            }
+        }
+
+        private void ResetFile()
+        {
+            SearchResultIndex = -1;
+            CurrentFilePath = string.Empty;
         }
     }
 }

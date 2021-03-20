@@ -79,7 +79,11 @@
                     <StackPanel Orientation="Vertical">
                         <Button Command="{Binding FindRandomFilesCommand}">Find 10 random files</Button>
                         <TextBlock Text="{Binding SearchNumberOfHits}"/>
+                        <TextBlock Text="{Binding SearchResultIndex}"/>
                         <TextBlock Text="{Binding TotalNumberOfFiles}"/>
+                        <TextBlock Text="{Binding CurrentFilePath}"/>
+                        <Button Command="{Binding PrevFileCommand}">Prev</Button>
+                        <Button Command="{Binding NextFileCommand}">Next</Button>
                     </StackPanel>
                 </DockPanel>
                 <!-- Birthdays page -->
