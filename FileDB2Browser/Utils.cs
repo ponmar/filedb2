@@ -10,9 +10,9 @@ namespace FileDB2Browser
     {
         public static string GetBornYearsAgo(string dateOfBirth)
         {
-            if (dateOfBirth != null && DateTime.TryParse(dateOfBirth, out var result))
+            if (InternalDatetimeToDatetime(dateOfBirth, out var result))
             {
-                return GetBornYearsAgo(result);
+                return GetBornYearsAgo(result.Value);
             }
             return string.Empty;
         }
@@ -46,6 +46,23 @@ namespace FileDB2Browser
                 next = next.AddYears(1);
 
             return (next - today).Days;
+        }
+
+        public static bool InternalDatetimeToDatetime(string datetimeStr, out DateTime? result)
+        {
+            if (datetimeStr != null && DateTime.TryParse(datetimeStr, out var datetime))
+            {
+                result = datetime;
+                return true;
+            }
+            result = null;
+            return false;
+        }
+
+        public static DateTime? InternalDatetimeToDatetime(string datetimeStr)
+        {
+            InternalDatetimeToDatetime(datetimeStr, out var result);
+            return result;
         }
     }
 }

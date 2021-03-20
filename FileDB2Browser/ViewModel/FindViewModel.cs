@@ -1,11 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Input;
 using FileDB2Interface;
 using FileDB2Interface.Model;
 
 namespace FileDB2Browser.ViewModel
 {
+    public class FileSearchResult
+    {
+        public string Path { get; set; }
+        public string Description { get; set; }
+        public DateTime? Datetime { get; set; }
+        public string Position { get; set; }
+    }
+
     public class FindViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
@@ -21,7 +31,7 @@ namespace FileDB2Browser.ViewModel
             }
         }
 
-        public List<FilesModel> SearchResult
+        public List<FileSearchResult> SearchResult
         {
             get => searchResult;
             private set
@@ -44,7 +54,7 @@ namespace FileDB2Browser.ViewModel
                 }
             }
         }
-        private List<FilesModel> searchResult = null;
+        private List<FileSearchResult> searchResult = null;
 
         public int SearchNumberOfHits { get; private set; } = 0;
 
@@ -54,7 +64,14 @@ namespace FileDB2Browser.ViewModel
 
         public void FindRandomFiles()
         {
-            SearchResult = fileDB2Handle.SearchFilesRandom(10);
+            var files = fileDB2Handle.SearchFilesRandom(10);
+            SearchResult = files.Select(fm => new FileSearchResult()
+            {
+                Path = fm.path,
+                Description = fm.description,
+                Datetime = Utils.InternalDatetimeToDatetime(fm.datetime),
+                Position = fm.position,
+            }).ToList();
         }
 
         public FindViewModel(FileDB2Handle fileDB2Handle)
