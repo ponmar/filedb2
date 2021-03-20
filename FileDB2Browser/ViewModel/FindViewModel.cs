@@ -10,6 +10,7 @@ namespace FileDB2Browser.ViewModel
 {
     public class FileSearchResult
     {
+        public string InternalPath { get; set; }
         public string Path { get; set; }
         public string Description { get; set; }
         public DateTime? Datetime { get; set; }
@@ -67,7 +68,8 @@ namespace FileDB2Browser.ViewModel
             var files = fileDB2Handle.SearchFilesRandom(10);
             SearchResult = files.Select(fm => new FileSearchResult()
             {
-                Path = fm.path,
+                InternalPath = fm.path,
+                Path = fileDB2Handle.InternalPathToPath(fm.path),
                 Description = fm.description,
                 Datetime = Utils.InternalDatetimeToDatetime(fm.datetime),
                 Position = fm.position,

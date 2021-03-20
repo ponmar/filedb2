@@ -507,7 +507,7 @@ namespace FileDB2Interface
             return new SQLiteConnection(connectionString);
         }
 
-        private string InternalPathToPath(string internalPath)
+        public string InternalPathToPath(string internalPath)
         {
             var path = Path.Join(Config.FilesRootDirectory, internalPath);
             path = path.Replace('\\', Path.DirectorySeparatorChar);
