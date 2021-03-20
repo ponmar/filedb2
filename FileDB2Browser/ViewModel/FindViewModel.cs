@@ -40,6 +40,7 @@ namespace FileDB2Browser.ViewModel
 
                     PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(SearchNumberOfHits)));
                     PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(SearchResult)));
+                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(HasSearchResult)));
                 }
             }
         }
@@ -49,6 +50,8 @@ namespace FileDB2Browser.ViewModel
 
         public int TotalNumberOfFiles { get; }
 
+        public bool HasSearchResult => SearchResult != null;
+
         public void FindRandomFiles()
         {
             SearchResult = fileDB2Handle.SearchFilesRandom(10);
@@ -56,10 +59,8 @@ namespace FileDB2Browser.ViewModel
 
         public FindViewModel(FileDB2Handle fileDB2Handle)
         {
-            // TODO: set from db
-            TotalNumberOfFiles = 10;
-
             this.fileDB2Handle = fileDB2Handle;
+            TotalNumberOfFiles = fileDB2Handle.GetFileCount();
         }
     }
 }

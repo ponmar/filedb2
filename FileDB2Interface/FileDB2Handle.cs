@@ -108,6 +108,12 @@ namespace FileDB2Interface
             return connection.Query<FilesModel>("select * from [files]", new DynamicParameters()).ToList();
         }
 
+        public int GetFileCount()
+        {
+            using var connection = CreateConnection();
+            return connection.ExecuteScalar<int>("select count(*) from [files]");
+        }
+
         public List<FilesModel> SearchFiles(string criteria)
         {
             using var connection = CreateConnection();
@@ -207,6 +213,12 @@ namespace FileDB2Interface
         {
             using var connection = CreateConnection();
             return connection.Query<PersonModel>("select * from [persons]", new DynamicParameters()).ToList();
+        }
+
+        public int GetPersonCount()
+        {
+            using var connection = CreateConnection();
+            return connection.ExecuteScalar<int>("select count(*) from [persons]");
         }
 
         public List<PersonModel> SearchPersons(string criteria)
@@ -329,6 +341,12 @@ namespace FileDB2Interface
             return output.ToList();
         }
 
+        public int GetLocationCount()
+        {
+            using var connection = CreateConnection();
+            return connection.ExecuteScalar<int>("select count(*) from [locations]");
+        }
+
         public List<LocationModel> SearchLocations(string criteria)
         {
             using var connection = CreateConnection();
@@ -420,6 +438,11 @@ namespace FileDB2Interface
             using var connection = CreateConnection();
             var output = connection.Query<TagModel>("select * from [tags]", new DynamicParameters());
             return output.ToList();
+        }
+        public int GetTagCount()
+        {
+            using var connection = CreateConnection();
+            return connection.ExecuteScalar<int>("select count(*) from [tags]");
         }
 
         public List<TagModel> SearchTags(string criteria)
