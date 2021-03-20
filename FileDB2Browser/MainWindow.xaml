@@ -76,6 +76,8 @@
                     <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Find</Label>
                     <StackPanel Orientation="Vertical">
                         <Button Command="{Binding FindRandomFilesCommand}">Find 10 random files</Button>
+                        <TextBlock Text="{Binding SearchNumberOfHits}"/>
+                        <TextBlock Text="{Binding TotalNumberOfFiles}"/>
                     </StackPanel>
                 </DockPanel>
                 <DockPanel Visibility="Collapsed" Name="BirthdaysPage">

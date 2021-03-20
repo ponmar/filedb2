@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows.Input;
 using FileDB2Interface;
 using FileDB2Interface.Model;
 
 namespace FileDB2Browser.ViewModel
 {
-    public class FindViewModel
+    public class FindViewModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
         private readonly FileDB2Handle fileDB2Handle;
 
         private ICommand findRandomFilesCommand;
@@ -22,19 +21,38 @@ namespace FileDB2Browser.ViewModel
             }
         }
 
+        public List<FilesModel> SearchResult
+        {
+            get => searchResult;
+            private set
+            {
+                if (searchResult != value)
+                {
+                    searchResult = value;
+                    if (searchResult != null)
+                    {
+                        SearchNumberOfHits = searchResult.Count;
+                    }
+                    else
+                    {
+                        SearchNumberOfHits = 0;
+                    }
+
+                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(SearchNumberOfHits)));
+                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(SearchResult)));
+                }
+            }
+        }
         private List<FilesModel> searchResult = null;
 
         public int SearchNumberOfHits { get; private set; } = -1;
-
-        public bool HasSearchResult => SearchNumberOfHits != -1;
 
         public int TotalNumberOfFiles { get; }
 
         public void FindRandomFiles()
         {
             // TODO: add SearchFilesRandom(10);
-            searchResult = fileDB2Handle.SearchFiles("test");
-            SearchNumberOfHits = searchResult.Count;
+            SearchResult = fileDB2Handle.SearchFiles("test");
         }
 
         public FindViewModel(FileDB2Handle fileDB2Handle)
