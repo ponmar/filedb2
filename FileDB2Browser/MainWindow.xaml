@@ -86,28 +86,28 @@
                 <DockPanel Visibility="Collapsed" Name="BirthdaysPage">
                     <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Birthdays</Label>
                     <ScrollViewer>
-                        <DataGrid ItemsSource="{Binding Birthdays}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="false" CanUserDeleteRows="false"/>
+                        <DataGrid ItemsSource="{Binding Birthdays}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="false" CanUserDeleteRows="false" IsReadOnly="True"/>
                     </ScrollViewer>
                 </DockPanel>
                 <!-- Persons page -->
                 <DockPanel Visibility="Collapsed" Name="PersonsPage">
                     <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Persons</Label>
                     <ScrollViewer>
-                        <DataGrid ItemsSource="{Binding Persons}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False"/>
+                        <DataGrid ItemsSource="{Binding Persons}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" IsReadOnly="True"/>
                     </ScrollViewer>
                 </DockPanel>
                 <!-- Locations page -->
                 <DockPanel Visibility="Collapsed" Name="LocationsPage">
                     <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Locations</Label>
                     <ScrollViewer>
-                        <DataGrid ItemsSource="{Binding Locations}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False"/>
+                        <DataGrid ItemsSource="{Binding Locations}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" IsReadOnly="True"/>
                     </ScrollViewer>
                 </DockPanel>
                 <!-- Tags page -->
                 <DockPanel Visibility="Collapsed" Name="TagsPage">
                     <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Tags</Label>
                     <ScrollViewer>
-                        <DataGrid ItemsSource="{Binding Tags}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False"/>
+                        <DataGrid ItemsSource="{Binding Tags}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" IsReadOnly="True"/>
                     </ScrollViewer>
                 </DockPanel>
                 <!-- Import page -->
