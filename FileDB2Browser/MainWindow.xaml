@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:FileDB2Browser"
         mc:Ignorable="d"
         Title="FileDB2" Height="768" Width="1024" ResizeMode="CanResize">
@@ -91,6 +92,15 @@
                         <TextBlock Text="{Binding CurrentFileTags}"/>
                         <Button Command="{Binding PrevFileCommand}">Prev</Button>
                         <Button Command="{Binding NextFileCommand}">Next</Button>
+                        <!--<Image Source="{Binding CurrentFilePath, TargetNullValue={x:Null}}" />-->
+                        <!--<Image Source="{Binding CurrentFilePath}"/>-->
+                        <!--
+                        <Image Stretch="Fill" IsEnabled="{Binding HasSearchResult}">
+                            <Image.Source>
+                                <BitmapImage UriSource="{Binding CurrentFilePath}"/>
+                            </Image.Source>
+                        </Image>
+                        -->
                     </StackPanel>
                 </DockPanel>
                 <!-- Birthdays page -->
@@ -119,6 +129,7 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
                             </Grid.RowDefinitions>
                             <Label Grid.Row="0" Grid.Column="0">First name:</Label>
                             <TextBox Grid.Row="0" Grid.Column="1" Width="50" Text="{Binding Firstname}"/>
@@ -129,7 +140,15 @@
                             <Label Grid.Row="0" Grid.Column="6">Date of birth:</Label>
                             <TextBox Grid.Row="0" Grid.Column="7" Width="50" Text="{Binding DateOfBirth}"/>
                             <Button Grid.Row="0" Grid.Column="8" Command="{Binding AddPersonCommand}">Add person</Button>
-                            <DataGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="9" ItemsSource="{Binding Persons}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" IsReadOnly="True"/>
+                            <DataGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="9" ItemsSource="{Binding Persons}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding PersonSelectionCommand}" CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </DataGrid>
+                            <Button Grid.Row="2" Grid.Column="0" Command="{Binding RemovePersonCommand}">Delete selected person</Button>
+                            <Button Grid.Row="2" Grid.Column="1" Command="{Binding EditPersonCommand}">Edit selected person</Button>
                         </Grid>
                     </ScrollViewer>
                 </DockPanel>
@@ -137,14 +156,14 @@
                 <DockPanel Visibility="Collapsed" Name="LocationsPage">
                     <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Locations</Label>
                     <ScrollViewer>
-                        <DataGrid ItemsSource="{Binding Locations}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" IsReadOnly="True"/>
+                        <DataGrid ItemsSource="{Binding Locations}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single"/>
                     </ScrollViewer>
                 </DockPanel>
                 <!-- Tags page -->
                 <DockPanel Visibility="Collapsed" Name="TagsPage">
                     <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Tags</Label>
                     <ScrollViewer>
-                        <DataGrid ItemsSource="{Binding Tags}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" IsReadOnly="True"/>
+                        <DataGrid ItemsSource="{Binding Tags}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single"/>
                     </ScrollViewer>
                 </DockPanel>
                 <!-- Import page -->

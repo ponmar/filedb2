@@ -18,7 +18,7 @@ namespace FileDB2Browser.ViewModel
         {
             get
             {
-                return prevFileCommand ??= new CommandHandler(() => PrevFile());
+                return prevFileCommand ??= new CommandHandler(PrevFile);
             }
         }
         private ICommand prevFileCommand;
@@ -27,7 +27,7 @@ namespace FileDB2Browser.ViewModel
         {
             get
             {
-                return nextFileCommand ??= new CommandHandler(() => NextFile());
+                return nextFileCommand ??= new CommandHandler(NextFile);
             }
         }
         private ICommand nextFileCommand;
@@ -36,7 +36,7 @@ namespace FileDB2Browser.ViewModel
         {
             get
             {
-                return findRandomFilesCommand ??= new CommandHandler(() => FindRandomFiles());
+                return findRandomFilesCommand ??= new CommandHandler(FindRandomFiles);
             }
         }
         private ICommand findRandomFilesCommand;
@@ -136,7 +136,6 @@ namespace FileDB2Browser.ViewModel
         }
         private string currentFileDescription;
 
-        // TODO: add datetime property in string format? For example: 2015-07-15 19:01:47 (5 years ago)
         public string CurrentFileDateTime
         {
             get => currentFiledateTime;
@@ -207,25 +206,24 @@ namespace FileDB2Browser.ViewModel
         }
         private string currentFileTags;
 
-        public void FindRandomFiles()
-        {
-            SearchResult = fileDB2Handle.SearchFilesRandom(10);
-        }
-
         public FindViewModel(FileDB2Handle fileDB2Handle)
         {
             this.fileDB2Handle = fileDB2Handle;
             TotalNumberOfFiles = fileDB2Handle.GetFileCount();
         }
 
-        public void PrevFile()
+        public void PrevFile(object parameter)
         {
             LoadFile(SearchResultIndex - 1);
         }
 
-        public void NextFile()
+        public void NextFile(object parameter)
         {
             LoadFile(SearchResultIndex + 1);
+        }
+        public void FindRandomFiles(object parameter)
+        {
+            SearchResult = fileDB2Handle.SearchFilesRandom(10);
         }
 
         private void LoadFile(int index)

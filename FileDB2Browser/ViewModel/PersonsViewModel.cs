@@ -21,14 +21,41 @@ namespace FileDB2Browser.ViewModel
 
     public class PersonsViewModel
     {
-        private ICommand addPersonCommand;
         public ICommand AddPersonCommand
         {
             get
             {
-                return addPersonCommand ??= new CommandHandler(() => AddPerson());
+                return addPersonCommand ??= new CommandHandler(AddPerson);
             }
         }
+        private ICommand addPersonCommand;
+
+        public ICommand RemovePersonCommand
+        {
+            get
+            {
+                return removePersonCommand ??= new CommandHandler(RemovePerson);
+            }
+        }
+        private ICommand removePersonCommand;
+
+        public ICommand EditPersonCommand
+        {
+            get
+            {
+                return editPersonCommand ??= new CommandHandler(EditPerson);
+            }
+        }
+        private ICommand editPersonCommand;
+
+        public ICommand PersonSelectionCommand
+        {
+            get
+            {
+                return personSelectionCommand ??= new CommandHandler(PersonSelectionChanged);
+            }
+        }
+        private ICommand personSelectionCommand;
 
         public ObservableCollection<Person> Persons { get; }
 
@@ -40,6 +67,8 @@ namespace FileDB2Browser.ViewModel
 
         public string DateOfBirth { get; set; }
 
+        private Person selectedPerson;
+
         private readonly FileDB2Handle fileDB2Handle;
 
         public PersonsViewModel(FileDB2Handle fileDB2Handle)
@@ -49,13 +78,34 @@ namespace FileDB2Browser.ViewModel
             Persons = new ObservableCollection<Person>(persons);
         }
 
-        public void AddPerson()
+        public void AddPerson(object parameter)
         {
             fileDB2Handle.InsertPerson(Firstname, Lastname, Description, DateOfBirth);
             Firstname = string.Empty;
             Lastname = string.Empty;
             Description = string.Empty;
             DateOfBirth = string.Empty;
+        }
+
+        public void RemovePerson(object parameter)
+        {
+            if (selectedPerson != null)
+            {
+                // TODO: find id somehow and remove person
+            }
+        }
+
+        public void EditPerson(object parameter)
+        {
+            if (selectedPerson != null)
+            {
+                // TODO: find id somehow and edit person
+            }
+        }
+
+        public void PersonSelectionChanged(object parameter)
+        {
+            selectedPerson = (Person)parameter;
         }
     }
 }

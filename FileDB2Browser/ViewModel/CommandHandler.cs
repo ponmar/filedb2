@@ -5,16 +5,16 @@ namespace FileDB2Browser.ViewModel
 {
     public class CommandHandler : ICommand
     {
-        private readonly Action action;
+        private readonly Action<object> action;
         private readonly Func<bool> canExecute;
 
-        public CommandHandler(Action action)
+        public CommandHandler(Action<object> action)
         {
             this.action = action;
             this.canExecute = () => { return true; };
         }
 
-        public CommandHandler(Action action, Func<bool> canExecute)
+        public CommandHandler(Action<object> action, Func<bool> canExecute)
         {
             this.action = action;
             this.canExecute = canExecute;
@@ -33,7 +33,7 @@ namespace FileDB2Browser.ViewModel
 
         public void Execute(object parameter)
         {
-            action();
+            action(parameter);
         }
     }
 }
