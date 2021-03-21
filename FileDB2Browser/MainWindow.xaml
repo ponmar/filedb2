@@ -156,14 +156,26 @@
                 <DockPanel Visibility="Collapsed" Name="LocationsPage">
                     <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Locations</Label>
                     <ScrollViewer>
-                        <DataGrid ItemsSource="{Binding Locations}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single"/>
+                        <DataGrid ItemsSource="{Binding Locations}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding LocationSelectionCommand}" CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </DataGrid>
                     </ScrollViewer>
                 </DockPanel>
                 <!-- Tags page -->
                 <DockPanel Visibility="Collapsed" Name="TagsPage">
                     <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Tags</Label>
                     <ScrollViewer>
-                        <DataGrid ItemsSource="{Binding Tags}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single"/>
+                        <DataGrid ItemsSource="{Binding Tags}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding TagSelectionCommand}" CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </DataGrid>
                     </ScrollViewer>
                 </DockPanel>
                 <!-- Import page -->
