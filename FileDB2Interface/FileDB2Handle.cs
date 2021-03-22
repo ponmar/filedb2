@@ -137,8 +137,35 @@ namespace FileDB2Interface
             return connection.QueryFirst<FilesModel>("select * from [files] where id = @ID", parameters);
         }
 
-        // TODO: insert file
-        // TODO: insert files (import all)
+        public void InsertFile(string internalPath, string description = null)
+        {
+            internalPath = FixInternalPath(internalPath);
+            var path = InternalPathToPath(internalPath);
+            if (!File.Exists(path))
+            {
+                throw new FileDB2Exception($"No such file: {path}");
+            }
+            // TODO: throw exception if path is blacklisted
+            // TODO: throw exception if path is not whitelisted
+
+            ParseFilesystemFileExif(path, out var dateTaken, out var location);
+            // TODO: serialize dateTaken
+            // TODO: try to parse date from path if dateTaken not available?
+            string datetime = null;
+            string position = location != null ? $"{location.Latitude} {location.Longitude}" : null;
+
+            try
+            {
+                using var connection = CreateConnection();
+                var files = new FilesModel() { path = internalPath, description = description, datetime = datetime, position = position };
+                var sql = "insert into [files] (path, description, datetime, position) values (@path, @description, @datetime, @position)";
+                connection.Execute(sql, files);
+            }
+            catch (SQLiteException e)
+            {
+                throw new FileDB2Exception("SQL error", e);
+            }
+        }
 
         public void UpdateFileDescription(int id, string description)
         {
@@ -532,9 +559,7 @@ namespace FileDB2Interface
         public string InternalPathToPath(string internalPath)
         {
             var path = Path.Join(Config.FilesRootDirectory, internalPath);
-            path = path.Replace('\\', Path.DirectorySeparatorChar);
-            path = path.Replace('/', Path.DirectorySeparatorChar);
-            return path;
+            return FixPath(path);
         }
 
         private string PathToInternalPath(string path)
@@ -543,11 +568,23 @@ namespace FileDB2Interface
             {
                 path = path.Substring(Config.FilesRootDirectory.Length);
             }
+            return FixInternalPath(path);
+        }
+
+        private string FixInternalPath(string path)
+        {
             path = path.Replace('\\', '/');
             while (path.StartsWith('/'))
             {
                 path = path.Substring(1);
             }
+            return path;
+        }
+
+        private string FixPath(string path)
+        {
+            path = path.Replace('\\', Path.DirectorySeparatorChar);
+            path = path.Replace('/', Path.DirectorySeparatorChar);
             return path;
         }
 
