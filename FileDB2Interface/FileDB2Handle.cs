@@ -49,6 +49,12 @@ namespace FileDB2Interface
             return PathsToInternalPaths(files);
         }
 
+        public List<string> ListNewFilesystemFiles()
+        {
+            var files = ListAllFilesystemFiles();
+            return files.Where(f => !HasFilePath(f)).ToList();
+        }
+
         public List<string> ListAllFilesystemDirectories()
         {
             var dirs = Directory.GetDirectories(Config.FilesRootDirectory, "*.*", SearchOption.AllDirectories);
@@ -130,11 +136,20 @@ namespace FileDB2Interface
 
         public FilesModel GetFileById(int id)
         {
-            var parameters = new DynamicParameters();
-            parameters.Add("@ID", id, DbType.Int32, ParameterDirection.Input);
-
             using var connection = CreateConnection();
-            return connection.QueryFirst<FilesModel>("select * from [files] where id = @ID", parameters);
+            return connection.QueryFirst<FilesModel>("select * from [files] where id = @id", new { id = id });
+        }
+
+        public FilesModel GetFileByPath(string path)
+        {
+            using var connection = CreateConnection();
+            return connection.QueryFirst<FilesModel>("select * from [files] where path = @path", new { path = path });
+        }
+
+        public bool HasFilePath(string path)
+        {
+            using var connection = CreateConnection();
+            return connection.ExecuteScalar<bool>("select count(1) from [files] where path=@path", new { path = path });
         }
 
         public void InsertFile(string internalPath, string description = null)

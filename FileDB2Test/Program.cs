@@ -43,7 +43,9 @@ namespace FileDBTest
                 //handle.InsertPerson("A", "C", "test", "yyyy-mm-dd", 1000000);
                 //handle.DeletePerson(89);
 
-                var persons = handle.GetPersonsFromFile(8067);
+                //var persons = handle.GetPersonsFromFile(8067);
+
+                var newFiles = handle.ListNewFilesystemFiles();
             }
             catch (FileDB2Exception e)
             {
