@@ -42,7 +42,7 @@ namespace FileDB2Browser
 
                 if (!FileDB2BrowserConfigIO.Write(defaultConfig))
                 {
-                    // TODO: show error dialog
+                    // TODO: show error dialog and exit
                 }
             }
 
@@ -52,6 +52,8 @@ namespace FileDB2Browser
             {
                 Database = browserConfig.Database,
                 FilesRootDirectory = browserConfig.FilesRootDirectory,
+                BlacklistedFilePathPatterns = new List<string>() { "Thumbs.db", "filedb.db", "unsorted", "TN_" },
+                WhitelistedFilePathPatterns = new List<string>() { ".jpg", ".png", ".bmp", ".gif", ".avi", ".mpg", ".mp4", ".mkv", ".mov", ".pdf" }
             };
 
             fileDB2Handle = new FileDB2Handle(config);
