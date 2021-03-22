@@ -97,6 +97,7 @@
                     <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Find</Label>
                     <StackPanel Orientation="Vertical">
                         <Button Command="{Binding FindRandomFilesCommand}">Find 10 random files</Button>
+                        <Button Command="{Binding FindAllFilesCommand}">Find all files</Button>
                         <TextBlock Text="{Binding SearchNumberOfHits}"/>
                         <TextBlock Text="{Binding SearchResultIndex}"/>
                         <TextBlock Text="{Binding TotalNumberOfFiles}"/>

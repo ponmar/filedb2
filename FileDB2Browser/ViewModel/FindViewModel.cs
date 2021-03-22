@@ -41,6 +41,15 @@ namespace FileDB2Browser.ViewModel
         }
         private ICommand findRandomFilesCommand;
 
+        public ICommand FindAllFilesCommand
+        {
+            get
+            {
+                return findAllFilesCommand ??= new CommandHandler(FindAllFiles);
+            }
+        }
+        private ICommand findAllFilesCommand;
+
         private List<FilesModel> SearchResult
         {
             get => searchResult;
@@ -224,6 +233,11 @@ namespace FileDB2Browser.ViewModel
         public void FindRandomFiles(object parameter)
         {
             SearchResult = fileDB2Handle.SearchFilesRandom(10);
+        }
+
+        public void FindAllFiles(object parameter)
+        {
+            SearchResult = fileDB2Handle.GetFiles();
         }
 
         private void LoadFile(int index)
