@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Windows.Input;
 using FileDB2Interface;
@@ -269,12 +270,38 @@ namespace FileDB2Browser.ViewModel
 
         public void PrevDirectory(object parameter)
         {
-            // TODO
+            if (SearchResultIndex < 1)
+                return;
+
+            var currentDirectory = Path.GetDirectoryName(SearchResult[SearchResultIndex].path);
+
+            for (int i = SearchResultIndex - 1; i < searchResult.Count; i--)
+            {
+                var directory = Path.GetDirectoryName(SearchResult[i].path);
+                if (directory != currentDirectory)
+                {
+                    LoadFile(i);
+                    return;
+                }
+            }
         }
 
         public void NextDirectory(object parameter)
         {
-            // TODO
+            if (SearchResultIndex == -1 || SearchResultIndex == searchResult.Count - 1)
+                return;
+
+            var currentDirectory = Path.GetDirectoryName(SearchResult[SearchResultIndex].path);
+
+            for (int i=SearchResultIndex + 1; i<searchResult.Count; i++)
+            {
+                var directory = Path.GetDirectoryName(SearchResult[i].path);
+                if (directory != currentDirectory)
+                {
+                    LoadFile(i);
+                    return;
+                }
+            }
         }
 
         public void FirstFile(object parameter)
