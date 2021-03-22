@@ -130,7 +130,7 @@
                 <DockPanel Visibility="Collapsed" Name="BirthdaysPage">
                     <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Birthdays</Label>
                     <ScrollViewer>
-                        <DataGrid ItemsSource="{Binding Birthdays}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="false" CanUserDeleteRows="false" IsReadOnly="True"/>
+                        <DataGrid ItemsSource="{Binding Birthdays}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="false" CanUserDeleteRows="false" IsReadOnly="True" SelectionMode="Single"/>
                     </ScrollViewer>
                 </DockPanel>
                 <!-- Persons page -->
@@ -204,6 +204,10 @@
                 <!-- Import page -->
                 <DockPanel Visibility="Collapsed" Name="ImportPage">
                     <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Import</Label>
+                    <Button Grid.Row="2" Grid.Column="0" Command="{Binding ScanNewFilesCommand}">Scan for new files</Button>
+                    <ScrollViewer>
+                        <DataGrid ItemsSource="{Binding NewFiles}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="false" CanUserDeleteRows="false" IsReadOnly="True"/>
+                    </ScrollViewer>
                 </DockPanel>
                 <!-- Tools page -->
                 <DockPanel Visibility="Collapsed" Name="ToolsPage">
