@@ -52,21 +52,31 @@ namespace FileDB2Interface
         public List<string> ListNewFilesystemFiles()
         {
             var files = ListAllFilesystemFiles();
-            return files.Where(f => !PathIsBlacklisted(f) && PathIsWhitelisted(f) && !HasFilePath(f)).ToList();
+            return files.Where(f => !PathIsBlacklisted(f) && PathIsWhitelisted(f) && PathIsVisible(f) && !HasFilePath(f)).ToList();
         }
 
-        private bool PathIsBlacklisted(string path)
+        private bool PathIsBlacklisted(string internalPath)
         {
-            return Config.BlacklistedFilePathPatterns.FirstOrDefault(pattern => path.IndexOf(pattern) != -1) != null;
+            return Config.BlacklistedFilePathPatterns.FirstOrDefault(pattern => internalPath.IndexOf(pattern) != -1) != null;
         }
 
-        private bool PathIsWhitelisted(string path)
+        private bool PathIsWhitelisted(string internalPath)
         {
             if (Config.WhitelistedFilePathPatterns.Count == 0)
                 return true;
 
-            var pathLower = path.ToLower();
+            var pathLower = internalPath.ToLower();
             return Config.WhitelistedFilePathPatterns.FirstOrDefault(pattern => pathLower.EndsWith(pattern)) != null;
+        }
+
+        private bool PathIsVisible(string internalPath)
+        {
+            return Config.IncludeHiddenDirectories || !PathIsHidden(internalPath);
+        }
+
+        private bool PathIsHidden(string internalPath)
+        {
+            return internalPath.StartsWith('.') || internalPath.IndexOf("/.") != -1;
         }
 
         public List<string> ListAllFilesystemDirectories()

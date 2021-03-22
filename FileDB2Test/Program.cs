@@ -13,7 +13,8 @@ namespace FileDBTest
                 Database = @"C:\Source\filedb2_db\filedb2.db",
                 FilesRootDirectory = @"X:",
                 BlacklistedFilePathPatterns = new List<string>() { "Thumbs.db", "filedb.db", "unsorted", "TN_" },
-                WhitelistedFilePathPatterns = new List<string>() { ".jpg", ".png", ".bmp", ".gif", ".avi", ".mpg", ".mp4", ".mkv", ".mov", ".pdf" }
+                WhitelistedFilePathPatterns = new List<string>() { ".jpg", ".png", ".bmp", ".gif", ".avi", ".mpg", ".mp4", ".mkv", ".mov", ".pdf" },
+                IncludeHiddenDirectories = false,
             };
 
             try
