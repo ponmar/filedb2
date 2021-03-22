@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using FileDB2Browser.Config;
 using FileDB2Browser.ViewModel;
 using FileDB2Interface;
 
@@ -31,10 +32,26 @@ namespace FileDB2Browser
         {
             InitializeComponent();
 
+            if (!FileDB2BrowserConfigIO.FileExists())
+            {
+                var defaultConfig = new FileDB2BrowserConfig()
+                {
+                    Database = "filedb2.db",
+                    FilesRootDirectory = "files",
+                };
+
+                if (!FileDB2BrowserConfigIO.Write(defaultConfig))
+                {
+                    // TODO: show error dialog
+                }
+            }
+
+            FileDB2BrowserConfig browserConfig = FileDB2BrowserConfigIO.Read();
+
             var config = new FileDB2Config()
             {
-                Database = @"C:\source\filedb2_db\filedb2.db",
-                FilesRootDirectory = @"x:",
+                Database = browserConfig.Database,
+                FilesRootDirectory = browserConfig.FilesRootDirectory,
             };
 
             fileDB2Handle = new FileDB2Handle(config);
