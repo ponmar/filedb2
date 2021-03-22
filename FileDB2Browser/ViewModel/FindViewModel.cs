@@ -32,6 +32,42 @@ namespace FileDB2Browser.ViewModel
         }
         private ICommand nextFileCommand;
 
+        public ICommand PrevDirectoryCommand
+        {
+            get
+            {
+                return prevDirectoryCommand ??= new CommandHandler(PrevDirectory);
+            }
+        }
+        private ICommand prevDirectoryCommand;
+
+        public ICommand NextDirectoryCommand
+        {
+            get
+            {
+                return nextDirectoryCommand ??= new CommandHandler(NextDirectory);
+            }
+        }
+        private ICommand nextDirectoryCommand;
+
+        public ICommand FirstFileCommand
+        {
+            get
+            {
+                return firstFileCommand ??= new CommandHandler(FirstFile);
+            }
+        }
+        private ICommand firstFileCommand;
+
+        public ICommand LastFileCommand
+        {
+            get
+            {
+                return lastFileCommand ??= new CommandHandler(LastFile);
+            }
+        }
+        private ICommand lastFileCommand;
+
         public ICommand FindRandomFilesCommand
         {
             get
@@ -230,6 +266,30 @@ namespace FileDB2Browser.ViewModel
         {
             LoadFile(SearchResultIndex + 1);
         }
+
+        public void PrevDirectory(object parameter)
+        {
+            // TODO
+        }
+
+        public void NextDirectory(object parameter)
+        {
+            // TODO
+        }
+
+        public void FirstFile(object parameter)
+        {
+            LoadFile(0);
+        }
+
+        public void LastFile(object parameter)
+        {
+            if (searchResult != null)
+            {
+                LoadFile(SearchResult.Count - 1);
+            }
+        }
+
         public void FindRandomFiles(object parameter)
         {
             SearchResult = fileDB2Handle.SearchFilesRandom(10);

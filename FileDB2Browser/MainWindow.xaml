@@ -109,8 +109,12 @@
                         <TextBlock Text="{Binding CurrentFilePersons}"/>
                         <TextBlock Text="{Binding CurrentFileLocations}"/>
                         <TextBlock Text="{Binding CurrentFileTags}"/>
-                        <Button Command="{Binding PrevFileCommand}">Prev</Button>
-                        <Button Command="{Binding NextFileCommand}">Next</Button>
+                        <Button Command="{Binding PrevFileCommand}" ToolTip="Next">&lt;</Button>
+                        <Button Command="{Binding NextFileCommand}" ToolTip="Previous">&gt;</Button>
+                        <Button Command="{Binding PrevDirectoryCommand}" ToolTip="Next directory">&lt;&lt;</Button>
+                        <Button Command="{Binding NextDirectoryCommand}" ToolTip="Previous directory">&gt;&gt;</Button>
+                        <Button Command="{Binding FirstFileCommand}" ToolTip="First">[&lt;&lt;</Button>
+                        <Button Command="{Binding LastFileCommand}" ToolTip="Last">&gt;&gt;]</Button>
                         <!--<Image Source="{Binding CurrentFilePath, TargetNullValue={x:Null}}" />-->
                         <!--<Image Source="{Binding CurrentFilePath}"/>-->
                         <!--
