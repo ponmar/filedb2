@@ -366,6 +366,11 @@ namespace FileDB2Browser.ViewModel
                     // TODO: show error?
                     imagePresenter.ShowImage(null);
                 }
+                catch (NotSupportedException)
+                {
+                    // TODO: show error? This happens for non-image files
+                    imagePresenter.ShowImage(null);
+                }
             }
         }
 
