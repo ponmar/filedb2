@@ -29,6 +29,15 @@ namespace FileDB2Browser.ViewModel
         }
         private ICommand scanNewFilesCommand;
 
+        public ICommand ImportNewFilesCommand
+        {
+            get
+            {
+                return importNewFilesCommand ??= new CommandHandler(ImportNewFiles);
+            }
+        }
+        private ICommand importNewFilesCommand;
+
         private readonly FileDB2Handle fileDB2Handle;
         private readonly FileDB2BrowserConfig browserConfig;
 
@@ -53,6 +62,16 @@ namespace FileDB2Browser.ViewModel
             {
                 NewFiles.Add(newFile);
             }
+        }
+
+        public void ImportNewFiles(object parameter)
+        {
+            foreach (var newFile in NewFiles)
+            {
+                fileDB2Handle.InsertFile(newFile.Path);
+            }
+
+            NewFiles.Clear();
         }
 
         private string GetDateModified(string internalPath)
