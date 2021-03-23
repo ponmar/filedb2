@@ -204,10 +204,10 @@
                 <!-- Import page -->
                 <DockPanel Visibility="Collapsed" Name="ImportPage">
                     <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Import</Label>
-                    <Button Grid.Row="2" Grid.Column="0" Command="{Binding ScanNewFilesCommand}">Scan for new files</Button>
-                    <ScrollViewer>
+                    <StackPanel Orientation="Vertical">
+                        <Button Grid.Row="2" Grid.Column="0" Command="{Binding ScanNewFilesCommand}">Scan for new files</Button>
                         <DataGrid ItemsSource="{Binding NewFiles}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="false" CanUserDeleteRows="false" IsReadOnly="True"/>
-                    </ScrollViewer>
+                    </StackPanel>
                 </DockPanel>
                 <!-- Tools page -->
                 <DockPanel Visibility="Collapsed" Name="ToolsPage">

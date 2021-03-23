@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,7 +27,7 @@ namespace FileDB2Browser.ViewModel
 
         private readonly FileDB2Handle fileDB2Handle;
 
-        public List<NewFile> NewFiles;
+        public ObservableCollection<NewFile> NewFiles { get; } = new ObservableCollection<NewFile>();
 
         public ImportViewModel(FileDB2Handle fileDB2Handle)
         {
@@ -35,7 +36,12 @@ namespace FileDB2Browser.ViewModel
 
         public void ScanNewFiles(object parameter)
         {
-            NewFiles = fileDB2Handle.ListNewFilesystemFiles().Select(p => new NewFile() { Path = p }).ToList();
+            NewFiles.Clear();
+            var newFiles = fileDB2Handle.ListNewFilesystemFiles().Select(p => new NewFile() { Path = p });
+            foreach (var newFile in newFiles)
+            {
+                NewFiles.Add(newFile);
+            }
         }
     }
 }
