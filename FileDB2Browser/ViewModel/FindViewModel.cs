@@ -346,8 +346,8 @@ namespace FileDB2Browser.ViewModel
 
                 var selection = SearchResult[SearchResultIndex];
 
-                CurrentFileInternalPath = fileDB2Handle.InternalPathToPath(selection.path);
-                CurrentFilePath = selection.path;
+                CurrentFileInternalPath = selection.path;
+                CurrentFilePath = fileDB2Handle.InternalPathToPath(selection.path);
                 CurrentFileDescription = selection.description ?? string.Empty;
                 CurrentFileDateTime = GetFileDateTimeString(selection.datetime);
                 CurrentFilePosition = selection.position ?? string.Empty;
@@ -355,7 +355,7 @@ namespace FileDB2Browser.ViewModel
                 CurrentFileLocations = GetFileLocationsString(selection.id);
                 CurrentFileTags = GetFileTagsString(selection.id);
 
-                var uri = new Uri(CurrentFileInternalPath, UriKind.Absolute);
+                var uri = new Uri(CurrentFilePath, UriKind.Absolute);
                 try
                 {
                     // TODO: set cache policy?

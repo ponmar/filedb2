@@ -19,6 +19,11 @@
             <Setter Property="Width" Value="50"/>
         </Style>
 
+        <Style x:Key="NormalButton" TargetType="Button">
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="Padding" Value="3"/>
+        </Style>
+        
         <Style x:Key="PageButtonHeading" TargetType="Label">
             <Setter Property="Margin" Value="0,15,0,0"/>
             <Setter Property="FontSize" Value="15"/>
@@ -58,7 +63,6 @@
                 <TextBlock Text="&#x1F642;"/>
             </Button>
             <Button Style="{StaticResource PageButton}" Click="SetLocationsPage" ToolTip="Locations">
-                <!--<TextBlock Text="&#x2302;" ToolTip="Locations"/>-->
                 <TextBlock Text="&#x1F3E0;"/>
             </Button>
             <Button Style="{StaticResource PageButton}" Click="SetTagsPage" ToolTip="Tags">
@@ -98,42 +102,51 @@
                     </Grid>
                 </DockPanel>
                 <!-- Find page -->
-                <DockPanel Visibility="Collapsed" Name="FindPage">
-                    <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Find</Label>
-                    <StackPanel Orientation="Vertical">
-                        <Button Command="{Binding FindRandomFilesCommand}">Find 10 random files</Button>
-                        <Button Command="{Binding FindAllFilesCommand}">Find all files</Button>
-                        <TextBlock Text="{Binding SearchNumberOfHits}"/>
-                        <TextBlock Text="{Binding SearchResultIndex}"/>
-                        <TextBlock Text="{Binding TotalNumberOfFiles}"/>
-                        <TextBlock Text="{Binding CurrentFileInternalPath}"/>
-                        <TextBlock Text="{Binding CurrentFilePath}"/>
-                        <TextBlock Text="{Binding CurrentFileDescription}"/>
-                        <TextBlock Text="{Binding CurrentFileDateTime}"/>
-                        <TextBlock Text="{Binding CurrentFilePosition}"/>
-                        <TextBlock Text="{Binding CurrentFilePersons}"/>
-                        <TextBlock Text="{Binding CurrentFileLocations}"/>
-                        <TextBlock Text="{Binding CurrentFileTags}"/>
-                        <StackPanel Orientation="Horizontal">
-                            <Button Style="{StaticResource NavigationButton}" Command="{Binding PrevFileCommand}" ToolTip="Previous">&lt;</Button>
-                            <Button Style="{StaticResource NavigationButton}" Command="{Binding NextFileCommand}" ToolTip="Next">&gt;</Button>
-                            <Button Style="{StaticResource NavigationButton}" Command="{Binding PrevDirectoryCommand}" ToolTip="Previous directory">&lt;&lt;</Button>
-                            <Button Style="{StaticResource NavigationButton}" Command="{Binding NextDirectoryCommand}" ToolTip="Next directory">&gt;&gt;</Button>
-                            <Button Style="{StaticResource NavigationButton}" Command="{Binding FirstFileCommand}" ToolTip="First">[&lt;&lt;</Button>
-                            <Button Style="{StaticResource NavigationButton}" Command="{Binding LastFileCommand}" ToolTip="Last">&gt;&gt;]</Button>
-                        </StackPanel>
-                        <Image x:Name="CurrentFileImage" Stretch="Fill"/>
-                        <!--<Image Source="{Binding CurrentFilePath, TargetNullValue={x:Null}}" />-->
-                        <!--<Image Source="{Binding CurrentFilePath}"/>-->
-                        <!--
-                        <Image Stretch="Fill" IsEnabled="{Binding HasSearchResult}">
-                            <Image.Source>
-                                <BitmapImage UriSource="{Binding CurrentFilePath}"/>
-                            </Image.Source>
-                        </Image>
-                        -->
+                <Grid Visibility="Collapsed" Name="FindPage">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource PageHeading}">Find Files</Label>
+                    <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center">
+                        <Button Style="{StaticResource NormalButton}" Command="{Binding FindRandomFilesCommand}">10 random files</Button>
+                        <Button Style="{StaticResource NormalButton}" Command="{Binding FindAllFilesCommand}">All files</Button>
                     </StackPanel>
-                </DockPanel>
+                    <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center">
+                            <Run Text="File browser: ["/>
+                            <Run Text="{Binding SearchResultIndex, Mode=OneWay}"/>
+                            <Run Text="/"/>
+                            <Run Text="{Binding SearchNumberOfHits, Mode=OneWay}"/>
+                            <Run Text="]"/>
+                    </TextBlock>
+                    <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Style="{StaticResource NavigationButton}" Command="{Binding PrevFileCommand}" ToolTip="Previous">&lt;</Button>
+                        <Button Style="{StaticResource NavigationButton}" Command="{Binding NextFileCommand}" ToolTip="Next">&gt;</Button>
+                        <Button Style="{StaticResource NavigationButton}" Command="{Binding PrevDirectoryCommand}" ToolTip="Previous directory">&lt;&lt;</Button>
+                        <Button Style="{StaticResource NavigationButton}" Command="{Binding NextDirectoryCommand}" ToolTip="Next directory">&gt;&gt;</Button>
+                        <Button Style="{StaticResource NavigationButton}" Command="{Binding FirstFileCommand}" ToolTip="First">[&lt;&lt;</Button>
+                        <Button Style="{StaticResource NavigationButton}" Command="{Binding LastFileCommand}" ToolTip="Last">&gt;&gt;]</Button>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center">
+                        <TextBlock Text="{Binding CurrentFileDateTime}"/>
+                        <TextBlock Text="&#x1F642;" Margin="0 20 0 0"/>
+                        <TextBlock Text="{Binding CurrentFilePersons}"/>
+                        <TextBlock Text="&#x1F3E0;" Margin="0 20 0 0"/>
+                        <TextBlock Text="{Binding CurrentFileLocations}"/>
+                        <TextBlock Text="&#x1F516;" Margin="0 20 0 0"/>
+                        <TextBlock Text="{Binding CurrentFileTags}"/>
+                        <TextBlock Text="{Binding CurrentFilePosition}"/>
+                        <TextBlock Text="{Binding CurrentFileDescription}"/>
+                    </StackPanel>
+                    <Image Grid.Row="4" Grid.Column="1" x:Name="CurrentFileImage" Stretch="Uniform" RenderOptions.BitmapScalingMode="Fant" ToolTip="{Binding CurrentFileInternalPath}"/>
+                </Grid>
                 <!-- Birthdays page -->
                 <DockPanel Visibility="Collapsed" Name="BirthdaysPage">
                     <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Birthdays</Label>
