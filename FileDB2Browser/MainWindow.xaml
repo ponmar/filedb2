@@ -14,6 +14,11 @@
             <Setter Property="FontSize" Value="20"/>
         </Style>
 
+        <Style x:Key="NavigationButton" TargetType="Button">
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="Width" Value="50"/>
+        </Style>
+
         <Style x:Key="PageButtonHeading" TargetType="Label">
             <Setter Property="Margin" Value="0,15,0,0"/>
             <Setter Property="FontSize" Value="15"/>
@@ -109,12 +114,14 @@
                         <TextBlock Text="{Binding CurrentFilePersons}"/>
                         <TextBlock Text="{Binding CurrentFileLocations}"/>
                         <TextBlock Text="{Binding CurrentFileTags}"/>
-                        <Button Command="{Binding PrevFileCommand}" ToolTip="Next">&lt;</Button>
-                        <Button Command="{Binding NextFileCommand}" ToolTip="Previous">&gt;</Button>
-                        <Button Command="{Binding PrevDirectoryCommand}" ToolTip="Next directory">&lt;&lt;</Button>
-                        <Button Command="{Binding NextDirectoryCommand}" ToolTip="Previous directory">&gt;&gt;</Button>
-                        <Button Command="{Binding FirstFileCommand}" ToolTip="First">[&lt;&lt;</Button>
-                        <Button Command="{Binding LastFileCommand}" ToolTip="Last">&gt;&gt;]</Button>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Style="{StaticResource NavigationButton}" Command="{Binding PrevFileCommand}" ToolTip="Previous">&lt;</Button>
+                            <Button Style="{StaticResource NavigationButton}" Command="{Binding NextFileCommand}" ToolTip="Next">&gt;</Button>
+                            <Button Style="{StaticResource NavigationButton}" Command="{Binding PrevDirectoryCommand}" ToolTip="Previous directory">&lt;&lt;</Button>
+                            <Button Style="{StaticResource NavigationButton}" Command="{Binding NextDirectoryCommand}" ToolTip="Next directory">&gt;&gt;</Button>
+                            <Button Style="{StaticResource NavigationButton}" Command="{Binding FirstFileCommand}" ToolTip="First">[&lt;&lt;</Button>
+                            <Button Style="{StaticResource NavigationButton}" Command="{Binding LastFileCommand}" ToolTip="Last">&gt;&gt;]</Button>
+                        </StackPanel>
                         <Image x:Name="CurrentFileImage" Stretch="Fill"/>
                         <!--<Image Source="{Binding CurrentFilePath, TargetNullValue={x:Null}}" />-->
                         <!--<Image Source="{Binding CurrentFilePath}"/>-->
