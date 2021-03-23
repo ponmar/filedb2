@@ -3,17 +3,26 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Net.Cache;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 using FileDB2Interface;
 using FileDB2Interface.Model;
 
 namespace FileDB2Browser.ViewModel
 {
+    public interface IImagePresenter
+    {
+        void ShowImage(BitmapImage image);
+    }
+
     public class FindViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
         private readonly FileDB2Handle fileDB2Handle;
+
+        private readonly IImagePresenter imagePresenter;
 
         public ICommand PrevFileCommand
         {
@@ -252,9 +261,10 @@ namespace FileDB2Browser.ViewModel
         }
         private string currentFileTags;
 
-        public FindViewModel(FileDB2Handle fileDB2Handle)
+        public FindViewModel(FileDB2Handle fileDB2Handle, IImagePresenter imagePresenter)
         {
             this.fileDB2Handle = fileDB2Handle;
+            this.imagePresenter = imagePresenter;
             TotalNumberOfFiles = fileDB2Handle.GetFileCount();
         }
 
@@ -344,6 +354,18 @@ namespace FileDB2Browser.ViewModel
                 CurrentFilePersons = GetFilePersonsString(selection);
                 CurrentFileLocations = GetFileLocationsString(selection.id);
                 CurrentFileTags = GetFileTagsString(selection.id);
+
+                var uri = new Uri(CurrentFileInternalPath, UriKind.Absolute);
+                try
+                {
+                    // TODO: set cache policy?
+                    imagePresenter.ShowImage(new BitmapImage(uri));
+                }
+                catch (IOException)
+                {
+                    // TODO: show error?
+                    imagePresenter.ShowImage(null);
+                }
             }
         }
 

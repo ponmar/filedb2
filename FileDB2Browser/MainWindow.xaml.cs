@@ -23,7 +23,7 @@ namespace FileDB2Browser
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, IImagePresenter
     {
         private Page currentPage;
         private readonly FileDB2Handle fileDB2Handle;
@@ -119,7 +119,7 @@ namespace FileDB2Browser
                         StartPage.Visibility = Visibility.Visible;
                         break;
                     case Page.Find:
-                        DataContext = new FindViewModel(fileDB2Handle);
+                        DataContext = new FindViewModel(fileDB2Handle, this);
                         FindPage.Visibility = Visibility.Visible;
                         break;
                     case Page.Birthdays:
@@ -147,6 +147,14 @@ namespace FileDB2Browser
                         ToolsPage.Visibility = Visibility.Visible;
                         break;
                 }
+            }
+        }
+
+        public void ShowImage(BitmapImage image)
+        {
+            if (currentPage == Page.Find)
+            {
+                CurrentFileImage.Source = image;
             }
         }
     }

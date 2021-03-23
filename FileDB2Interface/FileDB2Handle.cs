@@ -626,8 +626,8 @@ namespace FileDB2Interface
 
         private string FixPath(string path)
         {
-            path = path.Replace('\\', Path.DirectorySeparatorChar);
-            path = path.Replace('/', Path.DirectorySeparatorChar);
+            path = path.Replace('\\', '/');
+            //path = path.Replace('/', Path.DirectorySeparatorChar);
             return path;
         }
 
