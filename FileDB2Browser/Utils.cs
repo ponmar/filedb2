@@ -8,9 +8,8 @@ namespace FileDB2Browser
 {
     public static class Utils
     {
-        public static int GetYearsAgo(DateTime dateTime)
+        public static int GetYearsAgo(DateTime now, DateTime dateTime)
         {
-            var now = DateTime.Now;
             int yearsAgo = now.Year - dateTime.Year;
 
             try
@@ -28,18 +27,18 @@ namespace FileDB2Browser
             return yearsAgo;
         }
 
-        public static string GetBornYearsAgo(string dateOfBirth)
+        public static string GetBornYearsAgoString(DateTime now, string dateOfBirth)
         {
             if (InternalDatetimeToDatetime(dateOfBirth, out var result))
             {
-                return GetBornYearsAgo(result.Value);
+                return GetBornYearsAgo(now, result.Value);
             }
             return string.Empty;
         }
 
-        public static string GetBornYearsAgo(DateTime dateOfBirth)
+        public static string GetBornYearsAgo(DateTime now, DateTime dateOfBirth)
         {
-            return GetYearsAgo(dateOfBirth).ToString();
+            return GetYearsAgo(now, dateOfBirth).ToString();
         }
 
         public static int GetDaysToNextBirthday(DateTime birthday)

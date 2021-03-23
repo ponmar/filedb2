@@ -74,7 +74,7 @@ namespace FileDB2Browser.ViewModel
         public PersonsViewModel(FileDB2Handle fileDB2Handle)
         {
             this.fileDB2Handle = fileDB2Handle;
-            var persons = fileDB2Handle.GetPersons().Select(pm => new Person() { Firstname = pm.firstname, Lastname = pm.lastname, Description = pm.description, DateOfBirth = pm.dateofbirth, BornYearsAgo = Utils.GetBornYearsAgo(pm.dateofbirth) });
+            var persons = fileDB2Handle.GetPersons().Select(pm => new Person() { Firstname = pm.firstname, Lastname = pm.lastname, Description = pm.description, DateOfBirth = pm.dateofbirth, BornYearsAgo = Utils.GetBornYearsAgoString(DateTime.Now, pm.dateofbirth) });
             Persons = new ObservableCollection<Person>(persons);
         }
 

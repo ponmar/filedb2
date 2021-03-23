@@ -115,6 +115,7 @@
                         <Button Command="{Binding NextDirectoryCommand}" ToolTip="Previous directory">&gt;&gt;</Button>
                         <Button Command="{Binding FirstFileCommand}" ToolTip="First">[&lt;&lt;</Button>
                         <Button Command="{Binding LastFileCommand}" ToolTip="Last">&gt;&gt;]</Button>
+                        <Image x:Name="MyImage"/>
                         <!--<Image Source="{Binding CurrentFilePath, TargetNullValue={x:Null}}" />-->
                         <!--<Image Source="{Binding CurrentFilePath}"/>-->
                         <!--

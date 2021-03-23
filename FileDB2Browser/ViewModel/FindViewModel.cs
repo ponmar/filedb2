@@ -341,7 +341,7 @@ namespace FileDB2Browser.ViewModel
                 CurrentFileDescription = selection.description ?? string.Empty;
                 CurrentFileDateTime = GetFileDateTimeString(selection.datetime);
                 CurrentFilePosition = selection.position ?? string.Empty;
-                CurrentFilePersons = GetFilePersonsString(selection.id);
+                CurrentFilePersons = GetFilePersonsString(selection);
                 CurrentFileLocations = GetFileLocationsString(selection.id);
                 CurrentFileTags = GetFileTagsString(selection.id);
             }
@@ -368,7 +368,7 @@ namespace FileDB2Browser.ViewModel
             }
 
             var resultString = datetime.Value.ToString("yyyy-MM-dd HH:mm");
-            int yearsAgo = Utils.GetYearsAgo(datetime.Value);
+            int yearsAgo = Utils.GetYearsAgo(DateTime.Now, datetime.Value);
             if (yearsAgo == 0)
             {
                 resultString = $"{resultString} (this year)";
@@ -380,16 +380,24 @@ namespace FileDB2Browser.ViewModel
             return resultString;
         }
 
-        private string GetFilePersonsString(int fileId)
+        private string GetFilePersonsString(FilesModel selection)
         {
-            var persons = fileDB2Handle.GetPersonsFromFile(fileId);
-            var personStrings = persons.Select(p => $"{p.firstname} {p.lastname}{GetPersonAgeString(p)}");
+            var persons = fileDB2Handle.GetPersonsFromFile(selection.id);
+            var personStrings = persons.Select(p => $"{p.firstname} {p.lastname}{GetPersonAgeInFileString(selection.datetime, p.dateofbirth)}");
             return string.Join(", ", personStrings);
         }
 
-        private string GetPersonAgeString(PersonModel person)
+        private string GetPersonAgeInFileString(string fileDatetimeStr, string personDateOfBirthStr)
         {
-            var age = Utils.GetBornYearsAgo(person.dateofbirth);
+            var fileDatetime = Utils.InternalDatetimeToDatetime(fileDatetimeStr);
+            if (fileDatetime == null)
+                return string.Empty;
+
+            var personDateOfBirth = Utils.InternalDatetimeToDatetime(personDateOfBirthStr);
+            if (personDateOfBirth == null)
+                return string.Empty;
+
+            var age = Utils.GetBornYearsAgo(fileDatetime.Value, personDateOfBirth.Value);
             if (age != string.Empty)
             {
                 age = $" ({age})";
