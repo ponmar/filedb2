@@ -49,29 +49,33 @@ namespace FileDB2Interface
             return PathsToInternalPaths(files);
         }
 
-        public List<string> ListNewFilesystemFiles()
+        public List<string> ListNewFilesystemFiles(List<string> blacklistedFilePathPatterns, List<string> whitelistedFilePathPatterns, bool includeHiddenDirectories)
         {
             var files = ListAllFilesystemFiles();
-            return files.Where(f => !PathIsBlacklisted(f) && PathIsWhitelisted(f) && PathIsVisible(f) && !HasFilePath(f)).ToList();
+            return files.Where(f =>
+                !PathIsBlacklisted(f, blacklistedFilePathPatterns) &&
+                PathIsWhitelisted(f, whitelistedFilePathPatterns) &&
+                PathIsVisible(f, includeHiddenDirectories) &&
+                !HasFilePath(f)).ToList();
         }
 
-        private bool PathIsBlacklisted(string internalPath)
+        private bool PathIsBlacklisted(string internalPath, List<string> blacklistedFilePathPatterns)
         {
-            return Config.BlacklistedFilePathPatterns.FirstOrDefault(pattern => internalPath.IndexOf(pattern) != -1) != null;
+            return blacklistedFilePathPatterns.FirstOrDefault(pattern => internalPath.IndexOf(pattern) != -1) != null;
         }
 
-        private bool PathIsWhitelisted(string internalPath)
+        private bool PathIsWhitelisted(string internalPath, List<string> whitelistedFilePathPatterns)
         {
-            if (Config.WhitelistedFilePathPatterns.Count == 0)
+            if (whitelistedFilePathPatterns.Count == 0)
                 return true;
 
             var pathLower = internalPath.ToLower();
-            return Config.WhitelistedFilePathPatterns.FirstOrDefault(pattern => pathLower.EndsWith(pattern)) != null;
+            return whitelistedFilePathPatterns.FirstOrDefault(pattern => pathLower.EndsWith(pattern)) != null;
         }
 
-        private bool PathIsVisible(string internalPath)
+        private bool PathIsVisible(string internalPath, bool includeHiddenDirectories)
         {
-            return Config.IncludeHiddenDirectories || !PathIsHidden(internalPath);
+            return includeHiddenDirectories || !PathIsHidden(internalPath);
         }
 
         private bool PathIsHidden(string internalPath)

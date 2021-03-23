@@ -27,6 +27,7 @@ namespace FileDB2Browser
     {
         private Page currentPage;
         private readonly FileDB2Handle fileDB2Handle;
+        private readonly FileDB2BrowserConfig browserConfig;
 
         public MainWindow()
         {
@@ -34,27 +35,23 @@ namespace FileDB2Browser
 
             if (!FileDB2BrowserConfigIO.FileExists())
             {
-                var defaultConfig = new FileDB2BrowserConfig()
+                if (!FileDB2BrowserConfigIO.Write(new FileDB2BrowserConfig()))
                 {
-                    Database = "filedb2.db",
-                    FilesRootDirectory = "files",
-                };
-
-                if (!FileDB2BrowserConfigIO.Write(defaultConfig))
-                {
-                    // TODO: show error dialog and exit
+                    // TODO: show error dialog
                 }
             }
 
-            FileDB2BrowserConfig browserConfig = FileDB2BrowserConfigIO.Read();
+            browserConfig = FileDB2BrowserConfigIO.Read();
+            if (browserConfig == null)
+            {
+                // TODO: show error dialog
+                browserConfig = new FileDB2BrowserConfig();
+            }
 
             var config = new FileDB2Config()
             {
                 Database = browserConfig.Database,
                 FilesRootDirectory = browserConfig.FilesRootDirectory,
-                BlacklistedFilePathPatterns = new List<string>() { "Thumbs.db", "filedb.db", "unsorted", "TN_" },
-                WhitelistedFilePathPatterns = new List<string>() { ".jpg", ".png", ".bmp", ".gif", ".avi", ".mpg", ".mp4", ".mkv", ".mov", ".pdf" },
-                IncludeHiddenDirectories = false,
             };
 
             fileDB2Handle = new FileDB2Handle(config);
@@ -142,7 +139,7 @@ namespace FileDB2Browser
                         TagsPage.Visibility = Visibility.Visible;
                         break;
                     case Page.Import:
-                        DataContext = new ImportViewModel(fileDB2Handle);
+                        DataContext = new ImportViewModel(fileDB2Handle, browserConfig);
                         ImportPage.Visibility = Visibility.Visible;
                         break;
                     case Page.Tools:
