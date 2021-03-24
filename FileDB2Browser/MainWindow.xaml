@@ -112,6 +112,7 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource PageHeading}">Find Files</Label>
@@ -134,7 +135,7 @@
                         <Button Style="{StaticResource NavigationButton}" Command="{Binding FirstFileCommand}" ToolTip="First">[&lt;&lt;</Button>
                         <Button Style="{StaticResource NavigationButton}" Command="{Binding LastFileCommand}" ToolTip="Last">&gt;&gt;]</Button>
                     </StackPanel>
-                    <StackPanel Orientation="Vertical" Grid.Row="4" Grid.Column="0" Margin="5">
+                    <StackPanel Orientation="Vertical" Grid.Row="4" Grid.Column="0" Grid.RowSpan="2" Margin="5">
                         <Border Background="GhostWhite" BorderBrush="Gainsboro" BorderThickness="2" CornerRadius="5">
                             <StackPanel Orientation="Vertical" Margin="5">
                                 <TextBlock Text="{Binding CurrentFileDateTime}" Visibility="{Binding CurrentFileDateTime, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
@@ -156,7 +157,8 @@
                             </StackPanel>
                         </Border>
                     </StackPanel>
-                    <Image Grid.Row="4" Grid.Column="1" x:Name="CurrentFileImage" Stretch="Uniform" RenderOptions.BitmapScalingMode="Fant" ToolTip="{Binding CurrentFileInternalPath}"/>
+                    <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding CurrentFileLoadError}" Visibility="{Binding CurrentFileLoadError, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
+                    <Image Grid.Row="5" Grid.Column="1" x:Name="CurrentFileImage" Stretch="Uniform" RenderOptions.BitmapScalingMode="Fant" ToolTip="{Binding CurrentFileInternalPath}"/>
                 </Grid>
                 <!-- Birthdays page -->
                 <DockPanel Visibility="Collapsed" Name="BirthdaysPage">

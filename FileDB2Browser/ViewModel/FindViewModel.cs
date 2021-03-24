@@ -261,6 +261,20 @@ namespace FileDB2Browser.ViewModel
         }
         private string currentFileTags;
 
+        public string CurrentFileLoadError
+        {
+            get => currentFileLoadError;
+            private set
+            {
+                if (value != currentFileLoadError)
+                {
+                    currentFileLoadError = value;
+                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentFileLoadError)));
+                }
+            }
+        }
+        private string currentFileLoadError;
+
         public FindViewModel(FileDB2Handle fileDB2Handle, IImagePresenter imagePresenter)
         {
             this.fileDB2Handle = fileDB2Handle;
@@ -358,17 +372,17 @@ namespace FileDB2Browser.ViewModel
                 var uri = new Uri(CurrentFilePath, UriKind.Absolute);
                 try
                 {
-                    // TODO: set cache policy?
+                    CurrentFileLoadError = string.Empty;
                     imagePresenter.ShowImage(new BitmapImage(uri));
                 }
                 catch (IOException)
                 {
-                    // TODO: show error?
+                    CurrentFileLoadError = "Image loading error";
                     imagePresenter.ShowImage(null);
                 }
                 catch (NotSupportedException)
                 {
-                    // TODO: show error? This happens for non-image files
+                    CurrentFileLoadError = "File format not supported";
                     imagePresenter.ShowImage(null);
                 }
             }
