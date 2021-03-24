@@ -175,37 +175,20 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
                             </Grid.RowDefinitions>
-                            <Label Grid.Row="0" Grid.Column="0">First name:</Label>
-                            <TextBox Grid.Row="0" Grid.Column="1" Width="50" Text="{Binding Firstname}"/>
-                            <Label Grid.Row="0" Grid.Column="2">Last name:</Label>
-                            <TextBox Grid.Row="0" Grid.Column="3" Width="50" Text="{Binding Lastname}"/>
-                            <Label Grid.Row="0" Grid.Column="4">Description:</Label>
-                            <TextBox Grid.Row="0" Grid.Column="5" Width="50" Text="{Binding Description}"/>
-                            <Label Grid.Row="0" Grid.Column="6">Date of birth:</Label>
-                            <TextBox Grid.Row="0" Grid.Column="7" Width="50" Text="{Binding DateOfBirth}"/>
-                            <Button Grid.Row="0" Grid.Column="8" Command="{Binding AddPersonCommand}">Add person</Button>
-                            <DataGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="9" ItemsSource="{Binding Persons}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single">
+                            <DataGrid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding Persons}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="SelectionChanged">
                                         <i:InvokeCommandAction Command="{Binding PersonSelectionCommand}" CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </DataGrid>
-                            <Button Grid.Row="2" Grid.Column="0" Command="{Binding RemovePersonCommand}">Delete selected person</Button>
-                            <Button Grid.Row="2" Grid.Column="1" Command="{Binding EditPersonCommand}">Edit selected person</Button>
+                            <Button Style="{StaticResource NormalButton}" Grid.Row="1" Grid.Column="0" Command="{Binding RemovePersonCommand}">Delete selected person</Button>
+                            <Button Style="{StaticResource NormalButton}" Grid.Row="1" Grid.Column="1" Command="{Binding EditPersonCommand}">Edit selected person</Button>
                         </Grid>
                     </ScrollViewer>
                 </DockPanel>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -17,19 +18,22 @@ namespace FileDB2Browser.ViewModel
         public string Description { get; set; }
         public string DateOfBirth { get; set; }
         public string BornYearsAgo { get; set; }
+
+        private readonly int id;
+
+        public Person(int id)
+        {
+            this.id = id;
+        }
+
+        public int GetId()
+        {
+            return id;
+        }
     }
 
     public class PersonsViewModel
     {
-        public ICommand AddPersonCommand
-        {
-            get
-            {
-                return addPersonCommand ??= new CommandHandler(AddPerson);
-            }
-        }
-        private ICommand addPersonCommand;
-
         public ICommand RemovePersonCommand
         {
             get
@@ -59,14 +63,6 @@ namespace FileDB2Browser.ViewModel
 
         public ObservableCollection<Person> Persons { get; }
 
-        public string Firstname { get; set; }
-
-        public string Lastname { get; set; }
-
-        public string Description { get; set; }
-
-        public string DateOfBirth { get; set; }
-
         private Person selectedPerson;
 
         private readonly FileDB2Handle fileDB2Handle;
@@ -74,24 +70,22 @@ namespace FileDB2Browser.ViewModel
         public PersonsViewModel(FileDB2Handle fileDB2Handle)
         {
             this.fileDB2Handle = fileDB2Handle;
-            var persons = fileDB2Handle.GetPersons().Select(pm => new Person() { Firstname = pm.firstname, Lastname = pm.lastname, Description = pm.description, DateOfBirth = pm.dateofbirth, BornYearsAgo = Utils.GetBornYearsAgoString(DateTime.Now, pm.dateofbirth) });
+            var persons = GetPersons();
             Persons = new ObservableCollection<Person>(persons);
-        }
-
-        public void AddPerson(object parameter)
-        {
-            fileDB2Handle.InsertPerson(Firstname, Lastname, Description, DateOfBirth);
-            Firstname = string.Empty;
-            Lastname = string.Empty;
-            Description = string.Empty;
-            DateOfBirth = string.Empty;
         }
 
         public void RemovePerson(object parameter)
         {
             if (selectedPerson != null)
             {
-                // TODO: find id somehow and remove person
+                // TODO: only delete if person not used in files?
+                fileDB2Handle.DeletePerson(selectedPerson.GetId());
+
+                Persons.Clear();
+                foreach (var person in GetPersons())
+                {
+                    Persons.Add(person);
+                }
             }
         }
 
@@ -99,13 +93,18 @@ namespace FileDB2Browser.ViewModel
         {
             if (selectedPerson != null)
             {
-                // TODO: find id somehow and edit person
+                // TODO: edit in new window
             }
         }
 
         public void PersonSelectionChanged(object parameter)
         {
             selectedPerson = (Person)parameter;
+        }
+
+        private IEnumerable<Person> GetPersons()
+        {
+            return fileDB2Handle.GetPersons().Select(pm => new Person(pm.id) { Firstname = pm.firstname, Lastname = pm.lastname, Description = pm.description, DateOfBirth = pm.dateofbirth, BornYearsAgo = Utils.GetBornYearsAgoString(DateTime.Now, pm.dateofbirth) });
         }
     }
 }
