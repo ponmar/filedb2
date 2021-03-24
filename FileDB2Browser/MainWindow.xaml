@@ -120,7 +120,7 @@
                         <Button Style="{StaticResource NormalButton}" Command="{Binding FindRandomFilesCommand}">10 random files</Button>
                         <Button Style="{StaticResource NormalButton}" Command="{Binding FindAllFilesCommand}">All files</Button>
                     </StackPanel>
-                    <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center">
+                    <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="0 20 0 0">
                             <Run Text="File browser: ["/>
                             <Run Text="{Binding SearchResultIndex, Mode=OneWay}"/>
                             <Run Text="/"/>
@@ -157,7 +157,7 @@
                             </StackPanel>
                         </Border>
                     </StackPanel>
-                    <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding CurrentFileLoadError}" Visibility="{Binding CurrentFileLoadError, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
+                    <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding CurrentFileLoadError}" Margin="10" Visibility="{Binding CurrentFileLoadError, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
                     <Image Grid.Row="5" Grid.Column="1" x:Name="CurrentFileImage" Stretch="Uniform" RenderOptions.BitmapScalingMode="Fant" ToolTip="{Binding CurrentFileInternalPath}"/>
                 </Grid>
                 <!-- Birthdays page -->
