@@ -119,6 +119,8 @@
                     <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center">
                         <Button Style="{StaticResource NormalButton}" Command="{Binding FindRandomFilesCommand}">10 random files</Button>
                         <Button Style="{StaticResource NormalButton}" Command="{Binding FindAllFilesCommand}">All files</Button>
+                        <TextBox Margin="20 0 0 0" Width="100" VerticalAlignment="Center" Text="{Binding SearchPattern}"/>
+                        <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesByTextCommand}">Search</Button>
                     </StackPanel>
                     <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="0 20 0 0">
                             <Run Text="File browser: ["/>

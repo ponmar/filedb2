@@ -96,6 +96,29 @@ namespace FileDB2Browser.ViewModel
         }
         private ICommand findAllFilesCommand;
 
+        public ICommand FindFilesByTextCommand
+        {
+            get
+            {
+                return findFilesByTextCommand ??= new CommandHandler(FindFilesByText);
+            }
+        }
+        private ICommand findFilesByTextCommand;
+
+        public string SearchPattern
+        {
+            get => searchPattern;
+            set
+            {
+                if (value != searchPattern)
+                {
+                    searchPattern = value;
+                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(SearchPattern)));
+                }
+            }
+        }
+        private string searchPattern;
+
         private List<FilesModel> SearchResult
         {
             get => searchResult;
@@ -351,6 +374,18 @@ namespace FileDB2Browser.ViewModel
             SearchResult = fileDB2Handle.GetFiles();
         }
 
+        public void FindFilesByText(object parameter)
+        {
+            if (!string.IsNullOrEmpty(SearchPattern))
+            {
+                SearchResult = fileDB2Handle.SearchFiles(SearchPattern);
+            }
+            else
+            {
+                SearchResult = null;
+            }
+        }
+
         private void LoadFile(int index)
         {
             if (SearchResult != null &&
@@ -398,6 +433,11 @@ namespace FileDB2Browser.ViewModel
             CurrentFileDateTime = string.Empty;
             CurrentFilePosition = string.Empty;
             CurrentFilePersons = string.Empty;
+            CurrentFileLocations = string.Empty;
+            CurrentFileTags = string.Empty;
+
+            CurrentFileLoadError = "No match";
+            imagePresenter.ShowImage(null);
         }
 
         private string GetFileDateTimeString(string datetimeString)
@@ -425,7 +465,7 @@ namespace FileDB2Browser.ViewModel
         {
             var persons = fileDB2Handle.GetPersonsFromFile(selection.id);
             var personStrings = persons.Select(p => $"{p.firstname} {p.lastname}{GetPersonAgeInFileString(selection.datetime, p.dateofbirth)}");
-            return string.Join(", ", personStrings);
+            return string.Join("\n", personStrings);
         }
 
         private string GetPersonAgeInFileString(string fileDatetimeStr, string personDateOfBirthStr)
@@ -448,17 +488,16 @@ namespace FileDB2Browser.ViewModel
 
         private string GetFileLocationsString(int fileId)
         {
-            // TODO: include gps position if available?
             var locations = fileDB2Handle.GetLocationsFromFile(fileId);
             var locationStrings = locations.Select(l => l.name);
-            return string.Join(", ", locationStrings);
+            return string.Join("\n", locationStrings);
         }
 
         private string GetFileTagsString(int fileId)
         {
             var tags = fileDB2Handle.GetTagsFromFile(fileId);
             var tagStrings = tags.Select(t => t.name);
-            return string.Join(", ", tagStrings);
+            return string.Join("\n", tagStrings);
         }
     }
 }
