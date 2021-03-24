@@ -401,8 +401,8 @@ namespace FileDB2Browser.ViewModel
             if (!string.IsNullOrEmpty(CurrentFilePath) &&
                 File.Exists(CurrentFilePath))
             {
-                // TODO: replace / with \\ needed for this to work in Windows. Where to fix?
-                Process.Start("explorer.exe", "/select, " + CurrentFilePath);
+                var explorerPath = CurrentFilePath.Replace("/", @"\");
+                Process.Start("explorer.exe", "/select, " + explorerPath);
             }
         }
 
@@ -469,12 +469,17 @@ namespace FileDB2Browser.ViewModel
             }
 
             var resultString = datetime.Value.ToString("yyyy-MM-dd HH:mm");
-            int yearsAgo = Utils.GetYearsAgo(DateTime.Now, datetime.Value);
-            if (yearsAgo == 0)
+            var now = DateTime.Now;
+            int yearsAgo = Utils.GetYearsAgo(now, datetime.Value);
+            if (yearsAgo == 0 && now.Year == datetime.Value.Year)
             {
                 resultString = $"{resultString} (this year)";
             }
-            else if (yearsAgo > 0)
+            else if (yearsAgo <= 1)
+            {
+                resultString = $"{resultString} ({yearsAgo} year ago)";
+            }
+            else if (yearsAgo > 1)
             {
                 resultString = $"{resultString} ({yearsAgo} years ago)";
             }
