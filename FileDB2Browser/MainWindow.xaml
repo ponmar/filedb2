@@ -158,6 +158,12 @@
                                 <TextBlock Text="{Binding CurrentFileDescription}" Margin="0 0 10 0" Visibility="{Binding CurrentFileDescription, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
                             </StackPanel>
                         </Border>
+
+                        <Border Background="GhostWhite" BorderBrush="Gainsboro" BorderThickness="2" CornerRadius="5" Margin="0 20 0 0">
+                            <StackPanel Orientation="Vertical" Margin="5">
+                                <Button Style="{StaticResource NormalButton}" Command="{Binding OpenFileLocationCommand}">Open file directory</Button>
+                            </StackPanel>
+                        </Border>
                     </StackPanel>
                     <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding CurrentFileLoadError}" Margin="10" Visibility="{Binding CurrentFileLoadError, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
                     <Image Grid.Row="5" Grid.Column="1" x:Name="CurrentFileImage" Stretch="Uniform" RenderOptions.BitmapScalingMode="Fant" ToolTip="{Binding CurrentFileInternalPath}"/>

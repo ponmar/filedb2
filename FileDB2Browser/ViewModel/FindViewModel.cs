@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Cache;
@@ -104,6 +105,15 @@ namespace FileDB2Browser.ViewModel
             }
         }
         private ICommand findFilesByTextCommand;
+
+        public ICommand OpenFileLocationCommand
+        {
+            get
+            {
+                return openFileLocationCommand ??= new CommandHandler(OpenFileLocation);
+            }
+        }
+        private ICommand openFileLocationCommand;
 
         public string SearchPattern
         {
@@ -383,6 +393,16 @@ namespace FileDB2Browser.ViewModel
             else
             {
                 SearchResult = null;
+            }
+        }
+
+        public void OpenFileLocation(object parameter)
+        {
+            if (!string.IsNullOrEmpty(CurrentFilePath) &&
+                File.Exists(CurrentFilePath))
+            {
+                // TODO: replace / with \\ needed for this to work in Windows. Where to fix?
+                Process.Start("explorer.exe", "/select, " + CurrentFilePath);
             }
         }
 
