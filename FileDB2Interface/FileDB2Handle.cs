@@ -236,7 +236,7 @@ namespace FileDB2Interface
         public void InsertFilePerson(int fileId, int personId)
         {
             using var connection = CreateConnection();
-            var sql = "insert into [filepersons] (fileid, personid) values (@fileId, @locationId)";
+            var sql = "insert into [filepersons] (fileid, personid) values (@fileId, @personId)";
             connection.Execute(sql, new { fileId = fileId, personId = personId });
         }
 

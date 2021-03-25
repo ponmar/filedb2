@@ -18,6 +18,27 @@ namespace FileDB2Browser.ViewModel
         void ShowImage(BitmapImage image);
     }
 
+    public class PersonToAdd
+    {
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+    }
+
+    public class LocationToAdd
+    {
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+    }
+
+    public class TagToAdd
+    {
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+    }
+
     public class FindViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
@@ -336,30 +357,36 @@ namespace FileDB2Browser.ViewModel
         }
         private string currentFileLoadError;
 
-        public ObservableCollection<string> Persons { get; }
+        public ObservableCollection<PersonToAdd> Persons { get; }
 
-        public ObservableCollection<string> Locations { get; }
+        public PersonToAdd SelectedPerson { get; set; }
 
-        public ObservableCollection<string> Tags { get; }
+        public ObservableCollection<LocationToAdd> Locations { get; }
+
+        public LocationToAdd SelectedLocation { get; set; }
+
+        public ObservableCollection<TagToAdd> Tags { get; }
+
+        public TagToAdd SelectedTag { get; set; }
 
         public FindViewModel(FileDB2Handle fileDB2Handle, IImagePresenter imagePresenter)
         {
             this.fileDB2Handle = fileDB2Handle;
             this.imagePresenter = imagePresenter;
-            
+
             TotalNumberOfFiles = fileDB2Handle.GetFileCount();
 
-            var persons = fileDB2Handle.GetPersons().Select(p => p.firstname + " " + p.lastname).ToList();
-            persons.Sort();
-            Persons = new ObservableCollection<string>(persons);
+            var persons = fileDB2Handle.GetPersons().Select(p => new PersonToAdd() { Id = p.id, Name = p.firstname + " " + p.lastname }).ToList();
+            //persons.Sort();
+            Persons = new ObservableCollection<PersonToAdd>(persons);
 
-            var locations = fileDB2Handle.GetLocations().Select(l => l.name).ToList();
-            locations.Sort();
-            Locations = new ObservableCollection<string>(locations);
+            var locations = fileDB2Handle.GetLocations().Select(l => new LocationToAdd() { Id = l.id, Name = l.name }).ToList();
+            //locations.Sort();
+            Locations = new ObservableCollection<LocationToAdd>(locations);
 
-            var tags = fileDB2Handle.GetTags().Select(t => t.name).ToList();
-            tags.Sort();
-            Tags = new ObservableCollection<string>(tags);
+            var tags = fileDB2Handle.GetTags().Select(t => new TagToAdd() { Id = t.id, Name = t.name }).ToList();
+            //tags.Sort();
+            Tags = new ObservableCollection<TagToAdd>(tags);
         }
 
         public void PrevFile(object parameter)
@@ -574,17 +601,32 @@ namespace FileDB2Browser.ViewModel
 
         public void AddFilePerson(object parameter)
         {
-            // TODO
+            if (SearchResultIndex != -1 && SelectedPerson != null)
+            {
+                // TODO: do not cause sql error by trying to add same id again
+                fileDB2Handle.InsertFilePerson(searchResult[SearchResultIndex].id, SelectedPerson.Id);
+                LoadFile(SearchResultIndex);
+            }
         }
 
         public void AddFileLocation(object parameter)
         {
-            // TODO
+            if (SearchResultIndex != -1 && SelectedLocation != null)
+            {
+                // TODO: do not cause sql error by trying to add same id again
+                fileDB2Handle.InsertFileLocation(searchResult[SearchResultIndex].id, SelectedLocation.Id);
+                LoadFile(SearchResultIndex);
+            }
         }
 
         public void AddFileTag(object parameter)
         {
-            // TODO
+            if (SearchResultIndex != -1 && SelectedTag != null)
+            {
+                // TODO: do not cause sql error by trying to add same id again
+                fileDB2Handle.InsertFileTag(searchResult[SearchResultIndex].id, SelectedTag.Id);
+                LoadFile(SearchResultIndex);
+            }
         }
     }
 }
