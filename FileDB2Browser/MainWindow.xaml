@@ -140,28 +140,6 @@
                     <StackPanel Orientation="Vertical" Grid.Row="4" Grid.Column="0" Grid.RowSpan="2" Margin="5">
                         <Border Background="GhostWhite" BorderBrush="Gainsboro" BorderThickness="2" CornerRadius="5">
                             <StackPanel Orientation="Vertical" Margin="5">
-                                <TextBlock Text="{Binding CurrentFileDateTime}" Visibility="{Binding CurrentFileDateTime, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
-                                
-                                <TextBlock Text="&#x1F642;" Margin="0 10 0 0" Visibility="{Binding CurrentFilePersons, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
-                                <TextBlock Text="{Binding CurrentFilePersons}" Margin="0 0 10 0" Visibility="{Binding CurrentFilePersons, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
-
-                                <TextBlock Text="&#x1F3E0;" Margin="0 10 0 0" Visibility="{Binding CurrentFileLocations, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
-                                <TextBlock Text="{Binding CurrentFileLocations}" Margin="0 0 10 0" Visibility="{Binding CurrentFileLocations, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
-
-                                <TextBlock Text="&#x1F516;" Margin="0 10 0 0" Visibility="{Binding CurrentFileTags, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
-                                <TextBlock Text="{Binding CurrentFileTags}" Margin="0 0 10 0" Visibility="{Binding CurrentFileTags, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
-
-                                <TextBlock Text="&#x1F6F0;" Margin="0 10 0 0" Visibility="{Binding CurrentFilePosition, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
-                                <TextBlock Text="{Binding CurrentFilePosition}" Margin="0 0 10 0" Visibility="{Binding CurrentFilePosition, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
-
-                                <TextBlock Text="&#x1F4DD;" Margin="0 10 0 0" Visibility="{Binding CurrentFileDescription, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
-                                <TextBlock Text="{Binding CurrentFileDescription}" Margin="0 0 10 0" Visibility="{Binding CurrentFileDescription, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
-                            </StackPanel>
-                        </Border>
-
-                        <Border Background="GhostWhite" BorderBrush="Gainsboro" BorderThickness="2" CornerRadius="5" Margin="0 20 0 0">
-                            <StackPanel Orientation="Vertical" Margin="5">
-                                <Button Style="{StaticResource NormalButton}" Command="{Binding OpenFileLocationCommand}">Open file directory</Button>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="auto"/>
@@ -173,16 +151,38 @@
                                         <RowDefinition Height="auto"/>
                                         <RowDefinition Height="auto"/>
                                     </Grid.RowDefinitions>
-                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="&#x1F642;" VerticalAlignment="Center" Margin="5"/>
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="&#x1F642;" VerticalAlignment="Center" Margin="5" ToolTip="Person to add to file"/>
                                     <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Persons}" VerticalAlignment="Center" SelectedItem="{Binding SelectedPerson}" DisplayMemberPath="Name"/>
                                     <Button Grid.Row="0" Grid.Column="2" Style="{StaticResource NormalButton}" Command="{Binding AddFilePersonCommand}">Add</Button>
-                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="&#x1F3E0;" VerticalAlignment="Center" Margin="5"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="&#x1F3E0;" VerticalAlignment="Center" Margin="5" ToolTip="Location to add to file"/>
                                     <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Locations}" VerticalAlignment="Center" SelectedItem="{Binding SelectedLocation}" DisplayMemberPath="Name"/>
                                     <Button Grid.Row="1" Grid.Column="2" Style="{StaticResource NormalButton}" Command="{Binding AddFileLocationCommand}">Add</Button>
-                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="&#x1F516;" VerticalAlignment="Center" Margin="5"/>
+                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="&#x1F516;" VerticalAlignment="Center" Margin="5" ToolTip="Tag to add to file"/>
                                     <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Tags}" VerticalAlignment="Center" SelectedItem="{Binding SelectedTag}" DisplayMemberPath="Name"/>
                                     <Button Grid.Row="2" Grid.Column="2" Style="{StaticResource NormalButton}" Command="{Binding AddFileTagCommand}">Add</Button>
                                 </Grid>
+                                <Button Style="{StaticResource NormalButton}" Command="{Binding OpenFileLocationCommand}">Open file directory</Button>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Background="GhostWhite" BorderBrush="Gainsboro" BorderThickness="2" CornerRadius="5" Margin="0 20 0 0">
+                            <StackPanel Orientation="Vertical" Margin="5">
+                                <TextBlock Text="{Binding CurrentFileDateTime}" Visibility="{Binding CurrentFileDateTime, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
+
+                                <TextBlock Text="&#x1F642;" Margin="0 10 0 0" Visibility="{Binding CurrentFilePersons, Converter={local1:StringNullOrEmptyToVisibilityConverter}}" ToolTip="Persons"/>
+                                <TextBlock Text="{Binding CurrentFilePersons}" Margin="0 0 10 0" Visibility="{Binding CurrentFilePersons, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
+
+                                <TextBlock Text="&#x1F3E0;" Margin="0 10 0 0" Visibility="{Binding CurrentFileLocations, Converter={local1:StringNullOrEmptyToVisibilityConverter}}" ToolTip="Locations"/>
+                                <TextBlock Text="{Binding CurrentFileLocations}" Margin="0 0 10 0" Visibility="{Binding CurrentFileLocations, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
+
+                                <TextBlock Text="&#x1F516;" Margin="0 10 0 0" Visibility="{Binding CurrentFileTags, Converter={local1:StringNullOrEmptyToVisibilityConverter}}" ToolTip="Tags"/>
+                                <TextBlock Text="{Binding CurrentFileTags}" Margin="0 0 10 0" Visibility="{Binding CurrentFileTags, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
+
+                                <TextBlock Text="&#x1F6F0;" Margin="0 10 0 0" Visibility="{Binding CurrentFilePosition, Converter={local1:StringNullOrEmptyToVisibilityConverter}}" ToolTip="GPS position"/>
+                                <TextBlock Text="{Binding CurrentFilePosition}" Margin="0 0 10 0" Visibility="{Binding CurrentFilePosition, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
+
+                                <TextBlock Text="&#x1F4DD;" Margin="0 10 0 0" Visibility="{Binding CurrentFileDescription, Converter={local1:StringNullOrEmptyToVisibilityConverter}}" ToolTip="Description"/>
+                                <TextBlock Text="{Binding CurrentFileDescription}" Margin="0 0 10 0" Visibility="{Binding CurrentFileDescription, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
                             </StackPanel>
                         </Border>
                     </StackPanel>

@@ -603,9 +603,16 @@ namespace FileDB2Browser.ViewModel
         {
             if (SearchResultIndex != -1 && SelectedPerson != null)
             {
-                // TODO: do not cause sql error by trying to add same id again
-                fileDB2Handle.InsertFilePerson(searchResult[SearchResultIndex].id, SelectedPerson.Id);
-                LoadFile(SearchResultIndex);
+                var fileId = searchResult[SearchResultIndex].id;
+                if (!fileDB2Handle.GetPersonsFromFile(fileId).Any(p => p.id == SelectedPerson.Id))
+                {
+                    fileDB2Handle.InsertFilePerson(fileId, SelectedPerson.Id);
+                    LoadFile(SearchResultIndex);
+                }
+                else
+                {
+                    // TODO: show error about already added
+                }
             }
         }
 
@@ -613,9 +620,16 @@ namespace FileDB2Browser.ViewModel
         {
             if (SearchResultIndex != -1 && SelectedLocation != null)
             {
-                // TODO: do not cause sql error by trying to add same id again
-                fileDB2Handle.InsertFileLocation(searchResult[SearchResultIndex].id, SelectedLocation.Id);
-                LoadFile(SearchResultIndex);
+                var fileId = searchResult[SearchResultIndex].id;
+                if (!fileDB2Handle.GetLocationsFromFile(fileId).Any(l => l.id == SelectedLocation.Id))
+                {
+                    fileDB2Handle.InsertFileLocation(fileId, SelectedLocation.Id);
+                    LoadFile(SearchResultIndex);
+                }
+                else
+                {
+                    // TODO: show error about already added
+                }
             }
         }
 
@@ -623,9 +637,16 @@ namespace FileDB2Browser.ViewModel
         {
             if (SearchResultIndex != -1 && SelectedTag != null)
             {
-                // TODO: do not cause sql error by trying to add same id again
-                fileDB2Handle.InsertFileTag(searchResult[SearchResultIndex].id, SelectedTag.Id);
-                LoadFile(SearchResultIndex);
+                var fileId = searchResult[SearchResultIndex].id;
+                if (!fileDB2Handle.GetTagsFromFile(fileId).Any(t => t.id == SelectedTag.Id))
+                {
+                    fileDB2Handle.InsertFileTag(fileId, SelectedTag.Id);
+                    LoadFile(SearchResultIndex);
+                }
+                else
+                {
+                    // TODO: show error about already added
+                }
             }
         }
     }
