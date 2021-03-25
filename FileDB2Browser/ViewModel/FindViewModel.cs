@@ -116,6 +116,33 @@ namespace FileDB2Browser.ViewModel
         }
         private ICommand openFileLocationCommand;
 
+        public ICommand AddFilePersonCommand
+        {
+            get
+            {
+                return addFilePersonCommand ??= new CommandHandler(AddFilePerson);
+            }
+        }
+        private ICommand addFilePersonCommand;
+
+        public ICommand AddFileLocationCommand
+        {
+            get
+            {
+                return addFileLocationCommand ??= new CommandHandler(AddFileLocation);
+            }
+        }
+        private ICommand addFileLocationCommand;
+
+        public ICommand AddFileTagCommand
+        {
+            get
+            {
+                return addFileTagCommand ??= new CommandHandler(AddFileTag);
+            }
+        }
+        private ICommand addFileTagCommand;
+
         public string SearchPattern
         {
             get => searchPattern;
@@ -543,6 +570,21 @@ namespace FileDB2Browser.ViewModel
             var tags = fileDB2Handle.GetTagsFromFile(fileId);
             var tagStrings = tags.Select(t => t.name);
             return string.Join("\n", tagStrings);
+        }
+
+        public void AddFilePerson(object parameter)
+        {
+            // TODO
+        }
+
+        public void AddFileLocation(object parameter)
+        {
+            // TODO
+        }
+
+        public void AddFileTag(object parameter)
+        {
+            // TODO
         }
     }
 }

@@ -165,7 +165,7 @@
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="auto"/>
-                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="auto"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
@@ -173,15 +173,15 @@
                                         <RowDefinition Height="auto"/>
                                         <RowDefinition Height="auto"/>
                                     </Grid.RowDefinitions>
-                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="&#x1F642;"/>
-                                    <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Persons}"/>
-                                    <Button Grid.Row="0" Grid.Column="2">Add</Button>
-                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="&#x1F3E0;"/>
-                                    <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Locations}"/>
-                                    <Button Grid.Row="1" Grid.Column="2">Add</Button>
-                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="&#x1F516;"/>
-                                    <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Tags}"/>
-                                    <Button Grid.Row="2" Grid.Column="2">Add</Button>
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="&#x1F642;" VerticalAlignment="Center" Margin="5"/>
+                                    <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Persons}" VerticalAlignment="Center"/>
+                                    <Button Grid.Row="0" Grid.Column="2" Style="{StaticResource NormalButton}" Command="{Binding AddFilePersonCommand}">Add</Button>
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="&#x1F3E0;" VerticalAlignment="Center" Margin="5"/>
+                                    <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Locations}" VerticalAlignment="Center"/>
+                                    <Button Grid.Row="1" Grid.Column="2" Style="{StaticResource NormalButton}" Command="{Binding AddFileLocationCommand}">Add</Button>
+                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="&#x1F516;" VerticalAlignment="Center" Margin="5"/>
+                                    <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Tags}" VerticalAlignment="Center"/>
+                                    <Button Grid.Row="2" Grid.Column="2" Style="{StaticResource NormalButton}" Command="{Binding AddFileTagCommand}">Add</Button>
                                 </Grid>
                             </StackPanel>
                         </Border>
