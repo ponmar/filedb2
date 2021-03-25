@@ -188,13 +188,9 @@ namespace FileDB2Interface
             {
                 throw new FileDB2Exception($"No such file: {path}");
             }
-            // TODO: throw exception if path is blacklisted
-            // TODO: throw exception if path is not whitelisted
 
             ParseFilesystemFileExif(path, out var dateTaken, out var location);
-            // TODO: serialize dateTaken
-            // TODO: try to parse date from path if dateTaken not available?
-            string datetime = null;
+            string datetime = dateTaken != null ? dateTaken.Value.ToString("yyyy-MM-ddTHH:mm:ss") : null;
             string position = location != null ? $"{location.Latitude} {location.Longitude}" : null;
 
             try
