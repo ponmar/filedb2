@@ -162,6 +162,27 @@
                         <Border Background="GhostWhite" BorderBrush="Gainsboro" BorderThickness="2" CornerRadius="5" Margin="0 20 0 0">
                             <StackPanel Orientation="Vertical" Margin="5">
                                 <Button Style="{StaticResource NormalButton}" Command="{Binding OpenFileLocationCommand}">Open file directory</Button>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="&#x1F642;"/>
+                                    <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Persons}"/>
+                                    <Button Grid.Row="0" Grid.Column="2">Add</Button>
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="&#x1F3E0;"/>
+                                    <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Locations}"/>
+                                    <Button Grid.Row="1" Grid.Column="2">Add</Button>
+                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="&#x1F516;"/>
+                                    <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Tags}"/>
+                                    <Button Grid.Row="2" Grid.Column="2">Add</Button>
+                                </Grid>
                             </StackPanel>
                         </Border>
                     </StackPanel>

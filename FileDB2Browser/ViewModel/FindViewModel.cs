@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
@@ -308,11 +309,30 @@ namespace FileDB2Browser.ViewModel
         }
         private string currentFileLoadError;
 
+        public ObservableCollection<string> Persons { get; }
+
+        public ObservableCollection<string> Locations { get; }
+
+        public ObservableCollection<string> Tags { get; }
+
         public FindViewModel(FileDB2Handle fileDB2Handle, IImagePresenter imagePresenter)
         {
             this.fileDB2Handle = fileDB2Handle;
             this.imagePresenter = imagePresenter;
+            
             TotalNumberOfFiles = fileDB2Handle.GetFileCount();
+
+            var persons = fileDB2Handle.GetPersons().Select(p => p.firstname + " " + p.lastname).ToList();
+            persons.Sort();
+            Persons = new ObservableCollection<string>(persons);
+
+            var locations = fileDB2Handle.GetLocations().Select(l => l.name).ToList();
+            locations.Sort();
+            Locations = new ObservableCollection<string>(locations);
+
+            var tags = fileDB2Handle.GetTags().Select(t => t.name).ToList();
+            tags.Sort();
+            Tags = new ObservableCollection<string>(tags);
         }
 
         public void PrevFile(object parameter)
