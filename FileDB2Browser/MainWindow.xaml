@@ -117,8 +117,8 @@
                     </Grid.RowDefinitions>
                     <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource PageHeading}">Find Files</Label>
                     <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center">
-                        <Button Style="{StaticResource NormalButton}" Command="{Binding FindRandomFilesCommand}">10 random files</Button>
-                        <Button Style="{StaticResource NormalButton}" Command="{Binding FindAllFilesCommand}">All files</Button>
+                        <Button Style="{StaticResource NormalButton}" Command="{Binding FindRandomFilesCommand}">Search 10 random</Button>
+                        <Button Style="{StaticResource NormalButton}" Command="{Binding FindAllFilesCommand}">Search all</Button>
                         <TextBox Margin="20 0 0 0" Width="100" VerticalAlignment="Center" Text="{Binding SearchPattern}"/>
                         <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesByTextCommand}">Search</Button>
                     </StackPanel>
