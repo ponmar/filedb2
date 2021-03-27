@@ -8,47 +8,68 @@
         xmlns:Views="clr-namespace:FileDB2Browser.View"
         mc:Ignorable="d"
         Title="FileDB2" Height="768" Width="1024" ResizeMode="CanResize">
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+    </Window.Resources>
+    
     <DockPanel>
         <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="0" DockPanel.Dock="Left">
             <Label Style="{StaticResource PageButtonHeading}">Browse</Label>
-            <Button Style="{StaticResource PageButton}" Click="SetStartPage" ToolTip="Start">
+            <Button Style="{StaticResource PageButton}" Command="{Binding OpenStartPageCommand}" ToolTip="Start">
                 <TextBlock Text="&#x1F44D;"/>
             </Button>
-            <Button Style="{StaticResource PageButton}" Click="SetFindPage" ToolTip="Find files">
+            <Button Style="{StaticResource PageButton}" Command="{Binding OpenFindPageCommand}" ToolTip="Find files">
                 <TextBlock Text="&#x1F50D;"/>
             </Button>
-            <Button Style="{StaticResource PageButton}" Click="SetBirthdaysPage" ToolTip="Birthdays">
+            <Button Style="{StaticResource PageButton}" Command="{Binding OpenBirthdaysPageCommand}" ToolTip="Birthdays">
                 <TextBlock Text="&#x1F382;"/>
             </Button>
             <Label Style="{StaticResource PageButtonHeading}">Categories</Label>
-            <Button Style="{StaticResource PageButton}" Click="SetPersonsPage" ToolTip="Persons">
+            <Button Style="{StaticResource PageButton}" Command="{Binding OpenPersonsPageCommand}" ToolTip="Persons">
                 <TextBlock Text="&#x1F642;"/>
             </Button>
-            <Button Style="{StaticResource PageButton}" Click="SetLocationsPage" ToolTip="Locations">
+            <Button Style="{StaticResource PageButton}" Command="{Binding OpenLocationsPageCommand}" ToolTip="Locations">
                 <TextBlock Text="&#x1F3E0;"/>
             </Button>
-            <Button Style="{StaticResource PageButton}" Click="SetTagsPage" ToolTip="Tags">
+            <Button Style="{StaticResource PageButton}" Command="{Binding OpenTagsPageCommand}" ToolTip="Tags">
                 <TextBlock Text="&#x1F516;"/>
             </Button>
             <Label Style="{StaticResource PageButtonHeading}">Files</Label>
-            <Button Style="{StaticResource PageButton}" Click="SetImportPage" ToolTip="Import">
+            <Button Style="{StaticResource PageButton}" Command="{Binding OpenImportPageCommand}" ToolTip="Import">
                 <TextBlock Text="&#x1F4C2;"/>
             </Button>
-            <Button Style="{StaticResource PageButton}" Click="SetToolsPage" ToolTip="Tools">
+            <Button Style="{StaticResource PageButton}" Command="{Binding OpenToolsPageCommand}" ToolTip="Tools">
                 <TextBlock Text="&#x1F527;"/>
             </Button>
         </StackPanel>
 
         <Border BorderThickness="2 2 2 2" BorderBrush="LightGray">
             <Grid Margin="20 5 20 5">
-                <Views:StartView Visibility="Collapsed" x:Name="StartPage"/>
-                <Views:FindView Visibility="Collapsed" x:Name="FindPage"/>
-                <Views:BirthdaysView Visibility="Collapsed" x:Name="BirthdaysPage"/>
-                <Views:PersonsView Visibility="Collapsed" x:Name="PersonsPage"/>
-                <Views:LocationsView Visibility="Collapsed" x:Name="LocationsPage"/>
-                <Views:TagsView Visibility="Collapsed" x:Name="TagsPage"/>
-                <Views:ImportView Visibility="Collapsed" x:Name="ImportPage"/>
-                <Views:ToolsView Visibility="Collapsed" x:Name="ToolsPage"/>
+                <StackPanel Visibility="{Binding Path=StartPageActive, Converter={StaticResource BoolToVis}, Mode=OneWay}">
+                    <Views:StartView/>
+                </StackPanel>
+                <StackPanel Visibility="{Binding Path=FindPageActive, Converter={StaticResource BoolToVis}, Mode=OneWay}">
+                    <Views:FindView />
+                </StackPanel>
+                <StackPanel Visibility="{Binding Path=BirthdaysPageActive, Converter={StaticResource BoolToVis}, Mode=OneWay}">
+                    <Views:BirthdaysView/>
+                </StackPanel>
+                <StackPanel Visibility="{Binding Path=PersonsPageActive, Converter={StaticResource BoolToVis}, Mode=OneWay}">
+                    <Views:PersonsView/>
+                </StackPanel>
+                <StackPanel Visibility="{Binding Path=LocationsPageActive, Converter={StaticResource BoolToVis}, Mode=OneWay}">
+                    <Views:LocationsView/>
+                </StackPanel>
+                <StackPanel Visibility="{Binding Path=TagsPageActive, Converter={StaticResource BoolToVis}, Mode=OneWay}">
+                    <Views:TagsView/>
+                </StackPanel>
+                <StackPanel Visibility="{Binding Path=ImportPageActive, Converter={StaticResource BoolToVis}, Mode=OneWay}">
+                    <Views:ImportView/>
+                </StackPanel>
+                <StackPanel Visibility="{Binding Path=ToolsPageActive, Converter={StaticResource BoolToVis}, Mode=OneWay}">
+                    <Views:ToolsView/>
+                </StackPanel>
             </Grid>
         </Border>
     </DockPanel>
