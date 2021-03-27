@@ -64,10 +64,8 @@ namespace FileDB2Browser.ViewModel
         public string Name { get; set; }
     }
 
-    public class FindViewModel : INotifyPropertyChanged
+    public class FindViewModel : ViewModelBase
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
         private readonly FileDB2Handle fileDB2Handle;
 
         private readonly IImagePresenter imagePresenter;
@@ -192,14 +190,7 @@ namespace FileDB2Browser.ViewModel
         public string SearchPattern
         {
             get => searchPattern;
-            set
-            {
-                if (value != searchPattern)
-                {
-                    searchPattern = value;
-                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(SearchPattern)));
-                }
-            }
+            private set { SetProperty(ref searchPattern, value); }
         }
         private string searchPattern;
 
@@ -229,8 +220,8 @@ namespace FileDB2Browser.ViewModel
                         ResetFile();
                     }
 
-                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(SearchNumberOfHits)));
-                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(HasSearchResult)));
+                    OnPropertyChanged(nameof(SearchNumberOfHits));
+                    OnPropertyChanged(nameof(HasSearchResult));
                 }
             }
         }
@@ -239,14 +230,7 @@ namespace FileDB2Browser.ViewModel
         public int SearchResultIndex
         {
             get => searchResultIndex;
-            private set
-            {
-                if (value != searchResultIndex)
-                {
-                    searchResultIndex = value;
-                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(SearchResultIndex)));
-                }
-            }
+            private set { SetProperty(ref searchResultIndex, value); }
         }
         private int searchResultIndex = -1;
 
@@ -259,126 +243,63 @@ namespace FileDB2Browser.ViewModel
         public string CurrentFileInternalPath
         {
             get => currentFileInternalPath;
-            private set
-            {
-                if (value != currentFileInternalPath)
-                {
-                    currentFileInternalPath = value;
-                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentFileInternalPath)));
-                }
-            }
+            private set { SetProperty(ref currentFileInternalPath, value); }
         }
         private string currentFileInternalPath;
 
         public string CurrentFilePath
         {
             get => currentFilePath;
-            private set
-            {
-                if (value != currentFilePath)
-                {
-                    currentFilePath = value;
-                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentFilePath)));
-                }
-            }
+            private set { SetProperty(ref currentFilePath, value); }
         }
         private string currentFilePath;
 
         public string CurrentFileDescription
         {
             get => currentFileDescription;
-            private set
-            {
-                if (value != currentFileDescription)
-                {
-                    currentFileDescription = value;
-                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentFileDescription)));
-                }
-            }
+            private set { SetProperty(ref currentFileDescription, value); }
         }
         private string currentFileDescription;
 
         public string CurrentFileDateTime
         {
             get => currentFiledateTime;
-            private set
-            {
-                if (value != currentFiledateTime)
-                {
-                    currentFiledateTime = value;
-                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentFileDateTime)));
-                }
-            }
+            private set { SetProperty(ref currentFiledateTime, value); }
         }
         private string currentFiledateTime;
 
         public string CurrentFilePosition
         {
             get => currentFilePosition;
-            private set
-            {
-                if (value != currentFilePosition)
-                {
-                    currentFilePosition = value;
-                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentFilePosition)));
-                }
-            }
+            private set { SetProperty(ref currentFilePosition, value); }
         }
         private string currentFilePosition;
 
         public string CurrentFilePersons
         {
             get => currentFilePersons;
-            private set
-            {
-                if (value != currentFilePersons)
-                {
-                    currentFilePersons = value;
-                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentFilePersons)));
-                }
-            }
+            private set { SetProperty(ref currentFilePersons, value); }
         }
         private string currentFilePersons;
 
         public string CurrentFileLocations
         {
             get => currentFileLocations;
-            private set
-            {
-                if (value != currentFileLocations)
-                {
-                    currentFileLocations = value;
-                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentFileLocations)));
-                }
-            }
+            private set { SetProperty(ref currentFileLocations, value); }
         }
         private string currentFileLocations;
 
         public string CurrentFileTags
         {
             get => currentFileTags;
-            private set
-            {
-                if (value != currentFileTags)
-                {
-                    currentFileTags = value;
-                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentFileTags)));
-                }
-            }
+            private set { SetProperty(ref currentFileTags, value); }
         }
         private string currentFileTags;
 
         public string CurrentFileLoadError
         {
             get => currentFileLoadError;
-            private set
-            {
-                if (value != currentFileLoadError)
-                {
-                    currentFileLoadError = value;
-                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentFileLoadError)));
-                }
-            }
+            private set { SetProperty(ref currentFileLoadError, value); }
         }
         private string currentFileLoadError;
 
