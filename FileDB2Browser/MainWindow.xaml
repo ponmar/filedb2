@@ -5,9 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:FileDB2Browser" xmlns:local1="clr-namespace:FileDB2Browser.Converters"
+        xmlns:Views="clr-namespace:FileDB2Browser.View"
         mc:Ignorable="d"
         Title="FileDB2" Height="768" Width="1024" ResizeMode="CanResize">
     <Window.Resources>
+        <!--
         <Style x:Key="PageButton" TargetType="Button">
             <Setter Property="Margin" Value="3"/>
             <Setter Property="Padding" Value="10"/>
@@ -44,6 +46,7 @@
         <Style x:Key="PageTextblock" TargetType="TextBlock">
             <Setter Property="Margin" Value="5,5,5,5"/>
         </Style>
+        -->
     </Window.Resources>
 
     <DockPanel>
@@ -80,6 +83,7 @@
         <Border BorderThickness="2 2 2 2" BorderBrush="LightGray">
             <Grid Margin="20 5 20 5">
                 <!-- Start page -->
+                <!--
                 <DockPanel Visibility="Collapsed" Name="StartPage">
                     <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Welcome to FileDB2!</Label>
                     <Grid Style="{StaticResource PageGrid}">
@@ -101,7 +105,10 @@
                         <Label></Label>
                     </Grid>
                 </DockPanel>
+                -->
+                <Views:StartView Visibility="Collapsed" x:Name="StartPage"/>
                 <!-- Find page -->
+                <!--
                 <Grid Visibility="Collapsed" Name="FindPage">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
@@ -189,14 +196,20 @@
                     <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding CurrentFileLoadError}" Margin="10" Visibility="{Binding CurrentFileLoadError, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
                     <Image Grid.Row="5" Grid.Column="1" x:Name="CurrentFileImage" Stretch="Uniform" RenderOptions.BitmapScalingMode="Fant" ToolTip="{Binding CurrentFileInternalPath}"/>
                 </Grid>
+                -->
+                <Views:FindView Visibility="Collapsed" x:Name="FindPage"/>
                 <!-- Birthdays page -->
+                <!--
                 <DockPanel Visibility="Collapsed" Name="BirthdaysPage">
                     <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Birthdays</Label>
                     <ScrollViewer>
                         <DataGrid ItemsSource="{Binding Birthdays}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="false" CanUserDeleteRows="false" IsReadOnly="True" SelectionMode="Single"/>
                     </ScrollViewer>
                 </DockPanel>
+                -->
+                <Views:BirthdaysView Visibility="Collapsed" x:Name="BirthdaysPage"/>
                 <!-- Persons page -->
+                <!--
                 <DockPanel Visibility="Collapsed" Name="PersonsPage">
                     <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Persons</Label>
                     <ScrollViewer>
@@ -221,7 +234,10 @@
                         </Grid>
                     </ScrollViewer>
                 </DockPanel>
+                -->
+                <Views:PersonsView Visibility="Collapsed" x:Name="PersonsPage"/>
                 <!-- Locations page -->
+                <!--
                 <DockPanel Visibility="Collapsed" Name="LocationsPage">
                     <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Locations</Label>
                     <ScrollViewer>
@@ -246,7 +262,10 @@
                         </Grid>
                     </ScrollViewer>
                 </DockPanel>
+                -->
+                <Views:LocationsView Visibility="Collapsed" x:Name="LocationsPage"/>
                 <!-- Tags page -->
+                <!--
                 <DockPanel Visibility="Collapsed" Name="TagsPage">
                     <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Tags</Label>
                     <ScrollViewer>
@@ -271,7 +290,10 @@
                         </Grid>
                     </ScrollViewer>
                 </DockPanel>
+                -->
+                <Views:TagsView Visibility="Collapsed" x:Name="TagsPage"/>
                 <!-- Import page -->
+                <!--
                 <DockPanel Visibility="Collapsed" Name="ImportPage">
                     <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Import</Label>
                     <StackPanel Orientation="Vertical">
@@ -280,6 +302,8 @@
                         <Button Command="{Binding ImportNewFilesCommand}">Import all new files</Button>
                     </StackPanel>
                 </DockPanel>
+                -->
+                <Views:ImportView Visibility="Collapsed" x:Name="ImportPage"/>
                 <!-- Tools page -->
                 <DockPanel Visibility="Collapsed" Name="ToolsPage">
                     <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Tools</Label>

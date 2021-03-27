@@ -51,7 +51,7 @@ namespace FileDB2Browser.Config
                 }
             }
 
-            return null;
+            return new FileDB2BrowserConfig();
         }
 
         public static bool FileExists()

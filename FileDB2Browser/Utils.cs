@@ -3,11 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FileDB2Browser.Config;
+using FileDB2Interface;
 
 namespace FileDB2Browser
 {
     public static class Utils
     {
+        public static FileDB2BrowserConfig BrowserConfig { get; } = FileDB2BrowserConfigIO.Read();
+
+        public static FileDB2Handle FileDB2Handle
+        {
+            get
+            {
+                if (fileDB2Handle == null)
+                {
+                    var config = new FileDB2Config()
+                    {
+                        Database = BrowserConfig.Database,
+                        FilesRootDirectory = BrowserConfig.FilesRootDirectory,
+                    };
+                    fileDB2Handle = new FileDB2Handle(config);
+                }
+                return fileDB2Handle;
+            }
+        }
+        private static FileDB2Handle fileDB2Handle;
+
         public static int GetYearsAgo(DateTime now, DateTime dateTime)
         {
             int yearsAgo = now.Year - dateTime.Year;

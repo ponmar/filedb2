@@ -23,11 +23,9 @@ namespace FileDB2Browser
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window, IImagePresenter
+    public partial class MainWindow : Window
     {
         private Page currentPage;
-        private readonly FileDB2Handle fileDB2Handle;
-        private readonly FileDB2BrowserConfig browserConfig;
 
         public MainWindow()
         {
@@ -41,20 +39,6 @@ namespace FileDB2Browser
                 }
             }
 
-            browserConfig = FileDB2BrowserConfigIO.Read();
-            if (browserConfig == null)
-            {
-                // TODO: show error dialog
-                browserConfig = new FileDB2BrowserConfig();
-            }
-
-            var config = new FileDB2Config()
-            {
-                Database = browserConfig.Database,
-                FilesRootDirectory = browserConfig.FilesRootDirectory,
-            };
-
-            fileDB2Handle = new FileDB2Handle(config);
             SetPage(Page.Start, true);
         }
 
@@ -115,46 +99,38 @@ namespace FileDB2Browser
                 switch (page)
                 {
                     case Page.Start:
-                        DataContext = new StartViewModel(fileDB2Handle);
+                        //DataContext = new StartViewModel(fileDB2Handle);
                         StartPage.Visibility = Visibility.Visible;
                         break;
                     case Page.Find:
-                        DataContext = new FindViewModel(fileDB2Handle, this);
+                        //DataContext = new FindViewModel(fileDB2Handle, this);
                         FindPage.Visibility = Visibility.Visible;
                         break;
                     case Page.Birthdays:
-                        DataContext = new BirthdaysViewModel(fileDB2Handle);
+                        //DataContext = new BirthdaysViewModel(fileDB2Handle);
                         BirthdaysPage.Visibility = Visibility.Visible;
                         break;
                     case Page.Persons:
-                        DataContext = new PersonsViewModel(fileDB2Handle);
+                        //DataContext = new PersonsViewModel(fileDB2Handle);
                         PersonsPage.Visibility = Visibility.Visible;
                         break;
                     case Page.Locations:
-                        DataContext = new LocationsViewModel(fileDB2Handle);
+                        //DataContext = new LocationsViewModel(fileDB2Handle);
                         LocationsPage.Visibility = Visibility.Visible;
                         break;
                     case Page.Tags:
-                        DataContext = new TagsViewModel(fileDB2Handle);
+                        //DataContext = new TagsViewModel(fileDB2Handle);
                         TagsPage.Visibility = Visibility.Visible;
                         break;
                     case Page.Import:
-                        DataContext = new ImportViewModel(fileDB2Handle, browserConfig);
+                        //DataContext = new ImportViewModel(fileDB2Handle, browserConfig);
                         ImportPage.Visibility = Visibility.Visible;
                         break;
                     case Page.Tools:
-                        DataContext = new ToolsViewModel(fileDB2Handle);
+                        //DataContext = new ToolsViewModel(fileDB2Handle);
                         ToolsPage.Visibility = Visibility.Visible;
                         break;
                 }
-            }
-        }
-
-        public void ShowImage(BitmapImage image)
-        {
-            if (currentPage == Page.Find)
-            {
-                CurrentFileImage.Source = image;
             }
         }
     }
