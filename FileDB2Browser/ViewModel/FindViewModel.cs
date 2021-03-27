@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -16,6 +17,30 @@ namespace FileDB2Browser.ViewModel
     public interface IImagePresenter
     {
         void ShowImage(BitmapImage image);
+    }
+
+    public class PersonToAddSorter : IComparer<PersonToAdd>
+    {
+        public int Compare(PersonToAdd x, PersonToAdd y)
+        {
+            return x.Name.CompareTo(y.Name);
+        }
+    }
+
+    public class LocationToAddSorter : IComparer<LocationToAdd>
+    {
+        public int Compare(LocationToAdd x, LocationToAdd y)
+        {
+            return x.Name.CompareTo(y.Name);
+        }
+    }
+
+    public class TagToAddSorter : IComparer<TagToAdd>
+    {
+        public int Compare(TagToAdd x, TagToAdd y)
+        {
+            return x.Name.CompareTo(y.Name);
+        }
     }
 
     public class PersonToAdd
@@ -377,15 +402,15 @@ namespace FileDB2Browser.ViewModel
             TotalNumberOfFiles = fileDB2Handle.GetFileCount();
 
             var persons = fileDB2Handle.GetPersons().Select(p => new PersonToAdd() { Id = p.id, Name = p.firstname + " " + p.lastname }).ToList();
-            //persons.Sort();
+            persons.Sort(new PersonToAddSorter());
             Persons = new ObservableCollection<PersonToAdd>(persons);
 
             var locations = fileDB2Handle.GetLocations().Select(l => new LocationToAdd() { Id = l.id, Name = l.name }).ToList();
-            //locations.Sort();
+            locations.Sort(new LocationToAddSorter());
             Locations = new ObservableCollection<LocationToAdd>(locations);
 
             var tags = fileDB2Handle.GetTags().Select(t => new TagToAdd() { Id = t.id, Name = t.name }).ToList();
-            //tags.Sort();
+            tags.Sort(new TagToAddSorter());
             Tags = new ObservableCollection<TagToAdd>(tags);
         }
 
