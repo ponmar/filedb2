@@ -8,10 +8,8 @@ using System.Windows.Input;
 
 namespace FileDB2Browser.ViewModel
 {
-    public class MainViewModel : INotifyPropertyChanged
+    public class MainViewModel : ViewModelBase
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
         public ICommand OpenStartPageCommand
         {
             get
@@ -88,112 +86,56 @@ namespace FileDB2Browser.ViewModel
         public bool StartPageActive
         {
             get => startPageActive;
-            private set
-            {
-                if (value != startPageActive)
-                {
-                    startPageActive = value;
-                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(StartPageActive)));
-                }
-            }
+            private set { SetProperty(ref startPageActive, value); }
         }
         private bool startPageActive = true;
 
         public bool FindPageActive
         {
             get => findPageActive;
-            private set
-            {
-                if (value != findPageActive)
-                {
-                    findPageActive = value;
-                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(FindPageActive)));
-                }
-            }
+            private set { SetProperty(ref findPageActive, value); }
         }
         private bool findPageActive = false;
 
         public bool BirthdaysPageActive
         {
             get => birthdaysPageActive;
-            private set
-            {
-                if (value != birthdaysPageActive)
-                {
-                    birthdaysPageActive = value;
-                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(BirthdaysPageActive)));
-                }
-            }
+            private set { SetProperty(ref birthdaysPageActive, value); }
         }
         private bool birthdaysPageActive = false;
 
         public bool PersonsPageActive
         {
             get => personsPageActive;
-            private set
-            {
-                if (value != personsPageActive)
-                {
-                    personsPageActive = value;
-                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(PersonsPageActive)));
-                }
-            }
+            private set { SetProperty(ref personsPageActive, value); }
         }
         private bool personsPageActive = false;
 
         public bool LocationsPageActive
         {
             get => locationsPageActive;
-            private set
-            {
-                if (value != locationsPageActive)
-                {
-                    locationsPageActive = value;
-                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(LocationsPageActive)));
-                }
-            }
+            private set { SetProperty(ref locationsPageActive, value); }
         }
         private bool locationsPageActive = false;
 
         public bool TagsPageActive
         {
             get => tagsPageActive;
-            private set
-            {
-                if (value != tagsPageActive)
-                {
-                    tagsPageActive = value;
-                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(TagsPageActive)));
-                }
-            }
+            private set { SetProperty(ref tagsPageActive, value); }
         }
         private bool tagsPageActive = false;
 
         public bool ImportPageActive
         {
             get => importPageActive;
-            private set
-            {
-                if (value != importPageActive)
-                {
-                    importPageActive = value;
-                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(ImportPageActive)));
-                }
-            }
+            private set { SetProperty(ref importPageActive, value); }
         }
         private bool importPageActive = false;
 
         public bool ToolsPageActive
         {
             get => toolsPageActive;
-            private set
-            {
-                if (value != toolsPageActive)
-                {
-                    toolsPageActive = value;
-                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(ToolsPageActive)));
-                }
-            }
+            private set { SetProperty(ref toolsPageActive, value); }
         }
         private bool toolsPageActive = false;
 
