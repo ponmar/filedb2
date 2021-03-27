@@ -190,7 +190,7 @@ namespace FileDB2Browser.ViewModel
         public string SearchPattern
         {
             get => searchPattern;
-            private set { SetProperty(ref searchPattern, value); }
+            set { SetProperty(ref searchPattern, value); }
         }
         private string searchPattern;
 
