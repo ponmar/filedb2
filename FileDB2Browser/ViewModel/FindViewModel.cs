@@ -70,6 +70,8 @@ namespace FileDB2Browser.ViewModel
 
         private readonly IImagePresenter imagePresenter;
 
+        #region Browsing commands
+
         public ICommand PrevFileCommand
         {
             get
@@ -124,6 +126,10 @@ namespace FileDB2Browser.ViewModel
         }
         private ICommand lastFileCommand;
 
+        #endregion
+
+        #region Search commands and properties
+
         public ICommand FindRandomFilesCommand
         {
             get
@@ -150,6 +156,44 @@ namespace FileDB2Browser.ViewModel
             }
         }
         private ICommand findFilesByTextCommand;
+
+        public string SearchPattern
+        {
+            get => searchPattern;
+            set { SetProperty(ref searchPattern, value); }
+        }
+        private string searchPattern;
+
+        public ICommand FindFilesWithPersonCommand
+        {
+            get
+            {
+                return findFilesWithPersonCommand ??= new CommandHandler(FindFilesWithPerson);
+            }
+        }
+        private ICommand findFilesWithPersonCommand;
+
+        public ICommand FindFilesWithLocationCommand
+        {
+            get
+            {
+                return findFilesWithLocationCommand ??= new CommandHandler(FindFilesWithLocation);
+            }
+        }
+        private ICommand findFilesWithLocationCommand;
+
+        public ICommand FindFilesWithTagCommand
+        {
+            get
+            {
+                return findFilesWithTagCommand ??= new CommandHandler(FindFilesWithTag);
+            }
+        }
+        private ICommand findFilesWithTagCommand;
+
+        #endregion
+
+        #region Meta-data change commands
 
         public ICommand OpenFileLocationCommand
         {
@@ -187,12 +231,9 @@ namespace FileDB2Browser.ViewModel
         }
         private ICommand addFileTagCommand;
 
-        public string SearchPattern
-        {
-            get => searchPattern;
-            set { SetProperty(ref searchPattern, value); }
-        }
-        private string searchPattern;
+        #endregion
+
+        #region Search result
 
         private List<FilesModel> SearchResult
         {
@@ -239,6 +280,10 @@ namespace FileDB2Browser.ViewModel
         public int TotalNumberOfFiles { get; }
 
         public bool HasSearchResult => SearchResult != null;
+
+        #endregion
+
+        #region Current file properties
 
         public string CurrentFileInternalPath
         {
@@ -302,6 +347,8 @@ namespace FileDB2Browser.ViewModel
             private set { SetProperty(ref currentFileLoadError, value); }
         }
         private string currentFileLoadError;
+
+        #endregion
 
         public ObservableCollection<PersonToAdd> Persons { get; }
 
@@ -413,6 +460,30 @@ namespace FileDB2Browser.ViewModel
             else
             {
                 SearchResult = null;
+            }
+        }
+
+        public void FindFilesWithPerson(object parameter)
+        {
+            if (SelectedPerson != null)
+            {
+                // TODO
+            }
+        }
+
+        public void FindFilesWithLocation(object parameter)
+        {
+            if (SelectedLocation != null)
+            {
+                // TODO
+            }
+        }
+
+        public void FindFilesWithTag(object parameter)
+        {
+            if (SelectedTag != null)
+            {
+                // TODO
             }
         }
 
