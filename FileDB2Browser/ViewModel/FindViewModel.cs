@@ -467,7 +467,7 @@ namespace FileDB2Browser.ViewModel
         {
             if (SelectedPerson != null)
             {
-                // TODO
+                SearchResult = fileDB2Handle.GetFilesWithPersons(new List<int>() { SelectedPerson.Id });
             }
         }
 
@@ -475,7 +475,7 @@ namespace FileDB2Browser.ViewModel
         {
             if (SelectedLocation != null)
             {
-                // TODO
+                SearchResult = fileDB2Handle.GetFilesWithLocations(new List<int>() { SelectedLocation.Id });
             }
         }
 
@@ -483,7 +483,7 @@ namespace FileDB2Browser.ViewModel
         {
             if (SelectedTag != null)
             {
-                // TODO
+                SearchResult = fileDB2Handle.GetFilesWithTags(new List<int>() { SelectedTag.Id });
             }
         }
 

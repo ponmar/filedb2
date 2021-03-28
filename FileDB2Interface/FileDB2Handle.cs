@@ -174,6 +174,24 @@ namespace FileDB2Interface
             return connection.QueryFirst<FilesModel>("select * from [files] where path = @path", new { path = path });
         }
 
+        public List<FilesModel> GetFilesWithPersons(List<int> personIds)
+        {
+            using var connection = CreateConnection();
+            return connection.Query<FilesModel>($"select * from [files] inner join filepersons on files.id = filepersons.fileid where filepersons.personid in ({string.Join(',', personIds)})").ToList();
+        }
+
+        public List<FilesModel> GetFilesWithLocations(List<int> locationIds)
+        {
+            using var connection = CreateConnection();
+            return connection.Query<FilesModel>($"select * from [files] inner join filelocations on files.id = filelocations.fileid where filelocations.locationid in ({string.Join(',', locationIds)})").ToList();
+        }
+
+        public List<FilesModel> GetFilesWithTags(List<int> tagIds)
+        {
+            using var connection = CreateConnection();
+            return connection.Query<FilesModel>($"select * from [files] inner join filetags on files.id = filetags.fileid where filetags.tagid in ({string.Join(',', tagIds)})").ToList();
+        }
+
         public bool HasFilePath(string path)
         {
             using var connection = CreateConnection();
