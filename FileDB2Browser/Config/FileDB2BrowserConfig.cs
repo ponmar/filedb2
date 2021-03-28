@@ -13,5 +13,6 @@ namespace FileDB2Browser.Config
         public List<string> BlacklistedFilePathPatterns { get; set; } = new List<string>() { "Thumbs.db", "filedb.db", "unsorted", "TN_" };
         public List<string> WhitelistedFilePathPatterns { get; set; } = new List<string>() { ".jpg", ".png", ".bmp", ".gif", ".avi", ".mpg", ".mp4", ".mkv", ".mov", ".pdf" };
         public bool IncludeHiddenDirectories { get; set; } = false;
+        public TimeSpan SlideshowDelay { get; set; } = TimeSpan.FromSeconds(3);
     }
 }

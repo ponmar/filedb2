@@ -24,7 +24,7 @@ namespace FileDB2Browser.View
         public FindView()
         {
             InitializeComponent();
-            DataContext = new FindViewModel(Utils.FileDB2Handle, this);
+            DataContext = new FindViewModel(Utils.BrowserConfig, Utils.FileDB2Handle, this);
         }
 
         public void ShowImage(BitmapImage image)

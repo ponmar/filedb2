@@ -10,6 +10,7 @@ using System.Net.Cache;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using FileDB2Browser.Config;
 using FileDB2Interface;
 using FileDB2Interface.Model;
 
@@ -398,7 +399,7 @@ namespace FileDB2Browser.ViewModel
 
         private DispatcherTimer slideshowTimer;
 
-        public FindViewModel(FileDB2Handle fileDB2Handle, IImagePresenter imagePresenter)
+        public FindViewModel(FileDB2BrowserConfig config, FileDB2Handle fileDB2Handle, IImagePresenter imagePresenter)
         {
             this.fileDB2Handle = fileDB2Handle;
             this.imagePresenter = imagePresenter;
@@ -419,7 +420,7 @@ namespace FileDB2Browser.ViewModel
 
             slideshowTimer = new DispatcherTimer();
             slideshowTimer.Tick += SlideshowTimer_Tick;
-            slideshowTimer.Interval = TimeSpan.FromSeconds(3);
+            slideshowTimer.Interval = config.SlideshowDelay;
         }
 
         public void PrevFile(object parameter)

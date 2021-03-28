@@ -19,6 +19,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
 
                     <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextblock}">Database:</TextBlock>
@@ -26,6 +27,9 @@
 
                     <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageTextblock}">Files root directory:</TextBlock>
                     <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource PageTextblock}" Text="{Binding FilesRootDirectory}"/>
+
+                    <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource PageTextblock}">Slideshow delay (seconds):</TextBlock>
+                    <TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource PageTextblock}" Text="{Binding SlideshowDelay}"/>
                 </Grid>
             </StackPanel>
         </ScrollViewer>
