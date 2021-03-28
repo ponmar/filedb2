@@ -9,7 +9,15 @@
     <DockPanel>
         <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Birthdays</Label>
         <ScrollViewer>
-            <DataGrid ItemsSource="{Binding Birthdays}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="false" CanUserDeleteRows="false" IsReadOnly="True" SelectionMode="Single"/>
+            <Grid Style="{StaticResource PageGrid}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <DataGrid Grid.Row="0" Grid.Column="0" ItemsSource="{Binding Birthdays}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="false" CanUserDeleteRows="false" IsReadOnly="True" SelectionMode="Single"/>
+            </Grid>
         </ScrollViewer>
     </DockPanel>
 </UserControl>
