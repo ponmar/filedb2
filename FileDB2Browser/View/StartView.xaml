@@ -8,23 +8,26 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <DockPanel>
         <Label Style="{StaticResource PageHeading}" DockPanel.Dock="Top">Welcome to FileDB2!</Label>
-        <Grid Style="{StaticResource PageGrid}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
+        <ScrollViewer>
+            <StackPanel Orientation="Vertical">
+                <Label Style="{StaticResource PageSubHeading}">Configuration</Label>
+                <Grid Style="{StaticResource PageGrid}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextblock}">Database:</TextBlock>
-            <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource PageTextblock}" Text="{Binding Database}"/>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextblock}">Database:</TextBlock>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource PageTextblock}" Text="{Binding Database}"/>
 
-            <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageTextblock}">Files root directory:</TextBlock>
-            <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource PageTextblock}" Text="{Binding FilesRootDirectory}"/>
-
-            <Label></Label>
-        </Grid>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageTextblock}">Files root directory:</TextBlock>
+                    <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource PageTextblock}" Text="{Binding FilesRootDirectory}"/>
+                </Grid>
+            </StackPanel>
+        </ScrollViewer>
     </DockPanel>
 </UserControl>
