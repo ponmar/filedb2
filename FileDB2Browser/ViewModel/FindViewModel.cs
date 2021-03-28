@@ -211,7 +211,7 @@ namespace FileDB2Browser.ViewModel
 
         #endregion
 
-        #region Meta-data change commands
+        #region Meta-data change commands and properties
 
         public ICommand OpenFileLocationCommand
         {
@@ -248,6 +248,22 @@ namespace FileDB2Browser.ViewModel
             }
         }
         private ICommand addFileTagCommand;
+
+        public ICommand SetFileDescriptionCommand
+        {
+            get
+            {
+                return setFileDescriptionCommand ??= new CommandHandler(SetFileDescription);
+            }
+        }
+        private ICommand setFileDescriptionCommand;
+
+        public string NewFileDescription
+        {
+            get => newFileDescription;
+            set { SetProperty(ref newFileDescription, value); }
+        }
+        private string newFileDescription;
 
         #endregion
 
@@ -617,6 +633,8 @@ namespace FileDB2Browser.ViewModel
                 CurrentFileLocations = GetFileLocationsString(selection.id);
                 CurrentFileTags = GetFileTagsString(selection.id);
 
+                NewFileDescription = CurrentFileDescription;
+
                 var uri = new Uri(CurrentFilePath, UriKind.Absolute);
                 try
                 {
@@ -766,6 +784,21 @@ namespace FileDB2Browser.ViewModel
                 {
                     // TODO: show error about already added
                 }
+            }
+        }
+
+        public void SetFileDescription(object parameter)
+        {
+            if (SearchResultIndex != -1)
+            {
+                var selection = SearchResult[SearchResultIndex];
+                var fileId = selection.id;
+                var description = string.IsNullOrEmpty(NewFileDescription) ? null : NewFileDescription;
+                fileDB2Handle.UpdateFileDescription(fileId, description);
+
+                // TODO: better to read from database?
+                selection.description = description;
+                LoadFile(SearchResultIndex);
             }
         }
     }
