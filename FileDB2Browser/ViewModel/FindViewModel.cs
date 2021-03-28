@@ -279,8 +279,8 @@ namespace FileDB2Browser.ViewModel
                         ResetFile();
                     }
 
-                    OnPropertyChanged(nameof(SearchNumberOfHits));
                     OnPropertyChanged(nameof(HasSearchResult));
+                    OnPropertyChanged(nameof(HasNonEmptySearchResult));
                 }
             }
         }
@@ -304,11 +304,18 @@ namespace FileDB2Browser.ViewModel
         }
         private int searchResultItemNumber = 0;
 
-        public int SearchNumberOfHits { get; private set; } = 0;
+        public int SearchNumberOfHits
+        {
+            get => searchNumberOfHits;
+            private set { SetProperty(ref searchNumberOfHits, value); }
+        }
+        private int searchNumberOfHits = 0;
 
         public int TotalNumberOfFiles { get; }
 
         public bool HasSearchResult => SearchResult != null;
+
+        public bool HasNonEmptySearchResult => SearchResult != null && SearchResult.Count > 0;
 
         #endregion
 
@@ -381,19 +388,19 @@ namespace FileDB2Browser.ViewModel
 
         public ObservableCollection<PersonToAdd> Persons { get; }
 
-        public PersonToAdd SelectedPerson { get; set; }
+        public PersonToAdd SelectedPersonToAdd { get; set; }
 
         public PersonToAdd SelectedPersonSearch { get; set; }
 
         public ObservableCollection<LocationToAdd> Locations { get; }
 
-        public LocationToAdd SelectedLocation { get; set; }
+        public LocationToAdd SelectedLocationToAdd { get; set; }
 
         public LocationToAdd SelectedLocationSearch { get; set; }
 
         public ObservableCollection<TagToAdd> Tags { get; }
 
-        public TagToAdd SelectedTag { get; set; }
+        public TagToAdd SelectedTagToAdd { get; set; }
 
         public TagToAdd SelectedTagSearch { get; set; }
 
@@ -713,12 +720,12 @@ namespace FileDB2Browser.ViewModel
 
         public void AddFilePerson(object parameter)
         {
-            if (SearchResultIndex != -1 && SelectedPerson != null)
+            if (SearchResultIndex != -1 && SelectedPersonToAdd != null)
             {
                 var fileId = searchResult[SearchResultIndex].id;
-                if (!fileDB2Handle.GetPersonsFromFile(fileId).Any(p => p.id == SelectedPerson.Id))
+                if (!fileDB2Handle.GetPersonsFromFile(fileId).Any(p => p.id == SelectedPersonToAdd.Id))
                 {
-                    fileDB2Handle.InsertFilePerson(fileId, SelectedPerson.Id);
+                    fileDB2Handle.InsertFilePerson(fileId, SelectedPersonToAdd.Id);
                     LoadFile(SearchResultIndex);
                 }
                 else
@@ -730,12 +737,12 @@ namespace FileDB2Browser.ViewModel
 
         public void AddFileLocation(object parameter)
         {
-            if (SearchResultIndex != -1 && SelectedLocation != null)
+            if (SearchResultIndex != -1 && SelectedLocationToAdd != null)
             {
                 var fileId = searchResult[SearchResultIndex].id;
-                if (!fileDB2Handle.GetLocationsFromFile(fileId).Any(l => l.id == SelectedLocation.Id))
+                if (!fileDB2Handle.GetLocationsFromFile(fileId).Any(l => l.id == SelectedLocationToAdd.Id))
                 {
-                    fileDB2Handle.InsertFileLocation(fileId, SelectedLocation.Id);
+                    fileDB2Handle.InsertFileLocation(fileId, SelectedLocationToAdd.Id);
                     LoadFile(SearchResultIndex);
                 }
                 else
@@ -747,12 +754,12 @@ namespace FileDB2Browser.ViewModel
 
         public void AddFileTag(object parameter)
         {
-            if (SearchResultIndex != -1 && SelectedTag != null)
+            if (SearchResultIndex != -1 && SelectedTagToAdd != null)
             {
                 var fileId = searchResult[SearchResultIndex].id;
-                if (!fileDB2Handle.GetTagsFromFile(fileId).Any(t => t.id == SelectedTag.Id))
+                if (!fileDB2Handle.GetTagsFromFile(fileId).Any(t => t.id == SelectedTagToAdd.Id))
                 {
-                    fileDB2Handle.InsertFileTag(fileId, SelectedTag.Id);
+                    fileDB2Handle.InsertFileTag(fileId, SelectedTagToAdd.Id);
                     LoadFile(SearchResultIndex);
                 }
                 else
