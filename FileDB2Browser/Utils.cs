@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using FileDB2Browser.Config;
 using FileDB2Interface;
 
@@ -89,6 +90,11 @@ namespace FileDB2Browser
         {
             InternalDatetimeToDatetime(datetimeStr, out var result);
             return result;
+        }
+
+        public static void ShowErrorDialog(string message)
+        {
+            MessageBox.Show(message, "FileDB2Browser", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.No);
         }
     }
 }

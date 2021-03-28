@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net.Cache;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
@@ -748,7 +745,7 @@ namespace FileDB2Browser.ViewModel
                 }
                 else
                 {
-                    // TODO: show error about already added
+                    Utils.ShowErrorDialog("This person has already been added");
                 }
             }
         }
@@ -765,7 +762,7 @@ namespace FileDB2Browser.ViewModel
                 }
                 else
                 {
-                    // TODO: show error about already added
+                    Utils.ShowErrorDialog("This location has already been added");
                 }
             }
         }
@@ -782,7 +779,7 @@ namespace FileDB2Browser.ViewModel
                 }
                 else
                 {
-                    // TODO: show error about already added
+                    Utils.ShowErrorDialog("This tag has already been added");
                 }
             }
         }
