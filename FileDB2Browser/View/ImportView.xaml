@@ -8,10 +8,21 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <DockPanel>
         <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Import</Label>
-        <StackPanel Orientation="Vertical">
-            <Button Command="{Binding ScanNewFilesCommand}">Scan for new files</Button>
-            <DataGrid ItemsSource="{Binding NewFiles}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="false" CanUserDeleteRows="false" IsReadOnly="True"/>
-            <Button Command="{Binding ImportNewFilesCommand}">Import all new files</Button>
-        </StackPanel>
+        <ScrollViewer>
+            <Grid Style="{StaticResource PageGrid}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Button Style="{StaticResource NormalButton}" Grid.Row="0" Grid.Column="0" Command="{Binding ScanNewFilesCommand}">Scan for new files</Button>
+                <DataGrid Grid.Row="1" Grid.Column="0" ItemsSource="{Binding NewFiles}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="false" CanUserDeleteRows="false" IsReadOnly="True"/>
+                <Button Style="{StaticResource NormalButton}" Grid.Row="2" Grid.Column="0" Command="{Binding ImportNewFilesCommand}">Import all new files</Button>
+            </Grid>
+        </ScrollViewer>
     </DockPanel>
 </UserControl>

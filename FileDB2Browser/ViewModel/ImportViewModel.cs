@@ -33,7 +33,7 @@ namespace FileDB2Browser.ViewModel
         {
             get
             {
-                return importNewFilesCommand ??= new CommandHandler(ImportNewFiles);
+                return importNewFilesCommand ??= new CommandHandler(ImportNewFiles, CanImportNewFiles);
             }
         }
         private ICommand importNewFilesCommand;
@@ -62,6 +62,11 @@ namespace FileDB2Browser.ViewModel
             {
                 NewFiles.Add(newFile);
             }
+        }
+
+        public bool CanImportNewFiles()
+        {
+            return NewFiles.Count > 0;
         }
 
         public void ImportNewFiles(object parameter)

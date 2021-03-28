@@ -126,6 +126,22 @@ namespace FileDB2Browser.ViewModel
         }
         private ICommand lastFileCommand;
 
+        public ICommand ToggleSlideshowCommand
+        {
+            get
+            {
+                return toggleSlideshowCommand ??= new CommandHandler(ToggleSlideshow);
+            }
+        }
+        private ICommand toggleSlideshowCommand;
+
+        public bool SlideshowActive
+        {
+            get => slideshowActive;
+            set { SetProperty(ref slideshowActive, value); }
+        }
+        private bool slideshowActive = false;
+
         #endregion
 
         #region Search commands and properties
@@ -455,6 +471,19 @@ namespace FileDB2Browser.ViewModel
             if (searchResult != null)
             {
                 LoadFile(SearchResult.Count - 1);
+            }
+        }
+
+        public void ToggleSlideshow(object parameter)
+        {
+            // TODO
+            if (SlideshowActive)
+            {
+
+            }
+            else
+            {
+
             }
         }
 
