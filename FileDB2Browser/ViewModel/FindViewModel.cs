@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net.Cache;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using FileDB2Interface;
 using FileDB2Interface.Model;
 
@@ -395,6 +396,8 @@ namespace FileDB2Browser.ViewModel
 
         public TagToAdd SelectedTagSearch { get; set; }
 
+        private DispatcherTimer slideshowTimer;
+
         public FindViewModel(FileDB2Handle fileDB2Handle, IImagePresenter imagePresenter)
         {
             this.fileDB2Handle = fileDB2Handle;
@@ -413,20 +416,33 @@ namespace FileDB2Browser.ViewModel
             var tags = fileDB2Handle.GetTags().Select(t => new TagToAdd() { Id = t.id, Name = t.name }).ToList();
             tags.Sort(new TagToAddSorter());
             Tags = new ObservableCollection<TagToAdd>(tags);
+
+            slideshowTimer = new DispatcherTimer();
+            slideshowTimer.Tick += SlideshowTimer_Tick;
+            slideshowTimer.Interval = TimeSpan.FromSeconds(3);
         }
 
         public void PrevFile(object parameter)
         {
+            StopSlideshow();
             LoadFile(SearchResultIndex - 1);
         }
 
         public void NextFile(object parameter)
+        {
+            StopSlideshow();
+            NextFile();
+        }
+
+        private void NextFile()
         {
             LoadFile(SearchResultIndex + 1);
         }
 
         public void PrevDirectory(object parameter)
         {
+            StopSlideshow();
+
             if (SearchResultIndex < 1)
                 return;
 
@@ -445,6 +461,8 @@ namespace FileDB2Browser.ViewModel
 
         public void NextDirectory(object parameter)
         {
+            StopSlideshow();
+
             if (SearchResultIndex == -1 || SearchResultIndex == searchResult.Count - 1)
                 return;
 
@@ -463,11 +481,13 @@ namespace FileDB2Browser.ViewModel
 
         public void FirstFile(object parameter)
         {
+            StopSlideshow();
             LoadFile(0);
         }
 
         public void LastFile(object parameter)
         {
+            StopSlideshow();
             if (searchResult != null)
             {
                 LoadFile(SearchResult.Count - 1);
@@ -476,29 +496,54 @@ namespace FileDB2Browser.ViewModel
 
         public void ToggleSlideshow(object parameter)
         {
-            // TODO
             if (SlideshowActive)
             {
-
+                StartSlideshow();
             }
             else
             {
+                StopSlideshow();
+            }
+        }
 
+        private void StartSlideshow()
+        {
+            if (SearchResult != null && SearchResult.Count > 1)
+            {
+                slideshowTimer.Start();
+            }
+        }
+
+        private void StopSlideshow()
+        {
+            slideshowTimer.Stop();
+            SlideshowActive = false;
+        }
+
+        private void SlideshowTimer_Tick(object sender, EventArgs e)
+        {
+            NextFile();
+            if (SearchResultIndex == SearchResult.Count - 1)
+            {
+                StopSlideshow();
             }
         }
 
         public void FindRandomFiles(object parameter)
         {
+            StopSlideshow();
             SearchResult = fileDB2Handle.SearchFilesRandom(10);
         }
 
         public void FindAllFiles(object parameter)
         {
+            StopSlideshow();
             SearchResult = fileDB2Handle.GetFiles();
         }
 
         public void FindFilesByText(object parameter)
         {
+            StopSlideshow();
             if (!string.IsNullOrEmpty(SearchPattern))
             {
                 SearchResult = fileDB2Handle.SearchFiles(SearchPattern);
@@ -511,6 +556,7 @@ namespace FileDB2Browser.ViewModel
 
         public void FindFilesWithPerson(object parameter)
         {
+            StopSlideshow();
             if (SelectedPersonSearch != null)
             {
                 SearchResult = fileDB2Handle.GetFilesWithPersons(new List<int>() { SelectedPersonSearch.Id });
@@ -519,6 +565,7 @@ namespace FileDB2Browser.ViewModel
 
         public void FindFilesWithLocation(object parameter)
         {
+            StopSlideshow();
             if (SelectedLocationSearch != null)
             {
                 SearchResult = fileDB2Handle.GetFilesWithLocations(new List<int>() { SelectedLocationSearch.Id });
@@ -527,6 +574,7 @@ namespace FileDB2Browser.ViewModel
 
         public void FindFilesWithTag(object parameter)
         {
+            StopSlideshow();
             if (SelectedTagSearch != null)
             {
                 SearchResult = fileDB2Handle.GetFilesWithTags(new List<int>() { SelectedTagSearch.Id });
