@@ -54,7 +54,7 @@
         </StackPanel>
         <StackPanel Orientation="Vertical" Grid.Row="4" Grid.Column="0" Grid.RowSpan="2" Margin="5">
             <Border Style="{StaticResource BorderGroup}">
-                <Expander Header="Categorize" Margin="5">
+                <Expander Header="Categorize" Margin="5" IsExpanded="False">
                     <StackPanel Orientation="Vertical">
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -103,8 +103,18 @@
             </Border>
 
             <Border Style="{StaticResource BorderGroup}" Margin="0 20 0 0">
-                <Expander Header="File actions" Margin="5">
+                <Expander Header="File actions" Margin="5" IsExpanded="False">
                     <Button Style="{StaticResource NormalButton}" Command="{Binding OpenFileLocationCommand}">Open file directory</Button>
+                </Expander>
+            </Border>
+
+            <Border Style="{StaticResource BorderGroup}" Margin="0 20 0 0">
+                <Expander Header="File list tools" Margin="5" IsExpanded="False">
+                </Expander>
+            </Border>
+
+            <Border Style="{StaticResource BorderGroup}" Margin="0 20 0 0">
+                <Expander Header="Export" Margin="5" IsExpanded="False">
                 </Expander>
             </Border>
         </StackPanel>
