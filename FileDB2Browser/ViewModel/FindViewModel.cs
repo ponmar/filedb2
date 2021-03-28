@@ -271,9 +271,20 @@ namespace FileDB2Browser.ViewModel
         public int SearchResultIndex
         {
             get => searchResultIndex;
-            private set { SetProperty(ref searchResultIndex, value); }
+            private set
+            {
+                SetProperty(ref searchResultIndex, value);
+                SearchResultItemNumber = searchResultIndex + 1;
+            }
         }
         private int searchResultIndex = -1;
+
+        public int SearchResultItemNumber
+        {
+            get => searchResultItemNumber;
+            private set { SetProperty(ref searchResultItemNumber, value); }
+        }
+        private int searchResultItemNumber = 0;
 
         public int SearchNumberOfHits { get; private set; } = 0;
 
