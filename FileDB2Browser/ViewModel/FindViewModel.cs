@@ -354,13 +354,19 @@ namespace FileDB2Browser.ViewModel
 
         public PersonToAdd SelectedPerson { get; set; }
 
+        public PersonToAdd SelectedPersonSearch { get; set; }
+
         public ObservableCollection<LocationToAdd> Locations { get; }
 
         public LocationToAdd SelectedLocation { get; set; }
 
+        public LocationToAdd SelectedLocationSearch { get; set; }
+
         public ObservableCollection<TagToAdd> Tags { get; }
 
         public TagToAdd SelectedTag { get; set; }
+
+        public TagToAdd SelectedTagSearch { get; set; }
 
         public FindViewModel(FileDB2Handle fileDB2Handle, IImagePresenter imagePresenter)
         {
@@ -465,25 +471,25 @@ namespace FileDB2Browser.ViewModel
 
         public void FindFilesWithPerson(object parameter)
         {
-            if (SelectedPerson != null)
+            if (SelectedPersonSearch != null)
             {
-                SearchResult = fileDB2Handle.GetFilesWithPersons(new List<int>() { SelectedPerson.Id });
+                SearchResult = fileDB2Handle.GetFilesWithPersons(new List<int>() { SelectedPersonSearch.Id });
             }
         }
 
         public void FindFilesWithLocation(object parameter)
         {
-            if (SelectedLocation != null)
+            if (SelectedLocationSearch != null)
             {
-                SearchResult = fileDB2Handle.GetFilesWithLocations(new List<int>() { SelectedLocation.Id });
+                SearchResult = fileDB2Handle.GetFilesWithLocations(new List<int>() { SelectedLocationSearch.Id });
             }
         }
 
         public void FindFilesWithTag(object parameter)
         {
-            if (SelectedTag != null)
+            if (SelectedTagSearch != null)
             {
-                SearchResult = fileDB2Handle.GetFilesWithTags(new List<int>() { SelectedTag.Id });
+                SearchResult = fileDB2Handle.GetFilesWithTags(new List<int>() { SelectedTagSearch.Id });
             }
         }
 

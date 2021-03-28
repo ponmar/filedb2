@@ -27,13 +27,13 @@
                 <TextBox Margin="20 0 0 0" Width="100" VerticalAlignment="Center" Text="{Binding SearchPattern}"/>
                 <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesByTextCommand}">Search</Button>
                 <TextBlock ToolTip="Persons" Text="&#x1F642;" Margin="20 0 3 0" VerticalAlignment="Center"/>
-                <ComboBox Width="100" VerticalAlignment="Center" ItemsSource="{Binding Persons}" SelectedItem="{Binding SelectedPerson}" DisplayMemberPath="Name"/>
+                <ComboBox Width="100" VerticalAlignment="Center" ItemsSource="{Binding Persons}" SelectedItem="{Binding SelectedPersonSearch}" DisplayMemberPath="Name"/>
                 <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesWithPersonCommand}">Search</Button>
                 <TextBlock ToolTip="Locations" Text="&#x1F3E0;" Margin="20 0 3 0" VerticalAlignment="Center"/>
-                <ComboBox Width="100" VerticalAlignment="Center" ItemsSource="{Binding Locations}" SelectedItem="{Binding SelectedLocation}" DisplayMemberPath="Name"/>
+                <ComboBox Width="100" VerticalAlignment="Center" ItemsSource="{Binding Locations}" SelectedItem="{Binding SelectedLocationSearch}" DisplayMemberPath="Name"/>
                 <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesWithLocationCommand}">Search</Button>
                 <TextBlock ToolTip="Tags" Text="&#x1F516;" Margin="20 0 3 0" VerticalAlignment="Center"/>
-                <ComboBox Width="100" VerticalAlignment="Center" ItemsSource="{Binding Tags}" SelectedItem="{Binding SelectedTag}" DisplayMemberPath="Name"/>
+                <ComboBox Width="100" VerticalAlignment="Center" ItemsSource="{Binding Tags}" SelectedItem="{Binding SelectedTagSearch}" DisplayMemberPath="Name"/>
                 <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesWithTagCommand}">Search</Button>
             </StackPanel>
         </Border>
