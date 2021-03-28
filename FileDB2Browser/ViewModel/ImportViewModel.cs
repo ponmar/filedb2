@@ -18,7 +18,7 @@ namespace FileDB2Browser.ViewModel
         public string DateModified { get; set; }
     }
 
-    public class ImportViewModel
+    public class ImportViewModel : ViewModelBase
     {
         public ICommand ScanNewFilesCommand
         {

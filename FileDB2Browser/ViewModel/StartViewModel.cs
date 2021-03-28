@@ -7,7 +7,7 @@ using FileDB2Interface;
 
 namespace FileDB2Browser.ViewModel
 {
-    public class StartViewModel
+    public class StartViewModel : ViewModelBase
     {
         public string Database { get; }
 

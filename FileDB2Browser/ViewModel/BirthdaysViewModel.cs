@@ -16,7 +16,7 @@ namespace FileDB2Browser.ViewModel
         public string BornYearsAgo { get; set; }
     }
 
-    public class BirthdaysViewModel
+    public class BirthdaysViewModel : ViewModelBase
     {
         public ObservableCollection<PersonBirthday> Birthdays { get; set; } = new ObservableCollection<PersonBirthday>();
 

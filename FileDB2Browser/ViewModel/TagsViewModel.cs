@@ -27,7 +27,7 @@ namespace FileDB2Browser.ViewModel
         }
     }
 
-    public class TagsViewModel
+    public class TagsViewModel : ViewModelBase
     {
         public ICommand RemoveTagCommand
         {

@@ -32,7 +32,7 @@ namespace FileDB2Browser.ViewModel
         }
     }
 
-    public class PersonsViewModel
+    public class PersonsViewModel : ViewModelBase
     {
         public ICommand RemovePersonCommand
         {

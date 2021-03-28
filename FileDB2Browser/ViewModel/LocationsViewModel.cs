@@ -31,7 +31,7 @@ namespace FileDB2Browser.ViewModel
         }
     }
 
-    public class LocationsViewModel
+    public class LocationsViewModel : ViewModelBase
     {
         public ICommand RemoveLocationCommand
         {
