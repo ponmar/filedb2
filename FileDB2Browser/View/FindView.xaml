@@ -54,32 +54,34 @@
         </StackPanel>
         <StackPanel Orientation="Vertical" Grid.Row="4" Grid.Column="0" Grid.RowSpan="2" Margin="5">
             <Border Style="{StaticResource BorderGroup}">
-                <StackPanel Orientation="Vertical" Margin="5">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="auto"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                        </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0" Grid.Column="0" Text="&#x1F642;" VerticalAlignment="Center" Margin="5" ToolTip="Person to add to file"/>
-                        <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Persons}" VerticalAlignment="Center" SelectedItem="{Binding SelectedPerson}" DisplayMemberPath="Name"/>
-                        <Button Grid.Row="0" Grid.Column="2" Style="{StaticResource NormalButton}" Command="{Binding AddFilePersonCommand}">Add</Button>
-                        <TextBlock Grid.Row="1" Grid.Column="0" Text="&#x1F3E0;" VerticalAlignment="Center" Margin="5" ToolTip="Location to add to file"/>
-                        <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Locations}" VerticalAlignment="Center" SelectedItem="{Binding SelectedLocation}" DisplayMemberPath="Name"/>
-                        <Button Grid.Row="1" Grid.Column="2" Style="{StaticResource NormalButton}" Command="{Binding AddFileLocationCommand}">Add</Button>
-                        <TextBlock Grid.Row="2" Grid.Column="0" Text="&#x1F516;" VerticalAlignment="Center" Margin="5" ToolTip="Tag to add to file"/>
-                        <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Tags}" VerticalAlignment="Center" SelectedItem="{Binding SelectedTag}" DisplayMemberPath="Name"/>
-                        <Button Grid.Row="2" Grid.Column="2" Style="{StaticResource NormalButton}" Command="{Binding AddFileTagCommand}">Add</Button>
-                    </Grid>
-                    <Button Style="{StaticResource NormalButton}" Command="{Binding OpenFileLocationCommand}">Open file directory</Button>
-                </StackPanel>
+                <Expander Header="Categorize" Margin="5">
+                    <StackPanel Orientation="Vertical">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="&#x1F642;" VerticalAlignment="Center" Margin="5" ToolTip="Person to add to file"/>
+                            <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Persons}" VerticalAlignment="Center" SelectedItem="{Binding SelectedPerson}" DisplayMemberPath="Name"/>
+                            <Button Grid.Row="0" Grid.Column="2" Style="{StaticResource NormalButton}" Command="{Binding AddFilePersonCommand}">Add</Button>
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="&#x1F3E0;" VerticalAlignment="Center" Margin="5" ToolTip="Location to add to file"/>
+                            <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Locations}" VerticalAlignment="Center" SelectedItem="{Binding SelectedLocation}" DisplayMemberPath="Name"/>
+                            <Button Grid.Row="1" Grid.Column="2" Style="{StaticResource NormalButton}" Command="{Binding AddFileLocationCommand}">Add</Button>
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="&#x1F516;" VerticalAlignment="Center" Margin="5" ToolTip="Tag to add to file"/>
+                            <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Tags}" VerticalAlignment="Center" SelectedItem="{Binding SelectedTag}" DisplayMemberPath="Name"/>
+                            <Button Grid.Row="2" Grid.Column="2" Style="{StaticResource NormalButton}" Command="{Binding AddFileTagCommand}">Add</Button>
+                        </Grid>
+                        <Button Style="{StaticResource NormalButton}" Command="{Binding OpenFileLocationCommand}">Open file directory</Button>
+                    </StackPanel>
+                </Expander>
             </Border>
-
+        
             <Border Style="{StaticResource BorderGroup}" Margin="0 20 0 0">
                 <StackPanel Orientation="Vertical" Margin="5">
                     <TextBlock Text="{Binding CurrentFileDateTime}" Visibility="{Binding CurrentFileDateTime, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
