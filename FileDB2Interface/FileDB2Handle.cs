@@ -12,6 +12,7 @@ using Directory = System.IO.Directory;
 using log4net;
 using System.Reflection;
 using log4net.Config;
+using System.Globalization;
 
 namespace FileDB2Interface
 {
@@ -341,8 +342,11 @@ namespace FileDB2Interface
 
         public void InsertPerson(string firstname, string lastname, string description = null, string dateOfBirth = null, int? profileFileId = null)
         {
-            // TODO: validate dateOfBirth
-            // TODO: validate profileFileId (it shall exist if not null)
+            ValidatePersonFirstname(firstname);
+            ValidatePersonLastname(lastname);
+            ValidatePersonDescription(description);
+            ValidatePersonDateOfBirth(dateOfBirth);
+            ValidatePersonProfileFileId(profileFileId);
 
             try
             {
@@ -359,6 +363,8 @@ namespace FileDB2Interface
 
         public void UpdatePersonFirstname(int id, string firstname)
         {
+            ValidatePersonFirstname(firstname);
+
             try
             {
                 using var connection = CreateConnection();
@@ -373,6 +379,8 @@ namespace FileDB2Interface
 
         public void UpdatePersonLastname(int id, string lastname)
         {
+            ValidatePersonLastname(lastname);
+
             try
             {
                 using var connection = CreateConnection();
@@ -387,6 +395,8 @@ namespace FileDB2Interface
 
         public void UpdatePersonDescription(int id, string description)
         {
+            ValidatePersonDescription(description);
+
             try
             {
                 using var connection = CreateConnection();
@@ -401,9 +411,10 @@ namespace FileDB2Interface
 
         public void UpdatePersonDateOfBirth(int id, string dateOfBirthStr)
         {
+            ValidatePersonDateOfBirth(dateOfBirthStr);
+
             try
             {
-                // TODO: validate dateOfBirthStr
                 using var connection = CreateConnection();
                 var sql = "update [persons] set dateofbirth = @dateOfBirthStr where id = @id";
                 connection.Execute(sql, new { dateOfBirthStr = dateOfBirthStr, id = id });
@@ -422,6 +433,8 @@ namespace FileDB2Interface
 
         public void UpdatePersonProfileFileId(int id, int? profileFileId)
         {
+            ValidatePersonProfileFileId(profileFileId);
+
             try
             {
                 using var connection = CreateConnection();
@@ -683,6 +696,51 @@ namespace FileDB2Interface
         private string GeoLocationToString(GeoLocation geoLocation)
         {
             return geoLocation != null ? $"{geoLocation.Latitude} {geoLocation.Longitude}".Replace(',', '.') : null;
+        }
+
+        #endregion
+
+        #region Data validation
+
+        public void ValidatePersonFirstname(string firstname)
+        {
+            if (string.IsNullOrEmpty(firstname))
+            {
+                throw new FileDB2DataValidationException("Person firstname empty");
+            }
+        }
+
+        public void ValidatePersonLastname(string lastname)
+        {
+            if (string.IsNullOrEmpty(lastname))
+            {
+                throw new FileDB2DataValidationException("Person lastname empty");
+            }
+        }
+
+        public void ValidatePersonDescription(string description)
+        {
+            if (description == string.Empty)
+            {
+                throw new FileDB2DataValidationException("Empty person description should be null");
+            }
+        }
+
+        public void ValidatePersonDateOfBirth(string dateOfBirth)
+        {
+            if (dateOfBirth != null &&
+                !DateTime.TryParseExact(dateOfBirth, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var _))
+            {
+                throw new FileDB2DataValidationException("Invalid format for person date of birth (should be YYYY-MM-DD)");
+            }
+        }
+
+        public void ValidatePersonProfileFileId(int? profileFileId)
+        {
+            if (profileFileId != null && !HasFileId(profileFileId.Value))
+            {
+                throw new FileDB2DataValidationException($"File with id {profileFileId.Value} does not exist");
+            }
         }
 
         #endregion

@@ -93,29 +93,31 @@ namespace FileDB2Browser.ViewModel
                     return;
                 }
 
-                if (!fileDB2Handle.HasFileId(value))
-                {
-                    Utils.ShowErrorDialog($"File with id {value} does not exist");
-                    return;
-                }
-
                 newProfileFileId = value;
             }
 
             var newDescription = string.IsNullOrEmpty(description) ? null : description;
             var newDateOfBirth = string.IsNullOrEmpty(dateOfBirth) ? null : dateOfBirth;
 
-            if (personId == -1)
+            try
             {
-                fileDB2Handle.InsertPerson(firstname, lastname, newDescription, newDateOfBirth, newProfileFileId);
+                if (personId == -1)
+                {
+                    fileDB2Handle.InsertPerson(firstname, lastname, newDescription, newDateOfBirth, newProfileFileId);
+                }
+                else
+                {
+                    // TODO: update all in one transaction?
+                    fileDB2Handle.UpdatePersonFirstname(personId, firstname);
+                    fileDB2Handle.UpdatePersonLastname(personId, lastname);
+                    fileDB2Handle.UpdateFileDescription(personId, newDescription);
+                    fileDB2Handle.UpdatePersonDateOfBirth(personId, newDateOfBirth);
+                    fileDB2Handle.UpdatePersonProfileFileId(personId, newProfileFileId);
+                }
             }
-            else
+            catch (FileDB2DataValidationException e)
             {
-                fileDB2Handle.UpdatePersonFirstname(personId, firstname);
-                fileDB2Handle.UpdatePersonLastname(personId, lastname);
-                fileDB2Handle.UpdateFileDescription(personId, newDescription);
-                fileDB2Handle.UpdatePersonDateOfBirth(personId, newDateOfBirth);
-                fileDB2Handle.UpdatePersonProfileFileId(personId, newProfileFileId);
+                Utils.ShowErrorDialog(e.Message);
             }
         }
     }
