@@ -17,7 +17,6 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource PageHeading}">Find Files</Label>
@@ -55,7 +54,7 @@
             <ToggleButton Style="{StaticResource NavigationToggleButton}" Command="{Binding ToggleSlideshowCommand}" IsChecked="{Binding SlideshowActive}" ToolTip="Toggle slideshow">&#x1F39E;</ToggleButton>
         </StackPanel>
         <!-- Left side areas -->
-        <StackPanel Orientation="Vertical" Grid.Row="4" Grid.Column="0" Grid.RowSpan="2" Margin="5">
+        <StackPanel Orientation="Vertical" Grid.Row="4" Grid.Column="0" Margin="5">
             <!-- Categorization -->
             <Border Style="{StaticResource BorderGroup}">
                 <Expander Header="Categorize" Margin="5" IsExpanded="False">
@@ -165,7 +164,7 @@
             </Border>
         </StackPanel>
         <!-- Image or error message -->
-        <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding CurrentFileLoadError}" Margin="10" Visibility="{Binding CurrentFileLoadError, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
-        <Image Grid.Row="5" Grid.Column="1" x:Name="CurrentFileImage" Stretch="Uniform" RenderOptions.BitmapScalingMode="Fant" ToolTip="{Binding CurrentFileInternalPath}"/>
+        <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding CurrentFileLoadError}" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding CurrentFileLoadError, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
+        <Image Grid.Row="4" Grid.Column="1" x:Name="CurrentFileImage" Stretch="Uniform" RenderOptions.BitmapScalingMode="Fant" ToolTip="{Binding CurrentFileInternalPath}"/>
     </Grid>
 </UserControl>
