@@ -4,7 +4,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
+using FileDB2Browser.View;
 using FileDB2Interface;
 using FileDB2Interface.Model;
 
@@ -29,14 +31,14 @@ namespace FileDB2Browser.ViewModel
 
     public class TagsViewModel : ViewModelBase
     {
-        public ICommand RemoveTagCommand
+        public ICommand AddTagCommand
         {
             get
             {
-                return removeTagCommand ??= new CommandHandler(RemoveTag);
+                return addTagCommand ??= new CommandHandler(AddTag);
             }
         }
-        private ICommand removeTagCommand;
+        private ICommand addTagCommand;
 
         public ICommand EditTagCommand
         {
@@ -47,6 +49,15 @@ namespace FileDB2Browser.ViewModel
         }
         private ICommand editTagCommand;
 
+        public ICommand RemoveTagCommand
+        {
+            get
+            {
+                return removeTagCommand ??= new CommandHandler(RemoveTag);
+            }
+        }
+        private ICommand removeTagCommand;
+
         public ICommand TagSelectionCommand
         {
             get
@@ -56,7 +67,7 @@ namespace FileDB2Browser.ViewModel
         }
         private ICommand tagSelectionCommand;
 
-        public ObservableCollection<Tag> Tags { get; }
+        public ObservableCollection<Tag> Tags { get; } = new ObservableCollection<Tag>();
 
         private Tag selectedTag;
 
@@ -65,8 +76,7 @@ namespace FileDB2Browser.ViewModel
         public TagsViewModel(FileDB2Handle fileDB2Handle)
         {
             this.fileDB2Handle = fileDB2Handle;
-            var tags = GetTags();
-            Tags = new ObservableCollection<Tag>(tags);
+            ReloadTags();
         }
 
         public void RemoveTag(object parameter)
@@ -76,11 +86,7 @@ namespace FileDB2Browser.ViewModel
                 // TODO: only delete if tag not used in files?
                 fileDB2Handle.DeleteTag(selectedTag.GetId());
 
-                Tags.Clear();
-                foreach (var tag in GetTags())
-                {
-                    Tags.Add(tag);
-                }
+                ReloadTags();
             }
         }
 
@@ -88,8 +94,23 @@ namespace FileDB2Browser.ViewModel
         {
             if (selectedTag != null)
             {
-                // TODO: edit in new window
+                var window = new AddTagWindow(selectedTag.GetId())
+                {
+                    Owner = Application.Current.MainWindow
+                };
+                window.ShowDialog();
+                ReloadTags();
             }
+        }
+
+        public void AddTag(object parameter)
+        {
+            var window = new AddTagWindow
+            {
+                Owner = Application.Current.MainWindow
+            };
+            window.ShowDialog();
+            ReloadTags();
         }
 
         public void TagSelectionChanged(object parameter)
@@ -97,9 +118,15 @@ namespace FileDB2Browser.ViewModel
             selectedTag = (Tag)parameter;
         }
 
-        private IEnumerable<Tag> GetTags()
+        private void ReloadTags()
         {
-            return fileDB2Handle.GetTags().Select(tm => new Tag(tm.id) { Name = tm.name });
+            Tags.Clear();
+
+            var tags = fileDB2Handle.GetTags().Select(tm => new Tag(tm.id) { Name = tm.name });
+            foreach (var tag in tags)
+            {
+                Tags.Add(tag);
+            }
         }
     }
 }

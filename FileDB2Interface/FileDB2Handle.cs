@@ -613,6 +613,8 @@ namespace FileDB2Interface
 
         public void InsertTag(string name)
         {
+            ValidateTagName(name);
+
             try
             {
                 using var connection = CreateConnection();
@@ -628,6 +630,8 @@ namespace FileDB2Interface
 
         public void UpdateTagName(int id, string name)
         {
+            ValidateTagName(name);
+
             try
             {
                 using var connection = CreateConnection();
@@ -741,6 +745,14 @@ namespace FileDB2Interface
             if (profileFileId != null && !HasFileId(profileFileId.Value))
             {
                 throw new FileDB2DataValidationException($"File with id {profileFileId.Value} does not exist");
+            }
+        }
+
+        public void ValidateTagName(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new FileDB2DataValidationException("Tag name empty");
             }
         }
 
