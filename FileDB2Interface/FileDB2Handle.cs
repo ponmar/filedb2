@@ -168,6 +168,12 @@ namespace FileDB2Interface
             return connection.QueryFirst<FilesModel>("select * from [files] where id = @id", new { id = id });
         }
 
+        public bool HasFileId(int id)
+        {
+            using var connection = CreateConnection();
+            return connection.ExecuteScalar<bool>("select count(1) from [files] where id=@id", new { id });
+        }
+
         public FilesModel GetFileByPath(string path)
         {
             using var connection = CreateConnection();
@@ -327,6 +333,12 @@ namespace FileDB2Interface
             return connection.QueryFirst<PersonModel>("select * from [persons] where id = @ID", parameters);
         }
 
+        public bool HasPersonId(int id)
+        {
+            using var connection = CreateConnection();
+            return connection.ExecuteScalar<bool>("select count(1) from [persons] where id=@id", new { id });
+        }
+
         public void InsertPerson(string firstname, string lastname, string description = null, string dateOfBirth = null, int? profileFileId = null)
         {
             // TODO: validate dateOfBirth
@@ -387,11 +399,11 @@ namespace FileDB2Interface
             }
         }
 
-        public void UpdatePersonDateOfBirth(int id, DateTime dateOfBirth)
+        public void UpdatePersonDateOfBirth(int id, string dateOfBirthStr)
         {
             try
             {
-                var dateOfBirthStr = dateOfBirth.ToString("yyyy-MM-dd");
+                // TODO: validate dateOfBirthStr
                 using var connection = CreateConnection();
                 var sql = "update [persons] set dateofbirth = @dateOfBirthStr where id = @id";
                 connection.Execute(sql, new { dateOfBirthStr = dateOfBirthStr, id = id });
@@ -400,6 +412,12 @@ namespace FileDB2Interface
             {
                 throw new FileDB2Exception("SQL error", e);
             }
+        }
+
+        public void UpdatePersonDateOfBirth(int id, DateTime dateOfBirth)
+        {
+            var dateOfBirthStr = dateOfBirth.ToString("yyyy-MM-dd");
+            UpdatePersonDateOfBirth(id, dateOfBirthStr);
         }
 
         public void UpdatePersonProfileFileId(int id, int? profileFileId)
@@ -460,6 +478,12 @@ namespace FileDB2Interface
 
             using var connection = CreateConnection();
             return connection.QueryFirst<LocationModel>("select * from [locations] where id = @ID", parameters);
+        }
+
+        public bool HasLocationId(int id)
+        {
+            using var connection = CreateConnection();
+            return connection.ExecuteScalar<bool>("select count(1) from [locations] where id=@id", new { id });
         }
 
         public void InsertLocation(string name, string description = null, GeoLocation geoLocation = null)
@@ -565,6 +589,12 @@ namespace FileDB2Interface
 
             using var connection = CreateConnection();
             return connection.QueryFirst<TagModel>("select * from [tags] where id = @ID", parameters);
+        }
+
+        public bool HasTagId(int id)
+        {
+            using var connection = CreateConnection();
+            return connection.ExecuteScalar<bool>("select count(1) from [tags] where id=@id", new { id });
         }
 
         public void InsertTag(string name)
