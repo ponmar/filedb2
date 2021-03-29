@@ -31,5 +31,10 @@ namespace FileDB2Browser.View
         {
             CurrentFileImage.Source = image;
         }
+
+        private void ProgressBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+
+        }
     }
 }
