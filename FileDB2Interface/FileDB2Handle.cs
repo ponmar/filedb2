@@ -13,6 +13,7 @@ using log4net;
 using System.Reflection;
 using log4net.Config;
 using System.Globalization;
+using FileDB2Interface.Exceptions;
 
 namespace FileDB2Interface
 {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace FileDB2Interface
+namespace FileDB2Interface.Exceptions
 {
     public class FileDB2DataValidationException : Exception
     {
@@ -10,5 +10,4 @@ namespace FileDB2Interface
         {
         }
     }
-
 }

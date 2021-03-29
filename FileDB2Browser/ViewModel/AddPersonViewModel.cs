@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using FileDB2Interface;
+using FileDB2Interface.Exceptions;
 
 namespace FileDB2Browser.ViewModel
 {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using FileDB2Interface;
+using FileDB2Interface.Exceptions;
 
 namespace FileDBTest
 {
