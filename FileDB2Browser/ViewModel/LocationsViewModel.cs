@@ -87,10 +87,12 @@ namespace FileDB2Browser.ViewModel
         {
             if (selectedLocation != null)
             {
-                // TODO: only delete if location not used in files?
-                fileDB2Handle.DeleteLocation(selectedLocation.GetId());
-
-                ReloadLocations();
+                var filesWithLocation = fileDB2Handle.GetFilesWithLocations(new List<int>() { selectedLocation.GetId() });
+                if (filesWithLocation.Count == 0 || Utils.ShowConfirmDialog($"Location is used in {filesWithLocation.Count} files, remove anyway?"))
+                {
+                    fileDB2Handle.DeleteLocation(selectedLocation.GetId());
+                    ReloadLocations();
+                }
             }
         }
 

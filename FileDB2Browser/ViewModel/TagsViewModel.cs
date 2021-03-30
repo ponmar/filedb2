@@ -83,10 +83,12 @@ namespace FileDB2Browser.ViewModel
         {
             if (selectedTag != null)
             {
-                // TODO: only delete if tag not used in files?
-                fileDB2Handle.DeleteTag(selectedTag.GetId());
-
-                ReloadTags();
+                var filesWithTag = fileDB2Handle.GetFilesWithTags(new List<int>() { selectedTag.GetId() });
+                if (filesWithTag.Count == 0 || Utils.ShowConfirmDialog($"Tag is used in {filesWithTag.Count} files, remove anyway?"))
+                {
+                    fileDB2Handle.DeleteTag(selectedTag.GetId());
+                    ReloadTags();
+                }
             }
         }
 

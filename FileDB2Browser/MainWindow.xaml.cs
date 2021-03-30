@@ -32,7 +32,7 @@ namespace FileDB2Browser
             {
                 if (!FileDB2BrowserConfigIO.Write(new FileDB2BrowserConfig()))
                 {
-                    // TODO: show error dialog
+                    Utils.ShowErrorDialog("Unable to write configuration file: " + FileDB2BrowserConfigIO.GetFilePath());
                 }
             }
         }

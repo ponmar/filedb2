@@ -94,7 +94,12 @@ namespace FileDB2Browser
 
         public static void ShowErrorDialog(string message)
         {
-            MessageBox.Show(message, "FileDB2Browser", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.No);
+            MessageBox.Show(message, "FileDB2", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.No);
+        }
+
+        public static bool ShowConfirmDialog(string question)
+        {
+            return MessageBox.Show(question, "FileDB2", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes;
         }
     }
 }

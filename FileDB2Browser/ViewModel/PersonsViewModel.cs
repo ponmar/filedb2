@@ -88,10 +88,12 @@ namespace FileDB2Browser.ViewModel
         {
             if (selectedPerson != null)
             {
-                // TODO: only delete if person not used in files?
-                fileDB2Handle.DeletePerson(selectedPerson.GetId());
-
-                ReloadPersons();
+                var filesWithPerson = fileDB2Handle.GetFilesWithPersons(new List<int>() { selectedPerson.GetId() });
+                if (filesWithPerson.Count == 0 || Utils.ShowConfirmDialog($"Person is used in {filesWithPerson.Count} files, remove anyway?"))
+                {
+                    fileDB2Handle.DeletePerson(selectedPerson.GetId());
+                    ReloadPersons();
+                }
             }
         }
 
