@@ -111,7 +111,7 @@ namespace FileDB2Browser.ViewModel
                     // TODO: update all in one transaction?
                     fileDB2Handle.UpdatePersonFirstname(personId, firstname);
                     fileDB2Handle.UpdatePersonLastname(personId, lastname);
-                    fileDB2Handle.UpdateFileDescription(personId, newDescription);
+                    fileDB2Handle.UpdatePersonDescription(personId, newDescription);
                     fileDB2Handle.UpdatePersonDateOfBirth(personId, newDateOfBirth);
                     fileDB2Handle.UpdatePersonProfileFileId(personId, newProfileFileId);
                 }

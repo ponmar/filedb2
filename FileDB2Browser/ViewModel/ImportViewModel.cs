@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using FileDB2Browser.Config;
 using FileDB2Interface;
+using FileDB2Interface.Exceptions;
 
 namespace FileDB2Browser.ViewModel
 {
@@ -71,9 +72,16 @@ namespace FileDB2Browser.ViewModel
 
         public void ImportNewFiles(object parameter)
         {
-            foreach (var newFile in NewFiles)
+            try
             {
-                fileDB2Handle.InsertFile(newFile.Path);
+                foreach (var newFile in NewFiles)
+                {
+                    fileDB2Handle.InsertFile(newFile.Path);
+                }
+            }
+            catch (FileDB2DataValidationException e)
+            {
+                Utils.ShowErrorDialog(e.Message);
             }
 
             NewFiles.Clear();

@@ -208,11 +208,13 @@ namespace FileDB2Interface
 
         public void InsertFile(string internalPath, string description = null)
         {
+            ValidateFileDescription(description);
+
             internalPath = FixInternalPath(internalPath);
             var path = InternalPathToPath(internalPath);
             if (!File.Exists(path))
             {
-                throw new FileDB2Exception($"No such file: {path}");
+                throw new FileDB2DataValidationException($"No such file: {path}");
             }
 
             ParseFilesystemFileExif(path, out var dateTaken, out var location);
@@ -234,6 +236,8 @@ namespace FileDB2Interface
 
         public void UpdateFileDescription(int id, string description)
         {
+            ValidateFileDescription(description);
+
             try
             {
                 using var connection = CreateConnection();
@@ -245,8 +249,6 @@ namespace FileDB2Interface
                 throw new FileDB2Exception("SQL error", e);
             }
         }
-
-        // TODO: UpdateFileDatetime(...)
 
         public void DeleteFile(int id)
         {
@@ -727,6 +729,14 @@ namespace FileDB2Interface
         #endregion
 
         #region Data validation
+
+        public void ValidateFileDescription(string description)
+        {
+            if (description == string.Empty)
+            {
+                throw new FileDB2DataValidationException("Empty file description should be null");
+            }
+        }
 
         public void ValidatePersonFirstname(string firstname)
         {
