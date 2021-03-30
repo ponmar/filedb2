@@ -500,13 +500,16 @@ namespace FileDB2Interface
             return connection.ExecuteScalar<bool>("select count(1) from [locations] where id=@id", new { id });
         }
 
-        public void InsertLocation(string name, string description = null, GeoLocation geoLocation = null)
+        public void InsertLocation(string name, string description = null, string geoLocation = null)
         {
+            ValidateLocationName(name);
+            ValidateLocationDescription(description);
+            ValidateLocationGeoLocation(geoLocation);
+
             try
             {
-                var position = GeoLocationToString(geoLocation);
                 using var connection = CreateConnection();
-                var location = new LocationModel() { name = name, description = description, position = position };
+                var location = new LocationModel() { name = name, description = description, position = geoLocation };
                 var sql = "insert into [locations] (name, description, position) values (@name, @description, @position)";
                 connection.Execute(sql, location);
             }
@@ -516,8 +519,17 @@ namespace FileDB2Interface
             }
         }
 
+        public void InsertLocation(string name, string description = null, GeoLocation geoLocation = null)
+        {
+            var geoLocationStr = GeoLocationToString(geoLocation);
+            InsertLocation(name, description, geoLocationStr);
+        }
+
+
         public void UpdateLocationName(int id, string name)
         {
+            ValidateLocationName(name);
+
             try
             {
                 using var connection = CreateConnection();
@@ -532,10 +544,12 @@ namespace FileDB2Interface
 
         public void UpdateLocationDescription(int id, string description)
         {
+            ValidateLocationDescription(description);
+
             try
             {
                 using var connection = CreateConnection();
-                var sql = "update [locations] set description = @name where id = @id";
+                var sql = "update [locations] set description = @description where id = @id";
                 connection.Execute(sql, new { description = description, id = id });
             }
             catch (SQLiteException e)
@@ -544,19 +558,26 @@ namespace FileDB2Interface
             }
         }
 
-        public void UpdateLocationPosition(int id, GeoLocation geoLocation = null)
+        public void UpdateLocationPosition(int id, string geoLocation)
         {
+            ValidateLocationGeoLocation(geoLocation);
+
             try
             {
-                var position = GeoLocationToString(geoLocation);
                 using var connection = CreateConnection();
                 var sql = "update [locations] set position = @position where id = @id";
-                connection.Execute(sql, new { position = position, id = id });
+                connection.Execute(sql, new { position = geoLocation, id = id });
             }
             catch (SQLiteException e)
             {
                 throw new FileDB2Exception("SQL error", e);
             }
+        }
+
+        public void UpdateLocationPosition(int id, GeoLocation geoLocation)
+        {
+            var geoLocationStr = geoLocation != null ? GeoLocationToString(geoLocation) : null;
+            UpdateLocationPosition(id, geoLocationStr);
         }
 
         public void DeleteLocation(int id)
@@ -753,6 +774,30 @@ namespace FileDB2Interface
             if (string.IsNullOrEmpty(name))
             {
                 throw new FileDB2DataValidationException("Tag name empty");
+            }
+        }
+
+        public void ValidateLocationName(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new FileDB2DataValidationException("Location name empty");
+            }
+        }
+
+        public void ValidateLocationDescription(string description)
+        {
+            if (description == string.Empty)
+            {
+                throw new FileDB2DataValidationException("Empty location description should be null");
+            }
+        }
+
+        public void ValidateLocationGeoLocation(string geoLocation)
+        {
+            if (geoLocation != null)
+            {
+                // TODO
             }
         }
 

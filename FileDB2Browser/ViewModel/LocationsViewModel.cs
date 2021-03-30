@@ -4,7 +4,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
+using FileDB2Browser.View;
 using FileDB2Interface;
 using FileDB2Interface.Model;
 
@@ -96,13 +98,23 @@ namespace FileDB2Browser.ViewModel
         {
             if (selectedLocation != null)
             {
-                // TODO: edit in new window
+                var window = new AddLocationWindow(selectedLocation.GetId())
+                {
+                    Owner = Application.Current.MainWindow
+                };
+                window.ShowDialog();
+                ReloadLocations();
             }
         }
 
         public void AddLocation(object parameter)
         {
-            // TODO: add in new window
+            var window = new AddLocationWindow
+            {
+                Owner = Application.Current.MainWindow
+            };
+            window.ShowDialog();
+            ReloadLocations();
         }
 
         public void LocationSelectionChanged(object parameter)
