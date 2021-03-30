@@ -4,10 +4,12 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using FileDB2Browser.Config;
+using FileDB2Browser.View;
 using FileDB2Interface;
 using FileDB2Interface.Model;
 
@@ -262,6 +264,33 @@ namespace FileDB2Browser.ViewModel
         }
         private string newFileDescription;
 
+        public ICommand CreatePersonCommand
+        {
+            get
+            {
+                return createPersonCommand ??= new CommandHandler(CreatePerson);
+            }
+        }
+        private ICommand createPersonCommand;
+
+        public ICommand CreateLocationCommand
+        {
+            get
+            {
+                return createLocationCommand ??= new CommandHandler(CreateLocation);
+            }
+        }
+        private ICommand createLocationCommand;
+
+        public ICommand CreateTagCommand
+        {
+            get
+            {
+                return createTagCommand ??= new CommandHandler(CreateTag);
+            }
+        }
+        private ICommand createTagCommand;
+
         #endregion
 
         #region Search result
@@ -399,19 +428,19 @@ namespace FileDB2Browser.ViewModel
 
         #endregion
 
-        public ObservableCollection<PersonToAdd> Persons { get; }
+        public ObservableCollection<PersonToAdd> Persons { get; } = new ObservableCollection<PersonToAdd>();
 
         public PersonToAdd SelectedPersonToAdd { get; set; }
 
         public PersonToAdd SelectedPersonSearch { get; set; }
 
-        public ObservableCollection<LocationToAdd> Locations { get; }
+        public ObservableCollection<LocationToAdd> Locations { get; } = new ObservableCollection<LocationToAdd>();
 
         public LocationToAdd SelectedLocationToAdd { get; set; }
 
         public LocationToAdd SelectedLocationSearch { get; set; }
 
-        public ObservableCollection<TagToAdd> Tags { get; }
+        public ObservableCollection<TagToAdd> Tags { get; } = new ObservableCollection<TagToAdd>();
 
         public TagToAdd SelectedTagToAdd { get; set; }
 
@@ -426,17 +455,9 @@ namespace FileDB2Browser.ViewModel
 
             TotalNumberOfFiles = fileDB2Handle.GetFileCount();
 
-            var persons = fileDB2Handle.GetPersons().Select(p => new PersonToAdd() { Id = p.id, Name = p.firstname + " " + p.lastname }).ToList();
-            persons.Sort(new PersonToAddSorter());
-            Persons = new ObservableCollection<PersonToAdd>(persons);
-
-            var locations = fileDB2Handle.GetLocations().Select(l => new LocationToAdd() { Id = l.id, Name = l.name }).ToList();
-            locations.Sort(new LocationToAddSorter());
-            Locations = new ObservableCollection<LocationToAdd>(locations);
-
-            var tags = fileDB2Handle.GetTags().Select(t => new TagToAdd() { Id = t.id, Name = t.name }).ToList();
-            tags.Sort(new TagToAddSorter());
-            Tags = new ObservableCollection<TagToAdd>(tags);
+            ReloadPersons();
+            ReloadLocations();
+            ReloadTags();
 
             slideshowTimer = new DispatcherTimer();
             slideshowTimer.Tick += SlideshowTimer_Tick;
@@ -796,6 +817,75 @@ namespace FileDB2Browser.ViewModel
                 // TODO: better to read from database?
                 selection.description = description;
                 LoadFile(SearchResultIndex);
+            }
+        }
+
+        public void CreatePerson(object parameter)
+        {
+            var window = new AddPersonWindow
+            {
+                Owner = Application.Current.MainWindow
+            };
+            window.ShowDialog();
+
+            ReloadPersons();
+            // TODO: select new person?
+        }
+
+        public void CreateLocation(object parameter)
+        {
+            var window = new AddLocationWindow
+            {
+                Owner = Application.Current.MainWindow
+            };
+            window.ShowDialog();
+
+            ReloadLocations();
+            // TODO: select new location?
+        }
+
+        public void CreateTag(object parameter)
+        {
+            var window = new AddTagWindow
+            {
+                Owner = Application.Current.MainWindow
+            };
+            window.ShowDialog();
+
+            ReloadTags();
+            // TODO: select new tag?
+        }
+
+        private void ReloadPersons()
+        {
+            Persons.Clear();
+            var persons = fileDB2Handle.GetPersons().Select(p => new PersonToAdd() { Id = p.id, Name = p.firstname + " " + p.lastname }).ToList();
+            persons.Sort(new PersonToAddSorter());
+            foreach (var person in persons)
+            {
+                Persons.Add(person);
+            }
+        }
+
+        private void ReloadLocations()
+        {
+            Locations.Clear();
+            var locations = fileDB2Handle.GetLocations().Select(l => new LocationToAdd() { Id = l.id, Name = l.name }).ToList();
+            locations.Sort(new LocationToAddSorter());
+            foreach (var location in locations)
+            {
+                Locations.Add(location);
+            }
+        }
+
+        private void ReloadTags()
+        {
+            Tags.Clear();
+            var tags = fileDB2Handle.GetTags().Select(t => new TagToAdd() { Id = t.id, Name = t.name }).ToList();
+            tags.Sort(new TagToAddSorter());
+            foreach (var tag in tags)
+            {
+                Tags.Add(tag);
             }
         }
     }

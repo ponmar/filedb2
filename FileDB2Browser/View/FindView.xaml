@@ -21,20 +21,20 @@
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource PageHeading}">Find Files</Label>
         <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource BorderGroup}" Margin="0 0 0 20">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Style="{StaticResource NormalButton}" Command="{Binding FindRandomFilesCommand}">10 random files</Button>
-                <Button Style="{StaticResource NormalButton}" Command="{Binding FindAllFilesCommand}">All files</Button>
-                <TextBox Margin="20 0 0 0" Width="100" VerticalAlignment="Center" Text="{Binding SearchPattern}"/>
-                <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesByTextCommand}">Search</Button>
-                <TextBlock ToolTip="Persons" Text="&#x1F642;" Margin="20 0 3 0" VerticalAlignment="Center"/>
-                <ComboBox Width="100" VerticalAlignment="Center" ItemsSource="{Binding Persons}" SelectedItem="{Binding SelectedPersonSearch}" DisplayMemberPath="Name"/>
-                <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesWithPersonCommand}">Search</Button>
-                <TextBlock ToolTip="Locations" Text="&#x1F3E0;" Margin="20 0 3 0" VerticalAlignment="Center"/>
-                <ComboBox Width="100" VerticalAlignment="Center" ItemsSource="{Binding Locations}" SelectedItem="{Binding SelectedLocationSearch}" DisplayMemberPath="Name"/>
-                <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesWithLocationCommand}">Search</Button>
-                <TextBlock ToolTip="Tags" Text="&#x1F516;" Margin="20 0 3 0" VerticalAlignment="Center"/>
-                <ComboBox Width="100" VerticalAlignment="Center" ItemsSource="{Binding Tags}" SelectedItem="{Binding SelectedTagSearch}" DisplayMemberPath="Name"/>
-                <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesWithTagCommand}">Search</Button>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="3">
+                <Button Style="{StaticResource NormalButton}" Command="{Binding FindRandomFilesCommand}" ToolTip="Search 10 random files">10 random files</Button>
+                <Button Style="{StaticResource NormalButton}" Command="{Binding FindAllFilesCommand}" ToolTip="Search all files">All files</Button>
+                <TextBox Margin="20 0 0 0" Width="100" VerticalAlignment="Center" Text="{Binding SearchPattern}" ToolTip="Search criteria for file path/description"/>
+                <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesByTextCommand}" ToolTip="Search by path/description">Search</Button>
+                <TextBlock Text="&#x1F642;" Margin="20 0 3 0" VerticalAlignment="Center" ToolTip="Persons" />
+                <ComboBox Width="100" VerticalAlignment="Center" ItemsSource="{Binding Persons}" SelectedItem="{Binding SelectedPersonSearch}" DisplayMemberPath="Name" ToolTip="Persons"/>
+                <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesWithPersonCommand}" ToolTip="Search by person">Search</Button>
+                <TextBlock Text="&#x1F3E0;" Margin="20 0 3 0" VerticalAlignment="Center" ToolTip="Locations" />
+                <ComboBox Width="100" VerticalAlignment="Center" ItemsSource="{Binding Locations}" SelectedItem="{Binding SelectedLocationSearch}" DisplayMemberPath="Name" ToolTip="Locations"/>
+                <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesWithLocationCommand}" ToolTip="Search by location">Search</Button>
+                <TextBlock Text="&#x1F516;" Margin="20 0 3 0" VerticalAlignment="Center" ToolTip="Tags" />
+                <ComboBox Width="100" VerticalAlignment="Center" ItemsSource="{Binding Tags}" SelectedItem="{Binding SelectedTagSearch}" DisplayMemberPath="Name" ToolTip="Tags"/>
+                <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesWithTagCommand}" ToolTip="Search by tag">Search</Button>
             </StackPanel>
         </Border>
         <!-- Search result browse controls -->
@@ -90,6 +90,9 @@
                             <TextBox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Text="{Binding NewFileDescription}" ToolTip="File description"></TextBox>
                             <Button Grid.Row="3" Grid.Column="2" Style="{StaticResource NormalButton}" Command="{Binding SetFileDescriptionCommand}" ToolTip="Set file description">Set</Button>
                         </Grid>
+                        <Button Style="{StaticResource NormalButton}" Command="{Binding CreatePersonCommand}">Create person...</Button>
+                        <Button Style="{StaticResource NormalButton}" Command="{Binding CreateLocationCommand}">Create location...</Button>
+                        <Button Style="{StaticResource NormalButton}" Command="{Binding CreateTagCommand}">Create tag...</Button>
                     </StackPanel>
                 </Expander>
             </Border>
