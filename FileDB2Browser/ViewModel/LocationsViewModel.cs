@@ -33,14 +33,14 @@ namespace FileDB2Browser.ViewModel
 
     public class LocationsViewModel : ViewModelBase
     {
-        public ICommand RemoveLocationCommand
+        public ICommand AddLocationCommand
         {
             get
             {
-                return removeLocationCommand ??= new CommandHandler(RemoveLocation);
+                return addLocationCommand ??= new CommandHandler(AddLocation);
             }
         }
-        private ICommand removeLocationCommand;
+        private ICommand addLocationCommand;
 
         public ICommand EditLocationCommand
         {
@@ -51,6 +51,15 @@ namespace FileDB2Browser.ViewModel
         }
         private ICommand editLocationCommand;
 
+        public ICommand RemoveLocationCommand
+        {
+            get
+            {
+                return removeLocationCommand ??= new CommandHandler(RemoveLocation);
+            }
+        }
+        private ICommand removeLocationCommand;
+
         public ICommand LocationSelectionCommand
         {
             get
@@ -60,7 +69,7 @@ namespace FileDB2Browser.ViewModel
         }
         private ICommand locationSelectionCommand;
 
-        public ObservableCollection<Location> Locations { get; }
+        public ObservableCollection<Location> Locations { get; } = new ObservableCollection<Location>();
 
         private Location selectedLocation;
 
@@ -69,8 +78,7 @@ namespace FileDB2Browser.ViewModel
         public LocationsViewModel(FileDB2Handle fileDB2Handle)
         {
             this.fileDB2Handle = fileDB2Handle;
-            var locations = GetLocations();
-            Locations = new ObservableCollection<Location>(locations);
+            ReloadLocations();
         }
 
         public void RemoveLocation(object parameter)
@@ -80,11 +88,7 @@ namespace FileDB2Browser.ViewModel
                 // TODO: only delete if location not used in files?
                 fileDB2Handle.DeleteLocation(selectedLocation.GetId());
 
-                Locations.Clear();
-                foreach (var location in GetLocations())
-                {
-                    Locations.Add(location);
-                }
+                ReloadLocations();
             }
         }
 
@@ -96,14 +100,25 @@ namespace FileDB2Browser.ViewModel
             }
         }
 
+        public void AddLocation(object parameter)
+        {
+            // TODO: add in new window
+        }
+
         public void LocationSelectionChanged(object parameter)
         {
             selectedLocation = (Location)parameter;
         }
 
-        private IEnumerable<Location> GetLocations()
+        private void ReloadLocations()
         {
-            return fileDB2Handle.GetLocations().Select(lm => new Location(lm.id) { Name = lm.name, Description = lm.description, Position = lm.position });
+            Locations.Clear();
+
+            var locations = fileDB2Handle.GetLocations().Select(lm => new Location(lm.id) { Name = lm.name, Description = lm.description, Position = lm.position });
+            foreach (var location in locations)
+            {
+                Locations.Add(location);
+            }
         }
     }
 }
