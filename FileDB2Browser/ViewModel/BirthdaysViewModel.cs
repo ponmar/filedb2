@@ -29,7 +29,7 @@ namespace FileDB2Browser.ViewModel
                     Birthdays.Add(new PersonBirthday()
                     {
                         Name = person.firstname + " " + person.lastname,
-                        Birthday = dateOfBirth.ToString("d"),
+                        Birthday = dateOfBirth.ToString("d MMMM"),
                         DaysLeft = Utils.GetDaysToNextBirthday(dateOfBirth),
                         BornYearsAgo = Utils.GetBornYearsAgo(DateTime.Now, dateOfBirth),
                     });

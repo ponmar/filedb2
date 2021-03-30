@@ -63,7 +63,7 @@
         <StackPanel Orientation="Vertical" Grid.Row="4" Grid.Column="0" Margin="0 15 5 5">
             <!-- File categorization -->
             <Border Style="{StaticResource BorderGroup}">
-                <Expander Header="Categorize" Margin="5" IsExpanded="False">
+                <Expander Header="Update" Margin="5" IsExpanded="False">
                     <StackPanel Orientation="Vertical">
                         <Grid>
                             <Grid.ColumnDefinitions>
