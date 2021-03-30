@@ -117,12 +117,6 @@
                     <TextBlock Text="{Binding CurrentFileDescription}" Margin="0 0 10 0" Visibility="{Binding CurrentFileDescription, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
                 </StackPanel>
             </Border>
-            <!-- File actions -->
-            <Border Style="{StaticResource BorderGroup}" Margin="0 20 0 0">
-                <Expander Header="File actions" Margin="5" IsExpanded="False">
-                    <Button Style="{StaticResource NormalButton}" Command="{Binding OpenFileLocationCommand}">Open file directory</Button>
-                </Expander>
-            </Border>
             <!-- Combine searches -->
             <Border Style="{StaticResource BorderGroup}" Margin="0 20 0 0">
                 <Expander Header="Combine searches" Margin="5" IsExpanded="False">
@@ -169,6 +163,10 @@
             <!-- Export -->
             <Border Style="{StaticResource BorderGroup}" Margin="0 20 0 0">
                 <Expander Header="Export" Margin="5" IsExpanded="False">
+                    <StackPanel Orientation="Vertical">
+                        <Button Style="{StaticResource NormalButton}" Command="{Binding OpenFileLocationCommand}">Open file directory</Button>
+                        <Button Style="{StaticResource NormalButton}" Command="{Binding ExportFileListCommand}">Copy file list</Button>
+                    </StackPanel>
                 </Expander>
             </Border>
         </StackPanel>

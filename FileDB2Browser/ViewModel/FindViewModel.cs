@@ -12,6 +12,7 @@ using FileDB2Browser.Config;
 using FileDB2Browser.View;
 using FileDB2Interface;
 using FileDB2Interface.Model;
+using TextCopy;
 
 namespace FileDB2Browser.ViewModel
 {
@@ -220,6 +221,17 @@ namespace FileDB2Browser.ViewModel
             }
         }
         private ICommand openFileLocationCommand;
+
+        
+
+        public ICommand ExportFileListCommand
+        {
+            get
+            {
+                return exportFileListCommand ??= new CommandHandler(ExportFileList);
+            }
+        }
+        private ICommand exportFileListCommand;
 
         public ICommand AddFilePersonCommand
         {
@@ -630,6 +642,19 @@ namespace FileDB2Browser.ViewModel
             {
                 var explorerPath = CurrentFilePath.Replace("/", @"\");
                 Process.Start("explorer.exe", "/select, " + explorerPath);
+            }
+        }
+
+        public void ExportFileList(object parameter)
+        {
+            if (HasNonEmptySearchResult)
+            {
+                var fileIdList = string.Join(';', SearchResult.Select(f => f.id));
+                ClipboardService.SetText(fileIdList);
+            }
+            else
+            {
+                ClipboardService.SetText("");
             }
         }
 
