@@ -364,6 +364,27 @@ namespace FileDB2Interface
             }
         }
 
+        public void UpdatePerson(int id, string firstname, string lastname, string description = null, string dateOfBirth = null, int? profileFileId = null)
+        {
+            ValidatePersonFirstname(firstname);
+            ValidatePersonLastname(lastname);
+            ValidatePersonDescription(description);
+            ValidatePersonDateOfBirth(dateOfBirth);
+            ValidatePersonProfileFileId(profileFileId);
+
+            try
+            {
+                using var connection = CreateConnection();
+                var person = new PersonModel() { id = id, firstname = firstname, lastname = lastname, description = description, dateofbirth = dateOfBirth, profilefileid = profileFileId };
+                var sql = "update [persons] set firstname = @firstname, lastname = @lastname, description = @description, dateofbirth = @dateofbirth, profilefileid = @profilefileid where id = @id";
+                connection.Execute(sql, person);
+            }
+            catch (SQLiteException e)
+            {
+                throw new FileDB2Exception("SQL error", e);
+            }
+        }
+
         public void UpdatePersonFirstname(int id, string firstname)
         {
             ValidatePersonFirstname(firstname);

@@ -814,7 +814,6 @@ namespace FileDB2Browser.ViewModel
                 var description = string.IsNullOrEmpty(NewFileDescription) ? null : NewFileDescription;
                 fileDB2Handle.UpdateFileDescription(fileId, description);
 
-                // TODO: better to read from database?
                 selection.description = description;
                 LoadFile(SearchResultIndex);
             }
