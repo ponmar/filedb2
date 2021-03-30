@@ -506,7 +506,7 @@ namespace FileDB2Interface
         {
             ValidateLocationName(name);
             ValidateLocationDescription(description);
-            ValidateLocationGeoLocation(geoLocation);
+            ValidateLocationGeoLocation(geoLocation, out _);
 
             try
             {
@@ -562,7 +562,7 @@ namespace FileDB2Interface
 
         public void UpdateLocationPosition(int id, string geoLocation)
         {
-            ValidateLocationGeoLocation(geoLocation);
+            ValidateLocationGeoLocation(geoLocation, out _);
 
             try
             {
@@ -803,12 +803,29 @@ namespace FileDB2Interface
             }
         }
 
-        public void ValidateLocationGeoLocation(string geoLocation)
+        public void ValidateLocationGeoLocation(string geoLocationStr, out GeoLocation geoLocation)
         {
-            if (geoLocation != null)
+            if (geoLocationStr != null)
             {
-                // TODO
+                var parts = geoLocationStr.Split(' ');
+                if (parts.Length != 2)
+                {
+                    throw new FileDB2DataValidationException("Location geo-position invalid format (two parts should be specified)");
+                }
+
+                if (!double.TryParse(parts[0], out double latitude))
+                {
+                    throw new FileDB2DataValidationException("Location geo-position has invalid latitude");
+                }
+
+                if (!double.TryParse(parts[0], out double longitude))
+                {
+                    throw new FileDB2DataValidationException("Location geo-position has invalid longitude");
+                }
+
+                geoLocation = new GeoLocation(latitude, longitude);
             }
+            geoLocation = null;
         }
 
         #endregion
