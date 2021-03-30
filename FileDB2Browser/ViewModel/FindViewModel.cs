@@ -829,7 +829,6 @@ namespace FileDB2Browser.ViewModel
             window.ShowDialog();
 
             ReloadPersons();
-            // TODO: select new person?
         }
 
         public void CreateLocation(object parameter)
@@ -841,7 +840,6 @@ namespace FileDB2Browser.ViewModel
             window.ShowDialog();
 
             ReloadLocations();
-            // TODO: select new location?
         }
 
         public void CreateTag(object parameter)
@@ -853,7 +851,6 @@ namespace FileDB2Browser.ViewModel
             window.ShowDialog();
 
             ReloadTags();
-            // TODO: select new tag?
         }
 
         private void ReloadPersons()
