@@ -222,7 +222,21 @@ namespace FileDB2Browser.ViewModel
         }
         private ICommand openFileLocationCommand;
 
-        
+        public ICommand FindFilesFromListCommand
+        {
+            get
+            {
+                return findFilesFromListCommand ??= new CommandHandler(FindFilesFromList);
+            }
+        }
+        private ICommand findFilesFromListCommand;
+
+        public string FileListSearch
+        {
+            get => fileListSearch;
+            set { SetProperty(ref fileListSearch, value); }
+        }
+        private string fileListSearch;
 
         public ICommand ExportFileListCommand
         {
@@ -242,6 +256,15 @@ namespace FileDB2Browser.ViewModel
         }
         private ICommand addFilePersonCommand;
 
+        public ICommand RemoveFilePersonCommand
+        {
+            get
+            {
+                return removeFilePersonCommand ??= new CommandHandler(RemoveFilePerson);
+            }
+        }
+        private ICommand removeFilePersonCommand;
+
         public ICommand AddFileLocationCommand
         {
             get
@@ -251,6 +274,15 @@ namespace FileDB2Browser.ViewModel
         }
         private ICommand addFileLocationCommand;
 
+        public ICommand RemoveFileLocationCommand
+        {
+            get
+            {
+                return removeFileLocationCommand ??= new CommandHandler(RemoveFileLocation);
+            }
+        }
+        private ICommand removeFileLocationCommand;
+
         public ICommand AddFileTagCommand
         {
             get
@@ -259,6 +291,15 @@ namespace FileDB2Browser.ViewModel
             }
         }
         private ICommand addFileTagCommand;
+
+        public ICommand RemoveFileTagCommand
+        {
+            get
+            {
+                return removeFileTagCommand ??= new CommandHandler(RemoveFileTag);
+            }
+        }
+        private ICommand removeFileTagCommand;
 
         public ICommand SetFileDescriptionCommand
         {
@@ -635,6 +676,26 @@ namespace FileDB2Browser.ViewModel
             }
         }
 
+        public void FindFilesFromList(object parameter)
+        {
+            StopSlideshow();
+            if (!string.IsNullOrEmpty(fileListSearch))
+            {
+                var items = fileListSearch.Split(';');
+                var fileIds = new List<int>();
+                foreach (var item in items)
+                {
+                    if (int.TryParse(item, out var fileId))
+                    {
+                        fileIds.Add(fileId);
+                    }
+                }
+
+                // TODO: add query with many file ids
+                SearchResult = fileIds.Select(f => fileDB2Handle.GetFileById(f)).ToList();
+            }
+        }
+
         public void OpenFileLocation(object parameter)
         {
             if (!string.IsNullOrEmpty(CurrentFilePath) &&
@@ -781,53 +842,137 @@ namespace FileDB2Browser.ViewModel
 
         public void AddFilePerson(object parameter)
         {
-            if (SearchResultIndex != -1 && SelectedPersonToAdd != null)
+            if (SearchResultIndex == -1)
             {
-                var fileId = searchResult[SearchResultIndex].id;
-                if (!fileDB2Handle.GetPersonsFromFile(fileId).Any(p => p.id == SelectedPersonToAdd.Id))
-                {
-                    fileDB2Handle.InsertFilePerson(fileId, SelectedPersonToAdd.Id);
-                    LoadFile(SearchResultIndex);
-                }
-                else
-                {
-                    Utils.ShowErrorDialog("This person has already been added");
-                }
+                Utils.ShowErrorDialog("No file selected");
+                return;
             }
+
+            if (SelectedPersonToAdd == null)
+            {
+                Utils.ShowErrorDialog("No person selected");
+                return;
+            }
+
+            var fileId = searchResult[SearchResultIndex].id;
+            if (!fileDB2Handle.GetPersonsFromFile(fileId).Any(p => p.id == SelectedPersonToAdd.Id))
+            {
+                fileDB2Handle.InsertFilePerson(fileId, SelectedPersonToAdd.Id);
+                LoadFile(SearchResultIndex);
+            }
+            else
+            {
+                Utils.ShowErrorDialog("This person has already been added");
+            }
+        }
+
+        public void RemoveFilePerson(object parameter)
+        {
+            if (SearchResultIndex == -1)
+            {
+                Utils.ShowErrorDialog("No file selected");
+                return;
+            }
+
+            if (SelectedPersonToAdd == null)
+            {
+                Utils.ShowErrorDialog("No person selected");
+                return;
+            }
+
+            var fileId = searchResult[SearchResultIndex].id;
+            fileDB2Handle.DeleteFilePerson(fileId, SelectedPersonToAdd.Id);
+            LoadFile(SearchResultIndex);
         }
 
         public void AddFileLocation(object parameter)
         {
-            if (SearchResultIndex != -1 && SelectedLocationToAdd != null)
+            if (SearchResultIndex == -1)
             {
-                var fileId = searchResult[SearchResultIndex].id;
-                if (!fileDB2Handle.GetLocationsFromFile(fileId).Any(l => l.id == SelectedLocationToAdd.Id))
-                {
-                    fileDB2Handle.InsertFileLocation(fileId, SelectedLocationToAdd.Id);
-                    LoadFile(SearchResultIndex);
-                }
-                else
-                {
-                    Utils.ShowErrorDialog("This location has already been added");
-                }
+                Utils.ShowErrorDialog("No file selected");
+                return;
             }
+
+            if (SelectedLocationToAdd == null)
+            {
+                Utils.ShowErrorDialog("No location selected");
+                return;
+            }
+
+            var fileId = searchResult[SearchResultIndex].id;
+            if (!fileDB2Handle.GetLocationsFromFile(fileId).Any(l => l.id == SelectedLocationToAdd.Id))
+            {
+                fileDB2Handle.InsertFileLocation(fileId, SelectedLocationToAdd.Id);
+                LoadFile(SearchResultIndex);
+            }
+            else
+            {
+                Utils.ShowErrorDialog("This location has already been added");
+            }
+        }
+
+        public void RemoveFileLocation(object parameter)
+        {
+            if (SearchResultIndex == -1)
+            {
+                Utils.ShowErrorDialog("No file selected");
+                return;
+            }
+
+            if (SelectedLocationToAdd == null)
+            {
+                Utils.ShowErrorDialog("No location selected");
+                return;
+            }
+
+            var fileId = searchResult[SearchResultIndex].id;
+            fileDB2Handle.DeleteFileLocation(fileId, SelectedLocationToAdd.Id);
+            LoadFile(SearchResultIndex);
         }
 
         public void AddFileTag(object parameter)
         {
-            if (SearchResultIndex != -1 && SelectedTagToAdd != null)
+            if (SearchResultIndex == -1)
             {
-                var fileId = searchResult[SearchResultIndex].id;
-                if (!fileDB2Handle.GetTagsFromFile(fileId).Any(t => t.id == SelectedTagToAdd.Id))
-                {
-                    fileDB2Handle.InsertFileTag(fileId, SelectedTagToAdd.Id);
-                    LoadFile(SearchResultIndex);
-                }
-                else
-                {
-                    Utils.ShowErrorDialog("This tag has already been added");
-                }
+                Utils.ShowErrorDialog("No file selected");
+                return;
             }
+
+            if (SelectedTagToAdd == null)
+            {
+                Utils.ShowErrorDialog("No tag selected");
+                return;
+            }
+
+            var fileId = searchResult[SearchResultIndex].id;
+            if (!fileDB2Handle.GetTagsFromFile(fileId).Any(t => t.id == SelectedTagToAdd.Id))
+            {
+                fileDB2Handle.InsertFileTag(fileId, SelectedTagToAdd.Id);
+                LoadFile(SearchResultIndex);
+            }
+            else
+            {
+                Utils.ShowErrorDialog("This tag has already been added");
+            }
+        }
+
+        public void RemoveFileTag(object parameter)
+        {
+            if (SearchResultIndex == -1)
+            {
+                Utils.ShowErrorDialog("No file selected");
+                return;
+            }
+
+            if (SelectedTagToAdd == null)
+            {
+                Utils.ShowErrorDialog("No tag selected");
+                return;
+            }
+
+            var fileId = searchResult[SearchResultIndex].id;
+            fileDB2Handle.DeleteFileTag(fileId, SelectedTagToAdd.Id);
+            LoadFile(SearchResultIndex);
         }
 
         public void SetFileDescription(object parameter)
