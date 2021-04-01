@@ -157,6 +157,15 @@ namespace FileDB2Browser.ViewModel
         }
         private ICommand findRandomFilesCommand;
 
+        public ICommand FindCurrentDirectoryFilesCommand
+        {
+            get
+            {
+                return findCurrentDirectoryFilesCommand ??= new CommandHandler(FindCurrentDirectoryFiles);
+            }
+        }
+        private ICommand findCurrentDirectoryFilesCommand;
+
         public ICommand FindAllFilesCommand
         {
             get
@@ -646,6 +655,21 @@ namespace FileDB2Browser.ViewModel
             SearchResult = fileDB2Handle.SearchFilesRandom(10);
         }
 
+        public void FindCurrentDirectoryFiles(object parameter)
+        {
+            StopSlideshow();
+            if (SearchResultIndex == -1)
+            {
+                Utils.ShowErrorDialog("No file opened");
+                return;
+            }
+
+            // TODO: only by path
+            var path = SearchResult[SearchResultIndex].path;
+            var dir = Path.GetDirectoryName(path).Replace('\\', '/');
+            SearchResult = fileDB2Handle.SearchFiles(dir);
+        }
+
         public void FindAllFiles(object parameter)
         {
             StopSlideshow();
@@ -697,8 +721,34 @@ namespace FileDB2Browser.ViewModel
             StopSlideshow();
             if (!string.IsNullOrEmpty(SearchPersonAge))
             {
-                // TODO
+                if (!int.TryParse(SearchPersonAge, out var age))
+                {
+                    Utils.ShowErrorDialog("Invalid age format");
+                    return;
+                }
 
+                var result = new List<FilesModel>();
+                var personsWithAge = fileDB2Handle.GetPersons().Where(p => p.dateofbirth != null);
+
+                foreach (var person in personsWithAge)
+                {
+                    var dateOfBirth = fileDB2Handle.ParseDateOfBirth(person.dateofbirth);
+                    foreach (var file in fileDB2Handle.GetFilesWithPersons(new List<int>() { person.id }))
+                    {
+                        if (Utils.InternalDatetimeToDatetime(file.datetime, out var fileDatetime))
+                        {
+                            Utils.InternalDatetimeToDatetime(file.datetime);
+                            int personAgeInFile = Utils.GetYearsAgo(fileDatetime.Value, dateOfBirth);
+                            if (personAgeInFile == age)
+                            {
+                                result.Add(file);
+                            }
+                        }
+                    }
+
+                }
+
+                SearchResult = result;
             }
         }
 
