@@ -45,6 +45,10 @@
                         <TextBlock Text="&#x1F516;" Margin="20 0 3 0" VerticalAlignment="Center" ToolTip="Tags" />
                         <ComboBox Width="100" VerticalAlignment="Center" ItemsSource="{Binding Tags}" SelectedItem="{Binding SelectedTagSearch}" DisplayMemberPath="Name" ToolTip="Tags"/>
                         <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesWithTagCommand}" ToolTip="Search by tag">Search</Button>
+
+                        <TextBlock Text="Person age:" Margin="20 0 3 0" VerticalAlignment="Center"/>
+                        <TextBox Margin="3 0 0 0" Width="100" VerticalAlignment="Center" Text="{Binding SearchPersonAge}" ToolTip="Search criteria for file with persons of the specified age (example: 25, 30-40)"/>
+                        <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesByPersonAgeCommand}" ToolTip="Search for file with persons of the specified age">Search</Button>
                     </StackPanel>
                 </TabItem>
                 <TabItem Header="List">

@@ -209,6 +209,22 @@ namespace FileDB2Browser.ViewModel
         }
         private ICommand findFilesWithTagCommand;
 
+        public ICommand FindFilesByPersonAgeCommand
+        {
+            get
+            {
+                return findFilesByPersonAgeCommand ??= new CommandHandler(FindFilesByPersonAge);
+            }
+        }
+        private ICommand findFilesByPersonAgeCommand;
+
+        public string SearchPersonAge
+        {
+            get => searchPersonAge;
+            set { SetProperty(ref searchPersonAge, value); }
+        }
+        private string searchPersonAge;
+
         #endregion
 
         #region Meta-data change commands and properties
@@ -673,6 +689,16 @@ namespace FileDB2Browser.ViewModel
             if (SelectedTagSearch != null)
             {
                 SearchResult = fileDB2Handle.GetFilesWithTags(new List<int>() { SelectedTagSearch.Id });
+            }
+        }
+
+        public void FindFilesByPersonAge(object parameter)
+        {
+            StopSlideshow();
+            if (!string.IsNullOrEmpty(SearchPersonAge))
+            {
+                // TODO
+
             }
         }
 
