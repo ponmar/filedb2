@@ -664,10 +664,9 @@ namespace FileDB2Browser.ViewModel
                 return;
             }
 
-            // TODO: only by path
             var path = SearchResult[SearchResultIndex].path;
             var dir = Path.GetDirectoryName(path).Replace('\\', '/');
-            SearchResult = fileDB2Handle.SearchFiles(dir);
+            SearchResult = fileDB2Handle.SearchFilesByPath(dir);
         }
 
         public void FindAllFiles(object parameter)

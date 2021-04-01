@@ -157,6 +157,13 @@ namespace FileDB2Interface
             return connection.Query<FilesModel>(sql, new { criteria = "%" + criteria + "%" }).ToList();
         }
 
+        public List<FilesModel> SearchFilesByPath(string criteria)
+        {
+            using var connection = CreateConnection();
+            var sql = "select * from [files] where path like @criteria";
+            return connection.Query<FilesModel>(sql, new { criteria = criteria + "%" }).ToList();
+        }
+
         public List<FilesModel> SearchFilesRandom(int numFiles)
         {
             using var connection = CreateConnection();
@@ -182,19 +189,19 @@ namespace FileDB2Interface
             return connection.QueryFirst<FilesModel>("select * from [files] where path = @path", new { path = path });
         }
 
-        public List<FilesModel> GetFilesWithPersons(List<int> personIds)
+        public List<FilesModel> GetFilesWithPersons(IEnumerable<int> personIds)
         {
             using var connection = CreateConnection();
             return connection.Query<FilesModel>($"select * from [files] inner join filepersons on files.id = filepersons.fileid where filepersons.personid in ({string.Join(',', personIds)})").ToList();
         }
 
-        public List<FilesModel> GetFilesWithLocations(List<int> locationIds)
+        public List<FilesModel> GetFilesWithLocations(IEnumerable<int> locationIds)
         {
             using var connection = CreateConnection();
             return connection.Query<FilesModel>($"select * from [files] inner join filelocations on files.id = filelocations.fileid where filelocations.locationid in ({string.Join(',', locationIds)})").ToList();
         }
 
-        public List<FilesModel> GetFilesWithTags(List<int> tagIds)
+        public List<FilesModel> GetFilesWithTags(IEnumerable<int> tagIds)
         {
             using var connection = CreateConnection();
             return connection.Query<FilesModel>($"select * from [files] inner join filetags on files.id = filetags.fileid where filetags.tagid in ({string.Join(',', tagIds)})").ToList();
