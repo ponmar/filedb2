@@ -13,7 +13,7 @@ namespace FileDB2Browser.ViewModel
         public string Name { get; set; }
         public string Birthday { get; set; }
         public int DaysLeft { get; set; }
-        public string BornYearsAgo { get; set; }
+        public int BornYearsAgo { get; set; }
     }
 
     public class BirthdaysViewModel : ViewModelBase
@@ -31,7 +31,7 @@ namespace FileDB2Browser.ViewModel
                         Name = person.firstname + " " + person.lastname,
                         Birthday = dateOfBirth.ToString("d MMMM"),
                         DaysLeft = Utils.GetDaysToNextBirthday(dateOfBirth),
-                        BornYearsAgo = Utils.GetBornYearsAgo(DateTime.Now, dateOfBirth),
+                        BornYearsAgo = Utils.GetYearsAgo(DateTime.Now, dateOfBirth),
                     });
                 }
             }

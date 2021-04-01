@@ -11,6 +11,8 @@ namespace FileDB2Browser
 {
     public static class Utils
     {
+        public const string FileDB2BrowserTitle = "FileDB2";
+
         public static FileDB2BrowserConfig BrowserConfig { get; } = FileDB2BrowserConfigIO.Read();
 
         public static FileDB2Handle FileDB2Handle
@@ -94,12 +96,12 @@ namespace FileDB2Browser
 
         public static void ShowErrorDialog(string message)
         {
-            MessageBox.Show(message, "FileDB2", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.No);
+            MessageBox.Show(message, FileDB2BrowserTitle, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.No);
         }
 
         public static bool ShowConfirmDialog(string question)
         {
-            return MessageBox.Show(question, "FileDB2", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes;
+            return MessageBox.Show(question, FileDB2BrowserTitle, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes;
         }
     }
 }

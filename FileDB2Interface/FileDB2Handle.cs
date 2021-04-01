@@ -783,10 +783,15 @@ namespace FileDB2Interface
             }
         }
 
-        public void ValidatePersonDateOfBirth(string dateOfBirth)
+        public DateTime ParseDateOfBirth(string dateOfBirthStr)
         {
-            if (dateOfBirth != null &&
-                !DateTime.TryParseExact(dateOfBirth, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var _))
+            return DateTime.ParseExact(dateOfBirthStr, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None);
+        }
+
+        public void ValidatePersonDateOfBirth(string dateOfBirthStr)
+        {
+            if (dateOfBirthStr != null &&
+                !DateTime.TryParseExact(dateOfBirthStr, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out _))
             {
                 throw new FileDB2DataValidationException("Invalid format for person date of birth (should be YYYY-MM-DD)");
             }

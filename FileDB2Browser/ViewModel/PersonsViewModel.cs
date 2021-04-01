@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 using FileDB2Browser.View;
 using FileDB2Interface;
 using FileDB2Interface.Model;
@@ -19,7 +20,8 @@ namespace FileDB2Browser.ViewModel
         public string Lastname { get; set; }
         public string Description { get; set; }
         public string DateOfBirth { get; set; }
-        public string BornYearsAgo { get; set; }
+        public int BornYearsAgo { get; set; }
+        public int? ProfileFileId { get; set; }
 
         private readonly int id;
 
@@ -129,7 +131,7 @@ namespace FileDB2Browser.ViewModel
         {
             Persons.Clear();
 
-            var persons = fileDB2Handle.GetPersons().Select(pm => new Person(pm.id) { Firstname = pm.firstname, Lastname = pm.lastname, Description = pm.description, DateOfBirth = pm.dateofbirth, BornYearsAgo = Utils.GetBornYearsAgoString(DateTime.Now, pm.dateofbirth) });
+            var persons = fileDB2Handle.GetPersons().Select(pm => new Person(pm.id) { Firstname = pm.firstname, Lastname = pm.lastname, Description = pm.description, DateOfBirth = pm.dateofbirth, BornYearsAgo = pm.dateofbirth != null ? Utils.GetYearsAgo(DateTime.Now, fileDB2Handle.ParseDateOfBirth(pm.dateofbirth)) : -1, ProfileFileId = pm.profilefileid });
             foreach (var person in persons)
             {
                 Persons.Add(person);

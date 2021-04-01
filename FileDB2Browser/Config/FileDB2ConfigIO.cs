@@ -11,7 +11,7 @@ namespace FileDB2Browser.Config
 {
     public class FileDB2BrowserConfigIO
     {
-        private const string ApplicationDataSubDir = "FileDB2";
+        private const string ApplicationDataSubDir = Utils.FileDB2BrowserTitle;
         private const string Filename = "FileDB2BrowserConfig.json";
 
         public static bool Write(FileDB2BrowserConfig config)
@@ -65,13 +65,6 @@ namespace FileDB2Browser.Config
             var baseDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             var directory = Path.Combine(baseDirectory, ApplicationDataSubDir);
             return Path.Combine(directory, Filename);
-        }
-
-        public static string GetServerLogoFilePath(string filename)
-        {
-            var baseDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            var directory = Path.Combine(baseDirectory, ApplicationDataSubDir);
-            return Path.Combine(directory, filename);
         }
     }
 }
