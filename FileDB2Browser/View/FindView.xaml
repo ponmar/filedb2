@@ -26,7 +26,7 @@
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="3">
                         <Button Margin="0" Style="{StaticResource NormalButton}" Command="{Binding FindAllFilesCommand}" ToolTip="Search all files">All files</Button>
                         <Button Margin="20 0 0 0" Style="{StaticResource NormalButton}" Command="{Binding FindRandomFilesCommand}" ToolTip="Search 10 random files">10 random files</Button>
-                        <Button Margin="20 0 0 0" Style="{StaticResource NormalButton}" Command="{Binding FindCurrentDirectoryFilesCommand}" ToolTip="Search all files within current file directory">Current directory</Button>
+                        <Button Margin="20 0 0 0" Style="{StaticResource NormalButton}" Command="{Binding FindCurrentDirectoryFilesCommand}" ToolTip="Search all files within current file directory (recursive)">Current directory</Button>
 
                         <TextBlock Text="Path/Description:" Margin="20 0 3 0" VerticalAlignment="Center"/>
                         <TextBox Margin="3 0 0 0" Width="100" VerticalAlignment="Center" Text="{Binding SearchPattern}" ToolTip="Search criteria for file path/description"/>
