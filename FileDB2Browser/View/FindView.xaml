@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FileDB2Browser.View" xmlns:local1="clr-namespace:FileDB2Browser.Converters"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="800" d:DesignWidth="1000">
     <Grid>
         <!-- Search -->
         <Grid.ColumnDefinitions>
@@ -80,8 +80,8 @@
                     <Button Style="{StaticResource NavigationButton}" Command="{Binding FirstFileCommand}" ToolTip="First" Margin="10 3 3 3">&#x21E4;</Button>
                     <Button Style="{StaticResource NavigationButton}" Command="{Binding LastFileCommand}" ToolTip="Last" Margin="3 3 3 3">&#x21E5;</Button>
                     <ToggleButton Style="{StaticResource NavigationToggleButton}" Command="{Binding ToggleSlideshowCommand}" IsChecked="{Binding SlideshowActive}" ToolTip="Toggle slideshow" Margin="10 3 3 3">&#x1F39E;</ToggleButton>
-                    <ToggleButton Style="{StaticResource NavigationToggleButton}" IsChecked="{Binding RandomActive}" ToolTip="Toggle random" Margin="3 3 3 3">&#x21AD;</ToggleButton>
-                    <ToggleButton Style="{StaticResource NavigationToggleButton}" IsChecked="{Binding RepeatActive}" ToolTip="Toggle repeat" Margin="3 3 3 3">&#x21BB;</ToggleButton>
+                    <ToggleButton Style="{StaticResource NavigationToggleButton}" IsChecked="{Binding RandomActive}" ToolTip="Toggle slideshow random" Margin="3 3 3 3">&#x21AD;</ToggleButton>
+                    <ToggleButton Style="{StaticResource NavigationToggleButton}" IsChecked="{Binding RepeatActive}" ToolTip="Toggle slideshow repeat" Margin="3 3 3 3">&#x21BB;</ToggleButton>
                 </StackPanel>
             </StackPanel>
         </Border>
