@@ -65,8 +65,8 @@
         <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource BorderGroup}" Margin="0 0 0 5">
             <StackPanel Orientation="Vertical" Margin="0 5 0 2">
                 <Grid>
-                    <ProgressBar Minimum="0" Maximum="{Binding SearchNumberOfHits, Mode=OneWay}" Value="{Binding SearchResultItemNumber, Mode=OneWay}" Width="519" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" ValueChanged="ProgressBar_ValueChanged"/>
-                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <ProgressBar Minimum="0" Maximum="{Binding SearchNumberOfHits, Mode=OneWay}" Value="{Binding SearchResultItemNumber, Mode=OneWay}" Width="519" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" ValueChanged="ProgressBar_ValueChanged" Margin="0 0 0 3"/>
+                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 0 0 3">
                                     <Run Text="{Binding SearchResultItemNumber, Mode=OneWay}"/>
                                     <Run Text="/"/>
                                     <Run Text="{Binding SearchNumberOfHits, Mode=OneWay}"/>
@@ -80,8 +80,8 @@
                     <Button Style="{StaticResource NavigationButton}" Command="{Binding FirstFileCommand}" ToolTip="First" Margin="10 3 3 3">&#x21E4;</Button>
                     <Button Style="{StaticResource NavigationButton}" Command="{Binding LastFileCommand}" ToolTip="Last" Margin="3 3 3 3">&#x21E5;</Button>
                     <ToggleButton Style="{StaticResource NavigationToggleButton}" Command="{Binding ToggleSlideshowCommand}" IsChecked="{Binding SlideshowActive}" ToolTip="Toggle slideshow" Margin="10 3 3 3">&#x1F39E;</ToggleButton>
-                    <ToggleButton Style="{StaticResource NavigationToggleButton}" Command="{Binding ToggleRandomCommand}" IsChecked="{Binding RandomActive}" ToolTip="Toggle random" Margin="3 3 3 3">&#x21AD;</ToggleButton>
-                    <ToggleButton Style="{StaticResource NavigationToggleButton}" Command="{Binding ToggleRepeatCommand}" IsChecked="{Binding RepeatActive}" ToolTip="Toggle repeat" Margin="3 3 3 3">&#x21BB;</ToggleButton>
+                    <ToggleButton Style="{StaticResource NavigationToggleButton}" IsChecked="{Binding RandomActive}" ToolTip="Toggle random" Margin="3 3 3 3">&#x21AD;</ToggleButton>
+                    <ToggleButton Style="{StaticResource NavigationToggleButton}" IsChecked="{Binding RepeatActive}" ToolTip="Toggle repeat" Margin="3 3 3 3">&#x21BB;</ToggleButton>
                 </StackPanel>
             </StackPanel>
         </Border>

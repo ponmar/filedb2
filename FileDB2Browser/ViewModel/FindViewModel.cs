@@ -69,8 +69,8 @@ namespace FileDB2Browser.ViewModel
     public class FindViewModel : ViewModelBase
     {
         private readonly FileDB2Handle fileDB2Handle;
-
         private readonly IImagePresenter imagePresenter;
+        private readonly Random random = new Random();
 
         #region Browsing commands
 
@@ -143,6 +143,20 @@ namespace FileDB2Browser.ViewModel
             set { SetProperty(ref slideshowActive, value); }
         }
         private bool slideshowActive = false;
+
+        public bool RandomActive
+        {
+            get => randomActive;
+            set { SetProperty(ref randomActive, value); }
+        }
+        private bool randomActive = false;
+
+        public bool RepeatActive
+        {
+            get => repeatActive;
+            set { SetProperty(ref repeatActive, value); }
+        }
+        private bool repeatActive = false;
 
         #endregion
 
@@ -559,6 +573,11 @@ namespace FileDB2Browser.ViewModel
             LoadFile(SearchResultIndex + 1);
         }
 
+        private void NextRandomFile()
+        {
+            LoadFile(random.Next(SearchResult.Count));
+        }
+
         public void PrevDirectory(object parameter)
         {
             StopSlideshow();
@@ -642,10 +661,31 @@ namespace FileDB2Browser.ViewModel
 
         private void SlideshowTimer_Tick(object sender, EventArgs e)
         {
-            NextFile();
-            if (SearchResultIndex == SearchResult.Count - 1)
+            if (RandomActive)
             {
-                StopSlideshow();
+                NextRandomFile();
+            }
+            else
+            {
+                if (RepeatActive)
+                {
+                    if (SearchResultIndex == SearchResult.Count - 1)
+                    {
+                        LoadFile(0);
+                    }
+                    else
+                    {
+                        NextFile();
+                    }
+                }
+                else
+                {
+                    NextFile();
+                    if (SearchResultIndex == SearchResult.Count - 1)
+                    {
+                        StopSlideshow();
+                    }
+                }
             }
         }
 
