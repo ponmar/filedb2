@@ -261,6 +261,15 @@ namespace FileDB2Browser.ViewModel
         }
         private ICommand openFileLocationCommand;
 
+        public ICommand FindFilesFromMissingCategorizationCommand
+        {
+            get
+            {
+                return findFilesFromMissingCategorizationCommand ??= new CommandHandler(FindFilesFromMissingCategorization);
+            }
+        }
+        private ICommand findFilesFromMissingCategorizationCommand;
+
         public ICommand FindFilesFromListCommand
         {
             get
@@ -789,6 +798,12 @@ namespace FileDB2Browser.ViewModel
 
                 SearchResult = result;
             }
+        }
+
+        public void FindFilesFromMissingCategorization(object parameter)
+        {
+            StopSlideshow();
+            SearchResult = fileDB2Handle.GetFilesWithMissingData();
         }
 
         public void FindFilesFromList(object parameter)

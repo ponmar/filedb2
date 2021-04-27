@@ -52,6 +52,11 @@
                         <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesByPersonAgeCommand}" ToolTip="Search for file with persons of the specified age">Search</Button>
                     </StackPanel>
                 </TabItem>
+                <TabItem Header="To be categorized">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="3">
+                        <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesFromMissingCategorizationCommand}" ToolTip="Search by missing categorization">Search</Button>
+                    </StackPanel>
+                </TabItem>
                 <TabItem Header="List">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="3">
                         <TextBlock Text="Exported file list:" VerticalAlignment="Center"/>

@@ -207,6 +207,23 @@ namespace FileDB2Interface
             return connection.Query<FilesModel>($"select * from [files] inner join filetags on files.id = filetags.fileid where filetags.tagid in ({string.Join(',', tagIds)})").ToList();
         }
 
+        public List<FilesModel> GetFilesWithMissingData()
+        {
+            using var connection = CreateConnection();
+            var files = connection.Query<FilesModel>($"select * from [files] where description is null");
+            var result = new List<FilesModel>();
+            foreach (var file in files)
+            {
+                if (GetPersonsFromFile(file.id).Count == 0 &&
+                    GetLocationsFromFile(file.id).Count == 0 &&
+                    GetTagsFromFile(file.id).Count == 0)
+                {
+                    result.Add(file);
+                }
+            }
+            return result;
+        }
+
         public bool HasFilePath(string path)
         {
             using var connection = CreateConnection();
