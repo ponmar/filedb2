@@ -10,6 +10,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using FileDB2Browser.Config;
 using FileDB2Browser.View;
+using FileDB2Browser.ViewModel.Comparers;
 using FileDB2Interface;
 using FileDB2Interface.Model;
 using TextCopy;
@@ -19,30 +20,6 @@ namespace FileDB2Browser.ViewModel
     public interface IImagePresenter
     {
         void ShowImage(BitmapImage image);
-    }
-
-    public class PersonToAddSorter : IComparer<PersonToAdd>
-    {
-        public int Compare(PersonToAdd x, PersonToAdd y)
-        {
-            return x.Name.CompareTo(y.Name);
-        }
-    }
-
-    public class LocationToAddSorter : IComparer<LocationToAdd>
-    {
-        public int Compare(LocationToAdd x, LocationToAdd y)
-        {
-            return x.Name.CompareTo(y.Name);
-        }
-    }
-
-    public class TagToAddSorter : IComparer<TagToAdd>
-    {
-        public int Compare(TagToAdd x, TagToAdd y)
-        {
-            return x.Name.CompareTo(y.Name);
-        }
     }
 
     public class PersonToAdd
@@ -72,7 +49,7 @@ namespace FileDB2Browser.ViewModel
         private readonly IImagePresenter imagePresenter;
         private readonly Random random = new Random();
 
-        #region Browsing commands
+        #region Browsing and sorting commands
 
         public ICommand PrevFileCommand
         {
@@ -136,6 +113,24 @@ namespace FileDB2Browser.ViewModel
             }
         }
         private ICommand toggleSlideshowCommand;
+
+        public ICommand SortFilesByDateCommand
+        {
+            get
+            {
+                return sortFilesByDateCommand ??= new CommandHandler(SortFilesByDate);
+            }
+        }
+        private ICommand sortFilesByDateCommand;
+
+        public ICommand SortFilesByDateDescCommand
+        {
+            get
+            {
+                return sortFilesByDateDescCommand ??= new CommandHandler(SortFilesByDateDesc);
+            }
+        }
+        private ICommand sortFilesByDateDescCommand;
 
         public bool SlideshowActive
         {
@@ -639,6 +634,34 @@ namespace FileDB2Browser.ViewModel
             if (searchResult != null)
             {
                 LoadFile(SearchResult.Count - 1);
+            }
+        }
+
+        public void SortFilesByDate(object parameter)
+        {
+            SortFiles(new FilesByDateSorter());
+        }
+
+        public void SortFilesByDateDesc(object parameter)
+        {
+            SortFiles(new FilesByDateSorter(), true);
+        }
+
+        private void SortFiles(IComparer<FilesModel> comparer, bool desc = false)
+        {
+            StopSlideshow();
+            if (searchResult != null)
+            {
+                var selectedFile = searchResult[searchResultIndex];
+                if (desc)
+                {
+                    SearchResult.Sort((x, y) => comparer.Compare(y, x));
+                }
+                else
+                {
+                    SearchResult.Sort(comparer);
+                }
+                LoadFile(SearchResult.IndexOf(selectedFile));
             }
         }
 
