@@ -132,6 +132,24 @@ namespace FileDB2Browser.ViewModel
         }
         private ICommand sortFilesByDateDescCommand;
 
+        public ICommand SortFilesByPathCommand
+        {
+            get
+            {
+                return sortFilesByPathCommand ??= new CommandHandler(SortFilesByPath);
+            }
+        }
+        private ICommand sortFilesByPathCommand;
+
+        public ICommand SortFilesByPathDescCommand
+        {
+            get
+            {
+                return sortFilesByPathDescCommand ??= new CommandHandler(SortFilesByPathDesc);
+            }
+        }
+        private ICommand sortFilesByPathDescCommand;
+
         public bool SlideshowActive
         {
             get => slideshowActive;
@@ -645,6 +663,16 @@ namespace FileDB2Browser.ViewModel
         public void SortFilesByDateDesc(object parameter)
         {
             SortFiles(new FilesByDateSorter(), true);
+        }
+
+        public void SortFilesByPath(object parameter)
+        {
+            SortFiles(new FilesByPathSorter());
+        }
+
+        public void SortFilesByPathDesc(object parameter)
+        {
+            SortFiles(new FilesByPathSorter(), true);
         }
 
         private void SortFiles(IComparer<FilesModel> comparer, bool desc = false)
