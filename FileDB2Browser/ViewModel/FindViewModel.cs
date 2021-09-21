@@ -66,6 +66,7 @@ namespace FileDB2Browser.ViewModel
         private readonly FileDB2Handle fileDB2Handle;
         private readonly IImagePresenter imagePresenter;
         private readonly Random random = new();
+        private const int MaxSearchHistory = 4;
 
         #region Browsing and sorting commands
 
@@ -165,6 +166,15 @@ namespace FileDB2Browser.ViewModel
         }
         private string searchPersonAge;
 
+        public ICommand FindFilesFromUnionCommand => findFilesFromUnionCommand ??= new CommandHandler(FindFilesFromUnion);
+        private ICommand findFilesFromUnionCommand;
+
+        public ICommand FindFilesFromIntersectionCommand => findFilesFromIntersectionCommand ??= new CommandHandler(FindFilesFromIntersection);
+        private ICommand findFilesFromIntersectionCommand;
+
+        public ICommand FindFilesFromDifferenceCommand => findFilesFromDifferenceCommand ??= new CommandHandler(FindFilesFromDifference);
+        private ICommand findFilesFromDifferenceCommand;
+
         #endregion
 
         #region Meta-data change commands and properties
@@ -236,7 +246,7 @@ namespace FileDB2Browser.ViewModel
             get => searchResult;
             set
             {
-                if (searchResult != value) // TODO: compare files within search result?
+                if (searchResult != value)
                 {
                     searchResult = value;
                     if (searchResult != null)
@@ -245,6 +255,10 @@ namespace FileDB2Browser.ViewModel
                         if (searchResult.Count > 0)
                         {
                             LoadFile(0);
+                            if (SearchResultHistory.Count == MaxSearchHistory)
+                            {
+                                SearchResultHistory.RemoveAt(0);
+                            }
                             SearchResultHistory.Add(searchResult);
                         }
                         else
@@ -670,6 +684,38 @@ namespace FileDB2Browser.ViewModel
                 }
 
                 SearchResult = new SearchResult(result);
+            }
+        }
+
+        public void FindFilesFromUnion(object parameter)
+        {
+            if (SearchResultHistory.Count >= 2)
+            {
+                var files1 = SearchResultHistory[SearchResultHistory.Count - 1].Files;
+                var files2 = SearchResultHistory[SearchResultHistory.Count - 2].Files;
+                SearchResult = new SearchResult(files1.Union(files2, new FilesModelIdComparer()).ToList());
+            }
+        }
+
+        public void FindFilesFromIntersection(object parameter)
+        {
+            if (SearchResultHistory.Count >= 2)
+            {
+                var files1 = SearchResultHistory[SearchResultHistory.Count - 1].Files;
+                var files2 = SearchResultHistory[SearchResultHistory.Count - 2].Files;
+                SearchResult = new SearchResult(files1.Intersect(files2, new FilesModelIdComparer()).ToList());
+            }
+        }
+
+        public void FindFilesFromDifference(object parameter)
+        {
+            if (SearchResultHistory.Count >= 2)
+            {
+                var files1 = SearchResultHistory[SearchResultHistory.Count - 1].Files;
+                var files2 = SearchResultHistory[SearchResultHistory.Count - 2].Files;
+                var uniqueFiles1 = files1.Except(files2, new FilesModelIdComparer());
+                var uniqueFiles2 = files2.Except(files1, new FilesModelIdComparer());
+                SearchResult = new SearchResult(uniqueFiles1.Union(uniqueFiles2, new FilesModelIdComparer()).ToList());
             }
         }
 

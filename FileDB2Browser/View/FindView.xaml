@@ -228,9 +228,9 @@
                                 </GridView>
                             </ListView.View>
                         </ListView>
-                        <Button Grid.Row="2" Grid.Column="0" Style="{StaticResource NormalButton}">Union</Button>
-                        <Button Grid.Row="2" Grid.Column="1" Style="{StaticResource NormalButton}">Intersection</Button>
-                        <Button Grid.Row="2" Grid.Column="2" Style="{StaticResource NormalButton}">Difference</Button>
+                        <Button Style="{StaticResource NormalButton}" ToolTip="Combine selected searches" Command="{Binding FindFilesFromUnionCommand}">Union</Button>
+                        <Button Style="{StaticResource NormalButton}" ToolTip="Combine selected searches" Command="{Binding FindFilesFromIntersectionCommand}">Intersection</Button>
+                        <Button Style="{StaticResource NormalButton}" ToolTip="Combine selected searches" Command="{Binding FindFilesFromDifferenceCommand}">Difference</Button>
                     </StackPanel>
                 </Expander>
             </Border>
