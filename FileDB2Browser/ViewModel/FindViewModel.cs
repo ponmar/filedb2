@@ -231,12 +231,12 @@ namespace FileDB2Browser.ViewModel
 
         public ObservableCollection<SearchResult> SearchResultHistory { get; } = new();
 
-        private List<FilesModel> SearchResult
+        private SearchResult SearchResult
         {
             get => searchResult;
             set
             {
-                if (searchResult != value)
+                if (searchResult != value) // TODO: compare files within search result?
                 {
                     searchResult = value;
                     if (searchResult != null)
@@ -245,7 +245,7 @@ namespace FileDB2Browser.ViewModel
                         if (searchResult.Count > 0)
                         {
                             LoadFile(0);
-                            SearchResultHistory.Add(new SearchResult(searchResult));
+                            SearchResultHistory.Add(searchResult);
                         }
                         else
                         {
@@ -263,7 +263,7 @@ namespace FileDB2Browser.ViewModel
                 }
             }
         }
-        private List<FilesModel> searchResult = null;
+        private SearchResult searchResult = null;
 
         public int SearchResultIndex
         {
@@ -429,11 +429,11 @@ namespace FileDB2Browser.ViewModel
             if (SearchResultIndex < 1)
                 return;
 
-            var currentDirectory = Path.GetDirectoryName(SearchResult[SearchResultIndex].path);
+            var currentDirectory = Path.GetDirectoryName(SearchResult.Files[SearchResultIndex].path);
 
             for (int i = SearchResultIndex - 1; i < searchResult.Count; i--)
             {
-                var directory = Path.GetDirectoryName(SearchResult[i].path);
+                var directory = Path.GetDirectoryName(SearchResult.Files[i].path);
                 if (directory != currentDirectory)
                 {
                     LoadFile(i);
@@ -449,11 +449,11 @@ namespace FileDB2Browser.ViewModel
             if (SearchResultIndex == -1 || SearchResultIndex == searchResult.Count - 1)
                 return;
 
-            var currentDirectory = Path.GetDirectoryName(SearchResult[SearchResultIndex].path);
+            var currentDirectory = Path.GetDirectoryName(SearchResult.Files[SearchResultIndex].path);
 
             for (int i=SearchResultIndex + 1; i<searchResult.Count; i++)
             {
-                var directory = Path.GetDirectoryName(SearchResult[i].path);
+                var directory = Path.GetDirectoryName(SearchResult.Files[i].path);
                 if (directory != currentDirectory)
                 {
                     LoadFile(i);
@@ -502,16 +502,16 @@ namespace FileDB2Browser.ViewModel
             StopSlideshow();
             if (searchResult != null)
             {
-                var selectedFile = searchResult[searchResultIndex];
+                var selectedFile = searchResult.Files[searchResultIndex];
                 if (desc)
                 {
-                    SearchResult.Sort((x, y) => comparer.Compare(y, x));
+                    SearchResult.Files.Sort((x, y) => comparer.Compare(y, x));
                 }
                 else
                 {
-                    SearchResult.Sort(comparer);
+                    SearchResult.Files.Sort(comparer);
                 }
-                LoadFile(SearchResult.IndexOf(selectedFile));
+                LoadFile(SearchResult.Files.IndexOf(selectedFile));
             }
         }
 
@@ -574,7 +574,7 @@ namespace FileDB2Browser.ViewModel
         public void FindRandomFiles(object parameter)
         {
             StopSlideshow();
-            SearchResult = fileDB2Handle.SearchFilesRandom(10);
+            SearchResult = new SearchResult(fileDB2Handle.SearchFilesRandom(10));
         }
 
         public void FindCurrentDirectoryFiles(object parameter)
@@ -586,15 +586,15 @@ namespace FileDB2Browser.ViewModel
                 return;
             }
 
-            var path = SearchResult[SearchResultIndex].path;
+            var path = SearchResult.Files[SearchResultIndex].path;
             var dir = Path.GetDirectoryName(path).Replace('\\', '/');
-            SearchResult = fileDB2Handle.SearchFilesByPath(dir);
+            SearchResult = new SearchResult(fileDB2Handle.SearchFilesByPath(dir));
         }
 
         public void FindAllFiles(object parameter)
         {
             StopSlideshow();
-            SearchResult = fileDB2Handle.GetFiles();
+            SearchResult = new SearchResult(fileDB2Handle.GetFiles());
         }
 
         public void FindFilesByText(object parameter)
@@ -602,7 +602,7 @@ namespace FileDB2Browser.ViewModel
             StopSlideshow();
             if (!string.IsNullOrEmpty(SearchPattern))
             {
-                SearchResult = fileDB2Handle.SearchFiles(SearchPattern);
+                SearchResult = new SearchResult(fileDB2Handle.SearchFiles(SearchPattern));
             }
             else
             {
@@ -615,7 +615,7 @@ namespace FileDB2Browser.ViewModel
             StopSlideshow();
             if (SelectedPersonSearch != null)
             {
-                SearchResult = fileDB2Handle.GetFilesWithPersons(new List<int>() { SelectedPersonSearch.Id });
+                SearchResult = new SearchResult(fileDB2Handle.GetFilesWithPersons(new List<int>() { SelectedPersonSearch.Id }));
             }
         }
 
@@ -624,7 +624,7 @@ namespace FileDB2Browser.ViewModel
             StopSlideshow();
             if (SelectedLocationSearch != null)
             {
-                SearchResult = fileDB2Handle.GetFilesWithLocations(new List<int>() { SelectedLocationSearch.Id });
+                SearchResult = new SearchResult(fileDB2Handle.GetFilesWithLocations(new List<int>() { SelectedLocationSearch.Id }));
             }
         }
 
@@ -633,7 +633,7 @@ namespace FileDB2Browser.ViewModel
             StopSlideshow();
             if (SelectedTagSearch != null)
             {
-                SearchResult = fileDB2Handle.GetFilesWithTags(new List<int>() { SelectedTagSearch.Id });
+                SearchResult = new SearchResult(fileDB2Handle.GetFilesWithTags(new List<int>() { SelectedTagSearch.Id }));
             }
         }
 
@@ -669,14 +669,14 @@ namespace FileDB2Browser.ViewModel
 
                 }
 
-                SearchResult = result;
+                SearchResult = new SearchResult(result);
             }
         }
 
         public void FindFilesFromMissingCategorization(object parameter)
         {
             StopSlideshow();
-            SearchResult = fileDB2Handle.GetFilesWithMissingData();
+            SearchResult = new SearchResult(fileDB2Handle.GetFilesWithMissingData());
         }
 
         public void FindFilesFromList(object parameter)
@@ -695,7 +695,7 @@ namespace FileDB2Browser.ViewModel
                 }
 
                 // TODO: add query with many file ids
-                SearchResult = fileIds.Select(f => fileDB2Handle.GetFileById(f)).ToList();
+                SearchResult = new SearchResult(fileIds.Select(f => fileDB2Handle.GetFileById(f)).ToList());
             }
         }
 
@@ -713,7 +713,7 @@ namespace FileDB2Browser.ViewModel
         {
             if (HasNonEmptySearchResult)
             {
-                var fileIdList = string.Join(';', SearchResult.Select(f => f.id));
+                var fileIdList = string.Join(';', SearchResult.Files.Select(f => f.id));
                 ClipboardService.SetText(fileIdList);
             }
             else
@@ -729,7 +729,7 @@ namespace FileDB2Browser.ViewModel
             {
                 SearchResultIndex = index;
 
-                var selection = SearchResult[SearchResultIndex];
+                var selection = SearchResult.Files[SearchResultIndex];
 
                 CurrentFileInternalPath = selection.path;
                 CurrentFilePath = fileDB2Handle.InternalPathToPath(selection.path);
@@ -857,7 +857,7 @@ namespace FileDB2Browser.ViewModel
                 return;
             }
 
-            var fileId = searchResult[SearchResultIndex].id;
+            var fileId = searchResult.Files[SearchResultIndex].id;
             if (!fileDB2Handle.GetPersonsFromFile(fileId).Any(p => p.id == SelectedPersonToAdd.Id))
             {
                 fileDB2Handle.InsertFilePerson(fileId, SelectedPersonToAdd.Id);
@@ -883,7 +883,7 @@ namespace FileDB2Browser.ViewModel
                 return;
             }
 
-            var fileId = searchResult[SearchResultIndex].id;
+            var fileId = searchResult.Files[SearchResultIndex].id;
             fileDB2Handle.DeleteFilePerson(fileId, SelectedPersonToAdd.Id);
             LoadFile(SearchResultIndex);
         }
@@ -902,7 +902,7 @@ namespace FileDB2Browser.ViewModel
                 return;
             }
 
-            var fileId = searchResult[SearchResultIndex].id;
+            var fileId = searchResult.Files[SearchResultIndex].id;
             if (!fileDB2Handle.GetLocationsFromFile(fileId).Any(l => l.id == SelectedLocationToAdd.Id))
             {
                 fileDB2Handle.InsertFileLocation(fileId, SelectedLocationToAdd.Id);
@@ -928,7 +928,7 @@ namespace FileDB2Browser.ViewModel
                 return;
             }
 
-            var fileId = searchResult[SearchResultIndex].id;
+            var fileId = searchResult.Files[SearchResultIndex].id;
             fileDB2Handle.DeleteFileLocation(fileId, SelectedLocationToAdd.Id);
             LoadFile(SearchResultIndex);
         }
@@ -947,7 +947,7 @@ namespace FileDB2Browser.ViewModel
                 return;
             }
 
-            var fileId = searchResult[SearchResultIndex].id;
+            var fileId = searchResult.Files[SearchResultIndex].id;
             if (!fileDB2Handle.GetTagsFromFile(fileId).Any(t => t.id == SelectedTagToAdd.Id))
             {
                 fileDB2Handle.InsertFileTag(fileId, SelectedTagToAdd.Id);
@@ -973,7 +973,7 @@ namespace FileDB2Browser.ViewModel
                 return;
             }
 
-            var fileId = searchResult[SearchResultIndex].id;
+            var fileId = searchResult.Files[SearchResultIndex].id;
             fileDB2Handle.DeleteFileTag(fileId, SelectedTagToAdd.Id);
             LoadFile(SearchResultIndex);
         }
@@ -982,7 +982,7 @@ namespace FileDB2Browser.ViewModel
         {
             if (SearchResultIndex != -1)
             {
-                var selection = SearchResult[SearchResultIndex];
+                var selection = SearchResult.Files[SearchResultIndex];
                 var fileId = selection.id;
                 var description = string.IsNullOrEmpty(NewFileDescription) ? null : NewFileDescription;
                 fileDB2Handle.UpdateFileDescription(fileId, description);

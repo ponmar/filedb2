@@ -161,6 +161,7 @@
                 </StackPanel>
             </Border>
             <!-- Combine searches -->
+            <!--
             <Border Style="{StaticResource BorderGroup}" Margin="0 20 0 0">
                 <Expander Header="Combine searches" Margin="5" IsExpanded="False">
                     <StackPanel Orientation="Vertical">
@@ -203,6 +204,7 @@
                     </StackPanel>
                 </Expander>
             </Border>
+            -->
             <!-- Export -->
             <Border Style="{StaticResource BorderGroup}" Margin="0 20 0 0">
                 <Expander Header="Export" Margin="5" IsExpanded="False">
@@ -212,9 +214,9 @@
                     </StackPanel>
                 </Expander>
             </Border>
-            <!-- History -->
+            <!-- Search history -->
             <Border Style="{StaticResource BorderGroup}" Margin="0 20 0 0">
-                <Expander Header="History" Margin="5" IsExpanded="False">
+                <Expander Header="Search History" Margin="5" IsExpanded="False">
                     <StackPanel Orientation="Vertical">
                         <ListView ItemsSource="{Binding SearchResultHistory}">
                             <ListView.View>
@@ -226,6 +228,9 @@
                                 </GridView>
                             </ListView.View>
                         </ListView>
+                        <Button Grid.Row="2" Grid.Column="0" Style="{StaticResource NormalButton}">Union</Button>
+                        <Button Grid.Row="2" Grid.Column="1" Style="{StaticResource NormalButton}">Intersection</Button>
+                        <Button Grid.Row="2" Grid.Column="2" Style="{StaticResource NormalButton}">Difference</Button>
                     </StackPanel>
                 </Expander>
             </Border>
