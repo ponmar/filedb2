@@ -67,7 +67,6 @@ namespace FileDB2Browser.ViewModel
         private readonly FileDB2Handle fileDB2Handle;
         private readonly IImagePresenter imagePresenter;
         private readonly Random random = new();
-        private const int MaxSearchHistory = 4;
 
         #region Browsing and sorting commands
 
@@ -256,7 +255,7 @@ namespace FileDB2Browser.ViewModel
                         if (searchResult.Count > 0)
                         {
                             LoadFile(0);
-                            if (SearchResultHistory.Count == MaxSearchHistory)
+                            if (SearchResultHistory.Count == Utils.BrowserConfig.SearchHistorySize)
                             {
                                 SearchResultHistory.RemoveAt(0);
                             }

@@ -14,5 +14,6 @@ namespace FileDB2Browser.Config
         public List<string> WhitelistedFilePathPatterns { get; set; } = new List<string>() { ".jpg", ".png", ".bmp", ".gif", ".avi", ".mpg", ".mp4", ".mkv", ".mov", ".pdf" };
         public bool IncludeHiddenDirectories { get; set; } = false;
         public TimeSpan SlideshowDelay { get; set; } = TimeSpan.FromSeconds(3);
+        public int SearchHistorySize { get; set; } = 4;
     }
 }

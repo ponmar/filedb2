@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FileDB2Browser.Config;
-using FileDB2Interface;
+﻿using FileDB2Browser.Config;
 
 namespace FileDB2Browser.ViewModel
 {
@@ -29,13 +23,21 @@ namespace FileDB2Browser.ViewModel
             get => slideshowDelay;
             private set { SetProperty(ref slideshowDelay, value); }
         }
-        string slideshowDelay;
+        private string slideshowDelay;
+
+        public string SearchHistorySize
+        {
+            get => searchHistorySize;
+            private set { SetProperty(ref searchHistorySize, value); }
+        }
+        private string searchHistorySize;
 
         public StartViewModel(FileDB2BrowserConfig browserConfig)
         {
             Database = browserConfig.Database;
             FilesRootDirectory = browserConfig.FilesRootDirectory;
             SlideshowDelay = browserConfig.SlideshowDelay.TotalSeconds.ToString();
+            SearchHistorySize = browserConfig.SearchHistorySize.ToString();
         }
     }
 }

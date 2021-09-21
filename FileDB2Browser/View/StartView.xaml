@@ -20,6 +20,7 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
 
                     <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextblock}">Database:</TextBlock>
@@ -30,6 +31,9 @@
 
                     <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource PageTextblock}">Slideshow delay (seconds):</TextBlock>
                     <TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource PageTextblock}" Text="{Binding SlideshowDelay}"/>
+
+                    <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource PageTextblock}">Search history size:</TextBlock>
+                    <TextBlock Grid.Row="3" Grid.Column="1" Style="{StaticResource PageTextblock}" Text="{Binding SearchHistorySize}"/>
                 </Grid>
             </StackPanel>
         </ScrollViewer>
