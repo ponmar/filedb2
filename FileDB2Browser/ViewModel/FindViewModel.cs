@@ -47,107 +47,41 @@ namespace FileDB2Browser.ViewModel
     {
         private readonly FileDB2Handle fileDB2Handle;
         private readonly IImagePresenter imagePresenter;
-        private readonly Random random = new Random();
+        private readonly Random random = new();
 
         #region Browsing and sorting commands
 
-        public ICommand PrevFileCommand
-        {
-            get
-            {
-                return prevFileCommand ??= new CommandHandler(PrevFile);
-            }
-        }
+        public ICommand PrevFileCommand => prevFileCommand ??= new CommandHandler(PrevFile);
         private ICommand prevFileCommand;
 
-        public ICommand NextFileCommand
-        {
-            get
-            {
-                return nextFileCommand ??= new CommandHandler(NextFile);
-            }
-        }
+        public ICommand NextFileCommand => nextFileCommand ??= new CommandHandler(NextFile);
         private ICommand nextFileCommand;
 
-        public ICommand PrevDirectoryCommand
-        {
-            get
-            {
-                return prevDirectoryCommand ??= new CommandHandler(PrevDirectory);
-            }
-        }
+        public ICommand PrevDirectoryCommand => prevDirectoryCommand ??= new CommandHandler(PrevDirectory);
         private ICommand prevDirectoryCommand;
 
-        public ICommand NextDirectoryCommand
-        {
-            get
-            {
-                return nextDirectoryCommand ??= new CommandHandler(NextDirectory);
-            }
-        }
+        public ICommand NextDirectoryCommand => nextDirectoryCommand ??= new CommandHandler(NextDirectory);
         private ICommand nextDirectoryCommand;
 
-        public ICommand FirstFileCommand
-        {
-            get
-            {
-                return firstFileCommand ??= new CommandHandler(FirstFile);
-            }
-        }
+        public ICommand FirstFileCommand => firstFileCommand ??= new CommandHandler(FirstFile);
         private ICommand firstFileCommand;
 
-        public ICommand LastFileCommand
-        {
-            get
-            {
-                return lastFileCommand ??= new CommandHandler(LastFile);
-            }
-        }
+        public ICommand LastFileCommand => lastFileCommand ??= new CommandHandler(LastFile);
         private ICommand lastFileCommand;
 
-        public ICommand ToggleSlideshowCommand
-        {
-            get
-            {
-                return toggleSlideshowCommand ??= new CommandHandler(ToggleSlideshow);
-            }
-        }
+        public ICommand ToggleSlideshowCommand => toggleSlideshowCommand ??= new CommandHandler(ToggleSlideshow);
         private ICommand toggleSlideshowCommand;
 
-        public ICommand SortFilesByDateCommand
-        {
-            get
-            {
-                return sortFilesByDateCommand ??= new CommandHandler(SortFilesByDate);
-            }
-        }
+        public ICommand SortFilesByDateCommand => sortFilesByDateCommand ??= new CommandHandler(SortFilesByDate);
         private ICommand sortFilesByDateCommand;
 
-        public ICommand SortFilesByDateDescCommand
-        {
-            get
-            {
-                return sortFilesByDateDescCommand ??= new CommandHandler(SortFilesByDateDesc);
-            }
-        }
+        public ICommand SortFilesByDateDescCommand => sortFilesByDateDescCommand ??= new CommandHandler(SortFilesByDateDesc);
         private ICommand sortFilesByDateDescCommand;
 
-        public ICommand SortFilesByPathCommand
-        {
-            get
-            {
-                return sortFilesByPathCommand ??= new CommandHandler(SortFilesByPath);
-            }
-        }
+        public ICommand SortFilesByPathCommand => sortFilesByPathCommand ??= new CommandHandler(SortFilesByPath);
         private ICommand sortFilesByPathCommand;
 
-        public ICommand SortFilesByPathDescCommand
-        {
-            get
-            {
-                return sortFilesByPathDescCommand ??= new CommandHandler(SortFilesByPathDesc);
-            }
-        }
+        public ICommand SortFilesByPathDescCommand => sortFilesByPathDescCommand ??= new CommandHandler(SortFilesByPathDesc);
         private ICommand sortFilesByPathDescCommand;
 
         public bool SlideshowActive
@@ -175,40 +109,16 @@ namespace FileDB2Browser.ViewModel
 
         #region Search commands and properties
 
-        public ICommand FindRandomFilesCommand
-        {
-            get
-            {
-                return findRandomFilesCommand ??= new CommandHandler(FindRandomFiles);
-            }
-        }
+        public ICommand FindRandomFilesCommand => findRandomFilesCommand ??= new CommandHandler(FindRandomFiles);
         private ICommand findRandomFilesCommand;
 
-        public ICommand FindCurrentDirectoryFilesCommand
-        {
-            get
-            {
-                return findCurrentDirectoryFilesCommand ??= new CommandHandler(FindCurrentDirectoryFiles);
-            }
-        }
+        public ICommand FindCurrentDirectoryFilesCommand => findCurrentDirectoryFilesCommand ??= new CommandHandler(FindCurrentDirectoryFiles);
         private ICommand findCurrentDirectoryFilesCommand;
 
-        public ICommand FindAllFilesCommand
-        {
-            get
-            {
-                return findAllFilesCommand ??= new CommandHandler(FindAllFiles);
-            }
-        }
+        public ICommand FindAllFilesCommand => findAllFilesCommand ??= new CommandHandler(FindAllFiles);
         private ICommand findAllFilesCommand;
 
-        public ICommand FindFilesByTextCommand
-        {
-            get
-            {
-                return findFilesByTextCommand ??= new CommandHandler(FindFilesByText);
-            }
-        }
+        public ICommand FindFilesByTextCommand => findFilesByTextCommand ??= new CommandHandler(FindFilesByText);
         private ICommand findFilesByTextCommand;
 
         public string SearchPattern
@@ -218,40 +128,16 @@ namespace FileDB2Browser.ViewModel
         }
         private string searchPattern;
 
-        public ICommand FindFilesWithPersonCommand
-        {
-            get
-            {
-                return findFilesWithPersonCommand ??= new CommandHandler(FindFilesWithPerson);
-            }
-        }
+        public ICommand FindFilesWithPersonCommand => findFilesWithPersonCommand ??= new CommandHandler(FindFilesWithPerson);
         private ICommand findFilesWithPersonCommand;
 
-        public ICommand FindFilesWithLocationCommand
-        {
-            get
-            {
-                return findFilesWithLocationCommand ??= new CommandHandler(FindFilesWithLocation);
-            }
-        }
+        public ICommand FindFilesWithLocationCommand => findFilesWithLocationCommand ??= new CommandHandler(FindFilesWithLocation);
         private ICommand findFilesWithLocationCommand;
 
-        public ICommand FindFilesWithTagCommand
-        {
-            get
-            {
-                return findFilesWithTagCommand ??= new CommandHandler(FindFilesWithTag);
-            }
-        }
+        public ICommand FindFilesWithTagCommand => findFilesWithTagCommand ??= new CommandHandler(FindFilesWithTag);
         private ICommand findFilesWithTagCommand;
 
-        public ICommand FindFilesByPersonAgeCommand
-        {
-            get
-            {
-                return findFilesByPersonAgeCommand ??= new CommandHandler(FindFilesByPersonAge);
-            }
-        }
+        public ICommand FindFilesByPersonAgeCommand => findFilesByPersonAgeCommand ??= new CommandHandler(FindFilesByPersonAge);
         private ICommand findFilesByPersonAgeCommand;
 
         public string SearchPersonAge
@@ -265,31 +151,13 @@ namespace FileDB2Browser.ViewModel
 
         #region Meta-data change commands and properties
 
-        public ICommand OpenFileLocationCommand
-        {
-            get
-            {
-                return openFileLocationCommand ??= new CommandHandler(OpenFileLocation);
-            }
-        }
+        public ICommand OpenFileLocationCommand => openFileLocationCommand ??= new CommandHandler(OpenFileLocation);
         private ICommand openFileLocationCommand;
 
-        public ICommand FindFilesFromMissingCategorizationCommand
-        {
-            get
-            {
-                return findFilesFromMissingCategorizationCommand ??= new CommandHandler(FindFilesFromMissingCategorization);
-            }
-        }
+        public ICommand FindFilesFromMissingCategorizationCommand => findFilesFromMissingCategorizationCommand ??= new CommandHandler(FindFilesFromMissingCategorization);
         private ICommand findFilesFromMissingCategorizationCommand;
 
-        public ICommand FindFilesFromListCommand
-        {
-            get
-            {
-                return findFilesFromListCommand ??= new CommandHandler(FindFilesFromList);
-            }
-        }
+        public ICommand FindFilesFromListCommand => findFilesFromListCommand ??= new CommandHandler(FindFilesFromList);
         private ICommand findFilesFromListCommand;
 
         public string FileListSearch
@@ -299,76 +167,28 @@ namespace FileDB2Browser.ViewModel
         }
         private string fileListSearch;
 
-        public ICommand ExportFileListCommand
-        {
-            get
-            {
-                return exportFileListCommand ??= new CommandHandler(ExportFileList);
-            }
-        }
+        public ICommand ExportFileListCommand => exportFileListCommand ??= new CommandHandler(ExportFileList);
         private ICommand exportFileListCommand;
 
-        public ICommand AddFilePersonCommand
-        {
-            get
-            {
-                return addFilePersonCommand ??= new CommandHandler(AddFilePerson);
-            }
-        }
+        public ICommand AddFilePersonCommand => addFilePersonCommand ??= new CommandHandler(AddFilePerson);
         private ICommand addFilePersonCommand;
 
-        public ICommand RemoveFilePersonCommand
-        {
-            get
-            {
-                return removeFilePersonCommand ??= new CommandHandler(RemoveFilePerson);
-            }
-        }
+        public ICommand RemoveFilePersonCommand => removeFilePersonCommand ??= new CommandHandler(RemoveFilePerson);
         private ICommand removeFilePersonCommand;
 
-        public ICommand AddFileLocationCommand
-        {
-            get
-            {
-                return addFileLocationCommand ??= new CommandHandler(AddFileLocation);
-            }
-        }
+        public ICommand AddFileLocationCommand => addFileLocationCommand ??= new CommandHandler(AddFileLocation);
         private ICommand addFileLocationCommand;
 
-        public ICommand RemoveFileLocationCommand
-        {
-            get
-            {
-                return removeFileLocationCommand ??= new CommandHandler(RemoveFileLocation);
-            }
-        }
+        public ICommand RemoveFileLocationCommand => removeFileLocationCommand ??= new CommandHandler(RemoveFileLocation);
         private ICommand removeFileLocationCommand;
 
-        public ICommand AddFileTagCommand
-        {
-            get
-            {
-                return addFileTagCommand ??= new CommandHandler(AddFileTag);
-            }
-        }
+        public ICommand AddFileTagCommand => addFileTagCommand ??= new CommandHandler(AddFileTag);
         private ICommand addFileTagCommand;
 
-        public ICommand RemoveFileTagCommand
-        {
-            get
-            {
-                return removeFileTagCommand ??= new CommandHandler(RemoveFileTag);
-            }
-        }
+        public ICommand RemoveFileTagCommand => removeFileTagCommand ??= new CommandHandler(RemoveFileTag);
         private ICommand removeFileTagCommand;
 
-        public ICommand SetFileDescriptionCommand
-        {
-            get
-            {
-                return setFileDescriptionCommand ??= new CommandHandler(SetFileDescription);
-            }
-        }
+        public ICommand SetFileDescriptionCommand => setFileDescriptionCommand ??= new CommandHandler(SetFileDescription);
         private ICommand setFileDescriptionCommand;
 
         public string NewFileDescription
@@ -378,36 +198,20 @@ namespace FileDB2Browser.ViewModel
         }
         private string newFileDescription;
 
-        public ICommand CreatePersonCommand
-        {
-            get
-            {
-                return createPersonCommand ??= new CommandHandler(CreatePerson);
-            }
-        }
+        public ICommand CreatePersonCommand => createPersonCommand ??= new CommandHandler(CreatePerson);
         private ICommand createPersonCommand;
 
-        public ICommand CreateLocationCommand
-        {
-            get
-            {
-                return createLocationCommand ??= new CommandHandler(CreateLocation);
-            }
-        }
+        public ICommand CreateLocationCommand => createLocationCommand ??= new CommandHandler(CreateLocation);
         private ICommand createLocationCommand;
 
-        public ICommand CreateTagCommand
-        {
-            get
-            {
-                return createTagCommand ??= new CommandHandler(CreateTag);
-            }
-        }
+        public ICommand CreateTagCommand => createTagCommand ??= new CommandHandler(CreateTag);
         private ICommand createTagCommand;
 
         #endregion
 
         #region Search result
+
+        public ObservableCollection<List<FilesModel>> SearchResultHistory = new();
 
         private List<FilesModel> SearchResult
         {
@@ -423,6 +227,7 @@ namespace FileDB2Browser.ViewModel
                         if (searchResult.Count > 0)
                         {
                             LoadFile(0);
+                            SearchResultHistory.Add(searchResult);
                         }
                         else
                         {
@@ -560,7 +365,7 @@ namespace FileDB2Browser.ViewModel
 
         public TagToAdd SelectedTagSearch { get; set; }
 
-        private DispatcherTimer slideshowTimer;
+        private readonly DispatcherTimer slideshowTimer = new();
 
         public FindViewModel(FileDB2BrowserConfig config, FileDB2Handle fileDB2Handle, IImagePresenter imagePresenter)
         {
@@ -573,7 +378,6 @@ namespace FileDB2Browser.ViewModel
             ReloadLocations();
             ReloadTags();
 
-            slideshowTimer = new DispatcherTimer();
             slideshowTimer.Tick += SlideshowTimer_Tick;
             slideshowTimer.Interval = config.SlideshowDelay;
         }

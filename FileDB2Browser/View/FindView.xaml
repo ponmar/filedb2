@@ -212,6 +212,13 @@
                     </StackPanel>
                 </Expander>
             </Border>
+            <!-- History -->
+            <Border Style="{StaticResource BorderGroup}" Margin="0 20 0 0">
+                <Expander Header="History" Margin="5" IsExpanded="False">
+                    <StackPanel Orientation="Vertical">
+                    </StackPanel>
+                </Expander>
+            </Border>
         </StackPanel>
         <!-- Image or error message -->
         <Border Grid.Row="4" Grid.Column="1" Style="{StaticResource BorderGroup}" Margin="15 15 0 5">
