@@ -43,6 +43,24 @@ namespace FileDB2Browser.ViewModel
         public string Name { get; set; }
     }
 
+    public class SearchResult
+    {
+        public string Name => $"{Count}";
+
+        public string From => DateTime.ToString("HH:mm:ss");
+
+        public DateTime DateTime { get; } = DateTime.Now;
+
+        public int Count => Files.Count;
+
+        public List<FilesModel> Files { get; }
+
+        public SearchResult(List<FilesModel> files)
+        {
+            Files = files;
+        }
+    }
+
     public class FindViewModel : ViewModelBase
     {
         private readonly FileDB2Handle fileDB2Handle;
@@ -211,7 +229,7 @@ namespace FileDB2Browser.ViewModel
 
         #region Search result
 
-        public ObservableCollection<List<FilesModel>> SearchResultHistory = new();
+        public ObservableCollection<SearchResult> SearchResultHistory { get; } = new();
 
         private List<FilesModel> SearchResult
         {
@@ -227,7 +245,7 @@ namespace FileDB2Browser.ViewModel
                         if (searchResult.Count > 0)
                         {
                             LoadFile(0);
-                            SearchResultHistory.Add(searchResult);
+                            SearchResultHistory.Add(new SearchResult(searchResult));
                         }
                         else
                         {

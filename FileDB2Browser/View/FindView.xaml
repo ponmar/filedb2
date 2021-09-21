@@ -216,6 +216,16 @@
             <Border Style="{StaticResource BorderGroup}" Margin="0 20 0 0">
                 <Expander Header="History" Margin="5" IsExpanded="False">
                     <StackPanel Orientation="Vertical">
+                        <ListView ItemsSource="{Binding SearchResultHistory}">
+                            <ListView.View>
+                                <GridView>
+                                    <GridView.Columns>
+                                        <GridViewColumn Header="From" DisplayMemberBinding="{Binding Path=From}"></GridViewColumn>
+                                        <GridViewColumn Header="Files" DisplayMemberBinding="{Binding Path=Name}"></GridViewColumn>
+                                    </GridView.Columns>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
                     </StackPanel>
                 </Expander>
             </Border>
