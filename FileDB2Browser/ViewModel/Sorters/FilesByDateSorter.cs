@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FileDB2Interface.Model;
 
-namespace FileDB2Browser.ViewModel.Comparers
+namespace FileDB2Browser.ViewModel.Sorters
 {
     public class FilesByDateSorter : IComparer<FilesModel>
     {

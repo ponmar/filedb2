@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FileDB2Browser.ViewModel.Comparers
+namespace FileDB2Browser.ViewModel.Sorters
 {
-    public class LocationToAddSorter : IComparer<LocationToAdd>
+    public class PersonToAddSorter : IComparer<PersonToAdd>
     {
-        public int Compare(LocationToAdd x, LocationToAdd y)
+        public int Compare(PersonToAdd x, PersonToAdd y)
         {
             return x.Name.CompareTo(y.Name);
         }

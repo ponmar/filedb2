@@ -10,7 +10,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using FileDB2Browser.Config;
 using FileDB2Browser.View;
-using FileDB2Browser.ViewModel.Comparers;
+using FileDB2Browser.ViewModel.Sorters;
 using FileDB2Interface;
 using FileDB2Interface.Comparers;
 using FileDB2Interface.Model;
