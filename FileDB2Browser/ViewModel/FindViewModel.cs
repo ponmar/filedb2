@@ -166,13 +166,13 @@ namespace FileDB2Browser.ViewModel
         }
         private string searchPersonAge;
 
-        public ICommand FindFilesFromUnionCommand => findFilesFromUnionCommand ??= new CommandHandler(FindFilesFromUnion);
+        public ICommand FindFilesFromUnionCommand => findFilesFromUnionCommand ??= new CommandHandler(FindFilesFromUnion, FindFilesFromHistoryEnabled);
         private ICommand findFilesFromUnionCommand;
 
-        public ICommand FindFilesFromIntersectionCommand => findFilesFromIntersectionCommand ??= new CommandHandler(FindFilesFromIntersection);
+        public ICommand FindFilesFromIntersectionCommand => findFilesFromIntersectionCommand ??= new CommandHandler(FindFilesFromIntersection, FindFilesFromHistoryEnabled);
         private ICommand findFilesFromIntersectionCommand;
 
-        public ICommand FindFilesFromDifferenceCommand => findFilesFromDifferenceCommand ??= new CommandHandler(FindFilesFromDifference);
+        public ICommand FindFilesFromDifferenceCommand => findFilesFromDifferenceCommand ??= new CommandHandler(FindFilesFromDifference, FindFilesFromHistoryEnabled);
         private ICommand findFilesFromDifferenceCommand;
 
         #endregion
@@ -255,11 +255,7 @@ namespace FileDB2Browser.ViewModel
                         if (searchResult.Count > 0)
                         {
                             LoadFile(0);
-                            if (SearchResultHistory.Count == Utils.BrowserConfig.SearchHistorySize)
-                            {
-                                SearchResultHistory.RemoveAt(0);
-                            }
-                            SearchResultHistory.Add(searchResult);
+                            AddSearchResultToHistory();
                         }
                         else
                         {
@@ -277,6 +273,16 @@ namespace FileDB2Browser.ViewModel
                 }
             }
         }
+
+        private void AddSearchResultToHistory()
+        {
+            if (SearchResultHistory.Count == Utils.BrowserConfig.SearchHistorySize)
+            {
+                SearchResultHistory.RemoveAt(0);
+            }
+            SearchResultHistory.Add(searchResult);
+        }
+
         private SearchResult searchResult = null;
 
         public int SearchResultIndex
@@ -685,6 +691,11 @@ namespace FileDB2Browser.ViewModel
 
                 SearchResult = new SearchResult(result);
             }
+        }
+
+        public bool FindFilesFromHistoryEnabled()
+        {
+            return SearchResultHistory.Count >= 2;
         }
 
         public void FindFilesFromUnion(object parameter)

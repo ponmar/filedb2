@@ -160,51 +160,6 @@
                     <TextBlock Text="{Binding CurrentFileDescription}" Margin="0 0 10 0" Visibility="{Binding CurrentFileDescription, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
                 </StackPanel>
             </Border>
-            <!-- Combine searches -->
-            <!--
-            <Border Style="{StaticResource BorderGroup}" Margin="0 20 0 0">
-                <Expander Header="Combine searches" Margin="5" IsExpanded="False">
-                    <StackPanel Orientation="Vertical">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="auto"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
-                            </Grid.RowDefinitions>
-
-                            <TextBlock Grid.Row="0" Grid.Column="0" Text="1st:" VerticalAlignment="Center"/>
-                            <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Text="-"/>
-                            <Button Grid.Row="0" Grid.Column="2" Style="{StaticResource NormalButton}">Update from search</Button>
-
-                            <TextBlock Grid.Row="1" Grid.Column="0" Text="2nd:" VerticalAlignment="Center"/>
-                            <TextBlock Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Text="-"/>
-                            <Button Grid.Row="1" Grid.Column="2" Style="{StaticResource NormalButton}">Update from search</Button>
-                        </Grid>
-
-                        <Button Grid.Row="2" Grid.Column="0" Style="{StaticResource NormalButton}">Union</Button>
-                        <Button Grid.Row="2" Grid.Column="1" Style="{StaticResource NormalButton}">Intersection</Button>
-                        <Button Grid.Row="2" Grid.Column="2" Style="{StaticResource NormalButton}">Difference</Button>
-
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="auto"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="auto"/>
-                            </Grid.RowDefinitions>
-
-                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Result:"/>
-                            <TextBlock Grid.Row="0" Grid.Column="1" Text="-"/>
-                        </Grid>
-                    </StackPanel>
-                </Expander>
-            </Border>
-            -->
             <!-- Export -->
             <Border Style="{StaticResource BorderGroup}" Margin="0 20 0 0">
                 <Expander Header="Export" Margin="5" IsExpanded="False">
@@ -228,9 +183,9 @@
                                 </GridView>
                             </ListView.View>
                         </ListView>
-                        <Button Style="{StaticResource NormalButton}" ToolTip="Combine selected searches" Command="{Binding FindFilesFromUnionCommand}">Union</Button>
-                        <Button Style="{StaticResource NormalButton}" ToolTip="Combine selected searches" Command="{Binding FindFilesFromIntersectionCommand}">Intersection</Button>
-                        <Button Style="{StaticResource NormalButton}" ToolTip="Combine selected searches" Command="{Binding FindFilesFromDifferenceCommand}">Difference</Button>
+                        <Button Style="{StaticResource NormalButton}" ToolTip="Combine last two searches" Command="{Binding FindFilesFromUnionCommand}">Union</Button>
+                        <Button Style="{StaticResource NormalButton}" ToolTip="Combine last two searches" Command="{Binding FindFilesFromIntersectionCommand}">Intersection</Button>
+                        <Button Style="{StaticResource NormalButton}" ToolTip="Combine last two searches" Command="{Binding FindFilesFromDifferenceCommand}">Difference</Button>
                     </StackPanel>
                 </Expander>
             </Border>
