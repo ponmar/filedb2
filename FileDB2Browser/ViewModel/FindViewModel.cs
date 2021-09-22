@@ -70,37 +70,37 @@ namespace FileDB2Browser.ViewModel
 
         #region Browsing and sorting commands
 
-        public ICommand PrevFileCommand => prevFileCommand ??= new CommandHandler(PrevFile);
+        public ICommand PrevFileCommand => prevFileCommand ??= new CommandHandler(PrevFile, PrevFileAvailable);
         private ICommand prevFileCommand;
 
-        public ICommand NextFileCommand => nextFileCommand ??= new CommandHandler(NextFile);
+        public ICommand NextFileCommand => nextFileCommand ??= new CommandHandler(NextFile, NextFileAvailable);
         private ICommand nextFileCommand;
 
-        public ICommand PrevDirectoryCommand => prevDirectoryCommand ??= new CommandHandler(PrevDirectory);
+        public ICommand PrevDirectoryCommand => prevDirectoryCommand ??= new CommandHandler(PrevDirectory, SearchResultAvailable);
         private ICommand prevDirectoryCommand;
 
-        public ICommand NextDirectoryCommand => nextDirectoryCommand ??= new CommandHandler(NextDirectory);
+        public ICommand NextDirectoryCommand => nextDirectoryCommand ??= new CommandHandler(NextDirectory, SearchResultAvailable);
         private ICommand nextDirectoryCommand;
 
-        public ICommand FirstFileCommand => firstFileCommand ??= new CommandHandler(FirstFile);
+        public ICommand FirstFileCommand => firstFileCommand ??= new CommandHandler(FirstFile, FirstFileAvailable);
         private ICommand firstFileCommand;
 
-        public ICommand LastFileCommand => lastFileCommand ??= new CommandHandler(LastFile);
+        public ICommand LastFileCommand => lastFileCommand ??= new CommandHandler(LastFile, LastFileAvailable);
         private ICommand lastFileCommand;
 
-        public ICommand ToggleSlideshowCommand => toggleSlideshowCommand ??= new CommandHandler(ToggleSlideshow);
+        public ICommand ToggleSlideshowCommand => toggleSlideshowCommand ??= new CommandHandler(ToggleSlideshow, FirstFileAvailable);
         private ICommand toggleSlideshowCommand;
 
-        public ICommand SortFilesByDateCommand => sortFilesByDateCommand ??= new CommandHandler(SortFilesByDate);
+        public ICommand SortFilesByDateCommand => sortFilesByDateCommand ??= new CommandHandler(SortFilesByDate, FirstFileAvailable);
         private ICommand sortFilesByDateCommand;
 
-        public ICommand SortFilesByDateDescCommand => sortFilesByDateDescCommand ??= new CommandHandler(SortFilesByDateDesc);
+        public ICommand SortFilesByDateDescCommand => sortFilesByDateDescCommand ??= new CommandHandler(SortFilesByDateDesc, FirstFileAvailable);
         private ICommand sortFilesByDateDescCommand;
 
-        public ICommand SortFilesByPathCommand => sortFilesByPathCommand ??= new CommandHandler(SortFilesByPath);
+        public ICommand SortFilesByPathCommand => sortFilesByPathCommand ??= new CommandHandler(SortFilesByPath, FirstFileAvailable);
         private ICommand sortFilesByPathCommand;
 
-        public ICommand SortFilesByPathDescCommand => sortFilesByPathDescCommand ??= new CommandHandler(SortFilesByPathDesc);
+        public ICommand SortFilesByPathDescCommand => sortFilesByPathDescCommand ??= new CommandHandler(SortFilesByPathDesc, FirstFileAvailable);
         private ICommand sortFilesByPathDescCommand;
 
         public bool SlideshowActive
@@ -283,6 +283,7 @@ namespace FileDB2Browser.ViewModel
             SearchResultHistory.Add(searchResult);
         }
 
+        // TODO: set empty search to avoid null checks everywhere?
         private SearchResult searchResult = null;
 
         public int SearchResultIndex
@@ -426,6 +427,11 @@ namespace FileDB2Browser.ViewModel
             LoadFile(SearchResultIndex - 1);
         }
 
+        public bool PrevFileAvailable()
+        {
+            return SearchResultIndex > 0;
+        }
+
         public void NextFile(object parameter)
         {
             StopSlideshow();
@@ -435,6 +441,11 @@ namespace FileDB2Browser.ViewModel
         private void NextFile()
         {
             LoadFile(SearchResultIndex + 1);
+        }
+
+        public bool NextFileAvailable()
+        {
+            return searchResult != null && SearchResultIndex < searchResult.Count - 1;
         }
 
         private void NextRandomFile()
@@ -482,10 +493,20 @@ namespace FileDB2Browser.ViewModel
             }
         }
 
+        public bool SearchResultAvailable()
+        {
+            return searchResult != null && searchResult.Count > 0;
+        }
+
         public void FirstFile(object parameter)
         {
             StopSlideshow();
             LoadFile(0);
+        }
+
+        public bool FirstFileAvailable()
+        {
+            return searchResult != null && SearchResultIndex > 0;
         }
 
         public void LastFile(object parameter)
@@ -495,6 +516,11 @@ namespace FileDB2Browser.ViewModel
             {
                 LoadFile(SearchResult.Count - 1);
             }
+        }
+
+        public bool LastFileAvailable()
+        {
+            return searchResult != null && SearchResultIndex < SearchResult.Count - 1;
         }
 
         public void SortFilesByDate(object parameter)
