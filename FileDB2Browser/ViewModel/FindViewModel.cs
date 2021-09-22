@@ -179,7 +179,7 @@ namespace FileDB2Browser.ViewModel
 
         #region Meta-data change commands and properties
 
-        public ICommand OpenFileLocationCommand => openFileLocationCommand ??= new CommandHandler(OpenFileLocation);
+        public ICommand OpenFileLocationCommand => openFileLocationCommand ??= new CommandHandler(OpenFileLocation, SearchResultAvailable);
         private ICommand openFileLocationCommand;
 
         public ICommand FindFilesFromMissingCategorizationCommand => findFilesFromMissingCategorizationCommand ??= new CommandHandler(FindFilesFromMissingCategorization);
@@ -195,19 +195,19 @@ namespace FileDB2Browser.ViewModel
         }
         private string fileListSearch;
 
-        public ICommand ExportFileListCommand => exportFileListCommand ??= new CommandHandler(ExportFileList);
+        public ICommand ExportFileListCommand => exportFileListCommand ??= new CommandHandler(ExportFileList, SearchResultAvailable);
         private ICommand exportFileListCommand;
 
-        public ICommand AddFilePersonCommand => addFilePersonCommand ??= new CommandHandler(AddFilePerson);
+        public ICommand AddFilePersonCommand => addFilePersonCommand ??= new CommandHandler(AddFilePerson, PersonSelected);
         private ICommand addFilePersonCommand;
 
-        public ICommand RemoveFilePersonCommand => removeFilePersonCommand ??= new CommandHandler(RemoveFilePerson);
+        public ICommand RemoveFilePersonCommand => removeFilePersonCommand ??= new CommandHandler(RemoveFilePerson, PersonSelected);
         private ICommand removeFilePersonCommand;
 
-        public ICommand AddFileLocationCommand => addFileLocationCommand ??= new CommandHandler(AddFileLocation);
+        public ICommand AddFileLocationCommand => addFileLocationCommand ??= new CommandHandler(AddFileLocation, LocationSelected);
         private ICommand addFileLocationCommand;
 
-        public ICommand RemoveFileLocationCommand => removeFileLocationCommand ??= new CommandHandler(RemoveFileLocation);
+        public ICommand RemoveFileLocationCommand => removeFileLocationCommand ??= new CommandHandler(RemoveFileLocation, LocationSelected);
         private ICommand removeFileLocationCommand;
 
         public ICommand AddFileTagCommand => addFileTagCommand ??= new CommandHandler(AddFileTag);
@@ -388,19 +388,19 @@ namespace FileDB2Browser.ViewModel
 
         public ObservableCollection<PersonToAdd> Persons { get; } = new ObservableCollection<PersonToAdd>();
 
-        public PersonToAdd SelectedPersonToAdd { get; set; }
+        public PersonToAdd SelectedPersonToUpdate { get; set; }
 
         public PersonToAdd SelectedPersonSearch { get; set; }
 
         public ObservableCollection<LocationToAdd> Locations { get; } = new ObservableCollection<LocationToAdd>();
 
-        public LocationToAdd SelectedLocationToAdd { get; set; }
+        public LocationToAdd SelectedLocationToUpdate { get; set; }
 
         public LocationToAdd SelectedLocationSearch { get; set; }
 
         public ObservableCollection<TagToAdd> Tags { get; } = new ObservableCollection<TagToAdd>();
 
-        public TagToAdd SelectedTagToAdd { get; set; }
+        public TagToAdd SelectedTagToUpdate { get; set; }
 
         public TagToAdd SelectedTagSearch { get; set; }
 
@@ -934,16 +934,16 @@ namespace FileDB2Browser.ViewModel
                 return;
             }
 
-            if (SelectedPersonToAdd == null)
+            if (SelectedPersonToUpdate == null)
             {
                 Utils.ShowErrorDialog("No person selected");
                 return;
             }
 
             var fileId = searchResult.Files[SearchResultIndex].id;
-            if (!fileDB2Handle.GetPersonsFromFile(fileId).Any(p => p.id == SelectedPersonToAdd.Id))
+            if (!fileDB2Handle.GetPersonsFromFile(fileId).Any(p => p.id == SelectedPersonToUpdate.Id))
             {
-                fileDB2Handle.InsertFilePerson(fileId, SelectedPersonToAdd.Id);
+                fileDB2Handle.InsertFilePerson(fileId, SelectedPersonToUpdate.Id);
                 LoadFile(SearchResultIndex);
             }
             else
@@ -960,15 +960,20 @@ namespace FileDB2Browser.ViewModel
                 return;
             }
 
-            if (SelectedPersonToAdd == null)
+            if (SelectedPersonToUpdate == null)
             {
                 Utils.ShowErrorDialog("No person selected");
                 return;
             }
 
             var fileId = searchResult.Files[SearchResultIndex].id;
-            fileDB2Handle.DeleteFilePerson(fileId, SelectedPersonToAdd.Id);
+            fileDB2Handle.DeleteFilePerson(fileId, SelectedPersonToUpdate.Id);
             LoadFile(SearchResultIndex);
+        }
+
+        public bool PersonSelected()
+        {
+            return SelectedPersonToUpdate != null;
         }
 
         public void AddFileLocation(object parameter)
@@ -979,16 +984,16 @@ namespace FileDB2Browser.ViewModel
                 return;
             }
 
-            if (SelectedLocationToAdd == null)
+            if (SelectedLocationToUpdate == null)
             {
                 Utils.ShowErrorDialog("No location selected");
                 return;
             }
 
             var fileId = searchResult.Files[SearchResultIndex].id;
-            if (!fileDB2Handle.GetLocationsFromFile(fileId).Any(l => l.id == SelectedLocationToAdd.Id))
+            if (!fileDB2Handle.GetLocationsFromFile(fileId).Any(l => l.id == SelectedLocationToUpdate.Id))
             {
-                fileDB2Handle.InsertFileLocation(fileId, SelectedLocationToAdd.Id);
+                fileDB2Handle.InsertFileLocation(fileId, SelectedLocationToUpdate.Id);
                 LoadFile(SearchResultIndex);
             }
             else
@@ -1005,15 +1010,20 @@ namespace FileDB2Browser.ViewModel
                 return;
             }
 
-            if (SelectedLocationToAdd == null)
+            if (SelectedLocationToUpdate == null)
             {
                 Utils.ShowErrorDialog("No location selected");
                 return;
             }
 
             var fileId = searchResult.Files[SearchResultIndex].id;
-            fileDB2Handle.DeleteFileLocation(fileId, SelectedLocationToAdd.Id);
+            fileDB2Handle.DeleteFileLocation(fileId, SelectedLocationToUpdate.Id);
             LoadFile(SearchResultIndex);
+        }
+
+        public bool LocationSelected()
+        {
+            return SelectedLocationToUpdate != null;
         }
 
         public void AddFileTag(object parameter)
@@ -1024,16 +1034,16 @@ namespace FileDB2Browser.ViewModel
                 return;
             }
 
-            if (SelectedTagToAdd == null)
+            if (SelectedTagToUpdate == null)
             {
                 Utils.ShowErrorDialog("No tag selected");
                 return;
             }
 
             var fileId = searchResult.Files[SearchResultIndex].id;
-            if (!fileDB2Handle.GetTagsFromFile(fileId).Any(t => t.id == SelectedTagToAdd.Id))
+            if (!fileDB2Handle.GetTagsFromFile(fileId).Any(t => t.id == SelectedTagToUpdate.Id))
             {
-                fileDB2Handle.InsertFileTag(fileId, SelectedTagToAdd.Id);
+                fileDB2Handle.InsertFileTag(fileId, SelectedTagToUpdate.Id);
                 LoadFile(SearchResultIndex);
             }
             else
@@ -1050,15 +1060,20 @@ namespace FileDB2Browser.ViewModel
                 return;
             }
 
-            if (SelectedTagToAdd == null)
+            if (SelectedTagToUpdate == null)
             {
                 Utils.ShowErrorDialog("No tag selected");
                 return;
             }
 
             var fileId = searchResult.Files[SearchResultIndex].id;
-            fileDB2Handle.DeleteFileTag(fileId, SelectedTagToAdd.Id);
+            fileDB2Handle.DeleteFileTag(fileId, SelectedTagToUpdate.Id);
             LoadFile(SearchResultIndex);
+        }
+
+        public bool TagSelected()
+        {
+            return SelectedTagToUpdate != null;
         }
 
         public void SetFileDescription(object parameter)
