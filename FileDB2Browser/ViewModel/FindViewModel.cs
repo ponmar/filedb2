@@ -88,8 +88,14 @@ namespace FileDB2Browser.ViewModel
         public ICommand LastFileCommand => lastFileCommand ??= new CommandHandler(LastFile, LastFileAvailable);
         private ICommand lastFileCommand;
 
-        public ICommand ToggleSlideshowCommand => toggleSlideshowCommand ??= new CommandHandler(ToggleSlideshow, FirstFileAvailable);
+        public ICommand ToggleSlideshowCommand => toggleSlideshowCommand ??= new CommandHandler(ToggleSlideshow, SearchResultAvailable);
         private ICommand toggleSlideshowCommand;
+
+        public ICommand ToggleRandomCommand => toggleRandomCommand ??= new CommandHandler(ToggleRandom, SearchResultAvailable);
+        private ICommand toggleRandomCommand;
+
+        public ICommand ToggleRepeatCommand => toggleRepeatCommand ??= new CommandHandler(ToggleRepeat, SearchResultAvailable);
+        private ICommand toggleRepeatCommand;
 
         public ICommand SortFilesByDateCommand => sortFilesByDateCommand ??= new CommandHandler(SortFilesByDate, FirstFileAvailable);
         private ICommand sortFilesByDateCommand;
@@ -571,6 +577,14 @@ namespace FileDB2Browser.ViewModel
             {
                 StopSlideshow();
             }
+        }
+
+        public void ToggleRandom(object parameter)
+        {
+        }
+
+        public void ToggleRepeat(object parameter)
+        {
         }
 
         private void StartSlideshow()
