@@ -216,13 +216,13 @@ namespace FileDB2Browser.ViewModel
         public ICommand RemoveFileLocationCommand => removeFileLocationCommand ??= new CommandHandler(RemoveFileLocation, LocationSelected);
         private ICommand removeFileLocationCommand;
 
-        public ICommand AddFileTagCommand => addFileTagCommand ??= new CommandHandler(AddFileTag);
+        public ICommand AddFileTagCommand => addFileTagCommand ??= new CommandHandler(AddFileTag, TagSelected);
         private ICommand addFileTagCommand;
 
-        public ICommand RemoveFileTagCommand => removeFileTagCommand ??= new CommandHandler(RemoveFileTag);
+        public ICommand RemoveFileTagCommand => removeFileTagCommand ??= new CommandHandler(RemoveFileTag, TagSelected);
         private ICommand removeFileTagCommand;
 
-        public ICommand SetFileDescriptionCommand => setFileDescriptionCommand ??= new CommandHandler(SetFileDescription);
+        public ICommand SetFileDescriptionCommand => setFileDescriptionCommand ??= new CommandHandler(SetFileDescription, SearchResultAvailable);
         private ICommand setFileDescriptionCommand;
 
         public string NewFileDescription
