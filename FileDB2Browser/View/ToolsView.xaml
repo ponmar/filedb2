@@ -10,24 +10,14 @@
         <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Tools</Label>
         <ScrollViewer>
             <StackPanel Orientation="Vertical">
-                <Button Margin="0" Style="{StaticResource NormalButton}" Command="{Binding CreateBackupCommand}">Create backup</Button>
-                <!--
-                <ListView ItemsSource="{Binding SearchResultHistory}">
-                    <ListView.View>
-                        <GridView>
-                            <GridView.Columns>
-                                <GridViewColumn Header="From" DisplayMemberBinding="{Binding Path=From}"></GridViewColumn>
-                                <GridViewColumn Header="Files" DisplayMemberBinding="{Binding Path=Name}"></GridViewColumn>
-                            </GridView.Columns>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-                -->
-                <ListBox ItemsSource="{Binding BackupFiles}">
+                <Label Style="{StaticResource PageSubHeading}">Backup</Label>
+                <Button Margin="10" Width="200" Style="{StaticResource NormalButton}" Command="{Binding CreateBackupCommand}">Create backup</Button>
+                <TextBlock Width="500" Text="Backup files:"/>
+                <ListBox Margin="10" Width="500" ItemsSource="{Binding BackupFiles}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Path=Filename}" />
+                                <TextBlock Text="{Binding Path=Filename}" ToolTip="{Binding Path=Filename}" />
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
