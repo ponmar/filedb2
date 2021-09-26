@@ -8,5 +8,31 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <DockPanel>
         <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Tools</Label>
+        <ScrollViewer>
+            <StackPanel Orientation="Vertical">
+                <Button Margin="0" Style="{StaticResource NormalButton}" Command="{Binding CreateBackupCommand}">Create backup</Button>
+                <!--
+                <ListView ItemsSource="{Binding SearchResultHistory}">
+                    <ListView.View>
+                        <GridView>
+                            <GridView.Columns>
+                                <GridViewColumn Header="From" DisplayMemberBinding="{Binding Path=From}"></GridViewColumn>
+                                <GridViewColumn Header="Files" DisplayMemberBinding="{Binding Path=Name}"></GridViewColumn>
+                            </GridView.Columns>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                -->
+                <ListBox ItemsSource="{Binding BackupFiles}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Path=Filename}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+        </ScrollViewer>
     </DockPanel>
 </UserControl>
