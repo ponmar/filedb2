@@ -24,7 +24,7 @@ namespace FileDB2Browser.View
         public ImportView()
         {
             InitializeComponent();
-            DataContext = new ImportViewModel(Utils.FileDB2Handle, Utils.BrowserConfig);
+            DataContext = new ImportViewModel();
         }
     }
 }

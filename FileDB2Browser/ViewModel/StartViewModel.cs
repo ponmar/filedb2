@@ -1,4 +1,5 @@
-﻿using FileDB2Browser.Config;
+﻿using System.Windows.Input;
+using FileDB2Browser.Config;
 
 namespace FileDB2Browser.ViewModel
 {
@@ -32,12 +33,34 @@ namespace FileDB2Browser.ViewModel
         }
         private string searchHistorySize;
 
-        public StartViewModel(FileDB2BrowserConfig browserConfig)
+        public ICommand ResetConfigurationCommand => resetConfigurationCommand ??= new CommandHandler(ResetConfiguration);
+        private ICommand resetConfigurationCommand;
+
+        public StartViewModel()
         {
-            Database = browserConfig.Database;
-            FilesRootDirectory = browserConfig.FilesRootDirectory;
-            SlideshowDelay = browserConfig.SlideshowDelay.TotalSeconds.ToString();
-            SearchHistorySize = browserConfig.SearchHistorySize.ToString();
+            Init();
+        }
+
+        private void Init()
+        {
+            Database = Utils.BrowserConfig.Database;
+            FilesRootDirectory = Utils.BrowserConfig.FilesRootDirectory;
+            SlideshowDelay = Utils.BrowserConfig.SlideshowDelay.TotalSeconds.ToString();
+            SearchHistorySize = Utils.BrowserConfig.SearchHistorySize.ToString();
+        }
+
+        public void ResetConfiguration(object parameter)
+        {
+            if (FileDB2BrowserConfigIO.ResetConfiguration())
+            {
+                Utils.BrowserConfig = new FileDB2BrowserConfig();
+                Utils.ReloadFileDB2Handle();
+                Init();
+            }
+            else
+            {
+                Utils.ShowErrorDialog("Unable to reset configuration");
+            }
         }
     }
 }

@@ -21,39 +21,22 @@ namespace FileDB2Browser.ViewModel
 
     public class ImportViewModel : ViewModelBase
     {
-        public ICommand ScanNewFilesCommand
-        {
-            get
-            {
-                return scanNewFilesCommand ??= new CommandHandler(ScanNewFiles);
-            }
-        }
+        public ICommand ScanNewFilesCommand => scanNewFilesCommand ??= new CommandHandler(ScanNewFiles);
         private ICommand scanNewFilesCommand;
 
-        public ICommand ImportNewFilesCommand
-        {
-            get
-            {
-                return importNewFilesCommand ??= new CommandHandler(ImportNewFiles, CanImportNewFiles);
-            }
-        }
+        public ICommand ImportNewFilesCommand => importNewFilesCommand ??= new CommandHandler(ImportNewFiles, CanImportNewFiles);
         private ICommand importNewFilesCommand;
-
-        private readonly FileDB2Handle fileDB2Handle;
-        private readonly FileDB2BrowserConfig browserConfig;
 
         public ObservableCollection<NewFile> NewFiles { get; } = new ObservableCollection<NewFile>();
 
-        public ImportViewModel(FileDB2Handle fileDB2Handle, FileDB2BrowserConfig browserConfig)
+        public ImportViewModel()
         {
-            this.fileDB2Handle = fileDB2Handle;
-            this.browserConfig = browserConfig;
         }
 
         public void ScanNewFiles(object parameter)
         {
             NewFiles.Clear();
-            var newFiles = fileDB2Handle.ListNewFilesystemFiles(browserConfig.BlacklistedFilePathPatterns, browserConfig.WhitelistedFilePathPatterns, browserConfig.IncludeHiddenDirectories).Select(p => new NewFile()
+            var newFiles = Utils.FileDB2Handle.ListNewFilesystemFiles(Utils.BrowserConfig.BlacklistedFilePathPatterns, Utils.BrowserConfig.WhitelistedFilePathPatterns, Utils.BrowserConfig.IncludeHiddenDirectories).Select(p => new NewFile()
             {
                 Path = p,
                 DateModified = GetDateModified(p),
@@ -76,7 +59,7 @@ namespace FileDB2Browser.ViewModel
             {
                 foreach (var newFile in NewFiles)
                 {
-                    fileDB2Handle.InsertFile(newFile.Path);
+                    Utils.FileDB2Handle.InsertFile(newFile.Path);
                 }
             }
             catch (FileDB2DataValidationException e)
@@ -89,7 +72,7 @@ namespace FileDB2Browser.ViewModel
 
         private string GetDateModified(string internalPath)
         {
-            var path = fileDB2Handle.InternalPathToPath(internalPath);
+            var path = Utils.FileDB2Handle.InternalPathToPath(internalPath);
             var dateModified = File.GetLastWriteTime(path);
             return dateModified.ToString("yyyy-MM-dd HH:mm");
         }

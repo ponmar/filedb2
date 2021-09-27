@@ -24,7 +24,7 @@ namespace FileDB2Browser.View
         public TagsView()
         {
             InitializeComponent();
-            DataContext = new TagsViewModel(Utils.FileDB2Handle);
+            DataContext = new TagsViewModel();
         }
     }
 }

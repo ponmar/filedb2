@@ -11,7 +11,6 @@ namespace FileDB2Browser.ViewModel
 {
     public class AddTagViewModel : ViewModelBase
     {
-        private readonly FileDB2Handle fileDB2Handle;
         private readonly int tagId;
 
         public string Title
@@ -37,16 +36,15 @@ namespace FileDB2Browser.ViewModel
         }
         private ICommand addTagCommand;
 
-        public AddTagViewModel(FileDB2Handle fileDB2Handle, int tagId = -1)
+        public AddTagViewModel(int tagId = -1)
         {
-            this.fileDB2Handle = fileDB2Handle;
             this.tagId = tagId;
 
             Title = tagId == -1 ? "Add Tag" : "Edit Tag";
 
             if (tagId != -1)
             {
-                var tagModel = fileDB2Handle.GetTagById(tagId);
+                var tagModel = Utils.FileDB2Handle.GetTagById(tagId);
                 Name = tagModel.name;
             }
         }
@@ -57,11 +55,11 @@ namespace FileDB2Browser.ViewModel
             {
                 if (tagId == -1)
                 {
-                    fileDB2Handle.InsertTag(name);
+                    Utils.FileDB2Handle.InsertTag(name);
                 }
                 else
                 {
-                    fileDB2Handle.UpdateTagName(tagId, name);
+                    Utils.FileDB2Handle.UpdateTagName(tagId, name);
                 }
             }
             catch (FileDB2DataValidationException e)

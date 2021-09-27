@@ -27,11 +27,8 @@ namespace FileDB2Browser.ViewModel
 
         public ObservableCollection<BackupFile> BackupFiles { get; } = new();
 
-        private readonly FileDB2Handle fileDB2Handle;
-
-        public ToolsViewModel(FileDB2Handle fileDB2Handle)
+        public ToolsViewModel()
         {
-            this.fileDB2Handle = fileDB2Handle;
             ScanBackupFiles();
         }
 

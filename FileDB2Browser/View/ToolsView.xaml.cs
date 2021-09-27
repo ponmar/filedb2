@@ -24,7 +24,7 @@ namespace FileDB2Browser.View
         public ToolsView()
         {
             InitializeComponent();
-            DataContext = new ToolsViewModel(Utils.FileDB2Handle);
+            DataContext = new ToolsViewModel();
         }
     }
 }
