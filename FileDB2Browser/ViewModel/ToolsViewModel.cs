@@ -49,7 +49,16 @@ namespace FileDB2Browser.ViewModel
                     File.Copy(db, backupFilePath);
                     ScanBackupFiles();
                 }
+                else
+                {
+                    Utils.ShowErrorDialog($"Backup file already available");
+                }
             }
+            else
+            {
+                Utils.ShowErrorDialog($"Missing database: {db}");
+            }
+
         }
 
         private void ScanBackupFiles()
@@ -63,7 +72,6 @@ namespace FileDB2Browser.ViewModel
                     BackupFiles.Add(new BackupFile(backupFile));
                 }
             }
-
         }
     }
 }
