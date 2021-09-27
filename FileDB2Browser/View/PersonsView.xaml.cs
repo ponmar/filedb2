@@ -24,7 +24,7 @@ namespace FileDB2Browser.View
         public PersonsView()
         {
             InitializeComponent();
-            DataContext = new PersonsViewModel(Utils.FileDB2Handle);
+            DataContext = new PersonsViewModel();
         }
     }
 }

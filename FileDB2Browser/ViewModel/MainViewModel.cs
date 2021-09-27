@@ -10,78 +10,29 @@ namespace FileDB2Browser.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
-        public ICommand OpenStartPageCommand
-        {
-            get
-            {
-                return openStartPageCommand ??= new CommandHandler(OpenStartPage);
-            }
-        }
+        public ICommand OpenStartPageCommand => openStartPageCommand ??= new CommandHandler(OpenStartPage);
         private ICommand openStartPageCommand;
 
-        public ICommand OpenFindPageCommand
-        {
-            get
-            {
-                return openFindPageCommand ??= new CommandHandler(OpenFindPage);
-            }
-        }
+        public ICommand OpenFindPageCommand => openFindPageCommand ??= new CommandHandler(OpenFindPage);
         private ICommand openFindPageCommand;
 
-        public ICommand OpenBirthdaysPageCommand
-        {
-            get
-            {
-                return openBirthdaysPageCommand ??= new CommandHandler(OpenBirthdaysPage);
-            }
-        }
+        public ICommand OpenBirthdaysPageCommand => openBirthdaysPageCommand ??= new CommandHandler(OpenBirthdaysPage);
         private ICommand openBirthdaysPageCommand;
 
-        public ICommand OpenPersonsPageCommand
-        {
-            get
-            {
-                return openPersonsPageCommand ??= new CommandHandler(OpenPersonsPage);
-            }
-        }
+        public ICommand OpenPersonsPageCommand => openPersonsPageCommand ??= new CommandHandler(OpenPersonsPage);
         private ICommand openPersonsPageCommand;
 
-        public ICommand OpenLocationsPageCommand
-        {
-            get
-            {
-                return openLocationsPageCommand ??= new CommandHandler(OpenLocationsPage);
-            }
-        }
+        public ICommand OpenLocationsPageCommand => openLocationsPageCommand ??= new CommandHandler(OpenLocationsPage);
         private ICommand openLocationsPageCommand;
 
-        public ICommand OpenTagsPageCommand
-        {
-            get
-            {
-                return openTagsPageCommand ??= new CommandHandler(OpenTagsPage);
-            }
-        }
+        public ICommand OpenTagsPageCommand => openTagsPageCommand ??= new CommandHandler(OpenTagsPage);
         private ICommand openTagsPageCommand;
 
-        public ICommand OpenImportPageCommand
-        {
-            get
-            {
-                return openImportPageCommand ??= new CommandHandler(OpenImportPage);
-            }
-        }
+        public ICommand OpenImportPageCommand => openImportPageCommand ??= new CommandHandler(OpenImportPage);
         private ICommand openImportPageCommand;
 
-        public ICommand OpenToolsPageCommand
-        {
-            get
-            {
-                return openToolsPageCommand ??= new CommandHandler(OpenToolsPage);
-            }
-        }
+        public ICommand OpenToolsPageCommand => openToolsPageCommand ??= new CommandHandler(OpenToolsPage);
         private ICommand openToolsPageCommand;
-
 
         public bool StartPageActive
         {

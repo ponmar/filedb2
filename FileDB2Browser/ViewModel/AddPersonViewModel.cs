@@ -11,7 +11,6 @@ namespace FileDB2Browser.ViewModel
 {
     public class AddPersonViewModel : ViewModelBase
     {
-        private readonly FileDB2Handle fileDB2Handle;
         private readonly int personId;
 
         public string Title
@@ -65,16 +64,15 @@ namespace FileDB2Browser.ViewModel
         }
         private ICommand addPersonCommand;
 
-        public AddPersonViewModel(FileDB2Handle fileDB2Handle, int personId = -1)
+        public AddPersonViewModel(int personId = -1)
         {
-            this.fileDB2Handle = fileDB2Handle;
             this.personId = personId;
 
             Title = personId == -1 ? "Add Person" : "Edit Person";
 
             if (personId != -1)
             {
-                var personModel = fileDB2Handle.GetPersonById(personId);
+                var personModel = Utils.FileDB2Handle.GetPersonById(personId);
                 Firstname = personModel.firstname;
                 Lastname = personModel.lastname;
                 Description = personModel.description;
@@ -104,11 +102,11 @@ namespace FileDB2Browser.ViewModel
             {
                 if (personId == -1)
                 {
-                    fileDB2Handle.InsertPerson(firstname, lastname, newDescription, newDateOfBirth, newProfileFileId);
+                    Utils.FileDB2Handle.InsertPerson(firstname, lastname, newDescription, newDateOfBirth, newProfileFileId);
                 }
                 else
                 {
-                    fileDB2Handle.UpdatePerson(personId, firstname, lastname, newDescription, newDateOfBirth, newProfileFileId);
+                    Utils.FileDB2Handle.UpdatePerson(personId, firstname, lastname, newDescription, newDateOfBirth, newProfileFileId);
                 }
             }
             catch (FileDB2DataValidationException e)

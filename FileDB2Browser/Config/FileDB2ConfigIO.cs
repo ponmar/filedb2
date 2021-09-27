@@ -66,5 +66,10 @@ namespace FileDB2Browser.Config
             var directory = Path.Combine(baseDirectory, ApplicationDataSubDir);
             return Path.Combine(directory, Filename);
         }
+
+        public static bool ResetConfiguration()
+        {
+            return Write(new FileDB2BrowserConfig());
+        }
     }
 }

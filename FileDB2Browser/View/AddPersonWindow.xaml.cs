@@ -23,7 +23,7 @@ namespace FileDB2Browser.View
         public AddPersonWindow(int personId = -1)
         {
             InitializeComponent();
-            DataContext = new AddPersonViewModel(Utils.FileDB2Handle, personId);
+            DataContext = new AddPersonViewModel(personId);
         }
     }
 }

@@ -71,11 +71,8 @@ namespace FileDB2Browser.ViewModel
 
         private Tag selectedTag;
 
-        private readonly FileDB2Handle fileDB2Handle;
-
-        public TagsViewModel(FileDB2Handle fileDB2Handle)
+        public TagsViewModel()
         {
-            this.fileDB2Handle = fileDB2Handle;
             ReloadTags();
         }
 
@@ -83,10 +80,10 @@ namespace FileDB2Browser.ViewModel
         {
             if (selectedTag != null)
             {
-                var filesWithTag = fileDB2Handle.GetFilesWithTags(new List<int>() { selectedTag.GetId() });
+                var filesWithTag = Utils.FileDB2Handle.GetFilesWithTags(new List<int>() { selectedTag.GetId() });
                 if (filesWithTag.Count == 0 || Utils.ShowConfirmDialog($"Tag is used in {filesWithTag.Count} files, remove anyway?"))
                 {
-                    fileDB2Handle.DeleteTag(selectedTag.GetId());
+                    Utils.FileDB2Handle.DeleteTag(selectedTag.GetId());
                     ReloadTags();
                 }
             }
@@ -124,7 +121,7 @@ namespace FileDB2Browser.ViewModel
         {
             Tags.Clear();
 
-            var tags = fileDB2Handle.GetTags().Select(tm => new Tag(tm.id) { Name = tm.name });
+            var tags = Utils.FileDB2Handle.GetTags().Select(tm => new Tag(tm.id) { Name = tm.name });
             foreach (var tag in tags)
             {
                 Tags.Add(tag);

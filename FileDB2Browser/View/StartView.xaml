@@ -35,6 +35,7 @@
                     <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource PageTextblock}">Search history size:</TextBlock>
                     <TextBlock Grid.Row="3" Grid.Column="1" Style="{StaticResource PageTextblock}" Text="{Binding SearchHistorySize}"/>
                 </Grid>
+                <Button Margin="10" Width="100" Style="{StaticResource NormalButton}" Command="{Binding ResetConfigurationCommand}" ToolTip="No database entries or files are lost">Reset</Button>
             </StackPanel>
         </ScrollViewer>
     </DockPanel>

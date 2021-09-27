@@ -20,9 +20,9 @@ namespace FileDB2Browser.ViewModel
     {
         public ObservableCollection<PersonBirthday> Birthdays { get; set; } = new ObservableCollection<PersonBirthday>();
 
-        public BirthdaysViewModel(FileDB2Handle fileDB2Handle)
+        public BirthdaysViewModel()
         {
-            foreach (var person in fileDB2Handle.GetPersons())
+            foreach (var person in Utils.FileDB2Handle.GetPersons())
             {
                 if (person.dateofbirth != null && DateTime.TryParse(person.dateofbirth, out var dateOfBirth))
                 {

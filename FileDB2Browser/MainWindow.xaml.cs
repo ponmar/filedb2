@@ -30,9 +30,9 @@ namespace FileDB2Browser
 
             if (!FileDB2BrowserConfigIO.FileExists())
             {
-                if (!FileDB2BrowserConfigIO.Write(new FileDB2BrowserConfig()))
+                if (!FileDB2BrowserConfigIO.ResetConfiguration())
                 {
-                    Utils.ShowErrorDialog("Unable to write configuration file: " + FileDB2BrowserConfigIO.GetFilePath());
+                    Utils.ShowErrorDialog("Unable to create default configuration: " + FileDB2BrowserConfigIO.GetFilePath());
                 }
             }
         }

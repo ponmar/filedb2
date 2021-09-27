@@ -12,7 +12,6 @@ namespace FileDB2Browser.ViewModel
 {
     public class AddLocationViewModel : ViewModelBase
     {
-        private readonly FileDB2Handle fileDB2Handle;
         private readonly int locationId;
 
         public string Title
@@ -43,25 +42,18 @@ namespace FileDB2Browser.ViewModel
         }
         private string latLon = string.Empty;
 
-        public ICommand AddLocationCommand
-        {
-            get
-            {
-                return addLocationCommand ??= new CommandHandler(AddLocation);
-            }
-        }
+        public ICommand AddLocationCommand => addLocationCommand ??= new CommandHandler(AddLocation);
         private ICommand addLocationCommand;
 
-        public AddLocationViewModel(FileDB2Handle fileDB2Handle, int locationId = -1)
+        public AddLocationViewModel(int locationId = -1)
         {
-            this.fileDB2Handle = fileDB2Handle;
             this.locationId = locationId;
 
             Title = locationId == -1 ? "Add Location" : "Edit Location";
 
             if (locationId != -1)
             {
-                var locationModel = fileDB2Handle.GetLocationById(locationId);
+                var locationModel = Utils.FileDB2Handle.GetLocationById(locationId);
                 Name = locationModel.name;
                 Description = locationModel.description ?? string.Empty;
                 LatLon = locationModel.position ?? string.Empty;
@@ -77,13 +69,13 @@ namespace FileDB2Browser.ViewModel
 
                 if (locationId == -1)
                 {
-                    fileDB2Handle.InsertLocation(name, newDescription, newGeoLocation);
+                    Utils.FileDB2Handle.InsertLocation(name, newDescription, newGeoLocation);
                 }
                 else
                 {
-                    fileDB2Handle.UpdateLocationName(locationId, name);
-                    fileDB2Handle.UpdateLocationDescription(locationId, newDescription);
-                    fileDB2Handle.UpdateLocationPosition(locationId, newGeoLocation);
+                    Utils.FileDB2Handle.UpdateLocationName(locationId, name);
+                    Utils.FileDB2Handle.UpdateLocationDescription(locationId, newDescription);
+                    Utils.FileDB2Handle.UpdateLocationPosition(locationId, newGeoLocation);
                 }
             }
             catch (FileDB2DataValidationException e)

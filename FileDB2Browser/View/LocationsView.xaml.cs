@@ -24,7 +24,7 @@ namespace FileDB2Browser.View
         public LocationsView()
         {
             InitializeComponent();
-            DataContext = new LocationsViewModel(Utils.FileDB2Handle);
+            DataContext = new LocationsViewModel();
         }
     }
 }

@@ -412,9 +412,9 @@ namespace FileDB2Browser.ViewModel
 
         private readonly DispatcherTimer slideshowTimer = new();
 
-        public FindViewModel(FileDB2BrowserConfig config, FileDB2Handle fileDB2Handle, IImagePresenter imagePresenter)
+        public FindViewModel(IImagePresenter imagePresenter)
         {
-            this.fileDB2Handle = fileDB2Handle;
+            this.fileDB2Handle = Utils.FileDB2Handle;
             this.imagePresenter = imagePresenter;
 
             TotalNumberOfFiles = fileDB2Handle.GetFileCount();
@@ -424,7 +424,7 @@ namespace FileDB2Browser.ViewModel
             ReloadTags();
 
             slideshowTimer.Tick += SlideshowTimer_Tick;
-            slideshowTimer.Interval = config.SlideshowDelay;
+            slideshowTimer.Interval = Utils.BrowserConfig.SlideshowDelay;
         }
 
         public void PrevFile(object parameter)

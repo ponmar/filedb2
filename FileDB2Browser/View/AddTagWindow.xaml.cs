@@ -23,7 +23,7 @@ namespace FileDB2Browser.View
         public AddTagWindow(int tagId = -1)
         {
             InitializeComponent();
-            DataContext = new AddTagViewModel(Utils.FileDB2Handle, tagId);
+            DataContext = new AddTagViewModel(tagId);
         }
     }
 }

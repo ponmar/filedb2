@@ -13,7 +13,7 @@ namespace FileDB2Browser
     {
         public const string FileDB2BrowserTitle = "FileDB2";
 
-        public static FileDB2BrowserConfig BrowserConfig { get; } = FileDB2BrowserConfigIO.Read();
+        public static FileDB2BrowserConfig BrowserConfig { get; set; } = FileDB2BrowserConfigIO.Read();
 
         public static FileDB2Handle FileDB2Handle
         {
@@ -21,17 +21,22 @@ namespace FileDB2Browser
             {
                 if (fileDB2Handle == null)
                 {
-                    var config = new FileDB2Config()
-                    {
-                        Database = BrowserConfig.Database,
-                        FilesRootDirectory = BrowserConfig.FilesRootDirectory,
-                    };
-                    fileDB2Handle = new FileDB2Handle(config);
+                    ReloadFileDB2Handle();
                 }
                 return fileDB2Handle;
             }
         }
         private static FileDB2Handle fileDB2Handle;
+
+        public static void ReloadFileDB2Handle()
+        {
+            var config = new FileDB2Config()
+            {
+                Database = BrowserConfig.Database,
+                FilesRootDirectory = BrowserConfig.FilesRootDirectory,
+            };
+            fileDB2Handle = new FileDB2Handle(config);
+        }
 
         public static int GetYearsAgo(DateTime now, DateTime dateTime)
         {
