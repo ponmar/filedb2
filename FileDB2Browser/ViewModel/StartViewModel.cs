@@ -120,7 +120,7 @@ namespace FileDB2Browser.ViewModel
                 return;
             }
 
-            if (!int.TryParse(SearchHistorySize, out int slideshowDelay) || slideshowDelay < 1)
+            if (!int.TryParse(SlideshowDelay, out int slideshowDelay) || slideshowDelay < 1)
             {
                 Utils.ShowErrorDialog("Invalid slideshow delay");
                 return;
