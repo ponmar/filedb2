@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows.Input;
 using FileDB2Browser.Config;
 using Microsoft.Win32;
@@ -125,17 +126,25 @@ namespace FileDB2Browser.ViewModel
 
         public void BrowseFilesRootDirectory(object parameter)
         {
-            /*
-            var directoryDialog = new FolderBrowserDialog()
+            var fileDialog = new OpenFileDialog()
             {
-                Filter = "*.db",
+                Filter = "Any file within files root directory (*.*)|*.*",
                 InitialDirectory = @"c:\", // TODO: get directory from current path? Or appdata?
+                ValidateNames = false,
+                CheckFileExists = false,
             };
             if (fileDialog.ShowDialog() == true)
             {
-                Database = fileDialog.FileName;
+                var dir = Path.GetDirectoryName(fileDialog.FileName);
+                if (Directory.Exists(dir))
+                {
+                    FilesRootDirectory = dir;
+                }
+                else
+                {
+                    Utils.ShowErrorDialog($"No such directory: {dir}");
+                }
             }
-            */
         }
     }
 }
