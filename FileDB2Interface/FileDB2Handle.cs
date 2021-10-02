@@ -35,10 +35,12 @@ namespace FileDB2Interface
                 throw new FileDB2Exception($"Database does not exist: {config.Database}");
             }
 
+            /*
             if (!Directory.Exists(config.FilesRootDirectory))
             {
                 throw new FileDB2Exception($"Root directory does not exist: {config.FilesRootDirectory}");
             }
+            */
 
             log.Info($"FileDB started with database {config.Database} and root directory {config.FilesRootDirectory}");
         }

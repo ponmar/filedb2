@@ -99,6 +99,11 @@ namespace FileDB2Browser
             return result;
         }
 
+        public static void ShowInfoDialog(string message)
+        {
+            MessageBox.Show(message, FileDB2BrowserTitle, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.No);
+        }
+
         public static void ShowErrorDialog(string message)
         {
             MessageBox.Show(message, FileDB2BrowserTitle, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.No);
