@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows.Input;
 using FileDB2Browser.Config;
+using FileDB2Interface;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 
@@ -70,6 +71,9 @@ namespace FileDB2Browser.ViewModel
 
         public ICommand BrowseFilesRootDirectoryCommand => browseFilesRootDirectoryCommand ??= new CommandHandler(BrowseFilesRootDirectory);
         private ICommand browseFilesRootDirectoryCommand;
+
+        public ICommand CreateDatabaseCommand => createDatabaseCommand ??= new CommandHandler(CreateDatabase, CreateDatabasePossible);
+        private ICommand createDatabaseCommand;        
 
         public StartViewModel()
         {
@@ -205,6 +209,16 @@ namespace FileDB2Browser.ViewModel
                     Utils.ShowErrorDialog($"No such directory: {dir}");
                 }
             }
+        }
+
+        public void CreateDatabase(object parameter)
+        {
+            FileDB2Utils.CreateDatabase(Database);
+        }
+
+        public bool CreateDatabasePossible()
+        {
+            return !File.Exists(Database);
         }
     }
 }

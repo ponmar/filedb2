@@ -56,6 +56,9 @@
                     <Button Width="100" Style="{StaticResource NormalButton}" Command="{Binding ResetConfigurationCommand}" ToolTip="No database entries or files are lost">Reset</Button>
                     <Button Width="100" Style="{StaticResource NormalButton}" Command="{Binding SaveConfigurationCommand}">Save</Button>
                 </StackPanel>
+
+                <Label Style="{StaticResource PageSubHeading}">Database</Label>
+                <Button Width="100" Style="{StaticResource NormalButton}" Command="{Binding CreateDatabaseCommand}">Create...</Button>
             </StackPanel>
         </ScrollViewer>
     </DockPanel>

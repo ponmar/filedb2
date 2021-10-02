@@ -23,7 +23,7 @@ namespace FileDB2Interface
 
         private static readonly ILog log = LogManager.GetLogger("FileDB2Handle");
 
-        public FileDB2Handle(FileDB2Config config)
+        public FileDB2Handle(FileDB2Config config, bool allowMissingFilesRootDirectory = true)
         {
             var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
             XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
@@ -35,12 +35,18 @@ namespace FileDB2Interface
                 throw new FileDB2Exception($"Database does not exist: {config.Database}");
             }
 
-            /*
             if (!Directory.Exists(config.FilesRootDirectory))
             {
-                throw new FileDB2Exception($"Root directory does not exist: {config.FilesRootDirectory}");
+                var message = $"Files root directory does not exist: {config.FilesRootDirectory}";
+                if (allowMissingFilesRootDirectory)
+                {
+                    log.Warn(message);
+                }
+                else
+                {
+                    throw new FileDB2Exception(message);
+                }
             }
-            */
 
             log.Info($"FileDB started with database {config.Database} and root directory {config.FilesRootDirectory}");
         }
@@ -142,76 +148,76 @@ namespace FileDB2Interface
 
         public List<FilesModel> GetFiles()
         {
-            using var connection = CreateConnection();
+            using var connection = SqLiteUtils.CreateConnection(Config.Database);
             return connection.Query<FilesModel>("select * from [files]", new DynamicParameters()).ToList();
         }
 
         public int GetFileCount()
         {
-            using var connection = CreateConnection();
+            using var connection = SqLiteUtils.CreateConnection(Config.Database);
             return connection.ExecuteScalar<int>("select count(*) from [files]");
         }
 
         public List<FilesModel> SearchFiles(string criteria)
         {
-            using var connection = CreateConnection();
+            using var connection = SqLiteUtils.CreateConnection(Config.Database);
             var sql = "select * from [files] where (path like @criteria or description like @criteria)";
             return connection.Query<FilesModel>(sql, new { criteria = "%" + criteria + "%" }).ToList();
         }
 
         public List<FilesModel> SearchFilesByPath(string criteria)
         {
-            using var connection = CreateConnection();
+            using var connection = SqLiteUtils.CreateConnection(Config.Database);
             var sql = "select * from [files] where path like @criteria";
             return connection.Query<FilesModel>(sql, new { criteria = criteria + "%" }).ToList();
         }
 
         public List<FilesModel> SearchFilesRandom(int numFiles)
         {
-            using var connection = CreateConnection();
+            using var connection = SqLiteUtils.CreateConnection(Config.Database);
             var sql = $"select * from [files] order by random() limit {numFiles}";
             return connection.Query<FilesModel>(sql, new DynamicParameters()).ToList();
         }
 
         public FilesModel GetFileById(int id)
         {
-            using var connection = CreateConnection();
+            using var connection = SqLiteUtils.CreateConnection(Config.Database);
             return connection.QueryFirst<FilesModel>("select * from [files] where id = @id", new { id = id });
         }
 
         public bool HasFileId(int id)
         {
-            using var connection = CreateConnection();
+            using var connection = SqLiteUtils.CreateConnection(Config.Database);
             return connection.ExecuteScalar<bool>("select count(1) from [files] where id=@id", new { id });
         }
 
         public FilesModel GetFileByPath(string path)
         {
-            using var connection = CreateConnection();
+            using var connection = SqLiteUtils.CreateConnection(Config.Database);
             return connection.QueryFirst<FilesModel>("select * from [files] where path = @path", new { path = path });
         }
 
         public List<FilesModel> GetFilesWithPersons(IEnumerable<int> personIds)
         {
-            using var connection = CreateConnection();
+            using var connection = SqLiteUtils.CreateConnection(Config.Database);
             return connection.Query<FilesModel>($"select * from [files] inner join filepersons on files.id = filepersons.fileid where filepersons.personid in ({string.Join(',', personIds)})").ToList();
         }
 
         public List<FilesModel> GetFilesWithLocations(IEnumerable<int> locationIds)
         {
-            using var connection = CreateConnection();
+            using var connection = SqLiteUtils.CreateConnection(Config.Database);
             return connection.Query<FilesModel>($"select * from [files] inner join filelocations on files.id = filelocations.fileid where filelocations.locationid in ({string.Join(',', locationIds)})").ToList();
         }
 
         public List<FilesModel> GetFilesWithTags(IEnumerable<int> tagIds)
         {
-            using var connection = CreateConnection();
+            using var connection = SqLiteUtils.CreateConnection(Config.Database);
             return connection.Query<FilesModel>($"select * from [files] inner join filetags on files.id = filetags.fileid where filetags.tagid in ({string.Join(',', tagIds)})").ToList();
         }
 
         public List<FilesModel> GetFilesWithMissingData()
         {
-            using var connection = CreateConnection();
+            using var connection = SqLiteUtils.CreateConnection(Config.Database);
             var files = connection.Query<FilesModel>($"select * from [files] where description is null");
             var result = new List<FilesModel>();
             foreach (var file in files)
@@ -228,7 +234,7 @@ namespace FileDB2Interface
 
         public bool HasFilePath(string path)
         {
-            using var connection = CreateConnection();
+            using var connection = SqLiteUtils.CreateConnection(Config.Database);
             return connection.ExecuteScalar<bool>("select count(1) from [files] where path=@path", new { path = path });
         }
 
@@ -249,7 +255,7 @@ namespace FileDB2Interface
 
             try
             {
-                using var connection = CreateConnection();
+                using var connection = SqLiteUtils.CreateConnection(Config.Database);
                 var files = new FilesModel() { path = internalPath, description = description, datetime = datetime, position = position };
                 var sql = "insert into [files] (path, description, datetime, position) values (@path, @description, @datetime, @position)";
                 connection.Execute(sql, files);
@@ -266,7 +272,7 @@ namespace FileDB2Interface
 
             try
             {
-                using var connection = CreateConnection();
+                using var connection = SqLiteUtils.CreateConnection(Config.Database);
                 var sql = "update [files] set description = @description where id = @id";
                 connection.Execute(sql, new { description = description, id = id });
             }
@@ -278,49 +284,49 @@ namespace FileDB2Interface
 
         public void DeleteFile(int id)
         {
-            using IDbConnection connection = CreateConnection();
+            using var connection = SqLiteUtils.CreateConnection(Config.Database);
             var sql = "delete from [files] where id = @id";
             connection.Execute(sql, new { id = id });
         }
 
         public void InsertFilePerson(int fileId, int personId)
         {
-            using var connection = CreateConnection();
+            using var connection = SqLiteUtils.CreateConnection(Config.Database);
             var sql = "insert into [filepersons] (fileid, personid) values (@fileId, @personId)";
             connection.Execute(sql, new { fileId = fileId, personId = personId });
         }
 
         public void DeleteFilePerson(int fileId, int personId)
         {
-            using IDbConnection connection = CreateConnection();
+            using var connection = SqLiteUtils.CreateConnection(Config.Database);
             var sql = "delete from [filepersons] where fileid = @fileId and personid = @personId";
             connection.Execute(sql, new { fileId = fileId, personId = personId });
         }
 
         public void InsertFileLocation(int fileId, int locationId)
         {
-            using var connection = CreateConnection();
+            using var connection = SqLiteUtils.CreateConnection(Config.Database);
             var sql = "insert into [filelocations] (fileid, locationid) values (@fileId, @locationId)";
             connection.Execute(sql, new { fileId = fileId, locationId = locationId });
         }
 
         public void DeleteFileLocation(int fileId, int locationId)
         {
-            using IDbConnection connection = CreateConnection();
+            using var connection = SqLiteUtils.CreateConnection(Config.Database);
             var sql = "delete from [filelocations] where fileid = @fileId and locationid = @locationId";
             connection.Execute(sql, new { fileId = fileId, locationId = locationId });
         }
 
         public void InsertFileTag(int fileId, int tagId)
         {
-            using var connection = CreateConnection();
+            using var connection = SqLiteUtils.CreateConnection(Config.Database);
             var sql = "insert into [filetags] (fileid, tagid) values (@fileId, @tagId)";
             connection.Execute(sql, new { fileId = fileId, tagId = tagId });
         }
 
         public void DeleteFileTag(int fileId, int tagId)
         {
-            using IDbConnection connection = CreateConnection();
+            using var connection = SqLiteUtils.CreateConnection(Config.Database);
             var sql = "delete from [filetags] where fileid = @fileId and tagid = @tagId";
             connection.Execute(sql, new { fileId = fileId, tagId = tagId });
         }
@@ -331,25 +337,25 @@ namespace FileDB2Interface
 
         public List<PersonModel> GetPersons()
         {
-            using var connection = CreateConnection();
+            using var connection = SqLiteUtils.CreateConnection(Config.Database);
             return connection.Query<PersonModel>("select * from [persons]", new DynamicParameters()).ToList();
         }
 
         public List<PersonModel> GetPersonsFromFile(int fileId)
         {
-            using var connection = CreateConnection();
+            using var connection = SqLiteUtils.CreateConnection(Config.Database);
             return connection.Query<PersonModel>("select * from [persons] where id in (select personid from [filepersons] where fileid = @fileid)", new { fileid = fileId }).ToList();
         }
 
         public int GetPersonCount()
         {
-            using var connection = CreateConnection();
+            using var connection = SqLiteUtils.CreateConnection(Config.Database);
             return connection.ExecuteScalar<int>("select count(*) from [persons]");
         }
 
         public List<PersonModel> SearchPersons(string criteria)
         {
-            using var connection = CreateConnection();
+            using var connection = SqLiteUtils.CreateConnection(Config.Database);
             var sql = "select * from [persons] where (firstname like @criteria or lastname like @criteria or description like @criteria)";
             return connection.Query<PersonModel>(sql, new { criteria = "%" + criteria + "%" }).ToList();
         }
@@ -359,13 +365,13 @@ namespace FileDB2Interface
             var parameters = new DynamicParameters();
             parameters.Add("@ID", id, DbType.Int32, ParameterDirection.Input);
 
-            using var connection = CreateConnection();
+            using var connection = SqLiteUtils.CreateConnection(Config.Database);
             return connection.QueryFirst<PersonModel>("select * from [persons] where id = @ID", parameters);
         }
 
         public bool HasPersonId(int id)
         {
-            using var connection = CreateConnection();
+            using var connection = SqLiteUtils.CreateConnection(Config.Database);
             return connection.ExecuteScalar<bool>("select count(1) from [persons] where id=@id", new { id });
         }
 
@@ -379,7 +385,7 @@ namespace FileDB2Interface
 
             try
             {
-                using var connection = CreateConnection();
+                using var connection = SqLiteUtils.CreateConnection(Config.Database);
                 var person = new PersonModel() { firstname = firstname, lastname = lastname, description = description, dateofbirth = dateOfBirth, profilefileid = profileFileId };
                 var sql = "insert into [persons] (firstname, lastname, description, dateofbirth, profilefileid) values (@firstname, @lastname, @description, @dateofbirth, @profilefileid)";
                 connection.Execute(sql, person);
@@ -400,7 +406,7 @@ namespace FileDB2Interface
 
             try
             {
-                using var connection = CreateConnection();
+                using var connection = SqLiteUtils.CreateConnection(Config.Database);
                 var person = new PersonModel() { id = id, firstname = firstname, lastname = lastname, description = description, dateofbirth = dateOfBirth, profilefileid = profileFileId };
                 var sql = "update [persons] set firstname = @firstname, lastname = @lastname, description = @description, dateofbirth = @dateofbirth, profilefileid = @profilefileid where id = @id";
                 connection.Execute(sql, person);
@@ -417,7 +423,7 @@ namespace FileDB2Interface
 
             try
             {
-                using var connection = CreateConnection();
+                using var connection = SqLiteUtils.CreateConnection(Config.Database);
                 var sql = "update [persons] set firstname = @firstname where id = @id";
                 connection.Execute(sql, new { firstname = firstname, id = id });
             }
@@ -433,7 +439,7 @@ namespace FileDB2Interface
 
             try
             {
-                using var connection = CreateConnection();
+                using var connection = SqLiteUtils.CreateConnection(Config.Database);
                 var sql = "update [persons] set lastname = @lastname where id = @id";
                 connection.Execute(sql, new { lastname = lastname, id = id });
             }
@@ -449,7 +455,7 @@ namespace FileDB2Interface
 
             try
             {
-                using var connection = CreateConnection();
+                using var connection = SqLiteUtils.CreateConnection(Config.Database);
                 var sql = "update [persons] set description = @description where id = @id";
                 connection.Execute(sql, new { description = description, id = id });
             }
@@ -465,7 +471,7 @@ namespace FileDB2Interface
 
             try
             {
-                using var connection = CreateConnection();
+                using var connection = SqLiteUtils.CreateConnection(Config.Database);
                 var sql = "update [persons] set dateofbirth = @dateOfBirthStr where id = @id";
                 connection.Execute(sql, new { dateOfBirthStr = dateOfBirthStr, id = id });
             }
@@ -487,7 +493,7 @@ namespace FileDB2Interface
 
             try
             {
-                using var connection = CreateConnection();
+                using var connection = SqLiteUtils.CreateConnection(Config.Database);
                 var sql = "update [persons] set profilefileid = @profileFileId where id = @id";
                 connection.Execute(sql, new { profileFileId = profileFileId, id = id });
             }
@@ -499,7 +505,7 @@ namespace FileDB2Interface
 
         public void DeletePerson(int id)
         {
-            using IDbConnection connection = CreateConnection();
+            using var connection = SqLiteUtils.CreateConnection(Config.Database);
             var sql = "delete from [persons] where id = @id";
             connection.Execute(sql, new { id = id });
         }
@@ -510,26 +516,26 @@ namespace FileDB2Interface
 
         public List<LocationModel> GetLocations()
         {
-            using var connection = CreateConnection();
+            using var connection = SqLiteUtils.CreateConnection(Config.Database);
             var output = connection.Query<LocationModel>("select * from [locations]", new DynamicParameters());
             return output.ToList();
         }
 
         public List<LocationModel> GetLocationsFromFile(int fileId)
         {
-            using var connection = CreateConnection();
+            using var connection = SqLiteUtils.CreateConnection(Config.Database);
             return connection.Query<LocationModel>("select * from [locations] where id in (select locationid from [filelocations] where fileid = @fileid)", new { fileid = fileId }).ToList();
         }
 
         public int GetLocationCount()
         {
-            using var connection = CreateConnection();
+            using var connection = SqLiteUtils.CreateConnection(Config.Database);
             return connection.ExecuteScalar<int>("select count(*) from [locations]");
         }
 
         public List<LocationModel> SearchLocations(string criteria)
         {
-            using var connection = CreateConnection();
+            using var connection = SqLiteUtils.CreateConnection(Config.Database);
             var sql = "select * from [locations] where (name like @criteria or description like @criteria)";
             return connection.Query<LocationModel>(sql, new { criteria = "%" + criteria + "%" }).ToList();
         }
@@ -539,13 +545,13 @@ namespace FileDB2Interface
             var parameters = new DynamicParameters();
             parameters.Add("@ID", id, DbType.Int32, ParameterDirection.Input);
 
-            using var connection = CreateConnection();
+            using var connection = SqLiteUtils.CreateConnection(Config.Database);
             return connection.QueryFirst<LocationModel>("select * from [locations] where id = @ID", parameters);
         }
 
         public bool HasLocationId(int id)
         {
-            using var connection = CreateConnection();
+            using var connection = SqLiteUtils.CreateConnection(Config.Database);
             return connection.ExecuteScalar<bool>("select count(1) from [locations] where id=@id", new { id });
         }
 
@@ -557,7 +563,7 @@ namespace FileDB2Interface
 
             try
             {
-                using var connection = CreateConnection();
+                using var connection = SqLiteUtils.CreateConnection(Config.Database);
                 var location = new LocationModel() { name = name, description = description, position = geoLocation };
                 var sql = "insert into [locations] (name, description, position) values (@name, @description, @position)";
                 connection.Execute(sql, location);
@@ -581,7 +587,7 @@ namespace FileDB2Interface
 
             try
             {
-                using var connection = CreateConnection();
+                using var connection = SqLiteUtils.CreateConnection(Config.Database);
                 var sql = "update [locations] set name = @name where id = @id";
                 connection.Execute(sql, new { name = name, id = id });
             }
@@ -597,7 +603,7 @@ namespace FileDB2Interface
 
             try
             {
-                using var connection = CreateConnection();
+                using var connection = SqLiteUtils.CreateConnection(Config.Database);
                 var sql = "update [locations] set description = @description where id = @id";
                 connection.Execute(sql, new { description = description, id = id });
             }
@@ -613,7 +619,7 @@ namespace FileDB2Interface
 
             try
             {
-                using var connection = CreateConnection();
+                using var connection = SqLiteUtils.CreateConnection(Config.Database);
                 var sql = "update [locations] set position = @position where id = @id";
                 connection.Execute(sql, new { position = geoLocation, id = id });
             }
@@ -631,7 +637,7 @@ namespace FileDB2Interface
 
         public void DeleteLocation(int id)
         {
-            using IDbConnection connection = CreateConnection();
+            using var connection = SqLiteUtils.CreateConnection(Config.Database);
             var sql = "delete from [locations] where id = @id";
             connection.Execute(sql, new { id = id });
         }
@@ -642,26 +648,26 @@ namespace FileDB2Interface
 
         public List<TagModel> GetTags()
         {
-            using var connection = CreateConnection();
+            using var connection = SqLiteUtils.CreateConnection(Config.Database);
             var output = connection.Query<TagModel>("select * from [tags]", new DynamicParameters());
             return output.ToList();
         }
 
         public List<TagModel> GetTagsFromFile(int fileId)
         {
-            using var connection = CreateConnection();
+            using var connection = SqLiteUtils.CreateConnection(Config.Database);
             return connection.Query<TagModel>("select * from [tags] where id in (select tagid from [filetags] where fileid = @fileid)", new { fileid = fileId }).ToList();
         }
 
         public int GetTagCount()
         {
-            using var connection = CreateConnection();
+            using var connection = SqLiteUtils.CreateConnection(Config.Database);
             return connection.ExecuteScalar<int>("select count(*) from [tags]");
         }
 
         public List<TagModel> SearchTags(string criteria)
         {
-            using var connection = CreateConnection();
+            using var connection = SqLiteUtils.CreateConnection(Config.Database);
             var sql = "select * from [tags] where (name like @criteria)";
             return connection.Query<TagModel>(sql, new { criteria = "%" + criteria + "%" }).ToList();
         }
@@ -671,13 +677,13 @@ namespace FileDB2Interface
             var parameters = new DynamicParameters();
             parameters.Add("@ID", id, DbType.Int32, ParameterDirection.Input);
 
-            using var connection = CreateConnection();
+            using var connection = SqLiteUtils.CreateConnection(Config.Database);
             return connection.QueryFirst<TagModel>("select * from [tags] where id = @ID", parameters);
         }
 
         public bool HasTagId(int id)
         {
-            using var connection = CreateConnection();
+            using var connection = SqLiteUtils.CreateConnection(Config.Database);
             return connection.ExecuteScalar<bool>("select count(1) from [tags] where id=@id", new { id });
         }
 
@@ -687,7 +693,7 @@ namespace FileDB2Interface
 
             try
             {
-                using var connection = CreateConnection();
+                using var connection = SqLiteUtils.CreateConnection(Config.Database);
                 var tag = new TagModel() { name = name };
                 var sql = "insert into [tags] (name) values (@name)";
                 connection.Execute(sql, tag);
@@ -704,7 +710,7 @@ namespace FileDB2Interface
 
             try
             {
-                using var connection = CreateConnection();
+                using var connection = SqLiteUtils.CreateConnection(Config.Database);
                 var sql = "update [tags] set name = @name where id = @id";
                 connection.Execute(sql, new { name = name, id = id });
             }
@@ -716,7 +722,7 @@ namespace FileDB2Interface
 
         public void DeleteTag(int id)
         {
-            using IDbConnection connection = CreateConnection();
+            using var connection = SqLiteUtils.CreateConnection(Config.Database);
             var sql = "delete from [tags] where id = @id";
             connection.Execute(sql, new { id = id });
         }
@@ -724,12 +730,6 @@ namespace FileDB2Interface
         #endregion
 
         #region Helpers
-
-        private IDbConnection CreateConnection()
-        {
-            var connectionString = $"Data Source={Config.Database};foreign keys = true";
-            return new SQLiteConnection(connectionString);
-        }
 
         public string InternalPathToPath(string internalPath)
         {
