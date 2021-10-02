@@ -103,6 +103,17 @@ namespace FileDB2Browser.ViewModel
 
         public void SaveConfiguration(object parameter)
         {
+            if (!Database.EndsWith(".db"))
+            {
+                Utils.ShowErrorDialog("Invalid database filename");
+                return;
+            }
+            if (!File.Exists(Database))
+            {
+                Utils.ShowErrorDialog("Database missing");
+                return;
+            }
+
             if (!int.TryParse(SearchHistorySize, out int searchHistorySize) || searchHistorySize < 0 || searchHistorySize > 10)
             {
                 Utils.ShowErrorDialog("Invalid search history size");
