@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows.Input;
 using FileDB2Browser.Config;
 using Microsoft.Win32;
+using Newtonsoft.Json;
 
 namespace FileDB2Browser.ViewModel
 {
@@ -43,6 +45,20 @@ namespace FileDB2Browser.ViewModel
         }
         private bool includeHiddenDirectories;
 
+        public string BlacklistedFilePathPatternsJson
+        {
+            get => blacklistedFilePathPatternsJson;
+            set { SetProperty(ref blacklistedFilePathPatternsJson, value); }
+        }
+        private string blacklistedFilePathPatternsJson;
+
+        public string WhitelistedFilePathPatternsJson
+        {
+            get => whitelistedFilePathPatternsJson;
+            set { SetProperty(ref whitelistedFilePathPatternsJson, value); }
+        }
+        private string whitelistedFilePathPatternsJson;
+
         public ICommand ResetConfigurationCommand => resetConfigurationCommand ??= new CommandHandler(ResetConfiguration);
         private ICommand resetConfigurationCommand;
 
@@ -67,6 +83,8 @@ namespace FileDB2Browser.ViewModel
             SlideshowDelay = Utils.BrowserConfig.SlideshowDelay.TotalSeconds.ToString();
             SearchHistorySize = Utils.BrowserConfig.SearchHistorySize.ToString();
             IncludeHiddenDirectories = Utils.BrowserConfig.IncludeHiddenDirectories;
+            BlacklistedFilePathPatternsJson = JsonConvert.SerializeObject(Utils.BrowserConfig.BlacklistedFilePathPatterns);
+            WhitelistedFilePathPatternsJson = JsonConvert.SerializeObject(Utils.BrowserConfig.WhitelistedFilePathPatterns);
         }
 
         public void ResetConfiguration(object parameter)
@@ -97,6 +115,28 @@ namespace FileDB2Browser.ViewModel
                 return;
             }
 
+            List<string> blacklistedFilePathPatterns;
+            try
+            {
+                blacklistedFilePathPatterns = JsonConvert.DeserializeObject<List<string>>(BlacklistedFilePathPatternsJson);
+            }
+            catch (JsonException)
+            {
+                Utils.ShowErrorDialog("Invalid blacklisted file path patterns");
+                return;
+            }
+
+            List<string> whitelistedFilePathPatterns;
+            try
+            {
+                whitelistedFilePathPatterns = JsonConvert.DeserializeObject<List<string>>(WhitelistedFilePathPatternsJson);
+            }
+            catch (JsonException)
+            {
+                Utils.ShowErrorDialog("Invalid whitelisted file path patterns");
+                return;
+            }
+
             var config = new FileDB2BrowserConfig()
             {
                 Database = Database,
@@ -104,6 +144,8 @@ namespace FileDB2Browser.ViewModel
                 SearchHistorySize = searchHistorySize,
                 SlideshowDelay = TimeSpan.FromSeconds(slideshowDelay),
                 IncludeHiddenDirectories = IncludeHiddenDirectories,
+                BlacklistedFilePathPatterns = blacklistedFilePathPatterns,
+                WhitelistedFilePathPatterns = whitelistedFilePathPatterns,
             };
 
             if (FileDB2BrowserConfigIO.Write(config))
