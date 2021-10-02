@@ -5,6 +5,7 @@ using System.IO;
 using System.Text;
 using Dapper;
 using FileDB2Interface.Exceptions;
+using System.Data;
 
 namespace FileDB2Interface
 {
@@ -29,8 +30,14 @@ namespace FileDB2Interface
             }
 
             SQLiteConnection.CreateFile(database);
-            using var connection = SqLiteUtils.CreateConnection(database);
+            using var connection = CreateConnection(database);
             connection.Query(sql);
+        }
+
+        internal static IDbConnection CreateConnection(string database)
+        {
+            var connectionString = $"Data Source={database};foreign keys = true";
+            return new SQLiteConnection(connectionString);
         }
     }
 }
