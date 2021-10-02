@@ -22,14 +22,14 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextblock}" Text="Name:"/>
-            <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource PageTextbox}" Width="100" Text="{Binding Name}"/>
+            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="Name:"/>
+            <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource PageTextBox}" Width="100" Text="{Binding Name}"/>
 
-            <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageTextblock}" Text="Description (optional):"/>
-            <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource PageTextbox}" Width="100" Text="{Binding Description}"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="Description (optional):"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource PageTextBox}" Width="100" Text="{Binding Description}"/>
 
-            <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource PageTextblock}" Text="GPS position (optional):"/>
-            <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource PageTextbox}" Width="100" Text="{Binding LatLon}" ToolTip="latitude longitude"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="GPS position (optional):"/>
+            <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource PageTextBox}" Width="100" Text="{Binding LatLon}" ToolTip="latitude longitude"/>
         </Grid>
 
         <Button Style="{StaticResource NormalButton}" Command="{Binding AddLocationCommand}">Save</Button>

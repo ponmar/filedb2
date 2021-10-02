@@ -36,6 +36,13 @@ namespace FileDB2Browser.ViewModel
         }
         private string searchHistorySize;
 
+        public bool IncludeHiddenDirectories
+        {
+            get => includeHiddenDirectories;
+            set { SetProperty(ref includeHiddenDirectories, value); }
+        }
+        private bool includeHiddenDirectories;
+
         public ICommand ResetConfigurationCommand => resetConfigurationCommand ??= new CommandHandler(ResetConfiguration);
         private ICommand resetConfigurationCommand;
 
@@ -59,6 +66,7 @@ namespace FileDB2Browser.ViewModel
             FilesRootDirectory = Utils.BrowserConfig.FilesRootDirectory;
             SlideshowDelay = Utils.BrowserConfig.SlideshowDelay.TotalSeconds.ToString();
             SearchHistorySize = Utils.BrowserConfig.SearchHistorySize.ToString();
+            IncludeHiddenDirectories = Utils.BrowserConfig.IncludeHiddenDirectories;
         }
 
         public void ResetConfiguration(object parameter)
@@ -77,15 +85,13 @@ namespace FileDB2Browser.ViewModel
 
         public void SaveConfiguration(object parameter)
         {
-            // TODO: add more input validation
-
-            if (!int.TryParse(SearchHistorySize, out int searchHistorySize))
+            if (!int.TryParse(SearchHistorySize, out int searchHistorySize) || searchHistorySize < 0 || searchHistorySize > 10)
             {
                 Utils.ShowErrorDialog("Invalid search history size");
                 return;
             }
 
-            if (!int.TryParse(SearchHistorySize, out int slideshowDelay))
+            if (!int.TryParse(SearchHistorySize, out int slideshowDelay) || slideshowDelay < 1)
             {
                 Utils.ShowErrorDialog("Invalid slideshow delay");
                 return;
@@ -97,6 +103,7 @@ namespace FileDB2Browser.ViewModel
                 FilesRootDirectory = FilesRootDirectory,
                 SearchHistorySize = searchHistorySize,
                 SlideshowDelay = TimeSpan.FromSeconds(slideshowDelay),
+                IncludeHiddenDirectories = IncludeHiddenDirectories,
             };
 
             if (FileDB2BrowserConfigIO.Write(config))

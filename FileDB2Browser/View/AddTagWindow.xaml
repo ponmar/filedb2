@@ -20,8 +20,8 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextblock}" Text="Name:"/>
-            <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource PageTextbox}" Width="100" Text="{Binding Name}"/>
+            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="Name:"/>
+            <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource PageTextBox}" Width="100" Text="{Binding Name}"/>
         </Grid>
 
         <Button Style="{StaticResource NormalButton}" Command="{Binding AddTagCommand}">Save</Button>

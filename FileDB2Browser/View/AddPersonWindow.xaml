@@ -24,20 +24,20 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextblock}" Text="Firstname:"/>
-            <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource PageTextbox}" Width="100" Text="{Binding Firstname}"/>
+            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="Firstname:"/>
+            <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource PageTextBox}" Width="100" Text="{Binding Firstname}"/>
 
-            <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageTextblock}" Text="Lastname:"/>
-            <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource PageTextbox}" Width="100" Text="{Binding Lastname}"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="Lastname:"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource PageTextBox}" Width="100" Text="{Binding Lastname}"/>
 
-            <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource PageTextblock}" Text="Description (optional):"/>
-            <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource PageTextbox}" Width="100" Text="{Binding Description}"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="Description (optional):"/>
+            <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource PageTextBox}" Width="100" Text="{Binding Description}"/>
 
-            <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource PageTextblock}" Text="Date of birth (optional):"/>
-            <TextBox Grid.Row="3" Grid.Column="1" Style="{StaticResource PageTextbox}" Width="100" Text="{Binding DateOfBirth}" ToolTip="YYYY-MM-DD"/>
+            <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="Date of birth (optional):"/>
+            <TextBox Grid.Row="3" Grid.Column="1" Style="{StaticResource PageTextBox}" Width="100" Text="{Binding DateOfBirth}" ToolTip="YYYY-MM-DD"/>
 
-            <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource PageTextblock}" Text="Profile picture file id (optional):"/>
-            <TextBox Grid.Row="4" Grid.Column="1" Style="{StaticResource PageTextbox}" Width="100" Text="{Binding ProfilePictureFileId}"/>
+            <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="Profile picture file id (optional):"/>
+            <TextBox Grid.Row="4" Grid.Column="1" Style="{StaticResource PageTextBox}" Width="100" Text="{Binding ProfilePictureFileId}"/>
         </Grid>
 
         <Button Style="{StaticResource NormalButton}" Command="{Binding AddPersonCommand}">Save</Button>

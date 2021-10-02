@@ -22,21 +22,27 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextblock}">Database:</TextBlock>
-                    <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource PageTextbox}" Text="{Binding Database}"></TextBox>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextBlock}">Database:</TextBlock>
+                    <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding Database}"></TextBox>
                     <Button Grid.Row="0" Grid.Column="2" Style="{StaticResource NormalButton}" Command="{Binding BrowseDatabaseCommand}">Browse</Button>
 
-                    <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageTextblock}">Files root directory:</TextBlock>
-                    <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource PageTextbox}" Text="{Binding FilesRootDirectory}"></TextBox>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageTextBlock}">Files root directory:</TextBlock>
+                    <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding FilesRootDirectory}"></TextBox>
                     <Button Grid.Row="1" Grid.Column="2" Style="{StaticResource NormalButton}" Command="{Binding BrowseFilesRootDirectoryCommand}">Browse</Button>
 
-                    <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource PageTextblock}">Slideshow delay (seconds):</TextBlock>
-                    <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource PageTextbox}" Text="{Binding SlideshowDelay}"></TextBox>
+                    <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource PageTextBlock}">Slideshow delay (seconds):</TextBlock>
+                    <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding SlideshowDelay}"></TextBox>
 
-                    <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource PageTextblock}">Search history size:</TextBlock>
-                    <TextBox Grid.Row="3" Grid.Column="1" Style="{StaticResource PageTextbox}" Text="{Binding SearchHistorySize}"></TextBox>
+                    <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource PageTextBlock}">Search history size:</TextBlock>
+                    <TextBox Grid.Row="3" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding SearchHistorySize}"></TextBox>
+
+                    <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal">
+                        <CheckBox Style="{StaticResource PageCheckBox}" IsChecked="{Binding Path=IncludeHiddenDirectories, Mode=TwoWay}"/>
+                        <TextBlock Style="{StaticResource PageTextBlock}" Text="Include hidden directories"></TextBlock>
+                    </StackPanel>
                 </Grid>
                 <StackPanel Orientation="Horizontal" Style="{StaticResource PageStackPanel}">
                     <Button Width="100" Style="{StaticResource NormalButton}" Command="{Binding ResetConfigurationCommand}" ToolTip="No database entries or files are lost">Reset</Button>
