@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using FileDB2Interface;
 using FileDB2Interface.Exceptions;
+using FileDB2Interface.Model;
 
 namespace FileDB2Browser.ViewModel
 {
@@ -100,13 +101,16 @@ namespace FileDB2Browser.ViewModel
 
             try
             {
+                // TODO: make gui dropdown menu
+                Sex sex = Sex.NotApplicable;
+
                 if (personId == -1)
                 {
-                    Utils.FileDB2Handle.InsertPerson(firstname, lastname, newDescription, newDateOfBirth, newProfileFileId);
+                    Utils.FileDB2Handle.InsertPerson(firstname, lastname, newDescription, newDateOfBirth, newProfileFileId, sex);
                 }
                 else
                 {
-                    Utils.FileDB2Handle.UpdatePerson(personId, firstname, lastname, newDescription, newDateOfBirth, newProfileFileId);
+                    Utils.FileDB2Handle.UpdatePerson(personId, firstname, lastname, newDescription, newDateOfBirth, newProfileFileId, sex);
                 }
             }
             catch (FileDB2DataValidationException e)

@@ -375,7 +375,7 @@ namespace FileDB2Interface
             return connection.ExecuteScalar<bool>("select count(1) from [persons] where id=@id", new { id });
         }
 
-        public void InsertPerson(string firstname, string lastname, string description = null, string dateOfBirth = null, int? profileFileId = null)
+        public void InsertPerson(string firstname, string lastname, string description = null, string dateOfBirth = null, int? profileFileId = null, Sex sex = Sex.NotApplicable)
         {
             ValidatePersonFirstname(firstname);
             ValidatePersonLastname(lastname);
@@ -386,8 +386,8 @@ namespace FileDB2Interface
             try
             {
                 using var connection = FileDB2Utils.CreateConnection(Config.Database);
-                var person = new PersonModel() { firstname = firstname, lastname = lastname, description = description, dateofbirth = dateOfBirth, profilefileid = profileFileId };
-                var sql = "insert into [persons] (firstname, lastname, description, dateofbirth, profilefileid) values (@firstname, @lastname, @description, @dateofbirth, @profilefileid)";
+                var person = new PersonModel() { firstname = firstname, lastname = lastname, description = description, dateofbirth = dateOfBirth, profilefileid = profileFileId, sex = sex };
+                var sql = "insert into [persons] (firstname, lastname, description, dateofbirth, profilefileid, sex) values (@firstname, @lastname, @description, @dateofbirth, @profilefileid, @sex)";
                 connection.Execute(sql, person);
             }
             catch (SQLiteException e)
@@ -396,7 +396,7 @@ namespace FileDB2Interface
             }
         }
 
-        public void UpdatePerson(int id, string firstname, string lastname, string description = null, string dateOfBirth = null, int? profileFileId = null)
+        public void UpdatePerson(int id, string firstname, string lastname, string description = null, string dateOfBirth = null, int? profileFileId = null, Sex sex = Sex.NotApplicable)
         {
             ValidatePersonFirstname(firstname);
             ValidatePersonLastname(lastname);
@@ -407,8 +407,8 @@ namespace FileDB2Interface
             try
             {
                 using var connection = FileDB2Utils.CreateConnection(Config.Database);
-                var person = new PersonModel() { id = id, firstname = firstname, lastname = lastname, description = description, dateofbirth = dateOfBirth, profilefileid = profileFileId };
-                var sql = "update [persons] set firstname = @firstname, lastname = @lastname, description = @description, dateofbirth = @dateofbirth, profilefileid = @profilefileid where id = @id";
+                var person = new PersonModel() { id = id, firstname = firstname, lastname = lastname, description = description, dateofbirth = dateOfBirth, profilefileid = profileFileId, sex = sex };
+                var sql = "update [persons] set firstname = @firstname, lastname = @lastname, description = @description, dateofbirth = @dateofbirth, profilefileid = @profilefileid, sex = @sex where id = @id";
                 connection.Execute(sql, person);
             }
             catch (SQLiteException e)
@@ -496,6 +496,20 @@ namespace FileDB2Interface
                 using var connection = FileDB2Utils.CreateConnection(Config.Database);
                 var sql = "update [persons] set profilefileid = @profileFileId where id = @id";
                 connection.Execute(sql, new { profileFileId = profileFileId, id = id });
+            }
+            catch (SQLiteException e)
+            {
+                throw new FileDB2Exception("SQL error", e);
+            }
+        }
+
+        public void UpdatePersonSex(int id, Sex sex)
+        {
+            try
+            {
+                using var connection = FileDB2Utils.CreateConnection(Config.Database);
+                var sql = "update [persons] set sex = @sex where id = @id";
+                connection.Execute(sql, new { sex = sex, id = id });
             }
             catch (SQLiteException e)
             {

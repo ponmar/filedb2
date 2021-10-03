@@ -22,6 +22,7 @@ namespace FileDB2Browser.ViewModel
         public string DateOfBirth { get; set; }
         public int BornYearsAgo { get; set; }
         public int? ProfileFileId { get; set; }
+        public Sex Sex { get; set; }
 
         private readonly int id;
 
@@ -104,7 +105,7 @@ namespace FileDB2Browser.ViewModel
         {
             Persons.Clear();
 
-            var persons = Utils.FileDB2Handle.GetPersons().Select(pm => new Person(pm.id) { Firstname = pm.firstname, Lastname = pm.lastname, Description = pm.description, DateOfBirth = pm.dateofbirth, BornYearsAgo = pm.dateofbirth != null ? Utils.GetYearsAgo(DateTime.Now, Utils.FileDB2Handle.ParseDateOfBirth(pm.dateofbirth)) : -1, ProfileFileId = pm.profilefileid });
+            var persons = Utils.FileDB2Handle.GetPersons().Select(pm => new Person(pm.id) { Firstname = pm.firstname, Lastname = pm.lastname, Description = pm.description, DateOfBirth = pm.dateofbirth, BornYearsAgo = pm.dateofbirth != null ? Utils.GetYearsAgo(DateTime.Now, Utils.FileDB2Handle.ParseDateOfBirth(pm.dateofbirth)) : -1, ProfileFileId = pm.profilefileid, Sex = pm.sex });
             foreach (var person in persons)
             {
                 Persons.Add(person);
