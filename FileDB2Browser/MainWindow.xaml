@@ -16,14 +16,14 @@
     <DockPanel>
         <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="0" DockPanel.Dock="Left">
             <Label Style="{StaticResource PageButtonHeading}">Browse</Label>
-            <Button Style="{StaticResource PageButton}" Command="{Binding OpenStartPageCommand}" ToolTip="Settings">
-                <TextBlock Text="&#x1F527;"/>
-            </Button>
             <Button Style="{StaticResource PageButton}" Command="{Binding OpenFindPageCommand}" ToolTip="Search">
                 <TextBlock Text="&#x1F50D;"/>
             </Button>
             <Button Style="{StaticResource PageButton}" Command="{Binding OpenBirthdaysPageCommand}" ToolTip="Birthdays">
                 <TextBlock Text="&#x1F382;"/>
+            </Button>
+            <Button Style="{StaticResource PageButton}" Command="{Binding OpenStartPageCommand}" ToolTip="Settings">
+                <TextBlock Text="&#x1F527;"/>
             </Button>
             <Label Style="{StaticResource PageButtonHeading}">Categories</Label>
             <Button Style="{StaticResource PageButton}" Command="{Binding OpenPersonsPageCommand}" ToolTip="Persons">
@@ -40,7 +40,7 @@
                 <TextBlock Text="&#x1F4C2;"/>
             </Button>
             <Button Style="{StaticResource PageButton}" Command="{Binding OpenToolsPageCommand}" ToolTip="Tools">
-                <TextBlock Text="&#x1F527;"/>
+                <TextBlock Text="&#x2692;"/>
             </Button>
         </StackPanel>
 

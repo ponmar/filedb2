@@ -39,7 +39,7 @@ namespace FileDB2Browser.ViewModel
             get => startPageActive;
             private set { SetProperty(ref startPageActive, value); }
         }
-        private bool startPageActive = true;
+        private bool startPageActive = false;
 
         public bool FindPageActive
         {
@@ -92,6 +92,7 @@ namespace FileDB2Browser.ViewModel
 
         public MainViewModel()
         {
+            OpenFindPage(null);
         }
 
         public void OpenStartPage(object parameter)
