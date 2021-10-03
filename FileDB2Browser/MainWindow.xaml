@@ -22,7 +22,7 @@
             <Button Style="{StaticResource PageButton}" Command="{Binding OpenBirthdaysPageCommand}" ToolTip="Birthdays">
                 <TextBlock Text="&#x1F382;"/>
             </Button>
-            <Button Style="{StaticResource PageButton}" Command="{Binding OpenStartPageCommand}" ToolTip="Settings">
+            <Button Style="{StaticResource PageButton}" Command="{Binding OpenSettingsPageCommand}" ToolTip="Settings">
                 <TextBlock Text="&#x1F527;"/>
             </Button>
             <Label Style="{StaticResource PageButtonHeading}">Categories</Label>
@@ -46,8 +46,8 @@
 
         <Border BorderThickness="2 2 2 2" BorderBrush="LightGray">
             <Grid Margin="20 5 20 5">
-                <Grid Visibility="{Binding Path=StartPageActive, Converter={StaticResource BoolToVis}, Mode=OneWay}">
-                    <Views:StartView/>
+                <Grid Visibility="{Binding Path=SettingsPageActive, Converter={StaticResource BoolToVis}, Mode=OneWay}">
+                    <Views:SettingsView/>
                 </Grid>
                 <Grid Visibility="{Binding Path=FindPageActive, Converter={StaticResource BoolToVis}, Mode=OneWay}">
                     <Views:FindView />

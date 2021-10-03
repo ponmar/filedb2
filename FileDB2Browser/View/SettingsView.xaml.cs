@@ -19,12 +19,12 @@ namespace FileDB2Browser.View
     /// <summary>
     /// Interaction logic for StartView.xaml
     /// </summary>
-    public partial class StartView : UserControl
+    public partial class SettingsView : UserControl
     {
-        public StartView()
+        public SettingsView()
         {
             InitializeComponent();
-            DataContext = new StartViewModel();
+            DataContext = new SettingsViewModel();
         }
     }
 }

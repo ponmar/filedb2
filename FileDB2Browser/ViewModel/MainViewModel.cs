@@ -10,8 +10,8 @@ namespace FileDB2Browser.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
-        public ICommand OpenStartPageCommand => openStartPageCommand ??= new CommandHandler(OpenStartPage);
-        private ICommand openStartPageCommand;
+        public ICommand OpenSettingsPageCommand => openSettingsPageCommand ??= new CommandHandler(OpenSettingsPage);
+        private ICommand openSettingsPageCommand;
 
         public ICommand OpenFindPageCommand => openFindPageCommand ??= new CommandHandler(OpenFindPage);
         private ICommand openFindPageCommand;
@@ -34,12 +34,12 @@ namespace FileDB2Browser.ViewModel
         public ICommand OpenToolsPageCommand => openToolsPageCommand ??= new CommandHandler(OpenToolsPage);
         private ICommand openToolsPageCommand;
 
-        public bool StartPageActive
+        public bool SettingsPageActive
         {
-            get => startPageActive;
-            private set { SetProperty(ref startPageActive, value); }
+            get => settingsPageActive;
+            private set { SetProperty(ref settingsPageActive, value); }
         }
-        private bool startPageActive = false;
+        private bool settingsPageActive = false;
 
         public bool FindPageActive
         {
@@ -95,10 +95,10 @@ namespace FileDB2Browser.ViewModel
             OpenFindPage(null);
         }
 
-        public void OpenStartPage(object parameter)
+        public void OpenSettingsPage(object parameter)
         {
             ResetActivePage();
-            StartPageActive = true;
+            SettingsPageActive = true;
         }
 
         public void OpenFindPage(object parameter)
@@ -145,7 +145,7 @@ namespace FileDB2Browser.ViewModel
 
         private void ResetActivePage()
         {
-            StartPageActive = false;
+            SettingsPageActive = false;
             FindPageActive = false;
             BirthdaysPageActive = false;
             PersonsPageActive = false;

@@ -21,7 +21,7 @@ namespace FileDB2Browser.ViewModel
         }
     }
 
-    public class StartViewModel : ViewModelBase
+    public class SettingsViewModel : ViewModelBase
     {
         public string Database
         {
@@ -92,7 +92,7 @@ namespace FileDB2Browser.ViewModel
 
         public ObservableCollection<BackupFile> BackupFiles { get; } = new();
 
-        public StartViewModel()
+        public SettingsViewModel()
         {
             Init();
             ScanBackupFiles();
