@@ -4,6 +4,7 @@ using System.IO;
 using System.Windows.Input;
 using FileDB2Browser.Config;
 using FileDB2Interface;
+using FileDB2Interface.Exceptions;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 
@@ -213,7 +214,17 @@ namespace FileDB2Browser.ViewModel
 
         public void CreateDatabase(object parameter)
         {
-            FileDB2Utils.CreateDatabase(Database);
+            if (Utils.ShowConfirmDialog($"Create database {Database}?"))
+            {
+                try
+                {
+                    FileDB2Utils.CreateDatabase(Database);
+                }
+                catch (FileDB2Exception e)
+                {
+                    Utils.ShowErrorDialog(e.Message);
+                }
+            }
         }
 
         public bool CreateDatabasePossible()
