@@ -17,7 +17,7 @@ using FileDB2Interface.Exceptions;
 
 namespace FileDB2Interface
 {
-    public class FileDB2Handle
+    public class FileDB2Handle : IFileDB2Handle
     {
         public FileDB2Config Config { get; }
 
@@ -593,7 +593,6 @@ namespace FileDB2Interface
             var geoLocationStr = GeoLocationToString(geoLocation);
             InsertLocation(name, description, geoLocationStr);
         }
-
 
         public void UpdateLocationName(int id, string name)
         {

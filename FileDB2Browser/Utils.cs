@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using FileDB2Browser.Config;
 using FileDB2Interface;
+using FileDB2Interface.Exceptions;
 
 namespace FileDB2Browser
 {
@@ -15,7 +16,7 @@ namespace FileDB2Browser
 
         public static FileDB2BrowserConfig BrowserConfig { get; set; } = FileDB2BrowserConfigIO.Read();
 
-        public static FileDB2Handle FileDB2Handle
+        public static IFileDB2Handle FileDB2Handle
         {
             get
             {
@@ -26,7 +27,7 @@ namespace FileDB2Browser
                 return fileDB2Handle;
             }
         }
-        private static FileDB2Handle fileDB2Handle;
+        private static IFileDB2Handle fileDB2Handle;
 
         public static void ReloadFileDB2Handle()
         {
@@ -35,7 +36,14 @@ namespace FileDB2Browser
                 Database = BrowserConfig.Database,
                 FilesRootDirectory = BrowserConfig.FilesRootDirectory,
             };
-            fileDB2Handle = new FileDB2Handle(config);
+            try
+            {
+                fileDB2Handle = new FileDB2Handle(config);
+            }
+            catch (FileDB2Exception)
+            {
+                fileDB2Handle = new InvalidHandle();
+            }
         }
 
         public static int GetYearsAgo(DateTime now, DateTime dateTime)
