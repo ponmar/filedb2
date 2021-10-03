@@ -10,18 +10,7 @@
         <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Tools</Label>
         <ScrollViewer>
             <StackPanel Orientation="Vertical">
-                <Label Style="{StaticResource PageSubHeading}">Backup</Label>
-                <Button Margin="10" Width="200" Style="{StaticResource NormalButton}" Command="{Binding CreateBackupCommand}">Create backup</Button>
-                <TextBlock Width="500" Text="Backup files:"/>
-                <ListBox Margin="10" Width="500" ItemsSource="{Binding BackupFiles}">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Path=Filename}" ToolTip="{Binding Path=Filename}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                <Label Style="{StaticResource PageSubHeading}">For future use</Label>
             </StackPanel>
         </ScrollViewer>
     </DockPanel>

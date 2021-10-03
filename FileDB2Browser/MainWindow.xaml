@@ -16,10 +16,10 @@
     <DockPanel>
         <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="0" DockPanel.Dock="Left">
             <Label Style="{StaticResource PageButtonHeading}">Browse</Label>
-            <Button Style="{StaticResource PageButton}" Command="{Binding OpenStartPageCommand}" ToolTip="Start">
-                <TextBlock Text="&#x1F44D;"/>
+            <Button Style="{StaticResource PageButton}" Command="{Binding OpenStartPageCommand}" ToolTip="Settings">
+                <TextBlock Text="&#x1F527;"/>
             </Button>
-            <Button Style="{StaticResource PageButton}" Command="{Binding OpenFindPageCommand}" ToolTip="Find files">
+            <Button Style="{StaticResource PageButton}" Command="{Binding OpenFindPageCommand}" ToolTip="Search">
                 <TextBlock Text="&#x1F50D;"/>
             </Button>
             <Button Style="{StaticResource PageButton}" Command="{Binding OpenBirthdaysPageCommand}" ToolTip="Birthdays">

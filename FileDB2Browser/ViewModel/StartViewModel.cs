@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows.Input;
 using FileDB2Browser.Config;
@@ -10,6 +11,16 @@ using Newtonsoft.Json;
 
 namespace FileDB2Browser.ViewModel
 {
+    public class BackupFile
+    {
+        public string Filename { get; }
+
+        public BackupFile(string filename)
+        {
+            Filename = filename;
+        }
+    }
+
     public class StartViewModel : ViewModelBase
     {
         public string Database
@@ -74,11 +85,17 @@ namespace FileDB2Browser.ViewModel
         private ICommand browseFilesRootDirectoryCommand;
 
         public ICommand CreateDatabaseCommand => createDatabaseCommand ??= new CommandHandler(CreateDatabase, CreateDatabasePossible);
-        private ICommand createDatabaseCommand;        
+        private ICommand createDatabaseCommand;
+
+        public ICommand CreateBackupCommand => createBackupCommand ??= new CommandHandler(CreateBackup);
+        private ICommand createBackupCommand;
+
+        public ObservableCollection<BackupFile> BackupFiles { get; } = new();
 
         public StartViewModel()
         {
             Init();
+            ScanBackupFiles();
         }
 
         private void Init()
@@ -230,6 +247,45 @@ namespace FileDB2Browser.ViewModel
         public bool CreateDatabasePossible()
         {
             return !File.Exists(Database);
+        }
+
+        public void CreateBackup(object parameter)
+        {
+            var db = Utils.BrowserConfig.Database;
+            if (File.Exists(db))
+            {
+                var directoryPath = Path.GetDirectoryName(db);
+                var timestamp = DateTime.Now.ToString("yyyy-MM-dd_HHmmss");
+                var backupFilename = $"backup_{timestamp}.db";
+                var backupFilePath = Path.Combine(directoryPath, backupFilename);
+                if (!File.Exists(backupFilePath))
+                {
+                    File.Copy(db, backupFilePath);
+                    ScanBackupFiles();
+                }
+                else
+                {
+                    Utils.ShowErrorDialog($"Backup file already available");
+                }
+            }
+            else
+            {
+                Utils.ShowErrorDialog($"Missing database: {db}");
+            }
+
+        }
+
+        private void ScanBackupFiles()
+        {
+            var backupDir = Path.GetDirectoryName(Utils.BrowserConfig.Database);
+            if (Directory.Exists(backupDir))
+            {
+                BackupFiles.Clear();
+                foreach (var backupFile in Directory.GetFiles(backupDir, "backup_*.db"))
+                {
+                    BackupFiles.Add(new BackupFile(backupFile));
+                }
+            }
         }
     }
 }
