@@ -56,6 +56,15 @@ namespace FileDB2Browser.ViewModel
         }
         private string profilePictureFileId = string.Empty;
 
+        public string SexSelection
+        {
+            get => sex;
+            set { SetProperty(ref sex, value); }
+        }
+        private string sex = Sex.NotApplicable.ToString();
+
+        public List<string> SexValues { get; } = Enum.GetNames(typeof(Sex)).ToList();
+
         public ICommand AddPersonCommand
         {
             get
@@ -79,6 +88,7 @@ namespace FileDB2Browser.ViewModel
                 Description = personModel.description;
                 DateOfBirth = personModel.dateofbirth;
                 ProfilePictureFileId = personModel.profilefileid == null ? string.Empty : personModel.profilefileid.Value.ToString();
+                SexSelection = personModel.sex.ToString();
             }
         }
 
@@ -101,16 +111,15 @@ namespace FileDB2Browser.ViewModel
 
             try
             {
-                // TODO: make gui dropdown menu
-                Sex sex = Sex.NotApplicable;
+                Sex SexEnum = Enum.Parse<Sex>(SexSelection);
 
                 if (personId == -1)
                 {
-                    Utils.FileDB2Handle.InsertPerson(firstname, lastname, newDescription, newDateOfBirth, newProfileFileId, sex);
+                    Utils.FileDB2Handle.InsertPerson(firstname, lastname, newDescription, newDateOfBirth, newProfileFileId, SexEnum);
                 }
                 else
                 {
-                    Utils.FileDB2Handle.UpdatePerson(personId, firstname, lastname, newDescription, newDateOfBirth, newProfileFileId, sex);
+                    Utils.FileDB2Handle.UpdatePerson(personId, firstname, lastname, newDescription, newDateOfBirth, newProfileFileId, SexEnum);
                 }
             }
             catch (FileDB2DataValidationException e)

@@ -55,6 +55,10 @@
         <Setter Property="Margin" Value="5,5,5,5"/>
     </Style>
 
+    <Style x:Key="PageComboBox" TargetType="ComboBox">
+        <Setter Property="Margin" Value="5,5,5,5"/>
+    </Style>
+
     <Style x:Key="PageCheckBox" TargetType="CheckBox">
         <Setter Property="Margin" Value="5,5,5,5"/>
     </Style>
