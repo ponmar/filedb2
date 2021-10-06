@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FileDB2Interface;
 using Newtonsoft.Json;
 
 namespace FileDB2Browser.Config
@@ -13,6 +8,20 @@ namespace FileDB2Browser.Config
     {
         private const string ApplicationDataSubDir = Utils.FileDB2BrowserTitle;
         private const string Filename = "FileDB2BrowserConfig.json";
+
+        public static FileDB2BrowserConfig GetDefaultConfig()
+        {
+            return new FileDB2BrowserConfig()
+            {
+                Database = "filedb2.db",
+                FilesRootDirectory = "files",
+                BlacklistedFilePathPatterns = new() { "Thumbs.db", "filedb.db", "unsorted", "TN_" },
+                WhitelistedFilePathPatterns = new() { ".jpg", ".png", ".bmp", ".gif", ".avi", ".mpg", ".mp4", ".mkv", ".mov", ".pdf" },
+                IncludeHiddenDirectories = false,
+                SlideshowDelay = TimeSpan.FromSeconds(3),
+                SearchHistorySize = 4,
+            };
+        }
 
         public static bool Write(FileDB2BrowserConfig config)
         {
@@ -51,7 +60,7 @@ namespace FileDB2Browser.Config
                 }
             }
 
-            return new FileDB2BrowserConfig();
+            return GetDefaultConfig();
         }
 
         public static bool FileExists()
@@ -69,7 +78,7 @@ namespace FileDB2Browser.Config
 
         public static bool ResetConfiguration()
         {
-            return Write(new FileDB2BrowserConfig());
+            return Write(GetDefaultConfig());
         }
     }
 }

@@ -113,7 +113,7 @@ namespace FileDB2Browser.ViewModel
         {
             if (FileDB2BrowserConfigIO.ResetConfiguration())
             {
-                Utils.BrowserConfig = new FileDB2BrowserConfig();
+                Utils.BrowserConfig = FileDB2BrowserConfigIO.GetDefaultConfig();
                 Utils.ReloadFileDB2Handle();
                 Init();
             }
