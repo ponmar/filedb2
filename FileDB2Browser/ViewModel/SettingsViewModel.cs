@@ -111,9 +111,9 @@ namespace FileDB2Browser.ViewModel
 
         public void ResetConfiguration(object parameter)
         {
-            if (FileDB2BrowserConfigIO.ResetConfiguration())
+            if (BrowserConfigIO.ResetConfiguration())
             {
-                Utils.BrowserConfig = FileDB2BrowserConfigIO.GetDefaultConfig();
+                Utils.BrowserConfig = BrowserConfigIO.GetDefaultConfig();
                 Utils.ReloadFileDB2Handle();
                 Init();
             }
@@ -170,18 +170,16 @@ namespace FileDB2Browser.ViewModel
                 return;
             }
 
-            var config = new FileDB2BrowserConfig()
-            {
-                Database = Database,
-                FilesRootDirectory = FilesRootDirectory,
-                SearchHistorySize = searchHistorySize,
-                SlideshowDelay = TimeSpan.FromSeconds(slideshowDelay),
-                IncludeHiddenDirectories = IncludeHiddenDirectories,
-                BlacklistedFilePathPatterns = blacklistedFilePathPatterns,
-                WhitelistedFilePathPatterns = whitelistedFilePathPatterns,
-            };
+            var config = new BrowserConfig(
+                Database,
+                FilesRootDirectory,
+                blacklistedFilePathPatterns,
+                whitelistedFilePathPatterns,
+                IncludeHiddenDirectories,
+                TimeSpan.FromSeconds(slideshowDelay),
+                searchHistorySize);
 
-            if (FileDB2BrowserConfigIO.Write(config))
+            if (BrowserConfigIO.Write(config))
             {
                 Utils.BrowserConfig = config;
                 Utils.ReloadFileDB2Handle();

@@ -4,26 +4,24 @@ using Newtonsoft.Json;
 
 namespace FileDB2Browser.Config
 {
-    public class FileDB2BrowserConfigIO
+    public class BrowserConfigIO
     {
         private const string ApplicationDataSubDir = Utils.FileDB2BrowserTitle;
         private const string Filename = "FileDB2BrowserConfig.json";
 
-        public static FileDB2BrowserConfig GetDefaultConfig()
+        public static BrowserConfig GetDefaultConfig()
         {
-            return new FileDB2BrowserConfig()
-            {
-                Database = "filedb2.db",
-                FilesRootDirectory = "files",
-                BlacklistedFilePathPatterns = new() { "Thumbs.db", "filedb.db", "unsorted", "TN_" },
-                WhitelistedFilePathPatterns = new() { ".jpg", ".png", ".bmp", ".gif", ".avi", ".mpg", ".mp4", ".mkv", ".mov", ".pdf" },
-                IncludeHiddenDirectories = false,
-                SlideshowDelay = TimeSpan.FromSeconds(3),
-                SearchHistorySize = 4,
-            };
+            return new BrowserConfig(
+                "filedb2.db",
+                "files",
+                new() { "Thumbs.db", "filedb.db", "unsorted", "TN_" },
+                new() { ".jpg", ".png", ".bmp", ".gif", ".avi", ".mpg", ".mp4", ".mkv", ".mov", ".pdf" },
+                false,
+                TimeSpan.FromSeconds(3),
+                4);
         }
 
-        public static bool Write(FileDB2BrowserConfig config)
+        public static bool Write(BrowserConfig config)
         {
             string jsonString = JsonConvert.SerializeObject(config, Formatting.Indented);
 
@@ -42,7 +40,7 @@ namespace FileDB2Browser.Config
             }
         }
 
-        public static FileDB2BrowserConfig Read()
+        public static BrowserConfig Read()
         {
             var filePath = GetFilePath();
             if (File.Exists(filePath))
@@ -50,7 +48,7 @@ namespace FileDB2Browser.Config
                 try
                 {
                     var jsonString = File.ReadAllText(filePath);
-                    return JsonConvert.DeserializeObject<FileDB2BrowserConfig>(jsonString);
+                    return JsonConvert.DeserializeObject<BrowserConfig>(jsonString);
                 }
                 catch (JsonException)
                 {
