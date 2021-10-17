@@ -111,9 +111,9 @@ namespace FileDB2Browser.ViewModel
 
         public void ResetConfiguration(object parameter)
         {
-            if (BrowserConfigIO.ResetConfiguration())
+            if (Utils.BrowserConfigIO.Write(BrowserConfigFactory.GetDefault()))
             {
-                Utils.BrowserConfig = BrowserConfigIO.GetDefaultConfig();
+                Utils.BrowserConfig = BrowserConfigFactory.GetDefault();
                 Utils.ReloadFileDB2Handle();
                 Init();
             }
@@ -170,7 +170,7 @@ namespace FileDB2Browser.ViewModel
                 return;
             }
 
-            var config = new BrowserConfig(
+            var config = new Config.Config(
                 Database,
                 FilesRootDirectory,
                 blacklistedFilePathPatterns,
@@ -179,7 +179,7 @@ namespace FileDB2Browser.ViewModel
                 TimeSpan.FromSeconds(slideshowDelay),
                 searchHistorySize);
 
-            if (BrowserConfigIO.Write(config))
+            if (Utils.BrowserConfigIO.Write(config))
             {
                 Utils.BrowserConfig = config;
                 Utils.ReloadFileDB2Handle();

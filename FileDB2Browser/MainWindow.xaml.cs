@@ -28,11 +28,11 @@ namespace FileDB2Browser
             InitializeComponent();
             DataContext = new MainViewModel();
 
-            if (!BrowserConfigIO.FileExists())
+            if (!Utils.BrowserConfigIO.FileExists())
             {
-                if (!BrowserConfigIO.ResetConfiguration())
+                if (!Utils.BrowserConfigIO.Write(BrowserConfigFactory.GetDefault()))
                 {
-                    Utils.ShowErrorDialog("Unable to create default configuration: " + BrowserConfigIO.GetFilePath());
+                    Utils.ShowErrorDialog("Unable to create default configuration: " + Utils.BrowserConfigIO.GetFilePath());
                 }
             }
         }

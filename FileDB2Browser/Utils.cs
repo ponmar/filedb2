@@ -14,7 +14,12 @@ namespace FileDB2Browser
     {
         public const string FileDB2BrowserTitle = "FileDB2";
 
-        public static BrowserConfig BrowserConfig { get; set; } = BrowserConfigIO.Read();
+        public static AppDataConfig<Config.Config> BrowserConfigIO { get; } = new(FileDB2BrowserTitle);
+        public static AppDataConfig<History> HistoryIO { get; } = new(FileDB2BrowserTitle);
+
+        public static Config.Config BrowserConfig { get; set; } = BrowserConfigIO.Read() ?? BrowserConfigFactory.GetDefault();
+
+        public static History History { get; } = HistoryIO.Read() ?? HistoryFactory.GetDefault();
 
         public static IFileDB2Handle FileDB2Handle
         {
