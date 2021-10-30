@@ -44,6 +44,6 @@
             <ComboBox Grid.Row="5" Grid.Column="1" Style="{StaticResource PageComboBox}" Width="150" ItemsSource="{Binding SexValues}" SelectedItem="{Binding SexSelection}"/>
         </Grid>
 
-        <Button Style="{StaticResource NormalButton}" Command="{Binding AddPersonCommand}">Save</Button>
+        <Button Style="{StaticResource NormalButton}" Command="{Binding SaveCommand}">Save</Button>
     </StackPanel>
 </Window>

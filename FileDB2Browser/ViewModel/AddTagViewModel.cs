@@ -27,14 +27,8 @@ namespace FileDB2Browser.ViewModel
         }
         private string name = string.Empty;
 
-        public ICommand AddTagCommand
-        {
-            get
-            {
-                return addTagCommand ??= new CommandHandler(AddTag);
-            }
-        }
-        private ICommand addTagCommand;
+        public ICommand SaveCommand => saveCommand ??= new CommandHandler(Save);
+        private ICommand saveCommand;
 
         public AddTagViewModel(int tagId = -1)
         {
@@ -49,7 +43,7 @@ namespace FileDB2Browser.ViewModel
             }
         }
 
-        public void AddTag(object parameter)
+        public void Save(object parameter)
         {
             try
             {

@@ -42,8 +42,8 @@ namespace FileDB2Browser.ViewModel
         }
         private string latLon = string.Empty;
 
-        public ICommand AddLocationCommand => addLocationCommand ??= new CommandHandler(AddLocation);
-        private ICommand addLocationCommand;
+        public ICommand SaveCommand => saveCommand ??= new CommandHandler(Save);
+        private ICommand saveCommand;
 
         public AddLocationViewModel(int locationId = -1)
         {
@@ -60,7 +60,7 @@ namespace FileDB2Browser.ViewModel
             }
         }
 
-        public void AddLocation(object parameter)
+        public void Save(object parameter)
         {
             try
             {

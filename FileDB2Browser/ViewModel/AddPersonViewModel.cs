@@ -65,14 +65,8 @@ namespace FileDB2Browser.ViewModel
 
         public List<string> SexValues { get; } = Enum.GetNames(typeof(Sex)).ToList();
 
-        public ICommand AddPersonCommand
-        {
-            get
-            {
-                return addPersonCommand ??= new CommandHandler(AddPerson);
-            }
-        }
-        private ICommand addPersonCommand;
+        public ICommand SaveCommand => saveCommand ??= new CommandHandler(Save);
+        private ICommand saveCommand;
 
         public AddPersonViewModel(int personId = -1)
         {
@@ -92,7 +86,7 @@ namespace FileDB2Browser.ViewModel
             }
         }
 
-        public void AddPerson(object parameter)
+        public void Save(object parameter)
         {
             int? newProfileFileId = null;
             if (!string.IsNullOrEmpty(profilePictureFileId))
