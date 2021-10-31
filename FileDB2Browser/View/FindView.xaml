@@ -139,6 +139,28 @@
                     </StackPanel>
                 </Expander>
             </Border>
+            <!-- File categorization -->
+            <Border Style="{StaticResource BorderGroup}" Margin="0 20 0 0">
+                <Expander Header="Update history" Margin="5" IsExpanded="False">
+                    <StackPanel Orientation="Vertical">
+                        <ListView ItemsSource="{Binding UpdateHistoryItems}">
+                            <ListView.Resources>
+                                <Style TargetType="GridViewColumnHeader">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </Style>
+                            </ListView.Resources>
+                            <ListView.View>
+                                <GridView>
+                                    <GridView.Columns>
+                                        <GridViewColumn DisplayMemberBinding="{Binding Path=Shortcut}"></GridViewColumn>
+                                        <GridViewColumn DisplayMemberBinding="{Binding Path=Description}"></GridViewColumn>
+                                    </GridView.Columns>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </StackPanel>
+                </Expander>
+            </Border>
             <!-- File info -->
             <Border Style="{StaticResource BorderGroup}" Margin="0 20 0 0">
                 <StackPanel Orientation="Vertical" Margin="5">

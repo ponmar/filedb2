@@ -61,6 +61,29 @@ namespace FileDB2Browser.ViewModel
         }
     }
 
+    public enum UpdateHistoryType
+    {
+        TogglePerson,
+        ToggleLocation,
+        ToggleTag,
+    }
+
+    public class UpdateHistoryItem
+    {
+        public UpdateHistoryType Type { get; }
+        public int ItemId { get; }
+        public string ItemName { get; }
+        public string Shortcut { get; set; }
+        public string Description => $"Toggle '{ItemName}'";
+
+        public UpdateHistoryItem(UpdateHistoryType type, int itemId, string itemName)
+        {
+            Type = type;
+            ItemId = itemId;
+            ItemName = itemName;
+        }
+    }
+
     public class FindViewModel : ViewModelBase
     {
         private readonly IImagePresenter imagePresenter;
@@ -407,6 +430,8 @@ namespace FileDB2Browser.ViewModel
         public TagToUpdate SelectedTagToUpdate { get; set; }
 
         public TagToUpdate SelectedTagSearch { get; set; }
+
+        public ObservableCollection<UpdateHistoryItem> UpdateHistoryItems { get; } = new();
 
         private readonly DispatcherTimer slideshowTimer = new();
 
@@ -961,6 +986,7 @@ namespace FileDB2Browser.ViewModel
             {
                 Utils.FileDB2Handle.InsertFilePerson(fileId, SelectedPersonToUpdate.Id);
                 LoadFile(SearchResultIndex);
+                AddUpdateHistoryItem(UpdateHistoryType.TogglePerson, SelectedPersonToUpdate.Id, SelectedPersonToUpdate.Name);
             }
             else
             {
@@ -985,6 +1011,7 @@ namespace FileDB2Browser.ViewModel
             var fileId = searchResult.Files[SearchResultIndex].id;
             Utils.FileDB2Handle.DeleteFilePerson(fileId, SelectedPersonToUpdate.Id);
             LoadFile(SearchResultIndex);
+            AddUpdateHistoryItem(UpdateHistoryType.TogglePerson, SelectedPersonToUpdate.Id, SelectedPersonToUpdate.Name);
         }
 
         public bool PersonSelected()
@@ -1011,6 +1038,7 @@ namespace FileDB2Browser.ViewModel
             {
                 Utils.FileDB2Handle.InsertFileLocation(fileId, SelectedLocationToUpdate.Id);
                 LoadFile(SearchResultIndex);
+                AddUpdateHistoryItem(UpdateHistoryType.ToggleLocation, SelectedLocationToUpdate.Id, SelectedLocationToUpdate.Name);
             }
             else
             {
@@ -1061,6 +1089,7 @@ namespace FileDB2Browser.ViewModel
             {
                 Utils.FileDB2Handle.InsertFileTag(fileId, SelectedTagToUpdate.Id);
                 LoadFile(SearchResultIndex);
+                AddUpdateHistoryItem(UpdateHistoryType.ToggleLocation, SelectedTagToUpdate.Id, SelectedTagToUpdate.Name);
             }
             else
             {
@@ -1085,6 +1114,7 @@ namespace FileDB2Browser.ViewModel
             var fileId = searchResult.Files[SearchResultIndex].id;
             Utils.FileDB2Handle.DeleteFileTag(fileId, SelectedTagToUpdate.Id);
             LoadFile(SearchResultIndex);
+            AddUpdateHistoryItem(UpdateHistoryType.ToggleLocation, SelectedTagToUpdate.Id, SelectedTagToUpdate.Name);
         }
 
         public bool TagSelected()
@@ -1169,6 +1199,29 @@ namespace FileDB2Browser.ViewModel
             foreach (var tag in tags)
             {
                 Tags.Add(tag);
+            }
+        }
+
+        private void AddUpdateHistoryItem(UpdateHistoryType type, int itemId, string itemName)
+        {
+            var duplicatedItem = UpdateHistoryItems.FirstOrDefault(x => x.Type == type && x.ItemName == itemName);
+            if (duplicatedItem != null)
+            {
+                UpdateHistoryItems.Remove(duplicatedItem);
+            }
+
+            UpdateHistoryItems.Insert(0, new UpdateHistoryItem(type, itemId, itemName));
+
+            while (UpdateHistoryItems.Count > 12)
+            {
+                UpdateHistoryItems.Remove(UpdateHistoryItems.Last());
+            }
+
+            int shortcutKey = 1;
+            foreach (var updateHistoryItem in UpdateHistoryItems)
+            {
+                updateHistoryItem.Shortcut = $"F{shortcutKey}";
+                shortcutKey++;
             }
         }
     }
