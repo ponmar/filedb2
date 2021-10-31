@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace FileDB2Browser.ViewModel.Sorters
 {
-    public class TagToAddSorter : IComparer<TagToAdd>
+    public class TagToAddSorter : IComparer<TagToUpdate>
     {
-        public int Compare(TagToAdd x, TagToAdd y)
+        public int Compare(TagToUpdate x, TagToUpdate y)
         {
             return x.Name.CompareTo(y.Name);
         }

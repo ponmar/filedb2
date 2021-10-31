@@ -9,10 +9,8 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-using FileDB2Browser.Config;
 using FileDB2Browser.View;
 using FileDB2Browser.ViewModel.Sorters;
-using FileDB2Interface;
 using FileDB2Interface.Comparers;
 using FileDB2Interface.Model;
 using TextCopy;
@@ -24,21 +22,21 @@ namespace FileDB2Browser.ViewModel
         void ShowImage(BitmapImage image);
     }
 
-    public class PersonToAdd
+    public class PersonToUpdate
     {
         public int Id { get; set; }
 
         public string Name { get; set; }
     }
 
-    public class LocationToAdd
+    public class LocationToUpdate
     {
         public int Id { get; set; }
 
         public string Name { get; set; }
     }
 
-    public class TagToAdd
+    public class TagToUpdate
     {
         public int Id { get; set; }
 
@@ -392,23 +390,23 @@ namespace FileDB2Browser.ViewModel
 
         #endregion
 
-        public ObservableCollection<PersonToAdd> Persons { get; } = new ObservableCollection<PersonToAdd>();
+        public ObservableCollection<PersonToUpdate> Persons { get; } = new ObservableCollection<PersonToUpdate>();
 
-        public PersonToAdd SelectedPersonToUpdate { get; set; }
+        public PersonToUpdate SelectedPersonToUpdate { get; set; }
 
-        public PersonToAdd SelectedPersonSearch { get; set; }
+        public PersonToUpdate SelectedPersonSearch { get; set; }
 
-        public ObservableCollection<LocationToAdd> Locations { get; } = new ObservableCollection<LocationToAdd>();
+        public ObservableCollection<LocationToUpdate> Locations { get; } = new ObservableCollection<LocationToUpdate>();
 
-        public LocationToAdd SelectedLocationToUpdate { get; set; }
+        public LocationToUpdate SelectedLocationToUpdate { get; set; }
 
-        public LocationToAdd SelectedLocationSearch { get; set; }
+        public LocationToUpdate SelectedLocationSearch { get; set; }
 
-        public ObservableCollection<TagToAdd> Tags { get; } = new ObservableCollection<TagToAdd>();
+        public ObservableCollection<TagToUpdate> Tags { get; } = new ObservableCollection<TagToUpdate>();
 
-        public TagToAdd SelectedTagToUpdate { get; set; }
+        public TagToUpdate SelectedTagToUpdate { get; set; }
 
-        public TagToAdd SelectedTagSearch { get; set; }
+        public TagToUpdate SelectedTagSearch { get; set; }
 
         private readonly DispatcherTimer slideshowTimer = new();
 
@@ -1144,7 +1142,7 @@ namespace FileDB2Browser.ViewModel
         private void ReloadPersons()
         {
             Persons.Clear();
-            var persons = Utils.FileDB2Handle.GetPersons().Select(p => new PersonToAdd() { Id = p.id, Name = p.firstname + " " + p.lastname }).ToList();
+            var persons = Utils.FileDB2Handle.GetPersons().Select(p => new PersonToUpdate() { Id = p.id, Name = p.firstname + " " + p.lastname }).ToList();
             persons.Sort(new PersonToAddSorter());
             foreach (var person in persons)
             {
@@ -1155,7 +1153,7 @@ namespace FileDB2Browser.ViewModel
         private void ReloadLocations()
         {
             Locations.Clear();
-            var locations = Utils.FileDB2Handle.GetLocations().Select(l => new LocationToAdd() { Id = l.id, Name = l.name }).ToList();
+            var locations = Utils.FileDB2Handle.GetLocations().Select(l => new LocationToUpdate() { Id = l.id, Name = l.name }).ToList();
             locations.Sort(new LocationToAddSorter());
             foreach (var location in locations)
             {
@@ -1166,7 +1164,7 @@ namespace FileDB2Browser.ViewModel
         private void ReloadTags()
         {
             Tags.Clear();
-            var tags = Utils.FileDB2Handle.GetTags().Select(t => new TagToAdd() { Id = t.id, Name = t.name }).ToList();
+            var tags = Utils.FileDB2Handle.GetTags().Select(t => new TagToUpdate() { Id = t.id, Name = t.name }).ToList();
             tags.Sort(new TagToAddSorter());
             foreach (var tag in tags)
             {
