@@ -25,6 +25,8 @@ namespace FileDB2Browser.View
         {
             InitializeComponent();
             DataContext = new FindViewModel(this);
+            // TODO: this must also be done when page becomes active
+            Loaded += (s, e) => Keyboard.Focus(this);
         }
 
         public void ShowImage(BitmapImage image)

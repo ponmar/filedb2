@@ -3,8 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-        xmlns:local="clr-namespace:FileDB2Browser" xmlns:local1="clr-namespace:FileDB2Browser.Converters"
         xmlns:Views="clr-namespace:FileDB2Browser.View"
         mc:Ignorable="d"
         Title="FileDB2" Height="768" Width="1024" ResizeMode="CanResize">
@@ -12,7 +10,7 @@
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
     </Window.Resources>
-    
+
     <DockPanel>
         <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="0" DockPanel.Dock="Left">
             <Label Style="{StaticResource PageButtonHeading}">Browse</Label>
@@ -50,7 +48,7 @@
                     <Views:SettingsView/>
                 </Grid>
                 <Grid Visibility="{Binding Path=FindPageActive, Converter={StaticResource BoolToVis}, Mode=OneWay}">
-                    <Views:FindView />
+                    <Views:FindView/>
                 </Grid>
                 <Grid Visibility="{Binding Path=BirthdaysPageActive, Converter={StaticResource BoolToVis}, Mode=OneWay}">
                     <Views:BirthdaysView/>

@@ -1232,5 +1232,14 @@ namespace FileDB2Browser.ViewModel
             UpdateHistoryItems = newItems;
             OnPropertyChanged(nameof(UpdateHistoryItems));
         }
+
+        public ICommand FunctionKeyCommand => functionKeyCommand ??= new CommandHandler(FunctionKey);
+        private ICommand functionKeyCommand;
+
+        private void FunctionKey(object parameter)
+        {
+            var number = int.Parse((string)parameter);
+
+        }
     }
 }
