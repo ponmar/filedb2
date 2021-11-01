@@ -91,10 +91,10 @@ namespace FileDB2Browser.ViewModel
 
         #region Browsing and sorting commands
 
-        public ICommand PrevFileCommand => prevFileCommand ??= new CommandHandler(PrevFile, PrevFileAvailable);
+        public ICommand PrevFileCommand => prevFileCommand ??= new CommandHandler(StopSlideshowAndSelectPrevFile, PrevFileAvailable);
         private ICommand prevFileCommand;
 
-        public ICommand NextFileCommand => nextFileCommand ??= new CommandHandler(NextFile, NextFileAvailable);
+        public ICommand NextFileCommand => nextFileCommand ??= new CommandHandler(StopSlideshowAndSelectNextFile, NextFileAvailable);
         private ICommand nextFileCommand;
 
         public ICommand PrevDirectoryCommand => prevDirectoryCommand ??= new CommandHandler(PrevDirectory, SearchResultAvailable);
@@ -431,7 +431,7 @@ namespace FileDB2Browser.ViewModel
 
         public TagToUpdate SelectedTagSearch { get; set; }
 
-        public ObservableCollection<UpdateHistoryItem> UpdateHistoryItems { get; } = new();
+        public ObservableCollection<UpdateHistoryItem> UpdateHistoryItems { get; private set; } = new();
 
         private readonly DispatcherTimer slideshowTimer = new();
 
@@ -449,7 +449,7 @@ namespace FileDB2Browser.ViewModel
             slideshowTimer.Interval = Utils.BrowserConfig.SlideshowDelay;
         }
 
-        public void PrevFile(object parameter)
+        public void StopSlideshowAndSelectPrevFile()
         {
             StopSlideshow();
             LoadFile(SearchResultIndex - 1);
@@ -460,7 +460,7 @@ namespace FileDB2Browser.ViewModel
             return SearchResultIndex > 0;
         }
 
-        public void NextFile(object parameter)
+        public void StopSlideshowAndSelectNextFile()
         {
             StopSlideshow();
             NextFile();
@@ -481,7 +481,7 @@ namespace FileDB2Browser.ViewModel
             LoadFile(random.Next(SearchResult.Count));
         }
 
-        public void PrevDirectory(object parameter)
+        public void PrevDirectory()
         {
             StopSlideshow();
 
@@ -501,7 +501,7 @@ namespace FileDB2Browser.ViewModel
             }
         }
 
-        public void NextDirectory(object parameter)
+        public void NextDirectory()
         {
             StopSlideshow();
 
@@ -526,7 +526,7 @@ namespace FileDB2Browser.ViewModel
             return searchResult != null && searchResult.Count > 0;
         }
 
-        public void FirstFile(object parameter)
+        public void FirstFile()
         {
             StopSlideshow();
             LoadFile(0);
@@ -537,7 +537,7 @@ namespace FileDB2Browser.ViewModel
             return searchResult != null && SearchResultIndex > 0;
         }
 
-        public void LastFile(object parameter)
+        public void LastFile()
         {
             StopSlideshow();
             if (searchResult != null)
@@ -551,22 +551,22 @@ namespace FileDB2Browser.ViewModel
             return searchResult != null && SearchResultIndex < SearchResult.Count - 1;
         }
 
-        public void SortFilesByDate(object parameter)
+        public void SortFilesByDate()
         {
             SortFiles(new FilesByDateSorter());
         }
 
-        public void SortFilesByDateDesc(object parameter)
+        public void SortFilesByDateDesc()
         {
             SortFiles(new FilesByDateSorter(), true);
         }
 
-        public void SortFilesByPath(object parameter)
+        public void SortFilesByPath()
         {
             SortFiles(new FilesByPathSorter());
         }
 
-        public void SortFilesByPathDesc(object parameter)
+        public void SortFilesByPathDesc()
         {
             SortFiles(new FilesByPathSorter(), true);
         }
@@ -589,7 +589,7 @@ namespace FileDB2Browser.ViewModel
             }
         }
 
-        public void ToggleSlideshow(object parameter)
+        public void ToggleSlideshow()
         {
             if (SlideshowActive)
             {
@@ -601,11 +601,11 @@ namespace FileDB2Browser.ViewModel
             }
         }
 
-        public void ToggleRandom(object parameter)
+        public void ToggleRandom()
         {
         }
 
-        public void ToggleRepeat(object parameter)
+        public void ToggleRepeat()
         {
         }
 
@@ -653,13 +653,13 @@ namespace FileDB2Browser.ViewModel
             }
         }
 
-        public void FindRandomFiles(object parameter)
+        public void FindRandomFiles()
         {
             StopSlideshow();
             SearchResult = new SearchResult(Utils.FileDB2Handle.SearchFilesRandom(10));
         }
 
-        public void FindCurrentDirectoryFiles(object parameter)
+        public void FindCurrentDirectoryFiles()
         {
             StopSlideshow();
             if (SearchResultIndex == -1)
@@ -673,13 +673,13 @@ namespace FileDB2Browser.ViewModel
             SearchResult = new SearchResult(Utils.FileDB2Handle.SearchFilesByPath(dir));
         }
 
-        public void FindAllFiles(object parameter)
+        public void FindAllFiles()
         {
             StopSlideshow();
             SearchResult = new SearchResult(Utils.FileDB2Handle.GetFiles());
         }
 
-        public void FindFilesByText(object parameter)
+        public void FindFilesByText()
         {
             StopSlideshow();
             if (!string.IsNullOrEmpty(SearchPattern))
@@ -692,7 +692,7 @@ namespace FileDB2Browser.ViewModel
             }
         }
 
-        public void FindFilesWithPerson(object parameter)
+        public void FindFilesWithPerson()
         {
             StopSlideshow();
             if (SelectedPersonSearch != null)
@@ -701,7 +701,7 @@ namespace FileDB2Browser.ViewModel
             }
         }
 
-        public void FindFilesWithLocation(object parameter)
+        public void FindFilesWithLocation()
         {
             StopSlideshow();
             if (SelectedLocationSearch != null)
@@ -710,7 +710,7 @@ namespace FileDB2Browser.ViewModel
             }
         }
 
-        public void FindFilesWithTag(object parameter)
+        public void FindFilesWithTag()
         {
             StopSlideshow();
             if (SelectedTagSearch != null)
@@ -719,7 +719,7 @@ namespace FileDB2Browser.ViewModel
             }
         }
 
-        public void FindFilesByPersonAge(object parameter)
+        public void FindFilesByPersonAge()
         {
             StopSlideshow();
             if (!string.IsNullOrEmpty(SearchPersonAge))
@@ -760,7 +760,7 @@ namespace FileDB2Browser.ViewModel
             return SearchResultHistory.Count >= 2;
         }
 
-        public void FindFilesFromUnion(object parameter)
+        public void FindFilesFromUnion()
         {
             if (SearchResultHistory.Count >= 2)
             {
@@ -770,7 +770,7 @@ namespace FileDB2Browser.ViewModel
             }
         }
 
-        public void FindFilesFromIntersection(object parameter)
+        public void FindFilesFromIntersection()
         {
             if (SearchResultHistory.Count >= 2)
             {
@@ -780,7 +780,7 @@ namespace FileDB2Browser.ViewModel
             }
         }
 
-        public void FindFilesFromDifference(object parameter)
+        public void FindFilesFromDifference()
         {
             if (SearchResultHistory.Count >= 2)
             {
@@ -792,13 +792,13 @@ namespace FileDB2Browser.ViewModel
             }
         }
 
-        public void FindFilesFromMissingCategorization(object parameter)
+        public void FindFilesFromMissingCategorization()
         {
             StopSlideshow();
             SearchResult = new SearchResult(Utils.FileDB2Handle.GetFilesWithMissingData());
         }
 
-        public void FindFilesFromList(object parameter)
+        public void FindFilesFromList()
         {
             StopSlideshow();
             if (!string.IsNullOrEmpty(fileListSearch))
@@ -818,7 +818,7 @@ namespace FileDB2Browser.ViewModel
             }
         }
 
-        public void OpenFileLocation(object parameter)
+        public void OpenFileLocation()
         {
             if (!string.IsNullOrEmpty(CurrentFilePath) &&
                 File.Exists(CurrentFilePath))
@@ -828,7 +828,7 @@ namespace FileDB2Browser.ViewModel
             }
         }
 
-        public void ExportFileList(object parameter)
+        public void ExportFileList()
         {
             if (HasNonEmptySearchResult)
             {
@@ -967,7 +967,7 @@ namespace FileDB2Browser.ViewModel
             return string.Join("\n", tagStrings);
         }
 
-        public void AddFilePerson(object parameter)
+        public void AddFilePerson()
         {
             if (SearchResultIndex == -1)
             {
@@ -994,7 +994,7 @@ namespace FileDB2Browser.ViewModel
             }
         }
 
-        public void RemoveFilePerson(object parameter)
+        public void RemoveFilePerson()
         {
             if (SearchResultIndex == -1)
             {
@@ -1019,7 +1019,7 @@ namespace FileDB2Browser.ViewModel
             return SelectedPersonToUpdate != null;
         }
 
-        public void AddFileLocation(object parameter)
+        public void AddFileLocation()
         {
             if (SearchResultIndex == -1)
             {
@@ -1046,7 +1046,7 @@ namespace FileDB2Browser.ViewModel
             }
         }
 
-        public void RemoveFileLocation(object parameter)
+        public void RemoveFileLocation()
         {
             if (SearchResultIndex == -1)
             {
@@ -1070,7 +1070,7 @@ namespace FileDB2Browser.ViewModel
             return SelectedLocationToUpdate != null;
         }
 
-        public void AddFileTag(object parameter)
+        public void AddFileTag()
         {
             if (SearchResultIndex == -1)
             {
@@ -1097,7 +1097,7 @@ namespace FileDB2Browser.ViewModel
             }
         }
 
-        public void RemoveFileTag(object parameter)
+        public void RemoveFileTag()
         {
             if (SearchResultIndex == -1)
             {
@@ -1122,7 +1122,7 @@ namespace FileDB2Browser.ViewModel
             return SelectedTagToUpdate != null;
         }
 
-        public void SetFileDescription(object parameter)
+        public void SetFileDescription()
         {
             if (SearchResultIndex != -1)
             {
@@ -1136,7 +1136,7 @@ namespace FileDB2Browser.ViewModel
             }
         }
 
-        public void CreatePerson(object parameter)
+        public void CreatePerson()
         {
             var window = new AddPersonWindow
             {
@@ -1147,7 +1147,7 @@ namespace FileDB2Browser.ViewModel
             ReloadPersons();
         }
 
-        public void CreateLocation(object parameter)
+        public void CreateLocation()
         {
             var window = new AddLocationWindow
             {
@@ -1158,7 +1158,7 @@ namespace FileDB2Browser.ViewModel
             ReloadLocations();
         }
 
-        public void CreateTag(object parameter)
+        public void CreateTag()
         {
             var window = new AddTagWindow
             {
@@ -1217,12 +1217,20 @@ namespace FileDB2Browser.ViewModel
                 UpdateHistoryItems.Remove(UpdateHistoryItems.Last());
             }
 
-            int shortcutKey = 1;
+            // TODO: find better solution for how to update view with updated items instead of creating a new collection
+
+            ObservableCollection<UpdateHistoryItem> newItems = new();
+
+            int index = 0;
             foreach (var updateHistoryItem in UpdateHistoryItems)
             {
-                updateHistoryItem.Shortcut = $"F{shortcutKey}";
-                shortcutKey++;
+                var shortcut = $"F{index + 1}";
+                newItems.Add(new UpdateHistoryItem(updateHistoryItem.Type, updateHistoryItem.ItemId, updateHistoryItem.ItemName) { Shortcut = shortcut });
+                index++;
             }
+
+            UpdateHistoryItems = newItems;
+            OnPropertyChanged(nameof(UpdateHistoryItems));
         }
     }
 }

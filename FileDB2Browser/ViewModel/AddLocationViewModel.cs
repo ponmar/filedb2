@@ -60,7 +60,7 @@ namespace FileDB2Browser.ViewModel
             }
         }
 
-        public void Save(object parameter)
+        public void Save()
         {
             try
             {

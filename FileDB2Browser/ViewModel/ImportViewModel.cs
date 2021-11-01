@@ -33,7 +33,7 @@ namespace FileDB2Browser.ViewModel
         {
         }
 
-        public void ScanNewFiles(object parameter)
+        public void ScanNewFiles()
         {
             NewFiles.Clear();
             var newFiles = Utils.FileDB2Handle.ListNewFilesystemFiles(Utils.BrowserConfig.BlacklistedFilePathPatterns, Utils.BrowserConfig.WhitelistedFilePathPatterns, Utils.BrowserConfig.IncludeHiddenDirectories).Select(p => new NewFile()
@@ -53,7 +53,7 @@ namespace FileDB2Browser.ViewModel
             return NewFiles.Count > 0;
         }
 
-        public void ImportNewFiles(object parameter)
+        public void ImportNewFiles()
         {
             try
             {

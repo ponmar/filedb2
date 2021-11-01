@@ -86,7 +86,7 @@ namespace FileDB2Browser.ViewModel
             }
         }
 
-        public void Save(object parameter)
+        public void Save()
         {
             int? newProfileFileId = null;
             if (!string.IsNullOrEmpty(profilePictureFileId))

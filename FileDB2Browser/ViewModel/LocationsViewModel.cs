@@ -56,7 +56,7 @@ namespace FileDB2Browser.ViewModel
             ReloadLocations();
         }
 
-        public void RemoveLocation(object parameter)
+        public void RemoveLocation()
         {
             if (selectedLocation != null)
             {
@@ -69,7 +69,7 @@ namespace FileDB2Browser.ViewModel
             }
         }
 
-        public void EditLocation(object parameter)
+        public void EditLocation()
         {
             if (selectedLocation != null)
             {
@@ -82,7 +82,7 @@ namespace FileDB2Browser.ViewModel
             }
         }
 
-        public void AddLocation(object parameter)
+        public void AddLocation()
         {
             var window = new AddLocationWindow
             {

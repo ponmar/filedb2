@@ -76,7 +76,7 @@ namespace FileDB2Browser.ViewModel
             ReloadTags();
         }
 
-        public void RemoveTag(object parameter)
+        public void RemoveTag()
         {
             if (selectedTag != null)
             {
@@ -89,7 +89,7 @@ namespace FileDB2Browser.ViewModel
             }
         }
 
-        public void EditTag(object parameter)
+        public void EditTag()
         {
             if (selectedTag != null)
             {
@@ -102,7 +102,7 @@ namespace FileDB2Browser.ViewModel
             }
         }
 
-        public void AddTag(object parameter)
+        public void AddTag()
         {
             var window = new AddTagWindow
             {

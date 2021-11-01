@@ -60,7 +60,7 @@ namespace FileDB2Browser.ViewModel
             ReloadPersons();
         }
 
-        public void RemovePerson(object parameter)
+        public void RemovePerson()
         {
             if (selectedPerson != null)
             {
@@ -73,7 +73,7 @@ namespace FileDB2Browser.ViewModel
             }
         }
 
-        public void EditPerson(object parameter)
+        public void EditPerson()
         {
             if (selectedPerson != null)
             {
@@ -86,7 +86,7 @@ namespace FileDB2Browser.ViewModel
             }
         }
 
-        public void AddPerson(object parameter)
+        public void AddPerson()
         {
             var window = new AddPersonWindow
             {

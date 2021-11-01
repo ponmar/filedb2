@@ -109,7 +109,7 @@ namespace FileDB2Browser.ViewModel
             WhitelistedFilePathPatternsJson = JsonConvert.SerializeObject(Utils.BrowserConfig.WhitelistedFilePathPatterns);
         }
 
-        public void ResetConfiguration(object parameter)
+        public void ResetConfiguration()
         {
             if (Utils.BrowserConfigIO.Write(BrowserConfigFactory.GetDefault()))
             {
@@ -123,7 +123,7 @@ namespace FileDB2Browser.ViewModel
             }
         }
 
-        public void SaveConfiguration(object parameter)
+        public void SaveConfiguration()
         {
             if (!Database.EndsWith(".db"))
             {
@@ -191,7 +191,7 @@ namespace FileDB2Browser.ViewModel
             }
         }
 
-        public void BrowseDatabase(object parameter)
+        public void BrowseDatabase()
         {
             var fileDialog = new OpenFileDialog()
             {
@@ -204,7 +204,7 @@ namespace FileDB2Browser.ViewModel
             }
         }
 
-        public void BrowseFilesRootDirectory(object parameter)
+        public void BrowseFilesRootDirectory()
         {
             var fileDialog = new OpenFileDialog()
             {
@@ -227,7 +227,7 @@ namespace FileDB2Browser.ViewModel
             }
         }
 
-        public void CreateDatabase(object parameter)
+        public void CreateDatabase()
         {
             if (Utils.ShowConfirmDialog($"Create database {Database}?"))
             {
@@ -247,7 +247,7 @@ namespace FileDB2Browser.ViewModel
             return !File.Exists(Database);
         }
 
-        public void CreateBackup(object parameter)
+        public void CreateBackup()
         {
             var db = Utils.BrowserConfig.Database;
             if (File.Exists(db))

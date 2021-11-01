@@ -92,52 +92,52 @@ namespace FileDB2Browser.ViewModel
 
         public MainViewModel()
         {
-            OpenFindPage(null);
+            OpenFindPage();
         }
 
-        public void OpenSettingsPage(object parameter)
+        public void OpenSettingsPage()
         {
             ResetActivePage();
             SettingsPageActive = true;
         }
 
-        public void OpenFindPage(object parameter)
+        public void OpenFindPage()
         {
             ResetActivePage();
             FindPageActive = true;
         }
 
-        public void OpenBirthdaysPage(object parameter)
+        public void OpenBirthdaysPage()
         {
             ResetActivePage();
             BirthdaysPageActive = true;
         }
 
-        public void OpenPersonsPage(object parameter)
+        public void OpenPersonsPage()
         {
             ResetActivePage();
             PersonsPageActive = true;
         }
 
-        public void OpenLocationsPage(object parameter)
+        public void OpenLocationsPage()
         {
             ResetActivePage();
             LocationsPageActive = true;
         }
 
-        public void OpenTagsPage(object parameter)
+        public void OpenTagsPage()
         {
             ResetActivePage();
             TagsPageActive = true;
         }
 
-        public void OpenImportPage(object parameter)
+        public void OpenImportPage()
         {
             ResetActivePage();
             ImportPageActive = true;
         }
 
-        public void OpenToolsPage(object parameter)
+        public void OpenToolsPage()
         {
             ResetActivePage();
             ToolsPageActive = true;
