@@ -172,19 +172,19 @@
                 <Expander Header="Update history" Margin="5" IsExpanded="False">
                     <StackPanel Orientation="Vertical">
                         <ListView ItemsSource="{Binding UpdateHistoryItems}">
-                            <ListView.Resources>
-                                <Style TargetType="GridViewColumnHeader">
-                                    <Setter Property="Visibility" Value="Collapsed" />
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="Focusable" Value="false"/>
                                 </Style>
-                            </ListView.Resources>
-                            <ListView.View>
-                                <GridView>
-                                    <GridView.Columns>
-                                        <GridViewColumn DisplayMemberBinding="{Binding Path=Shortcut}"></GridViewColumn>
-                                        <GridViewColumn DisplayMemberBinding="{Binding Path=Description}"></GridViewColumn>
-                                    </GridView.Columns>
-                                </GridView>
-                            </ListView.View>
+                            </ListView.ItemContainerStyle>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <WrapPanel>
+                                        <TextBlock Text="{Binding Shortcut}" FontWeight="Bold" Margin="0,0,10,0"/>
+                                        <TextBlock Text="{Binding Description}"/>
+                                    </WrapPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
                         </ListView>
                     </StackPanel>
                 </Expander>
