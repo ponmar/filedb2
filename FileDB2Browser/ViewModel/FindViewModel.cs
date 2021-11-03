@@ -1217,20 +1217,16 @@ namespace FileDB2Browser.ViewModel
                 UpdateHistoryItems.Remove(UpdateHistoryItems.Last());
             }
 
-            // TODO: find better solution for how to update view with updated items instead of creating a new collection
-
-            ObservableCollection<UpdateHistoryItem> newItems = new();
-
-            int index = 0;
-            foreach (var updateHistoryItem in UpdateHistoryItems)
+            for (int i=0; i<UpdateHistoryItems.Count; i++)
             {
-                var shortcut = $"F{index + 1}";
-                newItems.Add(new UpdateHistoryItem(updateHistoryItem.Type, updateHistoryItem.ItemId, updateHistoryItem.ItemName) { Shortcut = shortcut });
-                index++;
-            }
+                var item = UpdateHistoryItems[i];
+                var newShortcut = $"F{i + 1}";
 
-            UpdateHistoryItems = newItems;
-            OnPropertyChanged(nameof(UpdateHistoryItems));
+                if (item.Shortcut != newShortcut)
+                {
+                    UpdateHistoryItems[i] = new UpdateHistoryItem(item.Type, item.ItemId, item.ItemName) { Shortcut = newShortcut };
+                }
+            }
         }
 
         public ICommand FunctionKeyCommand => functionKeyCommand ??= new CommandHandler(FunctionKey);
