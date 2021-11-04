@@ -24,10 +24,12 @@ namespace FileDB2Browser.ViewModel
         public ICommand ScanNewFilesCommand => scanNewFilesCommand ??= new CommandHandler(ScanNewFiles);
         private ICommand scanNewFilesCommand;
 
-        public ICommand ImportNewFilesCommand => importNewFilesCommand ??= new CommandHandler(ImportNewFiles, CanImportNewFiles);
+        public ICommand ImportNewFilesCommand => importNewFilesCommand ??= new CommandHandler(ImportNewFiles);
         private ICommand importNewFilesCommand;
 
         public ObservableCollection<NewFile> NewFiles { get; } = new ObservableCollection<NewFile>();
+
+        public bool NewFilesAvailable => NewFiles.Count > 0;
 
         public ImportViewModel()
         {
@@ -46,11 +48,8 @@ namespace FileDB2Browser.ViewModel
             {
                 NewFiles.Add(newFile);
             }
-        }
 
-        public bool CanImportNewFiles()
-        {
-            return NewFiles.Count > 0;
+            OnPropertyChanged(nameof(NewFilesAvailable));
         }
 
         public void ImportNewFiles()
@@ -68,6 +67,7 @@ namespace FileDB2Browser.ViewModel
             }
 
             NewFiles.Clear();
+            OnPropertyChanged(nameof(NewFilesAvailable));
         }
 
         private string GetDateModified(string internalPath)

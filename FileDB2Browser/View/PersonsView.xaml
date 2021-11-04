@@ -18,15 +18,8 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
-                <DataGrid Grid.Row="0" Grid.Column="0" ItemsSource="{Binding Persons}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="SelectionChanged">
-                            <i:InvokeCommandAction Command="{Binding PersonSelectionCommand}" CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </DataGrid>
 
-                <Grid Grid.Row="1" Grid.Column="0" Style="{StaticResource PageGrid}">
+                <Grid Grid.Row="0" Grid.Column="0" Style="{StaticResource PageGrid}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
@@ -35,10 +28,18 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
-                    <Button Style="{StaticResource NormalButton}" Grid.Row="0" Grid.Column="0" Command="{Binding AddPersonCommand}">Add person</Button>
-                    <Button Style="{StaticResource NormalButton}" Grid.Row="0" Grid.Column="1" Command="{Binding EditPersonCommand}">Edit selected person</Button>
-                    <Button Style="{StaticResource NormalButton}" Grid.Row="0" Grid.Column="2" Command="{Binding RemovePersonCommand}">Delete selected person</Button>
+                    <Button Style="{StaticResource NormalButton}" Margin="10" Grid.Row="0" Grid.Column="0" Command="{Binding AddPersonCommand}">Add person</Button>
+                    <Button Style="{StaticResource NormalButton}" Margin="10" Grid.Row="0" Grid.Column="1" Command="{Binding EditPersonCommand}">Edit selected person</Button>
+                    <Button Style="{StaticResource NormalButton}" Margin="10" Grid.Row="0" Grid.Column="2" Command="{Binding RemovePersonCommand}">Delete selected person</Button>
                 </Grid>
+
+                <DataGrid Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Persons}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding PersonSelectionCommand}" CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </DataGrid>
             </Grid>
         </ScrollViewer>
     </DockPanel>
