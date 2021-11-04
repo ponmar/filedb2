@@ -431,7 +431,7 @@ namespace FileDB2Browser.ViewModel
 
         public TagToUpdate SelectedTagSearch { get; set; }
 
-        public ObservableCollection<UpdateHistoryItem> UpdateHistoryItems { get; private set; } = new();
+        public ObservableCollection<UpdateHistoryItem> UpdateHistoryItems { get; } = new();
 
         private readonly DispatcherTimer slideshowTimer = new();
 
