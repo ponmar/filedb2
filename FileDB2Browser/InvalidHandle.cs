@@ -45,6 +45,11 @@ namespace FileDB2Browser
             return new();
         }
 
+        public List<FilesModel> SearchFilesBySex(Sex sex)
+        {
+            return new();
+        }
+
         public List<FilesModel> SearchFilesByPath(string criteria)
         {
             return new();

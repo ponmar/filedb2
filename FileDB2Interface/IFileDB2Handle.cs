@@ -15,6 +15,7 @@ namespace FileDB2Interface
         public List<FilesModel> GetFiles();
         public int GetFileCount();
         public List<FilesModel> SearchFiles(string criteria);
+        public List<FilesModel> SearchFilesBySex(Sex sex);
         public List<FilesModel> SearchFilesByPath(string criteria);
         public List<FilesModel> SearchFilesRandom(int numFiles);
         public FilesModel GetFileById(int id);

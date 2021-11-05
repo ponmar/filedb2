@@ -165,6 +165,12 @@ namespace FileDB2Interface
             return connection.Query<FilesModel>(sql, new { criteria = "%" + criteria + "%" }).ToList();
         }
 
+        public List<FilesModel> SearchFilesBySex(Sex sex)
+        {
+            var personIds = SearchPersonsBySex(sex).Select(p => p.id);
+            return GetFilesWithPersons(personIds);
+        }
+
         public List<FilesModel> SearchFilesByPath(string criteria)
         {
             using var connection = FileDB2Utils.CreateConnection(Config.Database);
@@ -358,6 +364,13 @@ namespace FileDB2Interface
             using var connection = FileDB2Utils.CreateConnection(Config.Database);
             var sql = "select * from [persons] where (firstname like @criteria or lastname like @criteria or description like @criteria)";
             return connection.Query<PersonModel>(sql, new { criteria = "%" + criteria + "%" }).ToList();
+        }
+
+        public List<PersonModel> SearchPersonsBySex(Sex sex)
+        {
+            using var connection = FileDB2Utils.CreateConnection(Config.Database);
+            var sql = "select * from [persons] where sex = @sex";
+            return connection.Query<PersonModel>(sql, new { sex = sex }).ToList();
         }
 
         public PersonModel GetPersonById(int id)

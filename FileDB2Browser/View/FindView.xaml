@@ -47,6 +47,15 @@
                         <TextBlock Text="Path/Description:" Margin="20 0 3 0" VerticalAlignment="Center"/>
                         <TextBox Margin="3 0 0 0" Width="100" VerticalAlignment="Center" Text="{Binding SearchPattern}" ToolTip="Search criteria for file path/description"/>
                         <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesByTextCommand}" ToolTip="Search by path/description">Search</Button>
+
+                        <TextBlock Text="Sex:" Margin="20 0 3 0" VerticalAlignment="Center"/>
+                        <ComboBox VerticalAlignment="Center" ToolTip="ISO/IEC 5218" SelectedItem="{Binding SearchBySexSelection}">
+                            <ComboBoxItem IsSelected="True">NotKnown</ComboBoxItem>
+                            <ComboBoxItem>Male</ComboBoxItem>
+                            <ComboBoxItem>Female</ComboBoxItem>
+                            <ComboBoxItem>NotApplicable</ComboBoxItem>
+                        </ComboBox>
+                        <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesBySexCommand}" ToolTip="Search by sex (ISO/IEC 5218)">Search</Button>
                     </StackPanel>
                 </TabItem>
                 <TabItem Header="Categories">

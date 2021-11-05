@@ -170,9 +170,19 @@ namespace FileDB2Browser.ViewModel
         public string SearchPattern
         {
             get => searchPattern;
-            set { SetProperty(ref searchPattern, value); }
+            set => SetProperty(ref searchPattern, value);
         }
         private string searchPattern;
+
+        public ICommand FindFilesBySexCommand => findFilesBySexCommand ??= new CommandHandler(FindFilesBySex);
+        private ICommand findFilesBySexCommand;
+
+        public string SearchBySexSelection
+        {
+            get => searchBySexSelection;
+            set => SetProperty(ref searchBySexSelection, value.Split(" ")[1]);
+        }
+        private string searchBySexSelection = Sex.NotKnown.ToString();
 
         public ICommand FindFilesWithPersonCommand => findFilesWithPersonCommand ??= new CommandHandler(FindFilesWithPerson);
         private ICommand findFilesWithPersonCommand;
@@ -189,7 +199,7 @@ namespace FileDB2Browser.ViewModel
         public string SearchPersonAge
         {
             get => searchPersonAge;
-            set { SetProperty(ref searchPersonAge, value); }
+            set => SetProperty(ref searchPersonAge, value);
         }
         private string searchPersonAge;
 
@@ -690,6 +700,13 @@ namespace FileDB2Browser.ViewModel
             {
                 SearchResult = null;
             }
+        }
+
+        public void FindFilesBySex()
+        {
+            StopSlideshow();
+            var sex = Enum.Parse<Sex>(searchBySexSelection);
+            SearchResult = new SearchResult(Utils.FileDB2Handle.SearchFilesBySex(sex));
         }
 
         public void FindFilesWithPerson()
