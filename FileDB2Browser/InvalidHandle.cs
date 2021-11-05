@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FileDB2Interface;
 using FileDB2Interface.Model;
 using MetadataExtractor;
@@ -11,14 +8,9 @@ namespace FileDB2Browser
 {
     public class InvalidHandle : IFileDB2Handle
     {
-        public List<string> ListAllFilesystemFiles()
+        public IEnumerable<string> ListNewFilesystemFiles(List<string> blacklistedFilePathPatterns, List<string> whitelistedFilePathPatterns, bool includeHiddenDirectories)
         {
-            return new();
-        }
-
-        public List<string> ListNewFilesystemFiles(List<string> blacklistedFilePathPatterns, List<string> whitelistedFilePathPatterns, bool includeHiddenDirectories)
-        {
-            return new();
+            return new List<string>();
         }
 
         public List<string> ListAllFilesystemDirectories()

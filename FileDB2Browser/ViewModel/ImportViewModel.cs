@@ -38,15 +38,16 @@ namespace FileDB2Browser.ViewModel
         public void ScanNewFiles()
         {
             NewFiles.Clear();
-            var newFiles = Utils.FileDB2Handle.ListNewFilesystemFiles(Utils.BrowserConfig.BlacklistedFilePathPatterns, Utils.BrowserConfig.WhitelistedFilePathPatterns, Utils.BrowserConfig.IncludeHiddenDirectories).Select(p => new NewFile()
-            {
-                Path = p,
-                DateModified = GetDateModified(p),
-            });
+            OnPropertyChanged(nameof(NewFilesAvailable));
 
-            foreach (var newFile in newFiles)
+            // TODO: show counter?
+            foreach (var internalFilePath in Utils.FileDB2Handle.ListNewFilesystemFiles(Utils.BrowserConfig.BlacklistedFilePathPatterns, Utils.BrowserConfig.WhitelistedFilePathPatterns, Utils.BrowserConfig.IncludeHiddenDirectories))
             {
-                NewFiles.Add(newFile);
+                NewFiles.Add(new NewFile()
+                {
+                    Path = internalFilePath,
+                    DateModified = GetDateModified(internalFilePath),
+                });
             }
 
             OnPropertyChanged(nameof(NewFilesAvailable));

@@ -14,6 +14,7 @@ using System.Reflection;
 using log4net.Config;
 using System.Globalization;
 using FileDB2Interface.Exceptions;
+using System.Threading.Tasks;
 
 namespace FileDB2Interface
 {
@@ -53,20 +54,19 @@ namespace FileDB2Interface
 
         #region Files collection
 
-        public List<string> ListAllFilesystemFiles()
+        public IEnumerable<string> ListNewFilesystemFiles(List<string> blacklistedFilePathPatterns, List<string> whitelistedFilePathPatterns, bool includeHiddenDirectories)
         {
-            var files = Directory.GetFiles(Config.FilesRootDirectory, "*.*", SearchOption.AllDirectories);
-            return PathsToInternalPaths(files);
-        }
-
-        public List<string> ListNewFilesystemFiles(List<string> blacklistedFilePathPatterns, List<string> whitelistedFilePathPatterns, bool includeHiddenDirectories)
-        {
-            var files = ListAllFilesystemFiles();
-            return files.Where(f =>
-                !PathIsBlacklisted(f, blacklistedFilePathPatterns) &&
-                PathIsWhitelisted(f, whitelistedFilePathPatterns) &&
-                PathIsVisible(f, includeHiddenDirectories) &&
-                !HasFilePath(f)).ToList();
+            foreach (var filename in Directory.GetFiles(Config.FilesRootDirectory, "*.*", SearchOption.AllDirectories))
+            {
+                var internalPath = PathToInternalPath(filename);
+                if (!PathIsBlacklisted(internalPath, blacklistedFilePathPatterns) &&
+                    PathIsWhitelisted(internalPath, whitelistedFilePathPatterns) &&
+                    PathIsVisible(internalPath, includeHiddenDirectories) &&
+                    !HasFilePath(internalPath))
+                {
+                    yield return internalPath;
+                }
+            }
         }
 
         private bool PathIsBlacklisted(string internalPath, List<string> blacklistedFilePathPatterns)

@@ -8,8 +8,7 @@ namespace FileDB2Interface
 {
     public interface IFileDB2Handle
     {
-        public List<string> ListAllFilesystemFiles();
-        public List<string> ListNewFilesystemFiles(List<string> blacklistedFilePathPatterns, List<string> whitelistedFilePathPatterns, bool includeHiddenDirectories);
+        public IEnumerable<string> ListNewFilesystemFiles(List<string> blacklistedFilePathPatterns, List<string> whitelistedFilePathPatterns, bool includeHiddenDirectories);
         public List<string> ListAllFilesystemDirectories();
         public bool ParseFilesystemFileExif(string path, out DateTime? dateTaken, out GeoLocation location);
         public List<FilesModel> GetFilesMissingInFilesystem();
