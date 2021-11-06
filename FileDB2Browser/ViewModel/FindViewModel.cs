@@ -1262,8 +1262,61 @@ namespace FileDB2Browser.ViewModel
 
         private void FunctionKey(object parameter)
         {
-            var number = int.Parse((string)parameter);
+            if (!SearchResultAvailable())
+            {
+                return;
+            }
 
+            var fileId = SearchResult.Files[SearchResultIndex].id;
+
+            var number = int.Parse((string)parameter);
+            var shortcut = $"F{number}";
+            var historyItem = UpdateHistoryItems.FirstOrDefault(x => x.Shortcut == shortcut);
+            if (historyItem == null)
+            {
+                return;
+            }
+
+            switch (historyItem.Type)
+            {
+                case UpdateHistoryType.TogglePerson:
+                    var personId = historyItem.ItemId;
+                    if (Utils.FileDB2Handle.GetPersonsFromFile(fileId).Any(x => x.id == personId))
+                    {
+                        Utils.FileDB2Handle.DeleteFilePerson(fileId, personId);
+                    }
+                    else
+                    {
+                        Utils.FileDB2Handle.InsertFilePerson(fileId, personId);
+                    }
+                    break;
+
+                case UpdateHistoryType.ToggleLocation:
+                    var locationId = historyItem.ItemId;
+                    if (Utils.FileDB2Handle.GetLocationsFromFile(fileId).Any(x => x.id == locationId))
+                    {
+                        Utils.FileDB2Handle.DeleteFileLocation(fileId, locationId);
+                    }
+                    else
+                    {
+                        Utils.FileDB2Handle.InsertFileLocation(fileId, locationId);
+                    }
+                    break;
+
+                case UpdateHistoryType.ToggleTag:
+                    var tagId = historyItem.ItemId;
+                    if (Utils.FileDB2Handle.GetTagsFromFile(fileId).Any(x => x.id == tagId))
+                    {
+                        Utils.FileDB2Handle.DeleteFileTag(fileId, tagId);
+                    }
+                    else
+                    {
+                        Utils.FileDB2Handle.InsertFileTag(fileId, tagId);
+                    }
+                    break;
+            }
+
+            LoadFile(SearchResultIndex);
         }
     }
 }
