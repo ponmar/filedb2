@@ -158,7 +158,7 @@ namespace FileDB2Browser.ViewModel
         public ICommand FindRandomFilesCommand => findRandomFilesCommand ??= new CommandHandler(FindRandomFiles);
         private ICommand findRandomFilesCommand;
 
-        public ICommand FindCurrentDirectoryFilesCommand => findCurrentDirectoryFilesCommand ??= new CommandHandler(FindCurrentDirectoryFiles);
+        public ICommand FindCurrentDirectoryFilesCommand => findCurrentDirectoryFilesCommand ??= new CommandHandler(FindCurrentDirectoryFiles, SearchResultAvailable);
         private ICommand findCurrentDirectoryFilesCommand;
 
         public ICommand FindAllFilesCommand => findAllFilesCommand ??= new CommandHandler(FindAllFiles);
