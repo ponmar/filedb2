@@ -158,6 +158,13 @@ namespace FileDB2Browser.ViewModel
         public ICommand FindRandomFilesCommand => findRandomFilesCommand ??= new CommandHandler(FindRandomFiles);
         private ICommand findRandomFilesCommand;
 
+        public string NumRandomFiles
+        {
+            get => numRandomFiles;
+            set => SetProperty(ref numRandomFiles, value);
+        }
+        private string numRandomFiles = "10";
+
         public ICommand FindCurrentDirectoryFilesCommand => findCurrentDirectoryFilesCommand ??= new CommandHandler(FindCurrentDirectoryFiles, SearchResultAvailable);
         private ICommand findCurrentDirectoryFilesCommand;
 
@@ -666,7 +673,11 @@ namespace FileDB2Browser.ViewModel
         public void FindRandomFiles()
         {
             StopSlideshow();
-            SearchResult = new SearchResult(Utils.FileDB2Handle.SearchFilesRandom(10));
+
+            if (int.TryParse(NumRandomFiles, out var value))
+            {
+                SearchResult = new SearchResult(Utils.FileDB2Handle.SearchFilesRandom(value));
+            }
         }
 
         public void FindCurrentDirectoryFiles()
