@@ -47,16 +47,16 @@
                         <TextBox Margin="3 0 0 0" Width="100" VerticalAlignment="Center" Text="{Binding NumRandomFiles}"/>
                         <Button Style="{StaticResource NormalButton}" Command="{Binding FindRandomFilesCommand}" ToolTip="Search random files">Search</Button>
 
-                        <TextBlock Text="Path/Description:" Margin="20 0 3 0" VerticalAlignment="Center"/>
-                        <TextBox Margin="3 0 0 0" Width="100" VerticalAlignment="Center" Text="{Binding SearchPattern}" ToolTip="Search criteria for file path/description"/>
-                        <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesByTextCommand}" ToolTip="Search by path/description">Search</Button>
+                        <TextBlock Text="Text:" Margin="20 0 3 0" VerticalAlignment="Center" ToolTip="Search criteria for text (matches file path/description)"/>
+                        <TextBox Margin="3 0 0 0" Width="100" VerticalAlignment="Center" Text="{Binding SearchPattern}" ToolTip="Search criteria for text (matches file path/description)"/>
+                        <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesByTextCommand}" ToolTip="Search by text (matches file path/description)">Search</Button>
                     </StackPanel>
                 </TabItem>
                 <TabItem Header="Categories">
                     <Grid Margin="3">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="17"/>
-                            <ColumnDefinition Width="177.74"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
@@ -65,31 +65,31 @@
                             <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
 
-                        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left" Margin="3,3,0,3" Grid.ColumnSpan="2">
-                            <TextBlock Text="&#x1F642;" Margin="20 0 3 0" VerticalAlignment="Center" ToolTip="Persons" />
+                        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0">
+                            <TextBlock Text="&#x1F642;" VerticalAlignment="Center" ToolTip="Persons" Margin="3"/>
                             <ComboBox Width="100" VerticalAlignment="Center" ItemsSource="{Binding Persons}" SelectedItem="{Binding SelectedPersonSearch}" DisplayMemberPath="Name" ToolTip="Persons"/>
                             <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesWithPersonCommand}" ToolTip="Search by person">Search</Button>
                         </StackPanel>
 
-                        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left" Margin="4,3,0,3" Grid.ColumnSpan="2">
-                            <TextBlock Text="&#x1F3E0;" Margin="20 0 3 0" VerticalAlignment="Center" ToolTip="Locations" />
+                        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0">
+                            <TextBlock Text="&#x1F3E0;" VerticalAlignment="Center" ToolTip="Locations" Margin="3"/>
                             <ComboBox Width="100" VerticalAlignment="Center" ItemsSource="{Binding Locations}" SelectedItem="{Binding SelectedLocationSearch}" DisplayMemberPath="Name" ToolTip="Locations"/>
                             <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesWithLocationCommand}" ToolTip="Search by location">Search</Button>
                         </StackPanel>
 
-                        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left" Margin="3,3,0,3" Grid.ColumnSpan="2">
-                            <TextBlock Text="&#x1F516;" Margin="20 0 3 0" VerticalAlignment="Center" ToolTip="Tags" />
+                        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0">
+                            <TextBlock Text="&#x1F516;" VerticalAlignment="Center" ToolTip="Tags" Margin="3"/>
                             <ComboBox Width="100" VerticalAlignment="Center" ItemsSource="{Binding Tags}" SelectedItem="{Binding SelectedTagSearch}" DisplayMemberPath="Name" ToolTip="Tags"/>
                             <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesWithTagCommand}" ToolTip="Search by tag">Search</Button>
                         </StackPanel>
 
-                        <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,3,0,3">
+                        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0">
                             <TextBlock Text="Person age:" Margin="20 0 3 0" VerticalAlignment="Center"/>
                             <TextBox Margin="3 0 0 0" Width="100" VerticalAlignment="Center" Text="{Binding SearchPersonAge}" ToolTip="Search criteria for file with persons of the specified age (example: 25, 30-40)"/>
                             <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesByPersonAgeCommand}" ToolTip="Search for file with persons of the specified age">Search</Button>
                         </StackPanel>
 
-                        <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="43,3,0,3">
+                        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0">
                             <TextBlock Text="Person sex:" Margin="20 0 3 0" VerticalAlignment="Center" ToolTip="ISO/IEC 5218"/>
                             <ComboBox Margin="3 0 0 0" VerticalAlignment="Center" ToolTip="ISO/IEC 5218" SelectedItem="{Binding SearchBySexSelection}" Width="100">
                                 <ComboBoxItem IsSelected="True">NotKnown</ComboBoxItem>
@@ -98,6 +98,13 @@
                                 <ComboBoxItem>NotApplicable</ComboBoxItem>
                             </ComboBox>
                             <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesBySexCommand}" ToolTip="Search by sex (ISO/IEC 5218)">Search</Button>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0">
+                            <TextBlock Text="File date:" Margin="20 0 3 0" VerticalAlignment="Center"/>
+                            <DatePicker Margin="3 0 0 0" VerticalAlignment="center" Text="Start" IsTodayHighlighted="True"/>
+                            <DatePicker Margin="3 0 0 0" VerticalAlignment="center" Text="End" IsTodayHighlighted="True"/>
+                            <Button Style="{StaticResource NormalButton}" Command="" ToolTip="" VerticalAlignment="Center">Search</Button>
                         </StackPanel>
                     </Grid>
                 </TabItem>
