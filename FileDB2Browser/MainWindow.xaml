@@ -17,56 +17,56 @@
                 <TabItem.Header>
                     <TextBlock Text="&#x1F50D;" ToolTip="Search" Style="{StaticResource PageIcon}"/>
                 </TabItem.Header>
-                <Views:FindView Margin="5"/>
+                <Views:FindView Margin="10 0 10 10"/>
             </TabItem>
 
             <TabItem>
                 <TabItem.Header>
                     <TextBlock Text="&#x1F642;" ToolTip="Persons" Style="{StaticResource PageIcon}"/>
                 </TabItem.Header>
-                <Views:PersonsView Margin="5"/>
+                <Views:PersonsView Margin="10 0 10 10"/>
             </TabItem>
 
             <TabItem>
                 <TabItem.Header>
                     <TextBlock Text="&#x1F3E0;" ToolTip="Locations" Style="{StaticResource PageIcon}"/>
                 </TabItem.Header>
-                <Views:LocationsView Margin="5"/>
+                <Views:LocationsView Margin="10 0 10 10"/>
             </TabItem>
 
             <TabItem>
                 <TabItem.Header>
                     <TextBlock Text="&#x1F516;" ToolTip="Tags" Style="{StaticResource PageIcon}"/>
                 </TabItem.Header>
-                <Views:TagsView Margin="5"/>
+                <Views:TagsView Margin="10 0 10 10"/>
             </TabItem>
 
             <TabItem>
                 <TabItem.Header>
                     <TextBlock Text="&#x1F382;" ToolTip="Birthdays" Style="{StaticResource PageIcon}"/>
                 </TabItem.Header>
-                <Views:BirthdaysView Margin="5"/>
+                <Views:BirthdaysView Margin="10 0 10 10"/>
             </TabItem>
 
             <TabItem>
                 <TabItem.Header>
                     <TextBlock Text="&#x1F4C2;" ToolTip="Import" Style="{StaticResource PageIcon}"/>
                 </TabItem.Header>
-                <Views:ImportView Margin="5"/>
+                <Views:ImportView Margin="10 0 10 10"/>
             </TabItem>
 
             <TabItem>
                 <TabItem.Header>
                     <TextBlock Text="&#x2692;" ToolTip="Tools" Style="{StaticResource PageIcon}"/>
                 </TabItem.Header>
-                <Views:ToolsView Margin="5"/>
+                <Views:ToolsView Margin="10 0 10 10"/>
             </TabItem>
 
             <TabItem>
                 <TabItem.Header>
                     <TextBlock Text="&#x1F527;" ToolTip="Settings" Style="{StaticResource PageIcon}"/>
                 </TabItem.Header>
-                <Views:SettingsView Margin="5"/>
+                <Views:SettingsView Margin="10 0 10 10"/>
             </TabItem>
         </TabControl>
     </Grid>
