@@ -11,64 +11,63 @@
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
     </Window.Resources>
 
-    <DockPanel>
-        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="0" DockPanel.Dock="Left">
-            <Label Style="{StaticResource PageButtonHeading}">Browse</Label>
-            <Button Style="{StaticResource PageButton}" Command="{Binding OpenFindPageCommand}" ToolTip="Search">
-                <TextBlock Text="&#x1F50D;"/>
-            </Button>
-            <Button Style="{StaticResource PageButton}" Command="{Binding OpenBirthdaysPageCommand}" ToolTip="Birthdays">
-                <TextBlock Text="&#x1F382;"/>
-            </Button>
-            <Button Style="{StaticResource PageButton}" Command="{Binding OpenSettingsPageCommand}" ToolTip="Settings">
-                <TextBlock Text="&#x1F527;"/>
-            </Button>
-            <Label Style="{StaticResource PageButtonHeading}">Categories</Label>
-            <Button Style="{StaticResource PageButton}" Command="{Binding OpenPersonsPageCommand}" ToolTip="Persons">
-                <TextBlock Text="&#x1F642;"/>
-            </Button>
-            <Button Style="{StaticResource PageButton}" Command="{Binding OpenLocationsPageCommand}" ToolTip="Locations">
-                <TextBlock Text="&#x1F3E0;"/>
-            </Button>
-            <Button Style="{StaticResource PageButton}" Command="{Binding OpenTagsPageCommand}" ToolTip="Tags">
-                <TextBlock Text="&#x1F516;"/>
-            </Button>
-            <Label Style="{StaticResource PageButtonHeading}">Files</Label>
-            <Button Style="{StaticResource PageButton}" Command="{Binding OpenImportPageCommand}" ToolTip="Import">
-                <TextBlock Text="&#x1F4C2;"/>
-            </Button>
-            <Button Style="{StaticResource PageButton}" Command="{Binding OpenToolsPageCommand}" ToolTip="Tools">
-                <TextBlock Text="&#x2692;"/>
-            </Button>
-        </StackPanel>
+    <Grid>
+        <TabControl TabStripPlacement="Left">
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Text="&#x1F50D;" ToolTip="Search" Style="{StaticResource PageIcon}"/>
+                </TabItem.Header>
+                <Views:FindView Margin="5"/>
+            </TabItem>
 
-        <Border BorderThickness="2 2 2 2" BorderBrush="LightGray">
-            <Grid Margin="20 5 20 5">
-                <Grid Visibility="{Binding Path=SettingsPageActive, Converter={StaticResource BoolToVis}, Mode=OneWay}">
-                    <Views:SettingsView/>
-                </Grid>
-                <Grid Visibility="{Binding Path=FindPageActive, Converter={StaticResource BoolToVis}, Mode=OneWay}">
-                    <Views:FindView/>
-                </Grid>
-                <Grid Visibility="{Binding Path=BirthdaysPageActive, Converter={StaticResource BoolToVis}, Mode=OneWay}">
-                    <Views:BirthdaysView/>
-                </Grid>
-                <Grid Visibility="{Binding Path=PersonsPageActive, Converter={StaticResource BoolToVis}, Mode=OneWay}">
-                    <Views:PersonsView/>
-                </Grid>
-                <Grid Visibility="{Binding Path=LocationsPageActive, Converter={StaticResource BoolToVis}, Mode=OneWay}">
-                    <Views:LocationsView/>
-                </Grid>
-                <Grid Visibility="{Binding Path=TagsPageActive, Converter={StaticResource BoolToVis}, Mode=OneWay}">
-                    <Views:TagsView/>
-                </Grid>
-                <Grid Visibility="{Binding Path=ImportPageActive, Converter={StaticResource BoolToVis}, Mode=OneWay}">
-                    <Views:ImportView/>
-                </Grid>
-                <Grid Visibility="{Binding Path=ToolsPageActive, Converter={StaticResource BoolToVis}, Mode=OneWay}">
-                    <Views:ToolsView/>
-                </Grid>
-            </Grid>
-        </Border>
-    </DockPanel>
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Text="&#x1F642;" ToolTip="Persons" Style="{StaticResource PageIcon}"/>
+                </TabItem.Header>
+                <Views:PersonsView Margin="5"/>
+            </TabItem>
+
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Text="&#x1F3E0;" ToolTip="Locations" Style="{StaticResource PageIcon}"/>
+                </TabItem.Header>
+                <Views:LocationsView Margin="5"/>
+            </TabItem>
+
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Text="&#x1F516;" ToolTip="Tags" Style="{StaticResource PageIcon}"/>
+                </TabItem.Header>
+                <Views:TagsView Margin="5"/>
+            </TabItem>
+
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Text="&#x1F382;" ToolTip="Birthdays" Style="{StaticResource PageIcon}"/>
+                </TabItem.Header>
+                <Views:BirthdaysView Margin="5"/>
+            </TabItem>
+
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Text="&#x1F4C2;" ToolTip="Import" Style="{StaticResource PageIcon}"/>
+                </TabItem.Header>
+                <Views:ImportView Margin="5"/>
+            </TabItem>
+
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Text="&#x2692;" ToolTip="Tools" Style="{StaticResource PageIcon}"/>
+                </TabItem.Header>
+                <Views:ToolsView Margin="5"/>
+            </TabItem>
+
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Text="&#x1F527;" ToolTip="Settings" Style="{StaticResource PageIcon}"/>
+                </TabItem.Header>
+                <Views:SettingsView Margin="5"/>
+            </TabItem>
+        </TabControl>
+    </Grid>
 </Window>
