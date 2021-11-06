@@ -75,6 +75,11 @@ namespace FileDB2Browser
             return null;
         }
 
+        public List<FilesModel> GetFileByDate(DateTime start, DateTime end)
+        {
+            return new();
+        }
+
         public List<FilesModel> GetFilesWithPersons(IEnumerable<int> personIds)
         {
             return new();

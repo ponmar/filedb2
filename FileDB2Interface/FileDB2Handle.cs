@@ -203,6 +203,13 @@ namespace FileDB2Interface
             return connection.QueryFirst<FilesModel>("select * from [files] where path = @path", new { path = path });
         }
 
+        public List<FilesModel> GetFileByDate(DateTime start, DateTime end)
+        {
+            // TODO
+            using var connection = FileDB2Utils.CreateConnection(Config.Database);
+            return new List<FilesModel>();
+        }
+
         public List<FilesModel> GetFilesWithPersons(IEnumerable<int> personIds)
         {
             using var connection = FileDB2Utils.CreateConnection(Config.Database);

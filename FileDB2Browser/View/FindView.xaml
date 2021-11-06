@@ -102,9 +102,9 @@
 
                         <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0">
                             <TextBlock Text="File date:" Margin="20 0 3 0" VerticalAlignment="Center"/>
-                            <DatePicker Margin="3 0 0 0" VerticalAlignment="center" Text="Start" IsTodayHighlighted="True"/>
-                            <DatePicker Margin="3 0 0 0" VerticalAlignment="center" Text="End" IsTodayHighlighted="True"/>
-                            <Button Style="{StaticResource NormalButton}" Command="" ToolTip="" VerticalAlignment="Center">Search</Button>
+                            <DatePicker Margin="3 0 0 0" VerticalAlignment="center" Text="Start" IsTodayHighlighted="True" SelectedDate="{Binding SearchStartDate}"/>
+                            <DatePicker Margin="3 0 0 0" VerticalAlignment="center" Text="End" IsTodayHighlighted="True" SelectedDate="{Binding SearchEndDate}"/>
+                            <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesByDateCommand}" ToolTip="" VerticalAlignment="Center">Search</Button>
                         </StackPanel>
                     </Grid>
                 </TabItem>
