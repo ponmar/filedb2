@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using FileDB2Interface;
+﻿using System.Windows.Input;
 using FileDB2Interface.Exceptions;
 
 namespace FileDB2Browser.ViewModel
 {
     public class AddTagViewModel : ViewModelBase
     {
-        private readonly int tagId;
+        private readonly int? tagId;
 
         public string Title
         {
@@ -30,15 +24,15 @@ namespace FileDB2Browser.ViewModel
         public ICommand SaveCommand => saveCommand ??= new CommandHandler(Save);
         private ICommand saveCommand;
 
-        public AddTagViewModel(int tagId = -1)
+        public AddTagViewModel(int? tagId = null)
         {
             this.tagId = tagId;
 
-            Title = tagId == -1 ? "Add Tag" : "Edit Tag";
+            Title = tagId.HasValue ? "Edit Tag" : "Add Tag";
 
-            if (tagId != -1)
+            if (tagId.HasValue)
             {
-                var tagModel = Utils.FileDB2Handle.GetTagById(tagId);
+                var tagModel = Utils.FileDB2Handle.GetTagById(tagId.Value);
                 Name = tagModel.name;
             }
         }
@@ -47,13 +41,13 @@ namespace FileDB2Browser.ViewModel
         {
             try
             {
-                if (tagId == -1)
+                if (tagId.HasValue)
                 {
-                    Utils.FileDB2Handle.InsertTag(name);
+                    Utils.FileDB2Handle.UpdateTagName(tagId.Value, name);
                 }
                 else
                 {
-                    Utils.FileDB2Handle.UpdateTagName(tagId, name);
+                    Utils.FileDB2Handle.InsertTag(name);
                 }
             }
             catch (FileDB2DataValidationException e)

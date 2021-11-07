@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using FileDB2Interface;
 using FileDB2Interface.Exceptions;
 using FileDB2Interface.Model;
 
@@ -12,7 +9,7 @@ namespace FileDB2Browser.ViewModel
 {
     public class AddPersonViewModel : ViewModelBase
     {
-        private readonly int personId;
+        private readonly int? personId;
 
         public string Title
         {
@@ -68,15 +65,15 @@ namespace FileDB2Browser.ViewModel
         public ICommand SaveCommand => saveCommand ??= new CommandHandler(Save);
         private ICommand saveCommand;
 
-        public AddPersonViewModel(int personId = -1)
+        public AddPersonViewModel(int? personId = null)
         {
             this.personId = personId;
 
-            Title = personId == -1 ? "Add Person" : "Edit Person";
+            Title = personId.HasValue ? "Edit Person" : "Add Person";
 
-            if (personId != -1)
+            if (personId.HasValue)
             {
-                var personModel = Utils.FileDB2Handle.GetPersonById(personId);
+                var personModel = Utils.FileDB2Handle.GetPersonById(personId.Value);
                 Firstname = personModel.firstname;
                 Lastname = personModel.lastname;
                 Description = personModel.description;
@@ -107,13 +104,13 @@ namespace FileDB2Browser.ViewModel
             {
                 Sex SexEnum = Enum.Parse<Sex>(SexSelection);
 
-                if (personId == -1)
+                if (personId.HasValue)
                 {
-                    Utils.FileDB2Handle.InsertPerson(firstname, lastname, newDescription, newDateOfBirth, newProfileFileId, SexEnum);
+                    Utils.FileDB2Handle.UpdatePerson(personId.Value, firstname, lastname, newDescription, newDateOfBirth, newProfileFileId, SexEnum);
                 }
                 else
                 {
-                    Utils.FileDB2Handle.UpdatePerson(personId, firstname, lastname, newDescription, newDateOfBirth, newProfileFileId, SexEnum);
+                    Utils.FileDB2Handle.InsertPerson(firstname, lastname, newDescription, newDateOfBirth, newProfileFileId, SexEnum);
                 }
             }
             catch (FileDB2DataValidationException e)
