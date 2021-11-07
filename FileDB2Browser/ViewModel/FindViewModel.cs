@@ -734,7 +734,7 @@ namespace FileDB2Browser.ViewModel
         public void FindFilesByDate()
         {
             StopSlideshow();
-            SearchResult = new SearchResult(Utils.FileDB2Handle.GetFileByDate(SearchStartDate, SearchEndDate));
+            SearchResult = new SearchResult(Utils.FileDB2Handle.GetFileByDate(SearchStartDate.Date, SearchEndDate.Date).ToList());
         }
 
         public void FindFilesWithPerson()

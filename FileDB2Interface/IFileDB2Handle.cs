@@ -16,7 +16,7 @@ namespace FileDB2Interface
         public int GetFileCount();
         public List<FilesModel> SearchFiles(string criteria);
         public List<FilesModel> SearchFilesBySex(Sex sex);
-        public List<FilesModel> GetFileByDate(DateTime start, DateTime end);
+        public IEnumerable<FilesModel> GetFileByDate(DateTime start, DateTime end);
         public List<FilesModel> SearchFilesByPath(string criteria);
         public List<FilesModel> SearchFilesRandom(int numFiles);
         public FilesModel GetFileById(int id);

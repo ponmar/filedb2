@@ -203,11 +203,17 @@ namespace FileDB2Interface
             return connection.QueryFirst<FilesModel>("select * from [files] where path = @path", new { path = path });
         }
 
-        public List<FilesModel> GetFileByDate(DateTime start, DateTime end)
+        public IEnumerable<FilesModel> GetFileByDate(DateTime start, DateTime end)
         {
-            // TODO
             using var connection = FileDB2Utils.CreateConnection(Config.Database);
-            return new List<FilesModel>();
+            foreach (var fileWithDate in connection.Query<FilesModel>($"select * from [files] where datetime is not null"))
+            {
+                if (DateTime.TryParse(fileWithDate.datetime, out var fileDatetime) &&
+                    fileDatetime >= start && fileDatetime <= end)
+                {
+                    yield return fileWithDate;
+                }
+            }
         }
 
         public List<FilesModel> GetFilesWithPersons(IEnumerable<int> personIds)
