@@ -47,7 +47,7 @@ namespace FileDB2Browser.ViewModel
         public ICommand LocationSelectionCommand => locationSelectionCommand ??= new CommandHandler(LocationSelectionChanged);
         private ICommand locationSelectionCommand;
 
-        public ObservableCollection<Location> Locations { get; } = new ObservableCollection<Location>();
+        public ObservableCollection<Location> Locations { get; } = new();
 
         private Location selectedLocation;
 

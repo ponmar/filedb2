@@ -51,7 +51,7 @@ namespace FileDB2Browser.ViewModel
         public ICommand PersonSelectionCommand => personSelectionCommand ??= new CommandHandler(PersonSelectionChanged);
         private ICommand personSelectionCommand;
 
-        public ObservableCollection<Person> Persons { get; } = new ObservableCollection<Person>();
+        public ObservableCollection<Person> Persons { get; } = new();
 
         private Person selectedPerson;
 

@@ -31,43 +31,19 @@ namespace FileDB2Browser.ViewModel
 
     public class TagsViewModel : ViewModelBase
     {
-        public ICommand AddTagCommand
-        {
-            get
-            {
-                return addTagCommand ??= new CommandHandler(AddTag);
-            }
-        }
+        public ICommand AddTagCommand => addTagCommand ??= new CommandHandler(AddTag);
         private ICommand addTagCommand;
 
-        public ICommand EditTagCommand
-        {
-            get
-            {
-                return editTagCommand ??= new CommandHandler(EditTag);
-            }
-        }
+        public ICommand EditTagCommand => editTagCommand ??= new CommandHandler(EditTag);
         private ICommand editTagCommand;
 
-        public ICommand RemoveTagCommand
-        {
-            get
-            {
-                return removeTagCommand ??= new CommandHandler(RemoveTag);
-            }
-        }
+        public ICommand RemoveTagCommand => removeTagCommand ??= new CommandHandler(RemoveTag);
         private ICommand removeTagCommand;
 
-        public ICommand TagSelectionCommand
-        {
-            get
-            {
-                return tagSelectionCommand ??= new CommandHandler(TagSelectionChanged);
-            }
-        }
+        public ICommand TagSelectionCommand => tagSelectionCommand ??= new CommandHandler(TagSelectionChanged);
         private ICommand tagSelectionCommand;
 
-        public ObservableCollection<Tag> Tags { get; } = new ObservableCollection<Tag>();
+        public ObservableCollection<Tag> Tags { get; } = new();
 
         private Tag selectedTag;
 
