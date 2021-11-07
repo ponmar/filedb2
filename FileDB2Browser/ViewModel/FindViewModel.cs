@@ -55,6 +55,10 @@ namespace FileDB2Browser.ViewModel
 
         public List<FilesModel> Files { get; }
 
+        public SearchResult(IEnumerable<FilesModel> files) : this(files.ToList())
+        {
+        }
+
         public SearchResult(List<FilesModel> files)
         {
             Files = files;
@@ -734,7 +738,7 @@ namespace FileDB2Browser.ViewModel
         public void FindFilesByDate()
         {
             StopSlideshow();
-            SearchResult = new SearchResult(Utils.FileDB2Handle.GetFileByDate(SearchStartDate.Date, SearchEndDate.Date).ToList());
+            SearchResult = new SearchResult(Utils.FileDB2Handle.GetFileByDate(SearchStartDate.Date, SearchEndDate.Date));
         }
 
         public void FindFilesWithPerson()

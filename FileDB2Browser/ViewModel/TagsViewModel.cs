@@ -80,7 +80,7 @@ namespace FileDB2Browser.ViewModel
         {
             if (selectedTag != null)
             {
-                var filesWithTag = Utils.FileDB2Handle.GetFilesWithTags(new List<int>() { selectedTag.GetId() });
+                var filesWithTag = Utils.FileDB2Handle.GetFilesWithTags(new List<int>() { selectedTag.GetId() }).ToList();
                 if (filesWithTag.Count == 0 || Utils.ShowConfirmDialog($"Tag is used in {filesWithTag.Count} files, remove anyway?"))
                 {
                     Utils.FileDB2Handle.DeleteTag(selectedTag.GetId());

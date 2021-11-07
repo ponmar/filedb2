@@ -60,7 +60,7 @@ namespace FileDB2Browser.ViewModel
         {
             if (selectedLocation != null)
             {
-                var filesWithLocation = Utils.FileDB2Handle.GetFilesWithLocations(new List<int>() { selectedLocation.GetId() });
+                var filesWithLocation = Utils.FileDB2Handle.GetFilesWithLocations(new List<int>() { selectedLocation.GetId() }).ToList();
                 if (filesWithLocation.Count == 0 || Utils.ShowConfirmDialog($"Location is used in {filesWithLocation.Count} files, remove anyway?"))
                 {
                     Utils.FileDB2Handle.DeleteLocation(selectedLocation.GetId());

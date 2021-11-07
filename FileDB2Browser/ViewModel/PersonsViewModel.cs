@@ -64,7 +64,7 @@ namespace FileDB2Browser.ViewModel
         {
             if (selectedPerson != null)
             {
-                var filesWithPerson = Utils.FileDB2Handle.GetFilesWithPersons(new List<int>() { selectedPerson.GetId() });
+                var filesWithPerson = Utils.FileDB2Handle.GetFilesWithPersons(new List<int>() { selectedPerson.GetId() }).ToList();
                 if (filesWithPerson.Count == 0 || Utils.ShowConfirmDialog($"Person is used in {filesWithPerson.Count} files, remove anyway?"))
                 {
                     Utils.FileDB2Handle.DeletePerson(selectedPerson.GetId());

@@ -13,9 +13,9 @@ namespace FileDB2Browser
             return new List<string>();
         }
 
-        public List<string> ListAllFilesystemDirectories()
+        public IEnumerable<string> ListAllFilesystemDirectories()
         {
-            return new();
+            return new List<string>();
         }
 
         public bool ParseFilesystemFileExif(string path, out DateTime? dateTaken, out GeoLocation location)
@@ -25,14 +25,14 @@ namespace FileDB2Browser
             return false;
         }
 
-        public List<FilesModel> GetFilesMissingInFilesystem()
+        public IEnumerable<FilesModel> GetFilesMissingInFilesystem()
         {
-            return new();
+            return new List<FilesModel>();
         }
 
-        public List<FilesModel> GetFiles()
+        public IEnumerable<FilesModel> GetFiles()
         {
-            return new();
+            return new List<FilesModel>();
         }
 
         public int GetFileCount()
@@ -40,24 +40,24 @@ namespace FileDB2Browser
             return 0;
         }
 
-        public List<FilesModel> SearchFiles(string criteria)
+        public IEnumerable<FilesModel> SearchFiles(string criteria)
         {
-            return new();
+            return new List<FilesModel>();
         }
 
-        public List<FilesModel> SearchFilesBySex(Sex sex)
+        public IEnumerable<FilesModel> SearchFilesBySex(Sex sex)
         {
-            return new();
+            return new List<FilesModel>();
         }
 
-        public List<FilesModel> SearchFilesByPath(string criteria)
+        public IEnumerable<FilesModel> SearchFilesByPath(string criteria)
         {
-            return new();
+            return new List<FilesModel>();
         }
 
-        public List<FilesModel> SearchFilesRandom(int numFiles)
+        public IEnumerable<FilesModel> SearchFilesRandom(int numFiles)
         {
-            return new();
+            return new List<FilesModel>();
         }
 
         public FilesModel GetFileById(int id)
@@ -80,24 +80,24 @@ namespace FileDB2Browser
             return new List<FilesModel>();
         }
 
-        public List<FilesModel> GetFilesWithPersons(IEnumerable<int> personIds)
+        public IEnumerable<FilesModel> GetFilesWithPersons(IEnumerable<int> personIds)
         {
-            return new();
+            return new List<FilesModel>();
         }
 
-        public List<FilesModel> GetFilesWithLocations(IEnumerable<int> locationIds)
+        public IEnumerable<FilesModel> GetFilesWithLocations(IEnumerable<int> locationIds)
         {
-            return new();
+            return new List<FilesModel>();
         }
 
-        public List<FilesModel> GetFilesWithTags(IEnumerable<int> tagIds)
+        public IEnumerable<FilesModel> GetFilesWithTags(IEnumerable<int> tagIds)
         {
-            return new();
+            return new List<FilesModel>();
         }
 
-        public List<FilesModel> GetFilesWithMissingData()
+        public IEnumerable<FilesModel> GetFilesWithMissingData()
         {
-            return new();
+            return new List<FilesModel>();
         }
 
         public bool HasFilePath(string path)
@@ -141,14 +141,14 @@ namespace FileDB2Browser
         {
         }
 
-        public List<PersonModel> GetPersons()
+        public IEnumerable<PersonModel> GetPersons()
         {
-            return new();
+            return new List<PersonModel>();
         }
 
-        public List<PersonModel> GetPersonsFromFile(int fileId)
+        public IEnumerable<PersonModel> GetPersonsFromFile(int fileId)
         {
-            return new();
+            return new List<PersonModel>();
         }
 
         public int GetPersonCount()
@@ -156,9 +156,9 @@ namespace FileDB2Browser
             return 0;
         }
 
-        public List<PersonModel> SearchPersons(string criteria)
+        public IEnumerable<PersonModel> SearchPersons(string criteria)
         {
-            return new();
+            return new List<PersonModel>();
         }
 
         public PersonModel GetPersonById(int id)
@@ -211,14 +211,14 @@ namespace FileDB2Browser
         {
         }
 
-        public List<LocationModel> GetLocations()
+        public IEnumerable<LocationModel> GetLocations()
         {
-            return new();
+            return new List<LocationModel>();
         }
 
-        public List<LocationModel> GetLocationsFromFile(int fileId)
+        public IEnumerable<LocationModel> GetLocationsFromFile(int fileId)
         {
-            return new();
+            return new List<LocationModel>();
         }
 
         public int GetLocationCount()
@@ -226,9 +226,9 @@ namespace FileDB2Browser
             return 0;
         }
 
-        public List<LocationModel> SearchLocations(string criteria)
+        public IEnumerable<LocationModel> SearchLocations(string criteria)
         {
-            return new();
+            return new List<LocationModel>();
         }
 
         public LocationModel GetLocationById(int id)
@@ -269,14 +269,14 @@ namespace FileDB2Browser
         {
         }
 
-        public List<TagModel> GetTags()
+        public IEnumerable<TagModel> GetTags()
         {
-            return new();
+            return new List<TagModel>();
         }
 
-        public List<TagModel> GetTagsFromFile(int fileId)
+        public IEnumerable<TagModel> GetTagsFromFile(int fileId)
         {
-            return new();
+            return new List<TagModel>();
         }
 
         public int GetTagCount()
@@ -284,9 +284,9 @@ namespace FileDB2Browser
             return 0;
         }
 
-        public List<TagModel> SearchTags(string criteria)
+        public IEnumerable<TagModel> SearchTags(string criteria)
         {
-            return new();
+            return new List<TagModel>();
         }
 
         public TagModel GetTagById(int id)

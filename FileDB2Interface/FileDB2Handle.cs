@@ -93,7 +93,7 @@ namespace FileDB2Interface
             return internalPath.StartsWith('.') || internalPath.IndexOf("/.") != -1;
         }
 
-        public List<string> ListAllFilesystemDirectories()
+        public IEnumerable<string> ListAllFilesystemDirectories()
         {
             var dirs = Directory.GetDirectories(Config.FilesRootDirectory, "*.*", SearchOption.AllDirectories);
             return PathsToInternalPaths(dirs);
@@ -129,27 +129,25 @@ namespace FileDB2Interface
 
         #region Tools
 
-        public List<FilesModel> GetFilesMissingInFilesystem()
+        public IEnumerable<FilesModel> GetFilesMissingInFilesystem()
         {
-            var missingFiles = new List<FilesModel>();
             foreach (var file in GetFiles())
             {
                 if (!File.Exists(InternalPathToPath(file.path)))
                 {
-                    missingFiles.Add(file);
+                    yield return file;
                 }
             }
-            return missingFiles;
         }
 
         #endregion
 
         #region Files
 
-        public List<FilesModel> GetFiles()
+        public IEnumerable<FilesModel> GetFiles()
         {
             using var connection = FileDB2Utils.CreateConnection(Config.Database);
-            return connection.Query<FilesModel>("select * from [files]", new DynamicParameters()).ToList();
+            return connection.Query<FilesModel>("select * from [files]", new DynamicParameters());
         }
 
         public int GetFileCount()
@@ -158,31 +156,31 @@ namespace FileDB2Interface
             return connection.ExecuteScalar<int>("select count(*) from [files]");
         }
 
-        public List<FilesModel> SearchFiles(string criteria)
+        public IEnumerable<FilesModel> SearchFiles(string criteria)
         {
             using var connection = FileDB2Utils.CreateConnection(Config.Database);
             var sql = "select * from [files] where (path like @criteria or description like @criteria)";
-            return connection.Query<FilesModel>(sql, new { criteria = "%" + criteria + "%" }).ToList();
+            return connection.Query<FilesModel>(sql, new { criteria = "%" + criteria + "%" });
         }
 
-        public List<FilesModel> SearchFilesBySex(Sex sex)
+        public IEnumerable<FilesModel> SearchFilesBySex(Sex sex)
         {
             var personIds = SearchPersonsBySex(sex).Select(p => p.id);
             return GetFilesWithPersons(personIds);
         }
 
-        public List<FilesModel> SearchFilesByPath(string criteria)
+        public IEnumerable<FilesModel> SearchFilesByPath(string criteria)
         {
             using var connection = FileDB2Utils.CreateConnection(Config.Database);
             var sql = "select * from [files] where path like @criteria";
-            return connection.Query<FilesModel>(sql, new { criteria = criteria + "%" }).ToList();
+            return connection.Query<FilesModel>(sql, new { criteria = criteria + "%" });
         }
 
-        public List<FilesModel> SearchFilesRandom(int numFiles)
+        public IEnumerable<FilesModel> SearchFilesRandom(int numFiles)
         {
             using var connection = FileDB2Utils.CreateConnection(Config.Database);
             var sql = $"select * from [files] order by random() limit {numFiles}";
-            return connection.Query<FilesModel>(sql, new DynamicParameters()).ToList();
+            return connection.Query<FilesModel>(sql, new DynamicParameters());
         }
 
         public FilesModel GetFileById(int id)
@@ -216,39 +214,37 @@ namespace FileDB2Interface
             }
         }
 
-        public List<FilesModel> GetFilesWithPersons(IEnumerable<int> personIds)
+        public IEnumerable<FilesModel> GetFilesWithPersons(IEnumerable<int> personIds)
         {
             using var connection = FileDB2Utils.CreateConnection(Config.Database);
-            return connection.Query<FilesModel>($"select * from [files] inner join filepersons on files.id = filepersons.fileid where filepersons.personid in ({string.Join(',', personIds)})").ToList();
+            return connection.Query<FilesModel>($"select * from [files] inner join filepersons on files.id = filepersons.fileid where filepersons.personid in ({string.Join(',', personIds)})");
         }
 
-        public List<FilesModel> GetFilesWithLocations(IEnumerable<int> locationIds)
+        public IEnumerable<FilesModel> GetFilesWithLocations(IEnumerable<int> locationIds)
         {
             using var connection = FileDB2Utils.CreateConnection(Config.Database);
-            return connection.Query<FilesModel>($"select * from [files] inner join filelocations on files.id = filelocations.fileid where filelocations.locationid in ({string.Join(',', locationIds)})").ToList();
+            return connection.Query<FilesModel>($"select * from [files] inner join filelocations on files.id = filelocations.fileid where filelocations.locationid in ({string.Join(',', locationIds)})");
         }
 
-        public List<FilesModel> GetFilesWithTags(IEnumerable<int> tagIds)
+        public IEnumerable<FilesModel> GetFilesWithTags(IEnumerable<int> tagIds)
         {
             using var connection = FileDB2Utils.CreateConnection(Config.Database);
-            return connection.Query<FilesModel>($"select * from [files] inner join filetags on files.id = filetags.fileid where filetags.tagid in ({string.Join(',', tagIds)})").ToList();
+            return connection.Query<FilesModel>($"select * from [files] inner join filetags on files.id = filetags.fileid where filetags.tagid in ({string.Join(',', tagIds)})");
         }
 
-        public List<FilesModel> GetFilesWithMissingData()
+        public IEnumerable<FilesModel> GetFilesWithMissingData()
         {
             using var connection = FileDB2Utils.CreateConnection(Config.Database);
             var files = connection.Query<FilesModel>($"select * from [files] where description is null");
-            var result = new List<FilesModel>();
             foreach (var file in files)
             {
-                if (GetPersonsFromFile(file.id).Count == 0 &&
-                    GetLocationsFromFile(file.id).Count == 0 &&
-                    GetTagsFromFile(file.id).Count == 0)
+                if (!FileHasPersons(file.id) &&
+                    !FileHasLocation(file.id) &&
+                    !FileHasTags(file.id))
                 {
-                    result.Add(file);
+                    yield return file;
                 }
             }
-            return result;
         }
 
         public bool HasFilePath(string path)
@@ -354,16 +350,22 @@ namespace FileDB2Interface
 
         #region Persons
 
-        public List<PersonModel> GetPersons()
+        public IEnumerable<PersonModel> GetPersons()
         {
             using var connection = FileDB2Utils.CreateConnection(Config.Database);
-            return connection.Query<PersonModel>("select * from [persons]", new DynamicParameters()).ToList();
+            return connection.Query<PersonModel>("select * from [persons]", new DynamicParameters());
         }
 
-        public List<PersonModel> GetPersonsFromFile(int fileId)
+        public bool FileHasPersons(int fileId)
         {
             using var connection = FileDB2Utils.CreateConnection(Config.Database);
-            return connection.Query<PersonModel>("select * from [persons] where id in (select personid from [filepersons] where fileid = @fileid)", new { fileid = fileId }).ToList();
+            return connection.ExecuteScalar<bool>("select count(1) from [filepersons] where fileid=@fileId", new { fileId });
+        }
+
+        public IEnumerable<PersonModel> GetPersonsFromFile(int fileId)
+        {
+            using var connection = FileDB2Utils.CreateConnection(Config.Database);
+            return connection.Query<PersonModel>("select * from [persons] where id in (select personid from [filepersons] where fileid = @fileid)", new { fileid = fileId });
         }
 
         public int GetPersonCount()
@@ -372,18 +374,18 @@ namespace FileDB2Interface
             return connection.ExecuteScalar<int>("select count(*) from [persons]");
         }
 
-        public List<PersonModel> SearchPersons(string criteria)
+        public IEnumerable<PersonModel> SearchPersons(string criteria)
         {
             using var connection = FileDB2Utils.CreateConnection(Config.Database);
             var sql = "select * from [persons] where (firstname like @criteria or lastname like @criteria or description like @criteria)";
-            return connection.Query<PersonModel>(sql, new { criteria = "%" + criteria + "%" }).ToList();
+            return connection.Query<PersonModel>(sql, new { criteria = "%" + criteria + "%" });
         }
 
-        public List<PersonModel> SearchPersonsBySex(Sex sex)
+        public IEnumerable<PersonModel> SearchPersonsBySex(Sex sex)
         {
             using var connection = FileDB2Utils.CreateConnection(Config.Database);
             var sql = "select * from [persons] where sex = @sex";
-            return connection.Query<PersonModel>(sql, new { sex = sex }).ToList();
+            return connection.Query<PersonModel>(sql, new { sex = sex });
         }
 
         public PersonModel GetPersonById(int id)
@@ -554,17 +556,22 @@ namespace FileDB2Interface
 
         #region Locations
 
-        public List<LocationModel> GetLocations()
+        public IEnumerable<LocationModel> GetLocations()
         {
             using var connection = FileDB2Utils.CreateConnection(Config.Database);
-            var output = connection.Query<LocationModel>("select * from [locations]", new DynamicParameters());
-            return output.ToList();
+            return connection.Query<LocationModel>("select * from [locations]", new DynamicParameters());
         }
 
-        public List<LocationModel> GetLocationsFromFile(int fileId)
+        public bool FileHasLocation(int fileId)
         {
             using var connection = FileDB2Utils.CreateConnection(Config.Database);
-            return connection.Query<LocationModel>("select * from [locations] where id in (select locationid from [filelocations] where fileid = @fileid)", new { fileid = fileId }).ToList();
+            return connection.ExecuteScalar<bool>("select count(1) from [filelocations] where fileid=@fileId", new { fileId });
+        }
+
+        public IEnumerable<LocationModel> GetLocationsFromFile(int fileId)
+        {
+            using var connection = FileDB2Utils.CreateConnection(Config.Database);
+            return connection.Query<LocationModel>("select * from [locations] where id in (select locationid from [filelocations] where fileid = @fileid)", new { fileid = fileId });
         }
 
         public int GetLocationCount()
@@ -573,11 +580,11 @@ namespace FileDB2Interface
             return connection.ExecuteScalar<int>("select count(*) from [locations]");
         }
 
-        public List<LocationModel> SearchLocations(string criteria)
+        public IEnumerable<LocationModel> SearchLocations(string criteria)
         {
             using var connection = FileDB2Utils.CreateConnection(Config.Database);
             var sql = "select * from [locations] where (name like @criteria or description like @criteria)";
-            return connection.Query<LocationModel>(sql, new { criteria = "%" + criteria + "%" }).ToList();
+            return connection.Query<LocationModel>(sql, new { criteria = "%" + criteria + "%" });
         }
 
         public LocationModel GetLocationById(int id)
@@ -685,17 +692,22 @@ namespace FileDB2Interface
 
         #region Tags
 
-        public List<TagModel> GetTags()
+        public IEnumerable<TagModel> GetTags()
         {
             using var connection = FileDB2Utils.CreateConnection(Config.Database);
-            var output = connection.Query<TagModel>("select * from [tags]", new DynamicParameters());
-            return output.ToList();
+            return connection.Query<TagModel>("select * from [tags]", new DynamicParameters());
         }
 
-        public List<TagModel> GetTagsFromFile(int fileId)
+        public bool FileHasTags(int fileId)
         {
             using var connection = FileDB2Utils.CreateConnection(Config.Database);
-            return connection.Query<TagModel>("select * from [tags] where id in (select tagid from [filetags] where fileid = @fileid)", new { fileid = fileId }).ToList();
+            return connection.ExecuteScalar<bool>("select count(1) from [filetags] where fileid=@fileId", new { fileId });
+        }
+
+        public IEnumerable<TagModel> GetTagsFromFile(int fileId)
+        {
+            using var connection = FileDB2Utils.CreateConnection(Config.Database);
+            return connection.Query<TagModel>("select * from [tags] where id in (select tagid from [filetags] where fileid = @fileid)", new { fileid = fileId });
         }
 
         public int GetTagCount()
@@ -704,11 +716,11 @@ namespace FileDB2Interface
             return connection.ExecuteScalar<int>("select count(*) from [tags]");
         }
 
-        public List<TagModel> SearchTags(string criteria)
+        public IEnumerable<TagModel> SearchTags(string criteria)
         {
             using var connection = FileDB2Utils.CreateConnection(Config.Database);
             var sql = "select * from [tags] where (name like @criteria)";
-            return connection.Query<TagModel>(sql, new { criteria = "%" + criteria + "%" }).ToList();
+            return connection.Query<TagModel>(sql, new { criteria = "%" + criteria + "%" });
         }
 
         public TagModel GetTagById(int id)
@@ -802,9 +814,9 @@ namespace FileDB2Interface
             return path;
         }
 
-        private List<string> PathsToInternalPaths(string[] paths)
+        private IEnumerable<string> PathsToInternalPaths(string[] paths)
         {
-            return paths.Select(p => PathToInternalPath(p)).ToList();
+            return paths.Select(p => PathToInternalPath(p));
         }
 
         private string GeoLocationToString(GeoLocation geoLocation)
