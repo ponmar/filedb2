@@ -22,6 +22,10 @@
         <KeyBinding Command="{Binding FunctionKeyCommand}" CommandParameter="12" Key="F12"/>
     </UserControl.InputBindings>
 
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+    </UserControl.Resources>
+    
     <Grid>
         <!-- Search -->
         <Grid.ColumnDefinitions>
@@ -204,14 +208,7 @@
                             <Button Grid.Row="0" Grid.Column="2" Style="{StaticResource NormalButton}" Command="{Binding CreateLocationCommand}">Location...</Button>
                             <Button Grid.Row="0" Grid.Column="3" Style="{StaticResource NormalButton}" Command="{Binding CreateTagCommand}">Tag...</Button>
                         </Grid>
-                    </StackPanel>
-                </Expander>
-            </Border>
-            <!-- File categorization -->
-            <Border Style="{StaticResource BorderGroup}" Margin="0 20 0 0">
-                <Expander Header="Update history" Margin="5" IsExpanded="False">
-                    <StackPanel Orientation="Vertical">
-                        <ListView ItemsSource="{Binding UpdateHistoryItems}">
+                        <ListView ItemsSource="{Binding UpdateHistoryItems}" Visibility="{Binding HasNonEmptySearchResult, Converter={StaticResource BoolToVis}}">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
                                     <Setter Property="Focusable" Value="false"/>

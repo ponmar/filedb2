@@ -97,10 +97,10 @@ namespace FileDB2Browser.ViewModel
         public ICommand NextFileCommand => nextFileCommand ??= new CommandHandler(StopSlideshowAndSelectNextFile, NextFileAvailable);
         private ICommand nextFileCommand;
 
-        public ICommand PrevDirectoryCommand => prevDirectoryCommand ??= new CommandHandler(PrevDirectory, SearchResultAvailable);
+        public ICommand PrevDirectoryCommand => prevDirectoryCommand ??= new CommandHandler(PrevDirectory, () => HasNonEmptySearchResult);
         private ICommand prevDirectoryCommand;
 
-        public ICommand NextDirectoryCommand => nextDirectoryCommand ??= new CommandHandler(NextDirectory, SearchResultAvailable);
+        public ICommand NextDirectoryCommand => nextDirectoryCommand ??= new CommandHandler(NextDirectory, () => HasNonEmptySearchResult);
         private ICommand nextDirectoryCommand;
 
         public ICommand FirstFileCommand => firstFileCommand ??= new CommandHandler(FirstFile, FirstFileAvailable);
@@ -109,13 +109,13 @@ namespace FileDB2Browser.ViewModel
         public ICommand LastFileCommand => lastFileCommand ??= new CommandHandler(LastFile, LastFileAvailable);
         private ICommand lastFileCommand;
 
-        public ICommand ToggleSlideshowCommand => toggleSlideshowCommand ??= new CommandHandler(ToggleSlideshow, SearchResultAvailable);
+        public ICommand ToggleSlideshowCommand => toggleSlideshowCommand ??= new CommandHandler(ToggleSlideshow, () => HasNonEmptySearchResult);
         private ICommand toggleSlideshowCommand;
 
-        public ICommand ToggleRandomCommand => toggleRandomCommand ??= new CommandHandler(ToggleRandom, SearchResultAvailable);
+        public ICommand ToggleRandomCommand => toggleRandomCommand ??= new CommandHandler(ToggleRandom, () => HasNonEmptySearchResult);
         private ICommand toggleRandomCommand;
 
-        public ICommand ToggleRepeatCommand => toggleRepeatCommand ??= new CommandHandler(ToggleRepeat, SearchResultAvailable);
+        public ICommand ToggleRepeatCommand => toggleRepeatCommand ??= new CommandHandler(ToggleRepeat, () => HasNonEmptySearchResult);
         private ICommand toggleRepeatCommand;
 
         public ICommand SortFilesByDateCommand => sortFilesByDateCommand ??= new CommandHandler(SortFilesByDate, FirstFileAvailable);
@@ -165,7 +165,7 @@ namespace FileDB2Browser.ViewModel
         }
         private string numRandomFiles = "10";
 
-        public ICommand FindCurrentDirectoryFilesCommand => findCurrentDirectoryFilesCommand ??= new CommandHandler(FindCurrentDirectoryFiles, SearchResultAvailable);
+        public ICommand FindCurrentDirectoryFilesCommand => findCurrentDirectoryFilesCommand ??= new CommandHandler(FindCurrentDirectoryFiles, () => HasNonEmptySearchResult);
         private ICommand findCurrentDirectoryFilesCommand;
 
         public ICommand FindAllFilesCommand => findAllFilesCommand ??= new CommandHandler(FindAllFiles);
@@ -240,7 +240,7 @@ namespace FileDB2Browser.ViewModel
 
         #region Meta-data change commands and properties
 
-        public ICommand OpenFileLocationCommand => openFileLocationCommand ??= new CommandHandler(OpenFileLocation, SearchResultAvailable);
+        public ICommand OpenFileLocationCommand => openFileLocationCommand ??= new CommandHandler(OpenFileLocation, () => HasNonEmptySearchResult);
         private ICommand openFileLocationCommand;
 
         public ICommand FindFilesFromMissingCategorizationCommand => findFilesFromMissingCategorizationCommand ??= new CommandHandler(FindFilesFromMissingCategorization);
@@ -256,7 +256,7 @@ namespace FileDB2Browser.ViewModel
         }
         private string fileListSearch;
 
-        public ICommand ExportFileListCommand => exportFileListCommand ??= new CommandHandler(ExportFileList, SearchResultAvailable);
+        public ICommand ExportFileListCommand => exportFileListCommand ??= new CommandHandler(ExportFileList, () => HasNonEmptySearchResult);
         private ICommand exportFileListCommand;
 
         public ICommand AddFilePersonCommand => addFilePersonCommand ??= new CommandHandler(AddFilePerson, PersonSelected);
@@ -277,7 +277,7 @@ namespace FileDB2Browser.ViewModel
         public ICommand RemoveFileTagCommand => removeFileTagCommand ??= new CommandHandler(RemoveFileTag, TagSelected);
         private ICommand removeFileTagCommand;
 
-        public ICommand SetFileDescriptionCommand => setFileDescriptionCommand ??= new CommandHandler(SetFileDescription, SearchResultAvailable);
+        public ICommand SetFileDescriptionCommand => setFileDescriptionCommand ??= new CommandHandler(SetFileDescription, () => HasNonEmptySearchResult);
         private ICommand setFileDescriptionCommand;
 
         public string NewFileDescription
@@ -307,9 +307,8 @@ namespace FileDB2Browser.ViewModel
             get => searchResult;
             set
             {
-                if (searchResult != value)
+                if (SetProperty(ref searchResult, value))
                 {
-                    searchResult = value;
                     if (searchResult != null)
                     {
                         SearchNumberOfHits = searchResult.Count;
@@ -553,11 +552,6 @@ namespace FileDB2Browser.ViewModel
                     return;
                 }
             }
-        }
-
-        public bool SearchResultAvailable()
-        {
-            return searchResult != null && searchResult.Count > 0;
         }
 
         public void FirstFile()
@@ -1285,7 +1279,7 @@ namespace FileDB2Browser.ViewModel
 
         private void FunctionKey(object parameter)
         {
-            if (!SearchResultAvailable())
+            if (HasNonEmptySearchResult)
             {
                 return;
             }
