@@ -4,11 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Views="clr-namespace:FileDB2Browser.View"
+        xmlns:Converters="clr-namespace:FileDB2Browser.Converters" xmlns:viewmodel="clr-namespace:FileDB2Browser.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:MainViewModel}"
         mc:Ignorable="d"
-        Title="FileDB2" Height="768" Width="1024" ResizeMode="CanResize">
+        Title="{Binding Title}" Height="768" Width="1024" ResizeMode="CanResize">
 
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        <Converters:NegatedBoolConverter x:Key="NegatedBoolConverter"/>
     </Window.Resources>
 
     <Grid>
@@ -48,14 +50,14 @@
                 <Views:BirthdaysView Margin="10 0 10 10"/>
             </TabItem>
 
-            <TabItem>
+            <TabItem Visibility="{Binding ReadWriteMode, Converter={StaticResource BoolToVis}}">
                 <TabItem.Header>
                     <TextBlock Text="&#x1F4C2;" ToolTip="Import" Style="{StaticResource PageIcon}"/>
                 </TabItem.Header>
                 <Views:ImportView Margin="10 0 10 10"/>
             </TabItem>
 
-            <TabItem>
+            <TabItem Visibility="{Binding ReadWriteMode, Converter={StaticResource BoolToVis}}">
                 <TabItem.Header>
                     <TextBlock Text="&#x2692;" ToolTip="Tools" Style="{StaticResource PageIcon}"/>
                 </TabItem.Header>

@@ -51,6 +51,13 @@ namespace FileDB2Browser.ViewModel
         public ICommand PersonSelectionCommand => personSelectionCommand ??= new CommandHandler(PersonSelectionChanged);
         private ICommand personSelectionCommand;
 
+        public bool ReadWriteMode
+        {
+            get => readWriteMode;
+            set => SetProperty(ref readWriteMode, value);
+        }
+        private bool readWriteMode = !Utils.BrowserConfig.ReadOnly;
+
         public ObservableCollection<Person> Persons { get; } = new();
 
         private Person selectedPerson;

@@ -47,6 +47,13 @@ namespace FileDB2Browser.ViewModel
         public ICommand LocationSelectionCommand => locationSelectionCommand ??= new CommandHandler(LocationSelectionChanged);
         private ICommand locationSelectionCommand;
 
+        public bool ReadWriteMode
+        {
+            get => readWriteMode;
+            set => SetProperty(ref readWriteMode, value);
+        }
+        private bool readWriteMode = !Utils.BrowserConfig.ReadOnly;
+
         public ObservableCollection<Location> Locations { get; } = new();
 
         private Location selectedLocation;

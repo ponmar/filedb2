@@ -43,6 +43,13 @@ namespace FileDB2Browser.ViewModel
         public ICommand TagSelectionCommand => tagSelectionCommand ??= new CommandHandler(TagSelectionChanged);
         private ICommand tagSelectionCommand;
 
+        public bool ReadWriteMode
+        {
+            get => readWriteMode;
+            set => SetProperty(ref readWriteMode, value);
+        }
+        private bool readWriteMode = !Utils.BrowserConfig.ReadOnly;
+
         public ObservableCollection<Tag> Tags { get; } = new();
 
         private Tag selectedTag;

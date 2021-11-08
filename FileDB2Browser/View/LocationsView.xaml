@@ -7,6 +7,10 @@
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+    </UserControl.Resources>
+
     <DockPanel>
         <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Locations</Label>
         <ScrollViewer PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
@@ -19,7 +23,7 @@
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
 
-                <Grid Grid.Row="0" Grid.Column="0" Style="{StaticResource PageGrid}">
+                <Grid Grid.Row="0" Grid.Column="0" Style="{StaticResource PageGrid}" Visibility="{Binding ReadWriteMode, Converter={StaticResource BoolToVis}}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>

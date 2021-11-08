@@ -300,6 +300,13 @@ namespace FileDB2Browser.ViewModel
         public ICommand CreateTagCommand => createTagCommand ??= new CommandHandler(CreateTag);
         private ICommand createTagCommand;
 
+        public bool ReadWriteMode
+        {
+            get => readWriteMode;
+            set => SetProperty(ref readWriteMode, value);
+        }
+        private bool readWriteMode = !Utils.BrowserConfig.ReadOnly;
+
         #endregion
 
         #region Search result
@@ -1283,7 +1290,7 @@ namespace FileDB2Browser.ViewModel
 
         private void FunctionKey(object parameter)
         {
-            if (HasNonEmptySearchResult)
+            if (!ReadWriteMode || !HasNonEmptySearchResult)
             {
                 return;
             }
