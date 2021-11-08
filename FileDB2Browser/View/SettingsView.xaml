@@ -25,6 +25,7 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
 
                     <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextBlock}">Database:</TextBlock>
@@ -50,6 +51,10 @@
                     <StackPanel Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal">
                         <CheckBox Style="{StaticResource PageCheckBox}" IsChecked="{Binding Path=IncludeHiddenDirectories, Mode=TwoWay}" VerticalAlignment="Center"/>
                         <TextBlock Style="{StaticResource PageTextBlock}" Text="Include hidden directories" VerticalAlignment="Center"></TextBlock>
+                    </StackPanel>
+                    <StackPanel Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal">
+                        <CheckBox Style="{StaticResource PageCheckBox}" IsChecked="{Binding Path=ReadOnly, Mode=TwoWay}" VerticalAlignment="Center"/>
+                        <TextBlock Style="{StaticResource PageTextBlock}" Text="Read-only mode" VerticalAlignment="Center"></TextBlock>
                     </StackPanel>
                 </Grid>
                 <StackPanel Orientation="Horizontal" Style="{StaticResource PageStackPanel}">

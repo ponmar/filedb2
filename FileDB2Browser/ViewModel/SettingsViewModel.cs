@@ -26,51 +26,58 @@ namespace FileDB2Browser.ViewModel
         public string Database
         {
             get => database;
-            set { SetProperty(ref database, value); }
+            set => SetProperty(ref database, value);
         }
         private string database;
 
         public string FilesRootDirectory
         {
             get => filesRootDirectory;
-            set { SetProperty(ref filesRootDirectory, value); }
+            set => SetProperty(ref filesRootDirectory, value);
         }
         private string filesRootDirectory;
 
         public string SlideshowDelay
         {
             get => slideshowDelay;
-            set { SetProperty(ref slideshowDelay, value); }
+            set => SetProperty(ref slideshowDelay, value);
         }
         private string slideshowDelay;
 
         public string SearchHistorySize
         {
             get => searchHistorySize;
-            set { SetProperty(ref searchHistorySize, value); }
+            set => SetProperty(ref searchHistorySize, value);
         }
         private string searchHistorySize;
 
         public bool IncludeHiddenDirectories
         {
             get => includeHiddenDirectories;
-            set { SetProperty(ref includeHiddenDirectories, value); }
+            set => SetProperty(ref includeHiddenDirectories, value);
         }
         private bool includeHiddenDirectories;
 
         public string BlacklistedFilePathPatternsJson
         {
             get => blacklistedFilePathPatternsJson;
-            set { SetProperty(ref blacklistedFilePathPatternsJson, value); }
+            set => SetProperty(ref blacklistedFilePathPatternsJson, value);
         }
         private string blacklistedFilePathPatternsJson;
 
         public string WhitelistedFilePathPatternsJson
         {
             get => whitelistedFilePathPatternsJson;
-            set { SetProperty(ref whitelistedFilePathPatternsJson, value); }
+            set => SetProperty(ref whitelistedFilePathPatternsJson, value);
         }
         private string whitelistedFilePathPatternsJson;
+
+        public bool ReadOnly
+        {
+            get => readOnly;
+            set => SetProperty(ref readOnly, value);
+        }
+        private bool readOnly;
 
         public ICommand ResetConfigurationCommand => resetConfigurationCommand ??= new CommandHandler(ResetConfiguration);
         private ICommand resetConfigurationCommand;
@@ -107,6 +114,7 @@ namespace FileDB2Browser.ViewModel
             IncludeHiddenDirectories = Utils.BrowserConfig.IncludeHiddenDirectories;
             BlacklistedFilePathPatternsJson = JsonConvert.SerializeObject(Utils.BrowserConfig.BlacklistedFilePathPatterns);
             WhitelistedFilePathPatternsJson = JsonConvert.SerializeObject(Utils.BrowserConfig.WhitelistedFilePathPatterns);
+            ReadOnly = Utils.BrowserConfig.ReadOnly;
         }
 
         public void ResetConfiguration()
@@ -177,7 +185,8 @@ namespace FileDB2Browser.ViewModel
                 whitelistedFilePathPatterns,
                 IncludeHiddenDirectories,
                 TimeSpan.FromSeconds(slideshowDelay),
-                searchHistorySize);
+                searchHistorySize,
+                ReadOnly);
 
             if (Utils.BrowserConfigIO.Write(config))
             {
