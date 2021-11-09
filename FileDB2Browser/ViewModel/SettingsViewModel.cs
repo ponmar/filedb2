@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Windows.Input;
 using FileDB2Browser.Config;
 using FileDB2Interface;
@@ -15,14 +16,21 @@ namespace FileDB2Browser.ViewModel
     {
         public string Filename { get; }
 
-        public BackupFile(string filename)
+        public DateTime Timestamp { get; }
+
+        public TimeSpan Age => DateTime.Now - Timestamp;
+
+        public BackupFile(string filename, DateTime timestamp)
         {
             Filename = filename;
+            Timestamp = timestamp;
         }
     }
 
     public class SettingsViewModel : ViewModelBase
     {
+        private const string BackupFileTimestampFormat = "yyyy-MM-ddTHHmmss";
+
         public string Database
         {
             get => database;
@@ -110,6 +118,7 @@ namespace FileDB2Browser.ViewModel
         {
             Init();
             ScanBackupFiles();
+            ShowBackupReminder();
         }
 
         private void Init()
@@ -277,7 +286,7 @@ namespace FileDB2Browser.ViewModel
             if (File.Exists(db))
             {
                 var directoryPath = Path.GetDirectoryName(db);
-                var timestamp = DateTime.Now.ToString("yyyy-MM-dd_HHmmss");
+                var timestamp = DateTime.Now.ToString(BackupFileTimestampFormat);
                 var backupFilename = $"backup_{timestamp}.db";
                 var backupFilePath = Path.Combine(directoryPath, backupFilename);
                 if (!File.Exists(backupFilePath))
@@ -294,7 +303,6 @@ namespace FileDB2Browser.ViewModel
             {
                 Utils.ShowErrorDialog($"Missing database: {db}");
             }
-
         }
 
         private void ScanBackupFiles()
@@ -303,9 +311,42 @@ namespace FileDB2Browser.ViewModel
             if (Directory.Exists(backupDir))
             {
                 BackupFiles.Clear();
-                foreach (var backupFile in Directory.GetFiles(backupDir, "backup_*.db"))
+                foreach (var filePath in Directory.GetFiles(backupDir, "backup_*.db"))
                 {
-                    BackupFiles.Add(new BackupFile(backupFile));
+                    var filenameParts = filePath.Split("_");
+                    if (filenameParts.Length >= 2)
+                    {
+                        var timestampString = filenameParts[filenameParts.Length - 1].Replace(".db", "");
+                        try
+                        {
+                            var timestamp = DateTime.ParseExact(timestampString, BackupFileTimestampFormat, null);
+                            BackupFiles.Add(new BackupFile(filePath, timestamp));
+                        }
+                        catch (FormatException)
+                        {
+                        }
+                    }
+                }
+            }
+        }
+
+        private void ShowBackupReminder()
+        {
+            if (Utils.BrowserConfig.StartupBackupReminderAfterDays <= 0)
+            {
+                return;
+            }
+
+            if (BackupFiles.Count == 0)
+            {
+                Utils.ShowWarningDialog("Backup reminder: No database backup has been created!");
+            }
+            else
+            {
+                var latestBackupFileAge = BackupFiles.Min(x => x.Age);
+                if (latestBackupFileAge.TotalDays >= Utils.BrowserConfig.StartupBackupReminderAfterDays)
+                {
+                    Utils.ShowWarningDialog($"Backup reminder: Last database backup created {latestBackupFileAge.TotalDays} days ago!");
                 }
             }
         }

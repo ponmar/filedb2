@@ -113,6 +113,11 @@ namespace FileDB2Browser
             MessageBox.Show(message, FileDB2BrowserTitle, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.No);
         }
 
+        public static void ShowWarningDialog(string message)
+        {
+            MessageBox.Show(message, FileDB2BrowserTitle, MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.No);
+        }
+
         public static void ShowErrorDialog(string message)
         {
             MessageBox.Show(message, FileDB2BrowserTitle, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.No);
