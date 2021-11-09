@@ -25,7 +25,7 @@
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
     </UserControl.Resources>
-    
+
     <Grid>
         <!-- Search -->
         <Grid.ColumnDefinitions>
@@ -43,18 +43,35 @@
         <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource BorderGroup}" Margin="0 0 0 20">
             <TabControl Margin="5">
                 <TabItem Header="Basic">
-                    <StackPanel Orientation="Horizontal" Margin="3">
-                        <Button Margin="0" Style="{StaticResource NormalButton}" Command="{Binding FindAllFilesCommand}" VerticalAlignment="Center" ToolTip="Search all files">All files</Button>
-                        <Button Margin="20 0 0 0" Style="{StaticResource NormalButton}" Command="{Binding FindCurrentDirectoryFilesCommand}" VerticalAlignment="Center" ToolTip="Search all files within current file directory (recursive)">Current directory</Button>
+                    <Grid Margin="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
 
-                        <TextBlock Text="Random files:" Margin="20 0 3 0" VerticalAlignment="Center"/>
-                        <TextBox Margin="3 0 0 0" Width="100" VerticalAlignment="Center" Text="{Binding NumRandomFiles}"/>
-                        <Button Style="{StaticResource NormalButton}" Command="{Binding FindRandomFilesCommand}" ToolTip="Search random files">Search</Button>
+                        <Button Grid.Row="0" Grid.Column="0" Margin="0 0 20 0" Style="{StaticResource NormalButton}" Command="{Binding FindAllFilesCommand}" VerticalAlignment="Center" ToolTip="Search all files">All files</Button>
 
-                        <TextBlock Text="Text:" Margin="20 0 3 0" VerticalAlignment="Center" ToolTip="Search criteria for text (matches file path/description)"/>
-                        <TextBox Margin="3 0 0 0" Width="100" VerticalAlignment="Center" Text="{Binding SearchPattern}" ToolTip="Search criteria for text (matches file path/description)"/>
-                        <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesByTextCommand}" ToolTip="Search by text (matches file path/description)">Search</Button>
-                    </StackPanel>
+                        <Button Grid.Row="1" Grid.Column="0" Margin="0 0 20 0" Style="{StaticResource NormalButton}" Command="{Binding FindCurrentDirectoryFilesCommand}" VerticalAlignment="Center" ToolTip="Search all files within current file directory (recursive)">Current directory</Button>
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" Margin="0 0 20 0">
+                            <TextBlock Text="Random files:" Margin="3" VerticalAlignment="Center"/>
+                            <TextBox Margin="3 0 0 0" Width="100" VerticalAlignment="Center" Text="{Binding NumRandomFiles}"/>
+                            <Button Style="{StaticResource NormalButton}" Command="{Binding FindRandomFilesCommand}" ToolTip="Search random files">Search</Button>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" Margin="0 0 20 0">
+                            <TextBlock Text="Text:" Margin="3" VerticalAlignment="Center" ToolTip="Search criteria for text (matches file path/description)"/>
+                            <TextBox Margin="3 0 0 0" Width="100" VerticalAlignment="Center" Text="{Binding SearchPattern}" ToolTip="Search criteria for text (matches file path/description)"/>
+                            <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesByTextCommand}" ToolTip="Search by text (matches file path/description)">Search</Button>
+                        </StackPanel>
+
+                        <Button Grid.Row="0" Grid.Column="2" Style="{StaticResource NormalButton}" Command="{Binding FindFilesFromMissingCategorizationCommand}">Search by missing categorization</Button>
+                    </Grid>
                 </TabItem>
                 <TabItem Header="Categories">
                     <Grid Margin="3">
@@ -69,32 +86,32 @@
                             <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
 
-                        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0">
+                        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 20 0">
                             <TextBlock Text="&#x1F642;" VerticalAlignment="Center" ToolTip="Persons" Margin="3"/>
                             <ComboBox Width="100" VerticalAlignment="Center" ItemsSource="{Binding Persons}" SelectedItem="{Binding SelectedPersonSearch}" DisplayMemberPath="Name" ToolTip="Persons"/>
                             <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesWithPersonCommand}" ToolTip="Search by person">Search</Button>
                         </StackPanel>
 
-                        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0">
+                        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 20 0">
                             <TextBlock Text="&#x1F3E0;" VerticalAlignment="Center" ToolTip="Locations" Margin="3"/>
                             <ComboBox Width="100" VerticalAlignment="Center" ItemsSource="{Binding Locations}" SelectedItem="{Binding SelectedLocationSearch}" DisplayMemberPath="Name" ToolTip="Locations"/>
                             <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesWithLocationCommand}" ToolTip="Search by location">Search</Button>
                         </StackPanel>
 
-                        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0">
+                        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 20 0">
                             <TextBlock Text="&#x1F516;" VerticalAlignment="Center" ToolTip="Tags" Margin="3"/>
                             <ComboBox Width="100" VerticalAlignment="Center" ItemsSource="{Binding Tags}" SelectedItem="{Binding SelectedTagSearch}" DisplayMemberPath="Name" ToolTip="Tags"/>
                             <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesWithTagCommand}" ToolTip="Search by tag">Search</Button>
                         </StackPanel>
 
-                        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0">
-                            <TextBlock Text="Person age:" Margin="20 0 3 0" VerticalAlignment="Center"/>
+                        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 20 0">
+                            <TextBlock Text="Person age:" Margin="3" VerticalAlignment="Center"/>
                             <TextBox Margin="3 0 0 0" Width="100" VerticalAlignment="Center" Text="{Binding SearchPersonAge}" ToolTip="Search criteria for file with persons of the specified age (example: 25, 30-40)"/>
                             <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesByPersonAgeCommand}" ToolTip="Search for file with persons of the specified age">Search</Button>
                         </StackPanel>
 
-                        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0">
-                            <TextBlock Text="Person sex:" Margin="20 0 3 0" VerticalAlignment="Center" ToolTip="ISO/IEC 5218"/>
+                        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 20 0">
+                            <TextBlock Text="Person sex:" Margin="3" VerticalAlignment="Center" ToolTip="ISO/IEC 5218"/>
                             <ComboBox Margin="3 0 0 0" VerticalAlignment="Center" ToolTip="ISO/IEC 5218" SelectedItem="{Binding SearchBySexSelection}" Width="100">
                                 <ComboBoxItem IsSelected="True">NotKnown</ComboBoxItem>
                                 <ComboBoxItem>Male</ComboBoxItem>
@@ -105,17 +122,12 @@
                         </StackPanel>
 
                         <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0">
-                            <TextBlock Text="File date:" Margin="20 0 3 0" VerticalAlignment="Center"/>
+                            <TextBlock Text="File date:" Margin="3" VerticalAlignment="Center"/>
                             <DatePicker Margin="3 0 0 0" VerticalAlignment="center" Text="Start" IsTodayHighlighted="True" SelectedDate="{Binding SearchStartDate}" FirstDayOfWeek="Monday"/>
                             <DatePicker Margin="3 0 0 0" VerticalAlignment="center" Text="End" IsTodayHighlighted="True" SelectedDate="{Binding SearchEndDate}" FirstDayOfWeek="Monday"/>
                             <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesByDateCommand}" ToolTip="Seach files between dates" VerticalAlignment="Center">Search</Button>
                         </StackPanel>
                     </Grid>
-                </TabItem>
-                <TabItem Header="To be categorized">
-                    <StackPanel Orientation="Horizontal" Margin="3">
-                        <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesFromMissingCategorizationCommand}" ToolTip="Search by missing categorization">Search</Button>
-                    </StackPanel>
                 </TabItem>
                 <TabItem Header="List">
                     <StackPanel Orientation="Horizontal" Margin="3">
@@ -147,10 +159,10 @@
                     <ToggleButton Style="{StaticResource NavigationToggleButton}" Command="{Binding ToggleSlideshowCommand}" IsChecked="{Binding SlideshowActive}" ToolTip="Toggle slideshow" Margin="10 3 3 3">&#x1F39E;</ToggleButton>
                     <ToggleButton Style="{StaticResource NavigationToggleButton}" Command="{Binding ToggleRandomCommand}" IsChecked="{Binding RandomActive}" ToolTip="Toggle slideshow random" Margin="3 3 3 3">&#x21AD;</ToggleButton>
                     <ToggleButton Style="{StaticResource NavigationToggleButton}" Command="{Binding ToggleRepeatCommand}" IsChecked="{Binding RepeatActive}" ToolTip="Toggle slideshow repeat" Margin="3 3 3 3">&#x21BB;</ToggleButton>
-                    <Button Style="{StaticResource NavigationButton}" Command="{Binding SortFilesByDateCommand}" ToolTip="Sort result by date" Margin="10 3 3 3">Sort: date</Button>
-                    <Button Style="{StaticResource NavigationButton}" Command="{Binding SortFilesByDateDescCommand}" ToolTip="Sort result by date descending" Margin="3 3 3 3">Sort: date desc.</Button>
-                    <Button Style="{StaticResource NavigationButton}" Command="{Binding SortFilesByPathCommand}" ToolTip="Sort result by path" Margin="3 3 3 3">Sort: path</Button>
-                    <Button Style="{StaticResource NavigationButton}" Command="{Binding SortFilesByPathDescCommand}" ToolTip="Sort result by path descending" Margin="3 3 3 3">Sort: path desc.</Button>
+                    <Button Style="{StaticResource NormalButton}" Command="{Binding SortFilesByDateCommand}" ToolTip="Sort result by date" Margin="10 3 3 3">Sort: date</Button>
+                    <Button Style="{StaticResource NormalButton}" Command="{Binding SortFilesByDateDescCommand}" ToolTip="Sort result by date descending" Margin="3 3 3 3">Sort: date desc.</Button>
+                    <Button Style="{StaticResource NormalButton}" Command="{Binding SortFilesByPathCommand}" ToolTip="Sort result by path" Margin="3 3 3 3">Sort: path</Button>
+                    <Button Style="{StaticResource NormalButton}" Command="{Binding SortFilesByPathDescCommand}" ToolTip="Sort result by path descending" Margin="3 3 3 3">Sort: path desc.</Button>
                 </StackPanel>
             </StackPanel>
         </Border>
