@@ -14,7 +14,6 @@ using System.Reflection;
 using log4net.Config;
 using System.Globalization;
 using FileDB2Interface.Exceptions;
-using System.Threading.Tasks;
 
 namespace FileDB2Interface
 {

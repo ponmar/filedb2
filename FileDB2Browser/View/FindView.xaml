@@ -159,10 +159,11 @@
                     <ToggleButton Style="{StaticResource NavigationToggleButton}" Command="{Binding ToggleSlideshowCommand}" IsChecked="{Binding SlideshowActive}" ToolTip="Toggle slideshow" Margin="10 3 3 3">&#x1F39E;</ToggleButton>
                     <ToggleButton Style="{StaticResource NavigationToggleButton}" Command="{Binding ToggleRandomCommand}" IsChecked="{Binding RandomActive}" ToolTip="Toggle slideshow random" Margin="3 3 3 3">&#x21AD;</ToggleButton>
                     <ToggleButton Style="{StaticResource NavigationToggleButton}" Command="{Binding ToggleRepeatCommand}" IsChecked="{Binding RepeatActive}" ToolTip="Toggle slideshow repeat" Margin="3 3 3 3">&#x21BB;</ToggleButton>
-                    <Button Style="{StaticResource NormalButton}" Command="{Binding SortFilesByDateCommand}" ToolTip="Sort result by date" Margin="10 3 3 3">Sort: date</Button>
-                    <Button Style="{StaticResource NormalButton}" Command="{Binding SortFilesByDateDescCommand}" ToolTip="Sort result by date descending" Margin="3 3 3 3">Sort: date desc.</Button>
-                    <Button Style="{StaticResource NormalButton}" Command="{Binding SortFilesByPathCommand}" ToolTip="Sort result by path" Margin="3 3 3 3">Sort: path</Button>
-                    <Button Style="{StaticResource NormalButton}" Command="{Binding SortFilesByPathDescCommand}" ToolTip="Sort result by path descending" Margin="3 3 3 3">Sort: path desc.</Button>
+                    <TextBlock VerticalAlignment="Center" Margin="20 3 3 3">Sort by:</TextBlock>
+                    <Button Style="{StaticResource NormalButton}" Command="{Binding SortFilesByDateCommand}" ToolTip="Sort result by date ascending" Margin="3">Date &#x2B06;</Button>
+                    <Button Style="{StaticResource NormalButton}" Command="{Binding SortFilesByDateDescCommand}" ToolTip="Sort result by date descending" Margin="3">Date &#x2B07;</Button>
+                    <Button Style="{StaticResource NormalButton}" Command="{Binding SortFilesByPathCommand}" ToolTip="Sort result by path ascending" Margin="3">Path &#x2B06;</Button>
+                    <Button Style="{StaticResource NormalButton}" Command="{Binding SortFilesByPathDescCommand}" ToolTip="Sort result by path descending" Margin="3">Path &#x2B07;</Button>
                 </StackPanel>
             </StackPanel>
         </Border>
