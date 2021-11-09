@@ -122,16 +122,16 @@ namespace FileDB2Browser.ViewModel
         public ICommand ToggleRepeatCommand => toggleRepeatCommand ??= new CommandHandler(ToggleRepeat, () => HasNonEmptySearchResult);
         private ICommand toggleRepeatCommand;
 
-        public ICommand SortFilesByDateCommand => sortFilesByDateCommand ??= new CommandHandler(SortFilesByDate, FirstFileAvailable);
+        public ICommand SortFilesByDateCommand => sortFilesByDateCommand ??= new CommandHandler(SortFilesByDate, () => HasNonEmptySearchResult);
         private ICommand sortFilesByDateCommand;
 
-        public ICommand SortFilesByDateDescCommand => sortFilesByDateDescCommand ??= new CommandHandler(SortFilesByDateDesc, FirstFileAvailable);
+        public ICommand SortFilesByDateDescCommand => sortFilesByDateDescCommand ??= new CommandHandler(SortFilesByDateDesc, () => HasNonEmptySearchResult);
         private ICommand sortFilesByDateDescCommand;
 
-        public ICommand SortFilesByPathCommand => sortFilesByPathCommand ??= new CommandHandler(SortFilesByPath, FirstFileAvailable);
+        public ICommand SortFilesByPathCommand => sortFilesByPathCommand ??= new CommandHandler(SortFilesByPath, () => HasNonEmptySearchResult);
         private ICommand sortFilesByPathCommand;
 
-        public ICommand SortFilesByPathDescCommand => sortFilesByPathDescCommand ??= new CommandHandler(SortFilesByPathDesc, FirstFileAvailable);
+        public ICommand SortFilesByPathDescCommand => sortFilesByPathDescCommand ??= new CommandHandler(SortFilesByPathDesc, () => HasNonEmptySearchResult);
         private ICommand sortFilesByPathDescCommand;
 
         public bool SlideshowActive
