@@ -11,7 +11,8 @@ namespace FileDB2Browser.Config
         bool IncludeHiddenDirectories,
         TimeSpan SlideshowDelay,
         int SearchHistorySize,
-        bool ReadOnly);
+        bool ReadOnly,
+        int StartupBackupReminderAfterDays);
 
     public record History(DateTime LastFilesBackupAt);
 
@@ -27,7 +28,8 @@ namespace FileDB2Browser.Config
                 false,
                 TimeSpan.FromSeconds(3),
                 4,
-                false);
+                false,
+                30);
         }
     }
 

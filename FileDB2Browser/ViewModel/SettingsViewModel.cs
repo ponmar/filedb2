@@ -79,6 +79,13 @@ namespace FileDB2Browser.ViewModel
         }
         private bool readOnly;
 
+        public string StartupBackupReminderAfterDays
+        {
+            get => startupBackupReminderAfterDays;
+            set => SetProperty(ref startupBackupReminderAfterDays, value);
+        }
+        private string startupBackupReminderAfterDays;
+
         public ICommand ResetConfigurationCommand => resetConfigurationCommand ??= new CommandHandler(ResetConfiguration);
         private ICommand resetConfigurationCommand;
 
@@ -115,6 +122,7 @@ namespace FileDB2Browser.ViewModel
             BlacklistedFilePathPatternsJson = JsonConvert.SerializeObject(Utils.BrowserConfig.BlacklistedFilePathPatterns);
             WhitelistedFilePathPatternsJson = JsonConvert.SerializeObject(Utils.BrowserConfig.WhitelistedFilePathPatterns);
             ReadOnly = Utils.BrowserConfig.ReadOnly;
+            StartupBackupReminderAfterDays = Utils.BrowserConfig.StartupBackupReminderAfterDays.ToString();
         }
 
         public void ResetConfiguration()
@@ -178,6 +186,12 @@ namespace FileDB2Browser.ViewModel
                 return;
             }
 
+            if (!int.TryParse(StartupBackupReminderAfterDays, out int startupBackupReminderAfterDays) || startupBackupReminderAfterDays < 1)
+            {
+                Utils.ShowErrorDialog("Invalid startup backup reminder interval");
+                return;
+            }
+
             var config = new Config.Config(
                 Database,
                 FilesRootDirectory,
@@ -186,7 +200,8 @@ namespace FileDB2Browser.ViewModel
                 IncludeHiddenDirectories,
                 TimeSpan.FromSeconds(slideshowDelay),
                 searchHistorySize,
-                ReadOnly);
+                ReadOnly,
+                startupBackupReminderAfterDays);
 
             if (Utils.BrowserConfigIO.Write(config))
             {
