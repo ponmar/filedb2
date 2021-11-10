@@ -343,10 +343,10 @@ namespace FileDB2Browser.ViewModel
             }
             else
             {
-                var latestBackupFileAge = BackupFiles.Min(x => x.Age);
-                if (latestBackupFileAge.TotalDays >= Utils.BrowserConfig.StartupBackupReminderAfterDays)
+                var latestBackupDaysAge = (int)BackupFiles.Min(x => x.Age).TotalDays;
+                if (latestBackupDaysAge >= Utils.BrowserConfig.StartupBackupReminderAfterDays)
                 {
-                    Utils.ShowWarningDialog($"Backup reminder: Last database backup created {latestBackupFileAge.TotalDays} days ago!");
+                    Utils.ShowWarningDialog($"Backup reminder: Last database backup created {latestBackupDaysAge} days ago!");
                 }
             }
         }
