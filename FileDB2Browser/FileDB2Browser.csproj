@@ -17,4 +17,6 @@
     <ProjectReference Include="..\FileDB2Interface\FileDB2Interface.csproj" />
   </ItemGroup>
 
+  <Import Project="..\Shared\Shared.projitems" Label="Shared" />
+
 </Project>

@@ -3,15 +3,13 @@ using System.Windows;
 using FileDB2Browser.Config;
 using FileDB2Interface;
 using FileDB2Interface.Exceptions;
+using Shared;
 
 namespace FileDB2Browser
 {
-    public record Version(int Major, int Minor);
-
     public static class Utils
     {
         public const string ApplicationTitle = "FileDB2";
-        public static Version Version = new(0, 1);
 
         public static AppDataConfig<Config.Config> BrowserConfigIO { get; } = new(ApplicationTitle);
 
