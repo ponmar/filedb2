@@ -1,20 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using FileDB2Browser.Config;
+﻿using System.Windows;
 using FileDB2Browser.ViewModel;
-using FileDB2Interface;
 
 namespace FileDB2Browser
 {
@@ -27,14 +12,6 @@ namespace FileDB2Browser
         {
             InitializeComponent();
             DataContext = new MainViewModel();
-
-            if (!Utils.BrowserConfigIO.FileExists())
-            {
-                if (!Utils.BrowserConfigIO.Write(BrowserConfigFactory.GetDefault()))
-                {
-                    Utils.ShowErrorDialog("Unable to create default configuration: " + Utils.BrowserConfigIO.GetFilePath());
-                }
-            }
         }
     }
 }

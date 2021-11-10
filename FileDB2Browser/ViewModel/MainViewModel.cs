@@ -31,7 +31,7 @@ namespace FileDB2Browser.ViewModel
 
         private void UpdateTitle()
         {
-            Title = ReadWriteMode ? "FileDB2" : "FileDB2 - Read only mode";
+            Title = ReadWriteMode ? $"{Utils.ApplicationTitle}" : $"{Utils.ApplicationTitle} - Read only mode";
         }
     }
 }

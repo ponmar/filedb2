@@ -14,8 +14,6 @@ namespace FileDB2Browser.Config
         bool ReadOnly,
         int StartupBackupReminderAfterDays);
 
-    public record History(DateTime LastFilesBackupAt);
-
     public static class BrowserConfigFactory
     {
         public static Config GetDefault()
@@ -30,14 +28,6 @@ namespace FileDB2Browser.Config
                 4,
                 false,
                 30);
-        }
-    }
-
-    public static class HistoryFactory
-    {
-        public static History GetDefault()
-        {
-            return new History(DateTime.Now);
         }
     }
 }

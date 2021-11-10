@@ -8,14 +8,11 @@ namespace FileDB2Browser
 {
     public static class Utils
     {
-        public const string FileDB2BrowserTitle = "FileDB2";
+        public const string ApplicationTitle = "FileDB2";
 
-        public static AppDataConfig<Config.Config> BrowserConfigIO { get; } = new(FileDB2BrowserTitle);
-        public static AppDataConfig<History> HistoryIO { get; } = new(FileDB2BrowserTitle);
+        public static AppDataConfig<Config.Config> BrowserConfigIO { get; } = new(ApplicationTitle);
 
         public static Config.Config BrowserConfig { get; set; } = BrowserConfigIO.Read() ?? BrowserConfigFactory.GetDefault();
-
-        public static History History { get; } = HistoryIO.Read() ?? HistoryFactory.GetDefault();
 
         public static IFileDB2Handle FileDB2Handle
         {
@@ -110,22 +107,22 @@ namespace FileDB2Browser
 
         public static void ShowInfoDialog(string message)
         {
-            MessageBox.Show(message, FileDB2BrowserTitle, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.No);
+            MessageBox.Show(message, ApplicationTitle, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.No);
         }
 
         public static void ShowWarningDialog(string message)
         {
-            MessageBox.Show(message, FileDB2BrowserTitle, MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.No);
+            MessageBox.Show(message, ApplicationTitle, MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.No);
         }
 
         public static void ShowErrorDialog(string message)
         {
-            MessageBox.Show(message, FileDB2BrowserTitle, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.No);
+            MessageBox.Show(message, ApplicationTitle, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.No);
         }
 
         public static bool ShowConfirmDialog(string question)
         {
-            return MessageBox.Show(question, FileDB2BrowserTitle, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes;
+            return MessageBox.Show(question, ApplicationTitle, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes;
         }
     }
 }
