@@ -4,7 +4,7 @@ using FileDBInterface;
 using FileDBInterface.Model;
 using MetadataExtractor;
 
-namespace FileDB2Browser
+namespace FileDB
 {
     public class InvalidHandle : IFileDBHandle
     {

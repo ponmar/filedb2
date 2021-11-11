@@ -3,9 +3,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using FileDB2Browser.View;
+using FileDB.View;
 
-namespace FileDB2Browser.ViewModel
+namespace FileDB.ViewModel
 {
     public class Location
     {

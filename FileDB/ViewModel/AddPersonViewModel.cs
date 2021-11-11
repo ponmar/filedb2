@@ -5,7 +5,7 @@ using System.Windows.Input;
 using FileDBInterface.Exceptions;
 using FileDBInterface.Model;
 
-namespace FileDB2Browser.ViewModel
+namespace FileDB.ViewModel
 {
     public class AddPersonViewModel : ViewModelBase
     {

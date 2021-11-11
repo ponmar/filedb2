@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Data;
 
-namespace FileDB2Browser.Converters
+namespace FileDB.Converters
 {
     public class StringNullOrEmptyToVisibilityConverter : System.Windows.Markup.MarkupExtension, IValueConverter
     {

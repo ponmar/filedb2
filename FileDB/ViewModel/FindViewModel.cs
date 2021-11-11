@@ -9,13 +9,13 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-using FileDB2Browser.View;
-using FileDB2Browser.ViewModel.Sorters;
+using FileDB.View;
+using FileDB.ViewModel.Sorters;
 using FileDBInterface.Comparers;
 using FileDBInterface.Model;
 using TextCopy;
 
-namespace FileDB2Browser.ViewModel
+namespace FileDB.ViewModel
 {
     public interface IImagePresenter
     {

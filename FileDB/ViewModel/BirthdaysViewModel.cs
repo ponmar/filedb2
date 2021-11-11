@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 
-namespace FileDB2Browser.ViewModel
+namespace FileDB.ViewModel
 {
     public class PersonBirthday
     {

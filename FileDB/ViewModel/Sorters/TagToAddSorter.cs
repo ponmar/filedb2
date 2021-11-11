@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FileDB2Browser.ViewModel.Sorters
+namespace FileDB.ViewModel.Sorters
 {
     public class TagToAddSorter : IComparer<TagToUpdate>
     {

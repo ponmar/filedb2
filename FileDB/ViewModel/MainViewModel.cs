@@ -1,4 +1,4 @@
-﻿namespace FileDB2Browser.ViewModel
+﻿namespace FileDB.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {

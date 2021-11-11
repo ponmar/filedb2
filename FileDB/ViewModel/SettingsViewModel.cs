@@ -4,13 +4,13 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Windows.Input;
-using FileDB2Browser.Config;
+using FileDB.Config;
 using FileDBInterface;
 using FileDBInterface.Exceptions;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 
-namespace FileDB2Browser.ViewModel
+namespace FileDB.ViewModel
 {
     public class BackupFile
     {

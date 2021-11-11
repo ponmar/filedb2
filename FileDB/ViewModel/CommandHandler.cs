@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace FileDB2Browser.ViewModel
+namespace FileDB.ViewModel
 {
     public class CommandHandler : ICommand
     {

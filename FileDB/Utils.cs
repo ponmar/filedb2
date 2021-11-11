@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Windows;
-using FileDB2Browser.Config;
+using FileDB.Config;
 using FileDBInterface;
 using FileDBInterface.Exceptions;
-using Shared;
 
-namespace FileDB2Browser
+namespace FileDB
 {
     public static class Utils
     {

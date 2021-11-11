@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace FileDB2Browser.Config
+namespace FileDB.Config
 {
     public record Config(
         string Database,

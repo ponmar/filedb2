@@ -1,7 +1,7 @@
 ﻿using System.Windows;
-using FileDB2Browser.ViewModel;
+using FileDB.ViewModel;
 
-namespace FileDB2Browser
+namespace FileDB
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

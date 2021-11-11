@@ -1,7 +1,7 @@
 ﻿using System.Windows.Input;
 using FileDBInterface.Exceptions;
 
-namespace FileDB2Browser.ViewModel
+namespace FileDB.ViewModel
 {
     public class AddLocationViewModel : ViewModelBase
     {

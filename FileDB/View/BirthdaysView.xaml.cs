@@ -12,9 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using FileDB2Browser.ViewModel;
+using FileDB.ViewModel;
 
-namespace FileDB2Browser.View
+namespace FileDB.View
 {
     /// <summary>
     /// Interaction logic for BirthdaysView.xaml

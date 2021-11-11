@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using FileDBInterface;
 
-namespace FileDB2Browser.ViewModel
+namespace FileDB.ViewModel
 {
     public class ToolsViewModel : ViewModelBase
     {
