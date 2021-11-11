@@ -20,7 +20,7 @@ namespace FileDB2Browser.View
     /// </summary>
     public partial class AddLocationWindow : Window
     {
-        public AddLocationWindow(int locationId = -1)
+        public AddLocationWindow(int? locationId = null)
         {
             InitializeComponent();
             DataContext = new AddLocationViewModel(locationId);

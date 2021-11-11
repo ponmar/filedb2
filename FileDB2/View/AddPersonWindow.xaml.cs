@@ -20,7 +20,7 @@ namespace FileDB2Browser.View
     /// </summary>
     public partial class AddPersonWindow : Window
     {
-        public AddPersonWindow(int personId = -1)
+        public AddPersonWindow(int? personId = null)
         {
             InitializeComponent();
             DataContext = new AddPersonViewModel(personId);
