@@ -32,7 +32,7 @@ namespace FileDB.ViewModel
 
             if (tagId.HasValue)
             {
-                var tagModel = Utils.FileDB2Handle.GetTagById(tagId.Value);
+                var tagModel = Utils.FileDBHandle.GetTagById(tagId.Value);
                 Name = tagModel.name;
             }
         }
@@ -43,11 +43,11 @@ namespace FileDB.ViewModel
             {
                 if (tagId.HasValue)
                 {
-                    Utils.FileDB2Handle.UpdateTagName(tagId.Value, name);
+                    Utils.FileDBHandle.UpdateTagName(tagId.Value, name);
                 }
                 else
                 {
-                    Utils.FileDB2Handle.InsertTag(name);
+                    Utils.FileDBHandle.InsertTag(name);
                 }
             }
             catch (FileDBDataValidationException e)

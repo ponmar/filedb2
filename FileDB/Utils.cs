@@ -8,26 +8,26 @@ namespace FileDB
 {
     public static class Utils
     {
-        public const string ApplicationTitle = "FileDB2";
+        public const string ApplicationTitle = "FileDB";
 
         public static AppDataConfig<Config.Config> BrowserConfigIO { get; } = new(ApplicationTitle);
 
         public static Config.Config BrowserConfig { get; set; } = BrowserConfigIO.Read() ?? BrowserConfigFactory.GetDefault();
 
-        public static IFileDBHandle FileDB2Handle
+        public static IFileDBHandle FileDBHandle
         {
             get
             {
-                if (fileDB2Handle == null)
+                if (fileDBHandle == null)
                 {
-                    ReloadFileDB2Handle();
+                    ReloadFileDBHandle();
                 }
-                return fileDB2Handle;
+                return fileDBHandle;
             }
         }
-        private static IFileDBHandle fileDB2Handle;
+        private static IFileDBHandle fileDBHandle;
 
-        public static void ReloadFileDB2Handle()
+        public static void ReloadFileDBHandle()
         {
             var config = new FileDBConfig()
             {
@@ -36,11 +36,11 @@ namespace FileDB
             };
             try
             {
-                fileDB2Handle = new FileDBHandle(config);
+                fileDBHandle = new FileDBHandle(config);
             }
             catch (FileDBException)
             {
-                fileDB2Handle = new InvalidHandle();
+                fileDBHandle = new InvalidHandle();
             }
         }
 

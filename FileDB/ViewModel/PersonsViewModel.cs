@@ -66,10 +66,10 @@ namespace FileDB.ViewModel
         {
             if (selectedPerson != null)
             {
-                var filesWithPerson = Utils.FileDB2Handle.GetFilesWithPersons(new List<int>() { selectedPerson.GetId() }).ToList();
+                var filesWithPerson = Utils.FileDBHandle.GetFilesWithPersons(new List<int>() { selectedPerson.GetId() }).ToList();
                 if (filesWithPerson.Count == 0 || Utils.ShowConfirmDialog($"Person is used in {filesWithPerson.Count} files, remove anyway?"))
                 {
-                    Utils.FileDB2Handle.DeletePerson(selectedPerson.GetId());
+                    Utils.FileDBHandle.DeletePerson(selectedPerson.GetId());
                     ReloadPersons();
                 }
             }
@@ -107,7 +107,7 @@ namespace FileDB.ViewModel
         {
             Persons.Clear();
 
-            var persons = Utils.FileDB2Handle.GetPersons().Select(pm => new Person(pm.id) { Firstname = pm.firstname, Lastname = pm.lastname, Description = pm.description, DateOfBirth = pm.dateofbirth, BornYearsAgo = pm.dateofbirth != null ? Utils.GetYearsAgo(DateTime.Now, Utils.FileDB2Handle.ParseDateOfBirth(pm.dateofbirth)) : -1, ProfileFileId = pm.profilefileid, Sex = pm.sex });
+            var persons = Utils.FileDBHandle.GetPersons().Select(pm => new Person(pm.id) { Firstname = pm.firstname, Lastname = pm.lastname, Description = pm.description, DateOfBirth = pm.dateofbirth, BornYearsAgo = pm.dateofbirth != null ? Utils.GetYearsAgo(DateTime.Now, Utils.FileDBHandle.ParseDateOfBirth(pm.dateofbirth)) : -1, ProfileFileId = pm.profilefileid, Sex = pm.sex });
             foreach (var person in persons)
             {
                 Persons.Add(person);

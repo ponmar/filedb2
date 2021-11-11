@@ -62,10 +62,10 @@ namespace FileDB.ViewModel
         {
             if (selectedLocation != null)
             {
-                var filesWithLocation = Utils.FileDB2Handle.GetFilesWithLocations(new List<int>() { selectedLocation.GetId() }).ToList();
+                var filesWithLocation = Utils.FileDBHandle.GetFilesWithLocations(new List<int>() { selectedLocation.GetId() }).ToList();
                 if (filesWithLocation.Count == 0 || Utils.ShowConfirmDialog($"Location is used in {filesWithLocation.Count} files, remove anyway?"))
                 {
-                    Utils.FileDB2Handle.DeleteLocation(selectedLocation.GetId());
+                    Utils.FileDBHandle.DeleteLocation(selectedLocation.GetId());
                     ReloadLocations();
                 }
             }
@@ -103,7 +103,7 @@ namespace FileDB.ViewModel
         {
             Locations.Clear();
 
-            var locations = Utils.FileDB2Handle.GetLocations().Select(lm => new Location(lm.id) { Name = lm.name, Description = lm.description, Position = lm.position });
+            var locations = Utils.FileDBHandle.GetLocations().Select(lm => new Location(lm.id) { Name = lm.name, Description = lm.description, Position = lm.position });
             foreach (var location in locations)
             {
                 Locations.Add(location);

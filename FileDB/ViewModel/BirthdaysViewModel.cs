@@ -17,7 +17,7 @@ namespace FileDB.ViewModel
 
         public BirthdaysViewModel()
         {
-            foreach (var person in Utils.FileDB2Handle.GetPersons())
+            foreach (var person in Utils.FileDBHandle.GetPersons())
             {
                 if (person.dateofbirth != null && DateTime.TryParse(person.dateofbirth, out var dateOfBirth))
                 {

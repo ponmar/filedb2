@@ -139,7 +139,7 @@ namespace FileDB.ViewModel
             if (Utils.BrowserConfigIO.Write(BrowserConfigFactory.GetDefault()))
             {
                 Utils.BrowserConfig = BrowserConfigFactory.GetDefault();
-                Utils.ReloadFileDB2Handle();
+                Utils.ReloadFileDBHandle();
                 Init();
             }
             else
@@ -215,7 +215,7 @@ namespace FileDB.ViewModel
             if (Utils.BrowserConfigIO.Write(config))
             {
                 Utils.BrowserConfig = config;
-                Utils.ReloadFileDB2Handle();
+                Utils.ReloadFileDBHandle();
                 Utils.ShowInfoDialog("Configuration saved");
             }
             else
@@ -228,7 +228,7 @@ namespace FileDB.ViewModel
         {
             var fileDialog = new OpenFileDialog()
             {
-                Filter = "FileDB2 database files (*.db)|*.db",
+                Filter = $"{Utils.ApplicationTitle} database files (*.db)|*.db",
                 InitialDirectory = @"c:\", // TODO: get directory from current path? Or appdata?
             };
             if (fileDialog.ShowDialog() == true)

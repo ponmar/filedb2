@@ -11,7 +11,7 @@ namespace FileDBTest
         {
             var config = new FileDBConfig()
             {
-                Database = @"C:\Source\filedb2_db\filedb2.db",
+                Database = @"C:\Source\filedb2_db\filedb.db",
                 FilesRootDirectory = @"X:",
             };
 
@@ -54,7 +54,7 @@ namespace FileDBTest
             }
             catch (FileDBException e)
             {
-                Console.WriteLine("FileDB2 error: " + e.Message);
+                Console.WriteLine($"Unhandled exception: {e}");
             }
         }
     }

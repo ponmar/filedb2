@@ -483,7 +483,7 @@ namespace FileDB.ViewModel
         {
             this.imagePresenter = imagePresenter;
 
-            TotalNumberOfFiles = Utils.FileDB2Handle.GetFileCount();
+            TotalNumberOfFiles = Utils.FileDBHandle.GetFileCount();
 
             ReloadPersons();
             ReloadLocations();
@@ -698,7 +698,7 @@ namespace FileDB.ViewModel
 
             if (int.TryParse(NumRandomFiles, out var value))
             {
-                SearchResult = new SearchResult(Utils.FileDB2Handle.SearchFilesRandom(value));
+                SearchResult = new SearchResult(Utils.FileDBHandle.SearchFilesRandom(value));
             }
         }
 
@@ -713,13 +713,13 @@ namespace FileDB.ViewModel
 
             var path = SearchResult.Files[SearchResultIndex].path;
             var dir = Path.GetDirectoryName(path).Replace('\\', '/');
-            SearchResult = new SearchResult(Utils.FileDB2Handle.SearchFilesByPath(dir));
+            SearchResult = new SearchResult(Utils.FileDBHandle.SearchFilesByPath(dir));
         }
 
         public void FindAllFiles()
         {
             StopSlideshow();
-            SearchResult = new SearchResult(Utils.FileDB2Handle.GetFiles());
+            SearchResult = new SearchResult(Utils.FileDBHandle.GetFiles());
         }
 
         public void FindFilesByText()
@@ -727,7 +727,7 @@ namespace FileDB.ViewModel
             StopSlideshow();
             if (!string.IsNullOrEmpty(SearchPattern))
             {
-                SearchResult = new SearchResult(Utils.FileDB2Handle.SearchFiles(SearchPattern));
+                SearchResult = new SearchResult(Utils.FileDBHandle.SearchFiles(SearchPattern));
             }
             else
             {
@@ -739,13 +739,13 @@ namespace FileDB.ViewModel
         {
             StopSlideshow();
             var sex = Enum.Parse<Sex>(searchBySexSelection);
-            SearchResult = new SearchResult(Utils.FileDB2Handle.SearchFilesBySex(sex));
+            SearchResult = new SearchResult(Utils.FileDBHandle.SearchFilesBySex(sex));
         }
 
         public void FindFilesByDate()
         {
             StopSlideshow();
-            SearchResult = new SearchResult(Utils.FileDB2Handle.GetFileByDate(SearchStartDate.Date, SearchEndDate.Date));
+            SearchResult = new SearchResult(Utils.FileDBHandle.GetFileByDate(SearchStartDate.Date, SearchEndDate.Date));
         }
 
         public void FindFilesWithPerson()
@@ -753,7 +753,7 @@ namespace FileDB.ViewModel
             StopSlideshow();
             if (SelectedPersonSearch != null)
             {
-                SearchResult = new SearchResult(Utils.FileDB2Handle.GetFilesWithPersons(new List<int>() { SelectedPersonSearch.Id }));
+                SearchResult = new SearchResult(Utils.FileDBHandle.GetFilesWithPersons(new List<int>() { SelectedPersonSearch.Id }));
             }
         }
 
@@ -762,7 +762,7 @@ namespace FileDB.ViewModel
             StopSlideshow();
             if (SelectedLocationSearch != null)
             {
-                SearchResult = new SearchResult(Utils.FileDB2Handle.GetFilesWithLocations(new List<int>() { SelectedLocationSearch.Id }));
+                SearchResult = new SearchResult(Utils.FileDBHandle.GetFilesWithLocations(new List<int>() { SelectedLocationSearch.Id }));
             }
         }
 
@@ -771,7 +771,7 @@ namespace FileDB.ViewModel
             StopSlideshow();
             if (SelectedTagSearch != null)
             {
-                SearchResult = new SearchResult(Utils.FileDB2Handle.GetFilesWithTags(new List<int>() { SelectedTagSearch.Id }));
+                SearchResult = new SearchResult(Utils.FileDBHandle.GetFilesWithTags(new List<int>() { SelectedTagSearch.Id }));
             }
         }
 
@@ -787,12 +787,12 @@ namespace FileDB.ViewModel
                 }
 
                 var result = new List<FilesModel>();
-                var personsWithAge = Utils.FileDB2Handle.GetPersons().Where(p => p.dateofbirth != null);
+                var personsWithAge = Utils.FileDBHandle.GetPersons().Where(p => p.dateofbirth != null);
 
                 foreach (var person in personsWithAge)
                 {
-                    var dateOfBirth = Utils.FileDB2Handle.ParseDateOfBirth(person.dateofbirth);
-                    foreach (var file in Utils.FileDB2Handle.GetFilesWithPersons(new List<int>() { person.id }))
+                    var dateOfBirth = Utils.FileDBHandle.ParseDateOfBirth(person.dateofbirth);
+                    foreach (var file in Utils.FileDBHandle.GetFilesWithPersons(new List<int>() { person.id }))
                     {
                         if (Utils.InternalDatetimeToDatetime(file.datetime, out var fileDatetime))
                         {
@@ -851,7 +851,7 @@ namespace FileDB.ViewModel
         public void FindFilesFromMissingCategorization()
         {
             StopSlideshow();
-            SearchResult = new SearchResult(Utils.FileDB2Handle.GetFilesWithMissingData());
+            SearchResult = new SearchResult(Utils.FileDBHandle.GetFilesWithMissingData());
         }
 
         public void FindFilesFromList()
@@ -870,7 +870,7 @@ namespace FileDB.ViewModel
                 }
 
                 // TODO: add query with many file ids
-                SearchResult = new SearchResult(fileIds.Select(f => Utils.FileDB2Handle.GetFileById(f)).ToList());
+                SearchResult = new SearchResult(fileIds.Select(f => Utils.FileDBHandle.GetFileById(f)).ToList());
             }
         }
 
@@ -907,7 +907,7 @@ namespace FileDB.ViewModel
                 var selection = SearchResult.Files[SearchResultIndex];
 
                 CurrentFileInternalPath = selection.path;
-                CurrentFilePath = Utils.FileDB2Handle.InternalPathToPath(selection.path);
+                CurrentFilePath = Utils.FileDBHandle.InternalPathToPath(selection.path);
                 CurrentFileDescription = selection.description ?? string.Empty;
                 CurrentFileDateTime = GetFileDateTimeString(selection.datetime);
                 CurrentFilePosition = selection.position ?? string.Empty;
@@ -986,7 +986,7 @@ namespace FileDB.ViewModel
 
         private string GetFilePersonsString(FilesModel selection)
         {
-            var persons = Utils.FileDB2Handle.GetPersonsFromFile(selection.id);
+            var persons = Utils.FileDBHandle.GetPersonsFromFile(selection.id);
             var personStrings = persons.Select(p => $"{p.firstname} {p.lastname}{GetPersonAgeInFileString(selection.datetime, p.dateofbirth)}");
             return string.Join("\n", personStrings);
         }
@@ -1011,14 +1011,14 @@ namespace FileDB.ViewModel
 
         private string GetFileLocationsString(int fileId)
         {
-            var locations = Utils.FileDB2Handle.GetLocationsFromFile(fileId);
+            var locations = Utils.FileDBHandle.GetLocationsFromFile(fileId);
             var locationStrings = locations.Select(l => l.name);
             return string.Join("\n", locationStrings);
         }
 
         private string GetFileTagsString(int fileId)
         {
-            var tags = Utils.FileDB2Handle.GetTagsFromFile(fileId);
+            var tags = Utils.FileDBHandle.GetTagsFromFile(fileId);
             var tagStrings = tags.Select(t => t.name);
             return string.Join("\n", tagStrings);
         }
@@ -1038,9 +1038,9 @@ namespace FileDB.ViewModel
             }
 
             var fileId = searchResult.Files[SearchResultIndex].id;
-            if (!Utils.FileDB2Handle.GetPersonsFromFile(fileId).Any(p => p.id == SelectedPersonToUpdate.Id))
+            if (!Utils.FileDBHandle.GetPersonsFromFile(fileId).Any(p => p.id == SelectedPersonToUpdate.Id))
             {
-                Utils.FileDB2Handle.InsertFilePerson(fileId, SelectedPersonToUpdate.Id);
+                Utils.FileDBHandle.InsertFilePerson(fileId, SelectedPersonToUpdate.Id);
                 LoadFile(SearchResultIndex);
                 AddUpdateHistoryItem(UpdateHistoryType.TogglePerson, SelectedPersonToUpdate.Id, SelectedPersonToUpdate.Name);
             }
@@ -1065,7 +1065,7 @@ namespace FileDB.ViewModel
             }
 
             var fileId = searchResult.Files[SearchResultIndex].id;
-            Utils.FileDB2Handle.DeleteFilePerson(fileId, SelectedPersonToUpdate.Id);
+            Utils.FileDBHandle.DeleteFilePerson(fileId, SelectedPersonToUpdate.Id);
             LoadFile(SearchResultIndex);
             AddUpdateHistoryItem(UpdateHistoryType.TogglePerson, SelectedPersonToUpdate.Id, SelectedPersonToUpdate.Name);
         }
@@ -1090,9 +1090,9 @@ namespace FileDB.ViewModel
             }
 
             var fileId = searchResult.Files[SearchResultIndex].id;
-            if (!Utils.FileDB2Handle.GetLocationsFromFile(fileId).Any(l => l.id == SelectedLocationToUpdate.Id))
+            if (!Utils.FileDBHandle.GetLocationsFromFile(fileId).Any(l => l.id == SelectedLocationToUpdate.Id))
             {
-                Utils.FileDB2Handle.InsertFileLocation(fileId, SelectedLocationToUpdate.Id);
+                Utils.FileDBHandle.InsertFileLocation(fileId, SelectedLocationToUpdate.Id);
                 LoadFile(SearchResultIndex);
                 AddUpdateHistoryItem(UpdateHistoryType.ToggleLocation, SelectedLocationToUpdate.Id, SelectedLocationToUpdate.Name);
             }
@@ -1117,7 +1117,7 @@ namespace FileDB.ViewModel
             }
 
             var fileId = searchResult.Files[SearchResultIndex].id;
-            Utils.FileDB2Handle.DeleteFileLocation(fileId, SelectedLocationToUpdate.Id);
+            Utils.FileDBHandle.DeleteFileLocation(fileId, SelectedLocationToUpdate.Id);
             LoadFile(SearchResultIndex);
         }
 
@@ -1141,9 +1141,9 @@ namespace FileDB.ViewModel
             }
 
             var fileId = searchResult.Files[SearchResultIndex].id;
-            if (!Utils.FileDB2Handle.GetTagsFromFile(fileId).Any(t => t.id == SelectedTagToUpdate.Id))
+            if (!Utils.FileDBHandle.GetTagsFromFile(fileId).Any(t => t.id == SelectedTagToUpdate.Id))
             {
-                Utils.FileDB2Handle.InsertFileTag(fileId, SelectedTagToUpdate.Id);
+                Utils.FileDBHandle.InsertFileTag(fileId, SelectedTagToUpdate.Id);
                 LoadFile(SearchResultIndex);
                 AddUpdateHistoryItem(UpdateHistoryType.ToggleLocation, SelectedTagToUpdate.Id, SelectedTagToUpdate.Name);
             }
@@ -1168,7 +1168,7 @@ namespace FileDB.ViewModel
             }
 
             var fileId = searchResult.Files[SearchResultIndex].id;
-            Utils.FileDB2Handle.DeleteFileTag(fileId, SelectedTagToUpdate.Id);
+            Utils.FileDBHandle.DeleteFileTag(fileId, SelectedTagToUpdate.Id);
             LoadFile(SearchResultIndex);
             AddUpdateHistoryItem(UpdateHistoryType.ToggleLocation, SelectedTagToUpdate.Id, SelectedTagToUpdate.Name);
         }
@@ -1185,7 +1185,7 @@ namespace FileDB.ViewModel
                 var selection = SearchResult.Files[SearchResultIndex];
                 var fileId = selection.id;
                 var description = string.IsNullOrEmpty(NewFileDescription) ? null : NewFileDescription;
-                Utils.FileDB2Handle.UpdateFileDescription(fileId, description);
+                Utils.FileDBHandle.UpdateFileDescription(fileId, description);
 
                 selection.description = description;
                 LoadFile(SearchResultIndex);
@@ -1228,7 +1228,7 @@ namespace FileDB.ViewModel
         private void ReloadPersons()
         {
             Persons.Clear();
-            var persons = Utils.FileDB2Handle.GetPersons().Select(p => new PersonToUpdate() { Id = p.id, Name = p.firstname + " " + p.lastname }).ToList();
+            var persons = Utils.FileDBHandle.GetPersons().Select(p => new PersonToUpdate() { Id = p.id, Name = p.firstname + " " + p.lastname }).ToList();
             persons.Sort(new PersonToAddSorter());
             foreach (var person in persons)
             {
@@ -1239,7 +1239,7 @@ namespace FileDB.ViewModel
         private void ReloadLocations()
         {
             Locations.Clear();
-            var locations = Utils.FileDB2Handle.GetLocations().Select(l => new LocationToUpdate() { Id = l.id, Name = l.name }).ToList();
+            var locations = Utils.FileDBHandle.GetLocations().Select(l => new LocationToUpdate() { Id = l.id, Name = l.name }).ToList();
             locations.Sort(new LocationToAddSorter());
             foreach (var location in locations)
             {
@@ -1250,7 +1250,7 @@ namespace FileDB.ViewModel
         private void ReloadTags()
         {
             Tags.Clear();
-            var tags = Utils.FileDB2Handle.GetTags().Select(t => new TagToUpdate() { Id = t.id, Name = t.name }).ToList();
+            var tags = Utils.FileDBHandle.GetTags().Select(t => new TagToUpdate() { Id = t.id, Name = t.name }).ToList();
             tags.Sort(new TagToAddSorter());
             foreach (var tag in tags)
             {
@@ -1309,37 +1309,37 @@ namespace FileDB.ViewModel
             {
                 case UpdateHistoryType.TogglePerson:
                     var personId = historyItem.ItemId;
-                    if (Utils.FileDB2Handle.GetPersonsFromFile(fileId).Any(x => x.id == personId))
+                    if (Utils.FileDBHandle.GetPersonsFromFile(fileId).Any(x => x.id == personId))
                     {
-                        Utils.FileDB2Handle.DeleteFilePerson(fileId, personId);
+                        Utils.FileDBHandle.DeleteFilePerson(fileId, personId);
                     }
                     else
                     {
-                        Utils.FileDB2Handle.InsertFilePerson(fileId, personId);
+                        Utils.FileDBHandle.InsertFilePerson(fileId, personId);
                     }
                     break;
 
                 case UpdateHistoryType.ToggleLocation:
                     var locationId = historyItem.ItemId;
-                    if (Utils.FileDB2Handle.GetLocationsFromFile(fileId).Any(x => x.id == locationId))
+                    if (Utils.FileDBHandle.GetLocationsFromFile(fileId).Any(x => x.id == locationId))
                     {
-                        Utils.FileDB2Handle.DeleteFileLocation(fileId, locationId);
+                        Utils.FileDBHandle.DeleteFileLocation(fileId, locationId);
                     }
                     else
                     {
-                        Utils.FileDB2Handle.InsertFileLocation(fileId, locationId);
+                        Utils.FileDBHandle.InsertFileLocation(fileId, locationId);
                     }
                     break;
 
                 case UpdateHistoryType.ToggleTag:
                     var tagId = historyItem.ItemId;
-                    if (Utils.FileDB2Handle.GetTagsFromFile(fileId).Any(x => x.id == tagId))
+                    if (Utils.FileDBHandle.GetTagsFromFile(fileId).Any(x => x.id == tagId))
                     {
-                        Utils.FileDB2Handle.DeleteFileTag(fileId, tagId);
+                        Utils.FileDBHandle.DeleteFileTag(fileId, tagId);
                     }
                     else
                     {
-                        Utils.FileDB2Handle.InsertFileTag(fileId, tagId);
+                        Utils.FileDBHandle.InsertFileTag(fileId, tagId);
                     }
                     break;
             }

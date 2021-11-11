@@ -19,7 +19,7 @@ namespace FileDB.Config
         public static Config GetDefault()
         {
             return new Config(
-                "filedb2.db",
+                "filedb.db",
                 "files",
                 new() { "Thumbs.db", "filedb.db", "unsorted", "TN_" },
                 new() { ".jpg", ".png", ".bmp", ".gif", ".avi", ".mpg", ".mp4", ".mkv", ".mov", ".pdf" },

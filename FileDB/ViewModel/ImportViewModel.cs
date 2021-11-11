@@ -34,7 +34,7 @@ namespace FileDB.ViewModel
             OnPropertyChanged(nameof(NewFilesAvailable));
 
             // TODO: show counter?
-            foreach (var internalFilePath in Utils.FileDB2Handle.ListNewFilesystemFiles(Utils.BrowserConfig.BlacklistedFilePathPatterns, Utils.BrowserConfig.WhitelistedFilePathPatterns, Utils.BrowserConfig.IncludeHiddenDirectories))
+            foreach (var internalFilePath in Utils.FileDBHandle.ListNewFilesystemFiles(Utils.BrowserConfig.BlacklistedFilePathPatterns, Utils.BrowserConfig.WhitelistedFilePathPatterns, Utils.BrowserConfig.IncludeHiddenDirectories))
             {
                 NewFiles.Add(new NewFile()
                 {
@@ -52,7 +52,7 @@ namespace FileDB.ViewModel
             {
                 foreach (var newFile in NewFiles)
                 {
-                    Utils.FileDB2Handle.InsertFile(newFile.Path);
+                    Utils.FileDBHandle.InsertFile(newFile.Path);
                 }
             }
             catch (FileDBDataValidationException e)
@@ -66,7 +66,7 @@ namespace FileDB.ViewModel
 
         private string GetDateModified(string internalPath)
         {
-            var path = Utils.FileDB2Handle.InternalPathToPath(internalPath);
+            var path = Utils.FileDBHandle.InternalPathToPath(internalPath);
             var dateModified = File.GetLastWriteTime(path);
             return dateModified.ToString("yyyy-MM-dd HH:mm");
         }
