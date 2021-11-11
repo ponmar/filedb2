@@ -6,7 +6,7 @@ namespace Shared
 {
     public class Shared
     {
-        public static Version Version = new(0, 1);
+        public static Version Version = new(2, 1);
     }
 
     public record Version(int Major, int Minor);
