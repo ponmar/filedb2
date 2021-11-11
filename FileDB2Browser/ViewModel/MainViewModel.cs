@@ -1,6 +1,4 @@
-﻿using System.Windows.Input;
-
-namespace FileDB2Browser.ViewModel
+﻿namespace FileDB2Browser.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
@@ -31,7 +29,12 @@ namespace FileDB2Browser.ViewModel
 
         private void UpdateTitle()
         {
-            Title = ReadWriteMode ? $"{Utils.ApplicationTitle}" : $"{Utils.ApplicationTitle} - Read only mode";
+            var title = $"{Utils.ApplicationTitle} {Utils.Version.Major}.{Utils.Version.Minor}";
+            if (ReadWriteMode)
+            {
+                title += " (read only mode)";
+            }
+            Title = title;
         }
     }
 }
