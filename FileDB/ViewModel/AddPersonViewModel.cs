@@ -113,7 +113,7 @@ namespace FileDB.ViewModel
                     Utils.FileDBHandle.InsertPerson(firstname, lastname, newDescription, newDateOfBirth, newProfileFileId, SexEnum);
                 }
             }
-            catch (FileDBDataValidationException e)
+            catch (DataValidationException e)
             {
                 Utils.ShowErrorDialog(e.Message);
             }

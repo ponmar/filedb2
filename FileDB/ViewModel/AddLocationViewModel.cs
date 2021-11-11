@@ -71,7 +71,7 @@ namespace FileDB.ViewModel
                     Utils.FileDBHandle.InsertLocation(name, newDescription, newGeoLocation);
                 }
             }
-            catch (FileDBDataValidationException e)
+            catch (DataValidationException e)
             {
                 Utils.ShowErrorDialog(e.Message);
             }

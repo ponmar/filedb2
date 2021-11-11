@@ -1,6 +1,6 @@
 ﻿namespace FileDBInterface
 {
-    public class FileDBConfig
+    public class DatabaseWrapperConfig
     {
         public string Database { get; set; }
         public string FilesRootDirectory { get; set; }

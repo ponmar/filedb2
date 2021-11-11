@@ -6,13 +6,13 @@ using System.Data;
 
 namespace FileDBInterface
 {
-    public static class FileDBUtils
+    public static class DatabaseUtils
     {
         public static void CreateDatabase(string database)
         {
             if (File.Exists(database))
             {
-                throw new FileDBException($"Database already created: {database}");
+                throw new DatabaseWrapperException($"Database already created: {database}");
             }
 
             var scriptPath = "filedb.sql";
@@ -23,7 +23,7 @@ namespace FileDBInterface
             }
             catch (IOException e)
             {
-                throw new FileDBException("Unable to load database creation script", e);
+                throw new DatabaseWrapperException("Unable to load database creation script", e);
             }
 
             SQLiteConnection.CreateFile(database);

@@ -14,7 +14,7 @@ namespace FileDB
 
         public static Config.Config BrowserConfig { get; set; } = BrowserConfigIO.Read() ?? BrowserConfigFactory.GetDefault();
 
-        public static IFileDBHandle FileDBHandle
+        public static IDatabaseWrapper FileDBHandle
         {
             get
             {
@@ -25,20 +25,20 @@ namespace FileDB
                 return fileDBHandle;
             }
         }
-        private static IFileDBHandle fileDBHandle;
+        private static IDatabaseWrapper fileDBHandle;
 
         public static void ReloadFileDBHandle()
         {
-            var config = new FileDBConfig()
+            var config = new DatabaseWrapperConfig()
             {
                 Database = BrowserConfig.Database,
                 FilesRootDirectory = BrowserConfig.FilesRootDirectory,
             };
             try
             {
-                fileDBHandle = new FileDBHandle(config);
+                fileDBHandle = new DatabaseWrapper(config);
             }
-            catch (FileDBException)
+            catch (DatabaseWrapperException)
             {
                 fileDBHandle = new InvalidHandle();
             }

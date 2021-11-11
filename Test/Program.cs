@@ -9,7 +9,7 @@ namespace Test
     {
         static void Main(string[] args)
         {
-            var config = new FileDBConfig()
+            var config = new DatabaseWrapperConfig()
             {
                 Database = @"C:\Source\filedb2_db\filedb.db",
                 FilesRootDirectory = @"X:",
@@ -17,7 +17,7 @@ namespace Test
 
             try
             {
-                var handle = new FileDBHandle(config);
+                var handle = new DatabaseWrapper(config);
 
                 //var files = handle.GetFiles();
                 //var persons = handle.GetPersons();
@@ -52,7 +52,7 @@ namespace Test
                 var includeHiddenDirectories = false;
                 var newFiles = handle.ListNewFilesystemFiles(blacklistedFilePathPatterns, whitelistedFilePathPatterns, includeHiddenDirectories);
             }
-            catch (FileDBException e)
+            catch (DatabaseWrapperException e)
             {
                 Console.WriteLine($"Unhandled exception: {e}");
             }

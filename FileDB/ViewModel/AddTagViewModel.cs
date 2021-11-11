@@ -50,7 +50,7 @@ namespace FileDB.ViewModel
                     Utils.FileDBHandle.InsertTag(name);
                 }
             }
-            catch (FileDBDataValidationException e)
+            catch (DataValidationException e)
             {
                 Utils.ShowErrorDialog(e.Message);
             }

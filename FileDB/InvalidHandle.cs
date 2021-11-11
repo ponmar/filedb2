@@ -6,7 +6,7 @@ using MetadataExtractor;
 
 namespace FileDB
 {
-    public class InvalidHandle : IFileDBHandle
+    public class InvalidHandle : IDatabaseWrapper
     {
         public IEnumerable<string> ListNewFilesystemFiles(List<string> blacklistedFilePathPatterns, List<string> whitelistedFilePathPatterns, bool includeHiddenDirectories)
         {

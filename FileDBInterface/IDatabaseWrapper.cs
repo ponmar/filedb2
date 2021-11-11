@@ -6,7 +6,7 @@ using MetadataExtractor;
 
 namespace FileDBInterface
 {
-    public interface IFileDBHandle
+    public interface IDatabaseWrapper
     {
         public IEnumerable<string> ListNewFilesystemFiles(List<string> blacklistedFilePathPatterns, List<string> whitelistedFilePathPatterns, bool includeHiddenDirectories);
         public IEnumerable<string> ListAllFilesystemDirectories();

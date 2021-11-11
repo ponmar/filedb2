@@ -55,7 +55,7 @@ namespace FileDB.ViewModel
                     Utils.FileDBHandle.InsertFile(newFile.Path);
                 }
             }
-            catch (FileDBDataValidationException e)
+            catch (DataValidationException e)
             {
                 Utils.ShowErrorDialog(e.Message);
             }

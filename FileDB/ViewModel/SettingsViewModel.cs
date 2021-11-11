@@ -266,9 +266,9 @@ namespace FileDB.ViewModel
             {
                 try
                 {
-                    FileDBUtils.CreateDatabase(Database);
+                    DatabaseUtils.CreateDatabase(Database);
                 }
-                catch (FileDBException e)
+                catch (DatabaseWrapperException e)
                 {
                     Utils.ShowErrorDialog(e.Message);
                 }
