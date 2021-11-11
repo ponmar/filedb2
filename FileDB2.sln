@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileDB2Interface", "FileDB2
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileDB2Test", "FileDB2Test\FileDB2Test.csproj", "{D580E907-F680-4AE5-A4B1-58E5FE05840E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileDB2Browser", "FileDB2Browser\FileDB2Browser.csproj", "{AD7348A5-8874-44CD-977E-DF2FB0E5CE00}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileDB2", "FileDB2\FileDB2.csproj", "{AD7348A5-8874-44CD-977E-DF2FB0E5CE00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VersionPrinter", "VersionPrinter\VersionPrinter.csproj", "{E5814BDF-5D44-46AE-9954-B6971BAC651F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VersionPrinter", "VersionPrinter\VersionPrinter.csproj", "{E5814BDF-5D44-46AE-9954-B6971BAC651F}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shared", "Shared\Shared.shproj", "{0BF4213A-948E-4DB9-AC40-7B03098EE718}"
 EndProject
