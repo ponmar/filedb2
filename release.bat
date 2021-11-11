@@ -1,8 +1,9 @@
 rem @echo off
 
 set appDir=FileDB2Browser\bin\Release\net5.0-windows
+set versionPrinter=
 
-for /f "delims=" %%a in ('%appDir%\FileDB2Browser.exe --version') do @set version=%%a
+for /f "delims=" %%a in ('VersionPrinter\bin\Release\net5.0\VersionPrinter.exe') do @set version=%%a
 echo Detected version: %version%
 
 set zipDir=FileDB2-%version%
@@ -14,7 +15,7 @@ if exist "%releaseDir%" (
 )
 
 if exist "release\%zipFilename%" (
-    echo "Release filename already exists" && exit /b 1
+    echo "Release zip filename already exists" && exit /b 1
 )
 
 mkdir %releaseDir%
