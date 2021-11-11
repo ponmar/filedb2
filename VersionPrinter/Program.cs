@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace VersionPrinter
+namespace FileDB
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine($"{Shared.Shared.Version.Major}.{Shared.Shared.Version.Minor}");
+            Console.WriteLine($"{Shared.Version.Major}.{Shared.Version.Minor}");
         }
     }
 }
