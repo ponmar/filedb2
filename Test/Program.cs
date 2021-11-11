@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using FileDBInterface;
 using FileDBInterface.Exceptions;
 
-namespace FileDBTest
+namespace Test
 {
     class Program
     {
