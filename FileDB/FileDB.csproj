@@ -17,6 +17,12 @@
     <ProjectReference Include="..\FileDBInterface\FileDBInterface.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Page Update="View\AboutView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+  </ItemGroup>
+
   <Import Project="..\Shared\Shared.projitems" Label="Shared" />
 
 </Project>
