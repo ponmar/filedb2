@@ -6,13 +6,19 @@ namespace FileDB.Config
 {
     public class AppDataConfig<T>
     {
-        private string AppName { get; }
-        private string Filename { get; }
+        public string AppName { get; }
+        public string Filename { get; }
+
+        public string FilePath { get; private set; }
 
         public AppDataConfig(string appName)
         {
             AppName = appName;
             Filename = typeof(T).Name + ".json";
+
+            var baseDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            var directory = Path.Combine(baseDirectory, AppName);
+            FilePath = Path.Combine(directory, Filename);
         }
 
         public bool Write(T config)
@@ -21,11 +27,9 @@ namespace FileDB.Config
 
             try
             {
-                var baseDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-                var directory = Path.Combine(baseDirectory, AppName);
+                var directory = Path.GetDirectoryName(FilePath);
                 Directory.CreateDirectory(directory);
-                var filePath = Path.Combine(directory, Filename);
-                File.WriteAllText(filePath, jsonString);
+                File.WriteAllText(FilePath, jsonString);
                 return true;
             }
             catch (IOException)

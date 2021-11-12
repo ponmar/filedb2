@@ -12,7 +12,7 @@ namespace FileDB
 
         public static AppDataConfig<Config.Config> BrowserConfigIO { get; } = new(ApplicationTitle);
 
-        public static Config.Config BrowserConfig { get; set; } = BrowserConfigIO.Read() ?? BrowserConfigFactory.GetDefault();
+        public static Config.Config BrowserConfig { get; set; } = BrowserConfigIO.Read() ?? BrowserConfigFactory.CreateDefaultConfig();
 
         public static IDatabaseWrapper FileDBHandle
         {

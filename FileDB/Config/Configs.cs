@@ -16,7 +16,7 @@ namespace FileDB.Config
 
     public static class BrowserConfigFactory
     {
-        public static Config GetDefault()
+        public static Config CreateDefaultConfig()
         {
             return new Config(
                 "filedb.db",
@@ -28,6 +28,21 @@ namespace FileDB.Config
                 4,
                 false,
                 30);
+        }
+
+        public static Config CreateDemoConfig()
+        {
+            var defaultConfig = CreateDefaultConfig();
+            return new Config(
+                @"demo\filedb.db",
+                @"demo\files",
+                defaultConfig.BlacklistedFilePathPatterns,
+                defaultConfig.WhitelistedFilePathPatterns,
+                defaultConfig.IncludeHiddenDirectories,
+                defaultConfig.SlideshowDelay,
+                defaultConfig.SearchHistorySize,
+                defaultConfig.ReadOnly,
+                0);
         }
     }
 }
