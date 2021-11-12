@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "FileDB": {
+      "commandName": "Project",
+      "workingDirectory": "C:\\Source\\filedb2"
+    }
+  }
+}
