@@ -10,26 +10,20 @@
         <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">About</Label>
         <ScrollViewer>
             <StackPanel Orientation="Vertical">
-                <Label Style="{StaticResource PageSubHeading}">Releases</Label>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="auto"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                    </Grid.RowDefinitions>
-
-                    <TextBlock Grid.Row="0" Grid.Column="0">Download:</TextBlock>
-                    <TextBlock Grid.Row="0" Grid.Column="1">
+                <Label Style="{StaticResource PageSubHeading}">Links</Label>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock>Downloads:</TextBlock>
+                    <TextBlock Margin="10 0 0 0">
                         <Hyperlink NavigateUri="{Binding DownloadLink}" RequestNavigate="OpenUri">
-                            <TextBlock Text="Click" ToolTip="{Binding DownloadLink}"/>
+                            <TextBlock Text="Click to open" ToolTip="{Binding DownloadLink}"/>
                         </Hyperlink>
                     </TextBlock>
-                </Grid>
+                </StackPanel>                
 
                 <Label Style="{StaticResource PageSubHeading}">Changes</Label>
-                <TextBlock Text="{Binding Changes}"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock Text="{Binding Changes}"/>
+                </StackPanel>
             </StackPanel>
         </ScrollViewer>
     </DockPanel>
