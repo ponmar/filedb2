@@ -19,6 +19,7 @@ if exist "release\%zipFilename%" (
 mkdir %releaseDir%
 
 xcopy /s %appDir%\* %releaseDir%
+xcopy /s demo %releaseDir%
 xcopy CHANGES.txt %releaseDir%
 
 cd release
