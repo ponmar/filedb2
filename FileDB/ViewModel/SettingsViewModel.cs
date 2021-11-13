@@ -144,16 +144,7 @@ namespace FileDB.ViewModel
 
         public void ResetConfiguration()
         {
-            if (Utils.BrowserConfigIO.Write(BrowserConfigFactory.CreateDefaultConfig()))
-            {
-                Utils.BrowserConfig = BrowserConfigFactory.CreateDefaultConfig();
-                Utils.ReloadFileDBHandle();
-                Init();
-            }
-            else
-            {
-                Utils.ShowErrorDialog("Unable to reset configuration");
-            }
+            Init();
         }
 
         public void SaveConfiguration()
@@ -248,7 +239,7 @@ namespace FileDB.ViewModel
             {
                 Utils.BrowserConfig = config;
                 Utils.ReloadFileDBHandle();
-                Utils.ShowInfoDialog("Configuration saved");
+                Utils.ShowInfoDialog("Configuration saved. Restart to enable new configuration.");
             }
             else
             {
