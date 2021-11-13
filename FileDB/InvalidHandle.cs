@@ -171,11 +171,11 @@ namespace FileDB
             return false;
         }
 
-        public void InsertPerson(string firstname, string lastname, string description = null, string dateOfBirth = null, int? profileFileId = null, Sex sex = Sex.NotApplicable)
+        public void InsertPerson(string firstname, string lastname, string description = null, string dateOfBirth = null, string deceased = null, int? profileFileId = null, Sex sex = Sex.NotApplicable)
         {
         }
 
-        public void UpdatePerson(int id, string firstname, string lastname, string description = null, string dateOfBirth = null, int? profileFileId = null, Sex sex = Sex.NotApplicable)
+        public void UpdatePerson(int id, string firstname, string lastname, string description = null, string dateOfBirth = null, string deceased = null, int? profileFileId = null, Sex sex = Sex.NotApplicable)
         {
         }
 
@@ -196,6 +196,14 @@ namespace FileDB
         }
 
         public void UpdatePersonDateOfBirth(int id, DateTime dateOfBirth)
+        {
+        }
+
+        public void UpdatePersonDeceased(int id, string deceasedStr)
+        {
+        }
+
+        public void UpdatePersonDeceased(int id, DateTime deceased)
         {
         }
 
@@ -334,10 +342,19 @@ namespace FileDB
 
         public DateTime ParseDateOfBirth(string dateOfBirthStr)
         {
-            return DateTime.Now;
+            return default;
+        }
+
+        public DateTime ParseDeceased(string deceasedStr)
+        {
+            return default;
         }
 
         public void ValidatePersonDateOfBirth(string dateOfBirthStr)
+        {
+        }
+
+        public void ValidatePersonDeceased(string deceasedStr)
         {
         }
 

@@ -16,6 +16,7 @@
         public string lastname { get; set; }
         public string description { get; set; }
         public string dateofbirth { get; set; } // Format: YYYY-MM-DD
+        public string deceased { get; set; } // Format: YYYY-MM-DD
         public int? profilefileid { get; set; }
         public Sex sex { get; set; }
     }

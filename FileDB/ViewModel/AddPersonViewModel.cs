@@ -46,6 +46,13 @@ namespace FileDB.ViewModel
         }
         private string dateOfBirth = string.Empty;
 
+        public string Deceased
+        {
+            get => deceased;
+            set { SetProperty(ref deceased, value); }
+        }
+        private string deceased = string.Empty;
+
         public string ProfilePictureFileId
         {
             get => profilePictureFileId;
@@ -78,6 +85,7 @@ namespace FileDB.ViewModel
                 Lastname = personModel.lastname;
                 Description = personModel.description;
                 DateOfBirth = personModel.dateofbirth;
+                Deceased = personModel.deceased;
                 ProfilePictureFileId = personModel.profilefileid == null ? string.Empty : personModel.profilefileid.Value.ToString();
                 SexSelection = personModel.sex.ToString();
             }
@@ -99,6 +107,7 @@ namespace FileDB.ViewModel
 
             var newDescription = string.IsNullOrEmpty(description) ? null : description;
             var newDateOfBirth = string.IsNullOrEmpty(dateOfBirth) ? null : dateOfBirth;
+            var newDeceased = string.IsNullOrEmpty(deceased) ? null : deceased;
 
             try
             {
@@ -106,11 +115,11 @@ namespace FileDB.ViewModel
 
                 if (personId.HasValue)
                 {
-                    Utils.FileDBHandle.UpdatePerson(personId.Value, firstname, lastname, newDescription, newDateOfBirth, newProfileFileId, SexEnum);
+                    Utils.FileDBHandle.UpdatePerson(personId.Value, firstname, lastname, newDescription, newDateOfBirth, newDeceased, newProfileFileId, SexEnum);
                 }
                 else
                 {
-                    Utils.FileDBHandle.InsertPerson(firstname, lastname, newDescription, newDateOfBirth, newProfileFileId, SexEnum);
+                    Utils.FileDBHandle.InsertPerson(firstname, lastname, newDescription, newDateOfBirth, newDeceased, newProfileFileId, SexEnum);
                 }
             }
             catch (DataValidationException e)

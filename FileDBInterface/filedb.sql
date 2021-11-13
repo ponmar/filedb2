@@ -20,6 +20,7 @@ create table persons(
     lastname text not null,
     description text,
     dateofbirth varchar(10), /* Format: YYYY-MM-DD */
+    deceased varchar(10), /* Format: YYYY-MM-DD */
     profilefileid integer references files(id) on delete set null,
     sex integer not null default 0 /* Values according to ISO/IEC 5218 (0=Not known, 1=Male, 2=Female, 9=Not applicable) */
 );

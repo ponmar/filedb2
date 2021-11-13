@@ -15,6 +15,7 @@ namespace FileDB.ViewModel
         public string Lastname { get; set; }
         public string Description { get; set; }
         public string DateOfBirth { get; set; }
+        public string Deceased { get; set; }
         public int BornYearsAgo { get; set; }
         public int? ProfileFileId { get; set; }
         public Sex Sex { get; set; }
@@ -107,7 +108,7 @@ namespace FileDB.ViewModel
         {
             Persons.Clear();
 
-            var persons = Utils.FileDBHandle.GetPersons().Select(pm => new Person(pm.id) { Firstname = pm.firstname, Lastname = pm.lastname, Description = pm.description, DateOfBirth = pm.dateofbirth, BornYearsAgo = pm.dateofbirth != null ? Utils.GetYearsAgo(DateTime.Now, Utils.FileDBHandle.ParseDateOfBirth(pm.dateofbirth)) : -1, ProfileFileId = pm.profilefileid, Sex = pm.sex });
+            var persons = Utils.FileDBHandle.GetPersons().Select(pm => new Person(pm.id) { Firstname = pm.firstname, Lastname = pm.lastname, Description = pm.description, DateOfBirth = pm.dateofbirth, Deceased = pm.deceased, BornYearsAgo = pm.dateofbirth != null ? Utils.GetYearsAgo(DateTime.Now, Utils.FileDBHandle.ParseDateOfBirth(pm.dateofbirth)) : -1, ProfileFileId = pm.profilefileid, Sex = pm.sex });
             foreach (var person in persons)
             {
                 Persons.Add(person);

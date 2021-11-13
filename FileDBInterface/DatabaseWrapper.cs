@@ -402,19 +402,20 @@ namespace FileDBInterface
             return connection.ExecuteScalar<bool>("select count(1) from [persons] where id=@id", new { id });
         }
 
-        public void InsertPerson(string firstname, string lastname, string description = null, string dateOfBirth = null, int? profileFileId = null, Sex sex = Sex.NotApplicable)
+        public void InsertPerson(string firstname, string lastname, string description = null, string dateOfBirth = null, string deceased = null, int? profileFileId = null, Sex sex = Sex.NotApplicable)
         {
             ValidatePersonFirstname(firstname);
             ValidatePersonLastname(lastname);
             ValidatePersonDescription(description);
             ValidatePersonDateOfBirth(dateOfBirth);
+            ValidatePersonDeceased(deceased);
             ValidatePersonProfileFileId(profileFileId);
 
             try
             {
                 using var connection = DatabaseUtils.CreateConnection(Config.Database);
-                var person = new PersonModel() { firstname = firstname, lastname = lastname, description = description, dateofbirth = dateOfBirth, profilefileid = profileFileId, sex = sex };
-                var sql = "insert into [persons] (firstname, lastname, description, dateofbirth, profilefileid, sex) values (@firstname, @lastname, @description, @dateofbirth, @profilefileid, @sex)";
+                var person = new PersonModel() { firstname = firstname, lastname = lastname, description = description, dateofbirth = dateOfBirth, deceased = deceased, profilefileid = profileFileId, sex = sex };
+                var sql = "insert into [persons] (firstname, lastname, description, dateofbirth, deceased, profilefileid, sex) values (@firstname, @lastname, @description, @dateofbirth, @deceased, @profilefileid, @sex)";
                 connection.Execute(sql, person);
             }
             catch (SQLiteException e)
@@ -423,19 +424,20 @@ namespace FileDBInterface
             }
         }
 
-        public void UpdatePerson(int id, string firstname, string lastname, string description = null, string dateOfBirth = null, int? profileFileId = null, Sex sex = Sex.NotApplicable)
+        public void UpdatePerson(int id, string firstname, string lastname, string description = null, string dateOfBirth = null, string deceased = null, int? profileFileId = null, Sex sex = Sex.NotApplicable)
         {
             ValidatePersonFirstname(firstname);
             ValidatePersonLastname(lastname);
             ValidatePersonDescription(description);
             ValidatePersonDateOfBirth(dateOfBirth);
+            ValidatePersonDeceased(deceased);
             ValidatePersonProfileFileId(profileFileId);
 
             try
             {
                 using var connection = DatabaseUtils.CreateConnection(Config.Database);
-                var person = new PersonModel() { id = id, firstname = firstname, lastname = lastname, description = description, dateofbirth = dateOfBirth, profilefileid = profileFileId, sex = sex };
-                var sql = "update [persons] set firstname = @firstname, lastname = @lastname, description = @description, dateofbirth = @dateofbirth, profilefileid = @profilefileid, sex = @sex where id = @id";
+                var person = new PersonModel() { id = id, firstname = firstname, lastname = lastname, description = description, dateofbirth = dateOfBirth, deceased = deceased, profilefileid = profileFileId, sex = sex };
+                var sql = "update [persons] set firstname = @firstname, lastname = @lastname, description = @description, dateofbirth = @dateofbirth, deceased = @deceased, profilefileid = @profilefileid, sex = @sex where id = @id";
                 connection.Execute(sql, person);
             }
             catch (SQLiteException e)
@@ -512,6 +514,28 @@ namespace FileDBInterface
         {
             var dateOfBirthStr = dateOfBirth.ToString("yyyy-MM-dd");
             UpdatePersonDateOfBirth(id, dateOfBirthStr);
+        }
+
+        public void UpdatePersonDeceased(int id, string deceasedStr)
+        {
+            ValidatePersonDeceased(deceasedStr);
+
+            try
+            {
+                using var connection = DatabaseUtils.CreateConnection(Config.Database);
+                var sql = "update [persons] set deceased = @deceasedStr where id = @id";
+                connection.Execute(sql, new { deceased = deceasedStr, id = id });
+            }
+            catch (SQLiteException e)
+            {
+                throw new DatabaseWrapperException("SQL error", e);
+            }
+        }
+
+        public void UpdatePersonDeceased(int id, DateTime deceased)
+        {
+            var deceasedStr = deceased.ToString("yyyy-MM-dd");
+            UpdatePersonDeceased(id, deceasedStr);
         }
 
         public void UpdatePersonProfileFileId(int id, int? profileFileId)
@@ -864,12 +888,32 @@ namespace FileDBInterface
             return DateTime.ParseExact(dateOfBirthStr, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None);
         }
 
+        public DateTime ParseDeceased(string deceasedStr)
+        {
+            return DateTime.ParseExact(deceasedStr, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None);
+        }
+
         public void ValidatePersonDateOfBirth(string dateOfBirthStr)
         {
-            if (dateOfBirthStr != null &&
-                !DateTime.TryParseExact(dateOfBirthStr, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out _))
+            if (dateOfBirthStr != null)
             {
-                throw new DataValidationException("Invalid format for person date of birth (should be YYYY-MM-DD)");
+                ValidateInternalDateStr(dateOfBirthStr);
+            }
+        }
+
+        public void ValidatePersonDeceased(string deceasedStr)
+        {
+            if (deceasedStr != null)
+            {
+                ValidateInternalDateStr(deceasedStr);
+            }
+        }
+
+        private void ValidateInternalDateStr(string dateStr)
+        {
+            if (!DateTime.TryParseExact(dateStr, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out _))
+            {
+                throw new DataValidationException($"Invalid format for date string: {dateStr} (should match YYYY-MM-DD)");
             }
         }
 
