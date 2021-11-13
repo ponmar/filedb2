@@ -32,7 +32,11 @@
             var title = $"{Utils.ApplicationName} {Shared.Version.Major}.{Shared.Version.Minor}";
             if (!ReadWriteMode)
             {
-                title += " (read only mode)";
+                title += " (read only)";
+            }
+            if (Utils.DemoModeEnabled)
+            {
+                title += " [Demo mode]";
             }
             Title = title;
         }

@@ -12,6 +12,8 @@ namespace FileDB
 
         public static AppDataConfig<Config.Config> BrowserConfigIO { get; } = new(ApplicationName);
 
+        public static bool DemoModeEnabled { get; set; }
+
         public static Config.Config BrowserConfig { get; set; }
 
         public static IDatabaseWrapper FileDBHandle
