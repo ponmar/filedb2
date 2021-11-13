@@ -30,14 +30,17 @@
         private void UpdateTitle()
         {
             var title = $"{Utils.ApplicationName} {Shared.Version.Major}.{Shared.Version.Minor}";
+
+            if (!string.IsNullOrEmpty(Utils.BrowserConfig.Name))
+            {
+                title += $" [{Utils.BrowserConfig.Name}]";
+            }
+
             if (!ReadWriteMode)
             {
                 title += " (read only)";
             }
-            if (Utils.DemoModeEnabled)
-            {
-                title += " [Demo mode]";
-            }
+
             Title = title;
         }
     }

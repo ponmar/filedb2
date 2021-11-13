@@ -31,12 +31,20 @@ namespace FileDB.ViewModel
     {
         private const string BackupFileTimestampFormat = "yyyy-MM-ddTHHmmss";
 
+        /*
         public string ConfigFilePath
         {
             get => configFilePath;
             set => SetProperty(ref configFilePath, value);
         }
         private string configFilePath;
+        */
+        public string ConfigName
+        {
+            get => configName;
+            set => SetProperty(ref configName, value);
+        }
+        private string configName;
 
         public string Database
         {
@@ -132,7 +140,8 @@ namespace FileDB.ViewModel
 
         private void Init()
         {
-            ConfigFilePath = Utils.BrowserConfigIO.FilePath;
+            ConfigName = Utils.BrowserConfig.Name;
+            //ConfigFilePath = Utils.BrowserConfigIO.FilePath;
             Database = Utils.BrowserConfig.Database;
             FilesRootDirectory = Utils.BrowserConfig.FilesRootDirectory;
             SlideshowDelay = Utils.BrowserConfig.SlideshowDelay.TotalSeconds.ToString();
@@ -160,6 +169,13 @@ namespace FileDB.ViewModel
 
         public void SaveConfiguration()
         {
+            if (!Utils.ShowConfirmDialog($"Write your configuration to {Utils.BrowserConfigIO.FilePath}?"))
+            {
+                return;
+            }
+
+            // TODO: config name validation needed?
+
             if (!Database.EndsWith(".db"))
             {
                 Utils.ShowErrorDialog("Invalid database filename");
@@ -212,6 +228,7 @@ namespace FileDB.ViewModel
             }
 
             var config = new Config.Config(
+                ConfigName,
                 Database,
                 FilesRootDirectory,
                 blacklistedFilePathPatterns,

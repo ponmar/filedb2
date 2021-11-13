@@ -30,8 +30,8 @@
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextBlock}">Configuration file:</TextBlock>
-                    <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource PageTextBlock}" Text="{Binding ConfigFilePath}" ToolTip="{Binding ConfigFilePath}"></TextBlock>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextBlock}">Configuration name:</TextBlock>
+                    <TextBox Width="250" Grid.Row="0" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding ConfigName}"></TextBox>
 
                     <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageTextBlock}">Database:</TextBlock>
                     <TextBox Width="250" Grid.Row="1" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding Database}"></TextBox>
@@ -43,39 +43,35 @@
 
                     <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource PageTextBlock}">Slideshow delay (seconds):</TextBlock>
                     <TextBox Width="250" Grid.Row="3" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding SlideshowDelay}"></TextBox>
-                    <Button Grid.Row="3" Grid.Column="2" Style="{StaticResource NormalButton}">Reset</Button>
+                    <Button Grid.Row="3" Grid.Column="2" Style="{StaticResource NormalButton}" ToolTip="Reset to default">Reset</Button>
 
                     <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource PageTextBlock}">Startup database backup reminder interval (days):</TextBlock>
                     <TextBox Width="250" Grid.Row="4" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding StartupBackupReminderAfterDays}"></TextBox>
-                    <Button Grid.Row="4" Grid.Column="2" Style="{StaticResource NormalButton}">Reset</Button>
+                    <Button Grid.Row="4" Grid.Column="2" Style="{StaticResource NormalButton}" ToolTip="Reset to default">Reset</Button>
 
                     <TextBlock Grid.Row="5" Grid.Column="0" Style="{StaticResource PageTextBlock}">Search history size:</TextBlock>
                     <TextBox Width="250" Grid.Row="5" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding SearchHistorySize}"></TextBox>
-                    <Button Grid.Row="5" Grid.Column="2" Style="{StaticResource NormalButton}">Reset</Button>
+                    <Button Grid.Row="5" Grid.Column="2" Style="{StaticResource NormalButton}" ToolTip="Reset to default">Reset</Button>
 
                     <TextBlock Grid.Row="6" Grid.Column="0" Style="{StaticResource PageTextBlock}">Blacklisted file path patterns:</TextBlock>
                     <TextBox Width="250"  Grid.Row="6" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding BlacklistedFilePathPatternsJson}"></TextBox>
-                    <Button Grid.Row="6" Grid.Column="2" Style="{StaticResource NormalButton}">Reset</Button>
+                    <Button Grid.Row="6" Grid.Column="2" Style="{StaticResource NormalButton}" ToolTip="Reset to default">Reset</Button>
 
                     <TextBlock Grid.Row="7" Grid.Column="0" Style="{StaticResource PageTextBlock}">Whitelisted file path patterns:</TextBlock>
                     <TextBox Width="250"  Grid.Row="7" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding WhitelistedFilePathPatternsJson}"></TextBox>
-                    <Button Grid.Row="7" Grid.Column="2" Style="{StaticResource NormalButton}">Reset</Button>
+                    <Button Grid.Row="7" Grid.Column="2" Style="{StaticResource NormalButton}" ToolTip="Reset to default">Reset</Button>
 
-                    <StackPanel Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
-                        <CheckBox Style="{StaticResource PageCheckBox}" IsChecked="{Binding Path=IncludeHiddenDirectories, Mode=TwoWay}" VerticalAlignment="Center"/>
-                        <TextBlock Style="{StaticResource PageTextBlock}" Text="Include hidden directories" VerticalAlignment="Center"></TextBlock>
-                    </StackPanel>
-                    <Button Grid.Row="8" Grid.Column="2" Style="{StaticResource NormalButton}">Reset</Button>
-                    
-                    <StackPanel Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
-                        <CheckBox Style="{StaticResource PageCheckBox}" IsChecked="{Binding Path=ReadOnly, Mode=TwoWay}" VerticalAlignment="Center"/>
-                        <TextBlock Style="{StaticResource PageTextBlock}" Text="Read-only mode" VerticalAlignment="Center"></TextBlock>
-                    </StackPanel>
-                    <Button Grid.Row="9" Grid.Column="2" Style="{StaticResource NormalButton}">Reset</Button>
+                    <CheckBox Grid.Row="8" Grid.Column="0" HorizontalAlignment="Right" Style="{StaticResource PageCheckBox}" IsChecked="{Binding Path=IncludeHiddenDirectories, Mode=TwoWay}" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Row="8" Grid.Column="1" Style="{StaticResource PageTextBlock}" Text="Include hidden directories" VerticalAlignment="Center"></TextBlock>
+                    <Button Grid.Row="8" Grid.Column="2" Style="{StaticResource NormalButton}" ToolTip="Reset to default">Reset</Button>
+
+                    <CheckBox Grid.Row="9" Grid.Column="0" HorizontalAlignment="Right" Style="{StaticResource PageCheckBox}" IsChecked="{Binding Path=ReadOnly, Mode=TwoWay}" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Row="9" Grid.Column="1" Style="{StaticResource PageTextBlock}" Text="Read-only mode" VerticalAlignment="Center"></TextBlock>
+                    <Button Grid.Row="9" Grid.Column="2" Style="{StaticResource NormalButton}" ToolTip="Reset to default">Reset</Button>
                 </Grid>
                 <StackPanel Orientation="Horizontal" Style="{StaticResource PageStackPanel}">
                     <Button Width="100" Style="{StaticResource NormalButton}" Command="{Binding ResetConfigurationCommand}" ToolTip="No database entries or files are lost">Reset all</Button>
-                    <Button Width="100" Style="{StaticResource NormalButton}" Command="{Binding SaveConfigurationCommand}">Save</Button>
+                    <Button Width="100" Style="{StaticResource NormalButton}" Command="{Binding SaveConfigurationCommand}">Save...</Button>
                 </StackPanel>
 
                 <Label Style="{StaticResource PageSubHeading}">Database</Label>
@@ -83,7 +79,7 @@
 
                 <Label Style="{StaticResource PageSubHeading}">Backup</Label>
                 <Button Margin="10" Width="200" Style="{StaticResource NormalButton}" Command="{Binding CreateBackupCommand}">Create backup</Button>
-                <TextBlock Width="500" Text="Backup files:"/>
+                <TextBlock Width="500" Text="Backup files in configured database directory:"/>
                 <ListBox Margin="10" Width="500" ItemsSource="{Binding BackupFiles}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>

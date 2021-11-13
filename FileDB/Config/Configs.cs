@@ -4,6 +4,7 @@ using System.Collections.Generic;
 namespace FileDB.Config
 {
     public record Config(
+        string Name,
         string Database,
         string FilesRootDirectory,
         List<string> BlacklistedFilePathPatterns,
@@ -19,6 +20,7 @@ namespace FileDB.Config
         public static Config CreateDefaultConfig()
         {
             return new Config(
+                "Default",
                 "filedb.db",
                 "files",
                 new() { "Thumbs.db", "filedb.db", "unsorted", "TN_" },
@@ -34,6 +36,7 @@ namespace FileDB.Config
         {
             var defaultConfig = CreateDefaultConfig();
             return new Config(
+                "Demo configuration",
                 @"demo\filedb.db",
                 @"demo\files",
                 defaultConfig.BlacklistedFilePathPatterns,

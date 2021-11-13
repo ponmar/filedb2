@@ -16,9 +16,9 @@ namespace FileDB
     {
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            Utils.DemoModeEnabled = e.Args.Any(x => x == "--demo");
+            bool demoModeEnabled = e.Args.Any(x => x == "--demo");
 
-            if (Utils.DemoModeEnabled)
+            if (demoModeEnabled)
             {
                 Utils.BrowserConfig = BrowserConfigFactory.CreateDemoConfig();
             }
