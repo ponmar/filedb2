@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace FileDB.Config
 {
@@ -37,8 +38,8 @@ namespace FileDB.Config
             var defaultConfig = CreateDefaultConfig();
             return new Config(
                 "Demo configuration",
-                @"demo\filedb.db",
-                @"demo\files",
+                Path.Combine(Directory.GetCurrentDirectory(), @"demo\filedb.db"),
+                Path.Combine(Directory.GetCurrentDirectory(), @"demo\files"),
                 defaultConfig.BlacklistedFilePathPatterns,
                 defaultConfig.WhitelistedFilePathPatterns,
                 defaultConfig.IncludeHiddenDirectories,

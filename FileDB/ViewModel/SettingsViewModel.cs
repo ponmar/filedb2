@@ -181,9 +181,25 @@ namespace FileDB.ViewModel
                 Utils.ShowErrorDialog("Invalid database filename");
                 return;
             }
+            if (!Path.IsPathFullyQualified(Database))
+            {
+                Utils.ShowErrorDialog("Database path is not absolute");
+                return;
+            }
             if (!File.Exists(Database))
             {
                 Utils.ShowErrorDialog("Database missing");
+                return;
+            }
+
+            if (!Path.IsPathFullyQualified(FilesRootDirectory))
+            {
+                Utils.ShowErrorDialog("Files root directory path is not absolute");
+                return;
+            }
+            if (!Directory.Exists(FilesRootDirectory))
+            {
+                Utils.ShowErrorDialog("Files root directory missing");
                 return;
             }
 
