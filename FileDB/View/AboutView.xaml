@@ -7,12 +7,11 @@
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     <DockPanel>
-        <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">About</Label>
+        <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}" Content="{Binding Heading}"></Label>
         <ScrollViewer>
             <StackPanel Orientation="Vertical">
-                <Label Style="{StaticResource PageSubHeading}">Links</Label>
+                <Label Style="{StaticResource PageSubHeading}">Downloads</Label>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <TextBlock>Downloads:</TextBlock>
                     <TextBlock Margin="10 0 0 0">
                         <Hyperlink NavigateUri="{Binding DownloadLink}" RequestNavigate="OpenUri">
                             <TextBlock Text="Click to open" ToolTip="{Binding DownloadLink}"/>

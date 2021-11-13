@@ -8,9 +8,9 @@ namespace FileDB
 {
     public static class Utils
     {
-        public const string ApplicationTitle = "FileDB";
+        public const string ApplicationName = "FileDB";
 
-        public static AppDataConfig<Config.Config> BrowserConfigIO { get; } = new(ApplicationTitle);
+        public static AppDataConfig<Config.Config> BrowserConfigIO { get; } = new(ApplicationName);
 
         public static Config.Config BrowserConfig { get; set; } = BrowserConfigIO.Read() ?? BrowserConfigFactory.CreateDefaultConfig();
 
@@ -107,22 +107,22 @@ namespace FileDB
 
         public static void ShowInfoDialog(string message)
         {
-            MessageBox.Show(message, ApplicationTitle, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.No);
+            MessageBox.Show(message, ApplicationName, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.No);
         }
 
         public static void ShowWarningDialog(string message)
         {
-            MessageBox.Show(message, ApplicationTitle, MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.No);
+            MessageBox.Show(message, ApplicationName, MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.No);
         }
 
         public static void ShowErrorDialog(string message)
         {
-            MessageBox.Show(message, ApplicationTitle, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.No);
+            MessageBox.Show(message, ApplicationName, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.No);
         }
 
         public static bool ShowConfirmDialog(string question)
         {
-            return MessageBox.Show(question, ApplicationTitle, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes;
+            return MessageBox.Show(question, ApplicationName, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes;
         }
     }
 }

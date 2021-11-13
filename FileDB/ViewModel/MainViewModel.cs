@@ -29,7 +29,7 @@
 
         private void UpdateTitle()
         {
-            var title = $"{Utils.ApplicationTitle} {Shared.Version.Major}.{Shared.Version.Minor}";
+            var title = $"{Utils.ApplicationName} {Shared.Version.Major}.{Shared.Version.Minor}";
             if (!ReadWriteMode)
             {
                 title += " (read only mode)";

@@ -238,7 +238,7 @@ namespace FileDB.ViewModel
         {
             var fileDialog = new OpenFileDialog()
             {
-                Filter = $"{Utils.ApplicationTitle} database files (*.db)|*.db",
+                Filter = $"{Utils.ApplicationName} database files (*.db)|*.db",
                 InitialDirectory = @"c:\", // TODO: get directory from current path? Or appdata?
             };
             if (fileDialog.ShowDialog() == true)
