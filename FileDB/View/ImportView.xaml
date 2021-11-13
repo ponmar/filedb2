@@ -18,8 +18,8 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
-                <Button Style="{StaticResource NormalButton}" Margin="10" Grid.Row="0" Grid.Column="0" Command="{Binding ScanNewFilesCommand}">Scan for new files</Button>
-                <Button Style="{StaticResource NormalButton}" Margin="10" Grid.Row="0" Grid.Column="1" Command="{Binding ImportNewFilesCommand}" IsEnabled="{Binding NewFilesAvailable}">Import new files</Button>
+                <Button Style="{StaticResource NormalButton}" Margin="10" Grid.Row="0" Grid.Column="0" Command="{Binding ScanNewFilesCommand}">Find files...</Button>
+                <Button Style="{StaticResource NormalButton}" Margin="10" Grid.Row="0" Grid.Column="1" Command="{Binding ImportNewFilesCommand}" IsEnabled="{Binding NewFilesAvailable}">Import listed files</Button>
                 <DataGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding NewFiles}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="false" CanUserDeleteRows="false" IsReadOnly="True"/>
             </Grid>
         </ScrollViewer>

@@ -30,6 +30,11 @@ namespace FileDB.ViewModel
 
         public void ScanNewFiles()
         {
+            if (!Utils.ShowConfirmDialog($"Find all files, not yet imported, from directory {Utils.BrowserConfig.FilesRootDirectory}?"))
+            {
+                return;
+            }
+
             NewFiles.Clear();
             OnPropertyChanged(nameof(NewFilesAvailable));
 
@@ -44,6 +49,11 @@ namespace FileDB.ViewModel
             }
 
             OnPropertyChanged(nameof(NewFilesAvailable));
+
+            if (NewFiles.Count == 0)
+            {
+                Utils.ShowWarningDialog($"No new files found. Add files to directory {Utils.BrowserConfig.FilesRootDirectory} or configure another files root directory.");
+            }
         }
 
         public void ImportNewFiles()
