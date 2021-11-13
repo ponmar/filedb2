@@ -31,14 +31,6 @@ namespace FileDB.ViewModel
     {
         private const string BackupFileTimestampFormat = "yyyy-MM-ddTHHmmss";
 
-        /*
-        public string ConfigFilePath
-        {
-            get => configFilePath;
-            set => SetProperty(ref configFilePath, value);
-        }
-        private string configFilePath;
-        */
         public string ConfigName
         {
             get => configName;
@@ -129,8 +121,6 @@ namespace FileDB.ViewModel
 
         public ObservableCollection<BackupFile> BackupFiles { get; } = new();
 
-        private Config.Config DemoConfig = BrowserConfigFactory.CreateDemoConfig();
-
         public SettingsViewModel()
         {
             Init();
@@ -141,7 +131,6 @@ namespace FileDB.ViewModel
         private void Init()
         {
             ConfigName = Utils.BrowserConfig.Name;
-            //ConfigFilePath = Utils.BrowserConfigIO.FilePath;
             Database = Utils.BrowserConfig.Database;
             FilesRootDirectory = Utils.BrowserConfig.FilesRootDirectory;
             SlideshowDelay = Utils.BrowserConfig.SlideshowDelay.TotalSeconds.ToString();
