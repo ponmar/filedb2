@@ -17,7 +17,13 @@
                             <TextBlock Text="Click to open" ToolTip="{Binding DownloadLink}"/>
                         </Hyperlink>
                     </TextBlock>
-                </StackPanel>                
+                </StackPanel>
+
+                <Label Style="{StaticResource PageSubHeading}">Command line arguments</Label>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock>--demo</TextBlock>
+                    <TextBlock Margin="10 0 0 0">Enable demo configuration to play around with</TextBlock>
+                </StackPanel>
 
                 <Label Style="{StaticResource PageSubHeading}">Changes</Label>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">

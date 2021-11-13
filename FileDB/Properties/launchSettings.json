@@ -2,6 +2,7 @@
   "profiles": {
     "FileDB": {
       "commandName": "Project",
+      "commandLineArgs": "--demo",
       "workingDirectory": "C:\\Source\\filedb2"
     }
   }
