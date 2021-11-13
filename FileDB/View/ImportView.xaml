@@ -17,10 +17,12 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
-                <Button Style="{StaticResource NormalButton}" Margin="10" Grid.Row="0" Grid.Column="0" Command="{Binding ScanNewFilesCommand}">Find files...</Button>
-                <Button Style="{StaticResource NormalButton}" Margin="10" Grid.Row="0" Grid.Column="1" Command="{Binding ImportNewFilesCommand}" IsEnabled="{Binding NewFilesAvailable}">Import listed files</Button>
-                <DataGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding NewFiles}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="false" CanUserDeleteRows="false" IsReadOnly="True"/>
+                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center">&#x26A0; Check your settings to adjust what files will be listed.</TextBlock>
+                <Button Grid.Row="1" Grid.Column="0" Style="{StaticResource NormalButton}" Margin="10" Command="{Binding ScanNewFilesCommand}">Find files...</Button>
+                <Button Grid.Row="1" Grid.Column="1" Style="{StaticResource NormalButton}" Margin="10" Command="{Binding ImportNewFilesCommand}" IsEnabled="{Binding NewFilesAvailable}">Import listed files</Button>
+                <DataGrid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding NewFiles}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="false" CanUserDeleteRows="false" IsReadOnly="True"/>
             </Grid>
         </ScrollViewer>
     </DockPanel>
