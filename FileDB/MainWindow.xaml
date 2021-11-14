@@ -45,21 +45,21 @@
 
             <TabItem>
                 <TabItem.Header>
-                    <TextBlock Text="&#x1F642;" ToolTip="Persons" Style="{StaticResource PageIcon}"/>
+                    <TextBlock Text="&#x1F642;" ToolTip="Update Persons" Style="{StaticResource PageIcon}"/>
                 </TabItem.Header>
                 <Views:PersonsView Margin="10 0 10 10"/>
             </TabItem>
 
             <TabItem>
                 <TabItem.Header>
-                    <TextBlock Text="&#x1F3E0;" ToolTip="Locations" Style="{StaticResource PageIcon}"/>
+                    <TextBlock Text="&#x1F3E0;" ToolTip="Update Locations" Style="{StaticResource PageIcon}"/>
                 </TabItem.Header>
                 <Views:LocationsView Margin="10 0 10 10"/>
             </TabItem>
 
             <TabItem>
                 <TabItem.Header>
-                    <TextBlock Text="&#x1F516;" ToolTip="Tags" Style="{StaticResource PageIcon}"/>
+                    <TextBlock Text="&#x1F516;" ToolTip="Update Tags" Style="{StaticResource PageIcon}"/>
                 </TabItem.Header>
                 <Views:TagsView Margin="10 0 10 10"/>
             </TabItem>

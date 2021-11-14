@@ -13,7 +13,7 @@
     </UserControl.Resources>
 
     <DockPanel>
-        <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Tags</Label>
+        <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Update Tags</Label>
         <ScrollViewer PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
             <StackPanel Style="{StaticResource PageStackPanel}">
                 <StackPanel Orientation="Horizontal" Visibility="{Binding ReadWriteMode, Converter={StaticResource BoolToVis}}">
