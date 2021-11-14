@@ -119,21 +119,42 @@ namespace FileDB.ViewModel
         public ICommand CreateBackupCommand => createBackupCommand ??= new CommandHandler(CreateBackup);
         private ICommand createBackupCommand;
 
+        public ICommand SetDefaultSlideshowDelayCommand => setDefaultSlideshowDelayCommand ??= new CommandHandler(x => SlideshowDelay = ((int)BrowserConfigFactory.CreateDefaultConfig().SlideshowDelay.TotalSeconds).ToString());
+        private ICommand setDefaultSlideshowDelayCommand;
+
+        public ICommand SetDefaultStartupBackupReminderAfterDaysCommand => setDefaultStartupBackupReminderAfterDaysCommand ??= new CommandHandler(x => StartupBackupReminderAfterDays = BrowserConfigFactory.CreateDefaultConfig().StartupBackupReminderAfterDays.ToString());
+        private ICommand setDefaultStartupBackupReminderAfterDaysCommand;
+
+        public ICommand SetDefaultSearchHistorySizeCommand => setDefaultSearchHistorySizeCommand ??= new CommandHandler(x => SearchHistorySize = BrowserConfigFactory.CreateDefaultConfig().SearchHistorySize.ToString());
+        private ICommand setDefaultSearchHistorySizeCommand;
+
+        public ICommand SetDefaultBlacklistedFilePathPatternsJsonCommand => setDefaultBlacklistedFilePathPatternsJsonCommand ??= new CommandHandler(x => BlacklistedFilePathPatternsJson = JsonConvert.SerializeObject(BrowserConfigFactory.CreateDefaultConfig().BlacklistedFilePathPatterns));
+        private ICommand setDefaultBlacklistedFilePathPatternsJsonCommand;
+
+        public ICommand SetDefaultWhitelistedFilePathPatternsJsonCommand => setDefaultWhitelistedFilePathPatternsJsonCommand ??= new CommandHandler(x => WhitelistedFilePathPatternsJson = JsonConvert.SerializeObject(BrowserConfigFactory.CreateDefaultConfig().WhitelistedFilePathPatterns));
+        private ICommand setDefaultWhitelistedFilePathPatternsJsonCommand;
+
+        public ICommand SetDefaultIncludeHiddenDirectoriesCommand => setDefaultIncludeHiddenDirectoriesCommand ??= new CommandHandler(x => IncludeHiddenDirectories = BrowserConfigFactory.CreateDefaultConfig().IncludeHiddenDirectories);
+        private ICommand setDefaultIncludeHiddenDirectoriesCommand;
+
+        public ICommand SetDefaultReadOnlyCommand => setDefaultReadOnlyCommand ??= new CommandHandler(x => ReadOnly = BrowserConfigFactory.CreateDefaultConfig().ReadOnly);
+        private ICommand setDefaultReadOnlyCommand;
+
         public ObservableCollection<BackupFile> BackupFiles { get; } = new();
 
         public SettingsViewModel()
         {
-            Init();
+            UpdateFromConfiguration();
             ScanBackupFiles();
             ShowBackupReminder();
         }
 
-        private void Init()
+        private void UpdateFromConfiguration()
         {
             ConfigName = Utils.BrowserConfig.Name;
             Database = Utils.BrowserConfig.Database;
             FilesRootDirectory = Utils.BrowserConfig.FilesRootDirectory;
-            SlideshowDelay = Utils.BrowserConfig.SlideshowDelay.TotalSeconds.ToString();
+            SlideshowDelay = ((int)Utils.BrowserConfig.SlideshowDelay.TotalSeconds).ToString();
             SearchHistorySize = Utils.BrowserConfig.SearchHistorySize.ToString();
             IncludeHiddenDirectories = Utils.BrowserConfig.IncludeHiddenDirectories;
             BlacklistedFilePathPatternsJson = JsonConvert.SerializeObject(Utils.BrowserConfig.BlacklistedFilePathPatterns);
@@ -144,7 +165,7 @@ namespace FileDB.ViewModel
 
         public void ResetConfiguration()
         {
-            Init();
+            UpdateFromConfiguration();
         }
 
         public void SaveConfiguration()
@@ -154,7 +175,11 @@ namespace FileDB.ViewModel
                 return;
             }
 
-            // TODO: config name validation needed?
+            if (ConfigName.Length < 3 || ConfigName.Length > 100)
+            {
+                Utils.ShowErrorDialog("Invalid configuration name");
+                return;
+            }
 
             if (!Database.EndsWith(".db"))
             {
@@ -239,7 +264,7 @@ namespace FileDB.ViewModel
             {
                 Utils.BrowserConfig = config;
                 Utils.ReloadFileDBHandle();
-                Utils.ShowInfoDialog("Configuration saved. Restart to enable new configuration.");
+                Utils.ShowInfoDialog("Configuration saved. Restart to enable all settings.");
             }
             else
             {
