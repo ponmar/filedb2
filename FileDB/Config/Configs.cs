@@ -37,7 +37,7 @@ namespace FileDB.Config
         {
             var defaultConfig = CreateDefaultConfig();
             return new Config(
-                "Demo configuration",
+                "Demo",
                 Path.Combine(Directory.GetCurrentDirectory(), @"demo\filedb.db"),
                 Path.Combine(Directory.GetCurrentDirectory(), @"demo\files"),
                 defaultConfig.BlacklistedFilePathPatterns,
