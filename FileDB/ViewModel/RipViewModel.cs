@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.ObjectModel;
-using FileDBInterface;
+using System.Collections.Generic;
 
 namespace FileDB.ViewModel
 {
@@ -8,13 +7,22 @@ namespace FileDB.ViewModel
     {
         public string Name { get; set; }
         public string DateOfBirth { get; set; }
-        public string Deceased { get; set; }
+        public string DeceasedStr { get; set; }
+        public DateTime Deceased { get; set; }
         public int Age { get; set; }
+    }
+
+    public class PersonsByDeceasedSorter : IComparer<DeceasedPerson>
+    {
+        public int Compare(DeceasedPerson x, DeceasedPerson y)
+        {
+            return x.Deceased.CompareTo(y.Deceased);
+        }
     }
 
     public class RipViewModel : ViewModelBase
     {
-        public ObservableCollection<DeceasedPerson> Persons { get; set; } = new ObservableCollection<DeceasedPerson>();
+        public List<DeceasedPerson> Persons { get; set; } = new();
 
         public RipViewModel()
         {
@@ -29,11 +37,15 @@ namespace FileDB.ViewModel
                     {
                         Name = person.firstname + " " + person.lastname,
                         DateOfBirth = person.dateofbirth,
-                        Deceased = person.deceased,
+                        DeceasedStr = person.deceased,
+                        Deceased = deceased,
                         Age = Utils.GetAgeInYears(dateOfBirth, deceased),
-                    }); ;
+                    });
                 }
             }
+
+            Persons.Sort(new PersonsByDeceasedSorter());
+            Persons.Reverse();
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using FileDBInterface;
 
 namespace FileDB.ViewModel
@@ -12,9 +12,22 @@ namespace FileDB.ViewModel
         public int BornYearsAgo { get; set; }
     }
 
+    public class PersonsByDaysLeftUntilBirthdaySorter : IComparer<PersonBirthday>
+    {
+        public int Compare(PersonBirthday x, PersonBirthday y)
+        {
+            if (x.DaysLeft == y.DaysLeft)
+            {
+                return x.Name.CompareTo(y.Name);
+            }
+
+            return x.DaysLeft.CompareTo(y.DaysLeft);
+        }
+    }
+
     public class BirthdaysViewModel : ViewModelBase
     {
-        public ObservableCollection<PersonBirthday> Persons { get; set; } = new ObservableCollection<PersonBirthday>();
+        public List<PersonBirthday> Persons { get; } = new();
 
         public BirthdaysViewModel()
         {
@@ -33,6 +46,8 @@ namespace FileDB.ViewModel
                     });
                 }
             }
+
+            Persons.Sort(new PersonsByDaysLeftUntilBirthdaySorter());
         }
     }
 }

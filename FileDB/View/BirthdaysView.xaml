@@ -6,8 +6,21 @@
              xmlns:local="clr-namespace:FileDB.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <DataTemplate x:Key="PersonTemplate">
+            <StackPanel Orientation="Vertical" Margin="10">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding Name}" Margin="5" FontSize="20"/>
+                    <TextBlock Text="{Binding Age}" Margin="5" FontSize="20"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding Birthday}" Margin="5"/>
+                </StackPanel>
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+    
     <DockPanel>
-        <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Birthdays</Label>
         <ScrollViewer PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
             <Grid Style="{StaticResource PageGrid}">
                 <Grid.ColumnDefinitions>
@@ -16,7 +29,9 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
-                <DataGrid Grid.Row="0" Grid.Column="0" ItemsSource="{Binding Persons}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="false" CanUserDeleteRows="false" IsReadOnly="True" SelectionMode="Single"/>
+
+                <!--<DataGrid ItemsSource="{Binding Persons}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="false" CanUserDeleteRows="false" IsReadOnly="True" SelectionMode="Single"/>-->
+                <ListView Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" ItemsSource="{Binding Persons}" ItemTemplate="{StaticResource PersonTemplate}"/>
             </Grid>
         </ScrollViewer>
     </DockPanel>
