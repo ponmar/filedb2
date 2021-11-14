@@ -80,7 +80,7 @@
 
             <TabItem>
                 <TabItem.Header>
-                    <TextBlock Text="&#x1F6C8;" ToolTip="Settings" Style="{StaticResource PageIcon}"/>
+                    <TextBlock Text="&#x1F6C8;" ToolTip="About" Style="{StaticResource PageIcon}"/>
                 </TabItem.Header>
                 <Views:AboutView Margin="10 0 10 10"/>
             </TabItem>

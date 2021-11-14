@@ -14,37 +14,21 @@
     <DockPanel>
         <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Locations</Label>
         <ScrollViewer PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
-            <Grid Style="{StaticResource PageGrid}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
+            <StackPanel Style="{StaticResource PageStackPanel}">
+                <StackPanel Orientation="Horizontal" Visibility="{Binding ReadWriteMode, Converter={StaticResource BoolToVis}}">
+                    <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding AddLocationCommand}">Add location</Button>
+                    <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding EditLocationCommand}">Edit selected location</Button>
+                    <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding RemoveLocationCommand}">Delete selected location</Button>
+                </StackPanel>
 
-                <Grid Grid.Row="0" Grid.Column="0" Style="{StaticResource PageGrid}" Visibility="{Binding ReadWriteMode, Converter={StaticResource BoolToVis}}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                    </Grid.RowDefinitions>
-                    <Button Style="{StaticResource NormalButton}" Margin="10" Grid.Row="0" Grid.Column="0" Command="{Binding AddLocationCommand}">Add location</Button>
-                    <Button Style="{StaticResource NormalButton}" Margin="10" Grid.Row="0" Grid.Column="1" Command="{Binding EditLocationCommand}">Edit selected location</Button>
-                    <Button Style="{StaticResource NormalButton}" Margin="10" Grid.Row="0" Grid.Column="2" Command="{Binding RemoveLocationCommand}">Delete selected location</Button>
-                </Grid>
-
-                <DataGrid Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Locations}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single">
+                <DataGrid ItemsSource="{Binding Locations}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectionChanged">
                             <i:InvokeCommandAction Command="{Binding LocationSelectionCommand}" CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </DataGrid>
-            </Grid>
+            </StackPanel>
         </ScrollViewer>
     </DockPanel>
 </UserControl>

@@ -9,31 +9,48 @@
     <DockPanel>
         <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}" Content="{Binding Heading}"></Label>
         <ScrollViewer>
-            <StackPanel Orientation="Vertical">
-                <Label Style="{StaticResource PageSubHeading}">How to</Label>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <TextBlock Text="TBD"/>
+            <StackPanel Orientation="Vertical" Margin="10">
+                <Label Style="{StaticResource PageSubHeading}">Getting Started</Label>
+                <TextBlock Margin="10" Text="TBD"/>
+
+                <Label Style="{StaticResource PageSubHeading}">Notes About Your Files Collection</Label>
+                <TextBlock TextWrapping="Wrap" Margin="10">FileDB does not modify any files in your file collection. Files are read when adding files, viewing files or when reading Exif-data via the API.</TextBlock>
+                <TextBlock TextWrapping="Wrap" Margin="10">Before adding your files, take a moment to think about the directory structure. Any directory structure can be used for sorting files in your existing collection. However, this layout has been proven to work very well:</TextBlock>
+
+                <StackPanel Margin="30 10 10 10">
+                    <TextBlock>root</TextBlock>
+                    <TextBlock>|- 2015</TextBlock>
+                    <TextBlock>|   |- 2015-06-12 - Biking</TextBlock>
+                    <TextBlock>|   |      |- file1.jpg</TextBlock>
+                    <TextBlock>|   |      |- file2.jpg</TextBlock>
+                    <TextBlock>|   |</TextBlock>
+                    <TextBlock>|   |- 2015-07-13 - Birthday party</TextBlock>
+                    <TextBlock>|          |- somefile.jpg</TextBlock>
+                    <TextBlock>|</TextBlock>
+                    <TextBlock>|- 2016</TextBlock>
+                    <TextBlock>|- 2016-01-05 - Something else</TextBlock>
+                    <TextBlock>|- anotherfile1.jpg</TextBlock>
+                    <TextBlock>|- anotherfile2.jpg</TextBlock>
                 </StackPanel>
 
-                <Label Style="{StaticResource PageSubHeading}">Command line arguments</Label>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock TextWrapping="Wrap" Margin="10">File paths in FileDB uses UNIX style directory separators ('/'), mostly because that is how FileDB stores the paths internally.</TextBlock>
+                <TextBlock TextWrapping="Wrap" Margin="10">If you rename or delete files that has been added to FileDB you need to remove them in FileDB as well (and possibly add them again).</TextBlock>
+
+                <Label Style="{StaticResource PageSubHeading}">Command Line Arguments</Label>
+                <StackPanel Orientation="Horizontal" Margin="10">
                     <TextBlock>--demo</TextBlock>
                     <TextBlock Margin="10 0 0 0">Enable demo configuration to play around with</TextBlock>
                 </StackPanel>
 
                 <Label Style="{StaticResource PageSubHeading}">Changelog</Label>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <TextBlock Text="{Binding Changes}"/>
-                </StackPanel>
+                <TextBlock Margin="10" Text="{Binding Changes}"/>
 
                 <Label Style="{StaticResource PageSubHeading}">Downloads</Label>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <TextBlock Margin="10 0 0 0">
-                        <Hyperlink NavigateUri="{Binding DownloadLink}" RequestNavigate="OpenUri">
-                            <TextBlock Text="Click to open" ToolTip="{Binding DownloadLink}"/>
-                        </Hyperlink>
-                    </TextBlock>
-                </StackPanel>
+                <TextBlock Margin="10 0 0 0">
+                    <Hyperlink NavigateUri="{Binding DownloadLink}" RequestNavigate="OpenUri">
+                        <TextBlock Text="Click to open" ToolTip="{Binding DownloadLink}"/>
+                    </Hyperlink>
+                </TextBlock>
             </StackPanel>
         </ScrollViewer>
     </DockPanel>
