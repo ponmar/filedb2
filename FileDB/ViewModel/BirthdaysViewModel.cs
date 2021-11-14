@@ -9,6 +9,7 @@ namespace FileDB.ViewModel
         public string Name { get; set; }
         public string Birthday { get; set; }
         public int DaysLeft { get; set; }
+        public string DaysLeftStr { get; set; }
         public int BornYearsAgo { get; set; }
     }
 
@@ -37,13 +38,19 @@ namespace FileDB.ViewModel
                 {
                     var dateOfBirth = DatabaseUtils.ParseDateOfBirth(person.dateofbirth);
 
-                    Persons.Add(new PersonBirthday()
+                    var p = new PersonBirthday()
                     {
                         Name = person.firstname + " " + person.lastname,
                         Birthday = dateOfBirth.ToString("d MMMM"),
                         DaysLeft = Utils.GetDaysToNextBirthday(dateOfBirth),
                         BornYearsAgo = Utils.GetYearsAgo(DateTime.Now, dateOfBirth),
-                    });
+                    };
+
+                    p.DaysLeftStr = p.DaysLeft <= 14 ? $"{p.DaysLeft} days left" : string.Empty;
+
+                    Persons.Add(p);
+
+
                 }
             }
 

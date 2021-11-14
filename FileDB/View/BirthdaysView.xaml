@@ -15,6 +15,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="{Binding Birthday}" Margin="5"/>
+                    <TextBlock Text="{Binding DaysLeftStr}" Margin="5"/>
                 </StackPanel>
             </StackPanel>
         </DataTemplate>
@@ -30,7 +31,6 @@
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
 
-                <!--<DataGrid ItemsSource="{Binding Persons}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="false" CanUserDeleteRows="false" IsReadOnly="True" SelectionMode="Single"/>-->
                 <ListView Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" ItemsSource="{Binding Persons}" ItemTemplate="{StaticResource PersonTemplate}"/>
             </Grid>
         </ScrollViewer>
