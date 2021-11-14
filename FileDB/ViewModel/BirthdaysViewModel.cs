@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using FileDBInterface;
 
 namespace FileDB.ViewModel
 {
@@ -13,15 +14,17 @@ namespace FileDB.ViewModel
 
     public class BirthdaysViewModel : ViewModelBase
     {
-        public ObservableCollection<PersonBirthday> Birthdays { get; set; } = new ObservableCollection<PersonBirthday>();
+        public ObservableCollection<PersonBirthday> Persons { get; set; } = new ObservableCollection<PersonBirthday>();
 
         public BirthdaysViewModel()
         {
             foreach (var person in Utils.FileDBHandle.GetPersons())
             {
-                if (person.dateofbirth != null && DateTime.TryParse(person.dateofbirth, out var dateOfBirth))
+                if (person.dateofbirth != null && person.deceased == null)
                 {
-                    Birthdays.Add(new PersonBirthday()
+                    var dateOfBirth = DatabaseUtils.ParseDateOfBirth(person.dateofbirth);
+
+                    Persons.Add(new PersonBirthday()
                     {
                         Name = person.firstname + " " + person.lastname,
                         Birthday = dateOfBirth.ToString("d MMMM"),

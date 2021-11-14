@@ -88,6 +88,11 @@ namespace FileDB
             return (next - today).Days;
         }
 
+        public static int GetAgeInYears(DateTime dateOfBirth, DateTime deceased)
+        {
+            return GetYearsAgo(deceased, dateOfBirth);
+        }
+
         public static bool InternalDatetimeToDatetime(string datetimeStr, out DateTime? result)
         {
             if (datetimeStr != null && DateTime.TryParse(datetimeStr, out var datetime))
