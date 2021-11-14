@@ -10,7 +10,22 @@
         <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Tools</Label>
         <ScrollViewer>
             <StackPanel Orientation="Vertical">
-                <Label Style="{StaticResource PageSubHeading}">For future use</Label>
+                <Label Style="{StaticResource PageSubHeading}">Database Backup</Label>
+                <StackPanel Orientation="Vertical" Style="{StaticResource PageStackPanel}">
+                    <TextBlock>&#x26A0; Backup of your files collection, FileDB configuration and FileDB databases to external media should be done continuously!</TextBlock>
+                    <TextBlock>&#x26A0; Database recovery must be done manually if needed.</TextBlock>
+                    <Button Margin="10" Width="200" Style="{StaticResource NormalButton}" Command="{Binding CreateBackupCommand}">Create database backup</Button>
+                    <TextBlock Width="500" Text="Backup files in configured database directory:"/>
+                    <ListBox Margin="10" Width="500" ItemsSource="{Binding BackupFiles}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Path=Filename}" ToolTip="{Binding Path=Filename}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
             </StackPanel>
         </ScrollViewer>
     </DockPanel>

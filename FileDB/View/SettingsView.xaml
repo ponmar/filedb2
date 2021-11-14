@@ -10,7 +10,6 @@
         <Label Style="{StaticResource PageHeading}" DockPanel.Dock="Top">Settings</Label>
         <ScrollViewer>
             <StackPanel Orientation="Vertical">
-                <Label Style="{StaticResource PageSubHeading}">Configuration</Label>
                 <Grid Style="{StaticResource PageGrid}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
@@ -73,23 +72,6 @@
                     <Button Width="100" Style="{StaticResource NormalButton}" Command="{Binding ResetConfigurationCommand}" ToolTip="Reset changes to last saved configuration">Reset changes</Button>
                     <Button Style="{StaticResource NormalButton}" Command="{Binding CreateDatabaseCommand}">Create configured database...</Button>
                     <Button Width="100" Style="{StaticResource NormalButton}" Command="{Binding SaveConfigurationCommand}">Save...</Button>
-                </StackPanel>
-
-                <Label Style="{StaticResource PageSubHeading}">Backup</Label>
-                <StackPanel Orientation="Vertical" Style="{StaticResource PageStackPanel}">
-                    <Button Margin="10" Width="200" Style="{StaticResource NormalButton}" Command="{Binding CreateBackupCommand}">Create backup</Button>
-                    <TextBlock Width="500" Text="Backup files in configured database directory:"/>
-                    <ListBox Margin="10" Width="500" ItemsSource="{Binding BackupFiles}">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Path=Filename}" ToolTip="{Binding Path=Filename}" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                    <TextBlock>&#x26A0; Backup of your files collection, FileDB configuration and FileDB databases to external media should be done continuously</TextBlock>
-                    <TextBlock>&#x26A0; Database recovery must be done manually if needed.</TextBlock>
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>
