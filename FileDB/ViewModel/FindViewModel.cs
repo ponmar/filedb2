@@ -11,6 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using FileDB.View;
 using FileDB.ViewModel.Sorters;
+using FileDBInterface;
 using FileDBInterface.Comparers;
 using FileDBInterface.Model;
 using TextCopy;
@@ -398,6 +399,13 @@ namespace FileDB.ViewModel
             private set { SetProperty(ref currentFileInternalPath, value); }
         }
         private string currentFileInternalPath;
+
+        public string CurrentFileInternalDirectoryPath
+        {
+            get => currentFileInternalDirectoryPath;
+            private set { SetProperty(ref currentFileInternalDirectoryPath, value); }
+        }
+        private string currentFileInternalDirectoryPath;
 
         public string CurrentFilePath
         {
@@ -791,7 +799,7 @@ namespace FileDB.ViewModel
 
                 foreach (var person in personsWithAge)
                 {
-                    var dateOfBirth = Utils.FileDBHandle.ParseDateOfBirth(person.dateofbirth);
+                    var dateOfBirth = DatabaseUtils.ParseDateOfBirth(person.dateofbirth);
                     foreach (var file in Utils.FileDBHandle.GetFilesWithPersons(new List<int>() { person.id }))
                     {
                         if (Utils.InternalDatetimeToDatetime(file.datetime, out var fileDatetime))
@@ -907,6 +915,7 @@ namespace FileDB.ViewModel
                 var selection = SearchResult.Files[SearchResultIndex];
 
                 CurrentFileInternalPath = selection.path;
+                CurrentFileInternalDirectoryPath = Path.GetDirectoryName(selection.path);
                 CurrentFilePath = Utils.FileDBHandle.InternalPathToPath(selection.path);
                 CurrentFileDescription = selection.description ?? string.Empty;
                 CurrentFileDateTime = GetFileDateTimeString(selection.datetime);

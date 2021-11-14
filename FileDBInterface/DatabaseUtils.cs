@@ -3,6 +3,8 @@ using System.IO;
 using Dapper;
 using FileDBInterface.Exceptions;
 using System.Data;
+using System;
+using System.Globalization;
 
 namespace FileDBInterface
 {
@@ -76,5 +78,15 @@ create table filetags(
     primary key(fileid, tagid)
 );
 ";
+
+        public static DateTime ParseDateOfBirth(string dateOfBirthStr)
+        {
+            return DateTime.ParseExact(dateOfBirthStr, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None);
+        }
+
+        public static DateTime ParseDeceased(string deceasedStr)
+        {
+            return DateTime.ParseExact(deceasedStr, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None);
+        }
     }
 }

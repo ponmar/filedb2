@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using FileDB.View;
+using FileDBInterface;
 using FileDBInterface.Model;
 
 namespace FileDB.ViewModel
@@ -108,7 +109,7 @@ namespace FileDB.ViewModel
         {
             Persons.Clear();
 
-            var persons = Utils.FileDBHandle.GetPersons().Select(pm => new Person(pm.id) { Firstname = pm.firstname, Lastname = pm.lastname, Description = pm.description, DateOfBirth = pm.dateofbirth, Deceased = pm.deceased, BornYearsAgo = pm.dateofbirth != null ? Utils.GetYearsAgo(DateTime.Now, Utils.FileDBHandle.ParseDateOfBirth(pm.dateofbirth)) : -1, ProfileFileId = pm.profilefileid, Sex = pm.sex });
+            var persons = Utils.FileDBHandle.GetPersons().Select(pm => new Person(pm.id) { Firstname = pm.firstname, Lastname = pm.lastname, Description = pm.description, DateOfBirth = pm.dateofbirth, Deceased = pm.deceased, BornYearsAgo = pm.dateofbirth != null ? Utils.GetYearsAgo(DateTime.Now, DatabaseUtils.ParseDateOfBirth(pm.dateofbirth)) : -1, ProfileFileId = pm.profilefileid, Sex = pm.sex });
             foreach (var person in persons)
             {
                 Persons.Add(person);

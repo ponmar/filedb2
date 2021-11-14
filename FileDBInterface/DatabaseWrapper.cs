@@ -254,7 +254,7 @@ namespace FileDBInterface
 
         public void InsertFile(string internalPath, string description = null)
         {
-            ValidateFileDescription(description);
+            FormatValidator.ValidateFileDescription(description);
 
             internalPath = FixInternalPath(internalPath);
             var path = InternalPathToPath(internalPath);
@@ -282,7 +282,7 @@ namespace FileDBInterface
 
         public void UpdateFileDescription(int id, string description)
         {
-            ValidateFileDescription(description);
+            FormatValidator.ValidateFileDescription(description);
 
             try
             {
@@ -404,11 +404,11 @@ namespace FileDBInterface
 
         public void InsertPerson(string firstname, string lastname, string description = null, string dateOfBirth = null, string deceased = null, int? profileFileId = null, Sex sex = Sex.NotApplicable)
         {
-            ValidatePersonFirstname(firstname);
-            ValidatePersonLastname(lastname);
-            ValidatePersonDescription(description);
-            ValidatePersonDateOfBirth(dateOfBirth);
-            ValidatePersonDeceased(deceased);
+            FormatValidator.ValidatePersonFirstname(firstname);
+            FormatValidator.ValidatePersonLastname(lastname);
+            FormatValidator.ValidatePersonDescription(description);
+            FormatValidator.ValidatePersonDateOfBirth(dateOfBirth);
+            FormatValidator.ValidatePersonDeceased(deceased);
             ValidatePersonProfileFileId(profileFileId);
 
             try
@@ -426,11 +426,11 @@ namespace FileDBInterface
 
         public void UpdatePerson(int id, string firstname, string lastname, string description = null, string dateOfBirth = null, string deceased = null, int? profileFileId = null, Sex sex = Sex.NotApplicable)
         {
-            ValidatePersonFirstname(firstname);
-            ValidatePersonLastname(lastname);
-            ValidatePersonDescription(description);
-            ValidatePersonDateOfBirth(dateOfBirth);
-            ValidatePersonDeceased(deceased);
+            FormatValidator.ValidatePersonFirstname(firstname);
+            FormatValidator.ValidatePersonLastname(lastname);
+            FormatValidator.ValidatePersonDescription(description);
+            FormatValidator.ValidatePersonDateOfBirth(dateOfBirth);
+            FormatValidator.ValidatePersonDeceased(deceased);
             ValidatePersonProfileFileId(profileFileId);
 
             try
@@ -448,7 +448,7 @@ namespace FileDBInterface
 
         public void UpdatePersonFirstname(int id, string firstname)
         {
-            ValidatePersonFirstname(firstname);
+            FormatValidator.ValidatePersonFirstname(firstname);
 
             try
             {
@@ -464,7 +464,7 @@ namespace FileDBInterface
 
         public void UpdatePersonLastname(int id, string lastname)
         {
-            ValidatePersonLastname(lastname);
+            FormatValidator.ValidatePersonLastname(lastname);
 
             try
             {
@@ -480,7 +480,7 @@ namespace FileDBInterface
 
         public void UpdatePersonDescription(int id, string description)
         {
-            ValidatePersonDescription(description);
+            FormatValidator.ValidatePersonDescription(description);
 
             try
             {
@@ -496,7 +496,7 @@ namespace FileDBInterface
 
         public void UpdatePersonDateOfBirth(int id, string dateOfBirthStr)
         {
-            ValidatePersonDateOfBirth(dateOfBirthStr);
+            FormatValidator.ValidatePersonDateOfBirth(dateOfBirthStr);
 
             try
             {
@@ -518,7 +518,7 @@ namespace FileDBInterface
 
         public void UpdatePersonDeceased(int id, string deceasedStr)
         {
-            ValidatePersonDeceased(deceasedStr);
+            FormatValidator.ValidatePersonDeceased(deceasedStr);
 
             try
             {
@@ -627,9 +627,9 @@ namespace FileDBInterface
 
         public void InsertLocation(string name, string description = null, string geoLocation = null)
         {
-            ValidateLocationName(name);
-            ValidateLocationDescription(description);
-            ValidateLocationGeoLocation(geoLocation, out _);
+            FormatValidator.ValidateLocationName(name);
+            FormatValidator.ValidateLocationDescription(description);
+            FormatValidator.ValidateLocationGeoLocation(geoLocation, out _);
 
             try
             {
@@ -652,7 +652,7 @@ namespace FileDBInterface
 
         public void UpdateLocationName(int id, string name)
         {
-            ValidateLocationName(name);
+            FormatValidator.ValidateLocationName(name);
 
             try
             {
@@ -668,7 +668,7 @@ namespace FileDBInterface
 
         public void UpdateLocationDescription(int id, string description)
         {
-            ValidateLocationDescription(description);
+            FormatValidator.ValidateLocationDescription(description);
 
             try
             {
@@ -684,7 +684,7 @@ namespace FileDBInterface
 
         public void UpdateLocationPosition(int id, string geoLocation)
         {
-            ValidateLocationGeoLocation(geoLocation, out _);
+            FormatValidator.ValidateLocationGeoLocation(geoLocation, out _);
 
             try
             {
@@ -763,7 +763,7 @@ namespace FileDBInterface
 
         public void InsertTag(string name)
         {
-            ValidateTagName(name);
+            FormatValidator.ValidateTagName(name);
 
             try
             {
@@ -780,7 +780,7 @@ namespace FileDBInterface
 
         public void UpdateTagName(int id, string name)
         {
-            ValidateTagName(name);
+            FormatValidator.ValidateTagName(name);
 
             try
             {
@@ -849,74 +849,6 @@ namespace FileDBInterface
 
         #endregion
 
-        #region Data validation
-
-        public void ValidateFileDescription(string description)
-        {
-            if (description == string.Empty)
-            {
-                throw new DataValidationException("Empty file description should be null");
-            }
-        }
-
-        public void ValidatePersonFirstname(string firstname)
-        {
-            if (string.IsNullOrEmpty(firstname))
-            {
-                throw new DataValidationException("Person firstname empty");
-            }
-        }
-
-        public void ValidatePersonLastname(string lastname)
-        {
-            if (string.IsNullOrEmpty(lastname))
-            {
-                throw new DataValidationException("Person lastname empty");
-            }
-        }
-
-        public void ValidatePersonDescription(string description)
-        {
-            if (description == string.Empty)
-            {
-                throw new DataValidationException("Empty person description should be null");
-            }
-        }
-
-        public DateTime ParseDateOfBirth(string dateOfBirthStr)
-        {
-            return DateTime.ParseExact(dateOfBirthStr, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None);
-        }
-
-        public DateTime ParseDeceased(string deceasedStr)
-        {
-            return DateTime.ParseExact(deceasedStr, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None);
-        }
-
-        public void ValidatePersonDateOfBirth(string dateOfBirthStr)
-        {
-            if (dateOfBirthStr != null)
-            {
-                ValidateInternalDateStr(dateOfBirthStr);
-            }
-        }
-
-        public void ValidatePersonDeceased(string deceasedStr)
-        {
-            if (deceasedStr != null)
-            {
-                ValidateInternalDateStr(deceasedStr);
-            }
-        }
-
-        private void ValidateInternalDateStr(string dateStr)
-        {
-            if (!DateTime.TryParseExact(dateStr, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out _))
-            {
-                throw new DataValidationException($"Invalid format for date string: {dateStr} (should match YYYY-MM-DD)");
-            }
-        }
-
         public void ValidatePersonProfileFileId(int? profileFileId)
         {
             if (profileFileId != null && !HasFileId(profileFileId.Value))
@@ -924,56 +856,5 @@ namespace FileDBInterface
                 throw new DataValidationException($"File with id {profileFileId.Value} does not exist");
             }
         }
-
-        public void ValidateTagName(string name)
-        {
-            if (string.IsNullOrEmpty(name))
-            {
-                throw new DataValidationException("Tag name empty");
-            }
-        }
-
-        public void ValidateLocationName(string name)
-        {
-            if (string.IsNullOrEmpty(name))
-            {
-                throw new DataValidationException("Location name empty");
-            }
-        }
-
-        public void ValidateLocationDescription(string description)
-        {
-            if (description == string.Empty)
-            {
-                throw new DataValidationException("Empty location description should be null");
-            }
-        }
-
-        public void ValidateLocationGeoLocation(string geoLocationStr, out GeoLocation geoLocation)
-        {
-            if (geoLocationStr != null)
-            {
-                var parts = geoLocationStr.Split(' ');
-                if (parts.Length != 2)
-                {
-                    throw new DataValidationException("Location geo-position invalid format (two parts should be specified)");
-                }
-
-                if (!double.TryParse(parts[0], out double latitude))
-                {
-                    throw new DataValidationException("Location geo-position has invalid latitude");
-                }
-
-                if (!double.TryParse(parts[0], out double longitude))
-                {
-                    throw new DataValidationException("Location geo-position has invalid longitude");
-                }
-
-                geoLocation = new GeoLocation(latitude, longitude);
-            }
-            geoLocation = null;
-        }
-
-        #endregion
     }
 }

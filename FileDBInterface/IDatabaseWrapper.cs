@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using FileDBInterface.Model;
 using MetadataExtractor;
 
@@ -76,18 +75,5 @@ namespace FileDBInterface
         public void UpdateTagName(int id, string name);
         public void DeleteTag(int id);
         public string InternalPathToPath(string internalPath);
-        public void ValidateFileDescription(string description);
-        public void ValidatePersonFirstname(string firstname);
-        public void ValidatePersonLastname(string lastname);
-        public void ValidatePersonDescription(string description);
-        public DateTime ParseDateOfBirth(string dateOfBirthStr);
-        public DateTime ParseDeceased(string deceasedStr);
-        public void ValidatePersonDateOfBirth(string dateOfBirthStr);
-        public void ValidatePersonDeceased(string deceasedStr);
-        public void ValidatePersonProfileFileId(int? profileFileId);
-        public void ValidateTagName(string name);
-        public void ValidateLocationName(string name);
-        public void ValidateLocationDescription(string description);
-        public void ValidateLocationGeoLocation(string geoLocationStr, out GeoLocation geoLocation);
     }
 }
