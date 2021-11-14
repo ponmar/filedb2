@@ -25,15 +25,9 @@
     <DockPanel>
         <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Rest in Peace</Label>
         <ScrollViewer PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
-            <Grid Style="{StaticResource PageGrid}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
-                <ListView Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" ItemsSource="{Binding Persons}" ItemTemplate="{StaticResource PersonTemplate}"/>
-            </Grid>
+            <StackPanel Style="{StaticResource PageStackPanel}">
+                <ListView Margin="10" ItemsSource="{Binding Persons}" ItemTemplate="{StaticResource PersonTemplate}"/>
+            </StackPanel>
         </ScrollViewer>
     </DockPanel>
 </UserControl>

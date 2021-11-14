@@ -17,21 +17,25 @@
                 <TextBlock TextWrapping="Wrap" Margin="10">FileDB does not modify any files in your file collection. Files are read when adding files, viewing files or when reading Exif-data via the API.</TextBlock>
                 <TextBlock TextWrapping="Wrap" Margin="10">Before adding your files, take a moment to think about the directory structure. Any directory structure can be used for sorting files in your existing collection. However, this layout has been proven to work very well:</TextBlock>
 
-                <StackPanel Margin="30 10 10 10">
-                    <TextBlock>root</TextBlock>
-                    <TextBlock>|- 2015</TextBlock>
-                    <TextBlock>|   |- 2015-06-12 - Biking</TextBlock>
-                    <TextBlock>|   |      |- file1.jpg</TextBlock>
-                    <TextBlock>|   |      |- file2.jpg</TextBlock>
-                    <TextBlock>|   |</TextBlock>
-                    <TextBlock>|   |- 2015-07-13 - Birthday party</TextBlock>
-                    <TextBlock>|          |- somefile.jpg</TextBlock>
-                    <TextBlock>|</TextBlock>
-                    <TextBlock>|- 2016</TextBlock>
-                    <TextBlock>|- 2016-01-05 - Something else</TextBlock>
-                    <TextBlock>|- anotherfile1.jpg</TextBlock>
-                    <TextBlock>|- anotherfile2.jpg</TextBlock>
-                </StackPanel>
+                <TreeView Margin="10">
+                    <TreeViewItem Header="root" IsExpanded="True">
+                        <TreeViewItem Header="2015" IsExpanded="True">
+                            <TreeViewItem Header="2015-06-12 - Biking" IsExpanded="True">
+                                <TreeViewItem Header="file1.jpg"/>
+                                <TreeViewItem Header="file2.jpg"/>
+                            </TreeViewItem>
+                            <TreeViewItem Header="2015-07-13 - Birthday party" IsExpanded="True">
+                                <TreeViewItem Header="somefile1.jpg"/>
+                            </TreeViewItem>
+                        </TreeViewItem>
+                        <TreeViewItem Header="2016" IsExpanded="True">
+                            <TreeViewItem Header="2016-01-05 - Something else" IsExpanded="True">
+                                <TreeViewItem Header="anotherfile1.jpg"/>
+                                <TreeViewItem Header="anotherfile2.jpg"/>
+                            </TreeViewItem>
+                        </TreeViewItem>
+                    </TreeViewItem>
+                </TreeView>
 
                 <TextBlock TextWrapping="Wrap" Margin="10">File paths in FileDB uses UNIX style directory separators ('/'), mostly because that is how FileDB stores the paths internally.</TextBlock>
                 <TextBlock TextWrapping="Wrap" Margin="10">If you rename or delete files that has been added to FileDB you need to remove them in FileDB as well (and possibly add them again).</TextBlock>

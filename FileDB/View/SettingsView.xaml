@@ -28,6 +28,7 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
 
                     <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextBlock}">Configuration name:</TextBlock>
@@ -35,45 +36,46 @@
 
                     <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageTextBlock}">Database:</TextBlock>
                     <TextBox Width="250" Grid.Row="1" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding Database}"></TextBox>
-                    <Button Grid.Row="1" Grid.Column="2" Style="{StaticResource NormalButton}" Command="{Binding BrowseDatabaseCommand}">Browse...</Button>
-                    <Button Grid.Row="1" Grid.Column="3" Style="{StaticResource NormalButton}" Command="{Binding CreateDatabaseCommand}">Create database...</Button>
+                    <Button Grid.Row="1" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding BrowseDatabaseCommand}">Browse...</Button>
+                    <Button Grid.Row="1" Grid.Column="3" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding CreateDatabaseCommand}">Create database...</Button>
 
                     <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource PageTextBlock}">Files root directory:</TextBlock>
                     <TextBox Width="250"  Grid.Row="2" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding FilesRootDirectory}"></TextBox>
-                    <Button Grid.Row="2" Grid.Column="2" Style="{StaticResource NormalButton}" Command="{Binding BrowseFilesRootDirectoryCommand}">Browse...</Button>
+                    <Button Grid.Row="2" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding BrowseFilesRootDirectoryCommand}">Browse...</Button>
 
                     <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource PageTextBlock}">Slideshow delay (seconds):</TextBlock>
                     <TextBox Width="250" Grid.Row="3" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding SlideshowDelay}"></TextBox>
-                    <Button Grid.Row="3" Grid.Column="2" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultSlideshowDelayCommand}" ToolTip="Reset to default">Default</Button>
+                    <Button Grid.Row="3" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultSlideshowDelayCommand}" ToolTip="Reset to default">Default</Button>
 
                     <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource PageTextBlock}">Startup database backup reminder interval (days):</TextBlock>
                     <TextBox Width="250" Grid.Row="4" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding StartupBackupReminderAfterDays}" ToolTip="Set 0 to turn off"></TextBox>
-                    <Button Grid.Row="4" Grid.Column="2" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultStartupBackupReminderAfterDaysCommand}" ToolTip="Reset to default">Default</Button>
+                    <Button Grid.Row="4" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultStartupBackupReminderAfterDaysCommand}" ToolTip="Reset to default">Default</Button>
 
                     <TextBlock Grid.Row="5" Grid.Column="0" Style="{StaticResource PageTextBlock}">Search history size:</TextBlock>
                     <TextBox Width="250" Grid.Row="5" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding SearchHistorySize}"></TextBox>
-                    <Button Grid.Row="5" Grid.Column="2" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultSearchHistorySizeCommand}" ToolTip="Reset to default">Default</Button>
+                    <Button Grid.Row="5" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultSearchHistorySizeCommand}" ToolTip="Reset to default">Default</Button>
 
                     <TextBlock Grid.Row="6" Grid.Column="0" Style="{StaticResource PageTextBlock}">Blacklisted file path patterns:</TextBlock>
                     <TextBox Width="250"  Grid.Row="6" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding BlacklistedFilePathPatternsJson}"></TextBox>
-                    <Button Grid.Row="6" Grid.Column="2" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultBlacklistedFilePathPatternsJsonCommand}" ToolTip="Reset to default">Default</Button>
+                    <Button Grid.Row="6" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultBlacklistedFilePathPatternsJsonCommand}" ToolTip="Reset to default">Default</Button>
 
                     <TextBlock Grid.Row="7" Grid.Column="0" Style="{StaticResource PageTextBlock}">Whitelisted file path patterns:</TextBlock>
                     <TextBox Width="250"  Grid.Row="7" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding WhitelistedFilePathPatternsJson}"></TextBox>
-                    <Button Grid.Row="7" Grid.Column="2" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultWhitelistedFilePathPatternsJsonCommand}" ToolTip="Reset to default">Default</Button>
+                    <Button Grid.Row="7" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultWhitelistedFilePathPatternsJsonCommand}" ToolTip="Reset to default">Default</Button>
 
                     <CheckBox Grid.Row="8" Grid.Column="0" HorizontalAlignment="Right" Style="{StaticResource PageCheckBox}" IsChecked="{Binding Path=IncludeHiddenDirectories, Mode=TwoWay}" VerticalAlignment="Center"/>
                     <TextBlock Grid.Row="8" Grid.Column="1" Style="{StaticResource PageTextBlock}" Text="Include hidden directories" VerticalAlignment="Center"></TextBlock>
-                    <Button Grid.Row="8" Grid.Column="2" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultIncludeHiddenDirectoriesCommand}" ToolTip="Reset to default">Default</Button>
+                    <Button Grid.Row="8" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultIncludeHiddenDirectoriesCommand}" ToolTip="Reset to default">Default</Button>
 
                     <CheckBox Grid.Row="9" Grid.Column="0" HorizontalAlignment="Right" Style="{StaticResource PageCheckBox}" IsChecked="{Binding Path=ReadOnly, Mode=TwoWay}" VerticalAlignment="Center"/>
                     <TextBlock Grid.Row="9" Grid.Column="1" Style="{StaticResource PageTextBlock}" Text="Read-only mode" VerticalAlignment="Center"></TextBlock>
-                    <Button Grid.Row="9" Grid.Column="2" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultReadOnlyCommand}" ToolTip="Reset to default">Default</Button>
+                    <Button Grid.Row="9" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultReadOnlyCommand}" ToolTip="Reset to default">Default</Button>
+
+                    <StackPanel Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="4" Orientation="Horizontal" Style="{StaticResource PageStackPanel}" HorizontalAlignment="Center">
+                        <Button Margin="5" Width="100" Style="{StaticResource NormalButton}" Command="{Binding ResetConfigurationCommand}" ToolTip="Reset changes to last saved configuration">Reset changes</Button>
+                        <Button Margin="5" Width="100" Style="{StaticResource NormalButton}" Command="{Binding SaveConfigurationCommand}">Save...</Button>
+                    </StackPanel>
                 </Grid>
-                <StackPanel Orientation="Horizontal" Style="{StaticResource PageStackPanel}">
-                    <Button Width="100" Style="{StaticResource NormalButton}" Command="{Binding ResetConfigurationCommand}" ToolTip="Reset changes to last saved configuration">Reset changes</Button>
-                    <Button Width="100" Style="{StaticResource NormalButton}" Command="{Binding SaveConfigurationCommand}">Save...</Button>
-                </StackPanel>
             </StackPanel>
         </ScrollViewer>
     </DockPanel>

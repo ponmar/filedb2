@@ -14,7 +14,7 @@
                 <StackPanel Orientation="Vertical" Style="{StaticResource PageStackPanel}">
                     <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap">&#x26A0; Backup of your files collection, FileDB configuration and FileDB databases to external media should be done continuously!</TextBlock>
                     <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap">&#x26A0; Database recovery must be done manually if needed.</TextBlock>
-                    <Button Margin="5" Width="200" Style="{StaticResource NormalButton}" Command="{Binding CreateBackupCommand}" HorizontalAlignment="Left">Create database backup</Button>
+                    <Button Margin="10" Width="200" Style="{StaticResource NormalButton}" Command="{Binding CreateBackupCommand}" HorizontalAlignment="Left">Create database backup</Button>
                     <TextBlock Style="{StaticResource PageTextBlock}" HorizontalAlignment="Left" Text="Backup files in configured database directory:"/>
                     <ListBox Margin="10" ItemsSource="{Binding BackupFiles}" HorizontalAlignment="Left">
                         <ListBox.ItemTemplate>
