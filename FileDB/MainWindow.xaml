@@ -22,6 +22,27 @@
                 <Views:FindView Margin="10 0 10 10"/>
             </TabItem>
 
+            <TabItem Visibility="{Binding ReadWriteMode, Converter={StaticResource BoolToVis}}">
+                <TabItem.Header>
+                    <TextBlock Text="&#x1F4C2;" ToolTip="Import" Style="{StaticResource PageIcon}"/>
+                </TabItem.Header>
+                <Views:ImportView Margin="10 0 10 10"/>
+            </TabItem>
+
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Text="&#x1F382;" ToolTip="Birthdays" Style="{StaticResource PageIcon}"/>
+                </TabItem.Header>
+                <Views:BirthdaysView Margin="10 0 10 10"/>
+            </TabItem>
+
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Text="&#x1FAA6;" ToolTip="Rest in Peace" Style="{StaticResource PageIcon}"/>
+                </TabItem.Header>
+                <Views:RipView Margin="10 0 10 10"/>
+            </TabItem>
+
             <TabItem>
                 <TabItem.Header>
                     <TextBlock Text="&#x1F642;" ToolTip="Persons" Style="{StaticResource PageIcon}"/>
@@ -41,27 +62,6 @@
                     <TextBlock Text="&#x1F516;" ToolTip="Tags" Style="{StaticResource PageIcon}"/>
                 </TabItem.Header>
                 <Views:TagsView Margin="10 0 10 10"/>
-            </TabItem>
-
-            <TabItem>
-                <TabItem.Header>
-                    <TextBlock Text="&#x1F382;" ToolTip="Birthdays" Style="{StaticResource PageIcon}"/>
-                </TabItem.Header>
-                <Views:BirthdaysView Margin="10 0 10 10"/>
-            </TabItem>
-
-            <TabItem>
-                <TabItem.Header>
-                    <TextBlock Text="&#x1FAA6;" ToolTip="Rest in Peace" Style="{StaticResource PageIcon}"/>
-                </TabItem.Header>
-                <Views:RipView Margin="10 0 10 10"/>
-            </TabItem>
-
-            <TabItem Visibility="{Binding ReadWriteMode, Converter={StaticResource BoolToVis}}">
-                <TabItem.Header>
-                    <TextBlock Text="&#x1F4C2;" ToolTip="Import" Style="{StaticResource PageIcon}"/>
-                </TabItem.Header>
-                <Views:ImportView Margin="10 0 10 10"/>
             </TabItem>
 
             <TabItem Visibility="{Binding ReadWriteMode, Converter={StaticResource BoolToVis}}">

@@ -22,6 +22,7 @@
     </UserControl.Resources>
     
     <DockPanel>
+        <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Birthdays</Label>
         <ScrollViewer PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
             <Grid Style="{StaticResource PageGrid}">
                 <Grid.ColumnDefinitions>
