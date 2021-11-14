@@ -10,13 +10,9 @@
         <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}" Content="{Binding Heading}"></Label>
         <ScrollViewer>
             <StackPanel Orientation="Vertical">
-                <Label Style="{StaticResource PageSubHeading}">Downloads</Label>
+                <Label Style="{StaticResource PageSubHeading}">How to</Label>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <TextBlock Margin="10 0 0 0">
-                        <Hyperlink NavigateUri="{Binding DownloadLink}" RequestNavigate="OpenUri">
-                            <TextBlock Text="Click to open" ToolTip="{Binding DownloadLink}"/>
-                        </Hyperlink>
-                    </TextBlock>
+                    <TextBlock Text="TBD"/>
                 </StackPanel>
 
                 <Label Style="{StaticResource PageSubHeading}">Command line arguments</Label>
@@ -25,9 +21,18 @@
                     <TextBlock Margin="10 0 0 0">Enable demo configuration to play around with</TextBlock>
                 </StackPanel>
 
-                <Label Style="{StaticResource PageSubHeading}">Changes</Label>
+                <Label Style="{StaticResource PageSubHeading}">Changelog</Label>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <TextBlock Text="{Binding Changes}"/>
+                </StackPanel>
+
+                <Label Style="{StaticResource PageSubHeading}">Downloads</Label>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock Margin="10 0 0 0">
+                        <Hyperlink NavigateUri="{Binding DownloadLink}" RequestNavigate="OpenUri">
+                            <TextBlock Text="Click to open" ToolTip="{Binding DownloadLink}"/>
+                        </Hyperlink>
+                    </TextBlock>
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>
