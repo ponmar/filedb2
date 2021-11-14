@@ -6,6 +6,22 @@
              xmlns:local="clr-namespace:FileDB.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <DataTemplate x:Key="PersonTemplate">
+            <StackPanel Orientation="Vertical" Margin="10">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding Name}" Margin="5" FontSize="20"/>
+                    <TextBlock Text="{Binding Age}" Margin="5" FontSize="20"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding DateOfBirth}" Margin="5"/>
+                    <TextBlock Text="-" Margin="5"/>
+                    <TextBlock Text="{Binding Deceased}" Margin="5"/>
+                </StackPanel>
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+    
     <DockPanel>
         <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Rest in Peace</Label>
         <ScrollViewer PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
@@ -16,7 +32,12 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
+                <ListView Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" ItemsSource="{Binding Persons}" ItemTemplate="{StaticResource PersonTemplate}"/>
+
+
+                <!--
                 <DataGrid Grid.Row="0" Grid.Column="0" ItemsSource="{Binding Persons}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="false" CanUserDeleteRows="false" IsReadOnly="True" SelectionMode="Single"/>
+                -->
             </Grid>
         </ScrollViewer>
     </DockPanel>
