@@ -17,7 +17,7 @@ namespace FileDB.ViewModel
         public string Description { get; set; }
         public string DateOfBirth { get; set; }
         public string Deceased { get; set; }
-        public int BornYearsAgo { get; set; }
+        public int Age { get; set; }
         public int? ProfileFileId { get; set; }
         public Sex Sex { get; set; }
 
@@ -109,11 +109,40 @@ namespace FileDB.ViewModel
         {
             Persons.Clear();
 
-            var persons = Utils.FileDBHandle.GetPersons().Select(pm => new Person(pm.id) { Firstname = pm.firstname, Lastname = pm.lastname, Description = pm.description, DateOfBirth = pm.dateofbirth, Deceased = pm.deceased, BornYearsAgo = pm.dateofbirth != null ? Utils.GetYearsAgo(DateTime.Now, DatabaseUtils.ParseDateOfBirth(pm.dateofbirth)) : -1, ProfileFileId = pm.profilefileid, Sex = pm.sex });
+            var persons = Utils.FileDBHandle.GetPersons().Select(pm => new Person(pm.id)
+            {
+                Firstname = pm.firstname,
+                Lastname = pm.lastname,
+                Description = pm.description,
+                DateOfBirth = pm.dateofbirth,
+                Deceased = pm.deceased,
+                Age = GetPersonAge(pm),
+                ProfileFileId = pm.profilefileid,
+                Sex = pm.sex,
+            });
             foreach (var person in persons)
             {
                 Persons.Add(person);
             }
+        }
+
+        private int GetPersonAge(PersonModel person)
+        {
+            if (person.dateofbirth != null)
+            {
+                var dateOfBirth = DatabaseUtils.ParseDateOfBirth(person.dateofbirth);
+                if (person.deceased != null)
+                {
+                    var deceased = DatabaseUtils.ParseDeceased(person.deceased);
+                    return Utils.GetYearsAgo(deceased, dateOfBirth);
+                }
+                else
+                {
+                    return Utils.GetYearsAgo(DateTime.Now, dateOfBirth);
+                }
+            }
+
+            return -1;
         }
     }
 }
