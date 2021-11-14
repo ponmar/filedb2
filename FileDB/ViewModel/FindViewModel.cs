@@ -542,7 +542,7 @@ namespace FileDB.ViewModel
 
             var currentDirectory = Path.GetDirectoryName(SearchResult.Files[SearchResultIndex].path);
 
-            for (int i = SearchResultIndex - 1; i < searchResult.Count; i--)
+            for (int i = SearchResultIndex - 1; i >= 0; i--)
             {
                 var directory = Path.GetDirectoryName(SearchResult.Files[i].path);
                 if (directory != currentDirectory)
@@ -955,6 +955,7 @@ namespace FileDB.ViewModel
             SearchResultIndex = -1;
 
             CurrentFileInternalPath = string.Empty;
+            CurrentFileInternalDirectoryPath = string.Empty;
             CurrentFilePath = string.Empty;
             CurrentFileDescription = string.Empty;
             CurrentFileDateTime = string.Empty;

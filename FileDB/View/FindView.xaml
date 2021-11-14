@@ -165,6 +165,7 @@
                     <Button Style="{StaticResource NormalButton}" Command="{Binding SortFilesByPathCommand}" ToolTip="Sort result by path ascending" Margin="3">Path &#x2B06;</Button>
                     <Button Style="{StaticResource NormalButton}" Command="{Binding SortFilesByPathDescCommand}" ToolTip="Sort result by path descending" Margin="3">Path &#x2B07;</Button>
                 </StackPanel>
+                <TextBlock HorizontalAlignment="Center" Text="{Binding CurrentFileInternalDirectoryPath}"/>
             </StackPanel>
         </Border>
         <!-- Left side areas -->
