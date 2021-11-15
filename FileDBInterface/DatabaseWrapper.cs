@@ -98,7 +98,7 @@ namespace FileDBInterface
             return PathsToInternalPaths(dirs);
         }
 
-        public bool ParseFilesystemFileExif(string path, out DateTime? dateTaken, out GeoLocation location)
+        private void ParseFileExif(string path, out DateTime? dateTaken, out GeoLocation location)
         {
             try
             {
@@ -109,8 +109,6 @@ namespace FileDBInterface
 
                 var gps = directories.OfType<GpsDirectory>().FirstOrDefault();
                 location = gps?.GetGeoLocation();
-
-                return true;
             }
             catch (IOException)
             {
@@ -121,7 +119,25 @@ namespace FileDBInterface
 
             dateTaken = null;
             location = null;
-            return false;
+        }
+
+        private string ParseDateFromPath(string path)
+        {
+            // TODO: use regexp
+            var pathParts = path.Split('/');
+            foreach (var pathPart in pathParts)
+            {
+                var words = pathPart.Split(" ");
+                if (words.Length > 0)
+                {
+                    var firstWord = words[0];
+                    if (DateTime.TryParseExact(firstWord, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var _))
+                    {
+                        return firstWord;
+                    }
+                }
+            }
+            return null;
         }
 
         #endregion
@@ -263,9 +279,7 @@ namespace FileDBInterface
                 throw new DataValidationException($"No such file: {path}");
             }
 
-            ParseFilesystemFileExif(path, out var dateTaken, out var location);
-            string datetime = dateTaken != null ? dateTaken.Value.ToString("yyyy-MM-ddTHH:mm:ss") : null;
-            string position = location != null ? $"{location.Latitude} {location.Longitude}" : null;
+            GetFileMetaData(path, out var datetime, out var position);
 
             try
             {
@@ -273,6 +287,40 @@ namespace FileDBInterface
                 var files = new FilesModel() { path = internalPath, description = description, datetime = datetime, position = position };
                 var sql = "insert into [files] (path, description, datetime, position) values (@path, @description, @datetime, @position)";
                 connection.Execute(sql, files);
+            }
+            catch (SQLiteException e)
+            {
+                throw new DatabaseWrapperException("SQL error", e);
+            }
+        }
+
+        private void GetFileMetaData(string path, out string datetime, out string position)
+        {
+            ParseFileExif(path, out var dateTaken, out var location);
+
+            if (dateTaken != null)
+            {
+                datetime = dateTaken.Value.ToString("yyyy-MM-ddTHH:mm:ss");
+            }
+            else
+            {
+                datetime = ParseDateFromPath(path);
+                // TODO: otherwise try to get year from path? The datebase supports yyyy format also
+            }
+
+            position = location != null ? $"{location.Latitude} {location.Longitude}" : null;
+        }
+
+        public void UpdateFileFromMetaData(int id)
+        {
+            var file = GetFileById(id);
+            GetFileMetaData(InternalPathToPath(file.path), out var datetime, out var position);
+
+            try
+            {
+                using var connection = DatabaseUtils.CreateConnection(Config.Database);
+                var sql = "update [files] set datetime = @datetime, position = @position where id = @id";
+                connection.Execute(sql, new { datetime = datetime, position = position, id = id });
             }
             catch (SQLiteException e)
             {

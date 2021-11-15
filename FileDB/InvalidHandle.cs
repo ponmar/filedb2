@@ -18,13 +18,6 @@ namespace FileDB
             return new List<string>();
         }
 
-        public bool ParseFilesystemFileExif(string path, out DateTime? dateTaken, out GeoLocation location)
-        {
-            dateTaken = null;
-            location = null;
-            return false;
-        }
-
         public IEnumerable<FilesModel> GetFilesMissingInFilesystem()
         {
             return new List<FilesModel>();
@@ -106,6 +99,10 @@ namespace FileDB
         }
 
         public void InsertFile(string internalPath, string description = null)
+        {
+        }
+
+        public void UpdateFileFromMetaData(int id)
         {
         }
 

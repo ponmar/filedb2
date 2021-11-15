@@ -9,7 +9,6 @@ namespace FileDBInterface
     {
         public IEnumerable<string> ListNewFilesystemFiles(List<string> blacklistedFilePathPatterns, List<string> whitelistedFilePathPatterns, bool includeHiddenDirectories);
         public IEnumerable<string> ListAllFilesystemDirectories();
-        public bool ParseFilesystemFileExif(string path, out DateTime? dateTaken, out GeoLocation location);
         public IEnumerable<FilesModel> GetFilesMissingInFilesystem();
         public IEnumerable<FilesModel> GetFiles();
         public int GetFileCount();
@@ -27,6 +26,7 @@ namespace FileDBInterface
         public IEnumerable<FilesModel> GetFilesWithMissingData();
         public bool HasFilePath(string path);
         public void InsertFile(string internalPath, string description = null);
+        public void UpdateFileFromMetaData(int id);
         public void UpdateFileDescription(int id, string description);
         public void DeleteFile(int id);
         public void InsertFilePerson(int fileId, int personId);

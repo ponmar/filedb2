@@ -292,6 +292,9 @@ namespace FileDB.ViewModel
         }
         private string newFileDescription;
 
+        public ICommand ReloadFileTimestampCommand => reloadFileTimestampCommand ??= new CommandHandler(ReloadFileTimestamp);
+        private ICommand reloadFileTimestampCommand;
+
         public ICommand CreatePersonCommand => createPersonCommand ??= new CommandHandler(CreatePerson);
         private ICommand createPersonCommand;
 
@@ -1207,6 +1210,16 @@ namespace FileDB.ViewModel
                 Utils.FileDBHandle.UpdateFileDescription(fileId, description);
 
                 selection.description = description;
+                LoadFile(SearchResultIndex);
+            }
+        }
+
+        public void ReloadFileTimestamp()
+        {
+            if (SearchResultIndex != -1)
+            {
+                var selection = SearchResult.Files[SearchResultIndex];
+                Utils.FileDBHandle.UpdateFileFromMetaData(selection.id);
                 LoadFile(SearchResultIndex);
             }
         }
