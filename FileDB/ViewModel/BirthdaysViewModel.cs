@@ -10,7 +10,7 @@ namespace FileDB.ViewModel
         public string Birthday { get; set; }
         public int DaysLeft { get; set; }
         public string DaysLeftStr { get; set; }
-        public int BornYearsAgo { get; set; }
+        public int Age { get; set; }
     }
 
     public class PersonsByDaysLeftUntilBirthdaySorter : IComparer<PersonBirthday>
@@ -43,14 +43,12 @@ namespace FileDB.ViewModel
                         Name = person.firstname + " " + person.lastname,
                         Birthday = dateOfBirth.ToString("d MMMM"),
                         DaysLeft = Utils.GetDaysToNextBirthday(dateOfBirth),
-                        BornYearsAgo = Utils.GetYearsAgo(DateTime.Now, dateOfBirth),
+                        Age = Utils.GetYearsAgo(DateTime.Now, dateOfBirth),
                     };
 
-                    p.DaysLeftStr = p.DaysLeft <= 14 ? $"{p.DaysLeft} days left" : string.Empty;
+                    p.DaysLeftStr = p.DaysLeft <= 14 ? $"Turns {p.Age + 1} in {p.DaysLeft} days!" : string.Empty;
 
                     Persons.Add(p);
-
-
                 }
             }
 
