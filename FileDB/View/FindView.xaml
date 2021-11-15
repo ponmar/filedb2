@@ -265,8 +265,8 @@
             <Border Style="{StaticResource BorderGroup}" Margin="0 20 0 0">
                 <Expander Header="Export" Margin="5" IsExpanded="False">
                     <StackPanel Orientation="Vertical">
-                        <Button Style="{StaticResource NormalButton}" Command="{Binding OpenFileLocationCommand}">Open file directory</Button>
-                        <Button Style="{StaticResource NormalButton}" Command="{Binding ExportFileListCommand}">Copy file list</Button>
+                        <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding OpenFileLocationCommand}">Open file directory</Button>
+                        <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding ExportFileListCommand}">Copy file list</Button>
                     </StackPanel>
                 </Expander>
             </Border>
@@ -274,7 +274,7 @@
             <Border Style="{StaticResource BorderGroup}" Margin="0 20 0 0">
                 <Expander Header="Search History" Margin="5" IsExpanded="False">
                     <StackPanel Orientation="Vertical">
-                        <ListView ItemsSource="{Binding SearchResultHistory}">
+                        <ListView Margin="5" ItemsSource="{Binding SearchResultHistory}">
                             <ListView.Resources>
                                 <!--
                                 <Style TargetType="GridViewColumnHeader">
@@ -291,9 +291,9 @@
                                 </GridView>
                             </ListView.View>
                         </ListView>
-                        <Button Style="{StaticResource NormalButton}" ToolTip="Combine last two searches" Command="{Binding FindFilesFromUnionCommand}">Union</Button>
-                        <Button Style="{StaticResource NormalButton}" ToolTip="Combine last two searches" Command="{Binding FindFilesFromIntersectionCommand}">Intersection</Button>
-                        <Button Style="{StaticResource NormalButton}" ToolTip="Combine last two searches" Command="{Binding FindFilesFromDifferenceCommand}">Difference</Button>
+                        <Button Margin="5" Style="{StaticResource NormalButton}" ToolTip="Combine last two searches" Command="{Binding FindFilesFromUnionCommand}">Union</Button>
+                        <Button Margin="5" Style="{StaticResource NormalButton}" ToolTip="Combine last two searches" Command="{Binding FindFilesFromIntersectionCommand}">Intersection</Button>
+                        <Button Margin="5" Style="{StaticResource NormalButton}" ToolTip="Combine last two searches" Command="{Binding FindFilesFromDifferenceCommand}">Difference</Button>
                     </StackPanel>
                 </Expander>
             </Border>
