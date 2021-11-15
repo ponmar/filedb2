@@ -292,8 +292,8 @@ namespace FileDB.ViewModel
         }
         private string newFileDescription;
 
-        public ICommand ReloadFileTimestampCommand => reloadFileTimestampCommand ??= new CommandHandler(ReloadFileTimestamp);
-        private ICommand reloadFileTimestampCommand;
+        public ICommand UpdateFileFromMetaDataCommand => updateFileFromMetaDataCommand ??= new CommandHandler(UpdateFileFromMetaData);
+        private ICommand updateFileFromMetaDataCommand;
 
         public ICommand CreatePersonCommand => createPersonCommand ??= new CommandHandler(CreatePerson);
         private ICommand createPersonCommand;
@@ -1216,7 +1216,7 @@ namespace FileDB.ViewModel
             }
         }
 
-        public void ReloadFileTimestamp()
+        public void UpdateFileFromMetaData()
         {
             if (SearchResultIndex != -1)
             {

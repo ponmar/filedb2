@@ -207,7 +207,7 @@
                             <TextBox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Text="{Binding NewFileDescription}" ToolTip="File description"></TextBox>
                             <Button Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetFileDescriptionCommand}" ToolTip="Set file description">Set</Button>
                         </Grid>
-                        <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding ReloadFileTimestampCommand}" ToolTip="Reload file date and time from meta-data or path">Reload timestamp</Button>
+                        <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding UpdateFileFromMetaDataCommand}" ToolTip="Reload timestamp and GPS location from file">Reload meta-data</Button>
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
