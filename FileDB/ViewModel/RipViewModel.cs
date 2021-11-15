@@ -11,6 +11,7 @@ namespace FileDB.ViewModel
         public string DeceasedStr { get; set; }
         public DateTime Deceased { get; set; }
         public int Age { get; set; }
+        public string ProfileFileIdPath { get; set; }
     }
 
     public class PersonsByDeceasedSorter : IComparer<DeceasedPerson>
@@ -41,6 +42,7 @@ namespace FileDB.ViewModel
                         DeceasedStr = person.deceased,
                         Deceased = deceased,
                         Age = Utils.GetAgeInYears(dateOfBirth, deceased),
+                        ProfileFileIdPath = person.profilefileid != null ? Utils.FileDBHandle.InternalPathToPath(Utils.FileDBHandle.GetFileById(person.profilefileid.Value).path) : string.Empty,
                     });
                 }
             }
