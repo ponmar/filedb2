@@ -393,91 +393,98 @@ namespace FileDB.ViewModel
 
         #region Current file properties
 
+        public string CurrentFileToolTip
+        {
+            get => currentFileToolTip;
+            private set => SetProperty(ref currentFileToolTip, value);
+        }
+        private string currentFileToolTip;
+
         public string CurrentFileInternalPath
         {
             get => currentFileInternalPath;
-            private set { SetProperty(ref currentFileInternalPath, value); }
+            private set => SetProperty(ref currentFileInternalPath, value);
         }
         private string currentFileInternalPath;
 
         public string CurrentFileInternalDirectoryPath
         {
             get => currentFileInternalDirectoryPath;
-            private set { SetProperty(ref currentFileInternalDirectoryPath, value); }
+            private set => SetProperty(ref currentFileInternalDirectoryPath, value);
         }
         private string currentFileInternalDirectoryPath;
 
         public string CurrentFilePath
         {
             get => currentFilePath;
-            private set { SetProperty(ref currentFilePath, value); }
+            private set => SetProperty(ref currentFilePath, value);
         }
         private string currentFilePath;
 
         public string CurrentFileDescription
         {
             get => currentFileDescription;
-            private set { SetProperty(ref currentFileDescription, value); }
+            private set => SetProperty(ref currentFileDescription, value);
         }
         private string currentFileDescription;
 
         public string CurrentFileDateTime
         {
             get => currentFiledateTime;
-            private set { SetProperty(ref currentFiledateTime, value); }
+            private set => SetProperty(ref currentFiledateTime, value);
         }
         private string currentFiledateTime;
 
         public string CurrentFilePosition
         {
             get => currentFilePosition;
-            private set { SetProperty(ref currentFilePosition, value); }
+            private set => SetProperty(ref currentFilePosition, value);
         }
         private string currentFilePosition;
 
         public string CurrentFilePersons
         {
             get => currentFilePersons;
-            private set { SetProperty(ref currentFilePersons, value); }
+            private set => SetProperty(ref currentFilePersons, value);
         }
         private string currentFilePersons;
 
         public string CurrentFileLocations
         {
             get => currentFileLocations;
-            private set { SetProperty(ref currentFileLocations, value); }
+            private set => SetProperty(ref currentFileLocations, value);
         }
         private string currentFileLocations;
 
         public string CurrentFileTags
         {
             get => currentFileTags;
-            private set { SetProperty(ref currentFileTags, value); }
+            private set => SetProperty(ref currentFileTags, value);
         }
         private string currentFileTags;
 
         public string CurrentFileLoadError
         {
             get => currentFileLoadError;
-            private set { SetProperty(ref currentFileLoadError, value); }
+            private set => SetProperty(ref currentFileLoadError, value);
         }
         private string currentFileLoadError;
 
         #endregion
 
-        public ObservableCollection<PersonToUpdate> Persons { get; } = new ObservableCollection<PersonToUpdate>();
+        public ObservableCollection<PersonToUpdate> Persons { get; } = new();
 
         public PersonToUpdate SelectedPersonToUpdate { get; set; }
 
         public PersonToUpdate SelectedPersonSearch { get; set; }
 
-        public ObservableCollection<LocationToUpdate> Locations { get; } = new ObservableCollection<LocationToUpdate>();
+        public ObservableCollection<LocationToUpdate> Locations { get; } = new();
 
         public LocationToUpdate SelectedLocationToUpdate { get; set; }
 
         public LocationToUpdate SelectedLocationSearch { get; set; }
 
-        public ObservableCollection<TagToUpdate> Tags { get; } = new ObservableCollection<TagToUpdate>();
+        public ObservableCollection<TagToUpdate> Tags { get; } = new();
 
         public TagToUpdate SelectedTagToUpdate { get; set; }
 
@@ -914,6 +921,7 @@ namespace FileDB.ViewModel
 
                 var selection = SearchResult.Files[SearchResultIndex];
 
+                CurrentFileToolTip = $"{selection.path} (Id: {selection.id})";
                 CurrentFileInternalPath = selection.path;
                 CurrentFileInternalDirectoryPath = Path.GetDirectoryName(selection.path);
                 CurrentFilePath = Utils.FileDBHandle.InternalPathToPath(selection.path);
@@ -954,6 +962,7 @@ namespace FileDB.ViewModel
         {
             SearchResultIndex = -1;
 
+            CurrentFileToolTip = string.Empty;
             CurrentFileInternalPath = string.Empty;
             CurrentFileInternalDirectoryPath = string.Empty;
             CurrentFilePath = string.Empty;

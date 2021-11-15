@@ -302,7 +302,7 @@
         <Border Grid.Row="4" Grid.Column="1" Style="{StaticResource BorderGroup}" Margin="15 15 0 5">
             <Grid Margin="5">
                 <TextBlock Text="{Binding CurrentFileLoadError}" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding CurrentFileLoadError, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
-                <Image x:Name="CurrentFileImage" Stretch="Uniform" RenderOptions.BitmapScalingMode="Fant" ToolTip="{Binding CurrentFileInternalPath}"/>
+                <Image x:Name="CurrentFileImage" Stretch="Uniform" RenderOptions.BitmapScalingMode="Fant" ToolTip="{Binding CurrentFileToolTip}"/>
             </Grid>
         </Border>
     </Grid>
