@@ -275,21 +275,11 @@
                 <Expander Header="Search History" Margin="5" IsExpanded="False">
                     <StackPanel Orientation="Vertical">
                         <ListView Margin="5" ItemsSource="{Binding SearchResultHistory}">
-                            <ListView.Resources>
-                                <!--
-                                <Style TargetType="GridViewColumnHeader">
-                                    <Setter Property="Visibility" Value="Collapsed" />
-                                </Style>
-                                -->
-                            </ListView.Resources>
-                            <ListView.View>
-                                <GridView>
-                                    <GridView.Columns>
-                                        <GridViewColumn Header="From" DisplayMemberBinding="{Binding Path=From}"></GridViewColumn>
-                                        <GridViewColumn Header="Files" DisplayMemberBinding="{Binding Path=Name}"></GridViewColumn>
-                                    </GridView.Columns>
-                                </GridView>
-                            </ListView.View>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" Margin="2"/>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
                         </ListView>
                         <Button Margin="5" Style="{StaticResource NormalButton}" ToolTip="Combine last two searches" Command="{Binding FindFilesFromUnionCommand}">Union</Button>
                         <Button Margin="5" Style="{StaticResource NormalButton}" ToolTip="Combine last two searches" Command="{Binding FindFilesFromIntersectionCommand}">Intersection</Button>

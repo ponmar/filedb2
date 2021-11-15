@@ -46,7 +46,7 @@ namespace FileDB.ViewModel
 
     public class SearchResult
     {
-        public string Name => $"{Count}";
+        public string Name => $"{Count} files";
 
         public string From => DateTime.ToString("HH:mm:ss");
 
