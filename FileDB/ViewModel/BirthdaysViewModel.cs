@@ -48,7 +48,22 @@ namespace FileDB.ViewModel
                         ProfileFileIdPath = person.profilefileid != null ? Utils.FileDBHandle.InternalPathToPath(Utils.FileDBHandle.GetFileById(person.profilefileid.Value).path) : string.Empty,
                     };
 
-                    p.DaysLeftStr = p.DaysLeft <= 14 ? $"Turns {p.Age + 1} in {p.DaysLeft} days!" : string.Empty;
+                    if (p.DaysLeft == 0)
+                    {
+                        p.DaysLeftStr = $"Turned {p.Age + 1} today!";
+                    }
+                    else if (p.DaysLeft == 1)
+                    {
+                        p.DaysLeftStr = $"Turns {p.Age + 1} tomorrow!";
+                    }
+                    else if (p.DaysLeft <= 14)
+                    {
+                        p.DaysLeftStr = p.DaysLeft <= 14 ? $"Turns {p.Age + 1} in {p.DaysLeft} days" : string.Empty;
+                    }
+                    else
+                    {
+                        p.DaysLeftStr = string.Empty;
+                    }
 
                     Persons.Add(p);
                 }
