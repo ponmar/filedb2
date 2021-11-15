@@ -140,9 +140,9 @@
         </Border>
         <!-- Search result browse controls -->
         <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource BorderGroup}" Margin="0 0 0 5">
-            <StackPanel Orientation="Vertical" Margin="0 5 0 2">
+            <StackPanel Orientation="Vertical" Margin="0 7 0 5">
                 <Grid>
-                    <ProgressBar Minimum="0" Maximum="{Binding SearchNumberOfHits, Mode=OneWay}" Value="{Binding SearchResultItemNumber, Mode=OneWay}" Width="519" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" ValueChanged="ProgressBar_ValueChanged" Margin="0 0 0 3"/>
+                    <ProgressBar Minimum="0" Maximum="{Binding SearchNumberOfHits, Mode=OneWay}" Value="{Binding SearchResultItemNumber, Mode=OneWay}" Width="519" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" ValueChanged="ProgressBar_ValueChanged" Margin="0 0 0 5"/>
                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 0 0 3">
                                     <Run Text="{Binding SearchResultItemNumber, Mode=OneWay}"/>
                                     <Run Text="/"/>
@@ -165,7 +165,7 @@
                     <Button Style="{StaticResource NormalButton}" Command="{Binding SortFilesByPathCommand}" ToolTip="Sort result by path ascending" Margin="3">Path &#x2B06;</Button>
                     <Button Style="{StaticResource NormalButton}" Command="{Binding SortFilesByPathDescCommand}" ToolTip="Sort result by path descending" Margin="3">Path &#x2B07;</Button>
                 </StackPanel>
-                <TextBlock HorizontalAlignment="Center" Text="{Binding CurrentFileInternalDirectoryPath}"/>
+                <TextBlock Margin="0 3 0 0" HorizontalAlignment="Center" Text="{Binding CurrentFileInternalDirectoryPath}"/>
             </StackPanel>
         </Border>
         <!-- Left side areas -->
