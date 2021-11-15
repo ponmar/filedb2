@@ -988,7 +988,9 @@ namespace FileDB.ViewModel
                 return string.Empty;
             }
 
-            var resultString = datetime.Value.ToString("yyyy-MM-dd HH:mm");
+            // Note: when no time is available the string is used to avoid including time 00:00
+            var resultString = datetimeString.Contains("T") ? datetime.Value.ToString("yyyy-MM-dd HH:mm") : datetimeString;
+            
             var now = DateTime.Now;
             int yearsAgo = Utils.GetYearsAgo(now, datetime.Value);
             if (yearsAgo == 0 && now.Year == datetime.Value.Year)
