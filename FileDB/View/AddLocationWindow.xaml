@@ -32,6 +32,6 @@
             <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource PageTextBox}" Width="100" Text="{Binding LatLon}" ToolTip="latitude longitude"/>
         </Grid>
 
-        <Button Style="{StaticResource NormalButton}" Command="{Binding SaveCommand}">Save</Button>
+        <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SaveCommand}">Save</Button>
     </StackPanel>
 </Window>
