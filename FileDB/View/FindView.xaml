@@ -190,22 +190,22 @@
 
                             <TextBlock Grid.Row="0" Grid.Column="0" Text="&#x1F642;" VerticalAlignment="Center" Margin="5" ToolTip="Person"/>
                             <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Persons}" VerticalAlignment="Center" SelectedItem="{Binding SelectedPersonToUpdate}" DisplayMemberPath="Name" ToolTip="Person"/>
-                            <Button Grid.Row="0" Grid.Column="2" Style="{StaticResource NormalButton}" Command="{Binding AddFilePersonCommand}" ToolTip="Add selected person to file">+</Button>
-                            <Button Grid.Row="0" Grid.Column="3" Style="{StaticResource NormalButton}" Command="{Binding RemoveFilePersonCommand}" ToolTip="Remove selected person from file">-</Button>
+                            <Button Grid.Row="0" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding AddFilePersonCommand}" ToolTip="Add selected person to file">+</Button>
+                            <Button Grid.Row="0" Grid.Column="3" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding RemoveFilePersonCommand}" ToolTip="Remove selected person from file">-</Button>
 
                             <TextBlock Grid.Row="1" Grid.Column="0" Text="&#x1F3E0;" VerticalAlignment="Center" Margin="5" ToolTip="Location"/>
                             <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Locations}" VerticalAlignment="Center" SelectedItem="{Binding SelectedLocationToUpdate}" DisplayMemberPath="Name" ToolTip="Location"/>
-                            <Button Grid.Row="1" Grid.Column="2" Style="{StaticResource NormalButton}" Command="{Binding AddFileLocationCommand}" ToolTip="Add selected location to file">+</Button>
-                            <Button Grid.Row="1" Grid.Column="3" Style="{StaticResource NormalButton}" Command="{Binding RemoveFileLocationCommand}" ToolTip="Remove selected location from file">-</Button>
+                            <Button Grid.Row="1" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding AddFileLocationCommand}" ToolTip="Add selected location to file">+</Button>
+                            <Button Grid.Row="1" Grid.Column="3" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding RemoveFileLocationCommand}" ToolTip="Remove selected location from file">-</Button>
 
                             <TextBlock Grid.Row="2" Grid.Column="0" Text="&#x1F516;" VerticalAlignment="Center" Margin="5" ToolTip="Tag"/>
                             <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Tags}" VerticalAlignment="Center" SelectedItem="{Binding SelectedTagToUpdate}" DisplayMemberPath="Name" ToolTip="Tag"/>
-                            <Button Grid.Row="2" Grid.Column="2" Style="{StaticResource NormalButton}" Command="{Binding AddFileTagCommand}" ToolTip="Add selected tag to file">+</Button>
-                            <Button Grid.Row="2" Grid.Column="3" Style="{StaticResource NormalButton}" Command="{Binding RemoveFileTagCommand}" ToolTip="Remove selected tag from file">-</Button>
+                            <Button Grid.Row="2" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding AddFileTagCommand}" ToolTip="Add selected tag to file">+</Button>
+                            <Button Grid.Row="2" Grid.Column="3" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding RemoveFileTagCommand}" ToolTip="Remove selected tag from file">-</Button>
 
                             <TextBlock Grid.Row="3" Grid.Column="0" Text="&#x1F4DD;" VerticalAlignment="Center" Margin="5" ToolTip="File description"/>
                             <TextBox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Text="{Binding NewFileDescription}" ToolTip="File description"></TextBox>
-                            <Button Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource NormalButton}" Command="{Binding SetFileDescriptionCommand}" ToolTip="Set file description">Set</Button>
+                            <Button Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetFileDescriptionCommand}" ToolTip="Set file description">Set</Button>
                         </Grid>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -218,9 +218,9 @@
                                 <RowDefinition Height="auto"/>
                             </Grid.RowDefinitions>
                             <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Create:</TextBlock>
-                            <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource NormalButton}" Command="{Binding CreatePersonCommand}">Person...</Button>
-                            <Button Grid.Row="0" Grid.Column="2" Style="{StaticResource NormalButton}" Command="{Binding CreateLocationCommand}">Location...</Button>
-                            <Button Grid.Row="0" Grid.Column="3" Style="{StaticResource NormalButton}" Command="{Binding CreateTagCommand}">Tag...</Button>
+                            <Button Grid.Row="0" Grid.Column="1" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding CreatePersonCommand}">Person...</Button>
+                            <Button Grid.Row="0" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding CreateLocationCommand}">Location...</Button>
+                            <Button Grid.Row="0" Grid.Column="3" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding CreateTagCommand}">Tag...</Button>
                         </Grid>
                         <ListView ItemsSource="{Binding UpdateHistoryItems}" Visibility="{Binding HasNonEmptySearchResult, Converter={StaticResource BoolToVis}}">
                             <ListView.ItemContainerStyle>
