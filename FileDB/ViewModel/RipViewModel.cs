@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using FileDBInterface;
 
 namespace FileDB.ViewModel
@@ -49,6 +50,15 @@ namespace FileDB.ViewModel
 
             Persons.Sort(new PersonsByDeceasedSorter());
             Persons.Reverse();
+
+            if (Utils.BrowserConfig.RipReminder)
+            {
+                var today = DateTime.Today;
+                foreach (var person in Persons.Where(x => x.Deceased == today))
+                {
+                    Utils.ShowInfoDialog($"Rest in Peace {person.Name}!");
+                }
+            }
         }
     }
 }

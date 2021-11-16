@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using FileDBInterface;
 
 namespace FileDB.ViewModel
@@ -50,7 +51,7 @@ namespace FileDB.ViewModel
 
                     if (p.DaysLeft == 0)
                     {
-                        p.DaysLeftStr = $"Turned {p.Age + 1} today!";
+                        p.DaysLeftStr = $"Turned {p.Age} today!";
                     }
                     else if (p.DaysLeft == 1)
                     {
@@ -70,6 +71,14 @@ namespace FileDB.ViewModel
             }
 
             Persons.Sort(new PersonsByDaysLeftUntilBirthdaySorter());
+
+            if (Utils.BrowserConfig.BirthdayReminder)
+            {
+                foreach (var person in Persons.Where(x => x.DaysLeft == 0))
+                {
+                    Utils.ShowInfoDialog($"Happy Birthday to {person.Name}!");
+                }
+            }
         }
     }
 }
