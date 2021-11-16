@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
 using System.Windows.Input;
 using FileDB.Config;
 using FileDBInterface;
@@ -84,6 +82,20 @@ namespace FileDB.ViewModel
         }
         private string startupBackupReminderAfterDays;
 
+        public bool BirthdayReminder
+        {
+            get => birthdayReminder;
+            set => SetProperty(ref birthdayReminder, value);
+        }
+        private bool birthdayReminder;
+
+        public bool RipReminder
+        {
+            get => ripReminder;
+            set => SetProperty(ref ripReminder, value);
+        }
+        private bool ripReminder;
+
         public ICommand ResetConfigurationCommand => resetConfigurationCommand ??= new CommandHandler(ResetConfiguration);
         private ICommand resetConfigurationCommand;
 
@@ -120,6 +132,12 @@ namespace FileDB.ViewModel
         public ICommand SetDefaultReadOnlyCommand => setDefaultReadOnlyCommand ??= new CommandHandler(x => ReadOnly = BrowserConfigFactory.CreateDefaultConfig().ReadOnly);
         private ICommand setDefaultReadOnlyCommand;
 
+        public ICommand SetDefaultBirthdayReminderCommand => setDefaultBirthdayReminderCommand ??= new CommandHandler(x => BirthdayReminder = BrowserConfigFactory.CreateDefaultConfig().BirthdayReminder);
+        private ICommand setDefaultBirthdayReminderCommand;
+
+        public ICommand SetDefaultRipReminderCommand => setDefaultRipReminderCommand ??= new CommandHandler(x => RipReminder = BrowserConfigFactory.CreateDefaultConfig().RipReminder);
+        private ICommand setDefaultRipReminderCommand;
+
         public SettingsViewModel()
         {
             UpdateFromConfiguration();
@@ -137,6 +155,8 @@ namespace FileDB.ViewModel
             WhitelistedFilePathPatternsJson = JsonConvert.SerializeObject(Utils.BrowserConfig.WhitelistedFilePathPatterns);
             ReadOnly = Utils.BrowserConfig.ReadOnly;
             StartupBackupReminderAfterDays = Utils.BrowserConfig.StartupBackupReminderAfterDays.ToString();
+            BirthdayReminder = Utils.BrowserConfig.BirthdayReminder;
+            RipReminder = Utils.BrowserConfig.RipReminder;
         }
 
         public void ResetConfiguration()
@@ -234,7 +254,9 @@ namespace FileDB.ViewModel
                 TimeSpan.FromSeconds(slideshowDelay),
                 searchHistorySize,
                 ReadOnly,
-                startupBackupReminderAfterDays);
+                startupBackupReminderAfterDays,
+                BirthdayReminder,
+                RipReminder);
 
             if (Utils.BrowserConfigIO.Write(config))
             {

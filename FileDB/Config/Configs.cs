@@ -14,7 +14,9 @@ namespace FileDB.Config
         TimeSpan SlideshowDelay,
         int SearchHistorySize,
         bool ReadOnly,
-        int StartupBackupReminderAfterDays);
+        int StartupBackupReminderAfterDays,
+        bool BirthdayReminder,
+        bool RipReminder);
 
     public static class BrowserConfigFactory
     {
@@ -30,7 +32,9 @@ namespace FileDB.Config
                 TimeSpan.FromSeconds(3),
                 4,
                 false,
-                30);
+                30,
+                true,
+                true);
         }
 
         public static Config CreateDemoConfig()
@@ -46,7 +50,9 @@ namespace FileDB.Config
                 defaultConfig.SlideshowDelay,
                 defaultConfig.SearchHistorySize,
                 defaultConfig.ReadOnly,
-                0);
+                0,
+                true,
+                true);
         }
     }
 }
