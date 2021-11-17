@@ -67,7 +67,7 @@
                     <Button Grid.Row="7" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultWhitelistedFilePathPatternsJsonCommand}" ToolTip="Reset to default">Default</Button>
 
                     <TextBlock Grid.Row="8" Grid.Column="0" Style="{StaticResource PageTextBlock}">Location link:</TextBlock>
-                    <TextBox Width="250"  Grid.Row="8" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding LocationLink}" ToolTip="LAT and LON is replaced with actual GPS position data when generating links"></TextBox>
+                    <TextBox Width="250"  Grid.Row="8" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding LocationLink}" ToolTip="LAT and LON is replaced with actual GPS position data when generating links. Set empty to disable feature."></TextBox>
                     <Button Grid.Row="8" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultLocationLinkCommand}" ToolTip="Reset to default">Default</Button>
 
                     <CheckBox Grid.Row="9" Grid.Column="0" HorizontalAlignment="Right" Style="{StaticResource PageCheckBox}" IsChecked="{Binding Path=IncludeHiddenDirectories, Mode=TwoWay}" VerticalAlignment="Center"/>

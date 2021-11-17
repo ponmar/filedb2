@@ -255,14 +255,17 @@ namespace FileDB.ViewModel
                 return;
             }
 
-            try
+            if (!string.IsNullOrEmpty(LocationLink))
             {
-                new Uri(LocationLink);
-            }
-            catch (UriFormatException)
-            {
-                Utils.ShowErrorDialog("Location link is not a valid URI");
-                return;
+                try
+                {
+                    new Uri(LocationLink);
+                }
+                catch (UriFormatException)
+                {
+                    Utils.ShowErrorDialog("Location link is not a valid URI");
+                    return;
+                }
             }
 
             var config = new Config.Config(
