@@ -223,7 +223,7 @@
                             <Button Grid.Row="0" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding CreateLocationCommand}">Location...</Button>
                             <Button Grid.Row="0" Grid.Column="3" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding CreateTagCommand}">Tag...</Button>
                         </Grid>
-                        <ListView ItemsSource="{Binding UpdateHistoryItems}" Visibility="{Binding HasNonEmptySearchResult, Converter={StaticResource BoolToVis}}">
+                        <ListView ItemsSource="{Binding UpdateHistoryItems}" Visibility="{Binding HasNonEmptySearchResult, Converter={StaticResource BoolToVis}}" Background="Transparent" BorderThickness="0">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
                                     <Setter Property="Focusable" Value="false"/>
@@ -231,10 +231,10 @@
                             </ListView.ItemContainerStyle>
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <WrapPanel>
+                                    <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="{Binding Shortcut}" FontWeight="Bold" Margin="0,0,10,0"/>
                                         <TextBlock Text="{Binding Description}"/>
-                                    </WrapPanel>
+                                    </StackPanel>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
@@ -279,7 +279,7 @@
             <Border Style="{StaticResource BorderGroup}" Margin="0 20 0 0">
                 <Expander Header="Search History" Margin="5" IsExpanded="False">
                     <StackPanel Orientation="Vertical">
-                        <ListView Margin="5" ItemsSource="{Binding SearchResultHistory}">
+                        <ListView Margin="5" ItemsSource="{Binding SearchResultHistory}" Background="Transparent" BorderThickness="0">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding Name}" Margin="2"/>
