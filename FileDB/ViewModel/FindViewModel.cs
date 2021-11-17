@@ -445,6 +445,13 @@ namespace FileDB.ViewModel
         }
         private string currentFilePosition;
 
+        public string CurrentFilePositionLink
+        {
+            get => currentFilePositionLink;
+            private set => SetProperty(ref currentFilePositionLink, value);
+        }
+        private string currentFilePositionLink;
+
         public string CurrentFilePersons
         {
             get => currentFilePersons;
@@ -915,6 +922,16 @@ namespace FileDB.ViewModel
             }
         }
 
+        private string CreatePositionLink(string position, string defaultValue)
+        {
+            var positionParts = position.Split(" ");
+            if (positionParts.Length == 2 && !string.IsNullOrEmpty(Utils.BrowserConfig.LocationLink))
+            {
+                return Utils.BrowserConfig.LocationLink.Replace("LAT", positionParts[0]).Replace("LON", positionParts[1]);
+            }
+            return defaultValue;
+        }
+
         private void LoadFile(int index)
         {
             if (SearchResult != null &&
@@ -931,6 +948,7 @@ namespace FileDB.ViewModel
                 CurrentFileDescription = selection.description ?? string.Empty;
                 CurrentFileDateTime = GetFileDateTimeString(selection.datetime);
                 CurrentFilePosition = selection.position ?? string.Empty;
+                CurrentFilePositionLink = selection.position != null ? CreatePositionLink(selection.position, string.Empty) : string.Empty;
                 CurrentFilePersons = GetFilePersonsString(selection);
                 CurrentFileLocations = GetFileLocationsString(selection.id);
                 CurrentFileTags = GetFileTagsString(selection.id);
@@ -972,6 +990,7 @@ namespace FileDB.ViewModel
             CurrentFileDescription = string.Empty;
             CurrentFileDateTime = string.Empty;
             CurrentFilePosition = string.Empty;
+            CurrentFilePositionLink = string.Empty;
             CurrentFilePersons = string.Empty;
             CurrentFileLocations = string.Empty;
             CurrentFileTags = string.Empty;

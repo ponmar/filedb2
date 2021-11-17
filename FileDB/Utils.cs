@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows;
 using FileDB.Config;
 using FileDBInterface;
@@ -128,6 +129,11 @@ namespace FileDB
         public static bool ShowConfirmDialog(string question)
         {
             return MessageBox.Show(question, ApplicationName, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes;
+        }
+
+        public static void OpenUriInBrowser(string uri)
+        {
+            Process.Start(new ProcessStartInfo(uri) { UseShellExecute = true });
         }
     }
 }

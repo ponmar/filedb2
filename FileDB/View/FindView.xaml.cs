@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
@@ -15,8 +16,6 @@ namespace FileDB.View
         {
             InitializeComponent();
             DataContext = new FindViewModel(this);
-            // TODO: this must also be done when page becomes active
-            Loaded += (s, e) => Keyboard.Focus(this);
         }
 
         public void ShowImage(BitmapImage image)
@@ -24,9 +23,10 @@ namespace FileDB.View
             CurrentFileImage.Source = image;
         }
 
-        private void ProgressBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void OpenLocationUri(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
         {
-
+            Utils.OpenUriInBrowser(e.Uri.AbsoluteUri);
+            e.Handled = true;
         }
     }
 }

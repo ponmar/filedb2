@@ -30,7 +30,7 @@ namespace FileDB.View
 
         private void OpenUri(object sender, RequestNavigateEventArgs e)
         {
-            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri) { UseShellExecute = true });
+            Utils.OpenUriInBrowser(e.Uri.AbsoluteUri);
             e.Handled = true;
         }
     }
