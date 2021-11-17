@@ -96,6 +96,13 @@ namespace FileDB.ViewModel
         }
         private bool ripReminder;
 
+        public string LocationLink
+        {
+            get => locationLink;
+            set => SetProperty(ref locationLink, value);
+        }
+        private string locationLink;
+
         public ICommand ResetConfigurationCommand => resetConfigurationCommand ??= new CommandHandler(ResetConfiguration);
         private ICommand resetConfigurationCommand;
 
@@ -138,6 +145,9 @@ namespace FileDB.ViewModel
         public ICommand SetDefaultRipReminderCommand => setDefaultRipReminderCommand ??= new CommandHandler(x => RipReminder = BrowserConfigFactory.CreateDefaultConfig().RipReminder);
         private ICommand setDefaultRipReminderCommand;
 
+        public ICommand SetDefaultLocationLinkCommand => setDefaultLocationLinkCommand ??= new CommandHandler(x => LocationLink = BrowserConfigFactory.CreateDefaultConfig().LocationLink);
+        private ICommand setDefaultLocationLinkCommand;
+
         public SettingsViewModel()
         {
             UpdateFromConfiguration();
@@ -157,6 +167,7 @@ namespace FileDB.ViewModel
             StartupBackupReminderAfterDays = Utils.BrowserConfig.StartupBackupReminderAfterDays.ToString();
             BirthdayReminder = Utils.BrowserConfig.BirthdayReminder;
             RipReminder = Utils.BrowserConfig.RipReminder;
+            LocationLink = Utils.BrowserConfig.LocationLink;
         }
 
         public void ResetConfiguration()
@@ -244,6 +255,16 @@ namespace FileDB.ViewModel
                 return;
             }
 
+            try
+            {
+                new Uri(LocationLink);
+            }
+            catch (UriFormatException)
+            {
+                Utils.ShowErrorDialog("Location link is not a valid URI");
+                return;
+            }
+
             var config = new Config.Config(
                 ConfigName,
                 Database,
@@ -256,7 +277,8 @@ namespace FileDB.ViewModel
                 ReadOnly,
                 startupBackupReminderAfterDays,
                 BirthdayReminder,
-                RipReminder);
+                RipReminder,
+                LocationLink);
 
             if (Utils.BrowserConfigIO.Write(config))
             {

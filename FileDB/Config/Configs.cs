@@ -16,7 +16,8 @@ namespace FileDB.Config
         bool ReadOnly,
         int StartupBackupReminderAfterDays,
         bool BirthdayReminder,
-        bool RipReminder);
+        bool RipReminder,
+        string LocationLink);
 
     public static class BrowserConfigFactory
     {
@@ -34,7 +35,8 @@ namespace FileDB.Config
                 false,
                 30,
                 true,
-                true);
+                true,
+                "https://www.google.com/maps?q=loc:LAT,LON");
         }
 
         public static Config CreateDemoConfig()
@@ -51,8 +53,9 @@ namespace FileDB.Config
                 defaultConfig.SearchHistorySize,
                 defaultConfig.ReadOnly,
                 0,
-                true,
-                true);
+                defaultConfig.BirthdayReminder,
+                defaultConfig.RipReminder,
+                defaultConfig.LocationLink);
         }
     }
 }
