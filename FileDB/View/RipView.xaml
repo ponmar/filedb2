@@ -8,20 +8,22 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <DataTemplate x:Key="PersonTemplate">
-            <StackPanel Orientation="Horizontal" Margin="5" Width="400">
-                <Image Width="100" Height="100" Margin="5" Source="{Binding ProfileFileIdPath}" RenderOptions.BitmapScalingMode="Fant" VerticalAlignment="Center"/>
-                <StackPanel Orientation="Vertical" Margin="5" VerticalAlignment="Center">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Name}" Margin="5" FontSize="20"/>
-                        <TextBlock Text="{Binding Age}" Margin="5" FontSize="20"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding DateOfBirth}" Margin="5"/>
-                        <TextBlock Text="-" Margin="5"/>
-                        <TextBlock Text="{Binding DeceasedStr}" Margin="5"/>
+            <Border Style="{StaticResource BorderGroup}">
+                <StackPanel Orientation="Horizontal" Margin="5" Width="400">
+                    <Image Width="100" Height="100" Margin="5" Source="{Binding ProfileFileIdPath}" RenderOptions.BitmapScalingMode="Fant" VerticalAlignment="Center"/>
+                    <StackPanel Orientation="Vertical" Margin="5" VerticalAlignment="Center">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Name}" Margin="5" FontSize="20"/>
+                            <TextBlock Text="{Binding Age}" Margin="5" FontSize="20"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding DateOfBirth}" Margin="5"/>
+                            <TextBlock Text="-" Margin="5"/>
+                            <TextBlock Text="{Binding DeceasedStr}" Margin="5"/>
+                        </StackPanel>
                     </StackPanel>
                 </StackPanel>
-            </StackPanel>
+            </Border>
         </DataTemplate>
     </UserControl.Resources>
     

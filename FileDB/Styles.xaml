@@ -69,6 +69,6 @@
         <Setter Property="Background" Value="GhostWhite"/>
         <Setter Property="BorderBrush" Value="Gainsboro"/>
         <Setter Property="BorderThickness" Value="2"/>
-        <Setter Property="CornerRadius" Value="5"/>
+        <Setter Property="CornerRadius" Value="12"/>
     </Style>
 </ResourceDictionary>
