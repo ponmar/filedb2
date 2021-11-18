@@ -793,7 +793,7 @@ namespace FileDB.ViewModel
         {
             StopSlideshow();
 
-            if (!double.TryParse(SearchFileGpsRadius, out var radius))
+            if (!double.TryParse(SearchFileGpsRadius, out var radius) || radius < 1)
             {
                 Utils.ShowErrorDialog("Invalid radius");
                 return;
