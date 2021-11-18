@@ -123,9 +123,16 @@
 
                         <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0">
                             <TextBlock Text="File date:" Margin="3" VerticalAlignment="Center"/>
-                            <DatePicker Margin="3 0 0 0" VerticalAlignment="center" Text="Start" IsTodayHighlighted="True" SelectedDate="{Binding SearchStartDate}" FirstDayOfWeek="Monday"/>
-                            <DatePicker Margin="3 0 0 0" VerticalAlignment="center" Text="End" IsTodayHighlighted="True" SelectedDate="{Binding SearchEndDate}" FirstDayOfWeek="Monday"/>
+                            <DatePicker Width="105" Margin="3 0 0 0" VerticalAlignment="center" Text="Start" IsTodayHighlighted="True" SelectedDate="{Binding SearchStartDate}" FirstDayOfWeek="Monday"/>
+                            <DatePicker Width="105" Margin="3 0 0 0" VerticalAlignment="center" Text="End" IsTodayHighlighted="True" SelectedDate="{Binding SearchEndDate}" FirstDayOfWeek="Monday"/>
                             <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding FindFilesByDateCommand}" ToolTip="Seach files between dates" VerticalAlignment="Center">Search</Button>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0">
+                            <TextBlock Text="File GPS position:" Margin="3" VerticalAlignment="Center"/>
+                            <TextBox Margin="3 0 0 0" Width="105" VerticalAlignment="Center" Text="{Binding SearchFileGpsPosition}" ToolTip="Circle origo in format: LAT LON"/>
+                            <TextBox Margin="3 0 0 0" Width="105" VerticalAlignment="Center" Text="{Binding SearchFileGpsPositionRadius}" ToolTip="Circle radius [m]"/>
+                            <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding FindFilesByGpsPositionCommand}" ToolTip="Seach files between dates" VerticalAlignment="Center">Search</Button>
                         </StackPanel>
                     </Grid>
                 </TabItem>
