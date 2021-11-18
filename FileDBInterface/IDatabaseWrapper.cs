@@ -17,6 +17,7 @@ namespace FileDBInterface
         public IEnumerable<FilesModel> GetFileByDate(DateTime start, DateTime end);
         public IEnumerable<FilesModel> SearchFilesByPath(string criteria);
         public IEnumerable<FilesModel> SearchFilesRandom(int numFiles);
+        public IEnumerable<FilesModel> SearchFilesNearGpsPosition(double latitude, double longitude, double radius);
         public FilesModel GetFileById(int id);
         public bool HasFileId(int id);
         public FilesModel GetFileByPath(string path);

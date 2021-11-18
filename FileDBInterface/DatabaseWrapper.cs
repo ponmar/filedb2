@@ -198,6 +198,12 @@ namespace FileDBInterface
             return connection.Query<FilesModel>(sql, new DynamicParameters());
         }
 
+        public IEnumerable<FilesModel> SearchFilesNearGpsPosition(double latitude, double longitude, double radius)
+        {
+            // TODO
+            return new List<FilesModel>();
+        }
+
         public FilesModel GetFileById(int id)
         {
             using var connection = DatabaseUtils.CreateConnection(Config.Database);

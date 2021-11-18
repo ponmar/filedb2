@@ -5,6 +5,7 @@ using FileDBInterface.Exceptions;
 using System.Data;
 using System;
 using System.Globalization;
+using MetadataExtractor;
 
 namespace FileDBInterface
 {
@@ -87,6 +88,27 @@ create table filetags(
         public static DateTime ParseDeceased(string deceasedStr)
         {
             return DateTime.ParseExact(deceasedStr, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None);
+        }
+
+        public static (double lat, double lon)? ParseGpsPosition(string positionString)
+        {
+            var positionParts = positionString.Split(" ");
+            if (positionParts.Length != 2)
+            {
+                return null;
+            }
+
+            if (!double.TryParse(positionParts[0], out var latitude))
+            {
+                return null;
+            }
+
+            if (!double.TryParse(positionParts[1], out var longitude))
+            {
+                return null;
+            }
+
+            return (latitude, longitude);
         }
     }
 }

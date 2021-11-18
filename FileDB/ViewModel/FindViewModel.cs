@@ -199,6 +199,9 @@ namespace FileDB.ViewModel
         public ICommand FindFilesByDateCommand => findFilesByDateCommand ??= new CommandHandler(FindFilesByDate);
         private ICommand findFilesByDateCommand;
 
+        public ICommand FindFilesByGpsPositionCommand => findFilesByGpsPositionCommand ??= new CommandHandler(FindFilesByGpsPosition);
+        private ICommand findFilesByGpsPositionCommand;
+
         public DateTime SearchStartDate
         {
             get => searchStartDate;
@@ -212,6 +215,20 @@ namespace FileDB.ViewModel
             set => SetProperty(ref searchEndDate, value);
         }
         private DateTime searchEndDate = DateTime.Now;
+
+        public string SearchFileGpsPosition
+        {
+            get => searchFileGpsPosition;
+            set => SetProperty(ref searchFileGpsPosition, value);
+        }
+        private string searchFileGpsPosition;
+
+        public string SearchFileGpsRadius
+        {
+            get => searchFileGpsRadius;
+            set => SetProperty(ref searchFileGpsRadius, value);
+        }
+        private string searchFileGpsRadius = "500";
 
         public ICommand FindFilesWithPersonCommand => findFilesWithPersonCommand ??= new CommandHandler(FindFilesWithPerson);
         private ICommand findFilesWithPersonCommand;
@@ -358,7 +375,6 @@ namespace FileDB.ViewModel
             SearchResultHistory.Add(searchResult);
         }
 
-        // TODO: set empty search to avoid null checks everywhere?
         private SearchResult searchResult = null;
 
         public int SearchResultIndex
@@ -771,6 +787,26 @@ namespace FileDB.ViewModel
         {
             StopSlideshow();
             SearchResult = new SearchResult(Utils.FileDBHandle.GetFileByDate(SearchStartDate.Date, SearchEndDate.Date));
+        }
+
+        public void FindFilesByGpsPosition()
+        {
+            StopSlideshow();
+
+            if (!double.TryParse(SearchFileGpsRadius, out var radius))
+            {
+                Utils.ShowErrorDialog("Invalid radius");
+                return;
+            }
+
+            var gpsPos = DatabaseUtils.ParseGpsPosition(SearchFileGpsPosition);
+            if (gpsPos == null)
+            {
+                Utils.ShowErrorDialog("Invalid GPS position");
+                return;
+            }
+
+            SearchResult = new SearchResult(Utils.FileDBHandle.SearchFilesNearGpsPosition(gpsPos.Value.lat, gpsPos.Value.lon, radius));
         }
 
         public void FindFilesWithPerson()

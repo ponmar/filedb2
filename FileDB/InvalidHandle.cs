@@ -53,6 +53,11 @@ namespace FileDB
             return new List<FilesModel>();
         }
 
+        public IEnumerable<FilesModel> SearchFilesNearGpsPosition(double latitude, double longitude, double radius)
+        {
+            return new List<FilesModel>();
+        }
+
         public FilesModel GetFileById(int id)
         {
             return null;
