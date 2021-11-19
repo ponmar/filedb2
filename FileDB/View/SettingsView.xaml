@@ -32,6 +32,7 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
 
                     <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextBlock}">Configuration name:</TextBlock>
@@ -86,7 +87,11 @@
                     <TextBlock Grid.Row="12" Grid.Column="1" Style="{StaticResource PageTextBlock}" Text="RIP reminder" VerticalAlignment="Center"></TextBlock>
                     <Button Grid.Row="12" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultRipReminderCommand}" ToolTip="Reset to default">Default</Button>
 
-                    <StackPanel Grid.Row="13" Grid.Column="0" Grid.ColumnSpan="4" Orientation="Horizontal" Style="{StaticResource PageStackPanel}" HorizontalAlignment="Center">
+                    <TextBlock Grid.Row="13" Grid.Column="0" Style="{StaticResource PageTextBlock}">Max distance for setting file location at import (meters):</TextBlock>
+                    <TextBox Width="250"  Grid.Row="13" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding FileToLocationMaxDistance}"></TextBox>
+                    <Button Grid.Row="13" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultFileToLocationMaxDistanceCommand}" ToolTip="Reset to default">Default</Button>
+
+                    <StackPanel Grid.Row="14" Grid.Column="0" Grid.ColumnSpan="4" Orientation="Horizontal" Style="{StaticResource PageStackPanel}" HorizontalAlignment="Center">
                         <Button Margin="5" Width="100" Style="{StaticResource NormalButton}" Command="{Binding ResetConfigurationCommand}" ToolTip="Reset changes to last saved configuration">Reset changes</Button>
                         <Button Margin="5" Width="100" Style="{StaticResource NormalButton}" Command="{Binding SaveConfigurationCommand}">Save...</Button>
                     </StackPanel>

@@ -26,7 +26,7 @@ namespace FileDBInterface
         public IEnumerable<FilesModel> GetFilesWithTags(IEnumerable<int> tagIds);
         public IEnumerable<FilesModel> GetFilesWithMissingData();
         public bool HasFilePath(string path);
-        public void InsertFile(string internalPath, string description = null);
+        public void InsertFile(string internalPath, string description = null, double? maxDistanceForSettingLocation = null);
         public void UpdateFileFromMetaData(int id);
         public void UpdateFileDescription(int id, string description);
         public void DeleteFile(int id);

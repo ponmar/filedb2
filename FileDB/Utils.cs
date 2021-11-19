@@ -30,14 +30,9 @@ namespace FileDB
 
         public static void ReloadFileDBHandle()
         {
-            var config = new DatabaseWrapperConfig()
-            {
-                Database = BrowserConfig.Database,
-                FilesRootDirectory = BrowserConfig.FilesRootDirectory,
-            };
             try
             {
-                fileDBHandle = new DatabaseWrapper(config);
+                fileDBHandle = new DatabaseWrapper(BrowserConfig.Database, BrowserConfig.FilesRootDirectory);
             }
             catch (DatabaseWrapperException)
             {

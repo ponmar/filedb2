@@ -12,32 +12,33 @@ using Directory = System.IO.Directory;
 using log4net;
 using System.Reflection;
 using log4net.Config;
-using System.Globalization;
 using FileDBInterface.Exceptions;
 
 namespace FileDBInterface
 {
     public class DatabaseWrapper : IDatabaseWrapper
     {
-        public DatabaseWrapperConfig Config { get; }
-
         private static readonly ILog log = LogManager.GetLogger("FileDBHandle");
 
-        public DatabaseWrapper(DatabaseWrapperConfig config, bool allowMissingFilesRootDirectory = true)
+        private readonly string database;
+        private readonly string filesRootDirectory;
+
+        public DatabaseWrapper(string database, string filesRootDirectory, bool allowMissingFilesRootDirectory = true)
         {
             var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
             XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
 
-            Config = config;
+            this.database = database;
+            this.filesRootDirectory = filesRootDirectory;
 
-            if (!File.Exists(config.Database))
+            if (!File.Exists(database))
             {
-                throw new DatabaseWrapperException($"Database does not exist: {config.Database}");
+                throw new DatabaseWrapperException($"Database does not exist: {database}");
             }
 
-            if (!Directory.Exists(config.FilesRootDirectory))
+            if (!Directory.Exists(filesRootDirectory))
             {
-                var message = $"Files root directory does not exist: {config.FilesRootDirectory}";
+                var message = $"Files root directory does not exist: {filesRootDirectory}";
                 if (allowMissingFilesRootDirectory)
                 {
                     log.Warn(message);
@@ -48,14 +49,14 @@ namespace FileDBInterface
                 }
             }
 
-            log.Info($"FileDB started with database {config.Database} and root directory {config.FilesRootDirectory}");
+            log.Info($"FileDB started with database {database} and root directory {filesRootDirectory}");
         }
 
         #region Files collection
 
         public IEnumerable<string> ListNewFilesystemFiles(List<string> blacklistedFilePathPatterns, List<string> whitelistedFilePathPatterns, bool includeHiddenDirectories)
         {
-            foreach (var filename in Directory.GetFiles(Config.FilesRootDirectory, "*.*", SearchOption.AllDirectories))
+            foreach (var filename in Directory.GetFiles(filesRootDirectory, "*.*", SearchOption.AllDirectories))
             {
                 var internalPath = PathToInternalPath(filename);
                 if (!PathIsBlacklisted(internalPath, blacklistedFilePathPatterns) &&
@@ -94,7 +95,7 @@ namespace FileDBInterface
 
         public IEnumerable<string> ListAllFilesystemDirectories()
         {
-            var dirs = Directory.GetDirectories(Config.FilesRootDirectory, "*.*", SearchOption.AllDirectories);
+            var dirs = Directory.GetDirectories(filesRootDirectory, "*.*", SearchOption.AllDirectories);
             return PathsToInternalPaths(dirs);
         }
 
@@ -142,19 +143,19 @@ namespace FileDBInterface
 
         public IEnumerable<FilesModel> GetFiles()
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             return connection.Query<FilesModel>("select * from [files]", new DynamicParameters());
         }
 
         public int GetFileCount()
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             return connection.ExecuteScalar<int>("select count(*) from [files]");
         }
 
         public IEnumerable<FilesModel> SearchFiles(string criteria)
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             var sql = "select * from [files] where (path like @criteria or description like @criteria)";
             return connection.Query<FilesModel>(sql, new { criteria = "%" + criteria + "%" });
         }
@@ -167,21 +168,21 @@ namespace FileDBInterface
 
         public IEnumerable<FilesModel> SearchFilesByPath(string criteria)
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             var sql = "select * from [files] where path like @criteria";
             return connection.Query<FilesModel>(sql, new { criteria = criteria + "%" });
         }
 
         public IEnumerable<FilesModel> SearchFilesRandom(int numFiles)
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             var sql = $"select * from [files] order by random() limit {numFiles}";
             return connection.Query<FilesModel>(sql, new DynamicParameters());
         }
 
         public IEnumerable<FilesModel> SearchFilesNearGpsPosition(double latitude, double longitude, double radius)
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             var sql = "select * from [files] where position is not null";
 
             foreach (var fileWithPosition in connection.Query<FilesModel>(sql))
@@ -210,25 +211,25 @@ namespace FileDBInterface
 
         public FilesModel GetFileById(int id)
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             return connection.QueryFirst<FilesModel>("select * from [files] where id = @id", new { id = id });
         }
 
         public bool HasFileId(int id)
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             return connection.ExecuteScalar<bool>("select count(1) from [files] where id=@id", new { id });
         }
 
         public FilesModel GetFileByPath(string path)
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             return connection.QueryFirst<FilesModel>("select * from [files] where path = @path", new { path = path });
         }
 
         public IEnumerable<FilesModel> GetFileByDate(DateTime start, DateTime end)
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             foreach (var fileWithDate in connection.Query<FilesModel>($"select * from [files] where datetime is not null"))
             {
                 if (DateTime.TryParse(fileWithDate.datetime, out var fileDatetime) &&
@@ -241,25 +242,25 @@ namespace FileDBInterface
 
         public IEnumerable<FilesModel> GetFilesWithPersons(IEnumerable<int> personIds)
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             return connection.Query<FilesModel>($"select * from [files] inner join filepersons on files.id = filepersons.fileid where filepersons.personid in ({string.Join(',', personIds)})");
         }
 
         public IEnumerable<FilesModel> GetFilesWithLocations(IEnumerable<int> locationIds)
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             return connection.Query<FilesModel>($"select * from [files] inner join filelocations on files.id = filelocations.fileid where filelocations.locationid in ({string.Join(',', locationIds)})");
         }
 
         public IEnumerable<FilesModel> GetFilesWithTags(IEnumerable<int> tagIds)
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             return connection.Query<FilesModel>($"select * from [files] inner join filetags on files.id = filetags.fileid where filetags.tagid in ({string.Join(',', tagIds)})");
         }
 
         public IEnumerable<FilesModel> GetFilesWithMissingData()
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             var files = connection.Query<FilesModel>($"select * from [files] where description is null");
             foreach (var file in files)
             {
@@ -274,11 +275,11 @@ namespace FileDBInterface
 
         public bool HasFilePath(string path)
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             return connection.ExecuteScalar<bool>("select count(1) from [files] where path=@path", new { path = path });
         }
 
-        public void InsertFile(string internalPath, string description = null)
+        public void InsertFile(string internalPath, string description = null, double? maxDistanceForSettingLocation = null)
         {
             FormatValidator.ValidateFileDescription(description);
 
@@ -291,9 +292,14 @@ namespace FileDBInterface
 
             GetFileMetaData(path, out var datetime, out var position);
 
+            if (position != null && maxDistanceForSettingLocation != null)
+            {
+                // TODO: find nearest location and apply to file if within max distance
+            }
+
             try
             {
-                using var connection = DatabaseUtils.CreateConnection(Config.Database);
+                using var connection = DatabaseUtils.CreateConnection(database);
                 var files = new FilesModel() { path = internalPath, description = description, datetime = datetime, position = position };
                 var sql = "insert into [files] (path, description, datetime, position) values (@path, @description, @datetime, @position)";
                 connection.Execute(sql, files);
@@ -328,7 +334,7 @@ namespace FileDBInterface
 
             try
             {
-                using var connection = DatabaseUtils.CreateConnection(Config.Database);
+                using var connection = DatabaseUtils.CreateConnection(database);
                 var sql = "update [files] set datetime = @datetime, position = @position where id = @id";
                 connection.Execute(sql, new { datetime = datetime, position = position, id = id });
             }
@@ -344,7 +350,7 @@ namespace FileDBInterface
 
             try
             {
-                using var connection = DatabaseUtils.CreateConnection(Config.Database);
+                using var connection = DatabaseUtils.CreateConnection(database);
                 var sql = "update [files] set description = @description where id = @id";
                 connection.Execute(sql, new { description = description, id = id });
             }
@@ -356,49 +362,49 @@ namespace FileDBInterface
 
         public void DeleteFile(int id)
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             var sql = "delete from [files] where id = @id";
             connection.Execute(sql, new { id = id });
         }
 
         public void InsertFilePerson(int fileId, int personId)
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             var sql = "insert into [filepersons] (fileid, personid) values (@fileId, @personId)";
             connection.Execute(sql, new { fileId = fileId, personId = personId });
         }
 
         public void DeleteFilePerson(int fileId, int personId)
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             var sql = "delete from [filepersons] where fileid = @fileId and personid = @personId";
             connection.Execute(sql, new { fileId = fileId, personId = personId });
         }
 
         public void InsertFileLocation(int fileId, int locationId)
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             var sql = "insert into [filelocations] (fileid, locationid) values (@fileId, @locationId)";
             connection.Execute(sql, new { fileId = fileId, locationId = locationId });
         }
 
         public void DeleteFileLocation(int fileId, int locationId)
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             var sql = "delete from [filelocations] where fileid = @fileId and locationid = @locationId";
             connection.Execute(sql, new { fileId = fileId, locationId = locationId });
         }
 
         public void InsertFileTag(int fileId, int tagId)
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             var sql = "insert into [filetags] (fileid, tagid) values (@fileId, @tagId)";
             connection.Execute(sql, new { fileId = fileId, tagId = tagId });
         }
 
         public void DeleteFileTag(int fileId, int tagId)
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             var sql = "delete from [filetags] where fileid = @fileId and tagid = @tagId";
             connection.Execute(sql, new { fileId = fileId, tagId = tagId });
         }
@@ -409,38 +415,38 @@ namespace FileDBInterface
 
         public IEnumerable<PersonModel> GetPersons()
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             return connection.Query<PersonModel>("select * from [persons]", new DynamicParameters());
         }
 
         public bool FileHasPersons(int fileId)
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             return connection.ExecuteScalar<bool>("select count(1) from [filepersons] where fileid=@fileId", new { fileId });
         }
 
         public IEnumerable<PersonModel> GetPersonsFromFile(int fileId)
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             return connection.Query<PersonModel>("select * from [persons] where id in (select personid from [filepersons] where fileid = @fileid)", new { fileid = fileId });
         }
 
         public int GetPersonCount()
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             return connection.ExecuteScalar<int>("select count(*) from [persons]");
         }
 
         public IEnumerable<PersonModel> SearchPersons(string criteria)
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             var sql = "select * from [persons] where (firstname like @criteria or lastname like @criteria or description like @criteria)";
             return connection.Query<PersonModel>(sql, new { criteria = "%" + criteria + "%" });
         }
 
         public IEnumerable<PersonModel> SearchPersonsBySex(Sex sex)
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             var sql = "select * from [persons] where sex = @sex";
             return connection.Query<PersonModel>(sql, new { sex = sex });
         }
@@ -450,13 +456,13 @@ namespace FileDBInterface
             var parameters = new DynamicParameters();
             parameters.Add("@ID", id, DbType.Int32, ParameterDirection.Input);
 
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             return connection.QueryFirst<PersonModel>("select * from [persons] where id = @ID", parameters);
         }
 
         public bool HasPersonId(int id)
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             return connection.ExecuteScalar<bool>("select count(1) from [persons] where id=@id", new { id });
         }
 
@@ -471,7 +477,7 @@ namespace FileDBInterface
 
             try
             {
-                using var connection = DatabaseUtils.CreateConnection(Config.Database);
+                using var connection = DatabaseUtils.CreateConnection(database);
                 var person = new PersonModel() { firstname = firstname, lastname = lastname, description = description, dateofbirth = dateOfBirth, deceased = deceased, profilefileid = profileFileId, sex = sex };
                 var sql = "insert into [persons] (firstname, lastname, description, dateofbirth, deceased, profilefileid, sex) values (@firstname, @lastname, @description, @dateofbirth, @deceased, @profilefileid, @sex)";
                 connection.Execute(sql, person);
@@ -493,7 +499,7 @@ namespace FileDBInterface
 
             try
             {
-                using var connection = DatabaseUtils.CreateConnection(Config.Database);
+                using var connection = DatabaseUtils.CreateConnection(database);
                 var person = new PersonModel() { id = id, firstname = firstname, lastname = lastname, description = description, dateofbirth = dateOfBirth, deceased = deceased, profilefileid = profileFileId, sex = sex };
                 var sql = "update [persons] set firstname = @firstname, lastname = @lastname, description = @description, dateofbirth = @dateofbirth, deceased = @deceased, profilefileid = @profilefileid, sex = @sex where id = @id";
                 connection.Execute(sql, person);
@@ -510,7 +516,7 @@ namespace FileDBInterface
 
             try
             {
-                using var connection = DatabaseUtils.CreateConnection(Config.Database);
+                using var connection = DatabaseUtils.CreateConnection(database);
                 var sql = "update [persons] set firstname = @firstname where id = @id";
                 connection.Execute(sql, new { firstname = firstname, id = id });
             }
@@ -526,7 +532,7 @@ namespace FileDBInterface
 
             try
             {
-                using var connection = DatabaseUtils.CreateConnection(Config.Database);
+                using var connection = DatabaseUtils.CreateConnection(database);
                 var sql = "update [persons] set lastname = @lastname where id = @id";
                 connection.Execute(sql, new { lastname = lastname, id = id });
             }
@@ -542,7 +548,7 @@ namespace FileDBInterface
 
             try
             {
-                using var connection = DatabaseUtils.CreateConnection(Config.Database);
+                using var connection = DatabaseUtils.CreateConnection(database);
                 var sql = "update [persons] set description = @description where id = @id";
                 connection.Execute(sql, new { description = description, id = id });
             }
@@ -558,7 +564,7 @@ namespace FileDBInterface
 
             try
             {
-                using var connection = DatabaseUtils.CreateConnection(Config.Database);
+                using var connection = DatabaseUtils.CreateConnection(database);
                 var sql = "update [persons] set dateofbirth = @dateOfBirthStr where id = @id";
                 connection.Execute(sql, new { dateOfBirthStr = dateOfBirthStr, id = id });
             }
@@ -580,7 +586,7 @@ namespace FileDBInterface
 
             try
             {
-                using var connection = DatabaseUtils.CreateConnection(Config.Database);
+                using var connection = DatabaseUtils.CreateConnection(database);
                 var sql = "update [persons] set deceased = @deceasedStr where id = @id";
                 connection.Execute(sql, new { deceased = deceasedStr, id = id });
             }
@@ -602,7 +608,7 @@ namespace FileDBInterface
 
             try
             {
-                using var connection = DatabaseUtils.CreateConnection(Config.Database);
+                using var connection = DatabaseUtils.CreateConnection(database);
                 var sql = "update [persons] set profilefileid = @profileFileId where id = @id";
                 connection.Execute(sql, new { profileFileId = profileFileId, id = id });
             }
@@ -616,7 +622,7 @@ namespace FileDBInterface
         {
             try
             {
-                using var connection = DatabaseUtils.CreateConnection(Config.Database);
+                using var connection = DatabaseUtils.CreateConnection(database);
                 var sql = "update [persons] set sex = @sex where id = @id";
                 connection.Execute(sql, new { sex = sex, id = id });
             }
@@ -628,7 +634,7 @@ namespace FileDBInterface
 
         public void DeletePerson(int id)
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             var sql = "delete from [persons] where id = @id";
             connection.Execute(sql, new { id = id });
         }
@@ -639,31 +645,31 @@ namespace FileDBInterface
 
         public IEnumerable<LocationModel> GetLocations()
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             return connection.Query<LocationModel>("select * from [locations]", new DynamicParameters());
         }
 
         public bool FileHasLocation(int fileId)
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             return connection.ExecuteScalar<bool>("select count(1) from [filelocations] where fileid=@fileId", new { fileId });
         }
 
         public IEnumerable<LocationModel> GetLocationsFromFile(int fileId)
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             return connection.Query<LocationModel>("select * from [locations] where id in (select locationid from [filelocations] where fileid = @fileid)", new { fileid = fileId });
         }
 
         public int GetLocationCount()
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             return connection.ExecuteScalar<int>("select count(*) from [locations]");
         }
 
         public IEnumerable<LocationModel> SearchLocations(string criteria)
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             var sql = "select * from [locations] where (name like @criteria or description like @criteria)";
             return connection.Query<LocationModel>(sql, new { criteria = "%" + criteria + "%" });
         }
@@ -673,13 +679,13 @@ namespace FileDBInterface
             var parameters = new DynamicParameters();
             parameters.Add("@ID", id, DbType.Int32, ParameterDirection.Input);
 
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             return connection.QueryFirst<LocationModel>("select * from [locations] where id = @ID", parameters);
         }
 
         public bool HasLocationId(int id)
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             return connection.ExecuteScalar<bool>("select count(1) from [locations] where id=@id", new { id });
         }
 
@@ -691,7 +697,7 @@ namespace FileDBInterface
 
             try
             {
-                using var connection = DatabaseUtils.CreateConnection(Config.Database);
+                using var connection = DatabaseUtils.CreateConnection(database);
                 var location = new LocationModel() { name = name, description = description, position = geoLocation };
                 var sql = "insert into [locations] (name, description, position) values (@name, @description, @position)";
                 connection.Execute(sql, location);
@@ -714,7 +720,7 @@ namespace FileDBInterface
 
             try
             {
-                using var connection = DatabaseUtils.CreateConnection(Config.Database);
+                using var connection = DatabaseUtils.CreateConnection(database);
                 var sql = "update [locations] set name = @name where id = @id";
                 connection.Execute(sql, new { name = name, id = id });
             }
@@ -730,7 +736,7 @@ namespace FileDBInterface
 
             try
             {
-                using var connection = DatabaseUtils.CreateConnection(Config.Database);
+                using var connection = DatabaseUtils.CreateConnection(database);
                 var sql = "update [locations] set description = @description where id = @id";
                 connection.Execute(sql, new { description = description, id = id });
             }
@@ -746,7 +752,7 @@ namespace FileDBInterface
 
             try
             {
-                using var connection = DatabaseUtils.CreateConnection(Config.Database);
+                using var connection = DatabaseUtils.CreateConnection(database);
                 var sql = "update [locations] set position = @position where id = @id";
                 connection.Execute(sql, new { position = geoLocation, id = id });
             }
@@ -764,7 +770,7 @@ namespace FileDBInterface
 
         public void DeleteLocation(int id)
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             var sql = "delete from [locations] where id = @id";
             connection.Execute(sql, new { id = id });
         }
@@ -775,31 +781,31 @@ namespace FileDBInterface
 
         public IEnumerable<TagModel> GetTags()
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             return connection.Query<TagModel>("select * from [tags]", new DynamicParameters());
         }
 
         public bool FileHasTags(int fileId)
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             return connection.ExecuteScalar<bool>("select count(1) from [filetags] where fileid=@fileId", new { fileId });
         }
 
         public IEnumerable<TagModel> GetTagsFromFile(int fileId)
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             return connection.Query<TagModel>("select * from [tags] where id in (select tagid from [filetags] where fileid = @fileid)", new { fileid = fileId });
         }
 
         public int GetTagCount()
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             return connection.ExecuteScalar<int>("select count(*) from [tags]");
         }
 
         public IEnumerable<TagModel> SearchTags(string criteria)
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             var sql = "select * from [tags] where (name like @criteria)";
             return connection.Query<TagModel>(sql, new { criteria = "%" + criteria + "%" });
         }
@@ -809,13 +815,13 @@ namespace FileDBInterface
             var parameters = new DynamicParameters();
             parameters.Add("@ID", id, DbType.Int32, ParameterDirection.Input);
 
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             return connection.QueryFirst<TagModel>("select * from [tags] where id = @ID", parameters);
         }
 
         public bool HasTagId(int id)
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             return connection.ExecuteScalar<bool>("select count(1) from [tags] where id=@id", new { id });
         }
 
@@ -825,7 +831,7 @@ namespace FileDBInterface
 
             try
             {
-                using var connection = DatabaseUtils.CreateConnection(Config.Database);
+                using var connection = DatabaseUtils.CreateConnection(database);
                 var tag = new TagModel() { name = name };
                 var sql = "insert into [tags] (name) values (@name)";
                 connection.Execute(sql, tag);
@@ -842,7 +848,7 @@ namespace FileDBInterface
 
             try
             {
-                using var connection = DatabaseUtils.CreateConnection(Config.Database);
+                using var connection = DatabaseUtils.CreateConnection(database);
                 var sql = "update [tags] set name = @name where id = @id";
                 connection.Execute(sql, new { name = name, id = id });
             }
@@ -854,7 +860,7 @@ namespace FileDBInterface
 
         public void DeleteTag(int id)
         {
-            using var connection = DatabaseUtils.CreateConnection(Config.Database);
+            using var connection = DatabaseUtils.CreateConnection(database);
             var sql = "delete from [tags] where id = @id";
             connection.Execute(sql, new { id = id });
         }
@@ -865,15 +871,15 @@ namespace FileDBInterface
 
         public string InternalPathToPath(string internalPath)
         {
-            var path = Path.Join(Config.FilesRootDirectory, internalPath);
+            var path = Path.Join(filesRootDirectory, internalPath);
             return FixPath(path);
         }
 
         private string PathToInternalPath(string path)
         {
-            if (path.StartsWith(Config.FilesRootDirectory))
+            if (path.StartsWith(filesRootDirectory))
             {
-                path = path.Substring(Config.FilesRootDirectory.Length);
+                path = path.Substring(filesRootDirectory.Length);
             }
             return FixInternalPath(path);
         }

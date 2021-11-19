@@ -9,15 +9,9 @@ namespace Test
     {
         static void Main(string[] args)
         {
-            var config = new DatabaseWrapperConfig()
-            {
-                Database = @"C:\Source\filedb2_db\filedb.db",
-                FilesRootDirectory = @"X:",
-            };
-
             try
             {
-                var handle = new DatabaseWrapper(config);
+                var handle = new DatabaseWrapper(@"C:\Source\filedb2_db\filedb.db", @"X:");
 
                 //var files = handle.GetFiles();
                 //var persons = handle.GetPersons();

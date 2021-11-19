@@ -3,9 +3,6 @@ using System.IO;
 using Dapper;
 using FileDBInterface.Exceptions;
 using System.Data;
-using System;
-using System.Globalization;
-using MetadataExtractor;
 
 namespace FileDBInterface
 {

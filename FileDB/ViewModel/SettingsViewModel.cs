@@ -103,6 +103,13 @@ namespace FileDB.ViewModel
         }
         private string locationLink;
 
+        public string FileToLocationMaxDistance
+        {
+            get => fileToLocationMaxDistance;
+            set => SetProperty(ref fileToLocationMaxDistance, value);
+        }
+        private string fileToLocationMaxDistance;
+
         public ICommand ResetConfigurationCommand => resetConfigurationCommand ??= new CommandHandler(ResetConfiguration);
         private ICommand resetConfigurationCommand;
 
@@ -148,6 +155,9 @@ namespace FileDB.ViewModel
         public ICommand SetDefaultLocationLinkCommand => setDefaultLocationLinkCommand ??= new CommandHandler(x => LocationLink = BrowserConfigFactory.CreateDefaultConfig().LocationLink);
         private ICommand setDefaultLocationLinkCommand;
 
+        public ICommand SetDefaultFileToLocationMaxDistanceCommand => setDefaultFileToLocationMaxDistanceCommand ??= new CommandHandler(x => FileToLocationMaxDistance = BrowserConfigFactory.CreateDefaultConfig().FileToLocationMaxDistance.ToString());
+        private ICommand setDefaultFileToLocationMaxDistanceCommand;
+
         public SettingsViewModel()
         {
             UpdateFromConfiguration();
@@ -168,6 +178,7 @@ namespace FileDB.ViewModel
             BirthdayReminder = Utils.BrowserConfig.BirthdayReminder;
             RipReminder = Utils.BrowserConfig.RipReminder;
             LocationLink = Utils.BrowserConfig.LocationLink;
+            FileToLocationMaxDistance = Utils.BrowserConfig.FileToLocationMaxDistance.ToString();
         }
 
         public void ResetConfiguration()
@@ -268,10 +279,17 @@ namespace FileDB.ViewModel
                 }
             }
 
+            if (!double.TryParse(FileToLocationMaxDistance, out var fileToLocationMaxDistance))
+            {
+                Utils.ShowErrorDialog("Invalid file to location max distance");
+                return;
+            }
+
             var config = new Config.Config(
                 ConfigName,
                 Database,
                 FilesRootDirectory,
+                fileToLocationMaxDistance,
                 blacklistedFilePathPatterns,
                 whitelistedFilePathPatterns,
                 IncludeHiddenDirectories,

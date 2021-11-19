@@ -58,11 +58,13 @@ namespace FileDB.ViewModel
 
         public void ImportNewFiles()
         {
+            double? maxDistanceForSettingsLocation = Utils.BrowserConfig.FileToLocationMaxDistance > 0.5 ? Utils.BrowserConfig.FileToLocationMaxDistance : null;
+
             try
             {
                 foreach (var newFile in NewFiles)
                 {
-                    Utils.FileDBHandle.InsertFile(newFile.Path);
+                    Utils.FileDBHandle.InsertFile(newFile.Path, null, maxDistanceForSettingsLocation);
                 }
             }
             catch (DataValidationException e)
