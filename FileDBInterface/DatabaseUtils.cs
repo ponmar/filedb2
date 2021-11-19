@@ -79,36 +79,5 @@ create table filetags(
     primary key(fileid, tagid)
 );
 ";
-
-        public static DateTime ParseDateOfBirth(string dateOfBirthStr)
-        {
-            return DateTime.ParseExact(dateOfBirthStr, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None);
-        }
-
-        public static DateTime ParseDeceased(string deceasedStr)
-        {
-            return DateTime.ParseExact(deceasedStr, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None);
-        }
-
-        public static (double lat, double lon)? ParseGpsPosition(string positionString)
-        {
-            var positionParts = positionString.Split(" ");
-            if (positionParts.Length != 2)
-            {
-                return null;
-            }
-
-            if (!double.TryParse(positionParts[0], out var latitude))
-            {
-                return null;
-            }
-
-            if (!double.TryParse(positionParts[1], out var longitude))
-            {
-                return null;
-            }
-
-            return (latitude, longitude);
-        }
     }
 }

@@ -799,7 +799,7 @@ namespace FileDB.ViewModel
                 return;
             }
 
-            var gpsPos = DatabaseUtils.ParseGpsPosition(SearchFileGpsPosition);
+            var gpsPos = DatabaseParsing.ParseFilesPosition(SearchFileGpsPosition);
             if (gpsPos == null)
             {
                 Utils.ShowErrorDialog("Invalid GPS position");
@@ -852,7 +852,7 @@ namespace FileDB.ViewModel
 
                 foreach (var person in personsWithAge)
                 {
-                    var dateOfBirth = DatabaseUtils.ParseDateOfBirth(person.dateofbirth);
+                    var dateOfBirth = DatabaseParsing.ParsePersonsDateOfBirth(person.dateofbirth);
                     foreach (var file in Utils.FileDBHandle.GetFilesWithPersons(new List<int>() { person.id }))
                     {
                         if (Utils.InternalDatetimeToDatetime(file.datetime, out var fileDatetime))

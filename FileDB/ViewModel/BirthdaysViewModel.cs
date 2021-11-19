@@ -38,7 +38,7 @@ namespace FileDB.ViewModel
             {
                 if (person.dateofbirth != null && person.deceased == null)
                 {
-                    var dateOfBirth = DatabaseUtils.ParseDateOfBirth(person.dateofbirth);
+                    var dateOfBirth = DatabaseParsing.ParsePersonsDateOfBirth(person.dateofbirth);
 
                     var p = new PersonBirthday()
                     {

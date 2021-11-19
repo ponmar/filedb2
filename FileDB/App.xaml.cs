@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
+﻿using System.Globalization;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows;
 using FileDB.Config;
 
@@ -16,6 +13,10 @@ namespace FileDB
     {
         private void Application_Startup(object sender, StartupEventArgs e)
         {
+            CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
+            Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
+
             bool demoModeEnabled = e.Args.Any(x => x == "--demo");
 
             if (demoModeEnabled)

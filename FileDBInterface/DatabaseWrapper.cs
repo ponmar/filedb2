@@ -121,25 +121,6 @@ namespace FileDBInterface
             location = null;
         }
 
-        private string ParseDateFromPath(string path)
-        {
-            // TODO: use regexp
-            var pathParts = path.Split('/');
-            foreach (var pathPart in pathParts)
-            {
-                var words = pathPart.Split(" ");
-                if (words.Length > 0)
-                {
-                    var firstWord = words[0];
-                    if (DateTime.TryParseExact(firstWord, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var _))
-                    {
-                        return firstWord;
-                    }
-                }
-            }
-            return null;
-        }
-
         #endregion
 
         #region Tools
@@ -205,7 +186,7 @@ namespace FileDBInterface
 
             foreach (var fileWithPosition in connection.Query<FilesModel>(sql))
             {
-                var gpsPos = DatabaseUtils.ParseGpsPosition(fileWithPosition.position);
+                var gpsPos = DatabaseParsing.ParseFilesPosition(fileWithPosition.position);
                 if (gpsPos != null)
                 {
                     if (CalculateDistance(latitude, longitude, gpsPos.Value.lat, gpsPos.Value.lon) < radius)
@@ -329,15 +310,15 @@ namespace FileDBInterface
 
             if (dateTaken != null)
             {
-                datetime = dateTaken.Value.ToString("yyyy-MM-ddTHH:mm:ss");
+                datetime = DatabaseParsing.DateTakenToFilesDatetime(dateTaken.Value);
             }
             else
             {
-                datetime = ParseDateFromPath(path);
+                datetime = DatabaseParsing.PathToFilesDatetime(path);
                 // TODO: otherwise try to get year from path? The datebase supports yyyy format also
             }
 
-            position = location != null ? $"{location.Latitude} {location.Longitude}" : null;
+            position = location != null ? DatabaseParsing.ToFilesPosition(location.Latitude, location.Longitude) : null;
         }
 
         public void UpdateFileFromMetaData(int id)

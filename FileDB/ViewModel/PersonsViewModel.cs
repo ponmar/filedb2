@@ -130,10 +130,10 @@ namespace FileDB.ViewModel
         {
             if (person.dateofbirth != null)
             {
-                var dateOfBirth = DatabaseUtils.ParseDateOfBirth(person.dateofbirth);
+                var dateOfBirth = DatabaseParsing.ParsePersonsDateOfBirth(person.dateofbirth);
                 if (person.deceased != null)
                 {
-                    var deceased = DatabaseUtils.ParseDeceased(person.deceased);
+                    var deceased = DatabaseParsing.ParsePersonsDeceased(person.deceased);
                     return Utils.GetYearsAgo(deceased, dateOfBirth);
                 }
                 else
