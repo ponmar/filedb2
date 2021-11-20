@@ -101,6 +101,9 @@ namespace FileDBInterface
 
         private void ParseFileExif(string path, out DateTime? dateTaken, out GeoLocation location)
         {
+            dateTaken = null;
+            location = null;
+
             try
             {
                 var directories = ImageMetadataReader.ReadMetadata(path);
@@ -117,9 +120,6 @@ namespace FileDBInterface
             catch (ImageProcessingException)
             {
             }
-
-            dateTaken = null;
-            location = null;
         }
 
         #endregion
