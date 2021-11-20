@@ -1276,7 +1276,12 @@ namespace FileDB.ViewModel
             if (SearchResultIndex != -1)
             {
                 var selection = SearchResult.Files[SearchResultIndex];
+                var fileId = selection.id;
                 Utils.FileDBHandle.UpdateFileFromMetaData(selection.id);
+
+                var updatedFile = Utils.FileDBHandle.GetFileById(fileId);
+                selection.datetime = updatedFile.datetime;
+                selection.position = updatedFile.position;
                 LoadFile(SearchResultIndex);
             }
         }
