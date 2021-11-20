@@ -242,12 +242,19 @@ namespace FileDB.ViewModel
         public ICommand FindFilesByPersonAgeCommand => findFilesByPersonAgeCommand ??= new CommandHandler(FindFilesByPersonAge);
         private ICommand findFilesByPersonAgeCommand;
 
-        public string SearchPersonAge
+        public string SearchPersonAgeFrom
         {
-            get => searchPersonAge;
-            set => SetProperty(ref searchPersonAge, value);
+            get => searchPersonAgeFrom;
+            set => SetProperty(ref searchPersonAgeFrom, value);
         }
-        private string searchPersonAge;
+        private string searchPersonAgeFrom;
+
+        public string SearchPersonAgeTo
+        {
+            get => searchPersonAgeTo;
+            set => SetProperty(ref searchPersonAgeTo, value);
+        }
+        private string searchPersonAgeTo;
 
         public ICommand FindFilesFromUnionCommand => findFilesFromUnionCommand ??= new CommandHandler(FindFilesFromUnion, FindFilesFromHistoryEnabled);
         private ICommand findFilesFromUnionCommand;
@@ -839,9 +846,20 @@ namespace FileDB.ViewModel
         public void FindFilesByPersonAge()
         {
             StopSlideshow();
-            if (!string.IsNullOrEmpty(SearchPersonAge))
+            if (!string.IsNullOrEmpty(SearchPersonAgeFrom))
             {
-                if (!int.TryParse(SearchPersonAge, out var age))
+                if (!int.TryParse(SearchPersonAgeFrom, out var ageFrom))
+                {
+                    Utils.ShowErrorDialog("Invalid age format");
+                    return;
+                }
+
+                int ageTo;
+                if (string.IsNullOrEmpty(SearchPersonAgeTo))
+                {
+                    ageTo = ageFrom;
+                }
+                else if (!int.TryParse(SearchPersonAgeTo, out ageTo))
                 {
                     Utils.ShowErrorDialog("Invalid age format");
                     return;
@@ -859,7 +877,7 @@ namespace FileDB.ViewModel
                         {
                             Utils.InternalDatetimeToDatetime(file.datetime);
                             int personAgeInFile = Utils.GetYearsAgo(fileDatetime.Value, dateOfBirth);
-                            if (personAgeInFile == age)
+                            if (personAgeInFile >= ageFrom && personAgeInFile <= ageTo)
                             {
                                 result.Add(file);
                             }

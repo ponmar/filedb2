@@ -20,6 +20,7 @@
         <KeyBinding Command="{Binding FunctionKeyCommand}" CommandParameter="10" Key="F10"/>
         <KeyBinding Command="{Binding FunctionKeyCommand}" CommandParameter="11" Key="F11"/>
         <KeyBinding Command="{Binding FunctionKeyCommand}" CommandParameter="12" Key="F12"/>
+        <KeyBinding Command="{Binding FunctionKeyCommand}" CommandParameter="Left" Key="Left"/>
     </UserControl.InputBindings>
 
     <UserControl.Resources>
@@ -106,7 +107,9 @@
 
                         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 20 0">
                             <TextBlock Text="Person age:" Margin="3" VerticalAlignment="Center"/>
-                            <TextBox Margin="3 0 0 0" Width="100" VerticalAlignment="Center" Text="{Binding SearchPersonAge}" ToolTip="Search criteria for file with persons of the specified age (example: 25, 30-40)"/>
+                            <TextBox Margin="0 0 0 0" Width="45" VerticalAlignment="Center" Text="{Binding SearchPersonAgeFrom}" ToolTip="From age (years)"/>
+                            <TextBlock Text="-" Margin="3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <TextBox Margin="0 0 0 0" Width="45" VerticalAlignment="Center" Text="{Binding SearchPersonAgeTo}" ToolTip="To age (years)"/>
                             <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding FindFilesByPersonAgeCommand}" ToolTip="Search for file with persons of the specified age">Search</Button>
                         </StackPanel>
 
