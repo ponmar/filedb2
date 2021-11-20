@@ -103,7 +103,7 @@ namespace FileDB
             return false;
         }
 
-        public void InsertFile(string internalPath, string description = null, double? maxDistanceForSettingLocation = null)
+        public void InsertFile(string internalPath, string description = null)
         {
         }
 

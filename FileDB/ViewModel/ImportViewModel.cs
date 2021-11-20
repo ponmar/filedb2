@@ -1,6 +1,8 @@
 ﻿using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Windows.Input;
+using FileDBInterface;
 using FileDBInterface.Exceptions;
 
 namespace FileDB.ViewModel
@@ -58,13 +60,30 @@ namespace FileDB.ViewModel
 
         public void ImportNewFiles()
         {
-            double? maxDistanceForSettingsLocation = Utils.BrowserConfig.FileToLocationMaxDistance > 0.5 ? Utils.BrowserConfig.FileToLocationMaxDistance : null;
+            var locations = Utils.FileDBHandle.GetLocations();
 
             try
             {
                 foreach (var newFile in NewFiles)
                 {
-                    Utils.FileDBHandle.InsertFile(newFile.Path, null, maxDistanceForSettingsLocation);
+                    Utils.FileDBHandle.InsertFile(newFile.Path);
+
+                    var importedFile = Utils.FileDBHandle.GetFileByPath(newFile.Path);
+
+                    if (importedFile.position != null && Utils.BrowserConfig.FileToLocationMaxDistance > 0.5)
+                    {
+                        var importedFilePos = DatabaseParsing.ParseFilesPosition(importedFile.position).Value;
+
+                        foreach (var locationWithPosition in locations.Where(x => x.position != null))
+                        {
+                            var locationPos = DatabaseParsing.ParseFilesPosition(locationWithPosition.position).Value;
+                            var distance = DatabaseUtils.CalculateDistance(importedFilePos.lat, importedFilePos.lon, locationPos.lat, locationPos.lon);
+                            if (distance < Utils.BrowserConfig.FileToLocationMaxDistance)
+                            {
+                                Utils.FileDBHandle.InsertFileLocation(importedFile.id, locationWithPosition.id);
+                            }
+                        }
+                    }
                 }
             }
             catch (DataValidationException e)
