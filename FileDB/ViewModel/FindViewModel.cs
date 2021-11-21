@@ -25,6 +25,13 @@ namespace FileDB.ViewModel
         List<IFolder> Folders { get; }
     }
 
+    public class Folder : IFolder
+    {
+        public string FullPath { get; set; }
+        public string FolderLabel { get; set; }
+        public List<IFolder> Folders { get; set; }
+    }
+
     public interface IImagePresenter
     {
         void ShowImage(BitmapImage image);
@@ -272,7 +279,7 @@ namespace FileDB.ViewModel
         public ICommand FindFilesFromDifferenceCommand => findFilesFromDifferenceCommand ??= new CommandHandler(FindFilesFromDifference, FindFilesFromHistoryEnabled);
         private ICommand findFilesFromDifferenceCommand;
 
-        public ObservableCollection<IFolder> Folders { get; } = new();
+        public List<IFolder> Folders { get; } = new();
 
         #endregion
 
@@ -1383,7 +1390,11 @@ namespace FileDB.ViewModel
         private void ReloadFolders()
         {
             Folders.Clear();
-            // TODO: find all 
+
+            // TODO: use directories available in database
+            var root = new Folder() { FolderLabel = "Test", FullPath = "the path", Folders = new List<IFolder>() { new Folder() { FolderLabel = "child", FullPath = "child path" } } };
+
+            Folders.Add(root);
         }
 
         private void AddUpdateHistoryItem(UpdateHistoryType type, int itemId, string itemName)
