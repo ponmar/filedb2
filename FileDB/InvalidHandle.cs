@@ -321,7 +321,7 @@ namespace FileDB
         {
         }
 
-        public string InternalPathToPath(string internalPath)
+        public string ToAbsolutePath(string internalPath)
         {
             return string.Empty;
         }

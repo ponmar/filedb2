@@ -1008,7 +1008,7 @@ namespace FileDB.ViewModel
                 CurrentFileToolTip = $"{selection.path} (Id: {selection.id})";
                 CurrentFileInternalPath = selection.path;
                 CurrentFileInternalDirectoryPath = Path.GetDirectoryName(selection.path).Replace(@"\", "/");
-                CurrentFilePath = Utils.FileDBHandle.InternalPathToPath(selection.path);
+                CurrentFilePath = Utils.FileDBHandle.ToAbsolutePath(selection.path);
                 CurrentFileDescription = selection.description ?? string.Empty;
                 CurrentFileDateTime = GetFileDateTimeString(selection.datetime);
                 CurrentFilePosition = selection.position ?? string.Empty;

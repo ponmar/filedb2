@@ -75,6 +75,6 @@ namespace FileDBInterface
         public void InsertTag(string name);
         public void UpdateTagName(int id, string name);
         public void DeleteTag(int id);
-        public string InternalPathToPath(string internalPath);
+        public string ToAbsolutePath(string internalPath);
     }
 }

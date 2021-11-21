@@ -43,7 +43,7 @@ namespace FileDB.ViewModel
                         DeceasedStr = person.deceased,
                         Deceased = deceased,
                         Age = Utils.GetAgeInYears(dateOfBirth, deceased),
-                        ProfileFileIdPath = person.profilefileid != null ? Utils.FileDBHandle.InternalPathToPath(Utils.FileDBHandle.GetFileById(person.profilefileid.Value).path) : string.Empty,
+                        ProfileFileIdPath = person.profilefileid != null ? Utils.FileDBHandle.ToAbsolutePath(Utils.FileDBHandle.GetFileById(person.profilefileid.Value).path) : string.Empty,
                     });
                 }
             }

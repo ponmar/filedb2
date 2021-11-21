@@ -58,7 +58,7 @@ namespace FileDBInterface
         {
             foreach (var filename in Directory.GetFiles(filesRootDirectory, "*.*", SearchOption.AllDirectories))
             {
-                var internalPath = PathToInternalPath(filename);
+                var internalPath = ToFilesPath(filename);
                 if (!PathIsBlacklisted(internalPath, blacklistedFilePathPatterns) &&
                     PathIsWhitelisted(internalPath, whitelistedFilePathPatterns) &&
                     PathIsVisible(internalPath, includeHiddenDirectories) &&
@@ -96,7 +96,7 @@ namespace FileDBInterface
         public IEnumerable<string> ListAllFilesystemDirectories()
         {
             var dirs = Directory.GetDirectories(filesRootDirectory, "*.*", SearchOption.AllDirectories);
-            return PathsToInternalPaths(dirs);
+            return dirs.Select(p => ToFilesPath(p));
         }
 
         private void ParseFileExif(string path, out DateTime? dateTaken, out GeoLocation location)
@@ -130,7 +130,7 @@ namespace FileDBInterface
         {
             foreach (var file in GetFiles())
             {
-                if (!File.Exists(InternalPathToPath(file.path)))
+                if (!File.Exists(ToAbsolutePath(file.path)))
                 {
                     yield return file;
                 }
@@ -273,7 +273,7 @@ namespace FileDBInterface
             FormatValidator.ValidateFileDescription(description);
 
             internalPath = FixInternalPath(internalPath);
-            var path = InternalPathToPath(internalPath);
+            var path = ToAbsolutePath(internalPath);
             if (!File.Exists(path))
             {
                 throw new DataValidationException($"No such file: {path}");
@@ -314,7 +314,7 @@ namespace FileDBInterface
         public void UpdateFileFromMetaData(int id)
         {
             var file = GetFileById(id);
-            GetFileMetaData(InternalPathToPath(file.path), out var datetime, out var position);
+            GetFileMetaData(ToAbsolutePath(file.path), out var datetime, out var position);
 
             try
             {
@@ -853,13 +853,13 @@ namespace FileDBInterface
 
         #region Helpers
 
-        public string InternalPathToPath(string internalPath)
+        public string ToAbsolutePath(string internalPath)
         {
             var path = Path.Join(filesRootDirectory, internalPath);
             return FixPath(path);
         }
 
-        private string PathToInternalPath(string path)
+        private string ToFilesPath(string path)
         {
             if (path.StartsWith(filesRootDirectory))
             {
@@ -882,11 +882,6 @@ namespace FileDBInterface
         {
             path = path.Replace('\\', '/');
             return path;
-        }
-
-        private IEnumerable<string> PathsToInternalPaths(string[] paths)
-        {
-            return paths.Select(p => PathToInternalPath(p));
         }
 
         #endregion

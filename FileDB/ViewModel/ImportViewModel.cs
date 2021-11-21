@@ -97,7 +97,7 @@ namespace FileDB.ViewModel
 
         private string GetDateModified(string internalPath)
         {
-            var path = Utils.FileDBHandle.InternalPathToPath(internalPath);
+            var path = Utils.FileDBHandle.ToAbsolutePath(internalPath);
             var dateModified = File.GetLastWriteTime(path);
             return dateModified.ToString("yyyy-MM-dd HH:mm");
         }
