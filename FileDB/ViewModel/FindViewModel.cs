@@ -545,6 +545,7 @@ namespace FileDB.ViewModel
             ReloadPersons();
             ReloadLocations();
             ReloadTags();
+            ReloadFolders();
 
             slideshowTimer.Tick += SlideshowTimer_Tick;
             slideshowTimer.Interval = Utils.BrowserConfig.SlideshowDelay;
@@ -1377,6 +1378,12 @@ namespace FileDB.ViewModel
             {
                 Tags.Add(tag);
             }
+        }
+
+        private void ReloadFolders()
+        {
+            Folders.Clear();
+            // TODO: find all 
         }
 
         private void AddUpdateHistoryItem(UpdateHistoryType type, int itemId, string itemName)

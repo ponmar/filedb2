@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using MetadataExtractor;
 
 namespace FileDBInterface
 {
@@ -10,9 +11,19 @@ namespace FileDBInterface
             return DateTime.ParseExact(dateOfBirthStr, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None);
         }
 
+        public static string ToPersonsDateOfBirth(DateTime dateOfBirth)
+        {
+            return dateOfBirth.ToString("yyyy-MM-dd");
+        }
+
         public static DateTime ParsePersonsDeceased(string deceasedStr)
         {
             return DateTime.ParseExact(deceasedStr, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None);
+        }
+
+        public static string ToPersonsDeceased(DateTime deceased)
+        {
+            return deceased.ToString("yyyy-MM-dd");
         }
 
         public static string DateTakenToFilesDatetime(DateTime dateTaken)
@@ -64,6 +75,11 @@ namespace FileDBInterface
         public static string ToFilesPosition(double lat, double lon)
         {
             return $"{lat.ToString(CultureInfo.InvariantCulture)} {lon.ToString(CultureInfo.InvariantCulture)}";
+        }
+
+        public static string ToFilesPosition(GeoLocation geoLocation)
+        {
+            return geoLocation != null ? ToFilesPosition(geoLocation.Latitude, geoLocation.Longitude) : null;
         }
     }
 }

@@ -560,7 +560,7 @@ namespace FileDBInterface
 
         public void UpdatePersonDateOfBirth(int id, DateTime dateOfBirth)
         {
-            var dateOfBirthStr = dateOfBirth.ToString("yyyy-MM-dd");
+            string dateOfBirthStr = DatabaseParsing.ToPersonsDateOfBirth(dateOfBirth);
             UpdatePersonDateOfBirth(id, dateOfBirthStr);
         }
 
@@ -582,7 +582,7 @@ namespace FileDBInterface
 
         public void UpdatePersonDeceased(int id, DateTime deceased)
         {
-            var deceasedStr = deceased.ToString("yyyy-MM-dd");
+            var deceasedStr = DatabaseParsing.ToPersonsDeceased(deceased);
             UpdatePersonDeceased(id, deceasedStr);
         }
 
@@ -694,7 +694,7 @@ namespace FileDBInterface
 
         public void InsertLocation(string name, string description = null, GeoLocation geoLocation = null)
         {
-            var geoLocationStr = GeoLocationToString(geoLocation);
+            var geoLocationStr = DatabaseParsing.ToFilesPosition(geoLocation);
             InsertLocation(name, description, geoLocationStr);
         }
 
@@ -748,7 +748,7 @@ namespace FileDBInterface
 
         public void UpdateLocationPosition(int id, GeoLocation geoLocation)
         {
-            var geoLocationStr = geoLocation != null ? GeoLocationToString(geoLocation) : null;
+            var geoLocationStr = DatabaseParsing.ToFilesPosition(geoLocation);
             UpdateLocationPosition(id, geoLocationStr);
         }
 
@@ -881,18 +881,12 @@ namespace FileDBInterface
         private string FixPath(string path)
         {
             path = path.Replace('\\', '/');
-            //path = path.Replace('/', Path.DirectorySeparatorChar);
             return path;
         }
 
         private IEnumerable<string> PathsToInternalPaths(string[] paths)
         {
             return paths.Select(p => PathToInternalPath(p));
-        }
-
-        private string GeoLocationToString(GeoLocation geoLocation)
-        {
-            return geoLocation != null ? $"{geoLocation.Latitude} {geoLocation.Longitude}".Replace(',', '.') : null;
         }
 
         #endregion
