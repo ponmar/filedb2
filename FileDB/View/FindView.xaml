@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:FileDB.View" xmlns:local1="clr-namespace:FileDB.Converters"
+             xmlns:local="clr-namespace:FileDB.View" xmlns:local1="clr-namespace:FileDB.Converters" xmlns:local2="clr-namespace:FileDB.ViewModel"
              mc:Ignorable="d"
              d:DesignHeight="800" d:DesignWidth="1000"
              Focusable="True">
@@ -20,7 +20,7 @@
         <KeyBinding Command="{Binding FunctionKeyCommand}" CommandParameter="10" Key="F10"/>
         <KeyBinding Command="{Binding FunctionKeyCommand}" CommandParameter="11" Key="F11"/>
         <KeyBinding Command="{Binding FunctionKeyCommand}" CommandParameter="12" Key="F12"/>
-        <KeyBinding Command="{Binding FunctionKeyCommand}" CommandParameter="Left" Key="Left"/>
+        <!--<KeyBinding Command="{Binding FunctionKeyCommand}" CommandParameter="Left" Key="Left"/>-->
     </UserControl.InputBindings>
 
     <UserControl.Resources>
@@ -144,6 +144,19 @@
                         <TextBlock Text="Exported file list:" VerticalAlignment="Center"/>
                         <TextBox Margin="3 0 0 0" Width="100" VerticalAlignment="Center" Text="{Binding FileListSearch}" ToolTip="file1;file2;..."/>
                         <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding FindFilesFromListCommand}" ToolTip="Search by path/description">Search</Button>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Browse">
+                    <StackPanel Orientation="Vertical" Margin="3" HorizontalAlignment="Left">
+                        <TextBlock Margin="5" Text="Imported directories:"/>
+                        <TreeView ItemsSource="{Binding Folders}">
+                            <TreeView.ItemTemplate>
+                                <HierarchicalDataTemplate ItemsSource="{Binding Folders}" DataType="{x:Type local2:IFolder}">
+                                    <TextBlock Text="{Binding FolderLabel}" />
+                                </HierarchicalDataTemplate>
+                            </TreeView.ItemTemplate>
+                        </TreeView>
+                        <Button Margin="5" Width="100" Style="{StaticResource NormalButton}" Command="{Binding FindFilesFromListCommand}" ToolTip="Search by path/description">Search</Button>
                     </StackPanel>
                 </TabItem>
             </TabControl>

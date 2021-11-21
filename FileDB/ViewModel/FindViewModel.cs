@@ -18,6 +18,13 @@ using TextCopy;
 
 namespace FileDB.ViewModel
 {
+    public interface IFolder
+    {
+        string FullPath { get; }
+        string FolderLabel { get; }
+        List<IFolder> Folders { get; }
+    }
+
     public interface IImagePresenter
     {
         void ShowImage(BitmapImage image);
@@ -264,6 +271,8 @@ namespace FileDB.ViewModel
 
         public ICommand FindFilesFromDifferenceCommand => findFilesFromDifferenceCommand ??= new CommandHandler(FindFilesFromDifference, FindFilesFromHistoryEnabled);
         private ICommand findFilesFromDifferenceCommand;
+
+        public ObservableCollection<IFolder> Folders { get; } = new();
 
         #endregion
 
