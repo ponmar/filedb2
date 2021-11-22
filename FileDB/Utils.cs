@@ -59,14 +59,16 @@ namespace FileDB
             return yearsAgo;
         }
 
+        /*
         public static string GetBornYearsAgoString(DateTime now, string dateOfBirth)
         {
-            if (InternalDatetimeToDatetime(dateOfBirth, out var result))
+            if (DatabaseParsing.InternalDatetimeToDatetime(dateOfBirth, out var result))
             {
                 return GetBornYearsAgo(now, result.Value);
             }
             return string.Empty;
         }
+        */
 
         public static string GetBornYearsAgo(DateTime now, DateTime dateOfBirth)
         {
@@ -87,23 +89,6 @@ namespace FileDB
         public static int GetAgeInYears(DateTime dateOfBirth, DateTime deceased)
         {
             return GetYearsAgo(deceased, dateOfBirth);
-        }
-
-        public static bool InternalDatetimeToDatetime(string datetimeStr, out DateTime? result)
-        {
-            if (datetimeStr != null && DateTime.TryParse(datetimeStr, out var datetime))
-            {
-                result = datetime;
-                return true;
-            }
-            result = null;
-            return false;
-        }
-
-        public static DateTime? InternalDatetimeToDatetime(string datetimeStr)
-        {
-            InternalDatetimeToDatetime(datetimeStr, out var result);
-            return result;
         }
 
         public static void ShowInfoDialog(string message)

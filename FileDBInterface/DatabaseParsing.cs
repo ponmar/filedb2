@@ -26,7 +26,22 @@ namespace FileDBInterface
             return deceased.ToString("yyyy-MM-dd");
         }
 
-        // TODO: ParseFilesDatetime()?
+        public static bool ParseFilesDatetime(string datetimeStr, out DateTime? result)
+        {
+            if (datetimeStr != null && DateTime.TryParse(datetimeStr, out var datetime))
+            {
+                result = datetime;
+                return true;
+            }
+            result = null;
+            return false;
+        }
+
+        public static DateTime? ParseFilesDatetime(string datetimeStr)
+        {
+            ParseFilesDatetime(datetimeStr, out var result);
+            return result;
+        }
 
         public static string DateTakenToFilesDatetime(DateTime dateTaken)
         {

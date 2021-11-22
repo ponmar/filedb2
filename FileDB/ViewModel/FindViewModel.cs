@@ -890,9 +890,8 @@ namespace FileDB.ViewModel
                     var dateOfBirth = DatabaseParsing.ParsePersonsDateOfBirth(person.dateofbirth);
                     foreach (var file in Utils.FileDBHandle.GetFilesWithPersons(new List<int>() { person.id }))
                     {
-                        if (Utils.InternalDatetimeToDatetime(file.datetime, out var fileDatetime))
+                        if (DatabaseParsing.ParseFilesDatetime(file.datetime, out var fileDatetime))
                         {
-                            Utils.InternalDatetimeToDatetime(file.datetime);
                             int personAgeInFile = Utils.GetYearsAgo(fileDatetime.Value, dateOfBirth);
                             if (personAgeInFile >= ageFrom && personAgeInFile <= ageTo)
                             {
@@ -1072,7 +1071,7 @@ namespace FileDB.ViewModel
 
         private string GetFileDateTimeString(string datetimeString)
         {
-            var datetime = Utils.InternalDatetimeToDatetime(datetimeString);
+            var datetime = DatabaseParsing.ParseFilesDatetime(datetimeString);
             if (datetime == null)
             {
                 return string.Empty;
@@ -1107,11 +1106,11 @@ namespace FileDB.ViewModel
 
         private string GetPersonAgeInFileString(string fileDatetimeStr, string personDateOfBirthStr)
         {
-            var fileDatetime = Utils.InternalDatetimeToDatetime(fileDatetimeStr);
+            DateTime? fileDatetime = fileDatetimeStr == null ? null : DatabaseParsing.ParseFilesDatetime(fileDatetimeStr);
             if (fileDatetime == null)
                 return string.Empty;
 
-            var personDateOfBirth = Utils.InternalDatetimeToDatetime(personDateOfBirthStr);
+            DateTime? personDateOfBirth = personDateOfBirthStr == null ? null : DatabaseParsing.ParsePersonsDateOfBirth(personDateOfBirthStr);
             if (personDateOfBirth == null)
                 return string.Empty;
 
