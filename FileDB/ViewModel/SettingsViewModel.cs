@@ -190,13 +190,13 @@ namespace FileDB.ViewModel
 
         public void SaveConfiguration()
         {
-            if (!int.TryParse(SearchHistorySize, out int searchHistorySize) || searchHistorySize < 0 || searchHistorySize > 10)
+            if (!int.TryParse(SearchHistorySize, out int searchHistorySize))
             {
                 Utils.ShowErrorDialog("Invalid search history size");
                 return;
             }
 
-            if (!int.TryParse(SlideshowDelay, out int slideshowDelay) || slideshowDelay < 1)
+            if (!int.TryParse(SlideshowDelay, out int slideshowDelay))
             {
                 Utils.ShowErrorDialog("Invalid slideshow delay");
                 return;
@@ -224,7 +224,7 @@ namespace FileDB.ViewModel
                 return;
             }
 
-            if (!int.TryParse(StartupBackupReminderAfterDays, out int startupBackupReminderAfterDays) || startupBackupReminderAfterDays < 1)
+            if (!int.TryParse(StartupBackupReminderAfterDays, out int startupBackupReminderAfterDays))
             {
                 Utils.ShowErrorDialog("Invalid startup backup reminder interval");
                 return;
@@ -252,8 +252,7 @@ namespace FileDB.ViewModel
                 RipReminder,
                 LocationLink);
 
-            var configValidator = new ConfigValidator();
-            var result = configValidator.Validate(config);
+            var result = new ConfigValidator().Validate(config);
             if (!result.IsValid)
             {
                 Utils.ShowErrorDialog(result.Errors.First().ErrorMessage);

@@ -23,8 +23,18 @@ namespace FileDB.Validators
 
             When(c => !string.IsNullOrEmpty(c.LocationLink), () =>
             {
-                RuleFor(c => c.LocationLink).Must(IsValidUrl).WithMessage("Location link is not a valid url");
+                RuleFor(c => c.LocationLink)
+                    .Must(IsValidUrl).WithMessage("Location link is not a valid url");
             });
+
+            RuleFor(c => c.SearchHistorySize)
+                .InclusiveBetween(0, 10).WithMessage("Invalid search history size");
+
+            RuleFor(c => c.SlideshowDelay.TotalSeconds)
+                .GreaterThan(0).WithMessage("Invalid slideshow delay");
+
+            RuleFor(c => c.StartupBackupReminderAfterDays)
+                .GreaterThanOrEqualTo(0).WithMessage("Invalid startup backup reminder after days");
         }
 
         private bool IsValidUrl(string url)
