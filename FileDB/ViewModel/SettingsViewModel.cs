@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows.Input;
 using FileDB.Config;
+using FileDB.Validators;
 using FileDBInterface;
 using FileDBInterface.Exceptions;
 using Microsoft.Win32;
@@ -188,17 +190,6 @@ namespace FileDB.ViewModel
 
         public void SaveConfiguration()
         {
-            if (!Utils.ShowConfirmDialog($"Write your configuration to {Utils.BrowserConfigIO.FilePath}?"))
-            {
-                return;
-            }
-
-            if (ConfigName.Length < 3 || ConfigName.Length > 100)
-            {
-                Utils.ShowErrorDialog("Invalid configuration name");
-                return;
-            }
-
             if (!Database.EndsWith(".db"))
             {
                 Utils.ShowErrorDialog("Invalid database filename");
@@ -300,6 +291,19 @@ namespace FileDB.ViewModel
                 BirthdayReminder,
                 RipReminder,
                 LocationLink);
+
+            var configValidator = new ConfigValidator();
+            var result = configValidator.Validate(config);
+            if (!result.IsValid)
+            {
+                Utils.ShowErrorDialog(result.Errors.First().ErrorMessage);
+                return;
+            }
+
+            if (!Utils.ShowConfirmDialog($"Write your configuration to {Utils.BrowserConfigIO.FilePath}?"))
+            {
+                return;
+            }
 
             if (Utils.BrowserConfigIO.Write(config))
             {
