@@ -892,7 +892,7 @@ namespace FileDB.ViewModel
                     {
                         if (DatabaseParsing.ParseFilesDatetime(file.datetime, out var fileDatetime))
                         {
-                            int personAgeInFile = Utils.GetYearsAgo(fileDatetime.Value, dateOfBirth);
+                            int personAgeInFile = DatabaseUtils.GetYearsAgo(fileDatetime.Value, dateOfBirth);
                             if (personAgeInFile >= ageFrom && personAgeInFile <= ageTo)
                             {
                                 result.Add(file);
@@ -1081,7 +1081,7 @@ namespace FileDB.ViewModel
             var resultString = datetimeString.Contains("T") ? datetime.Value.ToString("yyyy-MM-dd HH:mm") : datetimeString;
             
             var now = DateTime.Now;
-            int yearsAgo = Utils.GetYearsAgo(now, datetime.Value);
+            int yearsAgo = DatabaseUtils.GetYearsAgo(now, datetime.Value);
             if (yearsAgo == 0 && now.Year == datetime.Value.Year)
             {
                 resultString = $"{resultString} (this year)";
@@ -1114,12 +1114,8 @@ namespace FileDB.ViewModel
             if (personDateOfBirth == null)
                 return string.Empty;
 
-            var age = Utils.GetBornYearsAgo(fileDatetime.Value, personDateOfBirth.Value);
-            if (age != string.Empty)
-            {
-                age = $" ({age})";
-            }
-            return age;
+            var age = DatabaseUtils.GetYearsAgo(fileDatetime.Value, personDateOfBirth.Value);
+            return $" ({age})";
         }
 
         private string GetFileLocationsString(int fileId)

@@ -40,57 +40,6 @@ namespace FileDB
             }
         }
 
-        public static int GetYearsAgo(DateTime now, DateTime dateTime)
-        {
-            int yearsAgo = now.Year - dateTime.Year;
-
-            try
-            {
-                if (new DateTime(dateTime.Year, now.Month, now.Day) < dateTime)
-                {
-                    yearsAgo--;
-                }
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-                // Current date did not exist the year that person was born
-            }
-
-            return yearsAgo;
-        }
-
-        /*
-        public static string GetBornYearsAgoString(DateTime now, string dateOfBirth)
-        {
-            if (DatabaseParsing.InternalDatetimeToDatetime(dateOfBirth, out var result))
-            {
-                return GetBornYearsAgo(now, result.Value);
-            }
-            return string.Empty;
-        }
-        */
-
-        public static string GetBornYearsAgo(DateTime now, DateTime dateOfBirth)
-        {
-            return GetYearsAgo(now, dateOfBirth).ToString();
-        }
-
-        public static int GetDaysToNextBirthday(DateTime birthday)
-        {
-            var today = DateTime.Today;
-            var next = birthday.AddYears(today.Year - birthday.Year);
-
-            if (next < today)
-                next = next.AddYears(1);
-
-            return (next - today).Days;
-        }
-
-        public static int GetAgeInYears(DateTime dateOfBirth, DateTime deceased)
-        {
-            return GetYearsAgo(deceased, dateOfBirth);
-        }
-
         public static void ShowInfoDialog(string message)
         {
             MessageBox.Show(message, ApplicationName, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.No);

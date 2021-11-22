@@ -44,8 +44,8 @@ namespace FileDB.ViewModel
                     {
                         Name = person.firstname + " " + person.lastname,
                         Birthday = dateOfBirth.ToString("d MMMM"),
-                        DaysLeft = Utils.GetDaysToNextBirthday(dateOfBirth),
-                        Age = Utils.GetYearsAgo(DateTime.Now, dateOfBirth),
+                        DaysLeft = DatabaseUtils.GetDaysToNextBirthday(dateOfBirth),
+                        Age = DatabaseUtils.GetYearsAgo(DateTime.Now, dateOfBirth),
                         ProfileFileIdPath = person.profilefileid != null ? Utils.FileDBHandle.ToAbsolutePath(Utils.FileDBHandle.GetFileById(person.profilefileid.Value).path) : string.Empty,
                     };
 

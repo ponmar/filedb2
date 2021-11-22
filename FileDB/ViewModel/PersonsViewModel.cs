@@ -134,11 +134,11 @@ namespace FileDB.ViewModel
                 if (person.deceased != null)
                 {
                     var deceased = DatabaseParsing.ParsePersonsDeceased(person.deceased);
-                    return Utils.GetYearsAgo(deceased, dateOfBirth);
+                    return DatabaseUtils.GetYearsAgo(deceased, dateOfBirth);
                 }
                 else
                 {
-                    return Utils.GetYearsAgo(DateTime.Now, dateOfBirth);
+                    return DatabaseUtils.GetYearsAgo(DateTime.Now, dateOfBirth);
                 }
             }
 
