@@ -30,7 +30,7 @@ namespace FileDB.Validators
             RuleFor(c => c.SearchHistorySize)
                 .InclusiveBetween(0, 10).WithMessage("Invalid search history size");
 
-            RuleFor(c => c.SlideshowDelay.TotalSeconds)
+            RuleFor(c => c.SlideshowDelay)
                 .GreaterThan(0).WithMessage("Invalid slideshow delay");
 
             RuleFor(c => c.StartupBackupReminderAfterDays)

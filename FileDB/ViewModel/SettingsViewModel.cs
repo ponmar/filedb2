@@ -127,7 +127,7 @@ namespace FileDB.ViewModel
         public ICommand CreateDatabaseCommand => createDatabaseCommand ??= new CommandHandler(CreateDatabase, CreateDatabasePossible);
         private ICommand createDatabaseCommand;
 
-        public ICommand SetDefaultSlideshowDelayCommand => setDefaultSlideshowDelayCommand ??= new CommandHandler(x => SlideshowDelay = ((int)BrowserConfigFactory.CreateDefaultConfig().SlideshowDelay.TotalSeconds).ToString());
+        public ICommand SetDefaultSlideshowDelayCommand => setDefaultSlideshowDelayCommand ??= new CommandHandler(x => SlideshowDelay = BrowserConfigFactory.CreateDefaultConfig().SlideshowDelay.ToString());
         private ICommand setDefaultSlideshowDelayCommand;
 
         public ICommand SetDefaultStartupBackupReminderAfterDaysCommand => setDefaultStartupBackupReminderAfterDaysCommand ??= new CommandHandler(x => StartupBackupReminderAfterDays = BrowserConfigFactory.CreateDefaultConfig().StartupBackupReminderAfterDays.ToString());
@@ -170,7 +170,7 @@ namespace FileDB.ViewModel
             ConfigName = Utils.BrowserConfig.Name;
             Database = Utils.BrowserConfig.Database;
             FilesRootDirectory = Utils.BrowserConfig.FilesRootDirectory;
-            SlideshowDelay = ((int)Utils.BrowserConfig.SlideshowDelay.TotalSeconds).ToString();
+            SlideshowDelay = Utils.BrowserConfig.SlideshowDelay.ToString();
             SearchHistorySize = Utils.BrowserConfig.SearchHistorySize.ToString();
             IncludeHiddenDirectories = Utils.BrowserConfig.IncludeHiddenDirectories;
             BlacklistedFilePathPatternsJson = JsonConvert.SerializeObject(Utils.BrowserConfig.BlacklistedFilePathPatterns);
@@ -244,7 +244,7 @@ namespace FileDB.ViewModel
                 blacklistedFilePathPatterns,
                 whitelistedFilePathPatterns,
                 IncludeHiddenDirectories,
-                TimeSpan.FromSeconds(slideshowDelay),
+                slideshowDelay,
                 searchHistorySize,
                 ReadOnly,
                 startupBackupReminderAfterDays,

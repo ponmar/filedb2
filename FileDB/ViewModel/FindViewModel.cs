@@ -555,7 +555,7 @@ namespace FileDB.ViewModel
             ReloadFolders();
 
             slideshowTimer.Tick += SlideshowTimer_Tick;
-            slideshowTimer.Interval = Utils.BrowserConfig.SlideshowDelay;
+            slideshowTimer.Interval = TimeSpan.FromSeconds(Utils.BrowserConfig.SlideshowDelay);
         }
 
         public void StopSlideshowAndSelectPrevFile()
