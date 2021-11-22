@@ -190,33 +190,6 @@ namespace FileDB.ViewModel
 
         public void SaveConfiguration()
         {
-            if (!Database.EndsWith(".db"))
-            {
-                Utils.ShowErrorDialog("Invalid database filename");
-                return;
-            }
-            if (!Path.IsPathFullyQualified(Database))
-            {
-                Utils.ShowErrorDialog("Database path is not absolute");
-                return;
-            }
-            if (!File.Exists(Database))
-            {
-                Utils.ShowErrorDialog("Database missing");
-                return;
-            }
-
-            if (!Path.IsPathFullyQualified(FilesRootDirectory))
-            {
-                Utils.ShowErrorDialog("Files root directory path is not absolute");
-                return;
-            }
-            if (!Directory.Exists(FilesRootDirectory))
-            {
-                Utils.ShowErrorDialog("Files root directory missing");
-                return;
-            }
-
             if (!int.TryParse(SearchHistorySize, out int searchHistorySize) || searchHistorySize < 0 || searchHistorySize > 10)
             {
                 Utils.ShowErrorDialog("Invalid search history size");
@@ -255,19 +228,6 @@ namespace FileDB.ViewModel
             {
                 Utils.ShowErrorDialog("Invalid startup backup reminder interval");
                 return;
-            }
-
-            if (!string.IsNullOrEmpty(LocationLink))
-            {
-                try
-                {
-                    new Uri(LocationLink);
-                }
-                catch (UriFormatException)
-                {
-                    Utils.ShowErrorDialog("Location link is not a valid URI");
-                    return;
-                }
             }
 
             if (!double.TryParse(FileToLocationMaxDistance, out var fileToLocationMaxDistance))
