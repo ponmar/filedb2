@@ -32,7 +32,7 @@ namespace FileDB.ViewModel
 
         public void ScanNewFiles()
         {
-            if (!Utils.ShowConfirmDialog($"Find all files, not yet imported, from directory {Utils.BrowserConfig.FilesRootDirectory}?"))
+            if (!Utils.ShowConfirmDialog($"Find all files, not yet imported, from directory {Utils.Config.FilesRootDirectory}?"))
             {
                 return;
             }
@@ -41,7 +41,7 @@ namespace FileDB.ViewModel
             OnPropertyChanged(nameof(NewFilesAvailable));
 
             // TODO: show counter?
-            foreach (var internalFilePath in Utils.FileDBHandle.ListNewFilesystemFiles(Utils.BrowserConfig.BlacklistedFilePathPatterns, Utils.BrowserConfig.WhitelistedFilePathPatterns, Utils.BrowserConfig.IncludeHiddenDirectories))
+            foreach (var internalFilePath in Utils.FileDBHandle.ListNewFilesystemFiles(Utils.Config.BlacklistedFilePathPatterns, Utils.Config.WhitelistedFilePathPatterns, Utils.Config.IncludeHiddenDirectories))
             {
                 NewFiles.Add(new NewFile()
                 {
@@ -54,7 +54,7 @@ namespace FileDB.ViewModel
 
             if (NewFiles.Count == 0)
             {
-                Utils.ShowWarningDialog($"No new files found. Add files to directory {Utils.BrowserConfig.FilesRootDirectory} or configure another files root directory.");
+                Utils.ShowWarningDialog($"No new files found. Add files to directory {Utils.Config.FilesRootDirectory} or configure another files root directory.");
             }
         }
 
@@ -70,7 +70,7 @@ namespace FileDB.ViewModel
 
                     var importedFile = Utils.FileDBHandle.GetFileByPath(newFile.Path);
 
-                    if (importedFile.position != null && Utils.BrowserConfig.FileToLocationMaxDistance > 0.5)
+                    if (importedFile.position != null && Utils.Config.FileToLocationMaxDistance > 0.5)
                     {
                         var importedFilePos = DatabaseParsing.ParseFilesPosition(importedFile.position).Value;
 
@@ -78,7 +78,7 @@ namespace FileDB.ViewModel
                         {
                             var locationPos = DatabaseParsing.ParseFilesPosition(locationWithPosition.position).Value;
                             var distance = DatabaseUtils.CalculateDistance(importedFilePos.lat, importedFilePos.lon, locationPos.lat, locationPos.lon);
-                            if (distance < Utils.BrowserConfig.FileToLocationMaxDistance)
+                            if (distance < Utils.Config.FileToLocationMaxDistance)
                             {
                                 Utils.FileDBHandle.InsertFileLocation(importedFile.id, locationWithPosition.id);
                             }

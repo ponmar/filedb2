@@ -51,7 +51,7 @@ namespace FileDB.ViewModel
             Persons.Sort(new PersonsByDeceasedSorter());
             Persons.Reverse();
 
-            if (Utils.BrowserConfig.RipReminder)
+            if (Utils.Config.RipReminder)
             {
                 var today = DateTime.Today;
                 foreach (var person in Persons.Where(x => x.Deceased == today))

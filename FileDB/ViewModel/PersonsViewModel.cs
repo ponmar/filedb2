@@ -53,7 +53,7 @@ namespace FileDB.ViewModel
             get => readWriteMode;
             set => SetProperty(ref readWriteMode, value);
         }
-        private bool readWriteMode = !Utils.BrowserConfig.ReadOnly;
+        private bool readWriteMode = !Utils.Config.ReadOnly;
 
         public ObservableCollection<Person> Persons { get; } = new();
 

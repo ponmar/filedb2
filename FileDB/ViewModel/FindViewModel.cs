@@ -349,7 +349,7 @@ namespace FileDB.ViewModel
             get => readWriteMode;
             set => SetProperty(ref readWriteMode, value);
         }
-        private bool readWriteMode = !Utils.BrowserConfig.ReadOnly;
+        private bool readWriteMode = !Utils.Config.ReadOnly;
 
         #endregion
 
@@ -391,7 +391,7 @@ namespace FileDB.ViewModel
 
         private void AddSearchResultToHistory()
         {
-            if (SearchResultHistory.Count == Utils.BrowserConfig.SearchHistorySize)
+            if (SearchResultHistory.Count == Utils.Config.SearchHistorySize)
             {
                 SearchResultHistory.RemoveAt(0);
             }
@@ -555,7 +555,7 @@ namespace FileDB.ViewModel
             ReloadFolders();
 
             slideshowTimer.Tick += SlideshowTimer_Tick;
-            slideshowTimer.Interval = TimeSpan.FromSeconds(Utils.BrowserConfig.SlideshowDelay);
+            slideshowTimer.Interval = TimeSpan.FromSeconds(Utils.Config.SlideshowDelay);
         }
 
         public void StopSlideshowAndSelectPrevFile()
@@ -995,9 +995,9 @@ namespace FileDB.ViewModel
         private string CreatePositionLink(string position, string defaultValue)
         {
             var positionParts = position.Split(" ");
-            if (positionParts.Length == 2 && !string.IsNullOrEmpty(Utils.BrowserConfig.LocationLink))
+            if (positionParts.Length == 2 && !string.IsNullOrEmpty(Utils.Config.LocationLink))
             {
-                return Utils.BrowserConfig.LocationLink.Replace("LAT", positionParts[0]).Replace("LON", positionParts[1]);
+                return Utils.Config.LocationLink.Replace("LAT", positionParts[0]).Replace("LON", positionParts[1]);
             }
             return defaultValue;
         }

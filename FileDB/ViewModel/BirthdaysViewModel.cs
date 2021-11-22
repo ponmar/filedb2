@@ -72,7 +72,7 @@ namespace FileDB.ViewModel
 
             Persons.Sort(new PersonsByDaysLeftUntilBirthdaySorter());
 
-            if (Utils.BrowserConfig.BirthdayReminder)
+            if (Utils.Config.BirthdayReminder)
             {
                 foreach (var person in Persons.Where(x => x.DaysLeft == 0))
                 {

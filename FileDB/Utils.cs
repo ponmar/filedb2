@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Windows;
 using FileDB.Config;
 using FileDBInterface;
@@ -13,7 +12,7 @@ namespace FileDB
 
         public static AppDataConfig<Config.Config> BrowserConfigIO { get; } = new(ApplicationName);
 
-        public static Config.Config BrowserConfig { get; set; }
+        public static Config.Config Config { get; set; }
 
         public static IDatabaseWrapper FileDBHandle
         {
@@ -32,7 +31,7 @@ namespace FileDB
         {
             try
             {
-                fileDBHandle = new DatabaseWrapper(BrowserConfig.Database, BrowserConfig.FilesRootDirectory);
+                fileDBHandle = new DatabaseWrapper(Config.Database, Config.FilesRootDirectory);
             }
             catch (DatabaseWrapperException)
             {

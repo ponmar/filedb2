@@ -167,20 +167,20 @@ namespace FileDB.ViewModel
 
         private void UpdateFromConfiguration()
         {
-            ConfigName = Utils.BrowserConfig.Name;
-            Database = Utils.BrowserConfig.Database;
-            FilesRootDirectory = Utils.BrowserConfig.FilesRootDirectory;
-            SlideshowDelay = Utils.BrowserConfig.SlideshowDelay.ToString();
-            SearchHistorySize = Utils.BrowserConfig.SearchHistorySize.ToString();
-            IncludeHiddenDirectories = Utils.BrowserConfig.IncludeHiddenDirectories;
-            BlacklistedFilePathPatternsJson = JsonConvert.SerializeObject(Utils.BrowserConfig.BlacklistedFilePathPatterns);
-            WhitelistedFilePathPatternsJson = JsonConvert.SerializeObject(Utils.BrowserConfig.WhitelistedFilePathPatterns);
-            ReadOnly = Utils.BrowserConfig.ReadOnly;
-            StartupBackupReminderAfterDays = Utils.BrowserConfig.StartupBackupReminderAfterDays.ToString();
-            BirthdayReminder = Utils.BrowserConfig.BirthdayReminder;
-            RipReminder = Utils.BrowserConfig.RipReminder;
-            LocationLink = Utils.BrowserConfig.LocationLink;
-            FileToLocationMaxDistance = Utils.BrowserConfig.FileToLocationMaxDistance.ToString();
+            ConfigName = Utils.Config.Name;
+            Database = Utils.Config.Database;
+            FilesRootDirectory = Utils.Config.FilesRootDirectory;
+            SlideshowDelay = Utils.Config.SlideshowDelay.ToString();
+            SearchHistorySize = Utils.Config.SearchHistorySize.ToString();
+            IncludeHiddenDirectories = Utils.Config.IncludeHiddenDirectories;
+            BlacklistedFilePathPatternsJson = JsonConvert.SerializeObject(Utils.Config.BlacklistedFilePathPatterns);
+            WhitelistedFilePathPatternsJson = JsonConvert.SerializeObject(Utils.Config.WhitelistedFilePathPatterns);
+            ReadOnly = Utils.Config.ReadOnly;
+            StartupBackupReminderAfterDays = Utils.Config.StartupBackupReminderAfterDays.ToString();
+            BirthdayReminder = Utils.Config.BirthdayReminder;
+            RipReminder = Utils.Config.RipReminder;
+            LocationLink = Utils.Config.LocationLink;
+            FileToLocationMaxDistance = Utils.Config.FileToLocationMaxDistance.ToString();
         }
 
         public void ResetConfiguration()
@@ -266,7 +266,7 @@ namespace FileDB.ViewModel
 
             if (Utils.BrowserConfigIO.Write(config))
             {
-                Utils.BrowserConfig = config;
+                Utils.Config = config;
                 Utils.ReloadFileDBHandle();
                 Utils.ShowInfoDialog("Configuration saved. Restart to enable all settings.");
             }

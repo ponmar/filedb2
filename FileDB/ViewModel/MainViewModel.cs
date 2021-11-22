@@ -20,7 +20,7 @@
                 }
             }
         }
-        private bool readWriteMode = !Utils.BrowserConfig.ReadOnly;
+        private bool readWriteMode = !Utils.Config.ReadOnly;
 
         public MainViewModel()
         {
@@ -31,9 +31,9 @@
         {
             var title = $"{Utils.ApplicationName} {Shared.Version.Major}.{Shared.Version.Minor}";
 
-            if (!string.IsNullOrEmpty(Utils.BrowserConfig.Name))
+            if (!string.IsNullOrEmpty(Utils.Config.Name))
             {
-                title += $" [{Utils.BrowserConfig.Name}]";
+                title += $" [{Utils.Config.Name}]";
             }
 
             if (!ReadWriteMode)

@@ -42,7 +42,7 @@ namespace FileDB.ViewModel
 
         public void CreateBackup()
         {
-            var db = Utils.BrowserConfig.Database;
+            var db = Utils.Config.Database;
             if (File.Exists(db))
             {
                 var directoryPath = Path.GetDirectoryName(db);
@@ -67,7 +67,7 @@ namespace FileDB.ViewModel
 
         private void ShowBackupReminder()
         {
-            if (Utils.BrowserConfig.StartupBackupReminderAfterDays <= 0)
+            if (Utils.Config.StartupBackupReminderAfterDays <= 0)
             {
                 return;
             }
@@ -79,7 +79,7 @@ namespace FileDB.ViewModel
             else
             {
                 var latestBackupDaysAge = (int)BackupFiles.Min(x => x.Age).TotalDays;
-                if (latestBackupDaysAge >= Utils.BrowserConfig.StartupBackupReminderAfterDays)
+                if (latestBackupDaysAge >= Utils.Config.StartupBackupReminderAfterDays)
                 {
                     Utils.ShowWarningDialog($"Backup reminder: Last database backup created {latestBackupDaysAge} days ago!");
                 }
@@ -88,7 +88,7 @@ namespace FileDB.ViewModel
 
         private void ScanBackupFiles()
         {
-            var backupDir = Path.GetDirectoryName(Utils.BrowserConfig.Database);
+            var backupDir = Path.GetDirectoryName(Utils.Config.Database);
             if (Directory.Exists(backupDir))
             {
                 BackupFiles.Clear();
