@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VersionPrinter", "VersionPr
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shared", "Shared\Shared.shproj", "{0BF4213A-948E-4DB9-AC40-7B03098EE718}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileDBInterfaceTests", "FileDBInterfaceTests\FileDBInterfaceTests.csproj", "{1D49EFF7-00AC-4171-8D20-A0975BC044E6}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Shared\Shared.projitems*{0bf4213a-948e-4db9-ac40-7b03098ee718}*SharedItemsImports = 13
@@ -40,6 +42,10 @@ Global
 		{E5814BDF-5D44-46AE-9954-B6971BAC651F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E5814BDF-5D44-46AE-9954-B6971BAC651F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E5814BDF-5D44-46AE-9954-B6971BAC651F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D49EFF7-00AC-4171-8D20-A0975BC044E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D49EFF7-00AC-4171-8D20-A0975BC044E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D49EFF7-00AC-4171-8D20-A0975BC044E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D49EFF7-00AC-4171-8D20-A0975BC044E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

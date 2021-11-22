@@ -26,6 +26,8 @@ namespace FileDBInterface
             return deceased.ToString("yyyy-MM-dd");
         }
 
+        // TODO: ParseFilesDatetime()?
+
         public static string DateTakenToFilesDatetime(DateTime dateTaken)
         {
             return dateTaken.ToString("yyyy-MM-ddTHH:mm:ss");
@@ -49,7 +51,6 @@ namespace FileDBInterface
             }
             return null;
         }
-
 
         public static (double lat, double lon)? ParseFilesPosition(string positionString)
         {
