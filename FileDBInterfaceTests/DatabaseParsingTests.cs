@@ -32,7 +32,6 @@ namespace FileDBInterfaceTests
             Assert.AreEqual("1957-03-23", DatabaseParsing.ToPersonsDeceased(new DateTime(year: 1957, month: 03, day: 23)));
         }
         
-        
         [TestMethod]
         public void ParseFilesDatetime()
         {
