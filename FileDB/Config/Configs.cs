@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace FileDB.Config
 {
@@ -8,8 +9,8 @@ namespace FileDB.Config
         string Database,
         string FilesRootDirectory,
         int FileToLocationMaxDistance,
-        List<string> BlacklistedFilePathPatterns,
-        List<string> WhitelistedFilePathPatterns,
+        string BlacklistedFilePathPatterns,
+        string WhitelistedFilePathPatterns,
         bool IncludeHiddenDirectories,
         int SlideshowDelay,
         int SearchHistorySize,
@@ -27,8 +28,8 @@ namespace FileDB.Config
                 "filedb.db",
                 "files",
                 300,
-                new() { "Thumbs.db", "filedb.db", "unsorted", "TN_" },
-                new() { ".jpg", ".png", ".bmp", ".gif", ".avi", ".mpg", ".mp4", ".mkv", ".mov", ".pdf" },
+                "Thumbs.db;filedb.db;unsorted;TN_",
+                ".jpg;.png;.bmp;.gif;.avi;.mpg;.mp4;.mkv;.mov;.pdf",
                 false,
                 3,
                 4,

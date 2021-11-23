@@ -66,12 +66,12 @@
                     <Button Grid.Row="5" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultSearchHistorySizeCommand}" ToolTip="Reset to default">Default</Button>
 
                     <TextBlock Grid.Row="6" Grid.Column="0" Style="{StaticResource PageTextBlock}">Blacklisted file path patterns:</TextBlock>
-                    <TextBox Width="250"  Grid.Row="6" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding BlacklistedFilePathPatternsJson}"></TextBox>
-                    <Button Grid.Row="6" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultBlacklistedFilePathPatternsJsonCommand}" ToolTip="Reset to default">Default</Button>
+                    <TextBox Width="250"  Grid.Row="6" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding BlacklistedFilePathPatterns}"></TextBox>
+                    <Button Grid.Row="6" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultBlacklistedFilePathPatternsCommand}" ToolTip="Reset to default">Default</Button>
 
                     <TextBlock Grid.Row="7" Grid.Column="0" Style="{StaticResource PageTextBlock}">Whitelisted file path patterns:</TextBlock>
-                    <TextBox Width="250" Grid.Row="7" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding WhitelistedFilePathPatternsJson}"></TextBox>
-                    <Button Grid.Row="7" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultWhitelistedFilePathPatternsJsonCommand}" ToolTip="Reset to default">Default</Button>
+                    <TextBox Width="250" Grid.Row="7" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding WhitelistedFilePathPatterns}"></TextBox>
+                    <Button Grid.Row="7" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultWhitelistedFilePathPatternsCommand}" ToolTip="Reset to default">Default</Button>
 
                     <TextBlock Grid.Row="8" Grid.Column="0" Style="{StaticResource PageTextBlock}">Location link:</TextBlock>
                     <TextBox Width="250"  Grid.Row="8" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding LocationLink}" ToolTip="LAT and LON is replaced with actual GPS position data when generating links. Set empty to disable feature."></TextBox>

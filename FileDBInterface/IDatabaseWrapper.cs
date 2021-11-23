@@ -7,7 +7,7 @@ namespace FileDBInterface
 {
     public interface IDatabaseWrapper
     {
-        public IEnumerable<string> ListNewFilesystemFiles(List<string> blacklistedFilePathPatterns, List<string> whitelistedFilePathPatterns, bool includeHiddenDirectories);
+        public IEnumerable<string> ListNewFilesystemFiles(IEnumerable<string> blacklistedFilePathPatterns, IEnumerable<string> whitelistedFilePathPatterns, bool includeHiddenDirectories);
         public IEnumerable<string> ListAllFilesystemDirectories();
         public IEnumerable<FilesModel> GetFilesMissingInFilesystem();
         public IEnumerable<FilesModel> GetFiles();

@@ -1,9 +1,11 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Windows.Input;
 using FileDBInterface;
 using FileDBInterface.Exceptions;
+using Newtonsoft.Json;
 
 namespace FileDB.ViewModel
 {
@@ -40,8 +42,11 @@ namespace FileDB.ViewModel
             NewFiles.Clear();
             OnPropertyChanged(nameof(NewFilesAvailable));
 
+            var blacklistedFilePathPatterns = Utils.Config.BlacklistedFilePathPatterns.Split(";");
+            var whitelistedFilePathPatterns = Utils.Config.WhitelistedFilePathPatterns.Split(";");
+
             // TODO: show counter?
-            foreach (var internalFilePath in Utils.FileDBHandle.ListNewFilesystemFiles(Utils.Config.BlacklistedFilePathPatterns, Utils.Config.WhitelistedFilePathPatterns, Utils.Config.IncludeHiddenDirectories))
+            foreach (var internalFilePath in Utils.FileDBHandle.ListNewFilesystemFiles(blacklistedFilePathPatterns, whitelistedFilePathPatterns, Utils.Config.IncludeHiddenDirectories))
             {
                 NewFiles.Add(new NewFile()
                 {

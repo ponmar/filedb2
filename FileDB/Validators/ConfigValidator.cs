@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using FluentValidation;
+using Newtonsoft.Json;
 
 namespace FileDB.Validators
 {
@@ -24,7 +26,11 @@ namespace FileDB.Validators
             RuleFor(c => c.FileToLocationMaxDistance)
                 .GreaterThanOrEqualTo(0).WithMessage("Invalid file to location max distance");
 
-            // TODO: validate patterns
+            RuleFor(c => c.BlacklistedFilePathPatterns)
+                .Must(IsSemicolonSeparatedFilePatterns).WithMessage("Invalid blacklisted file path patterns");
+
+            RuleFor(c => c.WhitelistedFilePathPatterns)
+                .Must(IsSemicolonSeparatedFilePatterns).WithMessage("Invalid whitelisted file path patterns");
 
             RuleFor(c => c.SlideshowDelay)
                 .GreaterThan(0).WithMessage("Invalid slideshow delay");
@@ -53,6 +59,11 @@ namespace FileDB.Validators
             {
                 return false;
             }
+        }
+
+        private bool IsSemicolonSeparatedFilePatterns(string text)
+        {
+            return text.Contains(";");
         }
     }
 }

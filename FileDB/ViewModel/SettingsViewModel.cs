@@ -55,19 +55,19 @@ namespace FileDB.ViewModel
         }
         private bool includeHiddenDirectories;
 
-        public string BlacklistedFilePathPatternsJson
+        public string BlacklistedFilePathPatterns
         {
-            get => blacklistedFilePathPatternsJson;
-            set => SetProperty(ref blacklistedFilePathPatternsJson, value);
+            get => blacklistedFilePathPatterns;
+            set => SetProperty(ref blacklistedFilePathPatterns, value);
         }
-        private string blacklistedFilePathPatternsJson;
+        private string blacklistedFilePathPatterns;
 
-        public string WhitelistedFilePathPatternsJson
+        public string WhitelistedFilePathPatterns
         {
-            get => whitelistedFilePathPatternsJson;
-            set => SetProperty(ref whitelistedFilePathPatternsJson, value);
+            get => whitelistedFilePathPatterns;
+            set => SetProperty(ref whitelistedFilePathPatterns, value);
         }
-        private string whitelistedFilePathPatternsJson;
+        private string whitelistedFilePathPatterns;
 
         public bool ReadOnly
         {
@@ -135,11 +135,11 @@ namespace FileDB.ViewModel
         public ICommand SetDefaultSearchHistorySizeCommand => setDefaultSearchHistorySizeCommand ??= new CommandHandler(x => SearchHistorySize = DefaultConfigs.Default.SearchHistorySize);
         private ICommand setDefaultSearchHistorySizeCommand;
 
-        public ICommand SetDefaultBlacklistedFilePathPatternsJsonCommand => setDefaultBlacklistedFilePathPatternsJsonCommand ??= new CommandHandler(x => BlacklistedFilePathPatternsJson = JsonConvert.SerializeObject(DefaultConfigs.Default.BlacklistedFilePathPatterns));
-        private ICommand setDefaultBlacklistedFilePathPatternsJsonCommand;
+        public ICommand SetDefaultBlacklistedFilePathPatternsCommand => setDefaultBlacklistedFilePathPatternsCommand ??= new CommandHandler(x => BlacklistedFilePathPatterns = DefaultConfigs.Default.BlacklistedFilePathPatterns);
+        private ICommand setDefaultBlacklistedFilePathPatternsCommand;
 
-        public ICommand SetDefaultWhitelistedFilePathPatternsJsonCommand => setDefaultWhitelistedFilePathPatternsJsonCommand ??= new CommandHandler(x => WhitelistedFilePathPatternsJson = JsonConvert.SerializeObject(DefaultConfigs.Default.WhitelistedFilePathPatterns));
-        private ICommand setDefaultWhitelistedFilePathPatternsJsonCommand;
+        public ICommand SetDefaultWhitelistedFilePathPatternsCommand => setDefaultWhitelistedFilePathPatternsCommand ??= new CommandHandler(x => WhitelistedFilePathPatterns = DefaultConfigs.Default.WhitelistedFilePathPatterns);
+        private ICommand setDefaultWhitelistedFilePathPatternsCommand;
 
         public ICommand SetDefaultIncludeHiddenDirectoriesCommand => setDefaultIncludeHiddenDirectoriesCommand ??= new CommandHandler(x => IncludeHiddenDirectories = DefaultConfigs.Default.IncludeHiddenDirectories);
         private ICommand setDefaultIncludeHiddenDirectoriesCommand;
@@ -172,8 +172,8 @@ namespace FileDB.ViewModel
             SlideshowDelay = Utils.Config.SlideshowDelay;
             SearchHistorySize = Utils.Config.SearchHistorySize;
             IncludeHiddenDirectories = Utils.Config.IncludeHiddenDirectories;
-            BlacklistedFilePathPatternsJson = JsonConvert.SerializeObject(Utils.Config.BlacklistedFilePathPatterns);
-            WhitelistedFilePathPatternsJson = JsonConvert.SerializeObject(Utils.Config.WhitelistedFilePathPatterns);
+            BlacklistedFilePathPatterns = Utils.Config.BlacklistedFilePathPatterns;
+            WhitelistedFilePathPatterns = Utils.Config.WhitelistedFilePathPatterns;
             ReadOnly = Utils.Config.ReadOnly;
             StartupBackupReminderAfterDays = Utils.Config.StartupBackupReminderAfterDays;
             BirthdayReminder = Utils.Config.BirthdayReminder;
@@ -189,35 +189,13 @@ namespace FileDB.ViewModel
 
         public void SaveConfiguration()
         {
-            List<string> blacklistedFilePathPatterns;
-            try
-            {
-                blacklistedFilePathPatterns = JsonConvert.DeserializeObject<List<string>>(BlacklistedFilePathPatternsJson);
-            }
-            catch (JsonException)
-            {
-                Utils.ShowErrorDialog("Invalid blacklisted file path patterns");
-                return;
-            }
-
-            List<string> whitelistedFilePathPatterns;
-            try
-            {
-                whitelistedFilePathPatterns = JsonConvert.DeserializeObject<List<string>>(WhitelistedFilePathPatternsJson);
-            }
-            catch (JsonException)
-            {
-                Utils.ShowErrorDialog("Invalid whitelisted file path patterns");
-                return;
-            }
-
             var config = new Config.Config(
                 ConfigName,
                 Database,
                 FilesRootDirectory,
                 fileToLocationMaxDistance,
-                blacklistedFilePathPatterns,
-                whitelistedFilePathPatterns,
+                BlacklistedFilePathPatterns,
+                WhitelistedFilePathPatterns,
                 IncludeHiddenDirectories,
                 slideshowDelay,
                 searchHistorySize,

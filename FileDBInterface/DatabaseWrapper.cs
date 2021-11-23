@@ -54,7 +54,7 @@ namespace FileDBInterface
 
         #region Files collection
 
-        public IEnumerable<string> ListNewFilesystemFiles(List<string> blacklistedFilePathPatterns, List<string> whitelistedFilePathPatterns, bool includeHiddenDirectories)
+        public IEnumerable<string> ListNewFilesystemFiles(IEnumerable<string> blacklistedFilePathPatterns, IEnumerable<string> whitelistedFilePathPatterns, bool includeHiddenDirectories)
         {
             foreach (var filename in Directory.GetFiles(filesRootDirectory, "*.*", SearchOption.AllDirectories))
             {
@@ -69,14 +69,14 @@ namespace FileDBInterface
             }
         }
 
-        private bool PathIsBlacklisted(string internalPath, List<string> blacklistedFilePathPatterns)
+        private bool PathIsBlacklisted(string internalPath, IEnumerable<string> blacklistedFilePathPatterns)
         {
             return blacklistedFilePathPatterns.FirstOrDefault(pattern => internalPath.IndexOf(pattern) != -1) != null;
         }
 
-        private bool PathIsWhitelisted(string internalPath, List<string> whitelistedFilePathPatterns)
+        private bool PathIsWhitelisted(string internalPath, IEnumerable<string> whitelistedFilePathPatterns)
         {
-            if (whitelistedFilePathPatterns.Count == 0)
+            if (whitelistedFilePathPatterns.Count() == 0)
                 return true;
 
             var pathLower = internalPath.ToLower();
