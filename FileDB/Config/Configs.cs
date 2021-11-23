@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 
 namespace FileDB.Config
@@ -20,11 +19,10 @@ namespace FileDB.Config
         bool RipReminder,
         string LocationLink);
 
-    public static class BrowserConfigFactory
+    public static class DefaultConfigs
     {
-        public static Config CreateDefaultConfig()
-        {
-            return new Config(
+        public static Config Default =>
+            new Config(
                 "Default",
                 "filedb.db",
                 "files",
@@ -39,26 +37,21 @@ namespace FileDB.Config
                 true,
                 true,
                 "https://www.google.com/maps?q=loc:LAT,LON");
-        }
 
-        public static Config CreateDemoConfig()
-        {
-            var defaultConfig = CreateDefaultConfig();
-            return new Config(
+        public static Config CreateDemo() => new Config(
                 "Demo",
                 Path.Combine(Directory.GetCurrentDirectory(), @"demo\filedb.db"),
                 Path.Combine(Directory.GetCurrentDirectory(), @"demo\files"),
-                defaultConfig.FileToLocationMaxDistance,
-                defaultConfig.BlacklistedFilePathPatterns,
-                defaultConfig.WhitelistedFilePathPatterns,
-                defaultConfig.IncludeHiddenDirectories,
-                defaultConfig.SlideshowDelay,
-                defaultConfig.SearchHistorySize,
-                defaultConfig.ReadOnly,
+                Default.FileToLocationMaxDistance,
+                Default.BlacklistedFilePathPatterns,
+                Default.WhitelistedFilePathPatterns,
+                Default.IncludeHiddenDirectories,
+                Default.SlideshowDelay,
+                Default.SearchHistorySize,
+                Default.ReadOnly,
                 0,
-                defaultConfig.BirthdayReminder,
-                defaultConfig.RipReminder,
-                defaultConfig.LocationLink);
-        }
+                Default.BirthdayReminder,
+                Default.RipReminder,
+                Default.LocationLink);
     }
 }

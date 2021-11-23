@@ -127,37 +127,37 @@ namespace FileDB.ViewModel
         public ICommand CreateDatabaseCommand => createDatabaseCommand ??= new CommandHandler(CreateDatabase, CreateDatabasePossible);
         private ICommand createDatabaseCommand;
 
-        public ICommand SetDefaultSlideshowDelayCommand => setDefaultSlideshowDelayCommand ??= new CommandHandler(x => SlideshowDelay = BrowserConfigFactory.CreateDefaultConfig().SlideshowDelay.ToString());
+        public ICommand SetDefaultSlideshowDelayCommand => setDefaultSlideshowDelayCommand ??= new CommandHandler(x => SlideshowDelay = DefaultConfigs.Default.SlideshowDelay.ToString());
         private ICommand setDefaultSlideshowDelayCommand;
 
-        public ICommand SetDefaultStartupBackupReminderAfterDaysCommand => setDefaultStartupBackupReminderAfterDaysCommand ??= new CommandHandler(x => StartupBackupReminderAfterDays = BrowserConfigFactory.CreateDefaultConfig().StartupBackupReminderAfterDays.ToString());
+        public ICommand SetDefaultStartupBackupReminderAfterDaysCommand => setDefaultStartupBackupReminderAfterDaysCommand ??= new CommandHandler(x => StartupBackupReminderAfterDays = DefaultConfigs.Default.StartupBackupReminderAfterDays.ToString());
         private ICommand setDefaultStartupBackupReminderAfterDaysCommand;
 
-        public ICommand SetDefaultSearchHistorySizeCommand => setDefaultSearchHistorySizeCommand ??= new CommandHandler(x => SearchHistorySize = BrowserConfigFactory.CreateDefaultConfig().SearchHistorySize.ToString());
+        public ICommand SetDefaultSearchHistorySizeCommand => setDefaultSearchHistorySizeCommand ??= new CommandHandler(x => SearchHistorySize = DefaultConfigs.Default.SearchHistorySize.ToString());
         private ICommand setDefaultSearchHistorySizeCommand;
 
-        public ICommand SetDefaultBlacklistedFilePathPatternsJsonCommand => setDefaultBlacklistedFilePathPatternsJsonCommand ??= new CommandHandler(x => BlacklistedFilePathPatternsJson = JsonConvert.SerializeObject(BrowserConfigFactory.CreateDefaultConfig().BlacklistedFilePathPatterns));
+        public ICommand SetDefaultBlacklistedFilePathPatternsJsonCommand => setDefaultBlacklistedFilePathPatternsJsonCommand ??= new CommandHandler(x => BlacklistedFilePathPatternsJson = JsonConvert.SerializeObject(DefaultConfigs.Default.BlacklistedFilePathPatterns));
         private ICommand setDefaultBlacklistedFilePathPatternsJsonCommand;
 
-        public ICommand SetDefaultWhitelistedFilePathPatternsJsonCommand => setDefaultWhitelistedFilePathPatternsJsonCommand ??= new CommandHandler(x => WhitelistedFilePathPatternsJson = JsonConvert.SerializeObject(BrowserConfigFactory.CreateDefaultConfig().WhitelistedFilePathPatterns));
+        public ICommand SetDefaultWhitelistedFilePathPatternsJsonCommand => setDefaultWhitelistedFilePathPatternsJsonCommand ??= new CommandHandler(x => WhitelistedFilePathPatternsJson = JsonConvert.SerializeObject(DefaultConfigs.Default.WhitelistedFilePathPatterns));
         private ICommand setDefaultWhitelistedFilePathPatternsJsonCommand;
 
-        public ICommand SetDefaultIncludeHiddenDirectoriesCommand => setDefaultIncludeHiddenDirectoriesCommand ??= new CommandHandler(x => IncludeHiddenDirectories = BrowserConfigFactory.CreateDefaultConfig().IncludeHiddenDirectories);
+        public ICommand SetDefaultIncludeHiddenDirectoriesCommand => setDefaultIncludeHiddenDirectoriesCommand ??= new CommandHandler(x => IncludeHiddenDirectories = DefaultConfigs.Default.IncludeHiddenDirectories);
         private ICommand setDefaultIncludeHiddenDirectoriesCommand;
 
-        public ICommand SetDefaultReadOnlyCommand => setDefaultReadOnlyCommand ??= new CommandHandler(x => ReadOnly = BrowserConfigFactory.CreateDefaultConfig().ReadOnly);
+        public ICommand SetDefaultReadOnlyCommand => setDefaultReadOnlyCommand ??= new CommandHandler(x => ReadOnly = DefaultConfigs.Default.ReadOnly);
         private ICommand setDefaultReadOnlyCommand;
 
-        public ICommand SetDefaultBirthdayReminderCommand => setDefaultBirthdayReminderCommand ??= new CommandHandler(x => BirthdayReminder = BrowserConfigFactory.CreateDefaultConfig().BirthdayReminder);
+        public ICommand SetDefaultBirthdayReminderCommand => setDefaultBirthdayReminderCommand ??= new CommandHandler(x => BirthdayReminder = DefaultConfigs.Default.BirthdayReminder);
         private ICommand setDefaultBirthdayReminderCommand;
 
-        public ICommand SetDefaultRipReminderCommand => setDefaultRipReminderCommand ??= new CommandHandler(x => RipReminder = BrowserConfigFactory.CreateDefaultConfig().RipReminder);
+        public ICommand SetDefaultRipReminderCommand => setDefaultRipReminderCommand ??= new CommandHandler(x => RipReminder = DefaultConfigs.Default.RipReminder);
         private ICommand setDefaultRipReminderCommand;
 
-        public ICommand SetDefaultLocationLinkCommand => setDefaultLocationLinkCommand ??= new CommandHandler(x => LocationLink = BrowserConfigFactory.CreateDefaultConfig().LocationLink);
+        public ICommand SetDefaultLocationLinkCommand => setDefaultLocationLinkCommand ??= new CommandHandler(x => LocationLink = DefaultConfigs.Default.LocationLink);
         private ICommand setDefaultLocationLinkCommand;
 
-        public ICommand SetDefaultFileToLocationMaxDistanceCommand => setDefaultFileToLocationMaxDistanceCommand ??= new CommandHandler(x => FileToLocationMaxDistance = BrowserConfigFactory.CreateDefaultConfig().FileToLocationMaxDistance.ToString());
+        public ICommand SetDefaultFileToLocationMaxDistanceCommand => setDefaultFileToLocationMaxDistanceCommand ??= new CommandHandler(x => FileToLocationMaxDistance = DefaultConfigs.Default.FileToLocationMaxDistance.ToString());
         private ICommand setDefaultFileToLocationMaxDistanceCommand;
 
         public SettingsViewModel()
@@ -255,7 +255,7 @@ namespace FileDB.ViewModel
             var result = new ConfigValidator().Validate(config);
             if (!result.IsValid)
             {
-                Utils.ShowErrorDialog(result.Errors.First().ErrorMessage);
+                Utils.ShowErrorDialog(result.Errors.Select(x => x.ErrorMessage));
                 return;
             }
 

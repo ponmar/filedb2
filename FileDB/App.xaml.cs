@@ -21,11 +21,11 @@ namespace FileDB
 
             if (demoModeEnabled)
             {
-                Utils.Config = BrowserConfigFactory.CreateDemoConfig();
+                Utils.Config = DefaultConfigs.CreateDemo();
             }
             else
             {
-                Utils.Config = Utils.BrowserConfigIO.Read() ?? BrowserConfigFactory.CreateDefaultConfig();
+                Utils.Config = Utils.BrowserConfigIO.Read() ?? DefaultConfigs.Default;
             }
         }
     }

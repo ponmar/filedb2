@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows;
 using FileDB.Config;
 using FileDBInterface;
@@ -52,6 +53,11 @@ namespace FileDB
         public static void ShowErrorDialog(string message)
         {
             MessageBox.Show(message, ApplicationName, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.No);
+        }
+
+        public static void ShowErrorDialog(IEnumerable<string> messages)
+        {
+            ShowErrorDialog(string.Join("\n", messages));
         }
 
         public static bool ShowConfirmDialog(string question)
