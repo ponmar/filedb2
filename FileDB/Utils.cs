@@ -11,8 +11,6 @@ namespace FileDB
     {
         public const string ApplicationName = "FileDB";
 
-        public static AppDataConfig<Config.Config> BrowserConfigIO { get; } = new(ApplicationName);
-
         public static Config.Config Config { get; set; }
 
         public static IDatabaseWrapper FileDBHandle

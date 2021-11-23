@@ -25,7 +25,7 @@ namespace FileDB
             }
             else
             {
-                Utils.Config = Utils.BrowserConfigIO.Read() ?? DefaultConfigs.Default;
+                Utils.Config = new AppDataConfig<Config.Config>(Utils.ApplicationName).Read() ?? DefaultConfigs.Default;
             }
         }
     }

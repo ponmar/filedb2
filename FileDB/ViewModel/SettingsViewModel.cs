@@ -259,12 +259,14 @@ namespace FileDB.ViewModel
                 return;
             }
 
-            if (!Utils.ShowConfirmDialog($"Write your configuration to {Utils.BrowserConfigIO.FilePath}?"))
+            var appDataConfig = new AppDataConfig<Config.Config>(Utils.ApplicationName);
+
+            if (!Utils.ShowConfirmDialog($"Write your configuration to {appDataConfig.FilePath}?"))
             {
                 return;
             }
 
-            if (Utils.BrowserConfigIO.Write(config))
+            if (appDataConfig.Write(config))
             {
                 Utils.Config = config;
                 Utils.ReloadFileDBHandle();
