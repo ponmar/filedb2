@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
-using FileDB.Config;
 using FileDBInterface;
 using FileDBInterface.Exceptions;
 

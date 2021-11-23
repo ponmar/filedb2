@@ -7,7 +7,7 @@ namespace FileDB.Config
         string Name,
         string Database,
         string FilesRootDirectory,
-        double FileToLocationMaxDistance,
+        int FileToLocationMaxDistance,
         List<string> BlacklistedFilePathPatterns,
         List<string> WhitelistedFilePathPatterns,
         bool IncludeHiddenDirectories,

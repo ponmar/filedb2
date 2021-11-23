@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Input;
@@ -35,19 +34,19 @@ namespace FileDB.ViewModel
         }
         private string filesRootDirectory;
 
-        public string SlideshowDelay
+        public int SlideshowDelay
         {
             get => slideshowDelay;
             set => SetProperty(ref slideshowDelay, value);
         }
-        private string slideshowDelay;
+        private int slideshowDelay;
 
-        public string SearchHistorySize
+        public int SearchHistorySize
         {
             get => searchHistorySize;
             set => SetProperty(ref searchHistorySize, value);
         }
-        private string searchHistorySize;
+        private int searchHistorySize;
 
         public bool IncludeHiddenDirectories
         {
@@ -77,12 +76,12 @@ namespace FileDB.ViewModel
         }
         private bool readOnly;
 
-        public string StartupBackupReminderAfterDays
+        public int StartupBackupReminderAfterDays
         {
             get => startupBackupReminderAfterDays;
             set => SetProperty(ref startupBackupReminderAfterDays, value);
         }
-        private string startupBackupReminderAfterDays;
+        private int startupBackupReminderAfterDays;
 
         public bool BirthdayReminder
         {
@@ -105,12 +104,12 @@ namespace FileDB.ViewModel
         }
         private string locationLink;
 
-        public string FileToLocationMaxDistance
+        public int FileToLocationMaxDistance
         {
             get => fileToLocationMaxDistance;
             set => SetProperty(ref fileToLocationMaxDistance, value);
         }
-        private string fileToLocationMaxDistance;
+        private int fileToLocationMaxDistance;
 
         public ICommand ResetConfigurationCommand => resetConfigurationCommand ??= new CommandHandler(ResetConfiguration);
         private ICommand resetConfigurationCommand;
@@ -127,13 +126,13 @@ namespace FileDB.ViewModel
         public ICommand CreateDatabaseCommand => createDatabaseCommand ??= new CommandHandler(CreateDatabase, CreateDatabasePossible);
         private ICommand createDatabaseCommand;
 
-        public ICommand SetDefaultSlideshowDelayCommand => setDefaultSlideshowDelayCommand ??= new CommandHandler(x => SlideshowDelay = DefaultConfigs.Default.SlideshowDelay.ToString());
+        public ICommand SetDefaultSlideshowDelayCommand => setDefaultSlideshowDelayCommand ??= new CommandHandler(x => SlideshowDelay = DefaultConfigs.Default.SlideshowDelay);
         private ICommand setDefaultSlideshowDelayCommand;
 
-        public ICommand SetDefaultStartupBackupReminderAfterDaysCommand => setDefaultStartupBackupReminderAfterDaysCommand ??= new CommandHandler(x => StartupBackupReminderAfterDays = DefaultConfigs.Default.StartupBackupReminderAfterDays.ToString());
+        public ICommand SetDefaultStartupBackupReminderAfterDaysCommand => setDefaultStartupBackupReminderAfterDaysCommand ??= new CommandHandler(x => StartupBackupReminderAfterDays = DefaultConfigs.Default.StartupBackupReminderAfterDays);
         private ICommand setDefaultStartupBackupReminderAfterDaysCommand;
 
-        public ICommand SetDefaultSearchHistorySizeCommand => setDefaultSearchHistorySizeCommand ??= new CommandHandler(x => SearchHistorySize = DefaultConfigs.Default.SearchHistorySize.ToString());
+        public ICommand SetDefaultSearchHistorySizeCommand => setDefaultSearchHistorySizeCommand ??= new CommandHandler(x => SearchHistorySize = DefaultConfigs.Default.SearchHistorySize);
         private ICommand setDefaultSearchHistorySizeCommand;
 
         public ICommand SetDefaultBlacklistedFilePathPatternsJsonCommand => setDefaultBlacklistedFilePathPatternsJsonCommand ??= new CommandHandler(x => BlacklistedFilePathPatternsJson = JsonConvert.SerializeObject(DefaultConfigs.Default.BlacklistedFilePathPatterns));
@@ -157,7 +156,7 @@ namespace FileDB.ViewModel
         public ICommand SetDefaultLocationLinkCommand => setDefaultLocationLinkCommand ??= new CommandHandler(x => LocationLink = DefaultConfigs.Default.LocationLink);
         private ICommand setDefaultLocationLinkCommand;
 
-        public ICommand SetDefaultFileToLocationMaxDistanceCommand => setDefaultFileToLocationMaxDistanceCommand ??= new CommandHandler(x => FileToLocationMaxDistance = DefaultConfigs.Default.FileToLocationMaxDistance.ToString());
+        public ICommand SetDefaultFileToLocationMaxDistanceCommand => setDefaultFileToLocationMaxDistanceCommand ??= new CommandHandler(x => FileToLocationMaxDistance = DefaultConfigs.Default.FileToLocationMaxDistance);
         private ICommand setDefaultFileToLocationMaxDistanceCommand;
 
         public SettingsViewModel()
@@ -170,17 +169,17 @@ namespace FileDB.ViewModel
             ConfigName = Utils.Config.Name;
             Database = Utils.Config.Database;
             FilesRootDirectory = Utils.Config.FilesRootDirectory;
-            SlideshowDelay = Utils.Config.SlideshowDelay.ToString();
-            SearchHistorySize = Utils.Config.SearchHistorySize.ToString();
+            SlideshowDelay = Utils.Config.SlideshowDelay;
+            SearchHistorySize = Utils.Config.SearchHistorySize;
             IncludeHiddenDirectories = Utils.Config.IncludeHiddenDirectories;
             BlacklistedFilePathPatternsJson = JsonConvert.SerializeObject(Utils.Config.BlacklistedFilePathPatterns);
             WhitelistedFilePathPatternsJson = JsonConvert.SerializeObject(Utils.Config.WhitelistedFilePathPatterns);
             ReadOnly = Utils.Config.ReadOnly;
-            StartupBackupReminderAfterDays = Utils.Config.StartupBackupReminderAfterDays.ToString();
+            StartupBackupReminderAfterDays = Utils.Config.StartupBackupReminderAfterDays;
             BirthdayReminder = Utils.Config.BirthdayReminder;
             RipReminder = Utils.Config.RipReminder;
             LocationLink = Utils.Config.LocationLink;
-            FileToLocationMaxDistance = Utils.Config.FileToLocationMaxDistance.ToString();
+            FileToLocationMaxDistance = Utils.Config.FileToLocationMaxDistance;
         }
 
         public void ResetConfiguration()
@@ -190,18 +189,6 @@ namespace FileDB.ViewModel
 
         public void SaveConfiguration()
         {
-            if (!int.TryParse(SearchHistorySize, out int searchHistorySize))
-            {
-                Utils.ShowErrorDialog("Invalid search history size");
-                return;
-            }
-
-            if (!int.TryParse(SlideshowDelay, out int slideshowDelay))
-            {
-                Utils.ShowErrorDialog("Invalid slideshow delay");
-                return;
-            }
-
             List<string> blacklistedFilePathPatterns;
             try
             {
@@ -221,18 +208,6 @@ namespace FileDB.ViewModel
             catch (JsonException)
             {
                 Utils.ShowErrorDialog("Invalid whitelisted file path patterns");
-                return;
-            }
-
-            if (!int.TryParse(StartupBackupReminderAfterDays, out int startupBackupReminderAfterDays))
-            {
-                Utils.ShowErrorDialog("Invalid startup backup reminder interval");
-                return;
-            }
-
-            if (!double.TryParse(FileToLocationMaxDistance, out var fileToLocationMaxDistance))
-            {
-                Utils.ShowErrorDialog("Invalid file to location max distance");
                 return;
             }
 

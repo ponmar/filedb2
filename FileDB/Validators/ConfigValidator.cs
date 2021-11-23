@@ -21,20 +21,25 @@ namespace FileDB.Validators
                 .Must(x => Path.IsPathFullyQualified(x)).WithMessage("Files root directory path is not absolute")
                 .Must(x => Directory.Exists(x)).WithMessage("Files root directory missing");
 
+            RuleFor(c => c.FileToLocationMaxDistance)
+                .GreaterThanOrEqualTo(0).WithMessage("Invalid file to location max distance");
+
+            // TODO: validate patterns
+
+            RuleFor(c => c.SlideshowDelay)
+                .GreaterThan(0).WithMessage("Invalid slideshow delay");
+
+            RuleFor(c => c.SearchHistorySize)
+                .InclusiveBetween(0, 10).WithMessage("Invalid search history size");
+
+            RuleFor(c => c.StartupBackupReminderAfterDays)
+                .GreaterThanOrEqualTo(0).WithMessage("Invalid startup backup reminder after days");
+
             When(c => !string.IsNullOrEmpty(c.LocationLink), () =>
             {
                 RuleFor(c => c.LocationLink)
                     .Must(IsValidUrl).WithMessage("Location link is not a valid url");
             });
-
-            RuleFor(c => c.SearchHistorySize)
-                .InclusiveBetween(0, 10).WithMessage("Invalid search history size");
-
-            RuleFor(c => c.SlideshowDelay)
-                .GreaterThan(0).WithMessage("Invalid slideshow delay");
-
-            RuleFor(c => c.StartupBackupReminderAfterDays)
-                .GreaterThanOrEqualTo(0).WithMessage("Invalid startup backup reminder after days");
         }
 
         private bool IsValidUrl(string url)
