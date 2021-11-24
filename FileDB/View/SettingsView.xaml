@@ -1,11 +1,11 @@
 ﻿<UserControl x:Class="FileDB.View.SettingsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:FileDB.View"
              xmlns:converters="clr-namespace:FileDB.Converters"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
 
     <UserControl.Resources>
@@ -66,11 +66,11 @@
                     <Button Grid.Row="5" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultSearchHistorySizeCommand}" ToolTip="Reset to default">Default</Button>
 
                     <TextBlock Grid.Row="6" Grid.Column="0" Style="{StaticResource PageTextBlock}">Blacklisted file path patterns:</TextBlock>
-                    <TextBox Width="250"  Grid.Row="6" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding BlacklistedFilePathPatterns}"></TextBox>
+                    <TextBox Width="250"  Grid.Row="6" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding BlacklistedFilePathPatterns}" ToolTip="Format: pattern1;pattern2;pattern3"></TextBox>
                     <Button Grid.Row="6" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultBlacklistedFilePathPatternsCommand}" ToolTip="Reset to default">Default</Button>
 
                     <TextBlock Grid.Row="7" Grid.Column="0" Style="{StaticResource PageTextBlock}">Whitelisted file path patterns:</TextBlock>
-                    <TextBox Width="250" Grid.Row="7" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding WhitelistedFilePathPatterns}"></TextBox>
+                    <TextBox Width="250" Grid.Row="7" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding WhitelistedFilePathPatterns}" ToolTip="Format: pattern1;pattern2;pattern3"></TextBox>
                     <Button Grid.Row="7" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultWhitelistedFilePathPatternsCommand}" ToolTip="Reset to default">Default</Button>
 
                     <TextBlock Grid.Row="8" Grid.Column="0" Style="{StaticResource PageTextBlock}">Location link:</TextBlock>

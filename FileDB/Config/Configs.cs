@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using Newtonsoft.Json;
 
 namespace FileDB.Config
 {
@@ -23,8 +22,7 @@ namespace FileDB.Config
     public static class DefaultConfigs
     {
         public static Config Default =>
-            new Config(
-                "Default",
+            new("Default",
                 "filedb.db",
                 "files",
                 300,
@@ -39,8 +37,8 @@ namespace FileDB.Config
                 true,
                 "https://www.google.com/maps?q=loc:LAT,LON");
 
-        public static Config CreateDemo() => new Config(
-                "Demo",
+        public static Config CreateDemo() =>
+            new("Demo",
                 Path.Combine(Directory.GetCurrentDirectory(), @"demo\filedb.db"),
                 Path.Combine(Directory.GetCurrentDirectory(), @"demo\files"),
                 Default.FileToLocationMaxDistance,

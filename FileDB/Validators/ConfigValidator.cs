@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using FluentValidation;
 using Newtonsoft.Json;
 
@@ -63,7 +64,23 @@ namespace FileDB.Validators
 
         private bool IsSemicolonSeparatedFilePatterns(string text)
         {
-            return text.Contains(";");
+            var parts = text.Split(";");
+            if (parts.Length == 0)
+            {
+                return false;
+            }
+
+            if (parts.Any(x => x != x.Trim()))
+            {
+                return false;
+            }
+
+            if (parts.Any(x => string.IsNullOrEmpty(x)))
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

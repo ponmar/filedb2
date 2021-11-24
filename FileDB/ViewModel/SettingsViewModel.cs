@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Windows.Input;
 using FileDB.Config;
@@ -7,7 +6,6 @@ using FileDB.Validators;
 using FileDBInterface;
 using FileDBInterface.Exceptions;
 using Microsoft.Win32;
-using Newtonsoft.Json;
 
 namespace FileDB.ViewModel
 {
