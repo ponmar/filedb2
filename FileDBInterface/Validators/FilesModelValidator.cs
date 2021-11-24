@@ -1,4 +1,6 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Globalization;
+using System.Text.RegularExpressions;
 using FileDBInterface.Model;
 using FluentValidation;
 
@@ -38,11 +40,10 @@ namespace FileDBInterface.Validators
 
         private bool IsFileDatetime(string datetime)
         {
-            // TODO: match only if correct number of digits
-            var year = new Regex("(\\d)+");
-            var date = new Regex("(\\d)+-(\\d)+-(\\d)+");
-            var dateAndTime = new Regex("(\\d)+-(\\d)+-(\\d)+T(\\d)+:(\\d)+:(\\d)+");
-            return year.IsMatch(datetime) || date.IsMatch(datetime) || dateAndTime.IsMatch(datetime);
+            return
+                DateTime.TryParseExact(datetime, "yyyy-MM-ddTHH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out _) ||
+                DateTime.TryParseExact(datetime, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out _) ||
+                DateTime.TryParseExact(datetime, "yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
         }
 
         public static bool ValidatePosition(string position)

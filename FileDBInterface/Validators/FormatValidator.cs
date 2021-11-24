@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Globalization;
 using FileDBInterface.Exceptions;
-using MetadataExtractor;
 
 namespace FileDBInterface.Validators
 {
