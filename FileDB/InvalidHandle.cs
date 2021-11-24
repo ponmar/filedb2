@@ -181,42 +181,6 @@ namespace FileDB
         {
         }
 
-        public void UpdatePersonFirstname(int id, string firstname)
-        {
-        }
-
-        public void UpdatePersonLastname(int id, string lastname)
-        {
-        }
-
-        public void UpdatePersonDescription(int id, string description)
-        {
-        }
-
-        public void UpdatePersonDateOfBirth(int id, string dateOfBirthStr)
-        {
-        }
-
-        public void UpdatePersonDateOfBirth(int id, DateTime dateOfBirth)
-        {
-        }
-
-        public void UpdatePersonDeceased(int id, string deceasedStr)
-        {
-        }
-
-        public void UpdatePersonDeceased(int id, DateTime deceased)
-        {
-        }
-
-        public void UpdatePersonProfileFileId(int id, int? profileFileId)
-        {
-        }
-
-        public void UpdatePersonSex(int id, Sex sex)
-        {
-        }
-
         public void DeletePerson(int id)
         {
         }

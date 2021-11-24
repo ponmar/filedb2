@@ -459,17 +459,18 @@ namespace FileDBInterface
 
         public void InsertPerson(string firstname, string lastname, string description = null, string dateOfBirth = null, string deceased = null, int? profileFileId = null, Sex sex = Sex.NotApplicable)
         {
-            FormatValidator.ValidatePersonFirstname(firstname);
-            FormatValidator.ValidatePersonLastname(lastname);
-            FormatValidator.ValidatePersonDescription(description);
-            FormatValidator.ValidatePersonDateOfBirth(dateOfBirth);
-            FormatValidator.ValidatePersonDeceased(deceased);
-            ValidatePersonProfileFileId(profileFileId);
+            var person = new PersonModel() { firstname = firstname, lastname = lastname, description = description, dateofbirth = dateOfBirth, deceased = deceased, profilefileid = profileFileId, sex = sex };
+
+            var validator = new PersonModelValidator();
+            var result = validator.Validate(person);
+            if (!result.IsValid)
+            {
+                throw new DataValidationException(string.Join("\n", result.Errors.Select(x => x.ErrorMessage)));
+            }
 
             try
             {
                 using var connection = DatabaseUtils.CreateConnection(database);
-                var person = new PersonModel() { firstname = firstname, lastname = lastname, description = description, dateofbirth = dateOfBirth, deceased = deceased, profilefileid = profileFileId, sex = sex };
                 var sql = "insert into [persons] (firstname, lastname, description, dateofbirth, deceased, profilefileid, sex) values (@firstname, @lastname, @description, @dateofbirth, @deceased, @profilefileid, @sex)";
                 connection.Execute(sql, person);
             }
@@ -481,141 +482,20 @@ namespace FileDBInterface
 
         public void UpdatePerson(int id, string firstname, string lastname, string description = null, string dateOfBirth = null, string deceased = null, int? profileFileId = null, Sex sex = Sex.NotApplicable)
         {
-            FormatValidator.ValidatePersonFirstname(firstname);
-            FormatValidator.ValidatePersonLastname(lastname);
-            FormatValidator.ValidatePersonDescription(description);
-            FormatValidator.ValidatePersonDateOfBirth(dateOfBirth);
-            FormatValidator.ValidatePersonDeceased(deceased);
-            ValidatePersonProfileFileId(profileFileId);
+            var person = new PersonModel() { id = id, firstname = firstname, lastname = lastname, description = description, dateofbirth = dateOfBirth, deceased = deceased, profilefileid = profileFileId, sex = sex };
+
+            var validator = new PersonModelValidator();
+            var result = validator.Validate(person);
+            if (!result.IsValid)
+            {
+                throw new DataValidationException(string.Join("\n", result.Errors.Select(x => x.ErrorMessage)));
+            }
 
             try
             {
                 using var connection = DatabaseUtils.CreateConnection(database);
-                var person = new PersonModel() { id = id, firstname = firstname, lastname = lastname, description = description, dateofbirth = dateOfBirth, deceased = deceased, profilefileid = profileFileId, sex = sex };
                 var sql = "update [persons] set firstname = @firstname, lastname = @lastname, description = @description, dateofbirth = @dateofbirth, deceased = @deceased, profilefileid = @profilefileid, sex = @sex where id = @id";
                 connection.Execute(sql, person);
-            }
-            catch (SQLiteException e)
-            {
-                throw new DatabaseWrapperException("SQL error", e);
-            }
-        }
-
-        public void UpdatePersonFirstname(int id, string firstname)
-        {
-            FormatValidator.ValidatePersonFirstname(firstname);
-
-            try
-            {
-                using var connection = DatabaseUtils.CreateConnection(database);
-                var sql = "update [persons] set firstname = @firstname where id = @id";
-                connection.Execute(sql, new { firstname = firstname, id = id });
-            }
-            catch (SQLiteException e)
-            {
-                throw new DatabaseWrapperException("SQL error", e);
-            }
-        }
-
-        public void UpdatePersonLastname(int id, string lastname)
-        {
-            FormatValidator.ValidatePersonLastname(lastname);
-
-            try
-            {
-                using var connection = DatabaseUtils.CreateConnection(database);
-                var sql = "update [persons] set lastname = @lastname where id = @id";
-                connection.Execute(sql, new { lastname = lastname, id = id });
-            }
-            catch (SQLiteException e)
-            {
-                throw new DatabaseWrapperException("SQL error", e);
-            }
-        }
-
-        public void UpdatePersonDescription(int id, string description)
-        {
-            FormatValidator.ValidatePersonDescription(description);
-
-            try
-            {
-                using var connection = DatabaseUtils.CreateConnection(database);
-                var sql = "update [persons] set description = @description where id = @id";
-                connection.Execute(sql, new { description = description, id = id });
-            }
-            catch (SQLiteException e)
-            {
-                throw new DatabaseWrapperException("SQL error", e);
-            }
-        }
-
-        public void UpdatePersonDateOfBirth(int id, string dateOfBirthStr)
-        {
-            FormatValidator.ValidatePersonDateOfBirth(dateOfBirthStr);
-
-            try
-            {
-                using var connection = DatabaseUtils.CreateConnection(database);
-                var sql = "update [persons] set dateofbirth = @dateOfBirthStr where id = @id";
-                connection.Execute(sql, new { dateOfBirthStr = dateOfBirthStr, id = id });
-            }
-            catch (SQLiteException e)
-            {
-                throw new DatabaseWrapperException("SQL error", e);
-            }
-        }
-
-        public void UpdatePersonDateOfBirth(int id, DateTime dateOfBirth)
-        {
-            string dateOfBirthStr = DatabaseParsing.ToPersonsDateOfBirth(dateOfBirth);
-            UpdatePersonDateOfBirth(id, dateOfBirthStr);
-        }
-
-        public void UpdatePersonDeceased(int id, string deceasedStr)
-        {
-            FormatValidator.ValidatePersonDeceased(deceasedStr);
-
-            try
-            {
-                using var connection = DatabaseUtils.CreateConnection(database);
-                var sql = "update [persons] set deceased = @deceasedStr where id = @id";
-                connection.Execute(sql, new { deceased = deceasedStr, id = id });
-            }
-            catch (SQLiteException e)
-            {
-                throw new DatabaseWrapperException("SQL error", e);
-            }
-        }
-
-        public void UpdatePersonDeceased(int id, DateTime deceased)
-        {
-            var deceasedStr = DatabaseParsing.ToPersonsDeceased(deceased);
-            UpdatePersonDeceased(id, deceasedStr);
-        }
-
-        public void UpdatePersonProfileFileId(int id, int? profileFileId)
-        {
-            ValidatePersonProfileFileId(profileFileId);
-
-            try
-            {
-                using var connection = DatabaseUtils.CreateConnection(database);
-                var sql = "update [persons] set profilefileid = @profileFileId where id = @id";
-                connection.Execute(sql, new { profileFileId = profileFileId, id = id });
-            }
-            catch (SQLiteException e)
-            {
-                throw new DatabaseWrapperException("SQL error", e);
-            }
-        }
-
-        public void UpdatePersonSex(int id, Sex sex)
-        {
-            try
-            {
-                using var connection = DatabaseUtils.CreateConnection(database);
-                var sql = "update [persons] set sex = @sex where id = @id";
-                connection.Execute(sql, new { sex = sex, id = id });
             }
             catch (SQLiteException e)
             {

@@ -44,14 +44,6 @@ namespace FileDBInterface
         public bool HasPersonId(int id);
         public void InsertPerson(string firstname, string lastname, string description = null, string dateOfBirth = null, string deceased = null, int? profileFileId = null, Sex sex = Sex.NotApplicable);
         public void UpdatePerson(int id, string firstname, string lastname, string description = null, string dateOfBirth = null, string deceased = null, int? profileFileId = null, Sex sex = Sex.NotApplicable);
-        public void UpdatePersonFirstname(int id, string firstname);
-        public void UpdatePersonLastname(int id, string lastname);
-        public void UpdatePersonDescription(int id, string description);
-        public void UpdatePersonDateOfBirth(int id, string dateOfBirthStr);
-        public void UpdatePersonDeceased(int id, string deceased);
-        public void UpdatePersonDateOfBirth(int id, DateTime dateOfBirth);
-        public void UpdatePersonProfileFileId(int id, int? profileFileId);
-        public void UpdatePersonSex(int id, Sex sex);
         public void DeletePerson(int id);
         public IEnumerable<LocationModel> GetLocations();
         public IEnumerable<LocationModel> GetLocationsFromFile(int fileId);
