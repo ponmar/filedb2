@@ -1,4 +1,5 @@
-﻿using FileDBInterface.Model;
+﻿using System.Text.RegularExpressions;
+using FileDBInterface.Model;
 using FluentValidation;
 
 namespace FileDBInterface.Validators
@@ -15,7 +16,11 @@ namespace FileDBInterface.Validators
             RuleFor(x => x.description)
                 .Must(ValidateDescription).WithMessage("Empty string used for file description (should be null or have content)");
 
-            //RuleFor(x => x.datetime). // Format: YYYY, YYYY-MM-DD or YYYY-MM-DDTHH:MM:SS
+            When(x => x.datetime != null, () =>
+            {
+                RuleFor(x => x.datetime)
+                    .Must(IsFileDatetime).WithMessage("Invalid datetime");
+            });
 
             RuleFor(x => x.position)
                 .Must(ValidatePosition).WithMessage("Invalid GPS position");
@@ -29,6 +34,15 @@ namespace FileDBInterface.Validators
         public static bool ValidateDescription(string description)
         {
             return description != string.Empty;
+        }
+
+        private bool IsFileDatetime(string datetime)
+        {
+            // TODO: match only if correct number of digits
+            var year = new Regex("(\\d)+");
+            var date = new Regex("(\\d)+-(\\d)+-(\\d)+");
+            var dateAndTime = new Regex("(\\d)+-(\\d)+-(\\d)+T(\\d)+:(\\d)+:(\\d)+");
+            return year.IsMatch(datetime) || date.IsMatch(datetime) || dateAndTime.IsMatch(datetime);
         }
 
         public static bool ValidatePosition(string position)
