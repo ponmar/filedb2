@@ -1079,7 +1079,7 @@ namespace FileDB.ViewModel
 
             // Note: when no time is available the string is used to avoid including time 00:00
             var resultString = datetimeString.Contains("T") ? datetime.Value.ToString("yyyy-MM-dd HH:mm") : datetimeString;
-            
+
             var now = DateTime.Now;
             int yearsAgo = DatabaseUtils.GetYearsAgo(now, datetime.Value);
             if (yearsAgo == 0 && now.Year == datetime.Value.Year)
@@ -1294,6 +1294,8 @@ namespace FileDB.ViewModel
                 var selection = SearchResult.Files[SearchResultIndex];
                 var fileId = selection.id;
                 var description = string.IsNullOrEmpty(NewFileDescription) ? null : NewFileDescription;
+
+                // TODO: catch validation exception here and in all other Update cases
                 Utils.FileDBHandle.UpdateFileDescription(fileId, description);
 
                 selection.description = description;

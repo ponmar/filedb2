@@ -680,16 +680,21 @@ namespace FileDBInterface
             return connection.ExecuteScalar<bool>("select count(1) from [locations] where id=@id", new { id });
         }
 
-        public void InsertLocation(string name, string description = null, string geoLocation = null)
+        public void InsertLocation(string name, string description = null, string position = null)
         {
             FormatValidator.ValidateLocationName(name);
             FormatValidator.ValidateLocationDescription(description);
-            FormatValidator.ValidateLocationGeoLocation(geoLocation, out _);
+
+            // TODO: use validate method from LocationValidator
+            if (!FilesModelValidator.ValidatePosition(position))
+            {
+                throw new DataValidationException("Position not valid");
+            }
 
             try
             {
                 using var connection = DatabaseUtils.CreateConnection(database);
-                var location = new LocationModel() { name = name, description = description, position = geoLocation };
+                var location = new LocationModel() { name = name, description = description, position = position };
                 var sql = "insert into [locations] (name, description, position) values (@name, @description, @position)";
                 connection.Execute(sql, location);
             }
@@ -737,15 +742,18 @@ namespace FileDBInterface
             }
         }
 
-        public void UpdateLocationPosition(int id, string geoLocation)
+        public void UpdateLocationPosition(int id, string position)
         {
-            FormatValidator.ValidateLocationGeoLocation(geoLocation, out _);
+            if (!FilesModelValidator.ValidatePosition(position))
+            {
+                throw new DataValidationException("Position invalid");
+            }
 
             try
             {
                 using var connection = DatabaseUtils.CreateConnection(database);
                 var sql = "update [locations] set position = @position where id = @id";
-                connection.Execute(sql, new { position = geoLocation, id = id });
+                connection.Execute(sql, new { position = position, id = id });
             }
             catch (SQLiteException e)
             {

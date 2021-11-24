@@ -79,30 +79,5 @@ namespace FileDBInterface.Validators
                 throw new DataValidationException("Empty location description should be null");
             }
         }
-
-        public static void ValidateLocationGeoLocation(string geoLocationStr, out GeoLocation geoLocation)
-        {
-            if (geoLocationStr != null)
-            {
-                var parts = geoLocationStr.Split(' ');
-                if (parts.Length != 2)
-                {
-                    throw new DataValidationException("Location geo-position invalid format (two parts should be specified)");
-                }
-
-                if (!double.TryParse(parts[0], out double latitude))
-                {
-                    throw new DataValidationException("Location geo-position has invalid latitude");
-                }
-
-                if (!double.TryParse(parts[0], out double longitude))
-                {
-                    throw new DataValidationException("Location geo-position has invalid longitude");
-                }
-
-                geoLocation = new GeoLocation(latitude, longitude);
-            }
-            geoLocation = null;
-        }
     }
 }
