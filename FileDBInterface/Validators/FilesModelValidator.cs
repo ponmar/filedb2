@@ -10,7 +10,7 @@ namespace FileDBInterface.Validators
     {
         public FilesModelValidator()
         {
-            RuleFor(x => x.id).GreaterThanOrEqualTo(0).WithMessage("Id must be greater than 0");
+            RuleFor(x => x.id).GreaterThanOrEqualTo(0).WithMessage("Id must be greater than or equal to 0");
 
             RuleFor(x => x.path)
                 .Must(IsInternalFilePath).WithMessage("Invalid path");
