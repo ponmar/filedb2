@@ -206,7 +206,7 @@ namespace FileDB.ViewModel
             var result = new ConfigValidator().Validate(config);
             if (!result.IsValid)
             {
-                Utils.ShowErrorDialog(result.Errors.Select(x => x.ErrorMessage));
+                Utils.ShowErrorDialog(result);
                 return;
             }
 

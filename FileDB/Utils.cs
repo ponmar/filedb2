@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using FileDBInterface;
 using FileDBInterface.Exceptions;
+using FluentValidation.Results;
 
 namespace FileDB
 {
@@ -55,6 +57,11 @@ namespace FileDB
         public static void ShowErrorDialog(IEnumerable<string> messages)
         {
             ShowErrorDialog(string.Join("\n", messages));
+        }
+
+        public static void ShowErrorDialog(ValidationResult validationResult)
+        {
+            ShowErrorDialog(validationResult.Errors.Select(x => x.ErrorMessage));
         }
 
         public static bool ShowConfirmDialog(string question)

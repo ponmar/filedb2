@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows;
 using FileDB.Config;
+using FileDB.Validators;
 
 namespace FileDB
 {
@@ -26,6 +27,13 @@ namespace FileDB
             else
             {
                 Utils.Config = new AppDataConfig<Config.Config>(Utils.ApplicationName).Read() ?? DefaultConfigs.Default;
+
+                var validator = new ConfigValidator();
+                var result = validator.Validate(Utils.Config);
+                if (!result.IsValid)
+                {
+                    Utils.ShowErrorDialog(result);
+                }
             }
         }
     }
