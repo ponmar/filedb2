@@ -261,7 +261,7 @@ namespace FileDB
         {
         }
 
-        public void UpdateTagName(int id, string name)
+        public void UpdateTag(int id, string name)
         {
         }
 

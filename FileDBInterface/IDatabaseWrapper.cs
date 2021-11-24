@@ -61,7 +61,7 @@ namespace FileDBInterface
         public TagModel GetTagById(int id);
         public bool HasTagId(int id);
         public void InsertTag(string name);
-        public void UpdateTagName(int id, string name);
+        public void UpdateTag(int id, string name);
         public void DeleteTag(int id);
         public string ToAbsolutePath(string internalPath);
     }

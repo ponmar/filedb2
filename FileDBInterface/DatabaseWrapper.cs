@@ -665,12 +665,18 @@ namespace FileDBInterface
 
         public void InsertTag(string name)
         {
-            FormatValidator.ValidateTagName(name);
+            var tag = new TagModel() { name = name };
+
+            var validator = new TagModelValidator();
+            var result = validator.Validate(tag);
+            if (!result.IsValid)
+            {
+                throw new DataValidationException(string.Join("\n", result.Errors.Select(x => x.ErrorMessage)));
+            }
 
             try
             {
                 using var connection = DatabaseUtils.CreateConnection(database);
-                var tag = new TagModel() { name = name };
                 var sql = "insert into [tags] (name) values (@name)";
                 connection.Execute(sql, tag);
             }
@@ -680,15 +686,21 @@ namespace FileDBInterface
             }
         }
 
-        public void UpdateTagName(int id, string name)
+        public void UpdateTag(int id, string name)
         {
-            FormatValidator.ValidateTagName(name);
+            var tag = new TagModel() { id = id, name = name };
+            var validator = new TagModelValidator();
+            var result = validator.Validate(tag);
+            if (!result.IsValid)
+            {
+                throw new DataValidationException(string.Join("\n", result.Errors.Select(x => x.ErrorMessage)));
+            }
 
             try
             {
                 using var connection = DatabaseUtils.CreateConnection(database);
                 var sql = "update [tags] set name = @name where id = @id";
-                connection.Execute(sql, new { name = name, id = id });
+                connection.Execute(sql, tag);
             }
             catch (SQLiteException e)
             {

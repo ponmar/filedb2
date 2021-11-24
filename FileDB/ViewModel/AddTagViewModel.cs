@@ -43,7 +43,7 @@ namespace FileDB.ViewModel
             {
                 if (tagId.HasValue)
                 {
-                    Utils.FileDBHandle.UpdateTagName(tagId.Value, name);
+                    Utils.FileDBHandle.UpdateTag(tagId.Value, name);
                 }
                 else
                 {
