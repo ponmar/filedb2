@@ -28,6 +28,17 @@
                 </StackPanel>
                 <Label Style="{StaticResource PageSubHeading}">Database Data Validation</Label>
                 <Button Margin="10" Width="200" Style="{StaticResource NormalButton}" Command="{Binding DatabaseValidationCommand}" HorizontalAlignment="Left">Run validation</Button>
+                <ListBox Margin="10" ItemsSource="{Binding DabaseValidationErrors}" HorizontalAlignment="Left">
+                    <!--
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Path=Filename}" ToolTip="{Binding Path=Filename}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                    -->
+                </ListBox>
             </StackPanel>
         </ScrollViewer>
     </DockPanel>

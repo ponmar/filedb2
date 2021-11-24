@@ -38,6 +38,8 @@ namespace FileDB.ViewModel
 
         public ObservableCollection<BackupFile> BackupFiles { get; } = new();
 
+        public ObservableCollection<string> DabaseValidationErrors { get; } = new();
+
         public ToolsViewModel()
         {
             ScanBackupFiles();
@@ -117,7 +119,7 @@ namespace FileDB.ViewModel
 
         private void DatabaseValidation()
         {
-            List<string> errors = new();
+            DabaseValidationErrors.Clear();
 
             var filesValidator = new FilesModelValidator();
             foreach (var file in Utils.DatabaseWrapper.GetFiles())
@@ -127,7 +129,7 @@ namespace FileDB.ViewModel
                 {
                     foreach (var error in result.Errors)
                     {
-                        errors.Add($"File {file.id}: {error.ErrorMessage}");
+                        DabaseValidationErrors.Add($"File {file.id}: {error.ErrorMessage}");
                     }
                 }
             }
@@ -140,7 +142,7 @@ namespace FileDB.ViewModel
                 {
                     foreach (var error in result.Errors)
                     {
-                        errors.Add($"Person {person.id}: {error.ErrorMessage}");
+                        DabaseValidationErrors.Add($"Person {person.id}: {error.ErrorMessage}");
                     }
                 }
             }
@@ -153,7 +155,7 @@ namespace FileDB.ViewModel
                 {
                     foreach (var error in result.Errors)
                     {
-                        errors.Add($"Location {location.id}: {error.ErrorMessage}");
+                        DabaseValidationErrors.Add($"Location {location.id}: {error.ErrorMessage}");
                     }
                 }
             }
@@ -166,9 +168,14 @@ namespace FileDB.ViewModel
                 {
                     foreach (var error in result.Errors)
                     {
-                        errors.Add($"Tag {tag.id}: {error.ErrorMessage}");
+                        DabaseValidationErrors.Add($"Tag {tag.id}: {error.ErrorMessage}");
                     }
                 }
+            }
+
+            if (DabaseValidationErrors.Count == 0)
+            {
+                DabaseValidationErrors.Add("No errors");
             }
         }
     }
