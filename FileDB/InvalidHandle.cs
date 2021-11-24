@@ -63,11 +63,6 @@ namespace FileDB
             return null;
         }
 
-        public bool HasFileId(int id)
-        {
-            return false;
-        }
-
         public FilesModel GetFileByPath(string path)
         {
             return null;
@@ -96,11 +91,6 @@ namespace FileDB
         public IEnumerable<FilesModel> GetFilesWithMissingData()
         {
             return new List<FilesModel>();
-        }
-
-        public bool HasFilePath(string path)
-        {
-            return false;
         }
 
         public void InsertFile(string internalPath, string description = null)

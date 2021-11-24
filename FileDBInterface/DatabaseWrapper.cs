@@ -205,7 +205,7 @@ namespace FileDBInterface
             return connection.QueryFirst<FilesModel>("select * from [files] where id = @id", new { id = id });
         }
 
-        public bool HasFileId(int id)
+        private bool HasFileId(int id)
         {
             using var connection = DatabaseUtils.CreateConnection(database);
             return connection.ExecuteScalar<bool>("select count(1) from [files] where id=@id", new { id });
@@ -263,7 +263,7 @@ namespace FileDBInterface
             }
         }
 
-        public bool HasFilePath(string path)
+        private bool HasFilePath(string path)
         {
             using var connection = DatabaseUtils.CreateConnection(database);
             return connection.ExecuteScalar<bool>("select count(1) from [files] where path=@path", new { path = path });
@@ -410,7 +410,7 @@ namespace FileDBInterface
             return connection.Query<PersonModel>("select * from [persons]", new DynamicParameters());
         }
 
-        public bool FileHasPersons(int fileId)
+        private bool FileHasPersons(int fileId)
         {
             using var connection = DatabaseUtils.CreateConnection(database);
             return connection.ExecuteScalar<bool>("select count(1) from [filepersons] where fileid=@fileId", new { fileId });
@@ -520,7 +520,7 @@ namespace FileDBInterface
             return connection.Query<LocationModel>("select * from [locations]", new DynamicParameters());
         }
 
-        public bool FileHasLocation(int fileId)
+        private bool FileHasLocation(int fileId)
         {
             using var connection = DatabaseUtils.CreateConnection(database);
             return connection.ExecuteScalar<bool>("select count(1) from [filelocations] where fileid=@fileId", new { fileId });
@@ -623,7 +623,7 @@ namespace FileDBInterface
             return connection.Query<TagModel>("select * from [tags]", new DynamicParameters());
         }
 
-        public bool FileHasTags(int fileId)
+        private bool FileHasTags(int fileId)
         {
             using var connection = DatabaseUtils.CreateConnection(database);
             return connection.ExecuteScalar<bool>("select count(1) from [filetags] where fileid=@fileId", new { fileId });
