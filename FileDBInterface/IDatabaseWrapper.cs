@@ -51,12 +51,8 @@ namespace FileDBInterface
         public IEnumerable<LocationModel> SearchLocations(string criteria);
         public LocationModel GetLocationById(int id);
         public bool HasLocationId(int id);
-        public void InsertLocation(string name, string description = null, string geoLocation = null);
-        public void InsertLocation(string name, string description = null, GeoLocation geoLocation = null);
-        public void UpdateLocationName(int id, string name);
-        public void UpdateLocationDescription(int id, string description);
-        public void UpdateLocationPosition(int id, string geoLocation);
-        public void UpdateLocationPosition(int id, GeoLocation geoLocation);
+        public void InsertLocation(string name, string description = null, string position = null);
+        public void UpdateLocation(int id, string name, string description = null, string position = null);
         public void DeleteLocation(int id);
         public IEnumerable<TagModel> GetTags();
         public IEnumerable<TagModel> GetTagsFromFile(int fileId);

@@ -13,21 +13,5 @@ namespace FileDBInterface.Validators
                 throw new DataValidationException("Tag name empty");
             }
         }
-
-        public static void ValidateLocationName(string name)
-        {
-            if (string.IsNullOrEmpty(name))
-            {
-                throw new DataValidationException("Location name empty");
-            }
-        }
-
-        public static void ValidateLocationDescription(string description)
-        {
-            if (description == string.Empty)
-            {
-                throw new DataValidationException("Empty location description should be null");
-            }
-        }
     }
 }

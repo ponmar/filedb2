@@ -62,9 +62,7 @@ namespace FileDB.ViewModel
 
                 if (locationId.HasValue)
                 {
-                    Utils.FileDBHandle.UpdateLocationName(locationId.Value, name);
-                    Utils.FileDBHandle.UpdateLocationDescription(locationId.Value, newDescription);
-                    Utils.FileDBHandle.UpdateLocationPosition(locationId.Value, newGeoLocation);
+                    Utils.FileDBHandle.UpdateLocation(locationId.Value, newDescription, newGeoLocation);
                 }
                 else
                 {

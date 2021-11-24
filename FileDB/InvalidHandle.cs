@@ -215,27 +215,11 @@ namespace FileDB
             return false;
         }
 
-        public void InsertLocation(string name, string description = null, string geoLocation = null)
+        public void InsertLocation(string name, string description = null, string position = null)
         {
         }
 
-        public void InsertLocation(string name, string description = null, GeoLocation geoLocation = null)
-        {
-        }
-
-        public void UpdateLocationName(int id, string name)
-        {
-        }
-
-        public void UpdateLocationDescription(int id, string description)
-        {
-        }
-
-        public void UpdateLocationPosition(int id, string geoLocation)
-        {
-        }
-
-        public void UpdateLocationPosition(int id, GeoLocation geoLocation)
+        public void UpdateLocation(int id, string name, string description = null, string position = null)
         {
         }
 
