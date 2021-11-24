@@ -271,7 +271,10 @@ namespace FileDBInterface
 
         public void InsertFile(string internalPath, string description = null)
         {
-            FormatValidator.ValidateFileDescription(description);
+            if (!FilesModelValidator.ValidateDescription(description))
+            {
+                throw new DataValidationException("Description invalid");
+            }
 
             internalPath = FixInternalPath(internalPath);
             var path = ToAbsolutePath(internalPath);
@@ -331,7 +334,10 @@ namespace FileDBInterface
 
         public void UpdateFileDescription(int id, string description)
         {
-            FormatValidator.ValidateFileDescription(description);
+            if (!FilesModelValidator.ValidateDescription(description))
+            {
+                throw new DataValidationException("Invalid description");
+            }
 
             try
             {

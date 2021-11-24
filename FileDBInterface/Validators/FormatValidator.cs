@@ -7,13 +7,6 @@ namespace FileDBInterface.Validators
 {
     public static class FormatValidator
     {
-        public static void ValidateFileDescription(string description)
-        {
-            if (description == string.Empty)
-            {
-                throw new DataValidationException("Empty file description should be null");
-            }
-        }
 
         public static void ValidatePersonFirstname(string firstname)
         {
