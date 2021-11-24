@@ -46,7 +46,7 @@ namespace FileDB.ViewModel
 
             if (locationId.HasValue)
             {
-                var locationModel = Utils.FileDBHandle.GetLocationById(locationId.Value);
+                var locationModel = Utils.DatabaseWrapper.GetLocationById(locationId.Value);
                 Name = locationModel.name;
                 Description = locationModel.description ?? string.Empty;
                 LatLon = locationModel.position ?? string.Empty;
@@ -62,11 +62,11 @@ namespace FileDB.ViewModel
 
                 if (locationId.HasValue)
                 {
-                    Utils.FileDBHandle.UpdateLocation(locationId.Value, newDescription, newGeoLocation);
+                    Utils.DatabaseWrapper.UpdateLocation(locationId.Value, newDescription, newGeoLocation);
                 }
                 else
                 {
-                    Utils.FileDBHandle.InsertLocation(name, newDescription, newGeoLocation);
+                    Utils.DatabaseWrapper.InsertLocation(name, newDescription, newGeoLocation);
                 }
             }
             catch (DataValidationException e)

@@ -29,7 +29,7 @@ namespace FileDB.ViewModel
 
         public RipViewModel()
         {
-            foreach (var person in Utils.FileDBHandle.GetPersons())
+            foreach (var person in Utils.DatabaseWrapper.GetPersons())
             {
                 if (person.dateofbirth != null && person.deceased != null)
                 {
@@ -43,7 +43,7 @@ namespace FileDB.ViewModel
                         DeceasedStr = person.deceased,
                         Deceased = deceased,
                         Age = DatabaseUtils.GetYearsAgo(deceased, dateOfBirth),
-                        ProfileFileIdPath = person.profilefileid != null ? Utils.FileDBHandle.ToAbsolutePath(Utils.FileDBHandle.GetFileById(person.profilefileid.Value).path) : string.Empty,
+                        ProfileFileIdPath = person.profilefileid != null ? Utils.DatabaseWrapper.ToAbsolutePath(Utils.DatabaseWrapper.GetFileById(person.profilefileid.Value).path) : string.Empty,
                     }) ;
                 }
             }

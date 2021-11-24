@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using FileDBInterface;
+using FileDBInterface.Validators;
 
 namespace FileDB.ViewModel
 {
@@ -32,6 +33,9 @@ namespace FileDB.ViewModel
         public ICommand CreateBackupCommand => createBackupCommand ??= new CommandHandler(CreateBackup);
         private ICommand createBackupCommand;
 
+        public ICommand DatabaseValidationCommand => databaseValidationCommand ??= new CommandHandler(DatabaseValidation);
+        private ICommand databaseValidationCommand;
+
         public ObservableCollection<BackupFile> BackupFiles { get; } = new();
 
         public ToolsViewModel()
@@ -40,7 +44,7 @@ namespace FileDB.ViewModel
             ShowBackupReminder();
         }
 
-        public void CreateBackup()
+        private void CreateBackup()
         {
             var db = Utils.Config.Database;
             if (File.Exists(db))
@@ -106,6 +110,63 @@ namespace FileDB.ViewModel
                         catch (FormatException)
                         {
                         }
+                    }
+                }
+            }
+        }
+
+        private void DatabaseValidation()
+        {
+            List<string> errors = new();
+
+            var filesValidator = new FilesModelValidator();
+            foreach (var file in Utils.DatabaseWrapper.GetFiles())
+            {
+                var result = filesValidator.Validate(file);
+                if (!result.IsValid)
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        errors.Add($"File {file.id}: {error.ErrorMessage}");
+                    }
+                }
+            }
+
+            var personValidator = new PersonModelValidator();
+            foreach (var person in Utils.DatabaseWrapper.GetPersons())
+            {
+                var result = personValidator.Validate(person);
+                if (!result.IsValid)
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        errors.Add($"Person {person.id}: {error.ErrorMessage}");
+                    }
+                }
+            }
+
+            var locationValidator = new LocationModelValidator();
+            foreach (var location in Utils.DatabaseWrapper.GetLocations())
+            {
+                var result = locationValidator.Validate(location);
+                if (!result.IsValid)
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        errors.Add($"Location {location.id}: {error.ErrorMessage}");
+                    }
+                }
+            }
+
+            var tagValidator = new TagModelValidator();
+            foreach (var tag in Utils.DatabaseWrapper.GetTags())
+            {
+                var result = tagValidator.Validate(tag);
+                if (!result.IsValid)
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        errors.Add($"Tag {tag.id}: {error.ErrorMessage}");
                     }
                 }
             }

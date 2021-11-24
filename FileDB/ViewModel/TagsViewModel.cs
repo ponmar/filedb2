@@ -58,10 +58,10 @@ namespace FileDB.ViewModel
         {
             if (selectedTag != null)
             {
-                var filesWithTag = Utils.FileDBHandle.GetFilesWithTags(new List<int>() { selectedTag.GetId() }).ToList();
+                var filesWithTag = Utils.DatabaseWrapper.GetFilesWithTags(new List<int>() { selectedTag.GetId() }).ToList();
                 if (filesWithTag.Count == 0 || Utils.ShowConfirmDialog($"Tag is used in {filesWithTag.Count} files, remove anyway?"))
                 {
-                    Utils.FileDBHandle.DeleteTag(selectedTag.GetId());
+                    Utils.DatabaseWrapper.DeleteTag(selectedTag.GetId());
                     ReloadTags();
                 }
             }
@@ -99,7 +99,7 @@ namespace FileDB.ViewModel
         {
             Tags.Clear();
 
-            var tags = Utils.FileDBHandle.GetTags().Select(tm => new Tag(tm.id) { Name = tm.name });
+            var tags = Utils.DatabaseWrapper.GetTags().Select(tm => new Tag(tm.id) { Name = tm.name });
             foreach (var tag in tags)
             {
                 Tags.Add(tag);

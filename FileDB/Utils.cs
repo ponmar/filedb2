@@ -14,28 +14,28 @@ namespace FileDB
 
         public static Config.Config Config { get; set; }
 
-        public static IDatabaseWrapper FileDBHandle
+        public static IDatabaseWrapper DatabaseWrapper
         {
             get
             {
-                if (fileDBHandle == null)
+                if (databaseWrapper == null)
                 {
                     ReloadFileDBHandle();
                 }
-                return fileDBHandle;
+                return databaseWrapper;
             }
         }
-        private static IDatabaseWrapper fileDBHandle;
+        private static IDatabaseWrapper databaseWrapper;
 
         public static void ReloadFileDBHandle()
         {
             try
             {
-                fileDBHandle = new DatabaseWrapper(Config.Database, Config.FilesRootDirectory);
+                databaseWrapper = new DatabaseWrapper(Config.Database, Config.FilesRootDirectory);
             }
             catch (DatabaseWrapperException)
             {
-                fileDBHandle = new InvalidHandle();
+                databaseWrapper = new InvalidHandle();
             }
         }
 

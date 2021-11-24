@@ -80,7 +80,7 @@ namespace FileDB.ViewModel
 
             if (personId.HasValue)
             {
-                var personModel = Utils.FileDBHandle.GetPersonById(personId.Value);
+                var personModel = Utils.DatabaseWrapper.GetPersonById(personId.Value);
                 Firstname = personModel.firstname;
                 Lastname = personModel.lastname;
                 Description = personModel.description;
@@ -115,11 +115,11 @@ namespace FileDB.ViewModel
 
                 if (personId.HasValue)
                 {
-                    Utils.FileDBHandle.UpdatePerson(personId.Value, firstname, lastname, newDescription, newDateOfBirth, newDeceased, newProfileFileId, SexEnum);
+                    Utils.DatabaseWrapper.UpdatePerson(personId.Value, firstname, lastname, newDescription, newDateOfBirth, newDeceased, newProfileFileId, SexEnum);
                 }
                 else
                 {
-                    Utils.FileDBHandle.InsertPerson(firstname, lastname, newDescription, newDateOfBirth, newDeceased, newProfileFileId, SexEnum);
+                    Utils.DatabaseWrapper.InsertPerson(firstname, lastname, newDescription, newDateOfBirth, newDeceased, newProfileFileId, SexEnum);
                 }
             }
             catch (DataValidationException e)

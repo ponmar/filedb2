@@ -46,7 +46,7 @@ namespace FileDB.ViewModel
             var whitelistedFilePathPatterns = Utils.Config.WhitelistedFilePathPatterns.Split(";");
 
             // TODO: show counter?
-            foreach (var internalFilePath in Utils.FileDBHandle.ListNewFilesystemFiles(blacklistedFilePathPatterns, whitelistedFilePathPatterns, Utils.Config.IncludeHiddenDirectories))
+            foreach (var internalFilePath in Utils.DatabaseWrapper.ListNewFilesystemFiles(blacklistedFilePathPatterns, whitelistedFilePathPatterns, Utils.Config.IncludeHiddenDirectories))
             {
                 NewFiles.Add(new NewFile()
                 {
@@ -65,15 +65,15 @@ namespace FileDB.ViewModel
 
         public void ImportNewFiles()
         {
-            var locations = Utils.FileDBHandle.GetLocations();
+            var locations = Utils.DatabaseWrapper.GetLocations();
 
             try
             {
                 foreach (var newFile in NewFiles)
                 {
-                    Utils.FileDBHandle.InsertFile(newFile.Path);
+                    Utils.DatabaseWrapper.InsertFile(newFile.Path);
 
-                    var importedFile = Utils.FileDBHandle.GetFileByPath(newFile.Path);
+                    var importedFile = Utils.DatabaseWrapper.GetFileByPath(newFile.Path);
 
                     if (importedFile.position != null && Utils.Config.FileToLocationMaxDistance > 0.5)
                     {
@@ -85,7 +85,7 @@ namespace FileDB.ViewModel
                             var distance = DatabaseUtils.CalculateDistance(importedFilePos.lat, importedFilePos.lon, locationPos.lat, locationPos.lon);
                             if (distance < Utils.Config.FileToLocationMaxDistance)
                             {
-                                Utils.FileDBHandle.InsertFileLocation(importedFile.id, locationWithPosition.id);
+                                Utils.DatabaseWrapper.InsertFileLocation(importedFile.id, locationWithPosition.id);
                             }
                         }
                     }
@@ -102,7 +102,7 @@ namespace FileDB.ViewModel
 
         private string GetDateModified(string internalPath)
         {
-            var path = Utils.FileDBHandle.ToAbsolutePath(internalPath);
+            var path = Utils.DatabaseWrapper.ToAbsolutePath(internalPath);
             var dateModified = File.GetLastWriteTime(path);
             return dateModified.ToString("yyyy-MM-dd HH:mm");
         }

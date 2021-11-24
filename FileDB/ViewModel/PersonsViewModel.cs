@@ -68,10 +68,10 @@ namespace FileDB.ViewModel
         {
             if (selectedPerson != null)
             {
-                var filesWithPerson = Utils.FileDBHandle.GetFilesWithPersons(new List<int>() { selectedPerson.GetId() }).ToList();
+                var filesWithPerson = Utils.DatabaseWrapper.GetFilesWithPersons(new List<int>() { selectedPerson.GetId() }).ToList();
                 if (filesWithPerson.Count == 0 || Utils.ShowConfirmDialog($"Person is used in {filesWithPerson.Count} files, remove anyway?"))
                 {
-                    Utils.FileDBHandle.DeletePerson(selectedPerson.GetId());
+                    Utils.DatabaseWrapper.DeletePerson(selectedPerson.GetId());
                     ReloadPersons();
                 }
             }
@@ -109,7 +109,7 @@ namespace FileDB.ViewModel
         {
             Persons.Clear();
 
-            var persons = Utils.FileDBHandle.GetPersons().Select(pm => new Person(pm.id)
+            var persons = Utils.DatabaseWrapper.GetPersons().Select(pm => new Person(pm.id)
             {
                 Firstname = pm.firstname,
                 Lastname = pm.lastname,
