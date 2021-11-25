@@ -13,6 +13,7 @@ using FileDB.View;
 using FileDB.ViewModel.Sorters;
 using FileDBInterface;
 using FileDBInterface.Comparers;
+using FileDBInterface.Exceptions;
 using FileDBInterface.Model;
 using TextCopy;
 
@@ -1295,11 +1296,16 @@ namespace FileDB.ViewModel
                 var fileId = selection.id;
                 var description = string.IsNullOrEmpty(NewFileDescription) ? null : NewFileDescription;
 
-                // TODO: catch validation exception here and in all other Update cases
-                Utils.DatabaseWrapper.UpdateFileDescription(fileId, description);
-
-                selection.description = description;
-                LoadFile(SearchResultIndex);
+                try
+                {
+                    Utils.DatabaseWrapper.UpdateFileDescription(fileId, description);
+                    selection.description = description;
+                    LoadFile(SearchResultIndex);
+                }
+                catch (DataValidationException e)
+                {
+                    Utils.ShowErrorDialog(e.Message);
+                }
             }
         }
 
