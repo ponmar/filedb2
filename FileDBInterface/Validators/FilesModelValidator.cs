@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using System.Text.RegularExpressions;
 using FileDBInterface.Model;
 using FluentValidation;
 
@@ -10,22 +9,22 @@ namespace FileDBInterface.Validators
     {
         public FilesModelValidator()
         {
-            RuleFor(x => x.id).GreaterThanOrEqualTo(0).WithMessage("Id must be greater than or equal to 0");
+            RuleFor(x => x.id).GreaterThanOrEqualTo(0).WithMessage("{PropertyName} must be greater than or equal to 0");
 
             RuleFor(x => x.path)
-                .Must(IsInternalFilePath).WithMessage("Invalid path");
+                .Must(IsInternalFilePath).WithMessage("{PropertyName} invalid");
 
             RuleFor(x => x.description)
-                .Must(ValidateDescription).WithMessage("Empty string used for file description (should be null or have content)");
+                .Must(ValidateDescription).WithMessage("{PropertyName} invalid)");
 
             When(x => x.datetime != null, () =>
             {
                 RuleFor(x => x.datetime)
-                    .Must(IsFileDatetime).WithMessage("Invalid datetime");
+                    .Must(IsFileDatetime).WithMessage("{PropertyName} invalid");
             });
 
             RuleFor(x => x.position)
-                .Must(ValidatePosition).WithMessage("Invalid GPS position");
+                .Must(ValidatePosition).WithMessage("{PropertyName} not in format: <latitude> <longitude>");
         }
 
         private bool IsInternalFilePath(string path)

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Globalization;
-using FileDBInterface.Model;
+﻿using FileDBInterface.Model;
 using FluentValidation;
 
 namespace FileDBInterface.Validators
@@ -10,16 +8,16 @@ namespace FileDBInterface.Validators
         public LocationModelValidator()
         {
             RuleFor(x => x.id)
-                .GreaterThanOrEqualTo(0).WithMessage("Id must be greater than or equal to 0");
+                .GreaterThanOrEqualTo(0).WithMessage("{PropertyName} must be greater than or equal to 0");
 
             RuleFor(x => x.name)
-                .NotNull()
-                .MinimumLength(2);
+                .NotNull().WithMessage("{PropertyName} missing")
+                .MinimumLength(2).WithMessage("{PropertyName} is too short");
 
             When(x => x.description != null, () =>
             {
                 RuleFor(x => x.description)
-                    .NotEmpty();
+                    .NotEmpty().WithMessage("{PropertyName} is empty instead of null");
             });
 
             RuleFor(x => x.position)
