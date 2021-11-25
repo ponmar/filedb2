@@ -465,7 +465,7 @@ namespace FileDBInterface
             var result = validator.Validate(person);
             if (!result.IsValid)
             {
-                throw new DataValidationException(string.Join("\n", result.Errors.Select(x => x.ErrorMessage)));
+                throw new DataValidationException(result);
             }
 
             try
@@ -488,7 +488,7 @@ namespace FileDBInterface
             var result = validator.Validate(person);
             if (!result.IsValid)
             {
-                throw new DataValidationException(string.Join("\n", result.Errors.Select(x => x.ErrorMessage)));
+                throw new DataValidationException(result);
             }
 
             try
@@ -568,7 +568,7 @@ namespace FileDBInterface
             var result = validator.Validate(location);
             if (!result.IsValid)
             {
-                throw new DataValidationException(string.Join("\n", result.Errors.Select(x => x.ErrorMessage)));
+                throw new DataValidationException(result);
             }
 
             try
@@ -591,7 +591,7 @@ namespace FileDBInterface
             var result = validator.Validate(location);
             if (!result.IsValid)
             {
-                throw new DataValidationException(string.Join("\n", result.Errors.Select(x => x.ErrorMessage)));
+                throw new DataValidationException(result);
             }
 
             try
@@ -671,7 +671,7 @@ namespace FileDBInterface
             var result = validator.Validate(tag);
             if (!result.IsValid)
             {
-                throw new DataValidationException(string.Join("\n", result.Errors.Select(x => x.ErrorMessage)));
+                throw new DataValidationException(result);
             }
 
             try
@@ -693,7 +693,7 @@ namespace FileDBInterface
             var result = validator.Validate(tag);
             if (!result.IsValid)
             {
-                throw new DataValidationException(string.Join("\n", result.Errors.Select(x => x.ErrorMessage)));
+                throw new DataValidationException(result);
             }
 
             try
