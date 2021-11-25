@@ -152,7 +152,7 @@
                         <TreeView ItemsSource="{Binding Folders}">
                             <TreeView.ItemTemplate>
                                 <HierarchicalDataTemplate ItemsSource="{Binding Folders}" DataType="{x:Type local2:IFolder}">
-                                    <TextBlock Text="{Binding FolderLabel}" />
+                                    <TextBlock Text="{Binding Name}" />
                                 </HierarchicalDataTemplate>
                             </TreeView.ItemTemplate>
                         </TreeView>

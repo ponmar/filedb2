@@ -21,16 +21,19 @@ namespace FileDB.ViewModel
 {
     public interface IFolder
     {
-        string FullPath { get; }
-        string FolderLabel { get; }
+        string Name { get; }
         List<IFolder> Folders { get; }
     }
 
     public class Folder : IFolder
     {
-        public string FullPath { get; set; }
-        public string FolderLabel { get; set; }
-        public List<IFolder> Folders { get; set; }
+        public string Name { get; }
+        public List<IFolder> Folders { get; } = new();
+
+        public Folder(string name)
+        {
+            Name = name;
+        }
     }
 
     public interface IImagePresenter
@@ -1392,12 +1395,40 @@ namespace FileDB.ViewModel
 
         private void ReloadFolders()
         {
+            var root = new Folder("root");
+
             Folders.Clear();
-
-            // TODO: use directories available in database
-            var root = new Folder() { FolderLabel = "Test", FullPath = "the path", Folders = new List<IFolder>() { new Folder() { FolderLabel = "child", FullPath = "child path" } } };
-
             Folders.Add(root);
+
+            foreach (var file in Utils.DatabaseWrapper.GetFiles())
+            {
+                var directoryEndIndex = file.path.LastIndexOf("/");
+                if (directoryEndIndex == -1)
+                {
+                    // This fils is in the root directory
+                    continue;
+                }
+                
+                var directoryPath = file.path.Substring(0, directoryEndIndex);
+                var directories = directoryPath.Split("/");
+
+                if (directories.Length > 0)
+                {
+                    var currentFolder = root;
+
+                    foreach (var pathPart in directories)
+                    {
+                        var subFolder = (Folder)currentFolder.Folders.FirstOrDefault(x => x.Name == pathPart);
+                        if (subFolder == null)
+                        {
+                            subFolder = new Folder(pathPart);
+                            currentFolder.Folders.Add(subFolder);
+                        }
+
+                        currentFolder = subFolder;
+                    }
+                }
+            }
         }
 
         private void AddUpdateHistoryItem(UpdateHistoryType type, int itemId, string itemName)
