@@ -149,14 +149,15 @@
                 <TabItem Header="Browse">
                     <StackPanel Orientation="Vertical" Margin="3" HorizontalAlignment="Left">
                         <TextBlock Margin="5" Text="Imported directories:"/>
-                        <TreeView ItemsSource="{Binding Folders}">
+                        <local:ExtendedTreeView ItemsSource="{Binding Folders}" SelectedItem_="{Binding SelectedFolder, Mode=TwoWay}">
                             <TreeView.ItemTemplate>
                                 <HierarchicalDataTemplate ItemsSource="{Binding Folders}" DataType="{x:Type local2:IFolder}">
                                     <TextBlock Text="{Binding Name}" />
                                 </HierarchicalDataTemplate>
                             </TreeView.ItemTemplate>
-                        </TreeView>
-                        <Button Margin="5" Width="100" Style="{StaticResource NormalButton}" Command="{Binding FindFilesFromListCommand}" ToolTip="Search by path/description">Search</Button>
+                        </local:ExtendedTreeView>
+                        <Button Margin="5" Width="100" Style="{StaticResource NormalButton}" Command="{Binding FindFilesSelectedFolderCommand}" ToolTip="Search by path/description">Search</Button>
+                        <Button Margin="5" Width="100" Style="{StaticResource NormalButton}" Command="{Binding ReloadFoldersCommand}">Reload folders</Button>
                     </StackPanel>
                 </TabItem>
             </TabControl>

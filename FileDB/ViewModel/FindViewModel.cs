@@ -21,18 +21,24 @@ namespace FileDB.ViewModel
 {
     public interface IFolder
     {
+        //public IFolder Parent { get; }
         string Name { get; }
         List<IFolder> Folders { get; }
+        string Path { get; }
     }
 
     public class Folder : IFolder
     {
+        private readonly IFolder parent;
         public string Name { get; }
         public List<IFolder> Folders { get; } = new();
 
-        public Folder(string name)
+        public string Path => parent != null ? parent.Path + "/" + Name : Name;
+
+        public Folder(string name, IFolder parent = null)
         {
             Name = name;
+            this.parent = parent;
         }
     }
 
@@ -109,6 +115,7 @@ namespace FileDB.ViewModel
 
     public class FindViewModel : ViewModelBase
     {
+        private const string RootFolderName = "root";
         private readonly IImagePresenter imagePresenter;
         private readonly Random random = new();
 
@@ -284,6 +291,8 @@ namespace FileDB.ViewModel
         private ICommand findFilesFromDifferenceCommand;
 
         public List<IFolder> Folders { get; } = new();
+        
+        public IFolder SelectedFolder { get; set; }
 
         #endregion
 
@@ -297,6 +306,12 @@ namespace FileDB.ViewModel
 
         public ICommand FindFilesFromListCommand => findFilesFromListCommand ??= new CommandHandler(FindFilesFromList);
         private ICommand findFilesFromListCommand;
+
+        public ICommand FindFilesSelectedFolderCommand => findFilesSelectedFolderCommand ??= new CommandHandler(FindFilesSelectedFolder);
+        private ICommand findFilesSelectedFolderCommand;
+
+        public ICommand ReloadFoldersCommand => reloadFoldersCommand ??= new CommandHandler(ReloadFolders);
+        private ICommand reloadFoldersCommand;
 
         public string FileListSearch
         {
@@ -973,6 +988,17 @@ namespace FileDB.ViewModel
             }
         }
 
+        private void FindFilesSelectedFolder()
+        {
+            StopSlideshow();
+            if (SelectedFolder != null)
+            {
+                var folderPath = SelectedFolder.Path;
+                var path = folderPath.Substring($"{RootFolderName}/".Length);
+                SearchResult = new SearchResult(Utils.DatabaseWrapper.SearchFilesByPath(path));
+            }
+        }
+
         public void OpenFileLocation()
         {
             if (!string.IsNullOrEmpty(CurrentFilePath) &&
@@ -1395,7 +1421,7 @@ namespace FileDB.ViewModel
 
         private void ReloadFolders()
         {
-            var root = new Folder("root");
+            var root = new Folder(RootFolderName);
 
             Folders.Clear();
             Folders.Add(root);
@@ -1421,7 +1447,7 @@ namespace FileDB.ViewModel
                         var subFolder = (Folder)currentFolder.Folders.FirstOrDefault(x => x.Name == pathPart);
                         if (subFolder == null)
                         {
-                            subFolder = new Folder(pathPart);
+                            subFolder = new Folder(pathPart, currentFolder);
                             currentFolder.Folders.Add(subFolder);
                         }
 
@@ -1429,6 +1455,8 @@ namespace FileDB.ViewModel
                     }
                 }
             }
+
+            OnPropertyChanged(nameof(Folders));
         }
 
         private void AddUpdateHistoryItem(UpdateHistoryType type, int itemId, string itemName)
