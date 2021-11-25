@@ -45,7 +45,6 @@ namespace FileDB.ViewModel
             var blacklistedFilePathPatterns = Utils.Config.BlacklistedFilePathPatterns.Split(";");
             var whitelistedFilePathPatterns = Utils.Config.WhitelistedFilePathPatterns.Split(";");
 
-            // TODO: show counter?
             foreach (var internalFilePath in Utils.DatabaseWrapper.ListNewFilesystemFiles(blacklistedFilePathPatterns, whitelistedFilePathPatterns, Utils.Config.IncludeHiddenDirectories))
             {
                 NewFiles.Add(new NewFile()

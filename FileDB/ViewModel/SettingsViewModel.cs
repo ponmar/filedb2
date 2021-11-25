@@ -234,7 +234,7 @@ namespace FileDB.ViewModel
             var fileDialog = new OpenFileDialog()
             {
                 Filter = $"{Utils.ApplicationName} database files (*.db)|*.db",
-                InitialDirectory = @"c:\", // TODO: get directory from current path? Or appdata?
+                InitialDirectory = @"c:\",
             };
             if (fileDialog.ShowDialog() == true)
             {
@@ -247,7 +247,7 @@ namespace FileDB.ViewModel
             var fileDialog = new OpenFileDialog()
             {
                 Filter = "Any file within files root directory (*.*)|*.*",
-                InitialDirectory = @"c:\", // TODO: get directory from current path? Or appdata?
+                InitialDirectory = @"c:\",
                 ValidateNames = false,
                 CheckFileExists = false,
             };

@@ -50,7 +50,6 @@ namespace FileDBInterface
 
         public static string PathToFilesDatetime(string path)
         {
-            // TODO: use regexp
             var pathParts = path.Split('/');
             foreach (var pathPart in pathParts)
             {
