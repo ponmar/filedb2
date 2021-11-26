@@ -10,15 +10,18 @@ namespace FileDB.Validators
         public ConfigValidator()
         {
             RuleFor(c => c.Name).Cascade(CascadeMode.Stop)
-                .NotEmpty().WithMessage("Name is empty")
-                .Length(3, 100).WithMessage("Name length is invalid");
+                .NotNull().WithMessage("{PropertyName} is null")
+                .NotEmpty().WithMessage("{PropertyName} is empty")
+                .Length(3, 100).WithMessage("{PropertyName} length is invalid");
 
             RuleFor(c => c.Database).Cascade(CascadeMode.Stop)
+                .NotNull().WithMessage("{PropertyName} is null")
                 .Must(x => x.EndsWith(".db")).WithMessage("Invalid database file extension")
                 .Must(x => Path.IsPathFullyQualified(x)).WithMessage("Database path is not absolute")
                 .Must(x => File.Exists(x)).WithMessage("Database missing");
 
             RuleFor(c => c.FilesRootDirectory).Cascade(CascadeMode.Stop)
+                .NotNull().WithMessage("{PropertyName} is null")
                 .Must(x => Path.IsPathFullyQualified(x)).WithMessage("Files root directory path is not absolute")
                 .Must(x => Directory.Exists(x)).WithMessage("Files root directory missing");
 
@@ -43,7 +46,9 @@ namespace FileDB.Validators
             When(c => !string.IsNullOrEmpty(c.LocationLink), () =>
             {
                 RuleFor(c => c.LocationLink)
-                    .Must(IsValidUrl).WithMessage("Location link is not a valid url");
+                    .Must(IsValidUrl).WithMessage("Location link is not a valid url")
+                    .Must(x => x.Contains("LAT")).WithMessage("LAT not included in url")
+                    .Must(x => x.Contains("LON")).WithMessage("LON not included in url");
             });
         }
 
@@ -62,6 +67,11 @@ namespace FileDB.Validators
 
         private bool IsSemicolonSeparatedFilePatterns(string text)
         {
+            if (text == null)
+            {
+                return false;
+            }
+
             var parts = text.Split(";");
             if (parts.Length == 0)
             {

@@ -31,5 +31,101 @@ namespace FileDBTests.Validators
             var result = validator.TestValidate(config);
             result.ShouldNotHaveAnyValidationErrors();
         }
+
+        [TestMethod]
+        public void Validate_NameEmpty_Error()
+        {
+            var config = new Config(Name: "", default, default, default, default, default, default, default, default, default, default, default, default, default);
+            var result = validator.TestValidate(config);
+            result.ShouldHaveValidationErrorFor(x => x.Name);
+        }
+
+        [TestMethod]
+        public void Validate_DatabaseEmpty_Error()
+        {
+            var config = new Config(default, Database: "", default, default, default, default, default, default, default, default, default, default, default, default);
+            var result = validator.TestValidate(config);
+            result.ShouldHaveValidationErrorFor(x => x.Database);
+        }
+
+        [TestMethod]
+        public void Validate_FilesRootDirectoryEmpty_Error()
+        {
+            var config = new Config(default, default, FilesRootDirectory: "", default, default, default, default, default, default, default, default, default, default, default);
+            var result = validator.TestValidate(config);
+            result.ShouldHaveValidationErrorFor(x => x.FilesRootDirectory);
+        }
+
+        [TestMethod]
+        public void Validate_FileToLocationMaxDistanceNegative_Error()
+        {
+            var config = new Config(default, default, default, FileToLocationMaxDistance: -1, default, default, default, default, default, default, default, default, default, default);
+            var result = validator.TestValidate(config);
+            result.ShouldHaveValidationErrorFor(x => x.FileToLocationMaxDistance);
+        }
+
+        [TestMethod]
+        public void Validate_BlacklistedFilePathPatternsEmpty_Error()
+        {
+            var config = new Config(default, default, default, default, BlacklistedFilePathPatterns: "", default, default, default, default, default, default, default, default, default);
+            var result = validator.TestValidate(config);
+            result.ShouldHaveValidationErrorFor(x => x.BlacklistedFilePathPatterns);
+        }
+
+        [TestMethod]
+        public void Validate_WhitelistedFilePathPatternsEmpty_Error()
+        {
+            var config = new Config(default, default, default, default, default, WhitelistedFilePathPatterns: "", default, default, default, default, default, default, default, default);
+            var result = validator.TestValidate(config);
+            result.ShouldHaveValidationErrorFor(x => x.WhitelistedFilePathPatterns);
+        }
+
+        [TestMethod]
+        public void Validate_SlideShowDelayTooSmall_Error()
+        {
+            var config = new Config(default, default, default, default, default, default, default, SlideshowDelay: 0, default, default, default, default, default, default);
+            var result = validator.TestValidate(config);
+            result.ShouldHaveValidationErrorFor(x => x.SlideshowDelay);
+        }
+
+        [TestMethod]
+        public void Validate_SearchHistorySizeTooSmall_Error()
+        {
+            var config = new Config(default, default, default, default, default, default, default, default, SearchHistorySize: -1, default, default, default, default, default);
+            var result = validator.TestValidate(config);
+            result.ShouldHaveValidationErrorFor(x => x.SearchHistorySize);
+        }
+
+        [TestMethod]
+        public void Validate_SearchHistorySizeTooBig_Error()
+        {
+            var config = new Config(default, default, default, default, default, default, default, default, SearchHistorySize: 11, default, default, default, default, default);
+            var result = validator.TestValidate(config);
+            result.ShouldHaveValidationErrorFor(x => x.SearchHistorySize);
+        }
+
+        [TestMethod]
+        public void Validate_StartupBackupReminderAfterDaysTooSmall_Error()
+        {
+            var config = new Config(default, default, default, default, default, default, default, default, default, default, StartupBackupReminderAfterDays: -1, default, default, default);
+            var result = validator.TestValidate(config);
+            result.ShouldHaveValidationErrorFor(x => x.StartupBackupReminderAfterDays);
+        }
+
+        [TestMethod]
+        public void Validate_LocationLinkWithoutLatitude_Error()
+        {
+            var config = new Config(default, default, default, default, default, default, default, default, default, default, default, default, default, LocationLink: "http://localhost/LON/");
+            var result = validator.TestValidate(config);
+            result.ShouldHaveValidationErrorFor(x => x.LocationLink);
+        }
+
+        [TestMethod]
+        public void Validate_LocationLinkWithoutLongitude_Error()
+        {
+            var config = new Config(default, default, default, default, default, default, default, default, default, default, default, default, default, LocationLink: "http://localhost/LAT/");
+            var result = validator.TestValidate(config);
+            result.ShouldHaveValidationErrorFor(x => x.LocationLink);
+        }
     }
 }
