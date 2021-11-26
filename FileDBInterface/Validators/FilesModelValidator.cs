@@ -24,7 +24,7 @@ namespace FileDBInterface.Validators
             });
 
             RuleFor(x => x.position)
-                .Must(ValidatePosition).WithMessage("{PropertyName} not in format: <latitude> <longitude>");
+                .Must(x => DatabaseParsing.ParseFilesPosition(x) != null).WithMessage("{PropertyName} not in format: <latitude> <longitude>");
         }
 
         private bool IsInternalFilePath(string path)
@@ -43,26 +43,6 @@ namespace FileDBInterface.Validators
                 DateTime.TryParseExact(datetime, "yyyy-MM-ddTHH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out _) ||
                 DateTime.TryParseExact(datetime, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out _) ||
                 DateTime.TryParseExact(datetime, "yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
-        }
-
-        public static bool ValidatePosition(string position)
-        {
-            if (position != null)
-            {
-                var parts = position.Split(' ');
-                if (parts.Length != 2)
-                {
-                    return false;
-                }
-
-
-                if (!double.TryParse(parts[0], NumberStyles.Float, CultureInfo.InvariantCulture, out var _) ||
-                    !double.TryParse(parts[1], NumberStyles.Float, CultureInfo.InvariantCulture, out var _))
-                {
-                    return false;
-                }
-            }
-            return true;
         }
     }
 }

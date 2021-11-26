@@ -68,23 +68,17 @@ namespace FileDBInterface
 
         public static (double lat, double lon)? ParseFilesPosition(string positionString)
         {
-            var positionParts = positionString.Split(" ");
-            if (positionParts.Length != 2)
+            if (positionString != null)
             {
-                return null;
+                var parts = positionString.Split(" ");
+                if (parts.Length == 2 &&
+                    double.TryParse(parts[0], NumberStyles.Float, CultureInfo.InvariantCulture, out var latitude) &&
+                    double.TryParse(parts[1], NumberStyles.Float, CultureInfo.InvariantCulture, out var longitude))
+                {
+                    return (latitude, longitude);
+                }
             }
-
-            if (!double.TryParse(positionParts[0], NumberStyles.Any, CultureInfo.InvariantCulture, out var latitude))
-            {
-                return null;
-            }
-
-            if (!double.TryParse(positionParts[1], NumberStyles.Any, CultureInfo.InvariantCulture, out var longitude))
-            {
-                return null;
-            }
-
-            return (latitude, longitude);
+            return null;
         }
 
         public static string ToFilesPosition(double lat, double lon)

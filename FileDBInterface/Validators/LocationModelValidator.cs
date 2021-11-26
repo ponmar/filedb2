@@ -21,7 +21,7 @@ namespace FileDBInterface.Validators
             });
 
             RuleFor(x => x.position)
-                .Must(FilesModelValidator.ValidatePosition);
+                .Must(x => DatabaseParsing.ParseFilesPosition(x) != null).WithMessage("{PropertyName} not in format: <latitude> <longitude>");
         }
     }
 }
