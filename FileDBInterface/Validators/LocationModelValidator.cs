@@ -20,8 +20,11 @@ namespace FileDBInterface.Validators
                     .NotEmpty().WithMessage("{PropertyName} is empty instead of null");
             });
 
-            RuleFor(x => x.position)
-                .Must(x => DatabaseParsing.ParseFilesPosition(x) != null).WithMessage("{PropertyName} not in format: <latitude> <longitude>");
+            When(x => x.position != null, () =>
+            {
+                RuleFor(x => x.position)
+                    .Must(x => DatabaseParsing.ParseFilesPosition(x) != null).WithMessage("{PropertyName} not in format: <latitude> <longitude>");
+            });
         }
     }
 }

@@ -23,8 +23,11 @@ namespace FileDBInterface.Validators
                     .Must(IsFileDatetime).WithMessage("{PropertyName} invalid");
             });
 
-            RuleFor(x => x.position)
-                .Must(x => DatabaseParsing.ParseFilesPosition(x) != null).WithMessage("{PropertyName} not in format: <latitude> <longitude>");
+            When(x => x.position != null, () =>
+            {
+                RuleFor(x => x.position)
+                    .Must(x => DatabaseParsing.ParseFilesPosition(x) != null).WithMessage("{PropertyName} not in format: <latitude> <longitude>");
+            });
         }
 
         private bool IsInternalFilePath(string path)
