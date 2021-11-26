@@ -29,7 +29,7 @@ namespace FileDBInterface.Validators
 
         private bool IsInternalFilePath(string path)
         {
-            return !path.Contains(@"\") && !path.StartsWith("/") && !path.EndsWith("/");
+            return !string.IsNullOrEmpty(path) && !path.Contains(@"\") && !path.StartsWith("/") && !path.EndsWith("/");
         }
 
         public static bool ValidateDescription(string description)
@@ -55,8 +55,9 @@ namespace FileDBInterface.Validators
                     return false;
                 }
 
-                if (!double.TryParse(parts[0], out var _) ||
-                    !double.TryParse(parts[1], out var _))
+
+                if (!double.TryParse(parts[0], NumberStyles.Float, CultureInfo.InvariantCulture, out var _) ||
+                    !double.TryParse(parts[1], NumberStyles.Float, CultureInfo.InvariantCulture, out var _))
                 {
                     return false;
                 }
