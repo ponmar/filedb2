@@ -9,10 +9,10 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using FileDB.Comparers;
 using FileDB.View;
 using FileDB.ViewModel.Sorters;
 using FileDBInterface;
-using FileDBInterface.Comparers;
 using FileDBInterface.Exceptions;
 using FileDBInterface.Model;
 using TextCopy;
@@ -291,7 +291,7 @@ namespace FileDB.ViewModel
         private ICommand findFilesFromDifferenceCommand;
 
         public List<IFolder> Folders { get; } = new();
-        
+
         public IFolder SelectedFolder { get; set; }
 
         #endregion
@@ -1434,7 +1434,7 @@ namespace FileDB.ViewModel
                     // This fils is in the root directory
                     continue;
                 }
-                
+
                 var directoryPath = file.path.Substring(0, directoryEndIndex);
                 var directories = directoryPath.Split("/");
 

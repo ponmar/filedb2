@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using FileDBInterface.Model;
 
-namespace FileDBInterface.Comparers
+namespace FileDB.Comparers
 {
-    public class PersonModelIdComparer : IEqualityComparer<PersonModel>
+    public class FilesModelIdComparer : IEqualityComparer<FilesModel>
     {
-        public int GetHashCode(PersonModel co)
+        public int GetHashCode(FilesModel co)
         {
             if (co == null)
             {
@@ -14,7 +14,7 @@ namespace FileDBInterface.Comparers
             return co.id.GetHashCode();
         }
 
-        public bool Equals(PersonModel x1, PersonModel x2)
+        public bool Equals(FilesModel x1, FilesModel x2)
         {
             if (object.ReferenceEquals(x1, x2))
             {
