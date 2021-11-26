@@ -16,6 +16,7 @@ namespace FileDBTests.Validators
             validator = new();
         }
 
+        /*
         [TestMethod]
         public void Validate_DefaultConfig_Valid()
         {
@@ -31,6 +32,7 @@ namespace FileDBTests.Validators
             var result = validator.TestValidate(config);
             result.ShouldNotHaveAnyValidationErrors();
         }
+        */
 
         [TestMethod]
         public void Validate_NameEmpty_Error()
