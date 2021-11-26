@@ -31,7 +31,7 @@ namespace FileDBInterfaceTests
         {
             Assert.AreEqual("1957-03-23", DatabaseParsing.ToPersonsDeceased(new DateTime(year: 1957, month: 03, day: 23)));
         }
-        
+
         [TestMethod]
         public void ParseFilesDatetime()
         {
@@ -65,9 +65,6 @@ namespace FileDBInterfaceTests
         [TestMethod]
         public void ToFilesPosition()
         {
-            Assert.AreEqual("34.123 75.321", DatabaseParsing.ToFilesPosition(new GeoLocation(34.123, 75.321)));
-            Assert.IsNull(DatabaseParsing.ToFilesPosition(null));
-
             Assert.AreEqual("34.123 75.321", DatabaseParsing.ToFilesPosition(34.123, 75.321));
         }
     }

@@ -85,10 +85,5 @@ namespace FileDBInterface
         {
             return $"{lat.ToString(CultureInfo.InvariantCulture)} {lon.ToString(CultureInfo.InvariantCulture)}";
         }
-
-        public static string ToFilesPosition(GeoLocation geoLocation)
-        {
-            return geoLocation != null ? ToFilesPosition(geoLocation.Latitude, geoLocation.Longitude) : null;
-        }
     }
 }
