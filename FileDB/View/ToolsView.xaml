@@ -14,25 +14,25 @@
     <DockPanel>
         <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Tools</Label>
         <ScrollViewer>
-            <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Vertical" Style="{StaticResource PageStackPanel}">
                 <Label Style="{StaticResource PageSubHeading}">Database Backup</Label>
-                <StackPanel Orientation="Vertical" Style="{StaticResource PageStackPanel}">
-                    <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap">&#x26A0; Backup of your files collection, FileDB configuration and FileDB databases to external media should be done continuously!</TextBlock>
-                    <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap">&#x26A0; Database recovery must be done manually if needed.</TextBlock>
-                    <Button Margin="10" Width="200" Style="{StaticResource NormalButton}" Command="{Binding CreateBackupCommand}" HorizontalAlignment="Left">Create database backup</Button>
-                    <TextBlock Style="{StaticResource PageTextBlock}" HorizontalAlignment="Left" Text="Backup files in configured database directory:"/>
-                    <ListBox Visibility="{Binding BackupFiles, Converter={StaticResource EnumerationToVisibilityConverter}}" Margin="10" ItemsSource="{Binding BackupFiles}" HorizontalAlignment="Left">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Path=Filename}" ToolTip="{Binding Path=Filename}" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                </StackPanel>
+                <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap">&#x26A0; Backup of your files collection, FileDB configuration and FileDB databases to external media should be done continuously!</TextBlock>
+                <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap">&#x26A0; Database recovery must be done manually if needed.</TextBlock>
+                <Button Margin="10" Width="200" Style="{StaticResource NormalButton}" Command="{Binding CreateBackupCommand}" HorizontalAlignment="Left">Create database backup</Button>
+                <TextBlock Style="{StaticResource PageTextBlock}" Text="{Binding BackupResult}"/>
+                <ListBox Visibility="{Binding BackupFiles, Converter={StaticResource EnumerationToVisibilityConverter}}" Margin="10" ItemsSource="{Binding BackupFiles}" HorizontalAlignment="Left">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Path=Filename}" ToolTip="{Binding Path=Filename}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
                 <Label Style="{StaticResource PageSubHeading}">Database Data Validation</Label>
                 <Button Margin="10" Width="200" Style="{StaticResource NormalButton}" Command="{Binding DatabaseValidationCommand}" HorizontalAlignment="Left">Run validation</Button>
+                <TextBlock Style="{StaticResource PageTextBlock}" Text="{Binding DatabaseValidationResult}"/>
                 <ListBox Visibility="{Binding DabaseValidationErrors, Converter={StaticResource EnumerationToVisibilityConverter}}" Margin="10" ItemsSource="{Binding DabaseValidationErrors}" HorizontalAlignment="Left"/>
             </StackPanel>
         </ScrollViewer>

@@ -32,7 +32,21 @@ namespace FileDB.ViewModel
         public ICommand DatabaseValidationCommand => databaseValidationCommand ??= new CommandHandler(DatabaseValidation);
         private ICommand databaseValidationCommand;
 
+        public string BackupResult
+        {
+            get => backupResult;
+            set => SetProperty(ref backupResult, value);
+        }
+        private string backupResult;
+
         public ObservableCollection<BackupFile> BackupFiles { get; } = new();
+
+        public string DatabaseValidationResult
+        {
+            get => databaseValidationResult;
+            set => SetProperty(ref databaseValidationResult, value);
+        }
+        private string databaseValidationResult = "Not validated.";
 
         public ObservableCollection<string> DabaseValidationErrors { get; } = new();
 
@@ -90,10 +104,11 @@ namespace FileDB.ViewModel
 
         private void ScanBackupFiles()
         {
+            BackupFiles.Clear();
+
             var backupDir = Path.GetDirectoryName(Utils.Config.Database);
             if (Directory.Exists(backupDir))
             {
-                BackupFiles.Clear();
                 foreach (var filePath in Directory.GetFiles(backupDir, "backup_*.db"))
                 {
                     var filenameParts = filePath.Split("_");
@@ -110,6 +125,12 @@ namespace FileDB.ViewModel
                         }
                     }
                 }
+
+                BackupResult = BackupFiles.Count > 0 ? $"{BackupFiles.Count} database backup files found:" : $"No database backup files found!";
+            }
+            else
+            {
+                BackupResult = "Directory for configured database does not exist.";
             }
         }
 
@@ -169,10 +190,7 @@ namespace FileDB.ViewModel
                 }
             }
 
-            if (DabaseValidationErrors.Count == 0)
-            {
-                DabaseValidationErrors.Add("No errors");
-            }
+            DatabaseValidationResult = DabaseValidationErrors.Count > 0 ? $"{DabaseValidationErrors.Count} errors found:" : $"No errors found.";
         }
     }
 }
