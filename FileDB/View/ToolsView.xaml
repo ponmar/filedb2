@@ -4,8 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FileDB.View"
+             xmlns:converters="clr-namespace:FileDB.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <converters:EnumerationToVisibilityConverter x:Key="EnumerationToVisibilityConverter" />
+    </UserControl.Resources>
+    
     <DockPanel>
         <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Tools</Label>
         <ScrollViewer>
@@ -16,7 +21,7 @@
                     <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap">&#x26A0; Database recovery must be done manually if needed.</TextBlock>
                     <Button Margin="10" Width="200" Style="{StaticResource NormalButton}" Command="{Binding CreateBackupCommand}" HorizontalAlignment="Left">Create database backup</Button>
                     <TextBlock Style="{StaticResource PageTextBlock}" HorizontalAlignment="Left" Text="Backup files in configured database directory:"/>
-                    <ListBox Margin="10" ItemsSource="{Binding BackupFiles}" HorizontalAlignment="Left">
+                    <ListBox Visibility="{Binding BackupFiles, Converter={StaticResource EnumerationToVisibilityConverter}}" Margin="10" ItemsSource="{Binding BackupFiles}" HorizontalAlignment="Left">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -28,17 +33,7 @@
                 </StackPanel>
                 <Label Style="{StaticResource PageSubHeading}">Database Data Validation</Label>
                 <Button Margin="10" Width="200" Style="{StaticResource NormalButton}" Command="{Binding DatabaseValidationCommand}" HorizontalAlignment="Left">Run validation</Button>
-                <ListBox Margin="10" ItemsSource="{Binding DabaseValidationErrors}" HorizontalAlignment="Left">
-                    <!--
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Path=Filename}" ToolTip="{Binding Path=Filename}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                    -->
-                </ListBox>
+                <ListBox Visibility="{Binding DabaseValidationErrors, Converter={StaticResource EnumerationToVisibilityConverter}}" Margin="10" ItemsSource="{Binding DabaseValidationErrors}" HorizontalAlignment="Left"/>
             </StackPanel>
         </ScrollViewer>
     </DockPanel>
