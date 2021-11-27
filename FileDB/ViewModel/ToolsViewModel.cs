@@ -132,6 +132,8 @@ namespace FileDB.ViewModel
             {
                 BackupResult = "Directory for configured database does not exist.";
             }
+
+            OnPropertyChanged(nameof(BackupResult));
         }
 
         private void DatabaseValidation()
@@ -191,6 +193,7 @@ namespace FileDB.ViewModel
             }
 
             DatabaseValidationResult = DabaseValidationErrors.Count > 0 ? $"{DabaseValidationErrors.Count} errors found:" : $"No errors found.";
+            OnPropertyChanged(nameof(DabaseValidationErrors));
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Windows;
 using FileDB.Converters;
@@ -31,6 +32,14 @@ namespace FileDBTests.Converters
         {
             var converter = new EnumerationToVisibilityConverter();
             var items = new List<string>() { "item" };
+            Assert.AreEqual(Visibility.Visible, converter.Convert(items, typeof(IEnumerable), null, CultureInfo.InvariantCulture));
+        }
+
+        [TestMethod]
+        public void Convert_HasObservableCollection_Visible()
+        {
+            var converter = new EnumerationToVisibilityConverter();
+            var items = new ObservableCollection<string>() { "item" };
             Assert.AreEqual(Visibility.Visible, converter.Convert(items, typeof(IEnumerable), null, CultureInfo.InvariantCulture));
         }
     }
