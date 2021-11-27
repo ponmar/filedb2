@@ -5,11 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:FileDB.View"
+             xmlns:converters="clr-namespace:FileDB.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        <converters:ValueToBoolConverter x:Key="ValueToBoolConverter"/>
     </UserControl.Resources>
 
     <DockPanel>
@@ -17,9 +19,9 @@
         <ScrollViewer PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
             <StackPanel Style="{StaticResource PageStackPanel}">
                 <StackPanel Orientation="Horizontal" Visibility="{Binding ReadWriteMode, Converter={StaticResource BoolToVis}}">
-                    <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding AddTagCommand}">Add tag</Button>
-                    <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding EditTagCommand}">Edit selected tag</Button>
-                    <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding RemoveTagCommand}">Delete selected tag</Button>
+                    <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding AddTagCommand}">Add tag...</Button>
+                    <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding EditTagCommand}" IsEnabled="{Binding SelectedTag, Converter={StaticResource ValueToBoolConverter}}">Edit selected tag...</Button>
+                    <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding RemoveTagCommand}" IsEnabled="{Binding SelectedTag, Converter={StaticResource ValueToBoolConverter}}">Delete selected tag...</Button>
                 </StackPanel>
 
                 <DataGrid Margin="10" ItemsSource="{Binding Tags}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single">

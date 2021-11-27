@@ -4,11 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FileDB.View"
+             xmlns:converters="clr-namespace:FileDB.Converters"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        <converters:ValueToBoolConverter x:Key="ValueToBoolConverter"/>
     </UserControl.Resources>
 
     <DockPanel>
@@ -16,9 +18,9 @@
         <ScrollViewer PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
             <StackPanel Style="{StaticResource PageStackPanel}">
                 <StackPanel Orientation="Horizontal" Visibility="{Binding ReadWriteMode, Converter={StaticResource BoolToVis}}">
-                    <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding AddLocationCommand}">Add location</Button>
-                    <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding EditLocationCommand}">Edit selected location</Button>
-                    <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding RemoveLocationCommand}">Delete selected location</Button>
+                    <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding AddLocationCommand}">Add location...</Button>
+                    <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding EditLocationCommand}" IsEnabled="{Binding SelectedLocation, Converter={StaticResource ValueToBoolConverter}}">Edit selected location...</Button>
+                    <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding RemoveLocationCommand}" IsEnabled="{Binding SelectedLocation, Converter={StaticResource ValueToBoolConverter}}">Delete selected location...</Button>
                 </StackPanel>
 
                 <DataGrid Margin="10" ItemsSource="{Binding Locations}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single">

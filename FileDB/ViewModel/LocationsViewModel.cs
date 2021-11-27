@@ -51,6 +51,11 @@ namespace FileDB.ViewModel
 
         public ObservableCollection<Location> Locations { get; } = new();
 
+        public Location SelectedLocation
+        {
+            get => selectedLocation;
+            set => SetProperty(ref selectedLocation, value);
+        }
         private Location selectedLocation;
 
         public LocationsViewModel()
@@ -60,28 +65,22 @@ namespace FileDB.ViewModel
 
         public void RemoveLocation()
         {
-            if (selectedLocation != null)
+            var filesWithLocation = Utils.DatabaseWrapper.GetFilesWithLocations(new List<int>() { selectedLocation.GetId() }).ToList();
+            if (filesWithLocation.Count == 0 || Utils.ShowConfirmDialog($"Location is used in {filesWithLocation.Count} files, remove anyway?"))
             {
-                var filesWithLocation = Utils.DatabaseWrapper.GetFilesWithLocations(new List<int>() { selectedLocation.GetId() }).ToList();
-                if (filesWithLocation.Count == 0 || Utils.ShowConfirmDialog($"Location is used in {filesWithLocation.Count} files, remove anyway?"))
-                {
-                    Utils.DatabaseWrapper.DeleteLocation(selectedLocation.GetId());
-                    ReloadLocations();
-                }
+                Utils.DatabaseWrapper.DeleteLocation(selectedLocation.GetId());
+                ReloadLocations();
             }
         }
 
         public void EditLocation()
         {
-            if (selectedLocation != null)
+            var window = new AddLocationWindow(selectedLocation.GetId())
             {
-                var window = new AddLocationWindow(selectedLocation.GetId())
-                {
-                    Owner = Application.Current.MainWindow
-                };
-                window.ShowDialog();
-                ReloadLocations();
-            }
+                Owner = Application.Current.MainWindow
+            };
+            window.ShowDialog();
+            ReloadLocations();
         }
 
         public void AddLocation()
@@ -96,7 +95,7 @@ namespace FileDB.ViewModel
 
         public void LocationSelectionChanged(object parameter)
         {
-            selectedLocation = (Location)parameter;
+            SelectedLocation = (Location)parameter;
         }
 
         private void ReloadLocations()

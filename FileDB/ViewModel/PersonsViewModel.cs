@@ -57,6 +57,11 @@ namespace FileDB.ViewModel
 
         public ObservableCollection<Person> Persons { get; } = new();
 
+        public Person SelectedPerson
+        {
+            get => selectedPerson;
+            set => SetProperty(ref selectedPerson, value);
+        }
         private Person selectedPerson;
 
         public PersonsViewModel()
@@ -66,28 +71,22 @@ namespace FileDB.ViewModel
 
         public void RemovePerson()
         {
-            if (selectedPerson != null)
+            var filesWithPerson = Utils.DatabaseWrapper.GetFilesWithPersons(new List<int>() { selectedPerson.GetId() }).ToList();
+            if (filesWithPerson.Count == 0 || Utils.ShowConfirmDialog($"Person is used in {filesWithPerson.Count} files, remove anyway?"))
             {
-                var filesWithPerson = Utils.DatabaseWrapper.GetFilesWithPersons(new List<int>() { selectedPerson.GetId() }).ToList();
-                if (filesWithPerson.Count == 0 || Utils.ShowConfirmDialog($"Person is used in {filesWithPerson.Count} files, remove anyway?"))
-                {
-                    Utils.DatabaseWrapper.DeletePerson(selectedPerson.GetId());
-                    ReloadPersons();
-                }
+                Utils.DatabaseWrapper.DeletePerson(selectedPerson.GetId());
+                ReloadPersons();
             }
         }
 
         public void EditPerson()
         {
-            if (selectedPerson != null)
+            var window = new AddPersonWindow(selectedPerson.GetId())
             {
-                var window = new AddPersonWindow(selectedPerson.GetId())
-                {
-                    Owner = Application.Current.MainWindow
-                };
-                window.ShowDialog();
-                ReloadPersons();
-            }
+                Owner = Application.Current.MainWindow
+            };
+            window.ShowDialog();
+            ReloadPersons();
         }
 
         public void AddPerson()
@@ -102,7 +101,7 @@ namespace FileDB.ViewModel
 
         public void PersonSelectionChanged(object parameter)
         {
-            selectedPerson = (Person)parameter;
+            SelectedPerson = (Person)parameter;
         }
 
         private void ReloadPersons()

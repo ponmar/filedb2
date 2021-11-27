@@ -47,6 +47,11 @@ namespace FileDB.ViewModel
 
         public ObservableCollection<Tag> Tags { get; } = new();
 
+        public Tag SelectedTag
+        {
+            get => selectedTag;
+            set => SetProperty(ref selectedTag, value);
+        }
         private Tag selectedTag;
 
         public TagsViewModel()
@@ -56,28 +61,22 @@ namespace FileDB.ViewModel
 
         public void RemoveTag()
         {
-            if (selectedTag != null)
+            var filesWithTag = Utils.DatabaseWrapper.GetFilesWithTags(new List<int>() { selectedTag.GetId() }).ToList();
+            if (filesWithTag.Count == 0 || Utils.ShowConfirmDialog($"Tag is used in {filesWithTag.Count} files, remove anyway?"))
             {
-                var filesWithTag = Utils.DatabaseWrapper.GetFilesWithTags(new List<int>() { selectedTag.GetId() }).ToList();
-                if (filesWithTag.Count == 0 || Utils.ShowConfirmDialog($"Tag is used in {filesWithTag.Count} files, remove anyway?"))
-                {
-                    Utils.DatabaseWrapper.DeleteTag(selectedTag.GetId());
-                    ReloadTags();
-                }
+                Utils.DatabaseWrapper.DeleteTag(selectedTag.GetId());
+                ReloadTags();
             }
         }
 
         public void EditTag()
         {
-            if (selectedTag != null)
+            var window = new AddTagWindow(selectedTag.GetId())
             {
-                var window = new AddTagWindow(selectedTag.GetId())
-                {
-                    Owner = Application.Current.MainWindow
-                };
-                window.ShowDialog();
-                ReloadTags();
-            }
+                Owner = Application.Current.MainWindow
+            };
+            window.ShowDialog();
+            ReloadTags();
         }
 
         public void AddTag()
@@ -92,7 +91,7 @@ namespace FileDB.ViewModel
 
         public void TagSelectionChanged(object parameter)
         {
-            selectedTag = (Tag)parameter;
+            SelectedTag = (Tag)parameter;
         }
 
         private void ReloadTags()
