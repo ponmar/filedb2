@@ -73,7 +73,9 @@ namespace FileDBInterface
                 var parts = positionString.Split(" ");
                 if (parts.Length == 2 &&
                     double.TryParse(parts[0], NumberStyles.Float, CultureInfo.InvariantCulture, out var latitude) &&
-                    double.TryParse(parts[1], NumberStyles.Float, CultureInfo.InvariantCulture, out var longitude))
+                    double.TryParse(parts[1], NumberStyles.Float, CultureInfo.InvariantCulture, out var longitude) &&
+                    latitude >= -90.0 && latitude <= 90.0 &&
+                    longitude >= -180.0 && longitude <= 180.0)
                 {
                     return (latitude, longitude);
                 }
