@@ -21,7 +21,6 @@ namespace FileDB.ViewModel
 {
     public interface IFolder
     {
-        //public IFolder Parent { get; }
         string Name { get; }
         List<IFolder> Folders { get; }
         string Path { get; }
@@ -1258,6 +1257,7 @@ namespace FileDB.ViewModel
             var fileId = searchResult.Files[SearchResultIndex].Id;
             Utils.DatabaseWrapper.DeleteFileLocation(fileId, SelectedLocationToUpdate.Id);
             LoadFile(SearchResultIndex);
+            AddUpdateHistoryItem(UpdateHistoryType.ToggleLocation, SelectedLocationToUpdate.Id, SelectedLocationToUpdate.Name);
         }
 
         public bool LocationSelected()
@@ -1284,7 +1284,7 @@ namespace FileDB.ViewModel
             {
                 Utils.DatabaseWrapper.InsertFileTag(fileId, SelectedTagToUpdate.Id);
                 LoadFile(SearchResultIndex);
-                AddUpdateHistoryItem(UpdateHistoryType.ToggleLocation, SelectedTagToUpdate.Id, SelectedTagToUpdate.Name);
+                AddUpdateHistoryItem(UpdateHistoryType.ToggleTag, SelectedTagToUpdate.Id, SelectedTagToUpdate.Name);
             }
             else
             {
@@ -1309,7 +1309,7 @@ namespace FileDB.ViewModel
             var fileId = searchResult.Files[SearchResultIndex].Id;
             Utils.DatabaseWrapper.DeleteFileTag(fileId, SelectedTagToUpdate.Id);
             LoadFile(SearchResultIndex);
-            AddUpdateHistoryItem(UpdateHistoryType.ToggleLocation, SelectedTagToUpdate.Id, SelectedTagToUpdate.Name);
+            AddUpdateHistoryItem(UpdateHistoryType.ToggleTag, SelectedTagToUpdate.Id, SelectedTagToUpdate.Name);
         }
 
         public bool TagSelected()
@@ -1484,6 +1484,8 @@ namespace FileDB.ViewModel
                     UpdateHistoryItems[i] = new UpdateHistoryItem(item.Type, item.ItemId, item.ItemName) { Shortcut = newShortcut };
                 }
             }
+
+            OnPropertyChanged(nameof(UpdateHistoryItems));
         }
 
         public ICommand FunctionKeyCommand => functionKeyCommand ??= new CommandHandler(FunctionKey);
