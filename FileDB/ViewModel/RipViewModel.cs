@@ -54,7 +54,7 @@ namespace FileDB.ViewModel
             if (Utils.Config.RipReminder)
             {
                 var today = DateTime.Today;
-                foreach (var person in Persons.Where(x => x.Deceased == today))
+                foreach (var person in Persons.Where(x => x.Deceased.Date == today))
                 {
                     Utils.ShowInfoDialog($"Rest in Peace {person.Name}!");
                 }
