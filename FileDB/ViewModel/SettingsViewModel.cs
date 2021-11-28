@@ -88,6 +88,13 @@ namespace FileDB.ViewModel
         }
         private bool birthdayReminder;
 
+        public bool BirthdayReminderForDeceased
+        {
+            get => birthdayReminderForDeceased;
+            set => SetProperty(ref birthdayReminderForDeceased, value);
+        }
+        private bool birthdayReminderForDeceased;
+
         public bool RipReminder
         {
             get => ripReminder;
@@ -148,6 +155,9 @@ namespace FileDB.ViewModel
         public ICommand SetDefaultBirthdayReminderCommand => setDefaultBirthdayReminderCommand ??= new CommandHandler(x => BirthdayReminder = DefaultConfigs.Default.BirthdayReminder);
         private ICommand setDefaultBirthdayReminderCommand;
 
+        public ICommand SetDefaultBirthdayReminderForDeceasedCommand => setDefaultBirthdayReminderForDeceasedCommand ??= new CommandHandler(x => BirthdayReminderForDeceased = DefaultConfigs.Default.BirthdayReminderForDeceased);
+        private ICommand setDefaultBirthdayReminderForDeceasedCommand;
+
         public ICommand SetDefaultRipReminderCommand => setDefaultRipReminderCommand ??= new CommandHandler(x => RipReminder = DefaultConfigs.Default.RipReminder);
         private ICommand setDefaultRipReminderCommand;
 
@@ -175,6 +185,7 @@ namespace FileDB.ViewModel
             ReadOnly = Utils.Config.ReadOnly;
             StartupBackupReminderAfterDays = Utils.Config.StartupBackupReminderAfterDays;
             BirthdayReminder = Utils.Config.BirthdayReminder;
+            BirthdayReminderForDeceased = Utils.Config.BirthdayReminderForDeceased;
             RipReminder = Utils.Config.RipReminder;
             LocationLink = Utils.Config.LocationLink;
             FileToLocationMaxDistance = Utils.Config.FileToLocationMaxDistance;
@@ -200,6 +211,7 @@ namespace FileDB.ViewModel
                 ReadOnly,
                 startupBackupReminderAfterDays,
                 BirthdayReminder,
+                BirthdayReminderForDeceased,
                 RipReminder,
                 LocationLink);
 

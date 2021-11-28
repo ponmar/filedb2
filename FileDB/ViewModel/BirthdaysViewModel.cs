@@ -82,7 +82,10 @@ namespace FileDB.ViewModel
                 notifications.AddRange(BirthdayNotifier.GetBirthdayNotifications(persons, BirthdayNotificationFor.Alive));
             }
 
-            // TODO: add config option and check deceased here
+            if (Utils.Config.BirthdayReminderForDeceased)
+            {
+                notifications.AddRange(BirthdayNotifier.GetBirthdayNotifications(persons, BirthdayNotificationFor.Deceased));
+            }
 
             foreach (var notification in notifications)
             {

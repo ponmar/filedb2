@@ -16,6 +16,7 @@ namespace FileDB.Config
         bool ReadOnly,
         int StartupBackupReminderAfterDays,
         bool BirthdayReminder,
+        bool BirthdayReminderForDeceased,
         bool RipReminder,
         string LocationLink);
 
@@ -35,6 +36,7 @@ namespace FileDB.Config
                 30,
                 true,
                 true,
+                true,
                 "https://www.google.com/maps?q=loc:LAT,LON");
 
         public static Config CreateDemo() =>
@@ -50,6 +52,7 @@ namespace FileDB.Config
                 Default.ReadOnly,
                 0,
                 Default.BirthdayReminder,
+                Default.BirthdayReminderForDeceased,
                 Default.RipReminder,
                 Default.LocationLink);
     }
