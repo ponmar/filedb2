@@ -1,6 +1,5 @@
 using System;
 using FileDBInterface;
-using MetadataExtractor;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FileDBInterfaceTests
@@ -60,6 +59,20 @@ namespace FileDBInterfaceTests
         public void ParseFilesPosition()
         {
             Assert.AreEqual((34.123, 75.321), DatabaseParsing.ParseFilesPosition("34.123 75.321"));
+        }
+
+        [TestMethod]
+        public void ParseFilesPosition_InvalidLatitude()
+        {
+            Assert.IsNull(DatabaseParsing.ParseFilesPosition("-91 75.321"));
+            Assert.IsNull(DatabaseParsing.ParseFilesPosition("91 75.321"));
+        }
+
+        [TestMethod]
+        public void ParseFilesPosition_InvalidLongitude()
+        {
+            Assert.IsNull(DatabaseParsing.ParseFilesPosition("34.123 -181"));
+            Assert.IsNull(DatabaseParsing.ParseFilesPosition("34.123 181"));
         }
 
         [TestMethod]
