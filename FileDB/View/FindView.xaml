@@ -193,7 +193,7 @@
             </StackPanel>
         </Border>
         <!-- Left side areas -->
-        <StackPanel Orientation="Vertical" Grid.Row="4" Grid.Column="0" Margin="0 15 5 5">
+        <StackPanel Orientation="Vertical" Grid.Row="4" Grid.Column="0" Margin="0 15 5 5" Width="225">
             <!-- File categorization -->
             <Border Margin="0 0 0 20" Style="{StaticResource BorderGroup}" Visibility="{Binding ReadWriteMode, Converter={StaticResource BoolToVis}}">
                 <Expander Header="Update" Margin="5" IsExpanded="False">
@@ -282,13 +282,13 @@
 
                         <TextBlock Text="&#x1F6F0;" Margin="0 10 0 0" Visibility="{Binding CurrentFilePosition, Converter={local1:StringNullOrEmptyToVisibilityConverter}}" ToolTip="GPS position"/>
                         <TextBlock Margin="0 0 10 0" Visibility="{Binding CurrentFilePosition, Converter={local1:StringNullOrEmptyToVisibilityConverter}}">
-                        <Hyperlink NavigateUri="{Binding CurrentFilePositionLink}" RequestNavigate="OpenLocationUri">
-                            <TextBlock Text="{Binding CurrentFilePosition}" Visibility="{Binding CurrentFilePosition, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
-                        </Hyperlink>
-                    </TextBlock>
+                            <Hyperlink NavigateUri="{Binding CurrentFilePositionLink}" RequestNavigate="OpenLocationUri">
+                                <TextBlock Text="{Binding CurrentFilePosition}" Visibility="{Binding CurrentFilePosition, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
+                            </Hyperlink>
+                        </TextBlock>
 
                         <TextBlock Text="&#x1F4DD;" Margin="0 10 0 0" Visibility="{Binding CurrentFileDescription, Converter={local1:StringNullOrEmptyToVisibilityConverter}}" ToolTip="Description"/>
-                        <TextBlock Text="{Binding CurrentFileDescription}" ToolTip="{Binding CurrentFileDescription}" Margin="0 0 10 0" MaxWidth="100" Visibility="{Binding CurrentFileDescription, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
+                        <TextBlock Text="{Binding CurrentFileDescription}" ToolTip="{Binding CurrentFileDescription}" Margin="0 0 10 0" TextWrapping="Wrap" Visibility="{Binding CurrentFileDescription, Converter={local1:StringNullOrEmptyToVisibilityConverter}}" HorizontalAlignment="Left"/>
                     </StackPanel>
                 </Expander>
             </Border>
