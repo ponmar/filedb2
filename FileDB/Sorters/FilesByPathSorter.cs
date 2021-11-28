@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using FileDBInterface.Model;
 
-namespace FileDB.ViewModel.Sorters
+namespace FileDB.Sorters
 {
     public class FilesByPathSorter : IComparer<FilesModel>
     {

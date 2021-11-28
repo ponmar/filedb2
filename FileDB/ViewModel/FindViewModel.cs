@@ -11,7 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using FileDB.Comparers;
 using FileDB.View;
-using FileDB.ViewModel.Sorters;
+using FileDB.Sorters;
 using FileDBInterface;
 using FileDBInterface.Exceptions;
 using FileDBInterface.Model;
