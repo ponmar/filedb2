@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FileDB.Notifications;
 using FileDBInterface;
 
 namespace FileDB.ViewModel
@@ -29,7 +30,8 @@ namespace FileDB.ViewModel
 
         public RipViewModel()
         {
-            foreach (var person in Utils.DatabaseWrapper.GetPersons())
+            var persons = Utils.DatabaseWrapper.GetPersons();
+            foreach (var person in persons)
             {
                 if (person.dateofbirth != null && person.deceased != null)
                 {
@@ -53,10 +55,10 @@ namespace FileDB.ViewModel
 
             if (Utils.Config.RipReminder)
             {
-                var today = DateTime.Today;
-                foreach (var person in Persons.Where(x => x.Deceased.Date == today))
+                var notifications = RestInPeaceNotifier.GetRestInPeaceNotifications(persons);
+                foreach (var notification in notifications)
                 {
-                    Utils.ShowInfoDialog($"Rest in Peace {person.Name}!");
+                    Utils.ShowNotification(notification);
                 }
             }
         }

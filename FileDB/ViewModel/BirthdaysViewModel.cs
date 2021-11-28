@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FileDB.Notifications;
 using FileDBInterface;
 
 namespace FileDB.ViewModel
@@ -34,7 +35,9 @@ namespace FileDB.ViewModel
 
         public BirthdaysViewModel()
         {
-            foreach (var person in Utils.DatabaseWrapper.GetPersons())
+            var persons = Utils.DatabaseWrapper.GetPersons();
+
+            foreach (var person in persons)
             {
                 if (person.dateofbirth != null && person.deceased == null)
                 {
@@ -72,12 +75,18 @@ namespace FileDB.ViewModel
 
             Persons.Sort(new PersonsByDaysLeftUntilBirthdaySorter());
 
+            List<Notification> notifications = new();
+
             if (Utils.Config.BirthdayReminder)
             {
-                foreach (var person in Persons.Where(x => x.DaysLeft == 0))
-                {
-                    Utils.ShowInfoDialog($"Happy Birthday to {person.Name}!");
-                }
+                notifications.AddRange(BirthdayNotifier.GetBirthdayNotifications(persons, BirthdayNotificationFor.Alive));
+            }
+
+            // TODO: add config option and check deceased here
+
+            foreach (var notification in notifications)
+            {
+                Utils.ShowNotification(notification);
             }
         }
     }

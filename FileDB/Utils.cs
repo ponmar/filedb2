@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
+using FileDB.Notifications;
 using FileDBInterface;
 using FileDBInterface.Exceptions;
 using FluentValidation.Results;
@@ -67,6 +68,22 @@ namespace FileDB
         public static bool ShowConfirmDialog(string question)
         {
             return MessageBox.Show(question, ApplicationName, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes;
+        }
+
+        public static void ShowNotification(Notification notification)
+        {
+            switch (notification.Type)
+            {
+                case NotificationType.Info:
+                    Utils.ShowInfoDialog(notification.Message);
+                    break;
+                case NotificationType.Warning:
+                    Utils.ShowWarningDialog(notification.Message);
+                    break;
+                case NotificationType.Error:
+                    Utils.ShowErrorDialog(notification.Message);
+                    break;
+            }
         }
 
         public static void OpenUriInBrowser(string uri)
