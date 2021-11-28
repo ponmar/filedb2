@@ -102,7 +102,7 @@ namespace FileDB.ViewModel
         {
             Locations.Clear();
 
-            var locations = Utils.DatabaseWrapper.GetLocations().Select(lm => new Location(lm.id) { Name = lm.name, Description = lm.description, Position = lm.position });
+            var locations = Utils.DatabaseWrapper.GetLocations().Select(lm => new Location(lm.Id) { Name = lm.Name, Description = lm.Description, Position = lm.Position });
             foreach (var location in locations)
             {
                 Locations.Add(location);

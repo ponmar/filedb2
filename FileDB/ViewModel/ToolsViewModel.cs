@@ -148,7 +148,7 @@ namespace FileDB.ViewModel
                 {
                     foreach (var error in result.Errors)
                     {
-                        DabaseValidationErrors.Add($"File {file.id}: {error.ErrorMessage}");
+                        DabaseValidationErrors.Add($"File {file.Id}: {error.ErrorMessage}");
                     }
                 }
             }
@@ -161,7 +161,7 @@ namespace FileDB.ViewModel
                 {
                     foreach (var error in result.Errors)
                     {
-                        DabaseValidationErrors.Add($"Person {person.id}: {error.ErrorMessage}");
+                        DabaseValidationErrors.Add($"Person {person.Id}: {error.ErrorMessage}");
                     }
                 }
             }
@@ -174,7 +174,7 @@ namespace FileDB.ViewModel
                 {
                     foreach (var error in result.Errors)
                     {
-                        DabaseValidationErrors.Add($"Location {location.id}: {error.ErrorMessage}");
+                        DabaseValidationErrors.Add($"Location {location.Id}: {error.ErrorMessage}");
                     }
                 }
             }
@@ -187,7 +187,7 @@ namespace FileDB.ViewModel
                 {
                     foreach (var error in result.Errors)
                     {
-                        DabaseValidationErrors.Add($"Tag {tag.id}: {error.ErrorMessage}");
+                        DabaseValidationErrors.Add($"Tag {tag.Id}: {error.ErrorMessage}");
                     }
                 }
             }

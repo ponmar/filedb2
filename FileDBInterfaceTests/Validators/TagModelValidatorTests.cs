@@ -19,7 +19,7 @@ namespace FileDBInterfaceTests.Validators
         [TestMethod]
         public void Validate_Valid()
         {
-            var model = new TagModel() { id = 1, name = "name" };
+            var model = new TagModel() { Id = 1, Name = "name" };
             var result = validator.TestValidate(model);
             result.ShouldNotHaveAnyValidationErrors();
         }
@@ -27,25 +27,25 @@ namespace FileDBInterfaceTests.Validators
         [TestMethod]
         public void Validate_IdIsNegative_Error()
         {
-            var model = new TagModel() { id = -1, name = "name" };
+            var model = new TagModel() { Id = -1, Name = "name" };
             var result = validator.TestValidate(model);
-            result.ShouldHaveValidationErrorFor(x => x.id);
+            result.ShouldHaveValidationErrorFor(x => x.Id);
         }
 
         [TestMethod]
         public void Validate_NameIsEmpty_Error()
         {
-            var model = new TagModel() { id = 1, name = string.Empty };
+            var model = new TagModel() { Id = 1, Name = string.Empty };
             var result = validator.TestValidate(model);
-            result.ShouldHaveValidationErrorFor(x => x.name);
+            result.ShouldHaveValidationErrorFor(x => x.Name);
         }
 
         [TestMethod]
         public void Validate_NameIsTooShort_Error()
         {
-            var model = new TagModel() { id = 1, name = "x" };
+            var model = new TagModel() { Id = 1, Name = "x" };
             var result = validator.TestValidate(model);
-            result.ShouldHaveValidationErrorFor(x => x.name);
+            result.ShouldHaveValidationErrorFor(x => x.Name);
         }
     }
 }

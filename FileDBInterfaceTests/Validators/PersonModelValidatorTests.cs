@@ -21,13 +21,13 @@ namespace FileDBInterfaceTests.Validators
         {
             var model = new PersonModel()
             {
-                id = 1,
-                firstname = "firstname",
-                lastname = "lastname",
-                description = null,
-                dateofbirth = null,
-                deceased = null,
-                profilefileid = null,
+                Id = 1,
+                Firstname = "firstname",
+                Lastname = "lastname",
+                Description = null,
+                DateOfBirth = null,
+                Deceased = null,
+                ProfileFileId = null,
                 sex = Sex.NotKnown,
             };
             var result = validator.TestValidate(model);
@@ -39,13 +39,13 @@ namespace FileDBInterfaceTests.Validators
         {
             var model = new PersonModel()
             {
-                id = 1,
-                firstname = "firstname",
-                lastname = "lastname",
-                description = "description",
-                dateofbirth = "2000-01-01",
-                deceased = "2000-01-02",
-                profilefileid = 10,
+                Id = 1,
+                Firstname = "firstname",
+                Lastname = "lastname",
+                Description = "description",
+                DateOfBirth = "2000-01-01",
+                Deceased = "2000-01-02",
+                ProfileFileId = 10,
                 sex = Sex.NotApplicable,
             };
             var result = validator.TestValidate(model);
@@ -57,17 +57,17 @@ namespace FileDBInterfaceTests.Validators
         {
             var model = new PersonModel()
             {
-                id = -1,
-                firstname = "firstname",
-                lastname = "lastname",
-                description = null,
-                dateofbirth = null,
-                deceased = null,
-                profilefileid = null,
+                Id = -1,
+                Firstname = "firstname",
+                Lastname = "lastname",
+                Description = null,
+                DateOfBirth = null,
+                Deceased = null,
+                ProfileFileId = null,
                 sex = Sex.NotKnown,
             };
             var result = validator.TestValidate(model);
-            result.ShouldHaveValidationErrorFor(x => x.id);
+            result.ShouldHaveValidationErrorFor(x => x.Id);
         }
 
         [TestMethod]
@@ -75,17 +75,17 @@ namespace FileDBInterfaceTests.Validators
         {
             var model = new PersonModel()
             {
-                id = 1,
-                firstname = string.Empty,
-                lastname = "lastname",
-                description = null,
-                dateofbirth = null,
-                deceased = null,
-                profilefileid = null,
+                Id = 1,
+                Firstname = string.Empty,
+                Lastname = "lastname",
+                Description = null,
+                DateOfBirth = null,
+                Deceased = null,
+                ProfileFileId = null,
                 sex = Sex.NotKnown,
             };
             var result = validator.TestValidate(model);
-            result.ShouldHaveValidationErrorFor(x => x.firstname);
+            result.ShouldHaveValidationErrorFor(x => x.Firstname);
         }
 
         [TestMethod]
@@ -93,17 +93,17 @@ namespace FileDBInterfaceTests.Validators
         {
             var model = new PersonModel()
             {
-                id = 1,
-                firstname = "firstname",
-                lastname = string.Empty,
-                description = null,
-                dateofbirth = null,
-                deceased = null,
-                profilefileid = null,
+                Id = 1,
+                Firstname = "firstname",
+                Lastname = string.Empty,
+                Description = null,
+                DateOfBirth = null,
+                Deceased = null,
+                ProfileFileId = null,
                 sex = Sex.NotKnown,
             };
             var result = validator.TestValidate(model);
-            result.ShouldHaveValidationErrorFor(x => x.lastname);
+            result.ShouldHaveValidationErrorFor(x => x.Lastname);
         }
 
         [TestMethod]
@@ -111,17 +111,17 @@ namespace FileDBInterfaceTests.Validators
         {
             var model = new PersonModel()
             {
-                id = 1,
-                firstname = "x",
-                lastname = "lastname",
-                description = null,
-                dateofbirth = null,
-                deceased = null,
-                profilefileid = null,
+                Id = 1,
+                Firstname = "x",
+                Lastname = "lastname",
+                Description = null,
+                DateOfBirth = null,
+                Deceased = null,
+                ProfileFileId = null,
                 sex = Sex.NotKnown,
             };
             var result = validator.TestValidate(model);
-            result.ShouldHaveValidationErrorFor(x => x.firstname);
+            result.ShouldHaveValidationErrorFor(x => x.Firstname);
         }
 
         [TestMethod]
@@ -129,17 +129,17 @@ namespace FileDBInterfaceTests.Validators
         {
             var model = new PersonModel()
             {
-                id = 1,
-                firstname = "firstname",
-                lastname = "x",
-                description = null,
-                dateofbirth = null,
-                deceased = null,
-                profilefileid = null,
+                Id = 1,
+                Firstname = "firstname",
+                Lastname = "x",
+                Description = null,
+                DateOfBirth = null,
+                Deceased = null,
+                ProfileFileId = null,
                 sex = Sex.NotKnown,
             };
             var result = validator.TestValidate(model);
-            result.ShouldHaveValidationErrorFor(x => x.lastname);
+            result.ShouldHaveValidationErrorFor(x => x.Lastname);
         }
 
         [TestMethod]
@@ -147,17 +147,17 @@ namespace FileDBInterfaceTests.Validators
         {
             var model = new PersonModel()
             {
-                id = 1,
-                firstname = "firstname",
-                lastname = "lastname",
-                description = string.Empty,
-                dateofbirth = null,
-                deceased = null,
-                profilefileid = null,
+                Id = 1,
+                Firstname = "firstname",
+                Lastname = "lastname",
+                Description = string.Empty,
+                DateOfBirth = null,
+                Deceased = null,
+                ProfileFileId = null,
                 sex = Sex.NotKnown,
             };
             var result = validator.TestValidate(model);
-            result.ShouldHaveValidationErrorFor(x => x.description);
+            result.ShouldHaveValidationErrorFor(x => x.Description);
         }
 
         [TestMethod]
@@ -165,17 +165,17 @@ namespace FileDBInterfaceTests.Validators
         {
             var model = new PersonModel()
             {
-                id = 1,
-                firstname = "firstname",
-                lastname = "lastname",
-                description = null,
-                dateofbirth = "invalid",
-                deceased = null,
-                profilefileid = null,
+                Id = 1,
+                Firstname = "firstname",
+                Lastname = "lastname",
+                Description = null,
+                DateOfBirth = "invalid",
+                Deceased = null,
+                ProfileFileId = null,
                 sex = Sex.NotKnown,
             };
             var result = validator.TestValidate(model);
-            result.ShouldHaveValidationErrorFor(x => x.dateofbirth);
+            result.ShouldHaveValidationErrorFor(x => x.DateOfBirth);
         }
 
         [TestMethod]
@@ -183,17 +183,17 @@ namespace FileDBInterfaceTests.Validators
         {
             var model = new PersonModel()
             {
-                id = 1,
-                firstname = "firstname",
-                lastname = "lastname",
-                description = null,
-                dateofbirth = null,
-                deceased = "invalid",
-                profilefileid = null,
+                Id = 1,
+                Firstname = "firstname",
+                Lastname = "lastname",
+                Description = null,
+                DateOfBirth = null,
+                Deceased = "invalid",
+                ProfileFileId = null,
                 sex = Sex.NotKnown,
             };
             var result = validator.TestValidate(model);
-            result.ShouldHaveValidationErrorFor(x => x.deceased);
+            result.ShouldHaveValidationErrorFor(x => x.Deceased);
         }
 
         [TestMethod]
@@ -201,17 +201,17 @@ namespace FileDBInterfaceTests.Validators
         {
             var model = new PersonModel()
             {
-                id = 1,
-                firstname = "firstname",
-                lastname = "lastname",
-                description = null,
-                dateofbirth = null,
-                deceased = "invalid",
-                profilefileid = -10,
+                Id = 1,
+                Firstname = "firstname",
+                Lastname = "lastname",
+                Description = null,
+                DateOfBirth = null,
+                Deceased = "invalid",
+                ProfileFileId = -10,
                 sex = Sex.NotKnown,
             };
             var result = validator.TestValidate(model);
-            result.ShouldHaveValidationErrorFor(x => x.profilefileid);
+            result.ShouldHaveValidationErrorFor(x => x.ProfileFileId);
         }
     }
 }

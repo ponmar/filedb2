@@ -74,17 +74,17 @@ namespace FileDB.ViewModel
 
                     var importedFile = Utils.DatabaseWrapper.GetFileByPath(newFile.Path);
 
-                    if (importedFile.position != null && Utils.Config.FileToLocationMaxDistance > 0.5)
+                    if (importedFile.Position != null && Utils.Config.FileToLocationMaxDistance > 0.5)
                     {
-                        var importedFilePos = DatabaseParsing.ParseFilesPosition(importedFile.position).Value;
+                        var importedFilePos = DatabaseParsing.ParseFilesPosition(importedFile.Position).Value;
 
-                        foreach (var locationWithPosition in locations.Where(x => x.position != null))
+                        foreach (var locationWithPosition in locations.Where(x => x.Position != null))
                         {
-                            var locationPos = DatabaseParsing.ParseFilesPosition(locationWithPosition.position).Value;
+                            var locationPos = DatabaseParsing.ParseFilesPosition(locationWithPosition.Position).Value;
                             var distance = DatabaseUtils.CalculateDistance(importedFilePos.lat, importedFilePos.lon, locationPos.lat, locationPos.lon);
                             if (distance < Utils.Config.FileToLocationMaxDistance)
                             {
-                                Utils.DatabaseWrapper.InsertFileLocation(importedFile.id, locationWithPosition.id);
+                                Utils.DatabaseWrapper.InsertFileLocation(importedFile.Id, locationWithPosition.Id);
                             }
                         }
                     }

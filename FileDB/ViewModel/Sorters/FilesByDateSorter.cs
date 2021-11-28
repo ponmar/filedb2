@@ -7,20 +7,20 @@ namespace FileDB.ViewModel.Sorters
     {
         public int Compare(FilesModel x, FilesModel y)
         {
-            if (x.datetime == null && y.datetime == null)
+            if (x.Datetime == null && y.Datetime == null)
             {
                 return 0;
             }
-            else if (x.datetime == null)
+            else if (x.Datetime == null)
             {
                 return 1;
             }
-            else if (y.datetime == null)
+            else if (y.Datetime == null)
             {
                 return -1;
             }
 
-            return x.datetime.CompareTo(y.datetime);
+            return x.Datetime.CompareTo(y.Datetime);
         }
     }
 }

@@ -98,7 +98,7 @@ namespace FileDB.ViewModel
         {
             Tags.Clear();
 
-            var tags = Utils.DatabaseWrapper.GetTags().Select(tm => new Tag(tm.id) { Name = tm.name });
+            var tags = Utils.DatabaseWrapper.GetTags().Select(tm => new Tag(tm.Id) { Name = tm.Name });
             foreach (var tag in tags)
             {
                 Tags.Add(tag);

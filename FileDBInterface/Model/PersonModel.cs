@@ -11,13 +11,13 @@
 
     public class PersonModel
     {
-        public int id { get; set; }
-        public string firstname { get; set; }
-        public string lastname { get; set; }
-        public string description { get; set; }
-        public string dateofbirth { get; set; } // Format: YYYY-MM-DD
-        public string deceased { get; set; } // Format: YYYY-MM-DD
-        public int? profilefileid { get; set; }
+        public int Id { get; set; }
+        public string Firstname { get; set; }
+        public string Lastname { get; set; }
+        public string Description { get; set; }
+        public string DateOfBirth { get; set; } // Format: YYYY-MM-DD
+        public string Deceased { get; set; } // Format: YYYY-MM-DD
+        public int? ProfileFileId { get; set; }
         public Sex sex { get; set; }
     }
 }

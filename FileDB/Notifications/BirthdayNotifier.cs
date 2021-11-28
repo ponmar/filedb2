@@ -15,9 +15,9 @@ namespace FileDB.Notifications
             var today = DateTime.Today;
             List<Notification> notifications = new();
 
-            foreach (var person in persons.Where(x => x.dateofbirth != null))
+            foreach (var person in persons.Where(x => x.DateOfBirth != null))
             {
-                var isDeceased = person.deceased != null;
+                var isDeceased = person.Deceased != null;
                 var checkPerson =
                     (!isDeceased && birthdayNotificationFor == BirthdayNotificationFor.Alive) ||
                     (isDeceased && (birthdayNotificationFor == BirthdayNotificationFor.Deceased));
@@ -27,17 +27,17 @@ namespace FileDB.Notifications
                     continue;
                 }
 
-                var dateOfBirth = DatabaseParsing.ParsePersonsDateOfBirth(person.dateofbirth);
+                var dateOfBirth = DatabaseParsing.ParsePersonsDateOfBirth(person.DateOfBirth);
                 if (dateOfBirth.Month == today.Month &&
                     dateOfBirth.Day == today.Day)
                 {
                     if (isDeceased)
                     {
-                        notifications.Add(new Notification(NotificationType.Info, $"Today is the birthday for {person.firstname} {person.lastname}!"));
+                        notifications.Add(new Notification(NotificationType.Info, $"Today is the birthday for {person.Firstname} {person.Lastname}!"));
                     }
                     else
                     {
-                        notifications.Add(new Notification(NotificationType.Info, $"Happy Birthday {person.firstname} {person.lastname}!"));
+                        notifications.Add(new Notification(NotificationType.Info, $"Happy Birthday {person.Firstname} {person.Lastname}!"));
                     }
                 }
             }

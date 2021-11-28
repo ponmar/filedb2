@@ -47,9 +47,9 @@ namespace FileDB.ViewModel
             if (locationId.HasValue)
             {
                 var locationModel = Utils.DatabaseWrapper.GetLocationById(locationId.Value);
-                Name = locationModel.name;
-                Description = locationModel.description ?? string.Empty;
-                LatLon = locationModel.position ?? string.Empty;
+                Name = locationModel.Name;
+                Description = locationModel.Description ?? string.Empty;
+                LatLon = locationModel.Position ?? string.Empty;
             }
         }
 

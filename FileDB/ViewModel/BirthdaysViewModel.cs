@@ -39,17 +39,17 @@ namespace FileDB.ViewModel
 
             foreach (var person in persons)
             {
-                if (person.dateofbirth != null && person.deceased == null)
+                if (person.DateOfBirth != null && person.Deceased == null)
                 {
-                    var dateOfBirth = DatabaseParsing.ParsePersonsDateOfBirth(person.dateofbirth);
+                    var dateOfBirth = DatabaseParsing.ParsePersonsDateOfBirth(person.DateOfBirth);
 
                     var p = new PersonBirthday()
                     {
-                        Name = person.firstname + " " + person.lastname,
+                        Name = person.Firstname + " " + person.Lastname,
                         Birthday = dateOfBirth.ToString("d MMMM"),
                         DaysLeft = DatabaseUtils.GetDaysToNextBirthday(dateOfBirth),
                         Age = DatabaseUtils.GetYearsAgo(DateTime.Now, dateOfBirth),
-                        ProfileFileIdPath = person.profilefileid != null ? Utils.DatabaseWrapper.ToAbsolutePath(Utils.DatabaseWrapper.GetFileById(person.profilefileid.Value).path) : string.Empty,
+                        ProfileFileIdPath = person.ProfileFileId != null ? Utils.DatabaseWrapper.ToAbsolutePath(Utils.DatabaseWrapper.GetFileById(person.ProfileFileId.Value).Path) : string.Empty,
                     };
 
                     if (p.DaysLeft == 0)

@@ -33,19 +33,19 @@ namespace FileDB.ViewModel
             var persons = Utils.DatabaseWrapper.GetPersons();
             foreach (var person in persons)
             {
-                if (person.dateofbirth != null && person.deceased != null)
+                if (person.DateOfBirth != null && person.Deceased != null)
                 {
-                    var dateOfBirth = DatabaseParsing.ParsePersonsDateOfBirth(person.dateofbirth);
-                    var deceased = DatabaseParsing.ParsePersonsDeceased(person.deceased);
+                    var dateOfBirth = DatabaseParsing.ParsePersonsDateOfBirth(person.DateOfBirth);
+                    var deceased = DatabaseParsing.ParsePersonsDeceased(person.Deceased);
 
                     Persons.Add(new DeceasedPerson()
                     {
-                        Name = person.firstname + " " + person.lastname,
-                        DateOfBirth = person.dateofbirth,
-                        DeceasedStr = person.deceased,
+                        Name = person.Firstname + " " + person.Lastname,
+                        DateOfBirth = person.DateOfBirth,
+                        DeceasedStr = person.Deceased,
                         Deceased = deceased,
                         Age = DatabaseUtils.GetYearsAgo(deceased, dateOfBirth),
-                        ProfileFileIdPath = person.profilefileid != null ? Utils.DatabaseWrapper.ToAbsolutePath(Utils.DatabaseWrapper.GetFileById(person.profilefileid.Value).path) : string.Empty,
+                        ProfileFileIdPath = person.ProfileFileId != null ? Utils.DatabaseWrapper.ToAbsolutePath(Utils.DatabaseWrapper.GetFileById(person.ProfileFileId.Value).Path) : string.Empty,
                     }) ;
                 }
             }

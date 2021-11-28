@@ -7,22 +7,22 @@ namespace FileDBInterface.Validators
     {
         public LocationModelValidator()
         {
-            RuleFor(x => x.id)
+            RuleFor(x => x.Id)
                 .GreaterThanOrEqualTo(0).WithMessage("{PropertyName} must be greater than or equal to 0");
 
-            RuleFor(x => x.name)
+            RuleFor(x => x.Name)
                 .NotNull().WithMessage("{PropertyName} missing")
                 .MinimumLength(2).WithMessage("{PropertyName} is too short");
 
-            When(x => x.description != null, () =>
+            When(x => x.Description != null, () =>
             {
-                RuleFor(x => x.description)
+                RuleFor(x => x.Description)
                     .NotEmpty().WithMessage("{PropertyName} is empty instead of null");
             });
 
-            When(x => x.position != null, () =>
+            When(x => x.Position != null, () =>
             {
-                RuleFor(x => x.position)
+                RuleFor(x => x.Position)
                     .Must(x => DatabaseParsing.ParseFilesPosition(x) != null).WithMessage("{PropertyName} not in format: <latitude> <longitude>");
             });
         }

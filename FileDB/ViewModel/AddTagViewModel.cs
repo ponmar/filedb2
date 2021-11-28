@@ -33,7 +33,7 @@ namespace FileDB.ViewModel
             if (tagId.HasValue)
             {
                 var tagModel = Utils.DatabaseWrapper.GetTagById(tagId.Value);
-                Name = tagModel.name;
+                Name = tagModel.Name;
             }
         }
 

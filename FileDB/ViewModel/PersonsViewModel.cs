@@ -108,15 +108,15 @@ namespace FileDB.ViewModel
         {
             Persons.Clear();
 
-            var persons = Utils.DatabaseWrapper.GetPersons().Select(pm => new Person(pm.id)
+            var persons = Utils.DatabaseWrapper.GetPersons().Select(pm => new Person(pm.Id)
             {
-                Firstname = pm.firstname,
-                Lastname = pm.lastname,
-                Description = pm.description,
-                DateOfBirth = pm.dateofbirth,
-                Deceased = pm.deceased,
+                Firstname = pm.Firstname,
+                Lastname = pm.Lastname,
+                Description = pm.Description,
+                DateOfBirth = pm.DateOfBirth,
+                Deceased = pm.Deceased,
                 Age = GetPersonAge(pm),
-                ProfileFileId = pm.profilefileid,
+                ProfileFileId = pm.ProfileFileId,
                 Sex = pm.sex,
             });
             foreach (var person in persons)
@@ -127,12 +127,12 @@ namespace FileDB.ViewModel
 
         private int GetPersonAge(PersonModel person)
         {
-            if (person.dateofbirth != null)
+            if (person.DateOfBirth != null)
             {
-                var dateOfBirth = DatabaseParsing.ParsePersonsDateOfBirth(person.dateofbirth);
-                if (person.deceased != null)
+                var dateOfBirth = DatabaseParsing.ParsePersonsDateOfBirth(person.DateOfBirth);
+                if (person.Deceased != null)
                 {
-                    var deceased = DatabaseParsing.ParsePersonsDeceased(person.deceased);
+                    var deceased = DatabaseParsing.ParsePersonsDeceased(person.Deceased);
                     return DatabaseUtils.GetYearsAgo(deceased, dateOfBirth);
                 }
                 else

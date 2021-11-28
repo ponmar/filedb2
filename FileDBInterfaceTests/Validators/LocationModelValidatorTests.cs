@@ -19,7 +19,7 @@ namespace FileDBInterfaceTests.Validators
         [TestMethod]
         public void Validate_NoOptionalData()
         {
-            var model = new LocationModel() { id = 1, name = "name", description = null, position = null };
+            var model = new LocationModel() { Id = 1, Name = "name", Description = null, Position = null };
             var result = validator.TestValidate(model);
             result.ShouldNotHaveAnyValidationErrors();
         }
@@ -27,7 +27,7 @@ namespace FileDBInterfaceTests.Validators
         [TestMethod]
         public void Validate_AllOptionalData()
         {
-            var model = new LocationModel() { id = 1, name = "name", description = "description", position = "5.10 6.11" };
+            var model = new LocationModel() { Id = 1, Name = "name", Description = "description", Position = "5.10 6.11" };
             var result = validator.TestValidate(model);
             result.ShouldNotHaveAnyValidationErrors();
         }
@@ -35,49 +35,49 @@ namespace FileDBInterfaceTests.Validators
         [TestMethod]
         public void Validate_IdIsNegative_Error()
         {
-            var model = new LocationModel() { id = -1, name = "name", description = "description", position = "5.10 6.11" };
+            var model = new LocationModel() { Id = -1, Name = "name", Description = "description", Position = "5.10 6.11" };
             var result = validator.TestValidate(model);
-            result.ShouldHaveValidationErrorFor(x => x.id);
+            result.ShouldHaveValidationErrorFor(x => x.Id);
         }
 
         [TestMethod]
         public void Validate_NameIsEmpty_Error()
         {
-            var model = new LocationModel() { id = 1, name = string.Empty, description = "description", position = "5.10 6.11" };
+            var model = new LocationModel() { Id = 1, Name = string.Empty, Description = "description", Position = "5.10 6.11" };
             var result = validator.TestValidate(model);
-            result.ShouldHaveValidationErrorFor(x => x.name);
+            result.ShouldHaveValidationErrorFor(x => x.Name);
         }
 
         [TestMethod]
         public void Validate_DescriptionIsEmpty_Error()
         {
-            var model = new LocationModel() { id = 1, name = "x", description = string.Empty, position = "5.10 6.11" };
+            var model = new LocationModel() { Id = 1, Name = "x", Description = string.Empty, Position = "5.10 6.11" };
             var result = validator.TestValidate(model);
-            result.ShouldHaveValidationErrorFor(x => x.description);
+            result.ShouldHaveValidationErrorFor(x => x.Description);
         }
 
         [TestMethod]
         public void Validate_PositionIsNoPosition_Error()
         {
-            var model = new LocationModel() { id = 1, name = "x", description = "description", position = "test" };
+            var model = new LocationModel() { Id = 1, Name = "x", Description = "description", Position = "test" };
             var result = validator.TestValidate(model);
-            result.ShouldHaveValidationErrorFor(x => x.position);
+            result.ShouldHaveValidationErrorFor(x => x.Position);
         }
 
         [TestMethod]
         public void Validate_PositionIsNotInvariantCulture_Error()
         {
-            var model = new LocationModel() { id = 1, name = "x", description = "description", position = "5,10 6,11" };
+            var model = new LocationModel() { Id = 1, Name = "x", Description = "description", Position = "5,10 6,11" };
             var result = validator.TestValidate(model);
-            result.ShouldHaveValidationErrorFor(x => x.position);
+            result.ShouldHaveValidationErrorFor(x => x.Position);
         }
 
         [TestMethod]
         public void Validate_PositionNoLongitude_Error()
         {
-            var model = new LocationModel() { id = 1, name = "x", description = "description", position = "5.10 " };
+            var model = new LocationModel() { Id = 1, Name = "x", Description = "description", Position = "5.10 " };
             var result = validator.TestValidate(model);
-            result.ShouldHaveValidationErrorFor(x => x.position);
+            result.ShouldHaveValidationErrorFor(x => x.Position);
         }
     }
 }

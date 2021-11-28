@@ -9,38 +9,38 @@ namespace FileDBInterface.Validators
     {
         public PersonModelValidator()
         {
-            RuleFor(x => x.id)
+            RuleFor(x => x.Id)
                 .GreaterThanOrEqualTo(0).WithMessage("{PropertyName} must be greater than or equal to 0");
 
-            RuleFor(x => x.firstname)
+            RuleFor(x => x.Firstname)
                 .NotNull().WithMessage("{PropertyName} is null")
                 .MinimumLength(2).WithMessage("{PropertyName} is too short");
 
-            RuleFor(x => x.lastname)
+            RuleFor(x => x.Lastname)
                 .NotNull().WithMessage("{PropertyName} is null")
                 .MinimumLength(2).WithMessage("{PropertyName} is too short");
 
-            When(x => x.description != null, () =>
+            When(x => x.Description != null, () =>
             {
-                RuleFor(x => x.description)
+                RuleFor(x => x.Description)
                     .NotEmpty().WithMessage("{PropertyName} is empty instead of null");
             });
 
-            When(x => x.dateofbirth != null, () =>
+            When(x => x.DateOfBirth != null, () =>
             {
-                RuleFor(x => x.dateofbirth)
+                RuleFor(x => x.DateOfBirth)
                     .Must(IsDate).WithMessage("{PropertyName} is not in format YYYY-MM-DD");
             });
 
-            When(x => x.deceased != null, () =>
+            When(x => x.Deceased != null, () =>
             {
-                RuleFor(x => x.deceased)
+                RuleFor(x => x.Deceased)
                     .Must(IsDate).WithMessage("{PropertyName} is not in format YYYY-MM-DD");
             });
 
-            When(x => x.profilefileid != null, () =>
+            When(x => x.ProfileFileId != null, () =>
             {
-                RuleFor(x => x.profilefileid)
+                RuleFor(x => x.ProfileFileId)
                     .Must(p => p.Value >= 0).WithMessage("{PropertyName} must be greater than or equal to 0");
             });
         }

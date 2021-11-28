@@ -616,11 +616,11 @@ namespace FileDB.ViewModel
             if (SearchResultIndex < 1)
                 return;
 
-            var currentDirectory = Path.GetDirectoryName(SearchResult.Files[SearchResultIndex].path);
+            var currentDirectory = Path.GetDirectoryName(SearchResult.Files[SearchResultIndex].Path);
 
             for (int i = SearchResultIndex - 1; i >= 0; i--)
             {
-                var directory = Path.GetDirectoryName(SearchResult.Files[i].path);
+                var directory = Path.GetDirectoryName(SearchResult.Files[i].Path);
                 if (directory != currentDirectory)
                 {
                     LoadFile(i);
@@ -636,11 +636,11 @@ namespace FileDB.ViewModel
             if (SearchResultIndex == -1 || SearchResultIndex == searchResult.Count - 1)
                 return;
 
-            var currentDirectory = Path.GetDirectoryName(SearchResult.Files[SearchResultIndex].path);
+            var currentDirectory = Path.GetDirectoryName(SearchResult.Files[SearchResultIndex].Path);
 
             for (int i=SearchResultIndex + 1; i<searchResult.Count; i++)
             {
-                var directory = Path.GetDirectoryName(SearchResult.Files[i].path);
+                var directory = Path.GetDirectoryName(SearchResult.Files[i].Path);
                 if (directory != currentDirectory)
                 {
                     LoadFile(i);
@@ -795,7 +795,7 @@ namespace FileDB.ViewModel
                 return;
             }
 
-            var path = SearchResult.Files[SearchResultIndex].path;
+            var path = SearchResult.Files[SearchResultIndex].Path;
             var dir = Path.GetDirectoryName(path).Replace('\\', '/');
             SearchResult = new SearchResult(Utils.DatabaseWrapper.SearchFilesByPath(dir));
         }
@@ -902,14 +902,14 @@ namespace FileDB.ViewModel
                 }
 
                 var result = new List<FilesModel>();
-                var personsWithAge = Utils.DatabaseWrapper.GetPersons().Where(p => p.dateofbirth != null);
+                var personsWithAge = Utils.DatabaseWrapper.GetPersons().Where(p => p.DateOfBirth != null);
 
                 foreach (var person in personsWithAge)
                 {
-                    var dateOfBirth = DatabaseParsing.ParsePersonsDateOfBirth(person.dateofbirth);
-                    foreach (var file in Utils.DatabaseWrapper.GetFilesWithPersons(new List<int>() { person.id }))
+                    var dateOfBirth = DatabaseParsing.ParsePersonsDateOfBirth(person.DateOfBirth);
+                    foreach (var file in Utils.DatabaseWrapper.GetFilesWithPersons(new List<int>() { person.Id }))
                     {
-                        if (DatabaseParsing.ParseFilesDatetime(file.datetime, out var fileDatetime))
+                        if (DatabaseParsing.ParseFilesDatetime(file.Datetime, out var fileDatetime))
                         {
                             int personAgeInFile = DatabaseUtils.GetYearsAgo(fileDatetime.Value, dateOfBirth);
                             if (personAgeInFile >= ageFrom && personAgeInFile <= ageTo)
@@ -1013,7 +1013,7 @@ namespace FileDB.ViewModel
         {
             if (HasNonEmptySearchResult)
             {
-                var fileIdList = string.Join(';', SearchResult.Files.Select(f => f.id));
+                var fileIdList = string.Join(';', SearchResult.Files.Select(f => f.Id));
                 ClipboardService.SetText(fileIdList);
             }
             else
@@ -1041,17 +1041,17 @@ namespace FileDB.ViewModel
 
                 var selection = SearchResult.Files[SearchResultIndex];
 
-                CurrentFileToolTip = $"{selection.path} (Id: {selection.id})";
-                CurrentFileInternalPath = selection.path;
-                CurrentFileInternalDirectoryPath = Path.GetDirectoryName(selection.path).Replace(@"\", "/");
-                CurrentFilePath = Utils.DatabaseWrapper.ToAbsolutePath(selection.path);
-                CurrentFileDescription = selection.description ?? string.Empty;
-                CurrentFileDateTime = GetFileDateTimeString(selection.datetime);
-                CurrentFilePosition = selection.position ?? string.Empty;
-                CurrentFilePositionLink = selection.position != null ? CreatePositionLink(selection.position, string.Empty) : string.Empty;
+                CurrentFileToolTip = $"{selection.Path} (Id: {selection.Id})";
+                CurrentFileInternalPath = selection.Path;
+                CurrentFileInternalDirectoryPath = Path.GetDirectoryName(selection.Path).Replace(@"\", "/");
+                CurrentFilePath = Utils.DatabaseWrapper.ToAbsolutePath(selection.Path);
+                CurrentFileDescription = selection.Description ?? string.Empty;
+                CurrentFileDateTime = GetFileDateTimeString(selection.Datetime);
+                CurrentFilePosition = selection.Position ?? string.Empty;
+                CurrentFilePositionLink = selection.Position != null ? CreatePositionLink(selection.Position, string.Empty) : string.Empty;
                 CurrentFilePersons = GetFilePersonsString(selection);
-                CurrentFileLocations = GetFileLocationsString(selection.id);
-                CurrentFileTags = GetFileTagsString(selection.id);
+                CurrentFileLocations = GetFileLocationsString(selection.Id);
+                CurrentFileTags = GetFileTagsString(selection.Id);
 
                 NewFileDescription = CurrentFileDescription;
 
@@ -1129,8 +1129,8 @@ namespace FileDB.ViewModel
 
         private string GetFilePersonsString(FilesModel selection)
         {
-            var persons = Utils.DatabaseWrapper.GetPersonsFromFile(selection.id);
-            var personStrings = persons.Select(p => $"{p.firstname} {p.lastname}{GetPersonAgeInFileString(selection.datetime, p.dateofbirth)}");
+            var persons = Utils.DatabaseWrapper.GetPersonsFromFile(selection.Id);
+            var personStrings = persons.Select(p => $"{p.Firstname} {p.Lastname}{GetPersonAgeInFileString(selection.Datetime, p.DateOfBirth)}");
             return string.Join("\n", personStrings);
         }
 
@@ -1151,14 +1151,14 @@ namespace FileDB.ViewModel
         private string GetFileLocationsString(int fileId)
         {
             var locations = Utils.DatabaseWrapper.GetLocationsFromFile(fileId);
-            var locationStrings = locations.Select(l => l.name);
+            var locationStrings = locations.Select(l => l.Name);
             return string.Join("\n", locationStrings);
         }
 
         private string GetFileTagsString(int fileId)
         {
             var tags = Utils.DatabaseWrapper.GetTagsFromFile(fileId);
-            var tagStrings = tags.Select(t => t.name);
+            var tagStrings = tags.Select(t => t.Name);
             return string.Join("\n", tagStrings);
         }
 
@@ -1176,8 +1176,8 @@ namespace FileDB.ViewModel
                 return;
             }
 
-            var fileId = searchResult.Files[SearchResultIndex].id;
-            if (!Utils.DatabaseWrapper.GetPersonsFromFile(fileId).Any(p => p.id == SelectedPersonToUpdate.Id))
+            var fileId = searchResult.Files[SearchResultIndex].Id;
+            if (!Utils.DatabaseWrapper.GetPersonsFromFile(fileId).Any(p => p.Id == SelectedPersonToUpdate.Id))
             {
                 Utils.DatabaseWrapper.InsertFilePerson(fileId, SelectedPersonToUpdate.Id);
                 LoadFile(SearchResultIndex);
@@ -1203,7 +1203,7 @@ namespace FileDB.ViewModel
                 return;
             }
 
-            var fileId = searchResult.Files[SearchResultIndex].id;
+            var fileId = searchResult.Files[SearchResultIndex].Id;
             Utils.DatabaseWrapper.DeleteFilePerson(fileId, SelectedPersonToUpdate.Id);
             LoadFile(SearchResultIndex);
             AddUpdateHistoryItem(UpdateHistoryType.TogglePerson, SelectedPersonToUpdate.Id, SelectedPersonToUpdate.Name);
@@ -1228,8 +1228,8 @@ namespace FileDB.ViewModel
                 return;
             }
 
-            var fileId = searchResult.Files[SearchResultIndex].id;
-            if (!Utils.DatabaseWrapper.GetLocationsFromFile(fileId).Any(l => l.id == SelectedLocationToUpdate.Id))
+            var fileId = searchResult.Files[SearchResultIndex].Id;
+            if (!Utils.DatabaseWrapper.GetLocationsFromFile(fileId).Any(l => l.Id == SelectedLocationToUpdate.Id))
             {
                 Utils.DatabaseWrapper.InsertFileLocation(fileId, SelectedLocationToUpdate.Id);
                 LoadFile(SearchResultIndex);
@@ -1255,7 +1255,7 @@ namespace FileDB.ViewModel
                 return;
             }
 
-            var fileId = searchResult.Files[SearchResultIndex].id;
+            var fileId = searchResult.Files[SearchResultIndex].Id;
             Utils.DatabaseWrapper.DeleteFileLocation(fileId, SelectedLocationToUpdate.Id);
             LoadFile(SearchResultIndex);
         }
@@ -1279,8 +1279,8 @@ namespace FileDB.ViewModel
                 return;
             }
 
-            var fileId = searchResult.Files[SearchResultIndex].id;
-            if (!Utils.DatabaseWrapper.GetTagsFromFile(fileId).Any(t => t.id == SelectedTagToUpdate.Id))
+            var fileId = searchResult.Files[SearchResultIndex].Id;
+            if (!Utils.DatabaseWrapper.GetTagsFromFile(fileId).Any(t => t.Id == SelectedTagToUpdate.Id))
             {
                 Utils.DatabaseWrapper.InsertFileTag(fileId, SelectedTagToUpdate.Id);
                 LoadFile(SearchResultIndex);
@@ -1306,7 +1306,7 @@ namespace FileDB.ViewModel
                 return;
             }
 
-            var fileId = searchResult.Files[SearchResultIndex].id;
+            var fileId = searchResult.Files[SearchResultIndex].Id;
             Utils.DatabaseWrapper.DeleteFileTag(fileId, SelectedTagToUpdate.Id);
             LoadFile(SearchResultIndex);
             AddUpdateHistoryItem(UpdateHistoryType.ToggleLocation, SelectedTagToUpdate.Id, SelectedTagToUpdate.Name);
@@ -1322,13 +1322,13 @@ namespace FileDB.ViewModel
             if (SearchResultIndex != -1)
             {
                 var selection = SearchResult.Files[SearchResultIndex];
-                var fileId = selection.id;
+                var fileId = selection.Id;
                 var description = string.IsNullOrEmpty(NewFileDescription) ? null : NewFileDescription;
 
                 try
                 {
                     Utils.DatabaseWrapper.UpdateFileDescription(fileId, description);
-                    selection.description = description;
+                    selection.Description = description;
                     LoadFile(SearchResultIndex);
                 }
                 catch (DataValidationException e)
@@ -1343,12 +1343,12 @@ namespace FileDB.ViewModel
             if (SearchResultIndex != -1)
             {
                 var selection = SearchResult.Files[SearchResultIndex];
-                var fileId = selection.id;
-                Utils.DatabaseWrapper.UpdateFileFromMetaData(selection.id);
+                var fileId = selection.Id;
+                Utils.DatabaseWrapper.UpdateFileFromMetaData(selection.Id);
 
                 var updatedFile = Utils.DatabaseWrapper.GetFileById(fileId);
-                selection.datetime = updatedFile.datetime;
-                selection.position = updatedFile.position;
+                selection.Datetime = updatedFile.Datetime;
+                selection.Position = updatedFile.Position;
                 LoadFile(SearchResultIndex);
             }
         }
@@ -1389,7 +1389,7 @@ namespace FileDB.ViewModel
         private void ReloadPersons()
         {
             Persons.Clear();
-            var persons = Utils.DatabaseWrapper.GetPersons().Select(p => new PersonToUpdate() { Id = p.id, Name = p.firstname + " " + p.lastname }).ToList();
+            var persons = Utils.DatabaseWrapper.GetPersons().Select(p => new PersonToUpdate() { Id = p.Id, Name = p.Firstname + " " + p.Lastname }).ToList();
             persons.Sort(new PersonToAddSorter());
             foreach (var person in persons)
             {
@@ -1400,7 +1400,7 @@ namespace FileDB.ViewModel
         private void ReloadLocations()
         {
             Locations.Clear();
-            var locations = Utils.DatabaseWrapper.GetLocations().Select(l => new LocationToUpdate() { Id = l.id, Name = l.name }).ToList();
+            var locations = Utils.DatabaseWrapper.GetLocations().Select(l => new LocationToUpdate() { Id = l.Id, Name = l.Name }).ToList();
             locations.Sort(new LocationToAddSorter());
             foreach (var location in locations)
             {
@@ -1411,7 +1411,7 @@ namespace FileDB.ViewModel
         private void ReloadTags()
         {
             Tags.Clear();
-            var tags = Utils.DatabaseWrapper.GetTags().Select(t => new TagToUpdate() { Id = t.id, Name = t.name }).ToList();
+            var tags = Utils.DatabaseWrapper.GetTags().Select(t => new TagToUpdate() { Id = t.Id, Name = t.Name }).ToList();
             tags.Sort(new TagToAddSorter());
             foreach (var tag in tags)
             {
@@ -1428,14 +1428,14 @@ namespace FileDB.ViewModel
 
             foreach (var file in Utils.DatabaseWrapper.GetFiles())
             {
-                var directoryEndIndex = file.path.LastIndexOf("/");
+                var directoryEndIndex = file.Path.LastIndexOf("/");
                 if (directoryEndIndex == -1)
                 {
                     // This fils is in the root directory
                     continue;
                 }
 
-                var directoryPath = file.path.Substring(0, directoryEndIndex);
+                var directoryPath = file.Path.Substring(0, directoryEndIndex);
                 var directories = directoryPath.Split("/");
 
                 if (directories.Length > 0)
@@ -1496,7 +1496,7 @@ namespace FileDB.ViewModel
                 return;
             }
 
-            var fileId = SearchResult.Files[SearchResultIndex].id;
+            var fileId = SearchResult.Files[SearchResultIndex].Id;
 
             var number = int.Parse((string)parameter);
             var shortcut = $"F{number}";
@@ -1510,7 +1510,7 @@ namespace FileDB.ViewModel
             {
                 case UpdateHistoryType.TogglePerson:
                     var personId = historyItem.ItemId;
-                    if (Utils.DatabaseWrapper.GetPersonsFromFile(fileId).Any(x => x.id == personId))
+                    if (Utils.DatabaseWrapper.GetPersonsFromFile(fileId).Any(x => x.Id == personId))
                     {
                         Utils.DatabaseWrapper.DeleteFilePerson(fileId, personId);
                     }
@@ -1522,7 +1522,7 @@ namespace FileDB.ViewModel
 
                 case UpdateHistoryType.ToggleLocation:
                     var locationId = historyItem.ItemId;
-                    if (Utils.DatabaseWrapper.GetLocationsFromFile(fileId).Any(x => x.id == locationId))
+                    if (Utils.DatabaseWrapper.GetLocationsFromFile(fileId).Any(x => x.Id == locationId))
                     {
                         Utils.DatabaseWrapper.DeleteFileLocation(fileId, locationId);
                     }
@@ -1534,7 +1534,7 @@ namespace FileDB.ViewModel
 
                 case UpdateHistoryType.ToggleTag:
                     var tagId = historyItem.ItemId;
-                    if (Utils.DatabaseWrapper.GetTagsFromFile(fileId).Any(x => x.id == tagId))
+                    if (Utils.DatabaseWrapper.GetTagsFromFile(fileId).Any(x => x.Id == tagId))
                     {
                         Utils.DatabaseWrapper.DeleteFileTag(fileId, tagId);
                     }

@@ -11,7 +11,7 @@ namespace FileDB.Comparers
             {
                 return 0;
             }
-            return co.id.GetHashCode();
+            return co.Id.GetHashCode();
         }
 
         public bool Equals(FilesModel x1, FilesModel x2)
@@ -25,7 +25,7 @@ namespace FileDB.Comparers
             {
                 return false;
             }
-            return x1.id == x2.id;
+            return x1.Id == x2.Id;
         }
     }
 }

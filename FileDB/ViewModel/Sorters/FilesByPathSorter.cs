@@ -7,7 +7,7 @@ namespace FileDB.ViewModel.Sorters
     {
         public int Compare(FilesModel x, FilesModel y)
         {
-            return x.path.CompareTo(y.path);
+            return x.Path.CompareTo(y.Path);
         }
     }
 }

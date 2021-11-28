@@ -7,10 +7,10 @@ namespace FileDBInterface.Validators
     {
         public TagModelValidator()
         {
-            RuleFor(x => x.id)
+            RuleFor(x => x.Id)
                 .GreaterThanOrEqualTo(0).WithMessage("{PropertyName} must be greater than or equal to 0");
 
-            RuleFor(x => x.name)
+            RuleFor(x => x.Name)
                 .NotNull().WithMessage("{PropertyName} is missing")
                 .MinimumLength(2).WithMessage("{PropertyName} is too short");
         }

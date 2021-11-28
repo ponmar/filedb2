@@ -12,8 +12,8 @@ namespace FileDBTests.Comparers
         public void Equals_DifferentInstancesSameId_AreEqual()
         {
             var comparer = new FilesModelIdComparer();
-            var model1 = new FilesModel() { id = 1 };
-            var model2 = new FilesModel() { id = 1 };
+            var model1 = new FilesModel() { Id = 1 };
+            var model2 = new FilesModel() { Id = 1 };
             Assert.IsTrue(comparer.Equals(model1, model2));
         }
 
@@ -21,7 +21,7 @@ namespace FileDBTests.Comparers
         public void Equals_SameInstances_AreEqual()
         {
             var comparer = new FilesModelIdComparer();
-            var model1 = new FilesModel() { id = 1 };
+            var model1 = new FilesModel() { Id = 1 };
             Assert.IsTrue(comparer.Equals(model1, model1));
         }
 
@@ -29,8 +29,8 @@ namespace FileDBTests.Comparers
         public void Equals_DifferentIds_AreNotEqual()
         {
             var comparer = new FilesModelIdComparer();
-            var model1 = new FilesModel() { id = 1 };
-            var model2 = new FilesModel() { id = 2 };
+            var model1 = new FilesModel() { Id = 1 };
+            var model2 = new FilesModel() { Id = 2 };
             Assert.IsFalse(comparer.Equals(model1, model2));
         }
     }

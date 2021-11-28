@@ -13,15 +13,15 @@ namespace FileDB.Notifications
             var today = DateTime.Today;
             List<Notification> notifications = new();
 
-            foreach (var person in persons.Where(x => x.dateofbirth != null))
+            foreach (var person in persons.Where(x => x.DateOfBirth != null))
             {
-                if (person.deceased != null)
+                if (person.Deceased != null)
                 {
-                    var deceased = DatabaseParsing.ParsePersonsDeceased(person.deceased);
+                    var deceased = DatabaseParsing.ParsePersonsDeceased(person.Deceased);
                     if (deceased.Month == today.Month &&
                         deceased.Day == today.Day)
                     {
-                        notifications.Add(new Notification(NotificationType.Info, $"Rest in Peace {person.firstname} {person.lastname}!"));
+                        notifications.Add(new Notification(NotificationType.Info, $"Rest in Peace {person.Firstname} {person.Lastname}!"));
                     }
                 }
             }

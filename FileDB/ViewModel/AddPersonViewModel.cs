@@ -81,12 +81,12 @@ namespace FileDB.ViewModel
             if (personId.HasValue)
             {
                 var personModel = Utils.DatabaseWrapper.GetPersonById(personId.Value);
-                Firstname = personModel.firstname;
-                Lastname = personModel.lastname;
-                Description = personModel.description;
-                DateOfBirth = personModel.dateofbirth;
-                Deceased = personModel.deceased;
-                ProfilePictureFileId = personModel.profilefileid == null ? string.Empty : personModel.profilefileid.Value.ToString();
+                Firstname = personModel.Firstname;
+                Lastname = personModel.Lastname;
+                Description = personModel.Description;
+                DateOfBirth = personModel.DateOfBirth;
+                Deceased = personModel.Deceased;
+                ProfilePictureFileId = personModel.ProfileFileId == null ? string.Empty : personModel.ProfileFileId.Value.ToString();
                 SexSelection = personModel.sex.ToString();
             }
         }

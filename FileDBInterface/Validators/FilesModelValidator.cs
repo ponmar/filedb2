@@ -9,23 +9,23 @@ namespace FileDBInterface.Validators
     {
         public FilesModelValidator()
         {
-            RuleFor(x => x.id).GreaterThanOrEqualTo(0).WithMessage("{PropertyName} must be greater than or equal to 0");
+            RuleFor(x => x.Id).GreaterThanOrEqualTo(0).WithMessage("{PropertyName} must be greater than or equal to 0");
 
-            RuleFor(x => x.path)
+            RuleFor(x => x.Path)
                 .Must(IsInternalFilePath).WithMessage("{PropertyName} invalid");
 
-            RuleFor(x => x.description)
+            RuleFor(x => x.Description)
                 .Must(ValidateDescription).WithMessage("{PropertyName} invalid)");
 
-            When(x => x.datetime != null, () =>
+            When(x => x.Datetime != null, () =>
             {
-                RuleFor(x => x.datetime)
+                RuleFor(x => x.Datetime)
                     .Must(IsFileDatetime).WithMessage("{PropertyName} invalid");
             });
 
-            When(x => x.position != null, () =>
+            When(x => x.Position != null, () =>
             {
-                RuleFor(x => x.position)
+                RuleFor(x => x.Position)
                     .Must(x => DatabaseParsing.ParseFilesPosition(x) != null).WithMessage("{PropertyName} not in format: <latitude> <longitude>");
             });
         }
