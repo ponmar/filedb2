@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using FileDBInterface.Model;
 
-namespace FileDBInterface
+namespace FileDBInterface.Access
 {
     public interface IFilesAccess
     {

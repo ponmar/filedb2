@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using FileDBInterface;
+using FileDBInterface.Access;
 using FileDBInterface.Model;
-using MetadataExtractor;
 
 namespace FileDB
 {
