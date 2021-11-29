@@ -828,7 +828,7 @@ namespace FileDB.ViewModel
         public void FindFilesByDate()
         {
             StopSlideshow();
-            SearchResult = new SearchResult(Utils.DatabaseWrapper.GetFileByDate(SearchStartDate.Date, SearchEndDate.Date));
+            SearchResult = new SearchResult(Utils.DatabaseWrapper.SearchFilesByDate(SearchStartDate.Date, SearchEndDate.Date));
         }
 
         public void FindFilesByGpsPosition()
@@ -856,7 +856,7 @@ namespace FileDB.ViewModel
             StopSlideshow();
             if (SelectedPersonSearch != null)
             {
-                SearchResult = new SearchResult(Utils.DatabaseWrapper.GetFilesWithPersons(new List<int>() { SelectedPersonSearch.Id }));
+                SearchResult = new SearchResult(Utils.DatabaseWrapper.SearchFilesWithPersons(new List<int>() { SelectedPersonSearch.Id }));
             }
         }
 
@@ -865,7 +865,7 @@ namespace FileDB.ViewModel
             StopSlideshow();
             if (SelectedLocationSearch != null)
             {
-                SearchResult = new SearchResult(Utils.DatabaseWrapper.GetFilesWithLocations(new List<int>() { SelectedLocationSearch.Id }));
+                SearchResult = new SearchResult(Utils.DatabaseWrapper.SearchFilesWithLocations(new List<int>() { SelectedLocationSearch.Id }));
             }
         }
 
@@ -874,7 +874,7 @@ namespace FileDB.ViewModel
             StopSlideshow();
             if (SelectedTagSearch != null)
             {
-                SearchResult = new SearchResult(Utils.DatabaseWrapper.GetFilesWithTags(new List<int>() { SelectedTagSearch.Id }));
+                SearchResult = new SearchResult(Utils.DatabaseWrapper.SearchFilesWithTags(new List<int>() { SelectedTagSearch.Id }));
             }
         }
 
@@ -906,7 +906,7 @@ namespace FileDB.ViewModel
                 foreach (var person in personsWithAge)
                 {
                     var dateOfBirth = DatabaseParsing.ParsePersonsDateOfBirth(person.DateOfBirth);
-                    foreach (var file in Utils.DatabaseWrapper.GetFilesWithPersons(new List<int>() { person.Id }))
+                    foreach (var file in Utils.DatabaseWrapper.SearchFilesWithPersons(new List<int>() { person.Id }))
                     {
                         if (DatabaseParsing.ParseFilesDatetime(file.Datetime, out var fileDatetime))
                         {
@@ -963,7 +963,7 @@ namespace FileDB.ViewModel
         public void FindFilesFromMissingCategorization()
         {
             StopSlideshow();
-            SearchResult = new SearchResult(Utils.DatabaseWrapper.GetFilesWithMissingData());
+            SearchResult = new SearchResult(Utils.DatabaseWrapper.SearchFilesWithMissingData());
         }
 
         public void FindFilesFromList()

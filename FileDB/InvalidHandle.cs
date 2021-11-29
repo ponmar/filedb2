@@ -67,27 +67,27 @@ namespace FileDB
             return null;
         }
 
-        public IEnumerable<FilesModel> GetFileByDate(DateTime start, DateTime end)
+        public IEnumerable<FilesModel> SearchFilesByDate(DateTime start, DateTime end)
         {
             return new List<FilesModel>();
         }
 
-        public IEnumerable<FilesModel> GetFilesWithPersons(IEnumerable<int> personIds)
+        public IEnumerable<FilesModel> SearchFilesWithPersons(IEnumerable<int> personIds)
         {
             return new List<FilesModel>();
         }
 
-        public IEnumerable<FilesModel> GetFilesWithLocations(IEnumerable<int> locationIds)
+        public IEnumerable<FilesModel> SearchFilesWithLocations(IEnumerable<int> locationIds)
         {
             return new List<FilesModel>();
         }
 
-        public IEnumerable<FilesModel> GetFilesWithTags(IEnumerable<int> tagIds)
+        public IEnumerable<FilesModel> SearchFilesWithTags(IEnumerable<int> tagIds)
         {
             return new List<FilesModel>();
         }
 
-        public IEnumerable<FilesModel> GetFilesWithMissingData()
+        public IEnumerable<FilesModel> SearchFilesWithMissingData()
         {
             return new List<FilesModel>();
         }

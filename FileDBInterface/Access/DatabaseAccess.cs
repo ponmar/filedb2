@@ -164,7 +164,7 @@ namespace FileDBInterface.Access
         public IEnumerable<FilesModel> SearchFilesBySex(Sex sex)
         {
             var personIds = SearchPersonsBySex(sex).Select(p => p.Id);
-            return GetFilesWithPersons(personIds);
+            return SearchFilesWithPersons(personIds);
         }
 
         public IEnumerable<FilesModel> SearchFilesByPath(string criteria)
@@ -217,7 +217,7 @@ namespace FileDBInterface.Access
             return connection.QueryFirst<FilesModel>("select * from [files] where Path = @path", new { path = path });
         }
 
-        public IEnumerable<FilesModel> GetFileByDate(DateTime start, DateTime end)
+        public IEnumerable<FilesModel> SearchFilesByDate(DateTime start, DateTime end)
         {
             using var connection = DatabaseUtils.CreateConnection(database);
             foreach (var fileWithDate in connection.Query<FilesModel>($"select * from [files] where Datetime is not null"))
@@ -230,25 +230,25 @@ namespace FileDBInterface.Access
             }
         }
 
-        public IEnumerable<FilesModel> GetFilesWithPersons(IEnumerable<int> personIds)
+        public IEnumerable<FilesModel> SearchFilesWithPersons(IEnumerable<int> personIds)
         {
             using var connection = DatabaseUtils.CreateConnection(database);
             return connection.Query<FilesModel>($"select * from [files] inner join filepersons on files.Id = filepersons.FileId where filepersons.PersonId in ({string.Join(',', personIds)})");
         }
 
-        public IEnumerable<FilesModel> GetFilesWithLocations(IEnumerable<int> locationIds)
+        public IEnumerable<FilesModel> SearchFilesWithLocations(IEnumerable<int> locationIds)
         {
             using var connection = DatabaseUtils.CreateConnection(database);
             return connection.Query<FilesModel>($"select * from [files] inner join filelocations on files.Id = filelocations.FileId where filelocations.LocationId in ({string.Join(',', locationIds)})");
         }
 
-        public IEnumerable<FilesModel> GetFilesWithTags(IEnumerable<int> tagIds)
+        public IEnumerable<FilesModel> SearchFilesWithTags(IEnumerable<int> tagIds)
         {
             using var connection = DatabaseUtils.CreateConnection(database);
             return connection.Query<FilesModel>($"select * from [files] inner join filetags on files.Id = filetags.FileId where filetags.TagId in ({string.Join(',', tagIds)})");
         }
 
-        public IEnumerable<FilesModel> GetFilesWithMissingData()
+        public IEnumerable<FilesModel> SearchFilesWithMissingData()
         {
             using var connection = DatabaseUtils.CreateConnection(database);
             var files = connection.Query<FilesModel>($"select * from [files] where Description is null");

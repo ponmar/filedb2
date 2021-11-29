@@ -65,7 +65,7 @@ namespace FileDB.ViewModel
 
         public void RemoveLocation()
         {
-            var filesWithLocation = Utils.DatabaseWrapper.GetFilesWithLocations(new List<int>() { selectedLocation.GetId() }).ToList();
+            var filesWithLocation = Utils.DatabaseWrapper.SearchFilesWithLocations(new List<int>() { selectedLocation.GetId() }).ToList();
             if (filesWithLocation.Count == 0 || Utils.ShowConfirmDialog($"Location is used in {filesWithLocation.Count} files, remove anyway?"))
             {
                 Utils.DatabaseWrapper.DeleteLocation(selectedLocation.GetId());

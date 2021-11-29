@@ -71,7 +71,7 @@ namespace FileDB.ViewModel
 
         public void RemovePerson()
         {
-            var filesWithPerson = Utils.DatabaseWrapper.GetFilesWithPersons(new List<int>() { selectedPerson.GetId() }).ToList();
+            var filesWithPerson = Utils.DatabaseWrapper.SearchFilesWithPersons(new List<int>() { selectedPerson.GetId() }).ToList();
             if (filesWithPerson.Count == 0 || Utils.ShowConfirmDialog($"Person is used in {filesWithPerson.Count} files, remove anyway?"))
             {
                 Utils.DatabaseWrapper.DeletePerson(selectedPerson.GetId());

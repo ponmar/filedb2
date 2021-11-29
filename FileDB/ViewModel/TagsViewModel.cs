@@ -61,7 +61,7 @@ namespace FileDB.ViewModel
 
         public void RemoveTag()
         {
-            var filesWithTag = Utils.DatabaseWrapper.GetFilesWithTags(new List<int>() { selectedTag.GetId() }).ToList();
+            var filesWithTag = Utils.DatabaseWrapper.SearchFilesWithTags(new List<int>() { selectedTag.GetId() }).ToList();
             if (filesWithTag.Count == 0 || Utils.ShowConfirmDialog($"Tag is used in {filesWithTag.Count} files, remove anyway?"))
             {
                 Utils.DatabaseWrapper.DeleteTag(selectedTag.GetId());
