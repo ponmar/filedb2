@@ -6,7 +6,7 @@ using MetadataExtractor;
 
 namespace FileDB
 {
-    public class InvalidHandle : IDatabaseWrapper
+    public class InvalidHandle : IDatabaseAccess
     {
         public IEnumerable<string> ListNewFilesystemFiles(IEnumerable<string> blacklistedFilePathPatterns, IEnumerable<string> whitelistedFilePathPatterns, bool includeHiddenDirectories)
         {
@@ -190,11 +190,6 @@ namespace FileDB
             return 0;
         }
 
-        public IEnumerable<LocationModel> SearchLocations(string criteria)
-        {
-            return new List<LocationModel>();
-        }
-
         public LocationModel GetLocationById(int id)
         {
             return null;
@@ -230,11 +225,6 @@ namespace FileDB
         public int GetTagCount()
         {
             return 0;
-        }
-
-        public IEnumerable<TagModel> SearchTags(string criteria)
-        {
-            return new List<TagModel>();
         }
 
         public TagModel GetTagById(int id)

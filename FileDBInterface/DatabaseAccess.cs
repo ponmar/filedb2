@@ -17,14 +17,14 @@ using FileDBInterface.Validators;
 
 namespace FileDBInterface
 {
-    public class DatabaseWrapper : IDatabaseWrapper
+    public class DatabaseAccess : IDatabaseAccess
     {
         private static readonly ILog log = LogManager.GetLogger("FileDBHandle");
 
         private readonly string database;
         private readonly string filesRootDirectory;
 
-        public DatabaseWrapper(string database, string filesRootDirectory, bool allowMissingFilesRootDirectory = true)
+        public DatabaseAccess(string database, string filesRootDirectory, bool allowMissingFilesRootDirectory = true)
         {
             var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
             XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
@@ -428,13 +428,6 @@ namespace FileDBInterface
             return connection.ExecuteScalar<int>("select count(*) from [persons]");
         }
 
-        public IEnumerable<PersonModel> SearchPersons(string criteria)
-        {
-            using var connection = DatabaseUtils.CreateConnection(database);
-            var sql = "select * from [persons] where (Firstname like @criteria or Lastname like @criteria or Description like @criteria)";
-            return connection.Query<PersonModel>(sql, new { criteria = "%" + criteria + "%" });
-        }
-
         public IEnumerable<PersonModel> SearchPersonsBySex(Sex sex)
         {
             using var connection = DatabaseUtils.CreateConnection(database);
@@ -538,13 +531,6 @@ namespace FileDBInterface
             return connection.ExecuteScalar<int>("select count(*) from [locations]");
         }
 
-        public IEnumerable<LocationModel> SearchLocations(string criteria)
-        {
-            using var connection = DatabaseUtils.CreateConnection(database);
-            var sql = "select * from [locations] where (Name like @criteria or Description like @criteria)";
-            return connection.Query<LocationModel>(sql, new { criteria = "%" + criteria + "%" });
-        }
-
         public LocationModel GetLocationById(int id)
         {
             var parameters = new DynamicParameters();
@@ -641,12 +627,14 @@ namespace FileDBInterface
             return connection.ExecuteScalar<int>("select count(*) from [tags]");
         }
 
+        /*
         public IEnumerable<TagModel> SearchTags(string criteria)
         {
             using var connection = DatabaseUtils.CreateConnection(database);
             var sql = "select * from [tags] where (Name like @criteria)";
             return connection.Query<TagModel>(sql, new { criteria = "%" + criteria + "%" });
         }
+        */
 
         public TagModel GetTagById(int id)
         {

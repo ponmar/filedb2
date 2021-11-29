@@ -15,7 +15,7 @@ namespace FileDB
 
         public static Config.Config Config { get; set; }
 
-        public static IDatabaseWrapper DatabaseWrapper
+        public static IDatabaseAccess DatabaseWrapper
         {
             get
             {
@@ -26,13 +26,13 @@ namespace FileDB
                 return databaseWrapper;
             }
         }
-        private static IDatabaseWrapper databaseWrapper;
+        private static IDatabaseAccess databaseWrapper;
 
         public static void ReloadFileDBHandle()
         {
             try
             {
-                databaseWrapper = new DatabaseWrapper(Config.Database, Config.FilesRootDirectory);
+                databaseWrapper = new DatabaseAccess(Config.Database, Config.FilesRootDirectory);
             }
             catch (DatabaseWrapperException)
             {
