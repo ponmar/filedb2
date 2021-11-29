@@ -117,7 +117,7 @@ namespace FileDB.ViewModel
                 Deceased = pm.Deceased,
                 Age = GetPersonAge(pm),
                 ProfileFileId = pm.ProfileFileId,
-                Sex = pm.sex,
+                Sex = pm.Sex,
             });
             foreach (var person in persons)
             {

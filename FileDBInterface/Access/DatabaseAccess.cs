@@ -450,10 +450,8 @@ namespace FileDBInterface.Access
             return connection.ExecuteScalar<bool>("select count(1) from [persons] where Id=@id", new { id });
         }
 
-        public void InsertPerson(string firstname, string lastname, string description = null, string dateOfBirth = null, string deceased = null, int? profileFileId = null, Sex sex = Sex.NotApplicable)
+        public void InsertPerson(PersonModel person)
         {
-            var person = new PersonModel() { Firstname = firstname, Lastname = lastname, Description = description, DateOfBirth = dateOfBirth, Deceased = deceased, ProfileFileId = profileFileId, sex = sex };
-
             var validator = new PersonModelValidator();
             var result = validator.Validate(person);
             if (!result.IsValid)
@@ -473,10 +471,8 @@ namespace FileDBInterface.Access
             }
         }
 
-        public void UpdatePerson(int id, string firstname, string lastname, string description = null, string dateOfBirth = null, string deceased = null, int? profileFileId = null, Sex sex = Sex.NotApplicable)
+        public void UpdatePerson(PersonModel person)
         {
-            var person = new PersonModel() { Id = id, Firstname = firstname, Lastname = lastname, Description = description, DateOfBirth = dateOfBirth, Deceased = deceased, ProfileFileId = profileFileId, sex = sex };
-
             var validator = new PersonModelValidator();
             var result = validator.Validate(person);
             if (!result.IsValid)
@@ -546,10 +542,8 @@ namespace FileDBInterface.Access
             return connection.ExecuteScalar<bool>("select count(1) from [locations] where Id=@id", new { id });
         }
 
-        public void InsertLocation(string name, string description = null, string position = null)
+        public void InsertLocation(LocationModel location)
         {
-            var location = new LocationModel() { Name = name, Description = description, Position = position };
-
             var validator = new LocationModelValidator();
             var result = validator.Validate(location);
             if (!result.IsValid)
@@ -569,10 +563,8 @@ namespace FileDBInterface.Access
             }
         }
 
-        public void UpdateLocation(int id, string name, string description = null, string position = null)
+        public void UpdateLocation(LocationModel location)
         {
-            var location = new LocationModel() { Id = id, Name = name, Description = description, Position = position };
-
             var validator = new LocationModelValidator();
             var result = validator.Validate(location);
             if (!result.IsValid)
@@ -651,10 +643,8 @@ namespace FileDBInterface.Access
             return connection.ExecuteScalar<bool>("select count(1) from [tags] where Id=@id", new { id });
         }
 
-        public void InsertTag(string name)
+        public void InsertTag(TagModel tag)
         {
-            var tag = new TagModel() { Name = name };
-
             var validator = new TagModelValidator();
             var result = validator.Validate(tag);
             if (!result.IsValid)
@@ -674,9 +664,8 @@ namespace FileDBInterface.Access
             }
         }
 
-        public void UpdateTag(int id, string name)
+        public void UpdateTag(TagModel tag)
         {
-            var tag = new TagModel() { Id = id, Name = name };
             var validator = new TagModelValidator();
             var result = validator.Validate(tag);
             if (!result.IsValid)

@@ -162,11 +162,11 @@ namespace FileDB
             return false;
         }
 
-        public void InsertPerson(string firstname, string lastname, string description = null, string dateOfBirth = null, string deceased = null, int? profileFileId = null, Sex sex = Sex.NotApplicable)
+        public void InsertPerson(PersonModel person)
         {
         }
 
-        public void UpdatePerson(int id, string firstname, string lastname, string description = null, string dateOfBirth = null, string deceased = null, int? profileFileId = null, Sex sex = Sex.NotApplicable)
+        public void UpdatePerson(PersonModel person)
         {
         }
 
@@ -199,11 +199,11 @@ namespace FileDB
             return false;
         }
 
-        public void InsertLocation(string name, string description = null, string position = null)
+        public void InsertLocation(LocationModel location)
         {
         }
 
-        public void UpdateLocation(int id, string name, string description = null, string position = null)
+        public void UpdateLocation(LocationModel location)
         {
         }
 
@@ -236,11 +236,11 @@ namespace FileDB
             return false;
         }
 
-        public void InsertTag(string name)
+        public void InsertTag(TagModel tag)
         {
         }
 
-        public void UpdateTag(int id, string name)
+        public void UpdateTag(TagModel tag)
         {
         }
 

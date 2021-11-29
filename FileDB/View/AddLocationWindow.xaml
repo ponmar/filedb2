@@ -29,7 +29,7 @@
             <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource PageTextBox}" Width="100" Text="{Binding Description}"/>
 
             <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="GPS position (optional):"/>
-            <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource PageTextBox}" Width="100" Text="{Binding LatLon}" ToolTip="latitude longitude"/>
+            <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource PageTextBox}" Width="100" Text="{Binding Position}" ToolTip="latitude longitude"/>
         </Grid>
 
         <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SaveCommand}">Save</Button>

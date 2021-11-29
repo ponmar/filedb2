@@ -18,6 +18,6 @@
         public string DateOfBirth { get; set; } // Format: YYYY-MM-DD
         public string Deceased { get; set; } // Format: YYYY-MM-DD
         public int? ProfileFileId { get; set; }
-        public Sex sex { get; set; }
+        public Sex Sex { get; set; }
     }
 }

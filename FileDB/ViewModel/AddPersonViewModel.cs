@@ -87,7 +87,7 @@ namespace FileDB.ViewModel
                 DateOfBirth = personModel.DateOfBirth;
                 Deceased = personModel.Deceased;
                 ProfilePictureFileId = personModel.ProfileFileId == null ? string.Empty : personModel.ProfileFileId.Value.ToString();
-                SexSelection = personModel.sex.ToString();
+                SexSelection = personModel.Sex.ToString();
             }
         }
 
@@ -113,13 +113,25 @@ namespace FileDB.ViewModel
             {
                 Sex SexEnum = Enum.Parse<Sex>(SexSelection);
 
+                var person = new PersonModel()
+                {
+                    Id = personId.HasValue ? personId.Value : default,
+                    Firstname = firstname,
+                    Lastname = lastname,
+                    DateOfBirth = newDateOfBirth,
+                    Deceased = newDeceased,
+                    Description = description,
+                    ProfileFileId = newProfileFileId,
+                    Sex = SexEnum
+                };
+
                 if (personId.HasValue)
                 {
-                    Utils.DatabaseWrapper.UpdatePerson(personId.Value, firstname, lastname, newDescription, newDateOfBirth, newDeceased, newProfileFileId, SexEnum);
+                    Utils.DatabaseWrapper.UpdatePerson(person);
                 }
                 else
                 {
-                    Utils.DatabaseWrapper.InsertPerson(firstname, lastname, newDescription, newDateOfBirth, newDeceased, newProfileFileId, SexEnum);
+                    Utils.DatabaseWrapper.InsertPerson(person);
                 }
             }
             catch (DataValidationException e)

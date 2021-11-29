@@ -9,8 +9,8 @@ namespace FileDBInterface.Access
         public LocationModel GetLocationById(int id);
         public bool HasLocationId(int id);
         public int GetLocationCount();
-        public void InsertLocation(string name, string description = null, string position = null);
-        public void UpdateLocation(int id, string name, string description = null, string position = null);
+        public void InsertLocation(LocationModel location);
+        public void UpdateLocation(LocationModel location);
         public void DeleteLocation(int id);
     }
 }

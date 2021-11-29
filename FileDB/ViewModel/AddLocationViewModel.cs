@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using FileDBInterface.Exceptions;
+using FileDBInterface.Model;
 
 namespace FileDB.ViewModel
 {
@@ -28,12 +29,12 @@ namespace FileDB.ViewModel
         }
         private string description = string.Empty;
 
-        public string LatLon
+        public string Position
         {
-            get => latLon;
-            set { SetProperty(ref latLon, value); }
+            get => position;
+            set { SetProperty(ref position, value); }
         }
-        private string latLon = string.Empty;
+        private string position = string.Empty;
 
         public ICommand SaveCommand => saveCommand ??= new CommandHandler(Save);
         private ICommand saveCommand;
@@ -49,7 +50,7 @@ namespace FileDB.ViewModel
                 var locationModel = Utils.DatabaseWrapper.GetLocationById(locationId.Value);
                 Name = locationModel.Name;
                 Description = locationModel.Description ?? string.Empty;
-                LatLon = locationModel.Position ?? string.Empty;
+                Position = locationModel.Position ?? string.Empty;
             }
         }
 
@@ -58,15 +59,23 @@ namespace FileDB.ViewModel
             try
             {
                 string newDescription = string.IsNullOrEmpty(description) ? null : description;
-                string newGeoLocation = string.IsNullOrEmpty(latLon) ? null : latLon;
+                string newPosition = string.IsNullOrEmpty(position) ? null : position;
+
+                var location = new LocationModel()
+                {
+                    Id = locationId.HasValue ? locationId.Value : default,
+                    Name = name,
+                    Description = newDescription,
+                    Position = newPosition
+                };
 
                 if (locationId.HasValue)
                 {
-                    Utils.DatabaseWrapper.UpdateLocation(locationId.Value, name, newDescription, newGeoLocation);
+                    Utils.DatabaseWrapper.UpdateLocation(location);
                 }
                 else
                 {
-                    Utils.DatabaseWrapper.InsertLocation(name, newDescription, newGeoLocation);
+                    Utils.DatabaseWrapper.InsertLocation(location);
                 }
             }
             catch (DataValidationException e)

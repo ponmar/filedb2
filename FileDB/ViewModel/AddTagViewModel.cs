@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using FileDBInterface.Exceptions;
+using FileDBInterface.Model;
 
 namespace FileDB.ViewModel
 {
@@ -41,13 +42,15 @@ namespace FileDB.ViewModel
         {
             try
             {
+                var tag = new TagModel() { Id = tagId.HasValue ? tagId.Value : default, Name = name };
+
                 if (tagId.HasValue)
                 {
-                    Utils.DatabaseWrapper.UpdateTag(tagId.Value, name);
+                    Utils.DatabaseWrapper.UpdateTag(tag);
                 }
                 else
                 {
-                    Utils.DatabaseWrapper.InsertTag(name);
+                    Utils.DatabaseWrapper.InsertTag(tag);
                 }
             }
             catch (DataValidationException e)

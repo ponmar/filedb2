@@ -28,7 +28,7 @@ namespace FileDBInterfaceTests.Validators
                 DateOfBirth = null,
                 Deceased = null,
                 ProfileFileId = null,
-                sex = Sex.NotKnown,
+                Sex = Sex.NotKnown,
             };
             var result = validator.TestValidate(model);
             result.ShouldNotHaveAnyValidationErrors();
@@ -46,7 +46,7 @@ namespace FileDBInterfaceTests.Validators
                 DateOfBirth = "2000-01-01",
                 Deceased = "2000-01-02",
                 ProfileFileId = 10,
-                sex = Sex.NotApplicable,
+                Sex = Sex.NotApplicable,
             };
             var result = validator.TestValidate(model);
             result.ShouldNotHaveAnyValidationErrors();
@@ -64,7 +64,7 @@ namespace FileDBInterfaceTests.Validators
                 DateOfBirth = null,
                 Deceased = null,
                 ProfileFileId = null,
-                sex = Sex.NotKnown,
+                Sex = Sex.NotKnown,
             };
             var result = validator.TestValidate(model);
             result.ShouldHaveValidationErrorFor(x => x.Id);
@@ -82,7 +82,7 @@ namespace FileDBInterfaceTests.Validators
                 DateOfBirth = null,
                 Deceased = null,
                 ProfileFileId = null,
-                sex = Sex.NotKnown,
+                Sex = Sex.NotKnown,
             };
             var result = validator.TestValidate(model);
             result.ShouldHaveValidationErrorFor(x => x.Firstname);
@@ -100,7 +100,7 @@ namespace FileDBInterfaceTests.Validators
                 DateOfBirth = null,
                 Deceased = null,
                 ProfileFileId = null,
-                sex = Sex.NotKnown,
+                Sex = Sex.NotKnown,
             };
             var result = validator.TestValidate(model);
             result.ShouldHaveValidationErrorFor(x => x.Lastname);
@@ -118,7 +118,7 @@ namespace FileDBInterfaceTests.Validators
                 DateOfBirth = null,
                 Deceased = null,
                 ProfileFileId = null,
-                sex = Sex.NotKnown,
+                Sex = Sex.NotKnown,
             };
             var result = validator.TestValidate(model);
             result.ShouldHaveValidationErrorFor(x => x.Firstname);
@@ -136,7 +136,7 @@ namespace FileDBInterfaceTests.Validators
                 DateOfBirth = null,
                 Deceased = null,
                 ProfileFileId = null,
-                sex = Sex.NotKnown,
+                Sex = Sex.NotKnown,
             };
             var result = validator.TestValidate(model);
             result.ShouldHaveValidationErrorFor(x => x.Lastname);
@@ -154,7 +154,7 @@ namespace FileDBInterfaceTests.Validators
                 DateOfBirth = null,
                 Deceased = null,
                 ProfileFileId = null,
-                sex = Sex.NotKnown,
+                Sex = Sex.NotKnown,
             };
             var result = validator.TestValidate(model);
             result.ShouldHaveValidationErrorFor(x => x.Description);
@@ -172,7 +172,7 @@ namespace FileDBInterfaceTests.Validators
                 DateOfBirth = "invalid",
                 Deceased = null,
                 ProfileFileId = null,
-                sex = Sex.NotKnown,
+                Sex = Sex.NotKnown,
             };
             var result = validator.TestValidate(model);
             result.ShouldHaveValidationErrorFor(x => x.DateOfBirth);
@@ -190,7 +190,7 @@ namespace FileDBInterfaceTests.Validators
                 DateOfBirth = null,
                 Deceased = "invalid",
                 ProfileFileId = null,
-                sex = Sex.NotKnown,
+                Sex = Sex.NotKnown,
             };
             var result = validator.TestValidate(model);
             result.ShouldHaveValidationErrorFor(x => x.Deceased);
@@ -208,7 +208,7 @@ namespace FileDBInterfaceTests.Validators
                 DateOfBirth = null,
                 Deceased = "invalid",
                 ProfileFileId = -10,
-                sex = Sex.NotKnown,
+                Sex = Sex.NotKnown,
             };
             var result = validator.TestValidate(model);
             result.ShouldHaveValidationErrorFor(x => x.ProfileFileId);
