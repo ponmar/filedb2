@@ -15,7 +15,7 @@
     <DockPanel>
         <Label Style="{StaticResource PageHeading}" DockPanel.Dock="Top">Settings</Label>
         <ScrollViewer>
-            <StackPanel Orientation="Vertical" Style="{StaticResource PageStackPanel}">
+            <StackPanel Orientation="Vertical" Style="{StaticResource PageStackPanel}" Grid.IsSharedSizeScope="True">
                 <StackPanel Orientation="Horizontal" Style="{StaticResource PageStackPanel}">
                     <Button Margin="5" Width="100" Style="{StaticResource NormalButton}" Command="{Binding ResetConfigurationCommand}" ToolTip="Reset changes to last saved configuration">Reset changes</Button>
                     <Button Margin="5" Width="100" Style="{StaticResource NormalButton}" Command="{Binding SaveConfigurationCommand}">Save...</Button>
@@ -24,10 +24,10 @@
                 <Label Content="General" Style="{StaticResource PageSubHeading}"/>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto" SharedSizeGroup="Column1"/>
+                        <ColumnDefinition Width="auto" SharedSizeGroup="Column2"/>
+                        <ColumnDefinition Width="auto" SharedSizeGroup="Column3"/>
+                        <ColumnDefinition Width="auto" SharedSizeGroup="Column4"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
@@ -58,10 +58,10 @@
                 <Label Content="Browsing" Style="{StaticResource PageSubHeading}"/>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition SharedSizeGroup="Column1"/>
+                        <ColumnDefinition SharedSizeGroup="Column2"/>
+                        <ColumnDefinition SharedSizeGroup="Column3"/>
+                        <ColumnDefinition SharedSizeGroup="Column4"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
@@ -85,10 +85,10 @@
                 <Label Content="Notifications" Style="{StaticResource PageSubHeading}"/>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition SharedSizeGroup="Column1"/>
+                        <ColumnDefinition SharedSizeGroup="Column2"/>
+                        <ColumnDefinition SharedSizeGroup="Column3"/>
+                        <ColumnDefinition SharedSizeGroup="Column4"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
@@ -114,7 +114,7 @@
                     </StackPanel>
                     <Button Grid.Row="2" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultRipReminderCommand}" ToolTip="Reset to default">Default</Button>
 
-                    <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource PageTextBlock}">Startup database backup reminder interval (days):</TextBlock>
+                    <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource PageTextBlock}">Backup reminder interval (days):</TextBlock>
                     <TextBox Width="250" Grid.Row="3" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding StartupBackupReminderAfterDays, Converter={StaticResource IntToStringConverter}}" ToolTip="Set 0 to turn off"></TextBox>
                     <Button Grid.Row="3" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultStartupBackupReminderAfterDaysCommand}" ToolTip="Reset to default">Default</Button>
                 </Grid>
@@ -122,10 +122,10 @@
                 <Label Content="Import" Style="{StaticResource PageSubHeading}"/>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition SharedSizeGroup="Column1"/>
+                        <ColumnDefinition SharedSizeGroup="Column2"/>
+                        <ColumnDefinition SharedSizeGroup="Column3"/>
+                        <ColumnDefinition SharedSizeGroup="Column4"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
@@ -153,7 +153,7 @@
                     <TextBox Width="250" Grid.Row="1" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding WhitelistedFilePathPatterns}" ToolTip="Format: pattern1;pattern2;pattern3"></TextBox>
                     <Button Grid.Row="1" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultWhitelistedFilePathPatternsCommand}" ToolTip="Reset to default">Default</Button>
 
-                    <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource PageTextBlock}">Max distance for setting file location at import (meters):</TextBlock>
+                    <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource PageTextBlock}">Location max distance at import (meters):</TextBlock>
                     <TextBox Width="250" Grid.Row="2" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding FileToLocationMaxDistance, Converter={StaticResource IntToStringConverter}}"></TextBox>
                     <Button Grid.Row="2" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultFileToLocationMaxDistanceCommand}" ToolTip="Reset to default">Default</Button>
 
