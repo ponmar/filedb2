@@ -565,6 +565,7 @@ namespace FileDBInterface.Access
 
         public void UpdateLocation(LocationModel location)
         {
+
             var validator = new LocationModelValidator();
             var result = validator.Validate(location);
             if (!result.IsValid)
