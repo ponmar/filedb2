@@ -917,7 +917,6 @@ namespace FileDB.ViewModel
                             }
                         }
                     }
-
                 }
 
                 SearchResult = new SearchResult(result);
@@ -993,8 +992,15 @@ namespace FileDB.ViewModel
             if (SelectedFolder != null)
             {
                 var folderPath = SelectedFolder.Path;
-                var path = folderPath.Substring($"{RootFolderName}/".Length);
-                SearchResult = new SearchResult(Utils.DatabaseWrapper.SearchFilesByPath(path));
+                if (folderPath.StartsWith(RootFolderName))
+                {
+                    folderPath = folderPath.Substring(RootFolderName.Length);
+                }
+                if (folderPath.StartsWith("/"))
+                {
+                    folderPath = folderPath.Substring("/".Length);
+                }
+                SearchResult = new SearchResult(Utils.DatabaseWrapper.SearchFilesByPath(folderPath));
             }
         }
 
