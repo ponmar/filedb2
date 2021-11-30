@@ -56,10 +56,7 @@ namespace FileDB.ViewModel
             {
                 var notifier = new RestInPeaceNotifier(persons);
                 var notifications = notifier.GetNotifications();
-                foreach (var notification in notifications)
-                {
-                    Utils.ShowNotification(notification);
-                }
+                Utils.ShowNotifications(notifications);
             }
         }
     }

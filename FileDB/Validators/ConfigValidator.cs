@@ -40,9 +40,6 @@ namespace FileDB.Validators
             RuleFor(c => c.SearchHistorySize)
                 .InclusiveBetween(0, 10).WithMessage("Invalid search history size");
 
-            RuleFor(c => c.StartupBackupReminderAfterDays)
-                .GreaterThanOrEqualTo(0).WithMessage("Invalid startup backup reminder after days");
-
             When(c => !string.IsNullOrEmpty(c.LocationLink), () =>
             {
                 RuleFor(c => c.LocationLink)

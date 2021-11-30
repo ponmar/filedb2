@@ -123,7 +123,6 @@ namespace FileDBInterface.FilesystemAccess
             else
             {
                 result.Datetime = DatabaseParsing.PathToFilesDatetime(path);
-                // TODO: otherwise try to get year from path? The datebase supports yyyy format also
             }
 
             result.Position = location != null ? DatabaseParsing.ToFilesPosition(location.Latitude, location.Longitude) : null;

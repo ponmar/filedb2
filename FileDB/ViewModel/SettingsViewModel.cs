@@ -74,12 +74,12 @@ namespace FileDB.ViewModel
         }
         private bool readOnly;
 
-        public int StartupBackupReminderAfterDays
+        public bool BackupReminder
         {
-            get => startupBackupReminderAfterDays;
-            set => SetProperty(ref startupBackupReminderAfterDays, value);
+            get => backupReminder;
+            set => SetProperty(ref backupReminder, value);
         }
-        private int startupBackupReminderAfterDays;
+        private bool backupReminder;
 
         public bool BirthdayReminder
         {
@@ -141,8 +141,8 @@ namespace FileDB.ViewModel
         public ICommand SetDefaultSlideshowDelayCommand => setDefaultSlideshowDelayCommand ??= new CommandHandler(x => SlideshowDelay = DefaultConfigs.Default.SlideshowDelay);
         private ICommand setDefaultSlideshowDelayCommand;
 
-        public ICommand SetDefaultStartupBackupReminderAfterDaysCommand => setDefaultStartupBackupReminderAfterDaysCommand ??= new CommandHandler(x => StartupBackupReminderAfterDays = DefaultConfigs.Default.StartupBackupReminderAfterDays);
-        private ICommand setDefaultStartupBackupReminderAfterDaysCommand;
+        public ICommand SetDefaultBackupReminderCommand => setDefaultBackupReminderCommand ??= new CommandHandler(x => BackupReminder = DefaultConfigs.Default.BackupReminder);
+        private ICommand setDefaultBackupReminderCommand;
 
         public ICommand SetDefaultSearchHistorySizeCommand => setDefaultSearchHistorySizeCommand ??= new CommandHandler(x => SearchHistorySize = DefaultConfigs.Default.SearchHistorySize);
         private ICommand setDefaultSearchHistorySizeCommand;
@@ -193,7 +193,7 @@ namespace FileDB.ViewModel
             BlacklistedFilePathPatterns = Utils.Config.BlacklistedFilePathPatterns;
             WhitelistedFilePathPatterns = Utils.Config.WhitelistedFilePathPatterns;
             ReadOnly = Utils.Config.ReadOnly;
-            StartupBackupReminderAfterDays = Utils.Config.StartupBackupReminderAfterDays;
+            BackupReminder = Utils.Config.BackupReminder;
             BirthdayReminder = Utils.Config.BirthdayReminder;
             BirthdayReminderForDeceased = Utils.Config.BirthdayReminderForDeceased;
             RipReminder = Utils.Config.RipReminder;
@@ -220,7 +220,7 @@ namespace FileDB.ViewModel
                 slideshowDelay,
                 searchHistorySize,
                 ReadOnly,
-                startupBackupReminderAfterDays,
+                BackupReminder,
                 BirthdayReminder,
                 BirthdayReminderForDeceased,
                 RipReminder,

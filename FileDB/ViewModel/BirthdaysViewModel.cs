@@ -94,10 +94,7 @@ namespace FileDB.ViewModel
                 notifications.AddRange(notifier.GetNotifications());
             }
 
-            foreach (var notification in notifications)
-            {
-                Utils.ShowNotification(notification);
-            }
+            Utils.ShowNotifications(notifications);
         }
     }
 }

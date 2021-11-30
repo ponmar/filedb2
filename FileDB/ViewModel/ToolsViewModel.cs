@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Windows.Input;
+using FileDB.Notifiers;
 using FileDBInterface.Validators;
 
 namespace FileDB.ViewModel
@@ -83,22 +84,11 @@ namespace FileDB.ViewModel
 
         private void ShowBackupReminder()
         {
-            if (Utils.Config.StartupBackupReminderAfterDays <= 0)
+            if (Utils.Config.BackupReminder)
             {
-                return;
-            }
-
-            if (BackupFiles.Count == 0)
-            {
-                Utils.ShowWarningDialog("Backup reminder: No database backup has been created!");
-            }
-            else
-            {
-                var latestBackupDaysAge = (int)BackupFiles.Min(x => x.Age).TotalDays;
-                if (latestBackupDaysAge >= Utils.Config.StartupBackupReminderAfterDays)
-                {
-                    Utils.ShowWarningDialog($"Backup reminder: Last database backup created {latestBackupDaysAge} days ago!");
-                }
+                var notifier = new BackupNotifier(BackupFiles, 30);
+                var notifications = notifier.GetNotifications();
+                Utils.ShowNotifications(notifications);
             }
         }
 

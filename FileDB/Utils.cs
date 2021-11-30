@@ -102,6 +102,14 @@ namespace FileDB
             }
         }
 
+        public static void ShowNotifications(IEnumerable<Notification> notifications)
+        {
+            foreach (var notification in notifications)
+            {
+                ShowNotification(notification);
+            }
+        }
+
         public static void OpenUriInBrowser(string uri)
         {
             Process.Start(new ProcessStartInfo(uri) { UseShellExecute = true });

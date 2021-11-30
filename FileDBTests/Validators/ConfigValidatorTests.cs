@@ -107,14 +107,6 @@ namespace FileDBTests.Validators
         }
 
         [TestMethod]
-        public void Validate_StartupBackupReminderAfterDaysTooSmall_Error()
-        {
-            var config = new Config(default, default, default, default, default, default, default, default, default, default, StartupBackupReminderAfterDays: -1, default, default, default, default, default);
-            var result = validator.TestValidate(config);
-            result.ShouldHaveValidationErrorFor(x => x.StartupBackupReminderAfterDays);
-        }
-
-        [TestMethod]
         public void Validate_LocationLinkWithoutLatitude_Error()
         {
             var config = new Config(default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, LocationLink: "http://localhost/LON/");
