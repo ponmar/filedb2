@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using FileDBInterface.DbAccess;
 using FileDBInterface.Model;
+using log4net;
 using MetadataExtractor;
 using MetadataExtractor.Formats.Exif;
 
@@ -11,11 +12,21 @@ namespace FileDBInterface.FilesystemAccess
 {
     public class FilesystemAccess : IFilesystemAccess
     {
-        private string filesRootDirectory;
+        private static readonly ILog log = LogManager.GetLogger(nameof(FilesystemAccess));
+
+        private readonly string filesRootDirectory;
 
         public FilesystemAccess(string filesRootDirectory)
         {
             this.filesRootDirectory = filesRootDirectory;
+            if (System.IO.Directory.Exists(filesRootDirectory))
+            {
+                log.Warn($"Using files root directory: {filesRootDirectory}");
+            }
+            else
+            {
+                log.Warn($"Files root directory does not exist: {filesRootDirectory}");
+            }
         }
 
         public IEnumerable<string> ListNewFilesystemFiles(IEnumerable<string> blacklistedFilePathPatterns, IEnumerable<string> whitelistedFilePathPatterns, bool includeHiddenDirectories, IFilesAccess filesDbAccess)

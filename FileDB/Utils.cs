@@ -22,26 +22,39 @@ namespace FileDB
             {
                 if (dbAccess == null)
                 {
-                    ReloadFileDBHandle();
+                    ReloadHandles();
                 }
                 return dbAccess;
             }
         }
         private static IDbAccess dbAccess;
 
-        public static void ReloadFileDBHandle()
+        public static void ReloadHandles()
         {
             try
             {
-                dbAccess = new DbAccess(Config.Database, Config.FilesRootDirectory);
+                dbAccess = new DbAccess(Config.Database);
             }
             catch (DatabaseWrapperException)
             {
                 dbAccess = new NoDbAccess();
             }
+
+            filesystemAccess = new FilesystemAccess(Config.FilesRootDirectory);
         }
 
-        public static IFilesystemAccess FilesystemAccess { get; } = new FilesystemAccess(Config.FilesRootDirectory);
+        public static IFilesystemAccess FilesystemAccess
+        {
+            get
+            {
+                if (filesystemAccess == null)
+                {
+                    ReloadHandles();
+                }
+                return filesystemAccess;
+            }
+        }
+        private static IFilesystemAccess filesystemAccess;
 
         public static void ShowInfoDialog(string message)
         {

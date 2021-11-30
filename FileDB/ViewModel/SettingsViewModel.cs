@@ -232,7 +232,7 @@ namespace FileDB.ViewModel
             if (appDataConfig.Write(config))
             {
                 Utils.Config = config;
-                Utils.ReloadFileDBHandle();
+                Utils.ReloadHandles();
                 Utils.ShowInfoDialog("Configuration saved. Restart to enable all settings.");
             }
             else

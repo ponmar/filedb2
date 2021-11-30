@@ -6,9 +6,6 @@ using System.Linq;
 using Dapper;
 using FileDBInterface.Model;
 using System.IO;
-using MetadataExtractor;
-using MetadataExtractor.Formats.Exif;
-using Directory = System.IO.Directory;
 using log4net;
 using System.Reflection;
 using log4net.Config;
@@ -20,47 +17,22 @@ namespace FileDBInterface.DbAccess
 {
     public class DbAccess : IDbAccess
     {
-        private static readonly ILog log = LogManager.GetLogger("FileDBHandle");
+        private static readonly ILog log = LogManager.GetLogger(nameof(DbAccess));
 
         private readonly string database;
-        private readonly string filesRootDirectory;
 
-        public DbAccess(string database, string filesRootDirectory, bool allowMissingFilesRootDirectory = true)
+        public DbAccess(string database)
         {
             var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
             XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
 
             this.database = database;
-            this.filesRootDirectory = filesRootDirectory;
 
             if (!File.Exists(database))
             {
                 throw new DatabaseWrapperException($"Database does not exist: {database}");
             }
-
-            if (!Directory.Exists(filesRootDirectory))
-            {
-                var message = $"Files root directory does not exist: {filesRootDirectory}";
-                if (allowMissingFilesRootDirectory)
-                {
-                    log.Warn(message);
-                }
-                else
-                {
-                    throw new DatabaseWrapperException(message);
-                }
-            }
-
-            log.Info($"FileDB started with database {database} and root directory {filesRootDirectory}");
         }
-
-        #region Files collection
-
-        #endregion
-
-        #region Tools
-
-        #endregion
 
         #region Files
 
