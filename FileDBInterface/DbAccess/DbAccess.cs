@@ -164,7 +164,7 @@ namespace FileDBInterface.DbAccess
                 throw new DataValidationException($"No such file: {absolutePath}");
             }
 
-            var fileMetadata = filesystemAccess.GetFileMetaData(absolutePath);
+            var fileMetadata = filesystemAccess.ParseFileMetadata(absolutePath);
 
             try
             {
@@ -182,7 +182,7 @@ namespace FileDBInterface.DbAccess
         public void UpdateFileFromMetaData(int id, IFilesystemAccess filesystemAccess)
         {
             var file = GetFileById(id);
-            var fileMetadata = filesystemAccess.GetFileMetaData(filesystemAccess.ToAbsolutePath(file.Path));
+            var fileMetadata = filesystemAccess.ParseFileMetadata(filesystemAccess.ToAbsolutePath(file.Path));
 
             try
             {

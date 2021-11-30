@@ -10,6 +10,6 @@ namespace FileDBInterface.FilesystemAccess
         IEnumerable<string> ListAllFilesystemDirectories();
         IEnumerable<FilesModel> GetFilesMissingInFilesystem(IEnumerable<FilesModel> allFiles);
         string ToAbsolutePath(string internalPath);
-        FileMetadata GetFileMetaData(string path);
+        FileMetadata ParseFileMetadata(string path);
     }
 }

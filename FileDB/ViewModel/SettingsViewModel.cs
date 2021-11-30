@@ -102,6 +102,13 @@ namespace FileDB.ViewModel
         }
         private bool ripReminder;
 
+        public bool MissingFilesRootDirNotification
+        {
+            get => missingFilesRootDirNotification;
+            set => SetProperty(ref missingFilesRootDirNotification, value);
+        }
+        private bool missingFilesRootDirNotification;
+
         public string LocationLink
         {
             get => locationLink;
@@ -161,6 +168,9 @@ namespace FileDB.ViewModel
         public ICommand SetDefaultRipReminderCommand => setDefaultRipReminderCommand ??= new CommandHandler(x => RipReminder = DefaultConfigs.Default.RipReminder);
         private ICommand setDefaultRipReminderCommand;
 
+        public ICommand SetDefaultMissingFilesRootDirNotificationCommand => setDefaultMissingFilesRootDirNotificationCommand ??= new CommandHandler(x => MissingFilesRootDirNotification = DefaultConfigs.Default.MissingFilesRootDirNotification);
+        private ICommand setDefaultMissingFilesRootDirNotificationCommand;
+
         public ICommand SetDefaultLocationLinkCommand => setDefaultLocationLinkCommand ??= new CommandHandler(x => LocationLink = DefaultConfigs.Default.LocationLink);
         private ICommand setDefaultLocationLinkCommand;
 
@@ -187,6 +197,7 @@ namespace FileDB.ViewModel
             BirthdayReminder = Utils.Config.BirthdayReminder;
             BirthdayReminderForDeceased = Utils.Config.BirthdayReminderForDeceased;
             RipReminder = Utils.Config.RipReminder;
+            MissingFilesRootDirNotification = Utils.Config.MissingFilesRootDirNotification;
             LocationLink = Utils.Config.LocationLink;
             FileToLocationMaxDistance = Utils.Config.FileToLocationMaxDistance;
         }
@@ -213,6 +224,7 @@ namespace FileDB.ViewModel
                 BirthdayReminder,
                 BirthdayReminderForDeceased,
                 RipReminder,
+                MissingFilesRootDirNotification,
                 LocationLink);
 
             var result = new ConfigValidator().Validate(config);

@@ -8,9 +8,18 @@ namespace FileDB.Notifications
 {
     public enum BirthdayNotificationFor { Alive, Deceased }
 
-    public static class BirthdayNotifier
+    public class BirthdayNotifier : Notifier
     {
-        public static List<Notification> GetBirthdayNotifications(IEnumerable<PersonModel> persons, BirthdayNotificationFor birthdayNotificationFor)
+        private readonly IEnumerable<PersonModel> persons;
+        private readonly BirthdayNotificationFor birthdayNotificationFor;
+
+        public BirthdayNotifier(IEnumerable<PersonModel> persons, BirthdayNotificationFor birthdayNotificationFor)
+        {
+            this.persons = persons;
+            this.birthdayNotificationFor = birthdayNotificationFor;
+        }
+
+        public List<Notification> GetNotifications()
         {
             var today = DateTime.Today;
             List<Notification> notifications = new();

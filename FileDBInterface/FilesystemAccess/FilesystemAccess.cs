@@ -21,7 +21,7 @@ namespace FileDBInterface.FilesystemAccess
             this.filesRootDirectory = filesRootDirectory;
             if (System.IO.Directory.Exists(filesRootDirectory))
             {
-                log.Warn($"Using files root directory: {filesRootDirectory}");
+                log.Info($"Using files root directory: {filesRootDirectory}");
             }
             else
             {
@@ -88,7 +88,7 @@ namespace FileDBInterface.FilesystemAccess
         public string ToAbsolutePath(string internalPath)
         {
             var path = Path.Join(filesRootDirectory, internalPath);
-            return FixPath(path);
+            return path.Replace('\\', '/');
         }
 
         private string ToInternalFilesPath(string path)
@@ -110,13 +110,7 @@ namespace FileDBInterface.FilesystemAccess
             return internalPath;
         }
 
-        private string FixPath(string path)
-        {
-            path = path.Replace('\\', '/');
-            return path;
-        }
-
-        public FileMetadata GetFileMetaData(string path)
+        public FileMetadata ParseFileMetadata(string path)
         {
             var result = new FileMetadata() { AbsolutePath = path };
 

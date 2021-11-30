@@ -6,9 +6,16 @@ using FileDBInterface.Model;
 
 namespace FileDB.Notifications
 {
-    public static class RestInPeaceNotifier
+    public class RestInPeaceNotifier : Notifier
     {
-        public static List<Notification> GetRestInPeaceNotifications(IEnumerable<PersonModel> persons)
+        private readonly IEnumerable<PersonModel> persons;
+
+        public RestInPeaceNotifier(IEnumerable<PersonModel> persons)
+        {
+            this.persons = persons;
+        }
+
+        public List<Notification> GetNotifications()
         {
             var today = DateTime.Today;
             List<Notification> notifications = new();

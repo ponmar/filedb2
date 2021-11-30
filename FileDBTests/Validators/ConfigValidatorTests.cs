@@ -37,7 +37,7 @@ namespace FileDBTests.Validators
         [TestMethod]
         public void Validate_NameEmpty_Error()
         {
-            var config = new Config(Name: "", default, default, default, default, default, default, default, default, default, default, default, default, default, default);
+            var config = new Config(Name: "", default, default, default, default, default, default, default, default, default, default, default, default, default, default, default);
             var result = validator.TestValidate(config);
             result.ShouldHaveValidationErrorFor(x => x.Name);
         }
@@ -45,7 +45,7 @@ namespace FileDBTests.Validators
         [TestMethod]
         public void Validate_DatabaseEmpty_Error()
         {
-            var config = new Config(default, Database: "", default, default, default, default, default, default, default, default, default, default, default, default, default);
+            var config = new Config(default, Database: "", default, default, default, default, default, default, default, default, default, default, default, default, default, default);
             var result = validator.TestValidate(config);
             result.ShouldHaveValidationErrorFor(x => x.Database);
         }
@@ -53,7 +53,7 @@ namespace FileDBTests.Validators
         [TestMethod]
         public void Validate_FilesRootDirectoryEmpty_Error()
         {
-            var config = new Config(default, default, FilesRootDirectory: "", default, default, default, default, default, default, default, default, default, default, default, default);
+            var config = new Config(default, default, FilesRootDirectory: "", default, default, default, default, default, default, default, default, default, default, default, default, default);
             var result = validator.TestValidate(config);
             result.ShouldHaveValidationErrorFor(x => x.FilesRootDirectory);
         }
@@ -61,7 +61,7 @@ namespace FileDBTests.Validators
         [TestMethod]
         public void Validate_FileToLocationMaxDistanceNegative_Error()
         {
-            var config = new Config(default, default, default, FileToLocationMaxDistance: -1, default, default, default, default, default, default, default, default, default, default, default);
+            var config = new Config(default, default, default, FileToLocationMaxDistance: -1, default, default, default, default, default, default, default, default, default, default, default, default);
             var result = validator.TestValidate(config);
             result.ShouldHaveValidationErrorFor(x => x.FileToLocationMaxDistance);
         }
@@ -69,7 +69,7 @@ namespace FileDBTests.Validators
         [TestMethod]
         public void Validate_BlacklistedFilePathPatternsEmpty_Error()
         {
-            var config = new Config(default, default, default, default, BlacklistedFilePathPatterns: "", default, default, default, default, default, default, default, default, default, default);
+            var config = new Config(default, default, default, default, BlacklistedFilePathPatterns: "", default, default, default, default, default, default, default, default, default, default, default);
             var result = validator.TestValidate(config);
             result.ShouldHaveValidationErrorFor(x => x.BlacklistedFilePathPatterns);
         }
@@ -77,7 +77,7 @@ namespace FileDBTests.Validators
         [TestMethod]
         public void Validate_WhitelistedFilePathPatternsEmpty_Error()
         {
-            var config = new Config(default, default, default, default, default, WhitelistedFilePathPatterns: "", default, default, default, default, default, default, default, default, default);
+            var config = new Config(default, default, default, default, default, WhitelistedFilePathPatterns: "", default, default, default, default, default, default, default, default, default, default);
             var result = validator.TestValidate(config);
             result.ShouldHaveValidationErrorFor(x => x.WhitelistedFilePathPatterns);
         }
@@ -85,7 +85,7 @@ namespace FileDBTests.Validators
         [TestMethod]
         public void Validate_SlideShowDelayTooSmall_Error()
         {
-            var config = new Config(default, default, default, default, default, default, default, SlideshowDelay: 0, default, default, default, default, default, default, default);
+            var config = new Config(default, default, default, default, default, default, default, SlideshowDelay: 0, default, default, default, default, default, default, default, default);
             var result = validator.TestValidate(config);
             result.ShouldHaveValidationErrorFor(x => x.SlideshowDelay);
         }
@@ -93,7 +93,7 @@ namespace FileDBTests.Validators
         [TestMethod]
         public void Validate_SearchHistorySizeTooSmall_Error()
         {
-            var config = new Config(default, default, default, default, default, default, default, default, SearchHistorySize: -1, default, default, default, default, default, default);
+            var config = new Config(default, default, default, default, default, default, default, default, SearchHistorySize: -1, default, default, default, default, default, default, default);
             var result = validator.TestValidate(config);
             result.ShouldHaveValidationErrorFor(x => x.SearchHistorySize);
         }
@@ -101,7 +101,7 @@ namespace FileDBTests.Validators
         [TestMethod]
         public void Validate_SearchHistorySizeTooBig_Error()
         {
-            var config = new Config(default, default, default, default, default, default, default, default, SearchHistorySize: 11, default, default, default, default, default, default);
+            var config = new Config(default, default, default, default, default, default, default, default, SearchHistorySize: 11, default, default, default, default, default, default, default);
             var result = validator.TestValidate(config);
             result.ShouldHaveValidationErrorFor(x => x.SearchHistorySize);
         }
@@ -109,7 +109,7 @@ namespace FileDBTests.Validators
         [TestMethod]
         public void Validate_StartupBackupReminderAfterDaysTooSmall_Error()
         {
-            var config = new Config(default, default, default, default, default, default, default, default, default, default, StartupBackupReminderAfterDays: -1, default, default, default, default);
+            var config = new Config(default, default, default, default, default, default, default, default, default, default, StartupBackupReminderAfterDays: -1, default, default, default, default, default);
             var result = validator.TestValidate(config);
             result.ShouldHaveValidationErrorFor(x => x.StartupBackupReminderAfterDays);
         }
@@ -117,7 +117,7 @@ namespace FileDBTests.Validators
         [TestMethod]
         public void Validate_LocationLinkWithoutLatitude_Error()
         {
-            var config = new Config(default, default, default, default, default, default, default, default, default, default, default, default, default, default, LocationLink: "http://localhost/LON/");
+            var config = new Config(default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, LocationLink: "http://localhost/LON/");
             var result = validator.TestValidate(config);
             result.ShouldHaveValidationErrorFor(x => x.LocationLink);
         }
@@ -125,7 +125,7 @@ namespace FileDBTests.Validators
         [TestMethod]
         public void Validate_LocationLinkWithoutLongitude_Error()
         {
-            var config = new Config(default, default, default, default, default, default, default, default, default, default, default, default, default, default, LocationLink: "http://localhost/LAT/");
+            var config = new Config(default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, LocationLink: "http://localhost/LAT/");
             var result = validator.TestValidate(config);
             result.ShouldHaveValidationErrorFor(x => x.LocationLink);
         }

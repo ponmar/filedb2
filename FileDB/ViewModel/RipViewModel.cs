@@ -55,7 +55,8 @@ namespace FileDB.ViewModel
 
             if (Utils.Config.RipReminder)
             {
-                var notifications = RestInPeaceNotifier.GetRestInPeaceNotifications(persons);
+                var notifier = new RestInPeaceNotifier(persons);
+                var notifications = notifier.GetNotifications();
                 foreach (var notification in notifications)
                 {
                     Utils.ShowNotification(notification);

@@ -77,14 +77,22 @@ namespace FileDB.ViewModel
 
             List<Notification> notifications = new();
 
+            if (Utils.Config.MissingFilesRootDirNotification)
+            {
+                var notifier = new MissingFilesRootDirNotifier(Utils.Config.FilesRootDirectory);
+                notifications.AddRange(notifier.GetNotifications());
+            }
+
             if (Utils.Config.BirthdayReminder)
             {
-                notifications.AddRange(BirthdayNotifier.GetBirthdayNotifications(persons, BirthdayNotificationFor.Alive));
+                var notifier = new BirthdayNotifier(persons, BirthdayNotificationFor.Alive);
+                notifications.AddRange(notifier.GetNotifications());
             }
 
             if (Utils.Config.BirthdayReminderForDeceased)
             {
-                notifications.AddRange(BirthdayNotifier.GetBirthdayNotifications(persons, BirthdayNotificationFor.Deceased));
+                var notifier = new BirthdayNotifier(persons, BirthdayNotificationFor.Deceased);
+                notifications.AddRange(notifier.GetNotifications());
             }
 
             foreach (var notification in notifications)

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 
 namespace FileDB.Config
 {
@@ -18,6 +17,7 @@ namespace FileDB.Config
         bool BirthdayReminder,
         bool BirthdayReminderForDeceased,
         bool RipReminder,
+        bool MissingFilesRootDirNotification,
         string LocationLink);
 
     public static class DefaultConfigs
@@ -34,6 +34,7 @@ namespace FileDB.Config
                 4,
                 false,
                 30,
+                true,
                 true,
                 true,
                 true,
@@ -54,6 +55,7 @@ namespace FileDB.Config
                 Default.BirthdayReminder,
                 Default.BirthdayReminderForDeceased,
                 Default.RipReminder,
+                Default.MissingFilesRootDirNotification,
                 Default.LocationLink);
     }
 }
