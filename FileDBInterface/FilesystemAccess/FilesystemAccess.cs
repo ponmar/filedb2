@@ -100,7 +100,7 @@ namespace FileDBInterface.FilesystemAccess
             return FixInternalPath(path);
         }
 
-        public string FixInternalPath(string internalPath)
+        private string FixInternalPath(string internalPath)
         {
             internalPath = internalPath.Replace('\\', '/');
             while (internalPath.StartsWith('/'))

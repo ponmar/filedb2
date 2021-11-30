@@ -158,8 +158,6 @@ namespace FileDBInterface.DbAccess
                 throw new DataValidationException("Description invalid");
             }
 
-            // TODO: validate should mean no fixing of path is needed?
-            internalPath = filesystemAccess.FixInternalPath(internalPath);
             var absolutePath = filesystemAccess.ToAbsolutePath(internalPath);
             if (!File.Exists(absolutePath))
             {
