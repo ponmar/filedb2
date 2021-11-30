@@ -29,7 +29,7 @@
 
         private void UpdateTitle()
         {
-            var title = $"{Utils.ApplicationName} {Shared.Version.Major}.{Shared.Version.Minor}";
+            var title = $"{Utils.ApplicationName} {ReleaseInformation.Version.Major}.{ReleaseInformation.Version.Minor}";
 
             if (!string.IsNullOrEmpty(Utils.Config.Name))
             {

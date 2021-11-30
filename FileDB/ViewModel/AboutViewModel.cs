@@ -8,7 +8,7 @@ namespace FileDB.ViewModel
 
         public string Changes => File.ReadAllText("CHANGES.txt");
 
-        public string Heading => $"About {Utils.ApplicationName} version {Shared.Version.Major}.{Shared.Version.Minor}";
+        public string Heading => $"About {Utils.ApplicationName} version {ReleaseInformation.Version.Major}.{ReleaseInformation.Version.Minor}";
 
         public AboutViewModel()
         {

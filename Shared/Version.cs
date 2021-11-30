@@ -1,6 +1,6 @@
 ﻿namespace FileDB
 {
-    public class Shared
+    public class ReleaseInformation
     {
         public static Version Version = new(2, 2);
     }

@@ -6,7 +6,7 @@ namespace FileDB
     {
         static void Main(string[] args)
         {
-            Console.WriteLine($"{Shared.Version.Major}.{Shared.Version.Minor}");
+            Console.WriteLine($"{ReleaseInformation.Version.Major}.{ReleaseInformation.Version.Minor}");
         }
     }
 }
