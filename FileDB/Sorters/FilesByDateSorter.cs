@@ -11,7 +11,7 @@ namespace FileDB.Sorters
         {
             if (x.Datetime == null && y.Datetime == null)
             {
-                return 0;
+                return x.Path.CompareTo(y.Path);
             }
             else if (x.Datetime == null)
             {
