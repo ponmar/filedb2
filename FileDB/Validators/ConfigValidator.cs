@@ -17,13 +17,11 @@ namespace FileDB.Validators
             RuleFor(c => c.Database).Cascade(CascadeMode.Stop)
                 .NotNull().WithMessage("{PropertyName} is null")
                 .Must(x => x.EndsWith(".db")).WithMessage("Invalid database file extension")
-                .Must(x => Path.IsPathFullyQualified(x)).WithMessage("Database path is not absolute")
-                .Must(x => File.Exists(x)).WithMessage("Database missing");
+                .Must(x => Path.IsPathFullyQualified(x)).WithMessage("Database path is not absolute");
 
             RuleFor(c => c.FilesRootDirectory).Cascade(CascadeMode.Stop)
                 .NotNull().WithMessage("{PropertyName} is null")
-                .Must(x => Path.IsPathFullyQualified(x)).WithMessage("Files root directory path is not absolute")
-                .Must(x => Directory.Exists(x)).WithMessage("Files root directory missing");
+                .Must(x => Path.IsPathFullyQualified(x)).WithMessage("Files root directory path is not absolute");
 
             RuleFor(c => c.FileToLocationMaxDistance)
                 .GreaterThanOrEqualTo(0).WithMessage("Invalid file to location max distance");
