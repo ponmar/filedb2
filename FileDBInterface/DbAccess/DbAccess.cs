@@ -39,7 +39,7 @@ namespace FileDBInterface.DbAccess
         public IEnumerable<FilesModel> GetFiles()
         {
             using var connection = DatabaseUtils.CreateConnection(database);
-            return connection.Query<FilesModel>("select * from [files]", new DynamicParameters());
+            return connection.Query<FilesModel>("select * from [files]");
         }
 
         public int GetFileCount()
@@ -52,7 +52,7 @@ namespace FileDBInterface.DbAccess
         {
             using var connection = DatabaseUtils.CreateConnection(database);
             var sql = "select * from [files] where (Path like @criteria or Description like @criteria)";
-            return connection.Query<FilesModel>(sql, new { criteria = "%" + criteria + "%" });
+            return connection.Query<FilesModel>(sql, new { criteria = $"%{criteria}%" });
         }
 
         public IEnumerable<FilesModel> SearchFilesBySex(Sex sex)
@@ -65,6 +65,7 @@ namespace FileDBInterface.DbAccess
         {
             using var connection = DatabaseUtils.CreateConnection(database);
             var sql = "select * from [files] where Path like @criteria";
+            // TODO: missing a % before criteria?
             return connection.Query<FilesModel>(sql, new { criteria = criteria + "%" });
         }
 
@@ -72,7 +73,7 @@ namespace FileDBInterface.DbAccess
         {
             using var connection = DatabaseUtils.CreateConnection(database);
             var sql = $"select * from [files] order by random() limit {numFiles}";
-            return connection.Query<FilesModel>(sql, new DynamicParameters());
+            return connection.Query<FilesModel>(sql);
         }
 
         public IEnumerable<FilesModel> SearchFilesNearGpsPosition(double latitude, double longitude, double radius)
@@ -187,8 +188,8 @@ namespace FileDBInterface.DbAccess
             try
             {
                 using var connection = DatabaseUtils.CreateConnection(database);
-                var sql = "update [files] set Datetime = @Datetime, Position = @Position where Id = @Id";
-                connection.Execute(sql, new { Datetime = fileMetadata.Datetime, Position = fileMetadata.Position, Id = id });
+                var sql = "update [files] set Datetime = @datetime, Position = @position where Id = @id";
+                connection.Execute(sql, new { datetime = fileMetadata.Datetime, position = fileMetadata.Position, id = id });
             }
             catch (SQLiteException e)
             {
@@ -271,7 +272,7 @@ namespace FileDBInterface.DbAccess
         public IEnumerable<PersonModel> GetPersons()
         {
             using var connection = DatabaseUtils.CreateConnection(database);
-            return connection.Query<PersonModel>("select * from [persons]", new DynamicParameters());
+            return connection.Query<PersonModel>("select * from [persons]");
         }
 
         private bool FileHasPersons(int fileId)
@@ -301,11 +302,8 @@ namespace FileDBInterface.DbAccess
 
         public PersonModel GetPersonById(int id)
         {
-            var parameters = new DynamicParameters();
-            parameters.Add("@ID", id, DbType.Int32, ParameterDirection.Input);
-
             using var connection = DatabaseUtils.CreateConnection(database);
-            return connection.QueryFirst<PersonModel>("select * from [persons] where Id = @ID", parameters);
+            return connection.QueryFirst<PersonModel>("select * from [persons] where Id = @ID", new { id = id });
         }
 
         public bool HasPersonId(int id)
@@ -370,7 +368,7 @@ namespace FileDBInterface.DbAccess
         public IEnumerable<LocationModel> GetLocations()
         {
             using var connection = DatabaseUtils.CreateConnection(database);
-            return connection.Query<LocationModel>("select * from [locations]", new DynamicParameters());
+            return connection.Query<LocationModel>("select * from [locations]");
         }
 
         private bool FileHasLocation(int fileId)
@@ -393,11 +391,8 @@ namespace FileDBInterface.DbAccess
 
         public LocationModel GetLocationById(int id)
         {
-            var parameters = new DynamicParameters();
-            parameters.Add("@ID", id, DbType.Int32, ParameterDirection.Input);
-
             using var connection = DatabaseUtils.CreateConnection(database);
-            return connection.QueryFirst<LocationModel>("select * from [locations] where Id = @ID", parameters);
+            return connection.QueryFirst<LocationModel>("select * from [locations] where Id = @id", new { id = id });
         }
 
         public bool HasLocationId(int id)
@@ -463,7 +458,7 @@ namespace FileDBInterface.DbAccess
         public IEnumerable<TagModel> GetTags()
         {
             using var connection = DatabaseUtils.CreateConnection(database);
-            return connection.Query<TagModel>("select * from [tags]", new DynamicParameters());
+            return connection.Query<TagModel>("select * from [tags]");
         }
 
         private bool FileHasTags(int fileId)
@@ -486,11 +481,8 @@ namespace FileDBInterface.DbAccess
 
         public TagModel GetTagById(int id)
         {
-            var parameters = new DynamicParameters();
-            parameters.Add("@ID", id, DbType.Int32, ParameterDirection.Input);
-
             using var connection = DatabaseUtils.CreateConnection(database);
-            return connection.QueryFirst<TagModel>("select * from [tags] where Id = @ID", parameters);
+            return connection.QueryFirst<TagModel>("select * from [tags] where Id = @id", new { id = id });
         }
 
         public bool HasTagId(int id)
