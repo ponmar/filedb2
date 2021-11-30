@@ -6,9 +6,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace FileDBTests.Sorters
 {
     [TestClass]
-    public class FilesByDateSorterTests
+    public class FilesByPathSorterTests
     {
-        private FilesByDateSorter sorter;
+        private FilesByPathSorter sorter;
 
         [TestInitialize]
         public void Initialize()
@@ -21,9 +21,9 @@ namespace FileDBTests.Sorters
         {
             var items = new List<FilesModel>()
             {
-                new FilesModel() { Id = 1, Datetime = "2000-10-20" },
-                new FilesModel() { Id = 0, Datetime = "1999-10-20" },
-                new FilesModel() { Id = 2, Datetime = "2000-10-21" },
+                new FilesModel() { Id = 0, Path = "aaa" },
+                new FilesModel() { Id = 2, Path = "ccc" },
+                new FilesModel() { Id = 1, Path = "bbb" },
             };
 
             items.Sort(sorter);
