@@ -12,7 +12,6 @@ using System.Windows.Threading;
 using FileDB.Comparers;
 using FileDB.View;
 using FileDB.Sorters;
-using FileDBInterface;
 using FileDBInterface.Exceptions;
 using FileDBInterface.Model;
 using TextCopy;

@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Windows.Input;
 using FileDB.Notifiers;
 using FileDBInterface.Validators;
+using TextCopy;
 
 namespace FileDB.ViewModel
 {
@@ -33,6 +35,9 @@ namespace FileDB.ViewModel
         public ICommand DatabaseValidationCommand => databaseValidationCommand ??= new CommandHandler(DatabaseValidation);
         private ICommand databaseValidationCommand;
 
+        public ICommand CopyInvalidFileListCommand => copyInvalidFileListCommand ??= new CommandHandler(CopyInvalidFileList);
+        private ICommand copyInvalidFileListCommand;
+
         public string BackupResult
         {
             get => backupResult;
@@ -50,6 +55,13 @@ namespace FileDB.ViewModel
         private string databaseValidationResult = "Not validated.";
 
         public ObservableCollection<string> DabaseValidationErrors { get; } = new();
+
+        public string InvalidFileList
+        {
+            get => invalidFileList;
+            set => SetProperty(ref invalidFileList, value);
+        }
+        private string invalidFileList = string.Empty;
 
         public ToolsViewModel()
         {
@@ -131,6 +143,7 @@ namespace FileDB.ViewModel
             DabaseValidationErrors.Clear();
 
             var filesValidator = new FilesModelValidator();
+            List<int> invalidFileIds = new();
             foreach (var file in Utils.DbAccess.GetFiles())
             {
                 var result = filesValidator.Validate(file);
@@ -140,8 +153,10 @@ namespace FileDB.ViewModel
                     {
                         DabaseValidationErrors.Add($"File {file.Id}: {error.ErrorMessage}");
                     }
+                    invalidFileIds.Add(file.Id);
                 }
             }
+            InvalidFileList = invalidFileIds.Count > 0 ? string.Join(";", invalidFileIds) : string.Empty;
 
             var personValidator = new PersonModelValidator();
             foreach (var person in Utils.DbAccess.GetPersons())
@@ -184,6 +199,11 @@ namespace FileDB.ViewModel
 
             DatabaseValidationResult = DabaseValidationErrors.Count > 0 ? $"{DabaseValidationErrors.Count} errors found:" : $"No errors found.";
             OnPropertyChanged(nameof(DabaseValidationErrors));
+        }
+
+        private void CopyInvalidFileList()
+        {
+            ClipboardService.SetText(InvalidFileList);
         }
     }
 }

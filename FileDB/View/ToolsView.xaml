@@ -9,6 +9,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <converters:EnumerationToVisibilityConverter x:Key="EnumerationToVisibilityConverter" />
+        <converters:StringContentToBoolConverter x:Key="StringContentToBoolConverter"/>
     </UserControl.Resources>
     
     <DockPanel>
@@ -31,7 +32,10 @@
                 </ListBox>
 
                 <Label Style="{StaticResource PageSubHeading}">Database Data Validation</Label>
-                <Button Margin="10" Width="200" Style="{StaticResource NormalButton}" Command="{Binding DatabaseValidationCommand}" HorizontalAlignment="Left">Run validation</Button>
+                <StackPanel Orientation="Horizontal">
+                    <Button Margin="10" Width="200" Style="{StaticResource NormalButton}" Command="{Binding DatabaseValidationCommand}" HorizontalAlignment="Left">Run validation</Button>
+                    <Button Margin="10" Width="200" Style="{StaticResource NormalButton}" Command="{Binding CopyInvalidFileListCommand}" IsEnabled="{Binding InvalidFileList, Converter={StaticResource StringContentToBoolConverter}}" HorizontalAlignment="Left">Copy invalid file list</Button>
+                </StackPanel>
                 <TextBlock Style="{StaticResource PageTextBlock}" Text="{Binding DatabaseValidationResult}"/>
                 <ListBox Visibility="{Binding DabaseValidationErrors, Converter={StaticResource EnumerationToVisibilityConverter}}" Margin="10" ItemsSource="{Binding DabaseValidationErrors}" HorizontalAlignment="Left"/>
             </StackPanel>
