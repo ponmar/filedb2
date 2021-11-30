@@ -1396,7 +1396,7 @@ namespace FileDB.ViewModel
         {
             Persons.Clear();
             var persons = Utils.DbAccess.GetPersons().Select(p => new PersonToUpdate() { Id = p.Id, Name = p.Firstname + " " + p.Lastname }).ToList();
-            persons.Sort(new PersonToAddSorter());
+            persons.Sort(new PersonToUpdateSorter());
             foreach (var person in persons)
             {
                 Persons.Add(person);
@@ -1407,7 +1407,7 @@ namespace FileDB.ViewModel
         {
             Locations.Clear();
             var locations = Utils.DbAccess.GetLocations().Select(l => new LocationToUpdate() { Id = l.Id, Name = l.Name }).ToList();
-            locations.Sort(new LocationToAddSorter());
+            locations.Sort(new LocationToUpdateSorter());
             foreach (var location in locations)
             {
                 Locations.Add(location);
@@ -1418,7 +1418,7 @@ namespace FileDB.ViewModel
         {
             Tags.Clear();
             var tags = Utils.DbAccess.GetTags().Select(t => new TagToUpdate() { Id = t.Id, Name = t.Name }).ToList();
-            tags.Sort(new TagToAddSorter());
+            tags.Sort(new TagToUpdateSorter());
             foreach (var tag in tags)
             {
                 Tags.Add(tag);

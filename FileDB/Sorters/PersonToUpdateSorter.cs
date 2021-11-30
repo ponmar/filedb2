@@ -3,9 +3,9 @@ using FileDB.ViewModel;
 
 namespace FileDB.Sorters
 {
-    public class LocationToAddSorter : IComparer<LocationToUpdate>
+    public class PersonToUpdateSorter : IComparer<PersonToUpdate>
     {
-        public int Compare(LocationToUpdate x, LocationToUpdate y)
+        public int Compare(PersonToUpdate x, PersonToUpdate y)
         {
             return x.Name.CompareTo(y.Name);
         }

@@ -3,7 +3,7 @@ using FileDB.ViewModel;
 
 namespace FileDB.Sorters
 {
-    public class TagToAddSorter : IComparer<TagToUpdate>
+    public class TagToUpdateSorter : IComparer<TagToUpdate>
     {
         public int Compare(TagToUpdate x, TagToUpdate y)
         {
