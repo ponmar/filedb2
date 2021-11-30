@@ -1,4 +1,4 @@
-﻿namespace FileDBInterface.Access
+﻿namespace FileDBInterface.DbAccess
 {
     public interface IDatabaseAccess : IPersonAccess, ILocationAccess, ITagAccess, IFilesystemAccess, IFilesAccess
     {

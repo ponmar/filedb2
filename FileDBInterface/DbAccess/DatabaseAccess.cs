@@ -15,7 +15,7 @@ using log4net.Config;
 using FileDBInterface.Exceptions;
 using FileDBInterface.Validators;
 
-namespace FileDBInterface.Access
+namespace FileDBInterface.DbAccess
 {
     public class DatabaseAccess : IDatabaseAccess
     {

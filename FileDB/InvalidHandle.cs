@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using FileDBInterface.Access;
+using FileDBInterface.DbAccess;
 using FileDBInterface.Model;
 
 namespace FileDB
