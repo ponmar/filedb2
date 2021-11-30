@@ -29,52 +29,52 @@ namespace FileDBInterface
 
         private const string DatabaseCreationSql = @"
 create table files(
-    id integer primary key autoincrement not null,
-    path text unique not null, /* Format: path/to/file/filename */
-    description text,
-    datetime varchar(19), /* Format: YYYY, YYYY-MM-DD or YYYY-MM-DDTHH:MM:SS */
-    position text /* Format: <latitude> <longitude> */
+    Id integer primary key autoincrement not null,
+    Path text unique not null, /* Format: path/to/file/filename */
+    Description text,
+    Datetime varchar(19), /* Format: YYYY, YYYY-MM-DD or YYYY-MM-DDTHH:MM:SS */
+    Position text /* Format: <latitude> <longitude> */
 );
 
 create table persons(
-    id integer primary key autoincrement not null,
-    firstname text not null,
-    lastname text not null,
-    description text,
-    dateofbirth varchar(10), /* Format: YYYY-MM-DD */
-    deceased varchar(10), /* Format: YYYY-MM-DD */
-    profilefileid integer references files(id) on delete set null,
-    sex integer not null default 0 /* Values according to ISO/IEC 5218 (0=Not known, 1=Male, 2=Female, 9=Not applicable) */
+    Id integer primary key autoincrement not null,
+    Firstname text not null,
+    Lastname text not null,
+    Description text,
+    DateOfBirth varchar(10), /* Format: YYYY-MM-DD */
+    Deceased varchar(10), /* Format: YYYY-MM-DD */
+    ProfileFileId integer references files(Id) on delete set null,
+    Sex integer not null default 0 /* Values according to ISO/IEC 5218 (0=Not known, 1=Male, 2=Female, 9=Not applicable) */
 );
 
 create table locations(
-    id integer primary key autoincrement not null,
-    name text unique not null,
-    description text,
-    position text /* Format: <latitude> <longitude> */
+    Id integer primary key autoincrement not null,
+    Name text unique not null,
+    Description text,
+    Position text /* Format: <latitude> <longitude> */
 );
 
 create table tags(
-    id integer primary key autoincrement not null,
-    name text unique not null
+    Id integer primary key autoincrement not null,
+    Name text unique not null
 );
 
 create table filepersons(
-    fileid integer references files(id) on delete cascade,
-    personid integer references persons(id) on delete cascade,
-    primary key(fileid, personid)
+    FileId integer references files(Id) on delete cascade,
+    PersonId integer references persons(Id) on delete cascade,
+    primary key(FileId, PersonId)
 );
 
 create table filelocations(
-    fileid integer references files(id) on delete cascade,
-    locationid integer references locations(id) on delete cascade,
-    primary key(fileid, locationid)
+    FileId integer references files(Id) on delete cascade,
+    LocationId integer references locations(Id) on delete cascade,
+    primary key(FileId, LocationId)
 );
 
 create table filetags(
-    fileid integer references files(id) on delete cascade,
-    tagid integer references tags(id) on delete cascade,
-    primary key(fileid, tagid)
+    FileId integer references files(Id) on delete cascade,
+    TagId integer references tags(Id) on delete cascade,
+    primary key(FileId, TagId)
 );
 ";
 
