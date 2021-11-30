@@ -193,7 +193,7 @@
             </StackPanel>
         </Border>
         <!-- Left side areas -->
-        <StackPanel Orientation="Vertical" Grid.Row="4" Grid.Column="0" Margin="0 15 5 5" Width="225">
+        <StackPanel Orientation="Vertical" Grid.Row="4" Grid.Column="0" Margin="0 15 5 5" Width="235">
             <!-- File categorization -->
             <Border Margin="0 0 0 20" Style="{StaticResource BorderGroup}" Visibility="{Binding ReadWriteMode, Converter={StaticResource BoolToVis}}">
                 <Expander Header="Update" Margin="5" IsExpanded="False">
