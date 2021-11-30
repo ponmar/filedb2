@@ -4,7 +4,7 @@ using System.Linq;
 using FileDBInterface;
 using FileDBInterface.Model;
 
-namespace FileDB.Notifications
+namespace FileDB.Notifiers
 {
     public enum BirthdayNotificationFor { Alive, Deceased }
 

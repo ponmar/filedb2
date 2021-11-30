@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 
-namespace FileDB.Notifications
+namespace FileDB.Notifiers
 {
     public class MissingFilesRootDirNotifier : Notifier
     {

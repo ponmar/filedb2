@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using FileDB.Notifications;
+using FileDB.Notifiers;
 using FileDBInterface;
 
 namespace FileDB.ViewModel

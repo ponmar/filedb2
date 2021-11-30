@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace FileDB.Notifications
+namespace FileDB.Notifiers
 {
     public enum NotificationType { Info, Warning, Error };
 
