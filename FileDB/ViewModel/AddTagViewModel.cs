@@ -33,7 +33,7 @@ namespace FileDB.ViewModel
 
             if (tagId.HasValue)
             {
-                var tagModel = Utils.DatabaseWrapper.GetTagById(tagId.Value);
+                var tagModel = Utils.DbAccess.GetTagById(tagId.Value);
                 Name = tagModel.Name;
             }
         }
@@ -46,11 +46,11 @@ namespace FileDB.ViewModel
 
                 if (tagId.HasValue)
                 {
-                    Utils.DatabaseWrapper.UpdateTag(tag);
+                    Utils.DbAccess.UpdateTag(tag);
                 }
                 else
                 {
-                    Utils.DatabaseWrapper.InsertTag(tag);
+                    Utils.DbAccess.InsertTag(tag);
                 }
             }
             catch (DataValidationException e)

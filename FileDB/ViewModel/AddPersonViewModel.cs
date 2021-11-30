@@ -80,7 +80,7 @@ namespace FileDB.ViewModel
 
             if (personId.HasValue)
             {
-                var personModel = Utils.DatabaseWrapper.GetPersonById(personId.Value);
+                var personModel = Utils.DbAccess.GetPersonById(personId.Value);
                 Firstname = personModel.Firstname;
                 Lastname = personModel.Lastname;
                 Description = personModel.Description;
@@ -127,11 +127,11 @@ namespace FileDB.ViewModel
 
                 if (personId.HasValue)
                 {
-                    Utils.DatabaseWrapper.UpdatePerson(person);
+                    Utils.DbAccess.UpdatePerson(person);
                 }
                 else
                 {
-                    Utils.DatabaseWrapper.InsertPerson(person);
+                    Utils.DbAccess.InsertPerson(person);
                 }
             }
             catch (DataValidationException e)

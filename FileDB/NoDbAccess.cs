@@ -1,27 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using FileDBInterface.DbAccess;
+using FileDBInterface.FilesystemAccess;
 using FileDBInterface.Model;
 
 namespace FileDB
 {
-    public class InvalidHandle : IDatabaseAccess
+    public class NoDbAccess : IDbAccess
     {
-        public IEnumerable<string> ListNewFilesystemFiles(IEnumerable<string> blacklistedFilePathPatterns, IEnumerable<string> whitelistedFilePathPatterns, bool includeHiddenDirectories)
-        {
-            return new List<string>();
-        }
-
-        public IEnumerable<string> ListAllFilesystemDirectories()
-        {
-            return new List<string>();
-        }
-
-        public IEnumerable<FilesModel> GetFilesMissingInFilesystem()
-        {
-            return new List<FilesModel>();
-        }
-
         public IEnumerable<FilesModel> GetFiles()
         {
             return new List<FilesModel>();
@@ -92,11 +78,11 @@ namespace FileDB
             return new List<FilesModel>();
         }
 
-        public void InsertFile(string internalPath, string description = null)
+        public void InsertFile(string internalPath, string description, IFilesystemAccess fileSystemAccess)
         {
         }
 
-        public void UpdateFileFromMetaData(int id)
+        public void UpdateFileFromMetaData(int id, IFilesystemAccess filesystemAccess)
         {
         }
 

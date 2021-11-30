@@ -141,7 +141,7 @@ namespace FileDB.ViewModel
             DabaseValidationErrors.Clear();
 
             var filesValidator = new FilesModelValidator();
-            foreach (var file in Utils.DatabaseWrapper.GetFiles())
+            foreach (var file in Utils.DbAccess.GetFiles())
             {
                 var result = filesValidator.Validate(file);
                 if (!result.IsValid)
@@ -154,7 +154,7 @@ namespace FileDB.ViewModel
             }
 
             var personValidator = new PersonModelValidator();
-            foreach (var person in Utils.DatabaseWrapper.GetPersons())
+            foreach (var person in Utils.DbAccess.GetPersons())
             {
                 var result = personValidator.Validate(person);
                 if (!result.IsValid)
@@ -167,7 +167,7 @@ namespace FileDB.ViewModel
             }
 
             var locationValidator = new LocationModelValidator();
-            foreach (var location in Utils.DatabaseWrapper.GetLocations())
+            foreach (var location in Utils.DbAccess.GetLocations())
             {
                 var result = locationValidator.Validate(location);
                 if (!result.IsValid)
@@ -180,7 +180,7 @@ namespace FileDB.ViewModel
             }
 
             var tagValidator = new TagModelValidator();
-            foreach (var tag in Utils.DatabaseWrapper.GetTags())
+            foreach (var tag in Utils.DbAccess.GetTags())
             {
                 var result = tagValidator.Validate(tag);
                 if (!result.IsValid)

@@ -65,10 +65,10 @@ namespace FileDB.ViewModel
 
         public void RemoveLocation()
         {
-            var filesWithLocation = Utils.DatabaseWrapper.SearchFilesWithLocations(new List<int>() { selectedLocation.GetId() }).ToList();
+            var filesWithLocation = Utils.DbAccess.SearchFilesWithLocations(new List<int>() { selectedLocation.GetId() }).ToList();
             if (filesWithLocation.Count == 0 || Utils.ShowConfirmDialog($"Location is used in {filesWithLocation.Count} files, remove anyway?"))
             {
-                Utils.DatabaseWrapper.DeleteLocation(selectedLocation.GetId());
+                Utils.DbAccess.DeleteLocation(selectedLocation.GetId());
                 ReloadLocations();
             }
         }
@@ -102,7 +102,7 @@ namespace FileDB.ViewModel
         {
             Locations.Clear();
 
-            var locations = Utils.DatabaseWrapper.GetLocations().Select(lm => new Location(lm.Id) { Name = lm.Name, Description = lm.Description, Position = lm.Position });
+            var locations = Utils.DbAccess.GetLocations().Select(lm => new Location(lm.Id) { Name = lm.Name, Description = lm.Description, Position = lm.Position });
             foreach (var location in locations)
             {
                 Locations.Add(location);

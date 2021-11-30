@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using FileDBInterface.FilesystemAccess;
 using FileDBInterface.Model;
 
 namespace FileDBInterface.DbAccess
@@ -10,9 +11,9 @@ namespace FileDBInterface.DbAccess
         public int GetFileCount();
         public FilesModel GetFileById(int id);
         public FilesModel GetFileByPath(string path);
-        public void InsertFile(string internalPath, string description = null);
+        public void InsertFile(string internalPath, string description, IFilesystemAccess filesystemAccess);
         public void DeleteFile(int id);
-        public void UpdateFileFromMetaData(int id);
+        public void UpdateFileFromMetaData(int id, IFilesystemAccess filesystemAccess);
         public void UpdateFileDescription(int id, string description);
 
         public IEnumerable<FilesModel> SearchFiles(string criteria);

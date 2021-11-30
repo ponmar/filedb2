@@ -5,6 +5,7 @@ using System.Windows;
 using FileDB.Notifications;
 using FileDBInterface.DbAccess;
 using FileDBInterface.Exceptions;
+using FileDBInterface.FilesystemAccess;
 using FluentValidation.Results;
 
 namespace FileDB
@@ -15,30 +16,32 @@ namespace FileDB
 
         public static Config.Config Config { get; set; }
 
-        public static IDatabaseAccess DatabaseWrapper
+        public static IDbAccess DbAccess
         {
             get
             {
-                if (databaseWrapper == null)
+                if (dbAccess == null)
                 {
                     ReloadFileDBHandle();
                 }
-                return databaseWrapper;
+                return dbAccess;
             }
         }
-        private static IDatabaseAccess databaseWrapper;
+        private static IDbAccess dbAccess;
 
         public static void ReloadFileDBHandle()
         {
             try
             {
-                databaseWrapper = new DatabaseAccess(Config.Database, Config.FilesRootDirectory);
+                dbAccess = new DbAccess(Config.Database, Config.FilesRootDirectory);
             }
             catch (DatabaseWrapperException)
             {
-                databaseWrapper = new InvalidHandle();
+                dbAccess = new NoDbAccess();
             }
         }
+
+        public static IFilesystemAccess FilesystemAccess { get; } = new FilesystemAccess(Config.FilesRootDirectory);
 
         public static void ShowInfoDialog(string message)
         {

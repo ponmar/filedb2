@@ -35,7 +35,7 @@ namespace FileDB.ViewModel
 
         public BirthdaysViewModel()
         {
-            var persons = Utils.DatabaseWrapper.GetPersons();
+            var persons = Utils.DbAccess.GetPersons();
 
             foreach (var person in persons)
             {
@@ -49,7 +49,7 @@ namespace FileDB.ViewModel
                         Birthday = dateOfBirth.ToString("d MMMM"),
                         DaysLeft = DatabaseUtils.GetDaysToNextBirthday(dateOfBirth),
                         Age = DatabaseUtils.GetYearsAgo(DateTime.Now, dateOfBirth),
-                        ProfileFileIdPath = person.ProfileFileId != null ? Utils.DatabaseWrapper.ToAbsolutePath(Utils.DatabaseWrapper.GetFileById(person.ProfileFileId.Value).Path) : string.Empty,
+                        ProfileFileIdPath = person.ProfileFileId != null ? Utils.FilesystemAccess.ToAbsolutePath(Utils.DbAccess.GetFileById(person.ProfileFileId.Value).Path) : string.Empty,
                     };
 
                     if (p.DaysLeft == 0)

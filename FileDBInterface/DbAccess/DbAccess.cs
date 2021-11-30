@@ -14,17 +14,18 @@ using System.Reflection;
 using log4net.Config;
 using FileDBInterface.Exceptions;
 using FileDBInterface.Validators;
+using FileDBInterface.FilesystemAccess;
 
 namespace FileDBInterface.DbAccess
 {
-    public class DatabaseAccess : IDatabaseAccess
+    public class DbAccess : IDbAccess
     {
         private static readonly ILog log = LogManager.GetLogger("FileDBHandle");
 
         private readonly string database;
         private readonly string filesRootDirectory;
 
-        public DatabaseAccess(string database, string filesRootDirectory, bool allowMissingFilesRootDirectory = true)
+        public DbAccess(string database, string filesRootDirectory, bool allowMissingFilesRootDirectory = true)
         {
             var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
             XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
@@ -55,88 +56,9 @@ namespace FileDBInterface.DbAccess
 
         #region Files collection
 
-        public IEnumerable<string> ListNewFilesystemFiles(IEnumerable<string> blacklistedFilePathPatterns, IEnumerable<string> whitelistedFilePathPatterns, bool includeHiddenDirectories)
-        {
-            foreach (var filename in Directory.GetFiles(filesRootDirectory, "*.*", SearchOption.AllDirectories))
-            {
-                var internalPath = ToFilesPath(filename);
-                if (!PathIsBlacklisted(internalPath, blacklistedFilePathPatterns) &&
-                    PathIsWhitelisted(internalPath, whitelistedFilePathPatterns) &&
-                    PathIsVisible(internalPath, includeHiddenDirectories) &&
-                    !HasFilePath(internalPath))
-                {
-                    yield return internalPath;
-                }
-            }
-        }
-
-        private bool PathIsBlacklisted(string internalPath, IEnumerable<string> blacklistedFilePathPatterns)
-        {
-            return blacklistedFilePathPatterns.FirstOrDefault(pattern => internalPath.IndexOf(pattern) != -1) != null;
-        }
-
-        private bool PathIsWhitelisted(string internalPath, IEnumerable<string> whitelistedFilePathPatterns)
-        {
-            if (whitelistedFilePathPatterns.Count() == 0)
-                return true;
-
-            var pathLower = internalPath.ToLower();
-            return whitelistedFilePathPatterns.FirstOrDefault(pattern => pathLower.EndsWith(pattern)) != null;
-        }
-
-        private bool PathIsVisible(string internalPath, bool includeHiddenDirectories)
-        {
-            return includeHiddenDirectories || !PathIsHidden(internalPath);
-        }
-
-        private bool PathIsHidden(string internalPath)
-        {
-            return internalPath.StartsWith('.') || internalPath.IndexOf("/.") != -1;
-        }
-
-        public IEnumerable<string> ListAllFilesystemDirectories()
-        {
-            var dirs = Directory.GetDirectories(filesRootDirectory, "*.*", SearchOption.AllDirectories);
-            return dirs.Select(p => ToFilesPath(p));
-        }
-
-        private void ParseFileExif(string path, out DateTime? dateTaken, out GeoLocation location)
-        {
-            dateTaken = null;
-            location = null;
-
-            try
-            {
-                var directories = ImageMetadataReader.ReadMetadata(path);
-
-                var subIfdDirectory = directories.OfType<ExifSubIfdDirectory>().FirstOrDefault();
-                dateTaken = subIfdDirectory?.GetDateTime(ExifDirectoryBase.TagDateTimeOriginal);
-
-                var gps = directories.OfType<GpsDirectory>().FirstOrDefault();
-                location = gps?.GetGeoLocation();
-            }
-            catch (IOException)
-            {
-            }
-            catch (ImageProcessingException)
-            {
-            }
-        }
-
         #endregion
 
         #region Tools
-
-        public IEnumerable<FilesModel> GetFilesMissingInFilesystem()
-        {
-            foreach (var file in GetFiles())
-            {
-                if (!File.Exists(ToAbsolutePath(file.Path)))
-                {
-                    yield return file;
-                }
-            }
-        }
 
         #endregion
 
@@ -214,7 +136,7 @@ namespace FileDBInterface.DbAccess
         public FilesModel GetFileByPath(string path)
         {
             using var connection = DatabaseUtils.CreateConnection(database);
-            return connection.QueryFirst<FilesModel>("select * from [files] where Path = @path", new { path = path });
+            return connection.QueryFirstOrDefault<FilesModel>("select * from [files] where Path = @path", new { path = path });
         }
 
         public IEnumerable<FilesModel> SearchFilesByDate(DateTime start, DateTime end)
@@ -263,32 +185,27 @@ namespace FileDBInterface.DbAccess
             }
         }
 
-        private bool HasFilePath(string path)
-        {
-            using var connection = DatabaseUtils.CreateConnection(database);
-            return connection.ExecuteScalar<bool>("select count(1) from [files] where Path=@path", new { path = path });
-        }
-
-        public void InsertFile(string internalPath, string description = null)
+        public void InsertFile(string internalPath, string description, IFilesystemAccess filesystemAccess)
         {
             if (!FilesModelValidator.ValidateDescription(description))
             {
                 throw new DataValidationException("Description invalid");
             }
 
-            internalPath = FixInternalPath(internalPath);
-            var path = ToAbsolutePath(internalPath);
-            if (!File.Exists(path))
+            // TODO: validate should mean no fixing of path is needed?
+            internalPath = filesystemAccess.FixInternalPath(internalPath);
+            var absolutePath = filesystemAccess.ToAbsolutePath(internalPath);
+            if (!File.Exists(absolutePath))
             {
-                throw new DataValidationException($"No such file: {path}");
+                throw new DataValidationException($"No such file: {absolutePath}");
             }
 
-            GetFileMetaData(path, out var datetime, out var position);
+            var fileMetadata = filesystemAccess.GetFileMetaData(absolutePath);
 
             try
             {
                 using var connection = DatabaseUtils.CreateConnection(database);
-                var files = new FilesModel() { Path = internalPath, Description = description, Datetime = datetime, Position = position };
+                var files = new FilesModel() { Path = internalPath, Description = description, Datetime = fileMetadata.Datetime, Position = fileMetadata.Position };
                 var sql = "insert into [files] (Path, Description, Datetime, Position) values (@Path, @Description, @Datetime, @Position)";
                 connection.Execute(sql, files);
             }
@@ -298,33 +215,16 @@ namespace FileDBInterface.DbAccess
             }
         }
 
-        private void GetFileMetaData(string path, out string datetime, out string position)
-        {
-            ParseFileExif(path, out var dateTaken, out var location);
-
-            if (dateTaken != null)
-            {
-                datetime = DatabaseParsing.DateTakenToFilesDatetime(dateTaken.Value);
-            }
-            else
-            {
-                datetime = DatabaseParsing.PathToFilesDatetime(path);
-                // TODO: otherwise try to get year from path? The datebase supports yyyy format also
-            }
-
-            position = location != null ? DatabaseParsing.ToFilesPosition(location.Latitude, location.Longitude) : null;
-        }
-
-        public void UpdateFileFromMetaData(int id)
+        public void UpdateFileFromMetaData(int id, IFilesystemAccess filesystemAccess)
         {
             var file = GetFileById(id);
-            GetFileMetaData(ToAbsolutePath(file.Path), out var datetime, out var position);
+            var fileMetadata = filesystemAccess.GetFileMetaData(filesystemAccess.ToAbsolutePath(file.Path));
 
             try
             {
                 using var connection = DatabaseUtils.CreateConnection(database);
-                var sql = "update [files] set Datetime = @datetime, Position = @position where Id = @id";
-                connection.Execute(sql, new { datetime = datetime, position = position, id = id });
+                var sql = "update [files] set Datetime = @Datetime, Position = @Position where Id = @Id";
+                connection.Execute(sql, new { Datetime = fileMetadata.Datetime, Position = fileMetadata.Position, Id = id });
             }
             catch (SQLiteException e)
             {
@@ -691,41 +591,6 @@ namespace FileDBInterface.DbAccess
             using var connection = DatabaseUtils.CreateConnection(database);
             var sql = "delete from [tags] where Id = @id";
             connection.Execute(sql, new { id = id });
-        }
-
-        #endregion
-
-        #region Helpers
-
-        public string ToAbsolutePath(string internalPath)
-        {
-            var path = Path.Join(filesRootDirectory, internalPath);
-            return FixPath(path);
-        }
-
-        private string ToFilesPath(string path)
-        {
-            if (path.StartsWith(filesRootDirectory))
-            {
-                path = path.Substring(filesRootDirectory.Length);
-            }
-            return FixInternalPath(path);
-        }
-
-        private string FixInternalPath(string path)
-        {
-            path = path.Replace('\\', '/');
-            while (path.StartsWith('/'))
-            {
-                path = path.Substring(1);
-            }
-            return path;
-        }
-
-        private string FixPath(string path)
-        {
-            path = path.Replace('\\', '/');
-            return path;
         }
 
         #endregion
