@@ -99,12 +99,6 @@ namespace FileDBInterface.DbAccess
             return connection.QueryFirst<FilesModel>("select * from [files] where Id = @id", new { id = id });
         }
 
-        private bool HasFileId(int id)
-        {
-            using var connection = DatabaseUtils.CreateConnection(database);
-            return connection.ExecuteScalar<bool>("select count(1) from [files] where Id = @id", new { id });
-        }
-
         public FilesModel GetFileByPath(string path)
         {
             using var connection = DatabaseUtils.CreateConnection(database);
@@ -492,15 +486,6 @@ namespace FileDBInterface.DbAccess
             return connection.ExecuteScalar<int>("select count(*) from [tags]");
         }
 
-        /*
-        public IEnumerable<TagModel> SearchTags(string criteria)
-        {
-            using var connection = DatabaseUtils.CreateConnection(database);
-            var sql = "select * from [tags] where (Name like @criteria)";
-            return connection.Query<TagModel>(sql, new { criteria = "%" + criteria + "%" });
-        }
-        */
-
         public TagModel GetTagById(int id)
         {
             var parameters = new DynamicParameters();
@@ -566,13 +551,5 @@ namespace FileDBInterface.DbAccess
         }
 
         #endregion
-
-        public void ValidatePersonProfileFileId(int? profileFileId)
-        {
-            if (profileFileId != null && !HasFileId(profileFileId.Value))
-            {
-                throw new DataValidationException($"File with id {profileFileId.Value} does not exist");
-            }
-        }
     }
 }
