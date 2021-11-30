@@ -5,7 +5,7 @@ using FileDBInterface.Exceptions;
 using System.Data;
 using System;
 
-namespace FileDBInterface
+namespace FileDBInterface.DbAccess
 {
     public static class DatabaseUtils
     {

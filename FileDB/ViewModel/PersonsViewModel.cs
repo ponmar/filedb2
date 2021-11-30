@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Input;
 using FileDB.View;
 using FileDBInterface;
+using FileDBInterface.DbAccess;
 using FileDBInterface.Model;
 
 namespace FileDB.ViewModel

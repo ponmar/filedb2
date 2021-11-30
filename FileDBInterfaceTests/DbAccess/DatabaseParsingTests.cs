@@ -1,8 +1,8 @@
 using System;
-using FileDBInterface;
+using FileDBInterface.DbAccess;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace FileDBInterfaceTests
+namespace FileDBInterfaceTests.DbAccess
 {
     [TestClass]
     public class DatabaseParsingTests

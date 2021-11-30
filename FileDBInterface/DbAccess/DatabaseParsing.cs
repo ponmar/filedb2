@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
-namespace FileDBInterface
+namespace FileDBInterface.DbAccess
 {
     public class DatabaseParsing
     {

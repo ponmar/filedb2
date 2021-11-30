@@ -4,6 +4,7 @@ using System.Windows.Input;
 using FileDB.Config;
 using FileDB.Validators;
 using FileDBInterface;
+using FileDBInterface.DbAccess;
 using FileDBInterface.Exceptions;
 using Microsoft.Win32;
 

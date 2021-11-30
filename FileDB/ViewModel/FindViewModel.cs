@@ -16,6 +16,7 @@ using FileDBInterface;
 using FileDBInterface.Exceptions;
 using FileDBInterface.Model;
 using TextCopy;
+using FileDBInterface.DbAccess;
 
 namespace FileDB.ViewModel
 {

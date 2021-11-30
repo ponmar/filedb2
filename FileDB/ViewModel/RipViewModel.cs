@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using FileDB.Notifiers;
 using FileDBInterface;
+using FileDBInterface.DbAccess;
 
 namespace FileDB.ViewModel
 {
