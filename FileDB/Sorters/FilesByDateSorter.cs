@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using FileDBInterface;
 using FileDBInterface.Model;
 
 namespace FileDB.Sorters
@@ -20,7 +21,10 @@ namespace FileDB.Sorters
                 return -1;
             }
 
-            return x.Datetime.CompareTo(y.Datetime);
+            var xDatetime = DatabaseParsing.ParseFilesDatetime(x.Datetime).Value;
+            var yDatetime = DatabaseParsing.ParseFilesDatetime(y.Datetime).Value;
+
+            return xDatetime.CompareTo(yDatetime);
         }
     }
 }
