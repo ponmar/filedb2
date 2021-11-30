@@ -9,8 +9,9 @@ namespace FileDB.Sorters
     {
         public int Compare(FilesModel x, FilesModel y)
         {
-            if (x.Datetime == null && y.Datetime == null)
+            if (x.Datetime == y.Datetime)
             {
+                // Note: covers same datetime and when both are null
                 return x.Path.CompareTo(y.Path);
             }
             else if (x.Datetime == null)
