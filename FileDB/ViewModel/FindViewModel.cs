@@ -1016,15 +1016,7 @@ namespace FileDB.ViewModel
 
         public void ExportFileList()
         {
-            if (HasNonEmptySearchResult)
-            {
-                var fileIdList = string.Join(';', SearchResult.Files.Select(f => f.Id));
-                ClipboardService.SetText(fileIdList);
-            }
-            else
-            {
-                ClipboardService.SetText("");
-            }
+            ClipboardService.SetText(Utils.CreateFileList(SearchResult.Files));
         }
 
         private string CreatePositionLink(string position, string defaultValue)

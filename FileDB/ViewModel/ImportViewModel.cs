@@ -6,6 +6,7 @@ using System.Windows.Input;
 using FileDBInterface;
 using FileDBInterface.DbAccess;
 using FileDBInterface.Exceptions;
+using FileDBInterface.Model;
 using Newtonsoft.Json;
 using TextCopy;
 
@@ -89,7 +90,7 @@ namespace FileDB.ViewModel
 
             try
             {
-                List<int> importedFileIds = new();
+                List<FilesModel> importedFiles = new();
 
                 foreach (var newFile in NewFiles)
                 {
@@ -99,7 +100,7 @@ namespace FileDB.ViewModel
 
                     if (importedFile != null)
                     {
-                        importedFileIds.Add(importedFile.Id);
+                        importedFiles.Add(importedFile);
 
                         if (importedFile.Position != null && Utils.Config.FileToLocationMaxDistance > 0.5)
                         {
@@ -117,17 +118,9 @@ namespace FileDB.ViewModel
                         }
                     }
                 }
-
-                if (importedFileIds.Count > 0)
-                {
-                    ImportedFileList = string.Join(";", importedFileIds);
-                    ImportResult = $"{importedFileIds.Count} files imported.";
-                }
-                else
-                {
-                    ImportedFileList = string.Empty;
-                    ImportResult = string.Empty;
-                }
+                
+                ImportedFileList = Utils.CreateFileList(importedFiles);
+                ImportResult = importedFiles.Count > 0 ? $"{importedFiles.Count} files imported." : string.Empty;
             }
             catch (DataValidationException e)
             {

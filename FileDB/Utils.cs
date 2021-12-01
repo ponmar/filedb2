@@ -6,6 +6,7 @@ using FileDB.Notifiers;
 using FileDBInterface.DbAccess;
 using FileDBInterface.Exceptions;
 using FileDBInterface.FilesystemAccess;
+using FileDBInterface.Model;
 using FluentValidation.Results;
 
 namespace FileDB
@@ -113,6 +114,11 @@ namespace FileDB
         public static void OpenUriInBrowser(string uri)
         {
             Process.Start(new ProcessStartInfo(uri) { UseShellExecute = true });
+        }
+
+        public static string CreateFileList(List<FilesModel> files)
+        {
+            return files.Count > 0 ? string.Join(";", files.Select(x => x.Id)) : string.Empty;
         }
     }
 }
