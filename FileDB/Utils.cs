@@ -92,13 +92,13 @@ namespace FileDB
             switch (notification.Type)
             {
                 case NotificationType.Info:
-                    Utils.ShowInfoDialog(notification.Message);
+                    ShowInfoDialog(notification.Message);
                     break;
                 case NotificationType.Warning:
-                    Utils.ShowWarningDialog(notification.Message);
+                    ShowWarningDialog(notification.Message);
                     break;
                 case NotificationType.Error:
-                    Utils.ShowErrorDialog(notification.Message);
+                    ShowErrorDialog(notification.Message);
                     break;
             }
         }
