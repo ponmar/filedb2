@@ -7,6 +7,7 @@ using FileDBInterface;
 using FileDBInterface.DbAccess;
 using FileDBInterface.Exceptions;
 using Newtonsoft.Json;
+using TextCopy;
 
 namespace FileDB.ViewModel
 {
@@ -25,9 +26,26 @@ namespace FileDB.ViewModel
         public ICommand ImportNewFilesCommand => importNewFilesCommand ??= new CommandHandler(ImportNewFiles);
         private ICommand importNewFilesCommand;
 
-        public ObservableCollection<NewFile> NewFiles { get; } = new ObservableCollection<NewFile>();
+        public ICommand CopyImportedFileListCommand => copyImportedFileListCommand ??= new CommandHandler(CopyImportedFileList);
+        private ICommand copyImportedFileListCommand;
+
+        public ObservableCollection<NewFile> NewFiles { get; } = new();
 
         public bool NewFilesAvailable => NewFiles.Count > 0;
+
+        public string ImportResult
+        {
+            get => importResult;
+            set => SetProperty(ref importResult, value);
+        }
+        private string importResult = string.Empty;
+
+        public string ImportedFileList
+        {
+            get => importedFileList;
+            set => SetProperty(ref importedFileList, value);
+        }
+        private string importedFileList = string.Empty;
 
         public ImportViewModel()
         {
@@ -41,6 +59,8 @@ namespace FileDB.ViewModel
             }
 
             NewFiles.Clear();
+            ImportResult = string.Empty;
+            ImportedFileList = string.Empty;
             OnPropertyChanged(nameof(NewFilesAvailable));
 
             var blacklistedFilePathPatterns = Utils.Config.BlacklistedFilePathPatterns.Split(";");
@@ -69,26 +89,44 @@ namespace FileDB.ViewModel
 
             try
             {
+                List<int> importedFileIds = new();
+
                 foreach (var newFile in NewFiles)
                 {
                     Utils.DbAccess.InsertFile(newFile.Path, null, Utils.FilesystemAccess);
 
                     var importedFile = Utils.DbAccess.GetFileByPath(newFile.Path);
 
-                    if (importedFile != null && importedFile.Position != null && Utils.Config.FileToLocationMaxDistance > 0.5)
+                    if (importedFile != null)
                     {
-                        var importedFilePos = DatabaseParsing.ParseFilesPosition(importedFile.Position).Value;
+                        importedFileIds.Add(importedFile.Id);
 
-                        foreach (var locationWithPosition in locations.Where(x => x.Position != null))
+                        if (importedFile.Position != null && Utils.Config.FileToLocationMaxDistance > 0.5)
                         {
-                            var locationPos = DatabaseParsing.ParseFilesPosition(locationWithPosition.Position).Value;
-                            var distance = DatabaseUtils.CalculateDistance(importedFilePos.lat, importedFilePos.lon, locationPos.lat, locationPos.lon);
-                            if (distance < Utils.Config.FileToLocationMaxDistance)
+                            var importedFilePos = DatabaseParsing.ParseFilesPosition(importedFile.Position).Value;
+
+                            foreach (var locationWithPosition in locations.Where(x => x.Position != null))
                             {
-                                Utils.DbAccess.InsertFileLocation(importedFile.Id, locationWithPosition.Id);
+                                var locationPos = DatabaseParsing.ParseFilesPosition(locationWithPosition.Position).Value;
+                                var distance = DatabaseUtils.CalculateDistance(importedFilePos.lat, importedFilePos.lon, locationPos.lat, locationPos.lon);
+                                if (distance < Utils.Config.FileToLocationMaxDistance)
+                                {
+                                    Utils.DbAccess.InsertFileLocation(importedFile.Id, locationWithPosition.Id);
+                                }
                             }
                         }
                     }
+                }
+
+                if (importedFileIds.Count > 0)
+                {
+                    ImportedFileList = string.Join(";", importedFileIds);
+                    ImportResult = $"{importedFileIds.Count} files imported.";
+                }
+                else
+                {
+                    ImportedFileList = string.Empty;
+                    ImportResult = string.Empty;
                 }
             }
             catch (DataValidationException e)
@@ -98,6 +136,11 @@ namespace FileDB.ViewModel
 
             NewFiles.Clear();
             OnPropertyChanged(nameof(NewFilesAvailable));
+        }
+
+        private void CopyImportedFileList()
+        {
+            ClipboardService.SetText(ImportedFileList);
         }
 
         private string GetDateModified(string internalPath)
