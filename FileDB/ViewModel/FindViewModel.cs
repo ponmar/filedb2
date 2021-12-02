@@ -112,20 +112,6 @@ namespace FileDB.ViewModel
         }
     }
 
-    public enum SortMethod
-    {
-        Date,
-        DateDesc,
-        Path,
-        PathDesc,
-    }
-
-    public class SortMethodData
-    {
-        public string Name { get; set; }
-        public SortMethod Method { get; set; }
-    }
-
     public class FindViewModel : ViewModelBase
     {
         private const string RootFolderName = "root";
@@ -161,13 +147,7 @@ namespace FileDB.ViewModel
         public ICommand ToggleRepeatCommand => toggleRepeatCommand ??= new CommandHandler(ToggleRepeat, () => HasNonEmptySearchResult);
         private ICommand toggleRepeatCommand;
 
-        public List<SortMethodData> SortMethods { get; } = new()
-        {
-            new SortMethodData() { Name = "Date (Old - New)", Method = SortMethod.Date },
-            new SortMethodData() { Name = "Date (New - Old)", Method = SortMethod.DateDesc },
-            new SortMethodData() { Name = "Path (A - Z)", Method = SortMethod.Path },
-            new SortMethodData() { Name = "Path (Z - A)", Method = SortMethod.PathDesc },
-        };
+        public List<SortMethodDescription> SortMethods { get; } = Utils.GetSortMethods();
 
         public SortMethod SelectedSortMethod
         {

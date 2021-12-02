@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using FileDB.Notifiers;
+using FileDB.Sorters;
 using FileDBInterface.DbAccess;
 using FileDBInterface.Exceptions;
 using FileDBInterface.FilesystemAccess;
@@ -119,6 +121,16 @@ namespace FileDB
         public static string CreateFileList(List<FilesModel> files)
         {
             return files.Count > 0 ? string.Join(";", files.Select(x => x.Id)) : string.Empty;
+        }
+
+        public static List<SortMethodDescription> GetSortMethods()
+        {
+            List<SortMethodDescription> sortMethods = new();
+            foreach (var value in Enum.GetValues<SortMethod>())
+            {
+                sortMethods.Add(new SortMethodDescription(value));
+            }
+            return sortMethods;
         }
     }
 }
