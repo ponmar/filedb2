@@ -112,6 +112,20 @@ namespace FileDB.ViewModel
         }
     }
 
+    public enum SortMethod
+    {
+        Date,
+        DateDesc,
+        Path,
+        PathDesc,
+    }
+
+    public class SortMethodData
+    {
+        public string Name { get; set; }
+        public SortMethod Method { get; set; }
+    }
+
     public class FindViewModel : ViewModelBase
     {
         private const string RootFolderName = "root";
@@ -147,17 +161,26 @@ namespace FileDB.ViewModel
         public ICommand ToggleRepeatCommand => toggleRepeatCommand ??= new CommandHandler(ToggleRepeat, () => HasNonEmptySearchResult);
         private ICommand toggleRepeatCommand;
 
-        public ICommand SortFilesByDateCommand => sortFilesByDateCommand ??= new CommandHandler(SortFilesByDate, () => HasNonEmptySearchResult);
-        private ICommand sortFilesByDateCommand;
+        public List<SortMethodData> SortMethods { get; } = new()
+        {
+            new SortMethodData() { Name = "Date (Old - New)", Method = SortMethod.Date },
+            new SortMethodData() { Name = "Date (New - Old)", Method = SortMethod.DateDesc },
+            new SortMethodData() { Name = "Path (A - Z)", Method = SortMethod.Path },
+            new SortMethodData() { Name = "Path (Z - A)", Method = SortMethod.PathDesc },
+        };
 
-        public ICommand SortFilesByDateDescCommand => sortFilesByDateDescCommand ??= new CommandHandler(SortFilesByDateDesc, () => HasNonEmptySearchResult);
-        private ICommand sortFilesByDateDescCommand;
-
-        public ICommand SortFilesByPathCommand => sortFilesByPathCommand ??= new CommandHandler(SortFilesByPath, () => HasNonEmptySearchResult);
-        private ICommand sortFilesByPathCommand;
-
-        public ICommand SortFilesByPathDescCommand => sortFilesByPathDescCommand ??= new CommandHandler(SortFilesByPathDesc, () => HasNonEmptySearchResult);
-        private ICommand sortFilesByPathDescCommand;
+        public SortMethod SelectedSortMethod
+        {
+            get => selectedSortMethod;
+            set
+            {
+                if (SetProperty(ref selectedSortMethod, value))
+                {
+                    SortSearchResult(true);
+                }
+            }
+        }
+        private SortMethod selectedSortMethod = SortMethod.Date;
 
         public bool SlideshowActive
         {
@@ -388,6 +411,7 @@ namespace FileDB.ViewModel
                         if (searchResult.Count > 0)
                         {
                             LoadFile(0);
+                            SortSearchResult(false);
                             AddSearchResultToHistory();
                         }
                         else
@@ -404,6 +428,28 @@ namespace FileDB.ViewModel
                     OnPropertyChanged(nameof(HasSearchResult));
                     OnPropertyChanged(nameof(HasNonEmptySearchResult));
                 }
+            }
+        }
+
+        private void SortSearchResult(bool preserveSelection)
+        {
+            switch (SelectedSortMethod)
+            {
+                case SortMethod.Date:
+                    SortFilesByDate(preserveSelection);
+                    break;
+
+                case SortMethod.DateDesc:
+                    SortFilesByDateDesc(preserveSelection);
+                    break;
+
+                case SortMethod.Path:
+                    SortFilesByPath(preserveSelection);
+                    break;
+
+                case SortMethod.PathDesc:
+                    SortFilesByPathDesc(preserveSelection);
+                    break;
             }
         }
 
@@ -673,30 +719,30 @@ namespace FileDB.ViewModel
             return searchResult != null && SearchResultIndex < SearchResult.Count - 1;
         }
 
-        public void SortFilesByDate()
+        public void SortFilesByDate(bool preserveSelection)
         {
-            SortFiles(new FilesByDateSorter());
+            SortFiles(new FilesByDateSorter(), false, preserveSelection);
         }
 
-        public void SortFilesByDateDesc()
+        public void SortFilesByDateDesc(bool preserveSelection)
         {
-            SortFiles(new FilesByDateSorter(), true);
+            SortFiles(new FilesByDateSorter(), true, preserveSelection);
         }
 
-        public void SortFilesByPath()
+        public void SortFilesByPath(bool preserveSelection)
         {
-            SortFiles(new FilesByPathSorter());
+            SortFiles(new FilesByPathSorter(), false, preserveSelection);
         }
 
-        public void SortFilesByPathDesc()
+        public void SortFilesByPathDesc(bool preserveSelection)
         {
-            SortFiles(new FilesByPathSorter(), true);
+            SortFiles(new FilesByPathSorter(), true, preserveSelection);
         }
 
-        private void SortFiles(IComparer<FilesModel> comparer, bool desc = false)
+        private void SortFiles(IComparer<FilesModel> comparer, bool desc, bool preserveSelection)
         {
             StopSlideshow();
-            if (searchResult != null)
+            if (HasNonEmptySearchResult)
             {
                 var selectedFile = searchResult.Files[searchResultIndex];
                 if (desc)
@@ -707,7 +753,7 @@ namespace FileDB.ViewModel
                 {
                     SearchResult.Files.Sort(comparer);
                 }
-                LoadFile(SearchResult.Files.IndexOf(selectedFile));
+                LoadFile(preserveSelection ? SearchResult.Files.IndexOf(selectedFile) : 0);
             }
         }
 
