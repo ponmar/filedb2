@@ -6,7 +6,8 @@
         xmlns:Views="clr-namespace:FileDB.View"
         xmlns:Converters="clr-namespace:FileDB.Converters" xmlns:viewmodel="clr-namespace:FileDB.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:MainViewModel}"
         mc:Ignorable="d"
-        Title="{Binding Title}" Height="768" Width="1024" ResizeMode="CanResize">
+        Title="{Binding Title}" Height="768" Width="1024" ResizeMode="CanResize"
+        Style="{StaticResource Window}">
 
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
@@ -14,71 +15,71 @@
     </Window.Resources>
 
     <Grid>
-        <TabControl TabStripPlacement="Left">
-            <TabItem>
+        <TabControl TabStripPlacement="Left" Style="{StaticResource WindowTabControl}">
+            <TabItem Style="{StaticResource WindowTabItem}">
                 <TabItem.Header>
                     <TextBlock Text="&#x1F50D;" ToolTip="Search" Style="{StaticResource PageIcon}"/>
                 </TabItem.Header>
                 <Views:FindView Margin="10 0 10 10"/>
             </TabItem>
 
-            <TabItem Visibility="{Binding ReadWriteMode, Converter={StaticResource BoolToVis}}">
+            <TabItem Style="{StaticResource WindowTabItem}" Visibility="{Binding ReadWriteMode, Converter={StaticResource BoolToVis}}">
                 <TabItem.Header>
                     <TextBlock Text="&#x1F4C2;" ToolTip="Import" Style="{StaticResource PageIcon}"/>
                 </TabItem.Header>
                 <Views:ImportView Margin="10 0 10 10"/>
             </TabItem>
 
-            <TabItem>
+            <TabItem Style="{StaticResource WindowTabItem}">
                 <TabItem.Header>
                     <TextBlock Text="&#x1F382;" ToolTip="Birthdays" Style="{StaticResource PageIcon}"/>
                 </TabItem.Header>
                 <Views:BirthdaysView Margin="10 0 10 10"/>
             </TabItem>
 
-            <TabItem>
+            <TabItem Style="{StaticResource WindowTabItem}">
                 <TabItem.Header>
                     <TextBlock Text="&#x1FAA6;" ToolTip="Rest in Peace" Style="{StaticResource PageIcon}"/>
                 </TabItem.Header>
                 <Views:RipView Margin="10 0 10 10"/>
             </TabItem>
 
-            <TabItem>
+            <TabItem Style="{StaticResource WindowTabItem}">
                 <TabItem.Header>
                     <TextBlock Text="&#x1F642;" ToolTip="Update Persons" Style="{StaticResource PageIcon}"/>
                 </TabItem.Header>
                 <Views:PersonsView Margin="10 0 10 10"/>
             </TabItem>
 
-            <TabItem>
+            <TabItem Style="{StaticResource WindowTabItem}">
                 <TabItem.Header>
                     <TextBlock Text="&#x1F3E0;" ToolTip="Update Locations" Style="{StaticResource PageIcon}"/>
                 </TabItem.Header>
                 <Views:LocationsView Margin="10 0 10 10"/>
             </TabItem>
 
-            <TabItem>
+            <TabItem Style="{StaticResource WindowTabItem}">
                 <TabItem.Header>
                     <TextBlock Text="&#x1F516;" ToolTip="Update Tags" Style="{StaticResource PageIcon}"/>
                 </TabItem.Header>
                 <Views:TagsView Margin="10 0 10 10"/>
             </TabItem>
 
-            <TabItem Visibility="{Binding ReadWriteMode, Converter={StaticResource BoolToVis}}">
+            <TabItem Style="{StaticResource WindowTabItem}" Visibility="{Binding ReadWriteMode, Converter={StaticResource BoolToVis}}">
                 <TabItem.Header>
                     <TextBlock Text="&#x2692;" ToolTip="Tools" Style="{StaticResource PageIcon}"/>
                 </TabItem.Header>
                 <Views:ToolsView Margin="10 0 10 10"/>
             </TabItem>
 
-            <TabItem>
+            <TabItem Style="{StaticResource WindowTabItem}">
                 <TabItem.Header>
                     <TextBlock Text="&#x1F527;" ToolTip="Settings" Style="{StaticResource PageIcon}"/>
                 </TabItem.Header>
                 <Views:SettingsView Margin="10 0 10 10"/>
             </TabItem>
 
-            <TabItem>
+            <TabItem Style="{StaticResource WindowTabItem}">
                 <TabItem.Header>
                     <TextBlock Text="&#x1F6C8;" ToolTip="About" Style="{StaticResource PageIcon}"/>
                 </TabItem.Header>

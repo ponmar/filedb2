@@ -7,15 +7,15 @@
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     <DockPanel>
-        <Label DockPanel.Dock="Top" Style="{StaticResource PageHeading}" Content="{Binding Heading}"></Label>
+        <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageHeading}" Text="{Binding Heading}"></TextBlock>
         <ScrollViewer>
             <StackPanel Orientation="Vertical" Margin="10">
-                <Label Style="{StaticResource PageSubHeading}">Getting Started</Label>
-                <TextBlock Margin="10" Text="TBD"/>
+                <TextBlock Style="{StaticResource PageSubHeading}">Getting Started</TextBlock>
+                <TextBlock Style="{StaticResource PageTextBlock}" Margin="10" Text="TBD"/>
 
-                <Label Style="{StaticResource PageSubHeading}">Notes About Your Files Collection</Label>
-                <TextBlock TextWrapping="Wrap" Margin="10">FileDB does not modify any files in your file collection. Files are read when adding files, viewing files or when reading Exif-data via the API.</TextBlock>
-                <TextBlock TextWrapping="Wrap" Margin="10">Before adding your files, take a moment to think about the directory structure. Any directory structure can be used for sorting files in your existing collection. However, this layout has been proven to work very well:</TextBlock>
+                <TextBlock Style="{StaticResource PageSubHeading}">Notes About Your Files Collection</TextBlock>
+                <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Margin="10">FileDB does not modify any files in your file collection. Files are read when adding files, viewing files or when reading Exif-data via the API.</TextBlock>
+                <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Margin="10">Before adding your files, take a moment to think about the directory structure. Any directory structure can be used for sorting files in your existing collection. However, this layout has been proven to work very well:</TextBlock>
 
                 <TreeView Margin="10">
                     <TreeViewItem Header="root" IsExpanded="True">
@@ -37,20 +37,20 @@
                     </TreeViewItem>
                 </TreeView>
 
-                <TextBlock TextWrapping="Wrap" Margin="10">File paths in FileDB uses UNIX style directory separators ('/'), mostly because that is how FileDB stores the paths internally.</TextBlock>
-                <TextBlock TextWrapping="Wrap" Margin="10">If you rename or delete files that has been added to FileDB you need to remove them in FileDB as well (and possibly add them again).</TextBlock>
+                <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Margin="10">File paths in FileDB uses UNIX style directory separators ('/'), mostly because that is how FileDB stores the paths internally.</TextBlock>
+                <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Margin="10">If you rename or delete files that has been added to FileDB you need to remove them in FileDB as well (and possibly add them again).</TextBlock>
 
-                <Label Style="{StaticResource PageSubHeading}">Command Line Arguments</Label>
+                <TextBlock Style="{StaticResource PageTextBlock}">Command Line Arguments</TextBlock>
                 <StackPanel Orientation="Horizontal" Margin="10">
-                    <TextBlock>--demo</TextBlock>
-                    <TextBlock Margin="10 0 0 0">Enable demo configuration to play around with</TextBlock>
+                    <TextBlock Style="{StaticResource PageTextBlock}">--demo</TextBlock>
+                    <TextBlock Style="{StaticResource PageTextBlock}" Margin="10 0 0 0">Enable demo configuration to play around with</TextBlock>
                 </StackPanel>
 
-                <Label Style="{StaticResource PageSubHeading}">Changelog</Label>
-                <TextBlock Margin="10" Text="{Binding Changes}"/>
+                <TextBlock Style="{StaticResource PageSubHeading}">Changelog</TextBlock>
+                <TextBlock Style="{StaticResource PageTextBlock}" Margin="10" Text="{Binding Changes}"/>
 
-                <Label Style="{StaticResource PageSubHeading}">Downloads</Label>
-                <TextBlock Margin="10 0 0 0">
+                <TextBlock Style="{StaticResource PageSubHeading}">Downloads</TextBlock>
+                <TextBlock Style="{StaticResource PageTextBlock}" Margin="10 0 0 0">
                     <Hyperlink NavigateUri="{Binding DownloadLink}" RequestNavigate="OpenUri">
                         <TextBlock Text="Click to open" ToolTip="{Binding DownloadLink}"/>
                     </Hyperlink>
