@@ -33,7 +33,7 @@ namespace FileDBInterfaceTests.DbAccess
         public void DatabaseCreationSql_NoSyntaxError()
         {
             using var connection = new SQLiteConnection("Data Source=:memory:");
-            connection.Query(DatabaseUtils.DatabaseCreationSql);
+            connection.Execute(DatabaseUtils.DatabaseCreationSql);
         }
     }
 }

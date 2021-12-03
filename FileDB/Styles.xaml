@@ -9,16 +9,31 @@
         <Setter Property="Margin" Value="3"/>
         <Setter Property="Width" Value="50"/>
         <Setter Property="FontSize" Value="20"/>
+        <Style.Resources>
+            <Style TargetType="Border">
+                <Setter Property="CornerRadius" Value="5" />
+            </Style>
+        </Style.Resources>
     </Style>
 
     <Style x:Key="NavigationToggleButton" TargetType="ToggleButton">
         <Setter Property="Margin" Value="3"/>
         <Setter Property="Width" Value="50"/>
         <Setter Property="FontSize" Value="20"/>
+        <Style.Resources>
+            <Style TargetType="Border">
+                <Setter Property="CornerRadius" Value="5" />
+            </Style>
+        </Style.Resources>
     </Style>
 
     <Style x:Key="NormalButton" TargetType="Button">
         <Setter Property="Padding" Value="3"/>
+        <Style.Resources>
+            <Style TargetType="Border">
+                <Setter Property="CornerRadius" Value="3" />
+            </Style>
+        </Style.Resources>
     </Style>
 
     <Style x:Key="PageButtonHeading" TargetType="Label">
@@ -38,7 +53,7 @@
         <Setter Property="FontSize" Value="18"/>
         <Setter Property="HorizontalAlignment" Value="Left" />
     </Style>
-    
+
     <Style x:Key="PageGrid" TargetType="Grid">
         <Setter Property="Margin" Value="10"/>
         <Setter Property="HorizontalAlignment" Value="Left" />
