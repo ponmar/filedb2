@@ -8,45 +8,47 @@
         Title="{Binding Title}"
         SizeToContent="WidthAndHeight"
         ResizeMode="NoResize"
-        WindowStartupLocation="CenterOwner">
+        WindowStartupLocation="CenterOwner" Style="{StaticResource Window}">
     <StackPanel Orientation="Vertical">
-        <Grid Margin="10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-            </Grid.ColumnDefinitions>
+        <Border Style="{StaticResource BorderGroup}" Margin="5">
+            <Grid Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="Firstname:"/>
-            <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource PageTextBox}" Width="150" Text="{Binding Firstname}"/>
+                <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="Firstname:"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource PageTextBox}" Width="150" Text="{Binding Firstname}"/>
 
-            <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="Lastname:"/>
-            <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource PageTextBox}" Width="150" Text="{Binding Lastname}"/>
+                <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="Lastname:"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource PageTextBox}" Width="150" Text="{Binding Lastname}"/>
 
-            <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="Description (optional):"/>
-            <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource PageTextBox}" Width="150" Text="{Binding Description}"/>
+                <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="Description (optional):"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource PageTextBox}" Width="150" Text="{Binding Description}"/>
 
-            <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="Date of birth (optional):"/>
-            <TextBox Grid.Row="3" Grid.Column="1" Style="{StaticResource PageTextBox}" Width="150" Text="{Binding DateOfBirth}" ToolTip="YYYY-MM-DD"/>
+                <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="Date of birth (optional):"/>
+                <TextBox Grid.Row="3" Grid.Column="1" Style="{StaticResource PageTextBox}" Width="150" Text="{Binding DateOfBirth}" ToolTip="YYYY-MM-DD"/>
 
-            <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="Deceased (optional):"/>
-            <TextBox Grid.Row="4" Grid.Column="1" Style="{StaticResource PageTextBox}" Width="150" Text="{Binding Deceased}" ToolTip="YYYY-MM-DD"/>
+                <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="Deceased (optional):"/>
+                <TextBox Grid.Row="4" Grid.Column="1" Style="{StaticResource PageTextBox}" Width="150" Text="{Binding Deceased}" ToolTip="YYYY-MM-DD"/>
 
-            <TextBlock Grid.Row="5" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="Profile picture file id (optional):"/>
-            <TextBox Grid.Row="5" Grid.Column="1" Style="{StaticResource PageTextBox}" Width="150" Text="{Binding ProfilePictureFileId}"/>
+                <TextBlock Grid.Row="5" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="Profile picture file id (optional):"/>
+                <TextBox Grid.Row="5" Grid.Column="1" Style="{StaticResource PageTextBox}" Width="150" Text="{Binding ProfilePictureFileId}"/>
 
-            <TextBlock Grid.Row="6" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="Sex (ISO/IEC 5218):"/>
-            <ComboBox Grid.Row="6" Grid.Column="1" Style="{StaticResource PageComboBox}" Width="150" ItemsSource="{Binding SexValues}" SelectedItem="{Binding SexSelection}"/>
-        </Grid>
+                <TextBlock Grid.Row="6" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="Sex (ISO/IEC 5218):"/>
+                <ComboBox Grid.Row="6" Grid.Column="1" Style="{StaticResource PageComboBox}" Width="150" ItemsSource="{Binding SexValues}" SelectedItem="{Binding SexSelection}"/>
+            </Grid>
+        </Border>
 
         <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SaveCommand}">Save</Button>
     </StackPanel>

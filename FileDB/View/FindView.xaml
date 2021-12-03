@@ -42,8 +42,11 @@
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource PageHeading}">Search</TextBlock>
         <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource BorderGroup}" Margin="0 0 0 20">
-            <TabControl Margin="5">
-                <TabItem Header="Basic">
+            <TabControl Margin="5" Style="{StaticResource PageTabControl}">
+                <TabItem Style="{StaticResource PageTabItem}">
+                    <TabItem.Header>
+                        <TextBlock Text="Basic" Style="{StaticResource PageTabItemText}" />
+                    </TabItem.Header>
                     <Grid Margin="3">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"/>
@@ -60,21 +63,24 @@
                         <Button Grid.Row="1" Grid.Column="0" Margin="5 5 20 5" Style="{StaticResource NormalButton}" Command="{Binding FindCurrentDirectoryFilesCommand}" VerticalAlignment="Center" ToolTip="Search all files within current file directory (recursive)">Current directory</Button>
 
                         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" Margin="0 0 20 0">
-                            <TextBlock Text="Random files:" Margin="3" VerticalAlignment="Center"/>
-                            <TextBox Margin="3 0 0 0" Width="100" VerticalAlignment="Center" Text="{Binding NumRandomFiles}"/>
+                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="Random files:" Margin="3" VerticalAlignment="Center"/>
+                            <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3 0 0 0" Width="100" VerticalAlignment="Center" Text="{Binding NumRandomFiles}"/>
                             <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding FindRandomFilesCommand}" ToolTip="Search random files">Search</Button>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" Margin="0 0 20 0">
-                            <TextBlock Text="Text:" Margin="3" VerticalAlignment="Center" ToolTip="Search criteria for text (matches file path/description)"/>
-                            <TextBox Margin="3 0 0 0" Width="100" VerticalAlignment="Center" Text="{Binding SearchPattern}" ToolTip="Search criteria for text (matches file path/description)"/>
+                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="Text:" Margin="3" VerticalAlignment="Center" ToolTip="Search criteria for text (matches file path/description)"/>
+                            <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3 0 0 0" Width="100" VerticalAlignment="Center" Text="{Binding SearchPattern}" ToolTip="Search criteria for text (matches file path/description)"/>
                             <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding FindFilesByTextCommand}" ToolTip="Search by text (matches file path/description)">Search</Button>
                         </StackPanel>
 
                         <Button Margin="5" Grid.Row="0" Grid.Column="2" Style="{StaticResource NormalButton}" Command="{Binding FindFilesFromMissingCategorizationCommand}">Search by missing categorization</Button>
                     </Grid>
                 </TabItem>
-                <TabItem Header="Categories">
+                <TabItem Style="{StaticResource PageTabItem}">
+                    <TabItem.Header>
+                        <TextBlock Text="Categories" Style="{StaticResource PageTabItemText}" />
+                    </TabItem.Header>
                     <Grid Margin="3">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"/>
@@ -88,34 +94,34 @@
                         </Grid.RowDefinitions>
 
                         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 20 0">
-                            <TextBlock Text="&#x1F642;" VerticalAlignment="Center" ToolTip="Persons" Margin="3"/>
-                            <ComboBox Width="100" VerticalAlignment="Center" ItemsSource="{Binding Persons}" SelectedItem="{Binding SelectedPersonSearch}" DisplayMemberPath="Name" ToolTip="Persons"/>
+                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="&#x1F642;" VerticalAlignment="Center" ToolTip="Persons" Margin="3"/>
+                            <ComboBox Style="{StaticResource PageInnerComboBox}" Width="100" VerticalAlignment="Center" ItemsSource="{Binding Persons}" SelectedItem="{Binding SelectedPersonSearch}" DisplayMemberPath="Name" ToolTip="Persons"/>
                             <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding FindFilesWithPersonCommand}" ToolTip="Search by person">Search</Button>
                         </StackPanel>
 
                         <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 20 0">
-                            <TextBlock Text="&#x1F3E0;" VerticalAlignment="Center" ToolTip="Locations" Margin="3"/>
-                            <ComboBox Width="100" VerticalAlignment="Center" ItemsSource="{Binding Locations}" SelectedItem="{Binding SelectedLocationSearch}" DisplayMemberPath="Name" ToolTip="Locations"/>
+                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="&#x1F3E0;" VerticalAlignment="Center" ToolTip="Locations" Margin="3"/>
+                            <ComboBox Style="{StaticResource PageInnerComboBox}" Width="100" VerticalAlignment="Center" ItemsSource="{Binding Locations}" SelectedItem="{Binding SelectedLocationSearch}" DisplayMemberPath="Name" ToolTip="Locations"/>
                             <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding FindFilesWithLocationCommand}" ToolTip="Search by location">Search</Button>
                         </StackPanel>
 
                         <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 20 0">
-                            <TextBlock Text="&#x1F516;" VerticalAlignment="Center" ToolTip="Tags" Margin="3"/>
-                            <ComboBox Width="100" VerticalAlignment="Center" ItemsSource="{Binding Tags}" SelectedItem="{Binding SelectedTagSearch}" DisplayMemberPath="Name" ToolTip="Tags"/>
+                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="&#x1F516;" VerticalAlignment="Center" ToolTip="Tags" Margin="3"/>
+                            <ComboBox Style="{StaticResource PageInnerComboBox}" Width="100" VerticalAlignment="Center" ItemsSource="{Binding Tags}" SelectedItem="{Binding SelectedTagSearch}" DisplayMemberPath="Name" ToolTip="Tags"/>
                             <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding FindFilesWithTagCommand}" ToolTip="Search by tag">Search</Button>
                         </StackPanel>
 
                         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 20 0">
-                            <TextBlock Text="Person age:" Margin="3" VerticalAlignment="Center"/>
-                            <TextBox Margin="0 0 0 0" Width="45" VerticalAlignment="Center" Text="{Binding SearchPersonAgeFrom}" ToolTip="From age (years)"/>
-                            <TextBlock Text="-" Margin="3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                            <TextBox Margin="0 0 0 0" Width="45" VerticalAlignment="Center" Text="{Binding SearchPersonAgeTo}" ToolTip="To age (years)"/>
+                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="Person age:" Margin="3" VerticalAlignment="Center"/>
+                            <TextBox Style="{StaticResource PageInnerTextBox}" Margin="0 0 0 0" Width="45" VerticalAlignment="Center" Text="{Binding SearchPersonAgeFrom}" ToolTip="From age (years)"/>
+                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="-" Margin="3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <TextBox Style="{StaticResource PageInnerTextBox}" Margin="0 0 0 0" Width="45" VerticalAlignment="Center" Text="{Binding SearchPersonAgeTo}" ToolTip="To age (years)"/>
                             <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding FindFilesByPersonAgeCommand}" ToolTip="Search for file with persons of the specified age">Search</Button>
                         </StackPanel>
 
                         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 20 0">
-                            <TextBlock Text="Person sex:" Margin="3" VerticalAlignment="Center" ToolTip="ISO/IEC 5218"/>
-                            <ComboBox Margin="3 0 0 0" VerticalAlignment="Center" ToolTip="ISO/IEC 5218" SelectedItem="{Binding SearchBySexSelection}" Width="100">
+                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="Person sex:" Margin="3" VerticalAlignment="Center" ToolTip="ISO/IEC 5218"/>
+                            <ComboBox Style="{StaticResource PageInnerComboBox}" Margin="3 0 0 0" VerticalAlignment="Center" ToolTip="ISO/IEC 5218" SelectedItem="{Binding SearchBySexSelection}" Width="100">
                                 <ComboBoxItem IsSelected="True">NotKnown</ComboBoxItem>
                                 <ComboBoxItem>Male</ComboBoxItem>
                                 <ComboBoxItem>Female</ComboBoxItem>
@@ -125,30 +131,36 @@
                         </StackPanel>
 
                         <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0">
-                            <TextBlock Text="File date:" Margin="3" VerticalAlignment="Center"/>
+                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="File date:" Margin="3" VerticalAlignment="Center"/>
                             <DatePicker Width="105" Margin="3 0 0 0" VerticalAlignment="center" Text="Start" IsTodayHighlighted="True" SelectedDate="{Binding SearchStartDate}" FirstDayOfWeek="Monday"/>
                             <DatePicker Width="105" Margin="3 0 0 0" VerticalAlignment="center" Text="End" IsTodayHighlighted="True" SelectedDate="{Binding SearchEndDate}" FirstDayOfWeek="Monday"/>
                             <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding FindFilesByDateCommand}" ToolTip="Seach files between dates" VerticalAlignment="Center">Search</Button>
                         </StackPanel>
 
                         <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0">
-                            <TextBlock Text="File GPS position:" Margin="3" VerticalAlignment="Center"/>
-                            <TextBox Margin="3 0 0 0" Width="105" VerticalAlignment="Center" Text="{Binding SearchFileGpsPosition}" ToolTip="Format: LAT LON"/>
-                            <TextBox Margin="3 0 0 0" Width="105" VerticalAlignment="Center" Text="{Binding SearchFileGpsRadius}" ToolTip="Radius [m]"/>
+                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="File GPS position:" Margin="3" VerticalAlignment="Center"/>
+                            <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3 0 0 0" Width="105" VerticalAlignment="Center" Text="{Binding SearchFileGpsPosition}" ToolTip="Format: LAT LON"/>
+                            <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3 0 0 0" Width="105" VerticalAlignment="Center" Text="{Binding SearchFileGpsRadius}" ToolTip="Radius [m]"/>
                             <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding FindFilesByGpsPositionCommand}" ToolTip="Seach files between dates" VerticalAlignment="Center">Search</Button>
                         </StackPanel>
                     </Grid>
                 </TabItem>
-                <TabItem Header="List">
+                <TabItem Style="{StaticResource PageTabItem}">
+                    <TabItem.Header>
+                        <TextBlock Text="List" Style="{StaticResource PageTabItemText}" />
+                    </TabItem.Header>
                     <StackPanel Orientation="Horizontal" Margin="3">
-                        <TextBlock Text="Exported file list:" VerticalAlignment="Center"/>
-                        <TextBox Margin="3 0 0 0" Width="100" VerticalAlignment="Center" Text="{Binding FileListSearch}" ToolTip="file1;file2;..."/>
+                        <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="Exported file list:" VerticalAlignment="Center"/>
+                        <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3 0 0 0" Width="100" VerticalAlignment="Center" Text="{Binding FileListSearch}" ToolTip="file1;file2;..."/>
                         <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding FindFilesFromListCommand}" ToolTip="Search by path/description">Search</Button>
                     </StackPanel>
                 </TabItem>
-                <TabItem Header="Browse">
+                <TabItem Style="{StaticResource PageTabItem}">
+                    <TabItem.Header>
+                        <TextBlock Text="Browse" Style="{StaticResource PageTabItemText}" />
+                    </TabItem.Header>
                     <StackPanel Orientation="Vertical" Margin="3" HorizontalAlignment="Left">
-                        <TextBlock Margin="5" Text="Imported directories:"/>
+                        <TextBlock Style="{StaticResource PageInnerTextBlock}" Margin="5" Text="Imported directories:"/>
                         <local:ExtendedTreeView ItemsSource="{Binding Folders}" SelectedItem_="{Binding SelectedFolder, Mode=TwoWay}">
                             <TreeView.ItemTemplate>
                                 <HierarchicalDataTemplate ItemsSource="{Binding Folders}" DataType="{x:Type local2:IFolder}">
@@ -166,7 +178,7 @@
         <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource BorderGroup}" Margin="0 0 0 5">
             <StackPanel Orientation="Vertical" Margin="0 7 0 5">
                 <Grid>
-                    <ProgressBar Minimum="0" Maximum="{Binding SearchNumberOfHits, Mode=OneWay}" Value="{Binding SearchResultItemNumber, Mode=OneWay}" Width="519" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 0 0 5"/>
+                    <ProgressBar Style="{StaticResource PageProgressBar}" Minimum="0" Maximum="{Binding SearchNumberOfHits, Mode=OneWay}" Value="{Binding SearchResultItemNumber, Mode=OneWay}" Width="519" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 0 0 5"/>
                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 0 0 3">
                                     <Run Text="{Binding SearchResultItemNumber, Mode=OneWay}"/>
                                     <Run Text="/"/>
@@ -193,7 +205,7 @@
         <StackPanel Orientation="Vertical" Grid.Row="4" Grid.Column="0" Margin="0 15 5 5" Width="235">
             <!-- File categorization -->
             <Border Margin="0 0 0 20" Style="{StaticResource BorderGroup}" Visibility="{Binding ReadWriteMode, Converter={StaticResource BoolToVis}}">
-                <Expander Header="Update" Margin="5" IsExpanded="False">
+                <Expander Style="{StaticResource Expander}" Header="Update" Margin="5" IsExpanded="False">
                     <StackPanel Orientation="Vertical">
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -209,23 +221,23 @@
                                 <RowDefinition Height="auto"/>
                             </Grid.RowDefinitions>
 
-                            <TextBlock Grid.Row="0" Grid.Column="0" Text="&#x1F642;" VerticalAlignment="Center" Margin="5" ToolTip="Person"/>
-                            <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Persons}" VerticalAlignment="Center" SelectedItem="{Binding SelectedPersonToUpdate}" DisplayMemberPath="Name" ToolTip="Person"/>
+                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Grid.Row="0" Grid.Column="0" Text="&#x1F642;" VerticalAlignment="Center" Margin="5" ToolTip="Person"/>
+                            <ComboBox Style="{StaticResource PageInnerComboBox}" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Persons}" VerticalAlignment="Center" SelectedItem="{Binding SelectedPersonToUpdate}" DisplayMemberPath="Name" ToolTip="Person"/>
                             <Button Grid.Row="0" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding AddFilePersonCommand}" ToolTip="Add selected person to file">+</Button>
                             <Button Grid.Row="0" Grid.Column="3" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding RemoveFilePersonCommand}" ToolTip="Remove selected person from file">-</Button>
 
-                            <TextBlock Grid.Row="1" Grid.Column="0" Text="&#x1F3E0;" VerticalAlignment="Center" Margin="5" ToolTip="Location"/>
-                            <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Locations}" VerticalAlignment="Center" SelectedItem="{Binding SelectedLocationToUpdate}" DisplayMemberPath="Name" ToolTip="Location"/>
+                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Grid.Row="1" Grid.Column="0" Text="&#x1F3E0;" VerticalAlignment="Center" Margin="5" ToolTip="Location"/>
+                            <ComboBox Style="{StaticResource PageInnerComboBox}" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Locations}" VerticalAlignment="Center" SelectedItem="{Binding SelectedLocationToUpdate}" DisplayMemberPath="Name" ToolTip="Location"/>
                             <Button Grid.Row="1" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding AddFileLocationCommand}" ToolTip="Add selected location to file">+</Button>
                             <Button Grid.Row="1" Grid.Column="3" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding RemoveFileLocationCommand}" ToolTip="Remove selected location from file">-</Button>
 
-                            <TextBlock Grid.Row="2" Grid.Column="0" Text="&#x1F516;" VerticalAlignment="Center" Margin="5" ToolTip="Tag"/>
-                            <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Tags}" VerticalAlignment="Center" SelectedItem="{Binding SelectedTagToUpdate}" DisplayMemberPath="Name" ToolTip="Tag"/>
+                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Grid.Row="2" Grid.Column="0" Text="&#x1F516;" VerticalAlignment="Center" Margin="5" ToolTip="Tag"/>
+                            <ComboBox Style="{StaticResource PageInnerComboBox}" Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Tags}" VerticalAlignment="Center" SelectedItem="{Binding SelectedTagToUpdate}" DisplayMemberPath="Name" ToolTip="Tag"/>
                             <Button Grid.Row="2" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding AddFileTagCommand}" ToolTip="Add selected tag to file">+</Button>
                             <Button Grid.Row="2" Grid.Column="3" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding RemoveFileTagCommand}" ToolTip="Remove selected tag from file">-</Button>
 
-                            <TextBlock Grid.Row="3" Grid.Column="0" Text="&#x1F4DD;" VerticalAlignment="Center" Margin="5" ToolTip="File description"/>
-                            <TextBox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Text="{Binding NewFileDescription}" ToolTip="File description"></TextBox>
+                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Grid.Row="3" Grid.Column="0" Text="&#x1F4DD;" VerticalAlignment="Center" Margin="5" ToolTip="File description"/>
+                            <TextBox Style="{StaticResource PageInnerTextBox}" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Text="{Binding NewFileDescription}" ToolTip="File description"></TextBox>
                             <Button Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetFileDescriptionCommand}" ToolTip="Set file description">Set</Button>
                         </Grid>
                         <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding UpdateFileFromMetaDataCommand}" ToolTip="Reload timestamp and GPS location from file">Reload meta-data</Button>
@@ -239,7 +251,7 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                             </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Create:</TextBlock>
+                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Create:</TextBlock>
                             <Button Grid.Row="0" Grid.Column="1" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding CreatePersonCommand}">Person...</Button>
                             <Button Grid.Row="0" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding CreateLocationCommand}">Location...</Button>
                             <Button Grid.Row="0" Grid.Column="3" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding CreateTagCommand}">Tag...</Button>
@@ -253,8 +265,8 @@
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding Shortcut}" FontWeight="Bold" Margin="0,0,10,0"/>
-                                        <TextBlock Text="{Binding Description}"/>
+                                        <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{Binding Shortcut}" FontWeight="Bold" Margin="0,0,10,0"/>
+                                        <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{Binding Description}"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
@@ -264,7 +276,7 @@
             </Border>
             <!-- File info -->
             <Border Style="{StaticResource BorderGroup}" Margin="0 0 0 0">
-                <Expander Header="Information" Margin="5" IsExpanded="True">
+                <Expander Style="{StaticResource Expander}" Header="Information" Margin="5" IsExpanded="True">
                     <StackPanel Orientation="Vertical" Margin="5">
                         <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{Binding CurrentFileDateTime}" Visibility="{Binding CurrentFileDateTime, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
 
@@ -291,7 +303,7 @@
             </Border>
             <!-- Export -->
             <Border Style="{StaticResource BorderGroup}" Margin="0 20 0 0">
-                <Expander Header="Export" Margin="5" IsExpanded="False">
+                <Expander Style="{StaticResource Expander}" Header="Export" Margin="5" IsExpanded="False">
                     <StackPanel Orientation="Vertical">
                         <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding OpenFileLocationCommand}">Open file directory</Button>
                         <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding ExportFileListCommand}">Copy file list</Button>
@@ -300,7 +312,7 @@
             </Border>
             <!-- Search history -->
             <Border Style="{StaticResource BorderGroup}" Margin="0 20 0 0">
-                <Expander Header="Search History" Margin="5" IsExpanded="False">
+                <Expander Style="{StaticResource Expander}" Header="Search History" Margin="5" IsExpanded="False">
                     <StackPanel Orientation="Vertical">
                         <ListView Margin="5" ItemsSource="{Binding SearchResultHistory}" Background="Transparent" BorderThickness="0">
                             <ListView.ItemTemplate>
