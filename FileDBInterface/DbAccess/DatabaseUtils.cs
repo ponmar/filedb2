@@ -27,7 +27,7 @@ namespace FileDBInterface.DbAccess
             return new SQLiteConnection(connectionString);
         }
 
-        private const string DatabaseCreationSql = @"
+        public const string DatabaseCreationSql = @"
 create table files(
     Id integer primary key autoincrement not null,
     Path text unique not null, /* Format: path/to/file/filename */

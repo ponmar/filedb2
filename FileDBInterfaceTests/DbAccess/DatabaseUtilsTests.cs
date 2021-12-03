@@ -1,4 +1,6 @@
 using System;
+using System.Data.SQLite;
+using Dapper;
 using FileDBInterface.DbAccess;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -25,6 +27,13 @@ namespace FileDBInterfaceTests.DbAccess
         {
             var tomorrow = DateTime.Today + TimeSpan.FromDays(1);
             Assert.AreEqual(1, DatabaseUtils.GetDaysToNextBirthday(tomorrow));
+        }
+
+        [TestMethod]
+        public void DatabaseCreationSql_NoSyntaxError()
+        {
+            using var connection = new SQLiteConnection("Data Source=:memory:");
+            connection.Query(DatabaseUtils.DatabaseCreationSql);
         }
     }
 }
