@@ -120,7 +120,7 @@ namespace FileDB.ViewModel
                     Lastname = lastname,
                     DateOfBirth = newDateOfBirth,
                     Deceased = newDeceased,
-                    Description = description,
+                    Description = newDescription,
                     ProfileFileId = newProfileFileId,
                     Sex = SexEnum
                 };
