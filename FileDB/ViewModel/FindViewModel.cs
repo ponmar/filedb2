@@ -156,9 +156,7 @@ namespace FileDB.ViewModel
             {
                 if (SetProperty(ref selectedSortMethod, value))
                 {
-                    // TODO: add setting?
-                    var preserveSelection = false;
-                    SortSearchResult(preserveSelection);
+                    SortSearchResult(Utils.Config.KeepSelectionAfterSort);
                 }
             }
         }

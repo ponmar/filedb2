@@ -58,6 +58,13 @@ namespace FileDB.ViewModel
 
         public List<SortMethodDescription> SortMethods => Utils.GetSortMethods();
 
+        public bool KeepSelectionAfterSort
+        {
+            get => keepSelectionAfterSort;
+            set => SetProperty(ref keepSelectionAfterSort, value);
+        }
+        private bool keepSelectionAfterSort;
+
         public bool IncludeHiddenDirectories
         {
             get => includeHiddenDirectories;
@@ -169,6 +176,9 @@ namespace FileDB.ViewModel
         public ICommand SetDefaultDefaultSortMethodCommand => setDefaultDefaultSortMethodCommand ??= new CommandHandler(x => DefaultSortMethod = DefaultConfigs.Default.DefaultSortMethod);
         private ICommand setDefaultDefaultSortMethodCommand;
 
+        public ICommand SetDefaultKeepSelectionAfterSortCommand => setDefaultKeepSelectionAfterSortCommand ??= new CommandHandler(x => KeepSelectionAfterSort = DefaultConfigs.Default.KeepSelectionAfterSort);
+        private ICommand setDefaultKeepSelectionAfterSortCommand;
+
         public ICommand SetDefaultBlacklistedFilePathPatternsCommand => setDefaultBlacklistedFilePathPatternsCommand ??= new CommandHandler(x => BlacklistedFilePathPatterns = DefaultConfigs.Default.BlacklistedFilePathPatterns);
         private ICommand setDefaultBlacklistedFilePathPatternsCommand;
 
@@ -215,6 +225,7 @@ namespace FileDB.ViewModel
             SlideshowDelay = Utils.Config.SlideshowDelay;
             SearchHistorySize = Utils.Config.SearchHistorySize;
             DefaultSortMethod = Utils.Config.DefaultSortMethod;
+            KeepSelectionAfterSort = Utils.Config.KeepSelectionAfterSort;
             IncludeHiddenDirectories = Utils.Config.IncludeHiddenDirectories;
             BlacklistedFilePathPatterns = Utils.Config.BlacklistedFilePathPatterns;
             WhitelistedFilePathPatterns = Utils.Config.WhitelistedFilePathPatterns;
@@ -247,6 +258,7 @@ namespace FileDB.ViewModel
                 SlideshowDelay,
                 SearchHistorySize,
                 DefaultSortMethod,
+                KeepSelectionAfterSort,
                 ReadOnly,
                 BackupReminder,
                 BirthdayReminder,
