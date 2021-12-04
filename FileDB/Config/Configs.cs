@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using FileDB.Sorters;
 
 namespace FileDB.Config
 {
@@ -12,6 +13,7 @@ namespace FileDB.Config
         bool IncludeHiddenDirectories,
         int SlideshowDelay,
         int SearchHistorySize,
+        SortMethod DefaultSortMethod,
         bool ReadOnly,
         bool BackupReminder,
         bool BirthdayReminder,
@@ -32,6 +34,7 @@ namespace FileDB.Config
                 false,
                 3,
                 4,
+                SortMethod.Date,
                 false,
                 true,
                 true,
@@ -50,6 +53,7 @@ namespace FileDB.Config
                 Default.IncludeHiddenDirectories,
                 Default.SlideshowDelay,
                 Default.SearchHistorySize,
+                Default.DefaultSortMethod,
                 Default.ReadOnly,
                 false,
                 Default.BirthdayReminder,

@@ -196,8 +196,25 @@
 
     <Style x:Key="PageCheckBox" TargetType="CheckBox">
         <Setter Property="Margin" Value="10"/>
-        <Setter Property="Foreground" Value="{StaticResource FgColor1}"/>
-        <Setter Property="Background" Value="{StaticResource FgColor2}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBox">
+                    <Grid>
+                        <Border BorderBrush="{StaticResource FgColor2}" BorderThickness="1">
+                            <Rectangle Margin="1" Width="11" Height="11" x:Name="Equis" Fill="{StaticResource FgColor2}"/>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter TargetName="Equis" Property="Opacity" Value="1" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="false">
+                            <Setter TargetName="Equis" Property="Opacity" Value="0" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <Style x:Key="PageTextBox" TargetType="TextBox">

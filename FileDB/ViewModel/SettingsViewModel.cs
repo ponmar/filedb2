@@ -1,7 +1,9 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows.Input;
 using FileDB.Config;
+using FileDB.Sorters;
 using FileDB.Validators;
 using FileDBInterface;
 using FileDBInterface.DbAccess;
@@ -46,6 +48,15 @@ namespace FileDB.ViewModel
             set => SetProperty(ref searchHistorySize, value);
         }
         private int searchHistorySize;
+
+        public SortMethod DefaultSortMethod
+        {
+            get => defaultSortMethod;
+            set => SetProperty(ref defaultSortMethod, value);
+        }
+        private SortMethod defaultSortMethod;
+
+        public List<SortMethodDescription> SortMethods => Utils.GetSortMethods();
 
         public bool IncludeHiddenDirectories
         {
@@ -148,6 +159,9 @@ namespace FileDB.ViewModel
         public ICommand SetDefaultSearchHistorySizeCommand => setDefaultSearchHistorySizeCommand ??= new CommandHandler(x => SearchHistorySize = DefaultConfigs.Default.SearchHistorySize);
         private ICommand setDefaultSearchHistorySizeCommand;
 
+        public ICommand SetDefaultDefaultSortMethodCommand => setDefaultDefaultSortMethodCommand ??= new CommandHandler(x => DefaultSortMethod = DefaultConfigs.Default.DefaultSortMethod);
+        private ICommand setDefaultDefaultSortMethodCommand;
+
         public ICommand SetDefaultBlacklistedFilePathPatternsCommand => setDefaultBlacklistedFilePathPatternsCommand ??= new CommandHandler(x => BlacklistedFilePathPatterns = DefaultConfigs.Default.BlacklistedFilePathPatterns);
         private ICommand setDefaultBlacklistedFilePathPatternsCommand;
 
@@ -190,6 +204,7 @@ namespace FileDB.ViewModel
             FilesRootDirectory = Utils.Config.FilesRootDirectory;
             SlideshowDelay = Utils.Config.SlideshowDelay;
             SearchHistorySize = Utils.Config.SearchHistorySize;
+            DefaultSortMethod = Utils.Config.DefaultSortMethod;
             IncludeHiddenDirectories = Utils.Config.IncludeHiddenDirectories;
             BlacklistedFilePathPatterns = Utils.Config.BlacklistedFilePathPatterns;
             WhitelistedFilePathPatterns = Utils.Config.WhitelistedFilePathPatterns;
@@ -218,8 +233,9 @@ namespace FileDB.ViewModel
                 BlacklistedFilePathPatterns,
                 WhitelistedFilePathPatterns,
                 IncludeHiddenDirectories,
-                slideshowDelay,
-                searchHistorySize,
+                SlideshowDelay,
+                SearchHistorySize,
+                DefaultSortMethod,
                 ReadOnly,
                 BackupReminder,
                 BirthdayReminder,
