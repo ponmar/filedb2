@@ -20,7 +20,8 @@ namespace FileDB.Config
         bool BirthdayReminderForDeceased,
         bool RipReminder,
         bool MissingFilesRootDirNotification,
-        string LocationLink);
+        string LocationLink,
+        bool MaximizeWindow);
 
     public static class DefaultConfigs
     {
@@ -41,7 +42,8 @@ namespace FileDB.Config
                 true,
                 true,
                 true,
-                "https://www.google.com/maps?q=loc:LAT,LON");
+                "https://www.google.com/maps?q=loc:LAT,LON",
+                false);
 
         public static Config CreateDemo() =>
             new("Demo",
@@ -60,6 +62,7 @@ namespace FileDB.Config
                 Default.BirthdayReminderForDeceased,
                 Default.RipReminder,
                 Default.MissingFilesRootDirNotification,
-                Default.LocationLink);
+                Default.LocationLink,
+                Default.MaximizeWindow);
     }
 }

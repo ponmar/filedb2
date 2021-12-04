@@ -1,4 +1,6 @@
-﻿namespace FileDB.ViewModel
+﻿using System.Windows;
+
+namespace FileDB.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
@@ -9,6 +11,8 @@
         }
         private string title;
 
+        public WindowState WindowState => Utils.Config.MaximizeWindow ? WindowState.Maximized : WindowState.Normal;
+        
         public bool ReadWriteMode
         {
             get => readWriteMode;

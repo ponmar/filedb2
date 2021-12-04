@@ -135,6 +135,13 @@ namespace FileDB.ViewModel
         }
         private int fileToLocationMaxDistance;
 
+        public bool MaximizeWindow
+        {
+            get => maximizeWindow;
+            set => SetProperty(ref maximizeWindow, value);
+        }
+        private bool maximizeWindow;
+
         public ICommand ResetConfigurationCommand => resetConfigurationCommand ??= new CommandHandler(ResetConfiguration);
         private ICommand resetConfigurationCommand;
 
@@ -192,6 +199,9 @@ namespace FileDB.ViewModel
         public ICommand SetDefaultFileToLocationMaxDistanceCommand => setDefaultFileToLocationMaxDistanceCommand ??= new CommandHandler(x => FileToLocationMaxDistance = DefaultConfigs.Default.FileToLocationMaxDistance);
         private ICommand setDefaultFileToLocationMaxDistanceCommand;
 
+        public ICommand SetDefaultMaximizeWindowCommand => setDefaultMaximizeWindowCommand ??= new CommandHandler(x => MaximizeWindow = DefaultConfigs.Default.MaximizeWindow);
+        private ICommand setDefaultMaximizeWindowCommand;
+
         public SettingsViewModel()
         {
             UpdateFromConfiguration();
@@ -216,6 +226,7 @@ namespace FileDB.ViewModel
             MissingFilesRootDirNotification = Utils.Config.MissingFilesRootDirNotification;
             LocationLink = Utils.Config.LocationLink;
             FileToLocationMaxDistance = Utils.Config.FileToLocationMaxDistance;
+            MaximizeWindow = Utils.Config.MaximizeWindow;
         }
 
         public void ResetConfiguration()
@@ -242,7 +253,8 @@ namespace FileDB.ViewModel
                 BirthdayReminderForDeceased,
                 RipReminder,
                 MissingFilesRootDirNotification,
-                LocationLink);
+                LocationLink,
+                MaximizeWindow);
 
             var result = new ConfigValidator().Validate(config);
             if (!result.IsValid)
