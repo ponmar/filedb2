@@ -16,21 +16,23 @@
     <DockPanel>
         <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Update Locations</TextBlock>
         <ScrollViewer PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
-            <StackPanel Style="{StaticResource PageStackPanel}">
-                <StackPanel Orientation="Horizontal" Visibility="{Binding ReadWriteMode, Converter={StaticResource BoolToVis}}">
-                    <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding AddLocationCommand}">Add location...</Button>
-                    <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding EditLocationCommand}" IsEnabled="{Binding SelectedLocation, Converter={StaticResource ValueToBoolConverter}}">Edit selected location...</Button>
-                    <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding RemoveLocationCommand}" IsEnabled="{Binding SelectedLocation, Converter={StaticResource ValueToBoolConverter}}">Delete selected location...</Button>
-                </StackPanel>
+            <Border Style="{StaticResource BorderGroup}" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <StackPanel Style="{StaticResource PageStackPanel}">
+                        <StackPanel Orientation="Horizontal" Visibility="{Binding ReadWriteMode, Converter={StaticResource BoolToVis}}">
+                            <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding AddLocationCommand}">Add location...</Button>
+                            <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding EditLocationCommand}" IsEnabled="{Binding SelectedLocation, Converter={StaticResource ValueToBoolConverter}}">Edit selected location...</Button>
+                            <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding RemoveLocationCommand}" IsEnabled="{Binding SelectedLocation, Converter={StaticResource ValueToBoolConverter}}">Delete selected location...</Button>
+                        </StackPanel>
 
-                <DataGrid Margin="10" ItemsSource="{Binding Locations}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="SelectionChanged">
-                            <i:InvokeCommandAction Command="{Binding LocationSelectionCommand}" CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </DataGrid>
-            </StackPanel>
+                        <DataGrid Margin="10" ItemsSource="{Binding Locations}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding LocationSelectionCommand}" CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </DataGrid>
+                </StackPanel>
+            </Border>
         </ScrollViewer>
     </DockPanel>
 </UserControl>

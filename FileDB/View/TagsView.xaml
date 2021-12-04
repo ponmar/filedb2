@@ -17,21 +17,23 @@
     <DockPanel>
         <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Update Tags</TextBlock>
         <ScrollViewer PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
-            <StackPanel Style="{StaticResource PageStackPanel}">
-                <StackPanel Orientation="Horizontal" Visibility="{Binding ReadWriteMode, Converter={StaticResource BoolToVis}}">
-                    <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding AddTagCommand}">Add tag...</Button>
-                    <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding EditTagCommand}" IsEnabled="{Binding SelectedTag, Converter={StaticResource ValueToBoolConverter}}">Edit selected tag...</Button>
-                    <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding RemoveTagCommand}" IsEnabled="{Binding SelectedTag, Converter={StaticResource ValueToBoolConverter}}">Delete selected tag...</Button>
-                </StackPanel>
+            <Border Style="{StaticResource BorderGroup}" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <StackPanel Style="{StaticResource PageStackPanel}">
+                    <StackPanel Orientation="Horizontal" Visibility="{Binding ReadWriteMode, Converter={StaticResource BoolToVis}}">
+                        <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding AddTagCommand}">Add tag...</Button>
+                        <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding EditTagCommand}" IsEnabled="{Binding SelectedTag, Converter={StaticResource ValueToBoolConverter}}">Edit selected tag...</Button>
+                        <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding RemoveTagCommand}" IsEnabled="{Binding SelectedTag, Converter={StaticResource ValueToBoolConverter}}">Delete selected tag...</Button>
+                    </StackPanel>
 
-                <DataGrid Margin="10" ItemsSource="{Binding Tags}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="SelectionChanged">
-                            <i:InvokeCommandAction Command="{Binding TagSelectionCommand}" CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </DataGrid>
-            </StackPanel>
+                    <DataGrid Margin="10" ItemsSource="{Binding Tags}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding TagSelectionCommand}" CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </DataGrid>
+                </StackPanel>
+            </Border>
         </ScrollViewer>
     </DockPanel>
 </UserControl>

@@ -13,23 +13,21 @@
     <DockPanel>
         <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Import</TextBlock>
         <ScrollViewer>
-            <StackPanel>
-                <Border Style="{StaticResource BorderGroup}">
-                    <StackPanel Orientation="Vertical" Style="{StaticResource PageStackPanel}">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Style="{StaticResource PageWarning}">&#x26A0;</TextBlock>
-                            <TextBlock Style="{StaticResource PageTextBlock}">Check your settings to adjust what files will be listed.</TextBlock>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Button Style="{StaticResource NormalButton}" Width="150" Margin="10" Command="{Binding ScanNewFilesCommand}">Find files...</Button>
-                            <Button Style="{StaticResource NormalButton}" Width="150" Margin="10" Command="{Binding ImportNewFilesCommand}" IsEnabled="{Binding NewFilesAvailable}">Import listed files</Button>
-                            <Button Style="{StaticResource NormalButton}" Width="150" Margin="10" Command="{Binding CopyImportedFileListCommand}" IsEnabled="{Binding ImportedFileList, Converter={StaticResource StringContentToBoolConverter}}">Copy imported file list</Button>
-                        </StackPanel>
-                        <DataGrid Margin="10" ItemsSource="{Binding NewFiles}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="false" CanUserDeleteRows="false" IsReadOnly="True"/>
-                        <TextBlock Margin="10" Text="{Binding ImportResult}"/>
+            <Border Style="{StaticResource BorderGroup}" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <StackPanel Orientation="Vertical" Style="{StaticResource PageStackPanel}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource PageWarning}">&#x26A0;</TextBlock>
+                        <TextBlock Style="{StaticResource PageTextBlock}">Check your settings to adjust what files will be listed.</TextBlock>
                     </StackPanel>
-                </Border>
-            </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Style="{StaticResource NormalButton}" Width="150" Margin="10" Command="{Binding ScanNewFilesCommand}">Find files...</Button>
+                        <Button Style="{StaticResource NormalButton}" Width="150" Margin="10" Command="{Binding ImportNewFilesCommand}" IsEnabled="{Binding NewFilesAvailable}">Import listed files</Button>
+                        <Button Style="{StaticResource NormalButton}" Width="150" Margin="10" Command="{Binding CopyImportedFileListCommand}" IsEnabled="{Binding ImportedFileList, Converter={StaticResource StringContentToBoolConverter}}">Copy imported file list</Button>
+                    </StackPanel>
+                    <DataGrid Margin="10" ItemsSource="{Binding NewFiles}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="false" CanUserDeleteRows="false" IsReadOnly="True"/>
+                    <TextBlock Margin="10" Text="{Binding ImportResult}"/>
+                </StackPanel>
+            </Border>
         </ScrollViewer>
     </DockPanel>
 </UserControl>

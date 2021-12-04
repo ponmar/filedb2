@@ -5,56 +5,71 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:FileDB.View"
              mc:Ignorable="d"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="1000" d:DesignWidth="800">
     <DockPanel>
         <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageHeading}" Text="{Binding Heading}"></TextBlock>
         <ScrollViewer>
             <StackPanel Orientation="Vertical" Margin="10">
                 <TextBlock Style="{StaticResource PageSubHeading}">Getting Started</TextBlock>
-                <TextBlock Style="{StaticResource PageTextBlock}" Margin="10" Text="TBD"/>
+                <Border Style="{StaticResource BorderGroup}">
+                    <TextBlock Style="{StaticResource PageTextBlock}" Margin="10" Text="TBD"/>
+                </Border>
 
                 <TextBlock Style="{StaticResource PageSubHeading}">Notes About Your Files Collection</TextBlock>
-                <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Margin="10">FileDB does not modify any files in your file collection. Files are read when adding files, viewing files or when reading Exif-data via the API.</TextBlock>
-                <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Margin="10">Before adding your files, take a moment to think about the directory structure. Any directory structure can be used for sorting files in your existing collection. However, this layout has been proven to work very well:</TextBlock>
+                <Border Style="{StaticResource BorderGroup}">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Margin="10">FileDB does not modify any files in your file collection. Files are read when adding files, viewing files or when reading Exif-data via the API.</TextBlock>
+                        <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Margin="10">Before adding your files, take a moment to think about the directory structure. Any directory structure can be used for sorting files in your existing collection. However, this layout has been proven to work very well:</TextBlock>
 
-                <TreeView Margin="10">
-                    <TreeViewItem Header="root" IsExpanded="True">
-                        <TreeViewItem Header="2015" IsExpanded="True">
-                            <TreeViewItem Header="2015-06-12 - Biking" IsExpanded="True">
-                                <TreeViewItem Header="file1.jpg"/>
-                                <TreeViewItem Header="file2.jpg"/>
+                        <TreeView Margin="10">
+                            <TreeViewItem Header="root" IsExpanded="True">
+                                <TreeViewItem Header="2015" IsExpanded="True">
+                                    <TreeViewItem Header="2015-06-12 - Biking" IsExpanded="True">
+                                        <TreeViewItem Header="file1.jpg"/>
+                                        <TreeViewItem Header="file2.jpg"/>
+                                    </TreeViewItem>
+                                    <TreeViewItem Header="2015-07-13 - Birthday party" IsExpanded="True">
+                                        <TreeViewItem Header="somefile1.jpg"/>
+                                    </TreeViewItem>
+                                </TreeViewItem>
+                                <TreeViewItem Header="2016" IsExpanded="True">
+                                    <TreeViewItem Header="2016-01-05 - Something else" IsExpanded="True">
+                                        <TreeViewItem Header="anotherfile1.jpg"/>
+                                        <TreeViewItem Header="anotherfile2.jpg"/>
+                                    </TreeViewItem>
+                                </TreeViewItem>
                             </TreeViewItem>
-                            <TreeViewItem Header="2015-07-13 - Birthday party" IsExpanded="True">
-                                <TreeViewItem Header="somefile1.jpg"/>
-                            </TreeViewItem>
-                        </TreeViewItem>
-                        <TreeViewItem Header="2016" IsExpanded="True">
-                            <TreeViewItem Header="2016-01-05 - Something else" IsExpanded="True">
-                                <TreeViewItem Header="anotherfile1.jpg"/>
-                                <TreeViewItem Header="anotherfile2.jpg"/>
-                            </TreeViewItem>
-                        </TreeViewItem>
-                    </TreeViewItem>
-                </TreeView>
+                        </TreeView>
 
-                <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Margin="10">File paths in FileDB uses UNIX style directory separators ('/'), mostly because that is how FileDB stores the paths internally.</TextBlock>
-                <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Margin="10">If you rename or delete files that has been added to FileDB you need to remove them in FileDB as well (and possibly add them again).</TextBlock>
+                        <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Margin="10">File paths in FileDB uses UNIX style directory separators ('/'), mostly because that is how FileDB stores the paths internally.</TextBlock>
+                        <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Margin="10">If you rename or delete files that has been added to FileDB you need to remove them in FileDB as well (and possibly add them again).</TextBlock>
+                    </StackPanel>
+                </Border>
 
-                <TextBlock Style="{StaticResource PageTextBlock}">Command Line Arguments</TextBlock>
-                <StackPanel Orientation="Horizontal" Margin="10">
-                    <TextBlock Style="{StaticResource PageTextBlock}">--demo</TextBlock>
-                    <TextBlock Style="{StaticResource PageTextBlock}" Margin="10 0 0 0">Enable demo configuration to play around with</TextBlock>
-                </StackPanel>
+                <TextBlock Style="{StaticResource PageSubHeading}">Command Line Arguments</TextBlock>
+                <Border Style="{StaticResource BorderGroup}">
+                    <StackPanel Orientation="Horizontal" Margin="10">
+                        <TextBlock Style="{StaticResource PageTextBlock}">--demo</TextBlock>
+                        <TextBlock Style="{StaticResource PageTextBlock}">Enable demo configuration to play around with</TextBlock>
+                    </StackPanel>
+                </Border>
 
                 <TextBlock Style="{StaticResource PageSubHeading}">Changelog</TextBlock>
-                <TextBlock Style="{StaticResource PageTextBlock}" Margin="10" Text="{Binding Changes}"/>
+                <Border Style="{StaticResource BorderGroup}">
+                    <TextBlock Style="{StaticResource PageTextBlock}" Margin="10" Text="{Binding Changes}"/>
+                </Border>
 
                 <TextBlock Style="{StaticResource PageSubHeading}">Downloads</TextBlock>
-                <TextBlock Style="{StaticResource PageTextBlock}" Margin="10 0 0 0">
-                    <Hyperlink NavigateUri="{Binding DownloadLink}" RequestNavigate="OpenUri">
-                        <TextBlock Text="Click to open" ToolTip="{Binding DownloadLink}"/>
-                    </Hyperlink>
-                </TextBlock>
+                <Border Style="{StaticResource BorderGroup}">
+                    <StackPanel Orientation="Horizontal" Margin="10">
+                        <TextBlock Style="{StaticResource PageTextBlock}" Text="Releases:"/>
+                        <TextBlock Style="{StaticResource PageTextBlock}">
+                            <Hyperlink NavigateUri="{Binding DownloadLink}" RequestNavigate="OpenUri">
+                                <TextBlock Text="Click to open" ToolTip="{Binding DownloadLink}"/>
+                            </Hyperlink>
+                        </TextBlock>
+                    </StackPanel>
+                </Border>
             </StackPanel>
         </ScrollViewer>
     </DockPanel>

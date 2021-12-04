@@ -16,21 +16,23 @@
     <DockPanel>
         <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Update Persons</TextBlock>
         <ScrollViewer PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
-            <StackPanel Style="{StaticResource PageStackPanel}">
-                <StackPanel Orientation="Horizontal" Visibility="{Binding ReadWriteMode, Converter={StaticResource BoolToVis}}">
-                    <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding AddPersonCommand}">Add person...</Button>
-                    <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding EditPersonCommand}" IsEnabled="{Binding SelectedPerson, Converter={StaticResource ValueToBoolConverter}}">Edit selected person...</Button>
-                    <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding RemovePersonCommand}" IsEnabled="{Binding SelectedPerson, Converter={StaticResource ValueToBoolConverter}}">Delete selected person...</Button>
-                </StackPanel>
+            <Border Style="{StaticResource BorderGroup}" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <StackPanel Style="{StaticResource PageStackPanel}">
+                    <StackPanel Orientation="Horizontal" Visibility="{Binding ReadWriteMode, Converter={StaticResource BoolToVis}}">
+                        <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding AddPersonCommand}">Add person...</Button>
+                        <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding EditPersonCommand}" IsEnabled="{Binding SelectedPerson, Converter={StaticResource ValueToBoolConverter}}">Edit selected person...</Button>
+                        <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding RemovePersonCommand}" IsEnabled="{Binding SelectedPerson, Converter={StaticResource ValueToBoolConverter}}">Delete selected person...</Button>
+                    </StackPanel>
 
-                <DataGrid Margin="10" ItemsSource="{Binding Persons}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="SelectionChanged">
-                            <i:InvokeCommandAction Command="{Binding PersonSelectionCommand}" CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </DataGrid>
-            </StackPanel>
+                    <DataGrid Margin="10" ItemsSource="{Binding Persons}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding PersonSelectionCommand}" CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </DataGrid>
+                </StackPanel>
+            </Border>
         </ScrollViewer>
     </DockPanel>
 </UserControl>
