@@ -280,16 +280,16 @@
                     <StackPanel Orientation="Vertical" Margin="5">
                         <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{Binding CurrentFileDateTime}" Visibility="{Binding CurrentFileDateTime, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
 
-                        <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="&#x1F642;" Margin="0 10 0 0" Visibility="{Binding CurrentFilePersons, Converter={local1:StringNullOrEmptyToVisibilityConverter}}" ToolTip="Persons"/>
+                        <TextBlock Style="{StaticResource PageHighlightedTextBlock}" Text="&#x1F642;" Margin="0 10 0 0" Visibility="{Binding CurrentFilePersons, Converter={local1:StringNullOrEmptyToVisibilityConverter}}" ToolTip="Persons"/>
                         <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{Binding CurrentFilePersons}" Margin="0 0 10 0" Visibility="{Binding CurrentFilePersons, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
 
-                        <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="&#x1F3E0;" Margin="0 10 0 0" Visibility="{Binding CurrentFileLocations, Converter={local1:StringNullOrEmptyToVisibilityConverter}}" ToolTip="Locations"/>
+                        <TextBlock Style="{StaticResource PageHighlightedTextBlock}" Text="&#x1F3E0;" Margin="0 10 0 0" Visibility="{Binding CurrentFileLocations, Converter={local1:StringNullOrEmptyToVisibilityConverter}}" ToolTip="Locations"/>
                         <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{Binding CurrentFileLocations}" Margin="0 0 10 0" Visibility="{Binding CurrentFileLocations, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
 
-                        <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="&#x1F516;" Margin="0 10 0 0" Visibility="{Binding CurrentFileTags, Converter={local1:StringNullOrEmptyToVisibilityConverter}}" ToolTip="Tags"/>
+                        <TextBlock Style="{StaticResource PageHighlightedTextBlock}" Text="&#x1F516;" Margin="0 10 0 0" Visibility="{Binding CurrentFileTags, Converter={local1:StringNullOrEmptyToVisibilityConverter}}" ToolTip="Tags"/>
                         <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{Binding CurrentFileTags}" Margin="0 0 10 0" Visibility="{Binding CurrentFileTags, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
 
-                        <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="&#x1F6F0;" Margin="0 10 0 0" Visibility="{Binding CurrentFilePosition, Converter={local1:StringNullOrEmptyToVisibilityConverter}}" ToolTip="GPS position"/>
+                        <TextBlock Style="{StaticResource PageHighlightedTextBlock}" Text="&#x1F6F0;" Margin="0 10 0 0" Visibility="{Binding CurrentFilePosition, Converter={local1:StringNullOrEmptyToVisibilityConverter}}" ToolTip="GPS position"/>
                         <TextBlock Style="{StaticResource PageInnerTextBlock}" Margin="0 0 10 0" Visibility="{Binding CurrentFilePosition, Converter={local1:StringNullOrEmptyToVisibilityConverter}}">
                             <Hyperlink NavigateUri="{Binding CurrentFilePositionLink}" RequestNavigate="OpenLocationUri">
                                 <TextBlock Text="{Binding CurrentFilePosition}" Visibility="{Binding CurrentFilePosition, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
