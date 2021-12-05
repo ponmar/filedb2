@@ -45,7 +45,7 @@ namespace FileDB.Config
                 true,
                 true,
                 "https://www.google.com/maps?q=loc:LAT,LON",
-                false);
+                true);
 
         public static Config CreateDemo() =>
             new("Demo",
