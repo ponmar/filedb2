@@ -141,11 +141,14 @@ namespace FileDB.ViewModel
         public ICommand ToggleSlideshowCommand => toggleSlideshowCommand ??= new CommandHandler(ToggleSlideshow, () => HasNonEmptySearchResult);
         private ICommand toggleSlideshowCommand;
 
-        public ICommand ToggleRandomCommand => toggleRandomCommand ??= new CommandHandler(ToggleRandom, () => HasNonEmptySearchResult);
+        public ICommand ToggleRandomCommand => toggleRandomCommand ??= new CommandHandler(() => {}, () => HasNonEmptySearchResult);
         private ICommand toggleRandomCommand;
 
-        public ICommand ToggleRepeatCommand => toggleRepeatCommand ??= new CommandHandler(ToggleRepeat, () => HasNonEmptySearchResult);
+        public ICommand ToggleRepeatCommand => toggleRepeatCommand ??= new CommandHandler(() => {}, () => HasNonEmptySearchResult);
         private ICommand toggleRepeatCommand;
+
+        public ICommand CloseSearchCommand => closeSearchCommand ??= new CommandHandler(() => { SearchResult = null; }, () => HasNonEmptySearchResult);
+        private ICommand closeSearchCommand;
 
         public List<SortMethodDescription> SortMethods { get; } = Utils.GetSortMethods();
 
@@ -747,14 +750,6 @@ namespace FileDB.ViewModel
             {
                 StopSlideshow();
             }
-        }
-
-        public void ToggleRandom()
-        {
-        }
-
-        public void ToggleRepeat()
-        {
         }
 
         private void StartSlideshow()

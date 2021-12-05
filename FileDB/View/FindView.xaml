@@ -207,9 +207,12 @@
                     </StackPanel>
                     <TextBlock Style="{StaticResource PageInnerTextBlock}" Margin="0 3 0 0" HorizontalAlignment="Center" Text="{Binding CurrentFileInternalDirectoryPath}"/>
                 </StackPanel>
-                <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Margin="5">
-                    <TextBlock Style="{StaticResource PageInnerTextBlock}" VerticalAlignment="Center" Margin="20 3 3 3">Sort by:</TextBlock>
-                    <ComboBox Width="125" ItemsSource="{Binding SortMethods}" DisplayMemberPath="Name" SelectedValuePath="Method" SelectedValue="{Binding SelectedSortMethod}" VerticalAlignment="Center"/>
+                <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical">
+                    <Button Style="{StaticResource NormalButton}" Command="{Binding CloseSearchCommand}" Margin="5" Content="Close" Width="50" HorizontalAlignment="Right"/>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <TextBlock Style="{StaticResource PageInnerTextBlock}" VerticalAlignment="Center" Margin="20 3 3 3">Sort by:</TextBlock>
+                        <ComboBox Width="125" ItemsSource="{Binding SortMethods}" DisplayMemberPath="Name" SelectedValuePath="Method" SelectedValue="{Binding SelectedSortMethod}" VerticalAlignment="Center"/>
+                    </StackPanel>
                 </StackPanel>
             </Grid>
         </Border>
