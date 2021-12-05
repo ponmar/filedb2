@@ -313,7 +313,7 @@
                             </Hyperlink>
                         </TextBlock>
 
-                        <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="&#x1F4DD;" Margin="0 10 0 0" Visibility="{Binding CurrentFileDescription, Converter={local1:StringNullOrEmptyToVisibilityConverter}}" ToolTip="Description"/>
+                        <TextBlock Style="{StaticResource PageHighlightedTextBlock}" Text="&#x1F4DD;" Margin="0 10 0 0" Visibility="{Binding CurrentFileDescription, Converter={local1:StringNullOrEmptyToVisibilityConverter}}" ToolTip="Description"/>
                         <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{Binding CurrentFileDescription}" ToolTip="{Binding CurrentFileDescription}" Margin="0 0 10 0" TextWrapping="Wrap" Visibility="{Binding CurrentFileDescription, Converter={local1:StringNullOrEmptyToVisibilityConverter}}" HorizontalAlignment="Left"/>
                     </StackPanel>
                 </Expander>
