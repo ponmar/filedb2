@@ -21,21 +21,21 @@
                         <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Margin="10">FileDB does not modify any files in your file collection. Files are read when adding files, viewing files or when reading Exif-data via the API.</TextBlock>
                         <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Margin="10">Before adding your files, take a moment to think about the directory structure. Any directory structure can be used for sorting files in your existing collection. However, this layout has been proven to work very well:</TextBlock>
 
-                        <TreeView Margin="10">
-                            <TreeViewItem Header="root" IsExpanded="True">
-                                <TreeViewItem Header="2015" IsExpanded="True">
-                                    <TreeViewItem Header="2015-06-12 - Biking" IsExpanded="True">
-                                        <TreeViewItem Header="file1.jpg"/>
-                                        <TreeViewItem Header="file2.jpg"/>
+                        <TreeView Margin="10" Style="{StaticResource PageTreeView}">
+                            <TreeViewItem Header="root" IsExpanded="True" Style="{StaticResource PageTreeViewItem}">
+                                <TreeViewItem Header="2015" IsExpanded="True" Style="{StaticResource PageTreeViewItem}">
+                                    <TreeViewItem Header="2015-06-12 - Biking" IsExpanded="True" Style="{StaticResource PageTreeViewItem}">
+                                        <TreeViewItem Header="file1.jpg" Style="{StaticResource PageTreeViewItem}"/>
+                                        <TreeViewItem Header="file2.jpg" Style="{StaticResource PageTreeViewItem}"/>
                                     </TreeViewItem>
-                                    <TreeViewItem Header="2015-07-13 - Birthday party" IsExpanded="True">
-                                        <TreeViewItem Header="somefile1.jpg"/>
+                                    <TreeViewItem Header="2015-07-13 - Birthday party" IsExpanded="True" Style="{StaticResource PageTreeViewItem}">
+                                        <TreeViewItem Header="somefile1.jpg" Style="{StaticResource PageTreeViewItem}"/>
                                     </TreeViewItem>
                                 </TreeViewItem>
-                                <TreeViewItem Header="2016" IsExpanded="True">
-                                    <TreeViewItem Header="2016-01-05 - Something else" IsExpanded="True">
-                                        <TreeViewItem Header="anotherfile1.jpg"/>
-                                        <TreeViewItem Header="anotherfile2.jpg"/>
+                                <TreeViewItem Header="2016" IsExpanded="True" Style="{StaticResource PageTreeViewItem}">
+                                    <TreeViewItem Header="2016-01-05 - Something else" IsExpanded="True" Style="{StaticResource PageTreeViewItem}">
+                                        <TreeViewItem Header="anotherfile1.jpg" Style="{StaticResource PageTreeViewItem}"/>
+                                        <TreeViewItem Header="anotherfile2.jpg" Style="{StaticResource PageTreeViewItem}"/>
                                     </TreeViewItem>
                                 </TreeViewItem>
                             </TreeViewItem>

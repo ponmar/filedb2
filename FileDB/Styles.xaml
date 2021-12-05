@@ -246,4 +246,13 @@
     <Style x:Key="PageProgressBar" TargetType="ProgressBar">
         <Setter Property="Foreground" Value="{StaticResource Highlight2Color}"/>
     </Style>
+
+    <Style x:Key="PageTreeView" TargetType="TreeView">
+        <Setter Property="Background" Value="{StaticResource BgColor2}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+    </Style>
+
+    <Style x:Key="PageTreeViewItem" TargetType="TreeViewItem">
+        <Setter Property="Foreground" Value="{StaticResource FgColor1}"/>
+    </Style>
 </ResourceDictionary>

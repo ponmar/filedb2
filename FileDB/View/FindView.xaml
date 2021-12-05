@@ -161,15 +161,17 @@
                     </TabItem.Header>
                     <StackPanel Orientation="Vertical" Margin="3" HorizontalAlignment="Left">
                         <TextBlock Style="{StaticResource PageInnerTextBlock}" Margin="5" Text="Imported directories:"/>
-                        <local:ExtendedTreeView ItemsSource="{Binding Folders}" SelectedItem_="{Binding SelectedFolder, Mode=TwoWay}">
+                        <local:ExtendedTreeView ItemsSource="{Binding Folders}" SelectedItem_="{Binding SelectedFolder, Mode=TwoWay}" Style="{StaticResource PageTreeView}" Margin="5">
                             <TreeView.ItemTemplate>
                                 <HierarchicalDataTemplate ItemsSource="{Binding Folders}" DataType="{x:Type local2:IFolder}">
-                                    <TextBlock Text="{Binding Name}" />
+                                    <TextBlock Text="{Binding Name}" Foreground="{StaticResource FgColor1}" />
                                 </HierarchicalDataTemplate>
                             </TreeView.ItemTemplate>
                         </local:ExtendedTreeView>
-                        <Button Margin="5" Width="100" Style="{StaticResource NormalButton}" Command="{Binding FindFilesSelectedFolderCommand}" ToolTip="Search by path/description">Search</Button>
-                        <Button Margin="5" Width="100" Style="{StaticResource NormalButton}" Command="{Binding ReloadFoldersCommand}">Reload folders</Button>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Margin="5" Width="150" Style="{StaticResource NormalButton}" Command="{Binding ReloadFoldersCommand}">Reload directories</Button>
+                            <Button Margin="5" Width="150" Style="{StaticResource NormalButton}" Command="{Binding FindFilesSelectedFolderCommand}" ToolTip="Search for files within selected directory" HorizontalAlignment="Left">Search</Button>
+                        </StackPanel>
                     </StackPanel>
                 </TabItem>
             </TabControl>

@@ -105,6 +105,53 @@
                     </Grid>
                 </Border>
 
+                <TextBlock Text="Import" Style="{StaticResource PageSubHeading}"/>
+                <Border Style="{StaticResource BorderGroup}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition SharedSizeGroup="Column1"/>
+                            <ColumnDefinition SharedSizeGroup="Column2"/>
+                            <ColumnDefinition SharedSizeGroup="Column3"/>
+                            <ColumnDefinition SharedSizeGroup="Column4"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextBlock}">Blacklisted file path patterns:</TextBlock>
+                        <TextBox Width="250" Grid.Row="0" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding BlacklistedFilePathPatterns}" ToolTip="Format: pattern1;pattern2;pattern3"></TextBox>
+                        <Button Grid.Row="0" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultBlacklistedFilePathPatternsCommand}" ToolTip="Reset to default">Default</Button>
+
+                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageTextBlock}">Whitelisted file path patterns:</TextBlock>
+                        <TextBox Width="250" Grid.Row="1" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding WhitelistedFilePathPatterns}" ToolTip="Format: pattern1;pattern2;pattern3"></TextBox>
+                        <Button Grid.Row="1" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultWhitelistedFilePathPatternsCommand}" ToolTip="Reset to default">Default</Button>
+
+                        <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource PageTextBlock}">Location max distance at import (meters):</TextBlock>
+                        <TextBox Width="250" Grid.Row="2" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding FileToLocationMaxDistance, Converter={StaticResource IntToStringConverter}}"></TextBox>
+                        <Button Grid.Row="2" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultFileToLocationMaxDistanceCommand}" ToolTip="Reset to default">Default</Button>
+
+                        <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
+                            <CheckBox HorizontalAlignment="Right" Style="{StaticResource PageCheckBox}" IsChecked="{Binding Path=IncludeHiddenDirectories, Mode=TwoWay}" VerticalAlignment="Center"/>
+                            <TextBlock Style="{StaticResource PageTextBlock}" Text="Include hidden directories" VerticalAlignment="Center"></TextBlock>
+                        </StackPanel>
+                        <Button Grid.Row="3" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultIncludeHiddenDirectoriesCommand}" ToolTip="Reset to default">Default</Button>
+                    </Grid>
+                </Border>
+
                 <TextBlock Text="Notifications" Style="{StaticResource PageSubHeading}"/>
                 <Border Style="{StaticResource BorderGroup}">
                     <Grid>
@@ -150,53 +197,6 @@
                             <TextBlock Style="{StaticResource PageTextBlock}" Text="Backup reminder (monthly)" VerticalAlignment="Center"></TextBlock>
                         </StackPanel>
                         <Button Grid.Row="4" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultBackupReminderCommand}" ToolTip="Reset to default">Default</Button>
-                    </Grid>
-                </Border>
-
-                <TextBlock Text="Import" Style="{StaticResource PageSubHeading}"/>
-                <Border Style="{StaticResource BorderGroup}">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition SharedSizeGroup="Column1"/>
-                            <ColumnDefinition SharedSizeGroup="Column2"/>
-                            <ColumnDefinition SharedSizeGroup="Column3"/>
-                            <ColumnDefinition SharedSizeGroup="Column4"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                        </Grid.RowDefinitions>
-
-                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextBlock}">Blacklisted file path patterns:</TextBlock>
-                        <TextBox Width="250" Grid.Row="0" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding BlacklistedFilePathPatterns}" ToolTip="Format: pattern1;pattern2;pattern3"></TextBox>
-                        <Button Grid.Row="0" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultBlacklistedFilePathPatternsCommand}" ToolTip="Reset to default">Default</Button>
-
-                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageTextBlock}">Whitelisted file path patterns:</TextBlock>
-                        <TextBox Width="250" Grid.Row="1" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding WhitelistedFilePathPatterns}" ToolTip="Format: pattern1;pattern2;pattern3"></TextBox>
-                        <Button Grid.Row="1" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultWhitelistedFilePathPatternsCommand}" ToolTip="Reset to default">Default</Button>
-
-                        <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource PageTextBlock}">Location max distance at import (meters):</TextBlock>
-                        <TextBox Width="250" Grid.Row="2" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding FileToLocationMaxDistance, Converter={StaticResource IntToStringConverter}}"></TextBox>
-                        <Button Grid.Row="2" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultFileToLocationMaxDistanceCommand}" ToolTip="Reset to default">Default</Button>
-
-                        <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
-                            <CheckBox HorizontalAlignment="Right" Style="{StaticResource PageCheckBox}" IsChecked="{Binding Path=IncludeHiddenDirectories, Mode=TwoWay}" VerticalAlignment="Center"/>
-                            <TextBlock Style="{StaticResource PageTextBlock}" Text="Include hidden directories" VerticalAlignment="Center"></TextBlock>
-                        </StackPanel>
-                        <Button Grid.Row="3" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultIncludeHiddenDirectoriesCommand}" ToolTip="Reset to default">Default</Button>
                     </Grid>
                 </Border>
             </StackPanel>
