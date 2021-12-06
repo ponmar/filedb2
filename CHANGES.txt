@@ -1,2 +1,14 @@
+2.2:
+* Dark theme
+* Database validate tool
+* Data validation improvements
+* Imported file list can be copied
+* Add button for clearing current search result
+* New configuration options: DefaultSortMethod, KeepSelectionAfterSort, MissingFilesRootDirNotification, MaximizeWindow
+* Sorting improvements
+* Demo: add GPS positions to locations
+* Layout improvements
+* Bug fixes
+
 2.1:
 * First release
