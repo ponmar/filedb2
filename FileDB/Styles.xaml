@@ -170,31 +170,30 @@
         <Setter Property="Margin" Value="10"/>
     </Style>
 
-    <Style x:Key="PageTextBlock" TargetType="TextBlock">
-        <Setter Property="Foreground" Value="{StaticResource FgColor2}"/>
-        <Setter Property="Margin" Value="10"/>
-    </Style>
-
     <Style x:Key="PageInnerTextBlock" TargetType="TextBlock">
         <Setter Property="Foreground" Value="{StaticResource FgColor2}"/>
+    </Style>
+
+    <Style x:Key="PageTextBlock" TargetType="TextBlock" BasedOn="{StaticResource PageInnerTextBlock}">
+        <Setter Property="Margin" Value="10"/>
     </Style>
 
     <Style x:Key="PageHighlightedTextBlock" TargetType="TextBlock">
         <Setter Property="Foreground" Value="{StaticResource FgColor1}"/>
     </Style>
 
-    <Style x:Key="PageComboBox" TargetType="ComboBox">
-        <Setter Property="Margin" Value="10"/>
-        <!--
-        <Setter Property="Foreground" Value="{StaticResource FgColor1}"/>
-        <Setter Property="Background" Value="{StaticResource FgColor2}"/>
-        -->
-    </Style>
-
     <Style x:Key="PageInnerComboBox" TargetType="ComboBox">
         <!--
         <Setter Property="Foreground" Value="{StaticResource FgColor1}"/>
         <Setter Property="Background" Value="{StaticResource BgColor2}"/>
+        -->
+    </Style>
+
+    <Style x:Key="PageComboBox" TargetType="ComboBox" BasedOn="{StaticResource PageInnerComboBox}">
+        <Setter Property="Margin" Value="10"/>
+        <!--
+        <Setter Property="Foreground" Value="{StaticResource FgColor1}"/>
+        <Setter Property="Background" Value="{StaticResource FgColor2}"/>
         -->
     </Style>
 
@@ -221,15 +220,13 @@
         </Setter>
     </Style>
 
-    <Style x:Key="PageTextBox" TargetType="TextBox">
-        <Setter Property="Margin" Value="10"/>
+    <Style x:Key="PageInnerTextBox" TargetType="TextBox">
         <Setter Property="Foreground" Value="{StaticResource FgColor1}"/>
         <Setter Property="Background" Value="{StaticResource BgColor1}"/>
     </Style>
 
-    <Style x:Key="PageInnerTextBox" TargetType="TextBox">
-        <Setter Property="Foreground" Value="{StaticResource FgColor1}"/>
-        <Setter Property="Background" Value="{StaticResource BgColor1}"/>
+    <Style x:Key="PageTextBox" TargetType="TextBox" BasedOn="{StaticResource PageInnerTextBox}">
+        <Setter Property="Margin" Value="10"/>
     </Style>
 
     <Style x:Key="BorderGroup" TargetType="Border">
