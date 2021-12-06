@@ -17,7 +17,6 @@
 
     <Style x:Key="WindowTabControl" TargetType="TabControl">
         <Setter Property="Background" Value="{StaticResource BgColor1}"/>
-        <Setter Property="Foreground" Value="{StaticResource FgColor2}"/>
     </Style>
 
     <Style x:Key="WindowTabItem" TargetType="TabItem">
@@ -29,7 +28,7 @@
                                         VerticalAlignment="Center"
                                         HorizontalAlignment="Center"
                                         ContentSource="Header"
-                                        Margin="10,2"/>
+                                        Margin="10"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="True">
@@ -46,7 +45,6 @@
 
     <Style x:Key="PageTabControl" TargetType="TabControl">
         <Setter Property="Background" Value="{StaticResource BgColor1}"/>
-        <Setter Property="Foreground" Value="{StaticResource FgColor2}"/>
     </Style>
 
     <Style x:Key="PageTabItem" TargetType="TabItem">
