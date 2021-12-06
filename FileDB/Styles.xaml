@@ -24,13 +24,15 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TabItem">
-                    <Grid Name="Panel">
-                        <ContentPresenter x:Name="ContentSite"
-                                        VerticalAlignment="Center"
-                                        HorizontalAlignment="Center"
-                                        ContentSource="Header"
-                                        Margin="10"/>
-                    </Grid>
+                    <Border BorderThickness="5">
+                        <Grid Name="Panel">
+                            <ContentPresenter x:Name="ContentSite"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Center"
+                                            ContentSource="Header"
+                                            Margin="7"/>
+                        </Grid>
+                    </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="True">
                             <Setter TargetName="Panel" Property="Background" Value="{StaticResource BgColor1}" />
