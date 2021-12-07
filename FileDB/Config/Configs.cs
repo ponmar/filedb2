@@ -22,7 +22,8 @@ namespace FileDB.Config
         bool RipReminder,
         bool MissingFilesRootDirNotification,
         string LocationLink,
-        bool MaximizeWindow);
+        bool MaximizeWindow,
+        bool MaximizeToFullscreen);
 
     public static class DefaultConfigs
     {
@@ -45,7 +46,8 @@ namespace FileDB.Config
                 true,
                 true,
                 "https://www.google.com/maps?q=loc:LAT,LON",
-                true);
+                true,
+                false);
 
         public static Config CreateDemo() =>
             new("Demo",
@@ -66,6 +68,7 @@ namespace FileDB.Config
                 Default.RipReminder,
                 Default.MissingFilesRootDirNotification,
                 Default.LocationLink,
-                Default.MaximizeWindow);
+                Default.MaximizeWindow,
+                false);
     }
 }

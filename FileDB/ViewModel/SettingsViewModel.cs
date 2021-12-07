@@ -147,6 +147,13 @@ namespace FileDB.ViewModel
         }
         private bool maximizeWindow;
 
+        public bool MaximizeToFullscreen
+        {
+            get => maximizeToFullscreen;
+            set => SetProperty(ref maximizeToFullscreen, value);
+        }
+        private bool maximizeToFullscreen;
+
         public ICommand ResetConfigurationCommand => resetConfigurationCommand ??= new CommandHandler(ResetConfiguration);
         private ICommand resetConfigurationCommand;
 
@@ -210,6 +217,9 @@ namespace FileDB.ViewModel
         public ICommand SetDefaultMaximizeWindowCommand => setDefaultMaximizeWindowCommand ??= new CommandHandler(x => MaximizeWindow = DefaultConfigs.Default.MaximizeWindow);
         private ICommand setDefaultMaximizeWindowCommand;
 
+        public ICommand SetDefaultMaximizeToFullscreenCommand => setDefaultMaximizeToFullscreenCommand ??= new CommandHandler(x => MaximizeToFullscreen = DefaultConfigs.Default.MaximizeToFullscreen);
+        private ICommand setDefaultMaximizeToFullscreenCommand;
+
         public SettingsViewModel()
         {
             UpdateFromConfiguration();
@@ -236,6 +246,7 @@ namespace FileDB.ViewModel
             LocationLink = Utils.Config.LocationLink;
             FileToLocationMaxDistance = Utils.Config.FileToLocationMaxDistance;
             MaximizeWindow = Utils.Config.MaximizeWindow;
+            MaximizeToFullscreen = Utils.Config.MaximizeToFullscreen;
         }
 
         public void ResetConfiguration()
@@ -264,7 +275,8 @@ namespace FileDB.ViewModel
                 RipReminder,
                 MissingFilesRootDirNotification,
                 LocationLink,
-                MaximizeWindow);
+                MaximizeWindow,
+                MaximizeToFullscreen);
 
             var result = new ConfigValidator().Validate(config);
             if (!result.IsValid)

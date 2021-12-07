@@ -7,7 +7,7 @@
         xmlns:Converters="clr-namespace:FileDB.Converters" xmlns:viewmodel="clr-namespace:FileDB.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:MainViewModel}"
         mc:Ignorable="d"
         Title="{Binding Title}" Height="768" Width="1024" ResizeMode="CanResize"
-        Style="{StaticResource Window}" WindowState="{Binding WindowState, Mode=OneTime}">
+        Style="{StaticResource Window}" WindowState="{Binding WindowState}" WindowStyle="{Binding WindowStyle}">
 
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />

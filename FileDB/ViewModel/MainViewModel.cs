@@ -11,8 +11,20 @@ namespace FileDB.ViewModel
         }
         private string title;
 
-        public WindowState WindowState => Utils.Config.MaximizeWindow ? WindowState.Maximized : WindowState.Normal;
-        
+        public WindowState WindowState
+        {
+            get => windowState;
+            set => SetProperty(ref windowState, value);
+        }
+        private WindowState windowState = Utils.Config.MaximizeWindow ? WindowState.Maximized : WindowState.Normal;
+
+        public WindowStyle WindowStyle
+        {
+            get => windowStyle;
+            set => SetProperty(ref windowStyle, value);
+        }
+        private WindowStyle windowStyle = Utils.Config.MaximizeToFullscreen ? WindowStyle.None : WindowStyle.ThreeDBorderWindow;
+
         public bool ReadWriteMode
         {
             get => readWriteMode;
