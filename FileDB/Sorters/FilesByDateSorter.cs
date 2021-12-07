@@ -22,7 +22,9 @@ namespace FileDB.Sorters
                 return -1;
             }
 
+            // TODO: returns null here for "YYYY-MM-DD" format. Must try the other formats here.
             var xDatetime = DatabaseParsing.ParseFilesDatetime(x.Datetime).Value;
+            // TODO: returns null here for "YYYY-MM-DD" format. Must try the other formats here.
             var yDatetime = DatabaseParsing.ParseFilesDatetime(y.Datetime).Value;
 
             return xDatetime.CompareTo(yDatetime);
