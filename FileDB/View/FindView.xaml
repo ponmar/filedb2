@@ -20,14 +20,20 @@
         <KeyBinding Command="{Binding FunctionKeyCommand}" CommandParameter="10" Key="F10"/>
         <KeyBinding Command="{Binding FunctionKeyCommand}" CommandParameter="11" Key="F11"/>
         <KeyBinding Command="{Binding FunctionKeyCommand}" CommandParameter="12" Key="F12"/>
-        <!--<KeyBinding Command="{Binding FunctionKeyCommand}" CommandParameter="Left" Key="Left"/>-->
+        <KeyBinding Command="{Binding PrevKeyCommand}" Key="Left"/>
+        <KeyBinding Command="{Binding NextKeyCommand}" Key="Right"/>
+        <KeyBinding Command="{Binding HomeKeyCommand}" Key="Home"/>
+        <KeyBinding Command="{Binding EndKeyCommand}" Key="End"/>
+        <KeyBinding Command="{Binding PgDownKeyCommand}" Key="PageDown"/>
+        <KeyBinding Command="{Binding PgUpKeyCommand}" Key="PageUp"/>
+        <!--<KeyBinding Command="{Binding EscKeyCommand}" Key="F" Modifiers="Alt"/>-->
     </UserControl.InputBindings>
 
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
     </UserControl.Resources>
 
-    <Grid Margin="0 00 0 0">
+    <Grid Margin="0 0 0 0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
@@ -232,6 +238,7 @@
                 <Grid>
                     <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{Binding CurrentFileLoadError}" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding CurrentFileLoadError, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
                     <Image x:Name="CurrentFileImage" Stretch="Uniform" RenderOptions.BitmapScalingMode="Fant" ToolTip="{Binding CurrentFileToolTip}"/>
+                    <Button Style="{StaticResource NavigationButton}" Command="{Binding ToggleShowAllCommand}" VerticalAlignment="Top" HorizontalAlignment="Right" Content="&#x1F5B5;" Margin="5" ToolTip="Maximize"/>
                 </Grid>
             </Border>
 

@@ -141,10 +141,10 @@ namespace FileDB.ViewModel
         public ICommand ToggleSlideshowCommand => toggleSlideshowCommand ??= new CommandHandler(ToggleSlideshow, () => HasNonEmptySearchResult);
         private ICommand toggleSlideshowCommand;
 
-        public ICommand ToggleRandomCommand => toggleRandomCommand ??= new CommandHandler(() => {}, () => HasNonEmptySearchResult);
+        public ICommand ToggleRandomCommand => toggleRandomCommand ??= new CommandHandler(() => { }, () => HasNonEmptySearchResult);
         private ICommand toggleRandomCommand;
 
-        public ICommand ToggleRepeatCommand => toggleRepeatCommand ??= new CommandHandler(() => {}, () => HasNonEmptySearchResult);
+        public ICommand ToggleRepeatCommand => toggleRepeatCommand ??= new CommandHandler(() => { }, () => HasNonEmptySearchResult);
         private ICommand toggleRepeatCommand;
 
         public ICommand CloseSearchCommand => closeSearchCommand ??= new CommandHandler(() => { SearchResult = null; }, () => HasNonEmptySearchResult);
@@ -191,7 +191,7 @@ namespace FileDB.ViewModel
             get => showAll;
             set => SetProperty(ref showAll, value);
         }
-        private bool showAll = true; // TODO: init from settings?
+        private bool showAll = false; // TODO: init from settings?
 
         #endregion
 
@@ -673,7 +673,7 @@ namespace FileDB.ViewModel
 
             var currentDirectory = Path.GetDirectoryName(SearchResult.Files[SearchResultIndex].Path);
 
-            for (int i=SearchResultIndex + 1; i<searchResult.Count; i++)
+            for (int i = SearchResultIndex + 1; i < searchResult.Count; i++)
             {
                 var directory = Path.GetDirectoryName(SearchResult.Files[i].Path);
                 if (directory != currentDirectory)
@@ -1500,7 +1500,7 @@ namespace FileDB.ViewModel
                 UpdateHistoryItems.Remove(UpdateHistoryItems.Last());
             }
 
-            for (int i=0; i<UpdateHistoryItems.Count; i++)
+            for (int i = 0; i < UpdateHistoryItems.Count; i++)
             {
                 var item = UpdateHistoryItems[i];
                 var newShortcut = $"F{i + 1}";
@@ -1516,6 +1516,27 @@ namespace FileDB.ViewModel
 
         public ICommand FunctionKeyCommand => functionKeyCommand ??= new CommandHandler(FunctionKey);
         private ICommand functionKeyCommand;
+
+        public ICommand PrevKeyCommand => prevKeyCommand ??= new CommandHandler(() => { if (PrevFileCommand.CanExecute(null)) { PrevFileCommand.Execute(null); } });
+        private ICommand prevKeyCommand;
+
+        public ICommand NextKeyCommand => nextKeyCommand ??= new CommandHandler(() => { if (NextFileCommand.CanExecute(null)) { NextFileCommand.Execute(null); } });
+        private ICommand nextKeyCommand;
+
+        public ICommand HomeKeyCommand => homeKeyCommand ??= new CommandHandler(() => { if (FirstFileCommand.CanExecute(null)) { FirstFileCommand.Execute(null); } });
+        private ICommand homeKeyCommand;
+
+        public ICommand EndKeyCommand => endKeyCommand ??= new CommandHandler(() => { if (LastFileCommand.CanExecute(null)) { LastFileCommand.Execute(null); } });
+        private ICommand endKeyCommand;
+
+        public ICommand PgDownKeyCommand => pgDownKeyCommand ??= new CommandHandler(() => { if (NextDirectoryCommand.CanExecute(null)) { NextDirectoryCommand.Execute(null); } });
+        private ICommand pgDownKeyCommand;
+
+        public ICommand PgUpKeyCommand => pgUpKeyCommand ??= new CommandHandler(() => { if (PrevDirectoryCommand.CanExecute(null)) { PrevDirectoryCommand.Execute(null); } });
+        private ICommand pgUpKeyCommand;
+
+        public ICommand ToggleShowAllCommand => toggleShowAllCommand ??= new CommandHandler(() => { ShowAll = !ShowAll; } );
+        private ICommand toggleShowAllCommand;
 
         private void FunctionKey(object parameter)
         {
