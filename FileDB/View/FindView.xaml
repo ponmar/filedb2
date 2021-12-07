@@ -218,10 +218,17 @@
                 </StackPanel>
             </Grid>
         </Border>
+        <!-- Image or error message -->
+        <Border Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource BorderGroup}" Margin="0 15 0 0">
+            <Grid>
+                <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{Binding CurrentFileLoadError}" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding CurrentFileLoadError, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
+                <Image x:Name="CurrentFileImage" Stretch="Uniform" RenderOptions.BitmapScalingMode="Fant" ToolTip="{Binding CurrentFileToolTip}"/>
+            </Grid>
+        </Border>
         <!-- Left side areas -->
-        <StackPanel Orientation="Vertical" Grid.Row="4" Grid.Column="0" Margin="0 15 5 5" Width="235">
+        <StackPanel Orientation="Vertical" Grid.Row="4" Grid.Column="0" Margin="10 25 0 0" Width="235">
             <!-- File categorization -->
-            <Border Margin="0 0 0 20" Style="{StaticResource BorderGroup}" Visibility="{Binding ReadWriteMode, Converter={StaticResource BoolToVis}}">
+            <Border Margin="0 0 0 0" Style="{StaticResource BorderGroup}" Visibility="{Binding ReadWriteMode, Converter={StaticResource BoolToVis}}">
                 <Expander Style="{StaticResource Expander}" Header="Update" Margin="5" IsExpanded="False">
                     <StackPanel Orientation="Vertical">
                         <Grid>
@@ -292,7 +299,7 @@
                 </Expander>
             </Border>
             <!-- File info -->
-            <Border Style="{StaticResource BorderGroup}" Margin="0 0 0 0">
+            <Border Style="{StaticResource BorderGroup}" Margin="0 20 0 0">
                 <Expander Style="{StaticResource Expander}" Header="Information" Margin="5" IsExpanded="True">
                     <StackPanel Orientation="Vertical" Margin="5">
                         <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{Binding CurrentFileDateTime}" Visibility="{Binding CurrentFileDateTime, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
@@ -345,12 +352,5 @@
                 </Expander>
             </Border>
         </StackPanel>
-        <!-- Image or error message -->
-        <Border Grid.Row="4" Grid.Column="1" Style="{StaticResource BorderGroup}" Margin="15 15 0 5">
-            <Grid Margin="5">
-                <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{Binding CurrentFileLoadError}" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding CurrentFileLoadError, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
-                <Image x:Name="CurrentFileImage" Stretch="Uniform" RenderOptions.BitmapScalingMode="Fant" ToolTip="{Binding CurrentFileToolTip}"/>
-            </Grid>
-        </Border>
     </Grid>
 </UserControl>
