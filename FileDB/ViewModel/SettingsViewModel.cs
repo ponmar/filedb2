@@ -147,12 +147,12 @@ namespace FileDB.ViewModel
         }
         private bool maximizeWindow;
 
-        public bool MaximizeToFullscreen
+        public bool Fullscreen
         {
-            get => maximizeToFullscreen;
-            set => SetProperty(ref maximizeToFullscreen, value);
+            get => fullscreen;
+            set => SetProperty(ref fullscreen, value);
         }
-        private bool maximizeToFullscreen;
+        private bool fullscreen;
 
         public ICommand ResetConfigurationCommand => resetConfigurationCommand ??= new CommandHandler(ResetConfiguration);
         private ICommand resetConfigurationCommand;
@@ -217,8 +217,8 @@ namespace FileDB.ViewModel
         public ICommand SetDefaultMaximizeWindowCommand => setDefaultMaximizeWindowCommand ??= new CommandHandler(x => MaximizeWindow = DefaultConfigs.Default.MaximizeWindow);
         private ICommand setDefaultMaximizeWindowCommand;
 
-        public ICommand SetDefaultMaximizeToFullscreenCommand => setDefaultMaximizeToFullscreenCommand ??= new CommandHandler(x => MaximizeToFullscreen = DefaultConfigs.Default.MaximizeToFullscreen);
-        private ICommand setDefaultMaximizeToFullscreenCommand;
+        public ICommand SetDefaultFullscreenCommand => setDefaultFullscreenCommand ??= new CommandHandler(x => Fullscreen = DefaultConfigs.Default.Fullscreen);
+        private ICommand setDefaultFullscreenCommand;
 
         public SettingsViewModel()
         {
@@ -246,7 +246,7 @@ namespace FileDB.ViewModel
             LocationLink = Utils.Config.LocationLink;
             FileToLocationMaxDistance = Utils.Config.FileToLocationMaxDistance;
             MaximizeWindow = Utils.Config.MaximizeWindow;
-            MaximizeToFullscreen = Utils.Config.MaximizeToFullscreen;
+            Fullscreen = Utils.Config.Fullscreen;
         }
 
         public void ResetConfiguration()
@@ -276,7 +276,7 @@ namespace FileDB.ViewModel
                 MissingFilesRootDirNotification,
                 LocationLink,
                 MaximizeWindow,
-                MaximizeToFullscreen);
+                Fullscreen);
 
             var result = new ConfigValidator().Validate(config);
             if (!result.IsValid)

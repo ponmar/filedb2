@@ -80,7 +80,7 @@ namespace FileDB.ViewModel
 
             if (NewFiles.Count == 0)
             {
-                Utils.ShowWarningDialog($"No new files found. Add files to directory {Utils.Config.FilesRootDirectory} or configure another files root directory.");
+                Utils.ShowInfoDialog($"No new files found. Add files to directory {Utils.Config.FilesRootDirectory} or configure another files root directory.");
             }
         }
 

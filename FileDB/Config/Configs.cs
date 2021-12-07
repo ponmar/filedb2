@@ -23,7 +23,7 @@ namespace FileDB.Config
         bool MissingFilesRootDirNotification,
         string LocationLink,
         bool MaximizeWindow,
-        bool MaximizeToFullscreen);
+        bool Fullscreen);
 
     public static class DefaultConfigs
     {
