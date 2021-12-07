@@ -186,6 +186,13 @@ namespace FileDB.ViewModel
         }
         private bool repeatActive = false;
 
+        public bool ShowAll
+        {
+            get => showAll;
+            set => SetProperty(ref showAll, value);
+        }
+        private bool showAll = true; // TODO: init from settings?
+
         #endregion
 
         #region Search commands and properties

@@ -27,7 +27,7 @@
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
     </UserControl.Resources>
 
-    <Grid>
+    <Grid Margin="0 00 0 0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
@@ -35,8 +35,8 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-    
-        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical">
+
+        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical" Visibility="{Binding ShowAll, Converter={StaticResource BoolToVis}}">
             <!-- Search -->
             <TextBlock Style="{StaticResource PageHeading}">Search</TextBlock>
             <Border Style="{StaticResource BorderGroup}" Margin="0 0 0 10">
@@ -175,7 +175,7 @@
                 </TabControl>
             </Border>
             <!-- Search result browse controls -->
-            <Border Style="{StaticResource BorderGroup}" Margin="0 0 0 10">
+            <Border Style="{StaticResource BorderGroup}" Margin="0 0 0 0">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -228,7 +228,7 @@
             </Grid.RowDefinitions>
 
             <!-- Image or error message -->
-            <Border Style="{StaticResource BorderGroup}" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Margin="0 0 0 0">
+            <Border Style="{StaticResource BorderGroup}" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Margin="0 10 0 0">
                 <Grid>
                     <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{Binding CurrentFileLoadError}" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding CurrentFileLoadError, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
                     <Image x:Name="CurrentFileImage" Stretch="Uniform" RenderOptions.BitmapScalingMode="Fant" ToolTip="{Binding CurrentFileToolTip}"/>
@@ -236,7 +236,7 @@
             </Border>
 
             <!-- Left side areas -->
-            <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="0" Margin="10 12 0 0" Width="235">
+            <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="0" Margin="10 22 0 0" Width="235">
                 <!-- File categorization -->
                 <Border Margin="0 0 0 0" Style="{StaticResource BorderGroup}" Visibility="{Binding ReadWriteMode, Converter={StaticResource BoolToVis}}">
                     <Expander Style="{StaticResource Expander}" Header="Update" Margin="5" IsExpanded="False">
