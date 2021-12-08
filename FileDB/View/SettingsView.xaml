@@ -195,7 +195,7 @@
 
                         <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
                             <CheckBox HorizontalAlignment="Right" Style="{StaticResource PageCheckBox}" IsChecked="{Binding Path=MissingFilesRootDirNotification, Mode=TwoWay}" VerticalAlignment="Center"/>
-                            <TextBlock Style="{StaticResource PageTextBlock}" Text="Missing files root directory" VerticalAlignment="Center"></TextBlock>
+                            <TextBlock Style="{StaticResource PageTextBlock}" Text="Files root directory missing (i.e. network share not mounted)" VerticalAlignment="Center"></TextBlock>
                         </StackPanel>
                         <Button Grid.Row="3" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultMissingFilesRootDirNotificationCommand}" ToolTip="Reset to default">Default</Button>
 
