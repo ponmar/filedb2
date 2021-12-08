@@ -147,8 +147,8 @@ namespace FileDB.ViewModel
         public ICommand ToggleRepeatCommand => toggleRepeatCommand ??= new CommandHandler(() => { }, () => HasNonEmptySearchResult);
         private ICommand toggleRepeatCommand;
 
-        public ICommand CloseSearchCommand => closeSearchCommand ??= new CommandHandler(() => { SearchResult = null; }, () => HasNonEmptySearchResult);
-        private ICommand closeSearchCommand;
+        public ICommand ClearSearchCommand => clearSearchCommand ??= new CommandHandler(() => { SearchResult = null; }, () => HasNonEmptySearchResult);
+        private ICommand clearSearchCommand;
 
         public List<SortMethodDescription> SortMethods { get; } = Utils.GetSortMethods();
 
