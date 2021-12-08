@@ -191,7 +191,7 @@ namespace FileDB.ViewModel
             get => showAll;
             set => SetProperty(ref showAll, value);
         }
-        private bool showAll = false; // TODO: init from settings?
+        private bool showAll = true;
 
         #endregion
 
