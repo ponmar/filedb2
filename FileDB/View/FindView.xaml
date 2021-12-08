@@ -64,7 +64,7 @@
 
                             <Button Grid.Row="0" Grid.Column="0" Margin="5 5 20 5" Style="{StaticResource NormalButton}" Command="{Binding FindAllFilesCommand}" VerticalAlignment="Center" ToolTip="Search all files">All files</Button>
 
-                            <Button Grid.Row="1" Grid.Column="0" Margin="5 5 20 5" Style="{StaticResource NormalButton}" Command="{Binding FindCurrentDirectoryFilesCommand}" VerticalAlignment="Center" ToolTip="Search all files within current file directory (recursive)">Current directory</Button>
+                            <Button Grid.Row="1" Grid.Column="0" Margin="5 5 20 5" Style="{StaticResource NormalButton}" Command="{Binding FindCurrentDirectoryFilesCommand}" VerticalAlignment="Center" ToolTip="Search all files within current file directory (recursive)">All from current directory</Button>
 
                             <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" Margin="0 0 20 0">
                                 <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="Random files:" Margin="3" VerticalAlignment="Center"/>
@@ -151,30 +151,58 @@
                     </TabItem>
                     <TabItem Style="{StaticResource PageTabItem}">
                         <TabItem.Header>
-                            <TextBlock Text="List" Style="{StaticResource PageTabItemText}" />
+                            <TextBlock Text="Browse" Style="{StaticResource PageTabItemText}" />
                         </TabItem.Header>
-                        <StackPanel Orientation="Horizontal" Margin="3">
-                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="Exported file list:" VerticalAlignment="Center"/>
-                            <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3 0 0 0" Width="100" VerticalAlignment="Center" Text="{Binding FileListSearch}" ToolTip="file1;file2;..."/>
-                            <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding FindFilesFromListCommand}" ToolTip="Search by path/description">Search</Button>
+
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Vertical" Margin="3" HorizontalAlignment="Left">
+                                <TextBlock Style="{StaticResource PageInnerTextBlock}" Margin="5" Text="Browse database:"/>
+                                <local:ExtendedTreeView ItemsSource="{Binding Folders}" SelectedItem_="{Binding SelectedFolder, Mode=TwoWay}" Style="{StaticResource PageTreeView}" Margin="5">
+                                    <TreeView.ItemTemplate>
+                                        <HierarchicalDataTemplate ItemsSource="{Binding Folders}" DataType="{x:Type local2:IFolder}">
+                                            <TextBlock Text="{Binding Name}" Foreground="{StaticResource FgColor1}" />
+                                        </HierarchicalDataTemplate>
+                                    </TreeView.ItemTemplate>
+                                </local:ExtendedTreeView>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Margin="5" Width="100" Style="{StaticResource NormalButton}" Command="{Binding ReloadFoldersCommand}">Reload</Button>
+                                    <Button Margin="5" Width="100" Style="{StaticResource NormalButton}" Command="{Binding FindFilesSelectedFolderCommand}" ToolTip="Search for files within selected directory" HorizontalAlignment="Left">Search</Button>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <Button Margin="50 5 5 5" Style="{StaticResource NormalButton}" Command="{Binding OpenFileLocationCommand}" VerticalAlignment="Top">Open file directory</Button>
                         </StackPanel>
                     </TabItem>
                     <TabItem Style="{StaticResource PageTabItem}">
                         <TabItem.Header>
-                            <TextBlock Text="Browse" Style="{StaticResource PageTabItemText}" />
+                            <TextBlock Text="Export" Style="{StaticResource PageTabItemText}" />
                         </TabItem.Header>
-                        <StackPanel Orientation="Vertical" Margin="3" HorizontalAlignment="Left">
-                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Margin="5" Text="Imported directories:"/>
-                            <local:ExtendedTreeView ItemsSource="{Binding Folders}" SelectedItem_="{Binding SelectedFolder, Mode=TwoWay}" Style="{StaticResource PageTreeView}" Margin="5">
-                                <TreeView.ItemTemplate>
-                                    <HierarchicalDataTemplate ItemsSource="{Binding Folders}" DataType="{x:Type local2:IFolder}">
-                                        <TextBlock Text="{Binding Name}" Foreground="{StaticResource FgColor1}" />
-                                    </HierarchicalDataTemplate>
-                                </TreeView.ItemTemplate>
-                            </local:ExtendedTreeView>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Margin="5 5 30 5" Style="{StaticResource NormalButton}" Command="{Binding ExportFileListCommand}" VerticalAlignment="Center">Copy file list</Button>
+                        
+                            <StackPanel Orientation="Horizontal" Margin="3">
+                                <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="File list:" VerticalAlignment="Center"/>
+                                <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3 0 0 0" Width="100" VerticalAlignment="Center" Text="{Binding FileListSearch}" ToolTip="file1;file2;..."/>
+                                <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding FindFilesFromListCommand}" ToolTip="Search by path/description">Search</Button>
+                            </StackPanel>
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Style="{StaticResource PageTabItem}">
+                        <TabItem.Header>
+                            <TextBlock Text="History" Style="{StaticResource PageTabItemText}" />
+                        </TabItem.Header>
+                        <StackPanel Orientation="Vertical">
+                            <ListView Margin="5" ItemsSource="{Binding SearchResultHistory}" Background="Transparent" BorderThickness="0" Width="auto">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{Binding Name}" Margin="2"/>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
                             <StackPanel Orientation="Horizontal">
-                                <Button Margin="5" Width="150" Style="{StaticResource NormalButton}" Command="{Binding ReloadFoldersCommand}">Reload directories</Button>
-                                <Button Margin="5" Width="150" Style="{StaticResource NormalButton}" Command="{Binding FindFilesSelectedFolderCommand}" ToolTip="Search for files within selected directory" HorizontalAlignment="Left">Search</Button>
+                                <Button Margin="5" Width="100" Style="{StaticResource NormalButton}" ToolTip="Combine last two searches" Command="{Binding FindFilesFromUnionCommand}">Union</Button>
+                                <Button Margin="5" Width="100" Style="{StaticResource NormalButton}" ToolTip="Combine last two searches" Command="{Binding FindFilesFromIntersectionCommand}">Intersection</Button>
+                                <Button Margin="5" Width="100" Style="{StaticResource NormalButton}" ToolTip="Combine last two searches" Command="{Binding FindFilesFromDifferenceCommand}">Difference</Button>
                             </StackPanel>
                         </StackPanel>
                     </TabItem>
@@ -339,32 +367,6 @@
 
                             <TextBlock Style="{StaticResource PageHighlightedTextBlock}" Text="&#x1F4DD;" Margin="0 10 0 0" Visibility="{Binding CurrentFileDescription, Converter={local1:StringNullOrEmptyToVisibilityConverter}}" ToolTip="Description"/>
                             <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{Binding CurrentFileDescription}" ToolTip="{Binding CurrentFileDescription}" Margin="0 0 10 0" TextWrapping="Wrap" Visibility="{Binding CurrentFileDescription, Converter={local1:StringNullOrEmptyToVisibilityConverter}}" HorizontalAlignment="Left"/>
-                        </StackPanel>
-                    </Expander>
-                </Border>
-                <!-- Export -->
-                <Border Style="{StaticResource BorderGroup}" Margin="0 20 0 0">
-                    <Expander Style="{StaticResource Expander}" Header="Export" Margin="5" IsExpanded="False">
-                        <StackPanel Orientation="Vertical">
-                            <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding OpenFileLocationCommand}">Open file directory</Button>
-                            <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding ExportFileListCommand}">Copy file list</Button>
-                        </StackPanel>
-                    </Expander>
-                </Border>
-                <!-- Search history -->
-                <Border Style="{StaticResource BorderGroup}" Margin="0 20 0 0">
-                    <Expander Style="{StaticResource Expander}" Header="Search History" Margin="5" IsExpanded="False">
-                        <StackPanel Orientation="Vertical">
-                            <ListView Margin="5" ItemsSource="{Binding SearchResultHistory}" Background="Transparent" BorderThickness="0">
-                                <ListView.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{Binding Name}" Margin="2"/>
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
-                            <Button Margin="5" Style="{StaticResource NormalButton}" ToolTip="Combine last two searches" Command="{Binding FindFilesFromUnionCommand}">Union</Button>
-                            <Button Margin="5" Style="{StaticResource NormalButton}" ToolTip="Combine last two searches" Command="{Binding FindFilesFromIntersectionCommand}">Intersection</Button>
-                            <Button Margin="5" Style="{StaticResource NormalButton}" ToolTip="Combine last two searches" Command="{Binding FindFilesFromDifferenceCommand}">Difference</Button>
                         </StackPanel>
                     </Expander>
                 </Border>
