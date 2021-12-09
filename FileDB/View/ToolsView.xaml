@@ -27,7 +27,7 @@
                             <TextBlock Style="{StaticResource PageWarning}">&#x26A0;</TextBlock>
                             <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap">Database recovery must be done manually if needed.</TextBlock>
                         </StackPanel>
-                        <Button Margin="10" Width="200" Style="{StaticResource NormalButton}" Command="{Binding CreateBackupCommand}" HorizontalAlignment="Left">Create database backup</Button>
+                        <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding CreateBackupCommand}" HorizontalAlignment="Left">Create database backup</Button>
                         <TextBlock Style="{StaticResource PageTextBlock}" Text="{Binding BackupResult}"/>
                         <ListBox Visibility="{Binding BackupFiles, Converter={StaticResource EnumerationToVisibilityConverter}}" Margin="10" ItemsSource="{Binding BackupFiles}" HorizontalAlignment="Left">
                             <ListBox.ItemTemplate>
@@ -45,8 +45,8 @@
                 <Border Style="{StaticResource BorderGroup}">
                     <StackPanel Orientation="Vertical">
                         <StackPanel Orientation="Horizontal">
-                            <Button Margin="10" Width="200" Style="{StaticResource NormalButton}" Command="{Binding DatabaseValidationCommand}" HorizontalAlignment="Left">Run validation</Button>
-                            <Button Margin="10" Width="200" Style="{StaticResource NormalButton}" Command="{Binding CopyInvalidFileListCommand}" IsEnabled="{Binding InvalidFileList, Converter={StaticResource StringContentToBoolConverter}}" HorizontalAlignment="Left">Copy invalid file list</Button>
+                            <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding DatabaseValidationCommand}" HorizontalAlignment="Left">Run validation</Button>
+                            <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding CopyInvalidFileListCommand}" IsEnabled="{Binding InvalidFileList, Converter={StaticResource StringContentToBoolConverter}}" HorizontalAlignment="Left">Copy invalid file list</Button>
                         </StackPanel>
                         <TextBlock Style="{StaticResource PageTextBlock}" Text="{Binding DatabaseValidationResult}"/>
                         <ListBox Visibility="{Binding DabaseValidationErrors, Converter={StaticResource EnumerationToVisibilityConverter}}" Margin="10" ItemsSource="{Binding DabaseValidationErrors}" HorizontalAlignment="Left"/>

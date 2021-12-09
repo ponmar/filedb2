@@ -66,8 +66,6 @@
 
                             <Button Grid.Row="0" Grid.Column="0" Margin="5 5 20 5" Style="{StaticResource NormalButton}" Command="{Binding FindAllFilesCommand}" VerticalAlignment="Center" ToolTip="Search all files">All files</Button>
 
-                            <Button Grid.Row="1" Grid.Column="0" Margin="5 5 20 5" Style="{StaticResource NormalButton}" Command="{Binding FindCurrentDirectoryFilesCommand}" VerticalAlignment="Center" ToolTip="Search all files within current file directory (recursive)">All from current directory</Button>
-
                             <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" Margin="0 0 20 0">
                                 <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="Random files:" Margin="3" VerticalAlignment="Center"/>
                                 <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3 0 0 0" Width="100" VerticalAlignment="Center" Text="{Binding NumRandomFiles}"/>
@@ -80,7 +78,8 @@
                                 <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding FindFilesByTextCommand}" ToolTip="Search by text (matches file path/description)">Search</Button>
                             </StackPanel>
 
-                            <Button Margin="5" Grid.Row="0" Grid.Column="2" Style="{StaticResource NormalButton}" Command="{Binding FindFilesFromMissingCategorizationCommand}">Search by missing categorization</Button>
+                            <Button Margin="5" Grid.Row="0" Grid.Column="2" Style="{StaticResource NormalButton}" Command="{Binding FindFilesFromMissingCategorizationCommand}" HorizontalAlignment="Left">Search by missing categorization</Button>
+                            <Button Margin="5" Grid.Row="1" Grid.Column="2" Style="{StaticResource NormalButton}" Command="{Binding FindCurrentDirectoryFilesCommand}" ToolTip="Search all files within current file directory (recursive)" HorizontalAlignment="Left">All from current directory</Button>
                         </Grid>
                     </TabItem>
                     <TabItem Style="{StaticResource PageTabItem}">
@@ -172,7 +171,7 @@
                                 </StackPanel>
                             </StackPanel>
 
-                            <Button Margin="50 5 5 5" Style="{StaticResource NormalButton}" Command="{Binding OpenFileLocationCommand}" VerticalAlignment="Top">Open file directory</Button>
+                            <Button Margin="50 5 5 5" Style="{StaticResource NormalButton}" Command="{Binding OpenFileLocationCommand}" VerticalAlignment="Top">Open current file directory</Button>
                         </StackPanel>
                     </TabItem>
                     <TabItem Style="{StaticResource PageTabItem}">
@@ -202,9 +201,9 @@
                                 </ListView.ItemTemplate>
                             </ListView>
                             <StackPanel Orientation="Horizontal">
-                                <Button Margin="5" Width="100" Style="{StaticResource NormalButton}" ToolTip="Combine last two searches" Command="{Binding FindFilesFromUnionCommand}">Union</Button>
-                                <Button Margin="5" Width="100" Style="{StaticResource NormalButton}" ToolTip="Combine last two searches" Command="{Binding FindFilesFromIntersectionCommand}">Intersection</Button>
-                                <Button Margin="5" Width="100" Style="{StaticResource NormalButton}" ToolTip="Combine last two searches" Command="{Binding FindFilesFromDifferenceCommand}">Difference</Button>
+                                <Button Margin="5" Style="{StaticResource NormalButton}" ToolTip="Combine last two searches" Command="{Binding FindFilesFromUnionCommand}">Union</Button>
+                                <Button Margin="5" Style="{StaticResource NormalButton}" ToolTip="Combine last two searches" Command="{Binding FindFilesFromIntersectionCommand}">Intersection</Button>
+                                <Button Margin="5" Style="{StaticResource NormalButton}" ToolTip="Combine last two searches" Command="{Binding FindFilesFromDifferenceCommand}">Difference</Button>
                             </StackPanel>
                         </StackPanel>
                     </TabItem>

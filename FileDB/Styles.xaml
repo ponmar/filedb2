@@ -114,7 +114,7 @@
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border x:Name="MyBorder" CornerRadius="4" BorderBrush="{TemplateBinding Foreground}" BorderThickness="1" Background="{TemplateBinding Background}">
                         <Grid>
-                            <StackPanel Margin="3">
+                            <StackPanel Margin="6 3 6 3">
                                 <ContentPresenter x:Name="MyContentPresenter"
                                                   Content="{TemplateBinding Content}"
                                                   HorizontalAlignment="Center"
