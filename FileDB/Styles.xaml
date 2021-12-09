@@ -100,40 +100,17 @@
         <Setter Property="FontSize" Value="24"/>
     </Style>
 
-    <Style x:Key="NavigationButton" TargetType="Button">
-        <Setter Property="Margin" Value="3"/>
-        <Setter Property="Width" Value="50"/>
-        <Setter Property="FontSize" Value="20"/>
-        <Setter Property="Background" Value="{StaticResource BgColor1}"/>
-        <Setter Property="Foreground" Value="{StaticResource FgColor2}"/>
-        <Style.Resources>
-            <Style TargetType="Border">
-                <Setter Property="CornerRadius" Value="5" />
-            </Style>
-        </Style.Resources>
-    </Style>
-
-    <Style x:Key="NavigationToggleButton" TargetType="ToggleButton">
-        <Setter Property="Margin" Value="3"/>
-        <Setter Property="Width" Value="50"/>
-        <Setter Property="FontSize" Value="20"/>
-        <Setter Property="Background" Value="{StaticResource BgColor1}"/>
-        <Setter Property="Foreground" Value="{StaticResource FgColor1}"/>
-        <Style.Resources>
-            <Style TargetType="Border">
-                <Setter Property="CornerRadius" Value="5" />
-            </Style>
-        </Style.Resources>
-    </Style>
-
-    <Style x:Key="NormalButton" TargetType="Button">
+    <Style x:Key="ButtonBaseStyle" TargetType="ButtonBase">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Background" Value="{StaticResource BgColor1}" />
         <Setter Property="Foreground" Value="{StaticResource FgColor1}" />
+    </Style>
+    
+    <Style x:Key="NormalButton" TargetType="Button" BasedOn="{StaticResource ButtonBaseStyle}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="MyBorder" CornerRadius="3" BorderBrush="{TemplateBinding Foreground}" BorderThickness="1" Background="{TemplateBinding Background}">
+                    <Border x:Name="MyBorder" CornerRadius="4" BorderBrush="{TemplateBinding Foreground}" BorderThickness="1" Background="{TemplateBinding Background}">
                         <Grid>
                             <StackPanel Margin="3">
                                 <ContentPresenter x:Name="MyContentPresenter"
@@ -147,13 +124,55 @@
             </Setter.Value>
         </Setter>
         <Style.Triggers>
-            <Trigger Property="Button.IsMouseOver" Value="True">
+            <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="{StaticResource BgColor3}"/>
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Foreground" Value="{StaticResource FgColor2}"/>
             </Trigger>
         </Style.Triggers>
+    </Style>
+
+    <Style x:Key="NormalToggleButton" TargetType="ToggleButton" BasedOn="{StaticResource ButtonBaseStyle}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border x:Name="MyBorder" CornerRadius="4" BorderBrush="{TemplateBinding Foreground}" BorderThickness="1" Background="{TemplateBinding Background}">
+                        <Grid>
+                            <StackPanel Margin="3">
+                                <ContentPresenter x:Name="MyContentPresenter"
+                                                  Content="{TemplateBinding Content}"
+                                                  HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center" />
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter Property="Background" Value="{StaticResource Highlight2Color}"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource BgColor3}"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{StaticResource FgColor2}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
+    <Style x:Key="NavigationButton" TargetType="Button" BasedOn="{StaticResource NormalButton}">
+        <Setter Property="Margin" Value="3"/>
+        <Setter Property="Width" Value="50"/>
+        <Setter Property="FontSize" Value="20"/>
+    </Style>
+
+    <Style x:Key="NavigationToggleButton" TargetType="ToggleButton" BasedOn="{StaticResource NormalToggleButton}">
+        <Setter Property="Margin" Value="3"/>
+        <Setter Property="Width" Value="50"/>
+        <Setter Property="FontSize" Value="20"/>
     </Style>
 
     <Style x:Key="PageButtonHeading" TargetType="Label">
