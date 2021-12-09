@@ -3,6 +3,27 @@ using FileDB.Sorters;
 
 namespace FileDB.Config
 {
+    public enum WindowMode { Normal, Maximized, Fullscreen }
+
+    public static class WindowModeExtensions
+    {
+        public static string GetDescription(this WindowMode mode)
+        {
+            switch (mode)
+            {
+                case WindowMode.Normal:
+                    return "Window";
+
+                case WindowMode.Maximized:
+                    return "Maximized window";
+
+                case WindowMode.Fullscreen:
+                    return "Fullscreen window";
+            }
+            return string.Empty;
+        }
+    }
+
     public record Config(
         string Name,
         string Database,
@@ -22,8 +43,7 @@ namespace FileDB.Config
         bool RipReminder,
         bool MissingFilesRootDirNotification,
         string LocationLink,
-        bool MaximizeWindow,
-        bool Fullscreen);
+        WindowMode WindowMode);
 
     public static class DefaultConfigs
     {
@@ -46,8 +66,7 @@ namespace FileDB.Config
                 true,
                 true,
                 "https://www.google.com/maps?q=loc:LAT,LON",
-                true,
-                false);
+                WindowMode.Maximized);
 
         public static Config CreateDemo() =>
             new("Demo",
@@ -68,7 +87,6 @@ namespace FileDB.Config
                 Default.RipReminder,
                 Default.MissingFilesRootDirNotification,
                 Default.LocationLink,
-                Default.MaximizeWindow,
-                false);
+                Default.WindowMode);
     }
 }

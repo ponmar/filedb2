@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
+using FileDB.Config;
 using FileDB.Notifiers;
 using FileDB.Sorters;
 using FileDBInterface.DbAccess;
@@ -13,6 +14,18 @@ using FluentValidation.Results;
 
 namespace FileDB
 {
+    public class WindowModeDescription
+    {
+        public string Name => Mode.GetDescription();
+
+        public WindowMode Mode { get; }
+
+        public WindowModeDescription(WindowMode mode)
+        {
+            Mode = mode;
+        }
+    }
+
     public static class Utils
     {
         public const string ApplicationName = "FileDB";
@@ -131,6 +144,16 @@ namespace FileDB
                 sortMethods.Add(new SortMethodDescription(value));
             }
             return sortMethods;
+        }
+
+        public static List<WindowModeDescription> GetWindowModes()
+        {
+            List<WindowModeDescription> modes = new();
+            foreach (var mode in Enum.GetValues<WindowMode>())
+            {
+                modes.Add(new WindowModeDescription(mode));
+            }
+            return modes;
         }
     }
 }

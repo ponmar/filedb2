@@ -16,14 +16,14 @@ namespace FileDB.ViewModel
             get => windowState;
             set => SetProperty(ref windowState, value);
         }
-        private WindowState windowState = Utils.Config.Fullscreen || Utils.Config.MaximizeWindow ? WindowState.Maximized : WindowState.Normal;
+        private WindowState windowState = Utils.Config.WindowMode == Config.WindowMode.Normal ? WindowState.Normal : WindowState.Maximized;
 
         public WindowStyle WindowStyle
         {
             get => windowStyle;
             set => SetProperty(ref windowStyle, value);
         }
-        private WindowStyle windowStyle = Utils.Config.Fullscreen ? WindowStyle.None : WindowStyle.ThreeDBorderWindow;
+        private WindowStyle windowStyle = Utils.Config.WindowMode == Config.WindowMode.Fullscreen ? WindowStyle.None : WindowStyle.ThreeDBorderWindow;
 
         public bool ReadWriteMode
         {

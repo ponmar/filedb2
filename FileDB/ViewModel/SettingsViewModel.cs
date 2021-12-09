@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows.Input;
 using FileDB.Config;
@@ -140,19 +141,14 @@ namespace FileDB.ViewModel
         }
         private int fileToLocationMaxDistance;
 
-        public bool MaximizeWindow
+        public WindowMode WindowMode
         {
-            get => maximizeWindow;
-            set => SetProperty(ref maximizeWindow, value);
+            get => windowMode;
+            set => SetProperty(ref windowMode, value);
         }
-        private bool maximizeWindow;
+        private WindowMode windowMode;
 
-        public bool Fullscreen
-        {
-            get => fullscreen;
-            set => SetProperty(ref fullscreen, value);
-        }
-        private bool fullscreen;
+        public List<WindowModeDescription> WindowModes => Utils.GetWindowModes();
 
         public ICommand ResetConfigurationCommand => resetConfigurationCommand ??= new CommandHandler(ResetConfiguration);
         private ICommand resetConfigurationCommand;
@@ -214,12 +210,9 @@ namespace FileDB.ViewModel
         public ICommand SetDefaultFileToLocationMaxDistanceCommand => setDefaultFileToLocationMaxDistanceCommand ??= new CommandHandler(x => FileToLocationMaxDistance = DefaultConfigs.Default.FileToLocationMaxDistance);
         private ICommand setDefaultFileToLocationMaxDistanceCommand;
 
-        public ICommand SetDefaultMaximizeWindowCommand => setDefaultMaximizeWindowCommand ??= new CommandHandler(x => MaximizeWindow = DefaultConfigs.Default.MaximizeWindow);
-        private ICommand setDefaultMaximizeWindowCommand;
-
-        public ICommand SetDefaultFullscreenCommand => setDefaultFullscreenCommand ??= new CommandHandler(x => Fullscreen = DefaultConfigs.Default.Fullscreen);
-        private ICommand setDefaultFullscreenCommand;
-
+        public ICommand SetDefaultWindowModeCommand => setDefaultWindowModeCommand ??= new CommandHandler(x => WindowMode = DefaultConfigs.Default.WindowMode);
+        private ICommand setDefaultWindowModeCommand;
+        
         public SettingsViewModel()
         {
             UpdateFromConfiguration();
@@ -245,8 +238,7 @@ namespace FileDB.ViewModel
             MissingFilesRootDirNotification = Utils.Config.MissingFilesRootDirNotification;
             LocationLink = Utils.Config.LocationLink;
             FileToLocationMaxDistance = Utils.Config.FileToLocationMaxDistance;
-            MaximizeWindow = Utils.Config.MaximizeWindow;
-            Fullscreen = Utils.Config.Fullscreen;
+            WindowMode = Utils.Config.WindowMode;
         }
 
         public void ResetConfiguration()
@@ -275,8 +267,7 @@ namespace FileDB.ViewModel
                 RipReminder,
                 MissingFilesRootDirNotification,
                 LocationLink,
-                MaximizeWindow,
-                Fullscreen);
+                WindowMode);
 
             var result = new ConfigValidator().Validate(config);
             if (!result.IsValid)
