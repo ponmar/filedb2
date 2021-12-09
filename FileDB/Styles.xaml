@@ -85,7 +85,7 @@
             </DataTrigger>
         </Style.Triggers>
     </Style>
-    
+
     <Style x:Key="PageIcon" TargetType="TextBlock">
         <Style.Triggers>
             <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=TabItem}}" Value="True">
@@ -127,14 +127,33 @@
     </Style>
 
     <Style x:Key="NormalButton" TargetType="Button">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Background" Value="{StaticResource BgColor1}" />
         <Setter Property="Foreground" Value="{StaticResource FgColor1}" />
-        <Setter Property="Padding" Value="3"/>
-        <Style.Resources>
-            <Style TargetType="Border">
-                <Setter Property="CornerRadius" Value="3" />
-            </Style>
-        </Style.Resources>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="MyBorder" CornerRadius="3" BorderBrush="{TemplateBinding Foreground}" BorderThickness="1" Background="{TemplateBinding Background}">
+                        <Grid>
+                            <StackPanel Margin="3">
+                                <ContentPresenter x:Name="MyContentPresenter"
+                                                  Content="{TemplateBinding Content}"
+                                                  HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center" />
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="Button.IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource BgColor3}"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{StaticResource FgColor2}"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style x:Key="PageButtonHeading" TargetType="Label">
