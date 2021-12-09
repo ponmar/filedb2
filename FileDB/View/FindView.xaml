@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:FileDB.View" xmlns:local1="clr-namespace:FileDB.Converters" xmlns:local2="clr-namespace:FileDB.ViewModel"
+             xmlns:converters="clr-namespace:FileDB.Converters"
              mc:Ignorable="d"
              d:DesignHeight="800" d:DesignWidth="1000"
              Focusable="True">
@@ -31,6 +32,7 @@
 
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        <converters:NegatedBooleanToVisibilityConverter x:Key="NegatedBooleanToVisibilityConverter"/>
     </UserControl.Resources>
 
     <Grid Margin="0 0 0 0">
@@ -42,7 +44,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical" Visibility="{Binding ShowAll, Converter={StaticResource BoolToVis}}">
+        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical" Visibility="{Binding Maximize, Converter={StaticResource NegatedBooleanToVisibilityConverter}}">
             <!-- Search -->
             <TextBlock Style="{StaticResource PageHeading}">Search</TextBlock>
             <Border Style="{StaticResource BorderGroup}" Margin="0 0 0 10">
@@ -221,7 +223,7 @@
 
                     <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical" Margin="0 7 0 5">
                         <Grid>
-                            <ProgressBar Style="{StaticResource PageProgressBar}" Minimum="0" Maximum="{Binding SearchNumberOfHits, Mode=OneWay}" Value="{Binding SearchResultItemNumber, Mode=OneWay}" Width="519" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 0 0 5"/>
+                            <ProgressBar Style="{StaticResource PageProgressBar}" Minimum="0" Maximum="{Binding SearchNumberOfHits, Mode=OneWay}" Value="{Binding SearchResultItemNumber, Mode=OneWay}" Width="549" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 0 0 5"/>
                             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 0 0 3">
                                         <Run Text="{Binding SearchResultItemNumber, Mode=OneWay}"/>
                                         <Run Text="/"/>
@@ -231,11 +233,11 @@
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <Button Style="{StaticResource NavigationButton}" Command="{Binding PrevFileCommand}" ToolTip="Previous" Margin="3 3 3 3">&#x2B60;</Button>
                             <Button Style="{StaticResource NavigationButton}" Command="{Binding NextFileCommand}" ToolTip="Next" Margin="3 3 3 3">&#x2B62;</Button>
-                            <Button Style="{StaticResource NavigationButton}" Command="{Binding PrevDirectoryCommand}" ToolTip="Previous directory" Margin="10 3 3 3">&#x21C7;</Button>
+                            <Button Style="{StaticResource NavigationButton}" Command="{Binding PrevDirectoryCommand}" ToolTip="Previous directory" Margin="20 3 3 3">&#x21C7;</Button>
                             <Button Style="{StaticResource NavigationButton}" Command="{Binding NextDirectoryCommand}" ToolTip="Next directory" Margin="3 3 3 3">&#x21C9;</Button>
-                            <Button Style="{StaticResource NavigationButton}" Command="{Binding FirstFileCommand}" ToolTip="First" Margin="10 3 3 3">&#x21E4;</Button>
+                            <Button Style="{StaticResource NavigationButton}" Command="{Binding FirstFileCommand}" ToolTip="First" Margin="20 3 3 3">&#x21E4;</Button>
                             <Button Style="{StaticResource NavigationButton}" Command="{Binding LastFileCommand}" ToolTip="Last" Margin="3 3 3 3">&#x21E5;</Button>
-                            <ToggleButton Style="{StaticResource NavigationToggleButton}" Command="{Binding ToggleSlideshowCommand}" IsChecked="{Binding SlideshowActive}" ToolTip="Toggle slideshow" Margin="10 3 3 3">&#x1F39E;</ToggleButton>
+                            <ToggleButton Style="{StaticResource NavigationToggleButton}" Command="{Binding ToggleSlideshowCommand}" IsChecked="{Binding SlideshowActive}" ToolTip="Toggle slideshow" Margin="20 3 3 3">&#x1F39E;</ToggleButton>
                             <ToggleButton Style="{StaticResource NavigationToggleButton}" Command="{Binding ToggleRandomCommand}" IsChecked="{Binding RandomActive}" ToolTip="Toggle slideshow random" Margin="3 3 3 3">&#x21AD;</ToggleButton>
                             <ToggleButton Style="{StaticResource NavigationToggleButton}" Command="{Binding ToggleRepeatCommand}" IsChecked="{Binding RepeatActive}" ToolTip="Toggle slideshow repeat" Margin="3 3 3 3">&#x21BB;</ToggleButton>
                         </StackPanel>
@@ -244,7 +246,7 @@
                     <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical">
                         <Button Style="{StaticResource NormalButton}" Command="{Binding ClearSearchCommand}" Margin="5" Content="Clear" Width="50" HorizontalAlignment="Right"/>
                         <StackPanel Orientation="Horizontal" Margin="5">
-                            <TextBlock Style="{StaticResource PageInnerTextBlock}" VerticalAlignment="Center" Margin="20 3 3 3">Sort by:</TextBlock>
+                            <TextBlock Style="{StaticResource PageInnerTextBlock}" VerticalAlignment="Center" Margin="20 3 7 3">Sort by:</TextBlock>
                             <ComboBox Width="125" ItemsSource="{Binding SortMethods}" DisplayMemberPath="Name" SelectedValuePath="Method" SelectedValue="{Binding SelectedSortMethod}" VerticalAlignment="Center"/>
                         </StackPanel>
                     </StackPanel>
@@ -266,7 +268,7 @@
                 <Grid>
                     <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{Binding CurrentFileLoadError}" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding CurrentFileLoadError, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
                     <Image x:Name="CurrentFileImage" Stretch="Uniform" RenderOptions.BitmapScalingMode="Fant" ToolTip="{Binding CurrentFileToolTip}"/>
-                    <Button Style="{StaticResource NavigationButton}" Command="{Binding ToggleShowAllCommand}" VerticalAlignment="Top" HorizontalAlignment="Right" Content="&#x1F5B5;" Margin="5" ToolTip="Maximize"/>
+                    <ToggleButton Style="{StaticResource NavigationToggleButton}" IsChecked="{Binding Maximize}" VerticalAlignment="Top" HorizontalAlignment="Right" Content="&#x1F5B5;" Margin="5" ToolTip="Maximize"/>
                 </Grid>
             </Border>
 

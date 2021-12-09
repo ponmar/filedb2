@@ -186,20 +186,20 @@ namespace FileDB.ViewModel
         }
         private bool repeatActive = false;
 
-        public bool ShowAll
+        public bool Maximize
         {
-            get => showAll;
+            get => maximize;
             set
             {
-                if (SetProperty(ref showAll, value))
+                if (SetProperty(ref maximize, value))
                 {
                     OnPropertyChanged(nameof(ShowUpdateSection));
                 }
             }
         }
-        private bool showAll = true;
+        private bool maximize = false;
 
-        public bool ShowUpdateSection => ShowAll && ReadWriteMode;
+        public bool ShowUpdateSection => !Maximize && ReadWriteMode;
 
         #endregion
 
@@ -1548,9 +1548,6 @@ namespace FileDB.ViewModel
 
         public ICommand PgUpKeyCommand => pgUpKeyCommand ??= new CommandHandler(() => { if (PrevDirectoryCommand.CanExecute(null)) { PrevDirectoryCommand.Execute(null); } });
         private ICommand pgUpKeyCommand;
-
-        public ICommand ToggleShowAllCommand => toggleShowAllCommand ??= new CommandHandler(() => { ShowAll = !ShowAll; } );
-        private ICommand toggleShowAllCommand;
 
         private void FunctionKey(object parameter)
         {
