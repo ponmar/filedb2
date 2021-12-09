@@ -54,11 +54,6 @@
                     </StackPanel>
                 </Border>
 
-                <TextBlock Style="{StaticResource PageSubHeading}">Changelog</TextBlock>
-                <Border Style="{StaticResource BorderGroup}">
-                    <TextBlock Style="{StaticResource PageTextBlock}" Margin="10" Text="{Binding Changes}"/>
-                </Border>
-
                 <TextBlock Style="{StaticResource PageSubHeading}">Downloads</TextBlock>
                 <Border Style="{StaticResource BorderGroup}">
                     <StackPanel Orientation="Horizontal" Margin="10">
@@ -69,6 +64,11 @@
                             </Hyperlink>
                         </TextBlock>
                     </StackPanel>
+                </Border>
+
+                <TextBlock Style="{StaticResource PageSubHeading}">Changelog</TextBlock>
+                <Border Style="{StaticResource BorderGroup}">
+                    <TextBlock Style="{StaticResource PageTextBlock}" Margin="10" Text="{Binding Changes}"/>
                 </Border>
             </StackPanel>
         </ScrollViewer>
