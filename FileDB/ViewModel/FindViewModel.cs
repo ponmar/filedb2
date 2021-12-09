@@ -189,9 +189,17 @@ namespace FileDB.ViewModel
         public bool ShowAll
         {
             get => showAll;
-            set => SetProperty(ref showAll, value);
+            set
+            {
+                if (SetProperty(ref showAll, value))
+                {
+                    OnPropertyChanged(nameof(ShowUpdateSection));
+                }
+            }
         }
         private bool showAll = true;
+
+        public bool ShowUpdateSection => ShowAll && ReadWriteMode;
 
         #endregion
 
@@ -378,7 +386,13 @@ namespace FileDB.ViewModel
         public bool ReadWriteMode
         {
             get => readWriteMode;
-            set => SetProperty(ref readWriteMode, value);
+            set
+            {
+                if (SetProperty(ref readWriteMode, value))
+                {
+                    OnPropertyChanged(nameof(ShowUpdateSection));
+                }
+            }
         }
         private bool readWriteMode = !Utils.Config.ReadOnly;
 

@@ -179,7 +179,7 @@
                         </TabItem.Header>
                         <StackPanel Orientation="Horizontal">
                             <Button Margin="5 5 30 5" Style="{StaticResource NormalButton}" Command="{Binding ExportFileListCommand}" VerticalAlignment="Center">Copy file list</Button>
-                        
+
                             <StackPanel Orientation="Horizontal" Margin="3">
                                 <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="File list:" VerticalAlignment="Center"/>
                                 <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3 0 0 0" Width="100" VerticalAlignment="Center" Text="{Binding FileListSearch}" ToolTip="file1;file2;..."/>
@@ -273,7 +273,7 @@
             <!-- Left side areas -->
             <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="0" Margin="10 22 0 0" Width="235">
                 <!-- File categorization -->
-                <Border Margin="0 0 0 0" Style="{StaticResource BorderGroup}" Visibility="{Binding ReadWriteMode, Converter={StaticResource BoolToVis}}">
+                <Border Margin="0 0 0 20" Style="{StaticResource BorderGroup}" Visibility="{Binding ShowUpdateSection, Converter={StaticResource BoolToVis}}">
                     <Expander Style="{StaticResource Expander}" Header="Update" Margin="5" IsExpanded="False">
                         <StackPanel Orientation="Vertical">
                             <Grid>
@@ -344,7 +344,7 @@
                     </Expander>
                 </Border>
                 <!-- File info -->
-                <Border Style="{StaticResource BorderGroup}" Margin="0 20 0 0">
+                <Border Style="{StaticResource BorderGroup}" Margin="0 0 0 0">
                     <Expander Style="{StaticResource Expander}" Header="Information" Margin="5" IsExpanded="True">
                         <StackPanel Orientation="Vertical" Margin="5">
                             <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{Binding CurrentFileDateTime}" Visibility="{Binding CurrentFileDateTime, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
