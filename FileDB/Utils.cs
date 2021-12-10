@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using FileDB.Config;
+using FileDB.Extensions;
 using FileDB.Notifiers;
 using FileDB.Sorters;
 using FileDBInterface.DbAccess;
