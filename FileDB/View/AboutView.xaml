@@ -12,14 +12,36 @@
             <StackPanel Orientation="Vertical" Margin="10">
                 <TextBlock Style="{StaticResource PageSubHeading}">Getting Started</TextBlock>
                 <Border Style="{StaticResource BorderGroup}">
-                    <TextBlock Style="{StaticResource PageTextBlock}" Margin="10" Text="TBD"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="1."/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource PageTextBlock}" Text="Cleanup your files collection (see guideline below)"/>
+
+                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="2."/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource PageTextBlock}" Text="Import meta-data from the files collection (see import tab)"/>
+
+                        <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="3."/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource PageTextBlock}" Text="Tag persons, locations and tags"/>
+
+                        <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="4."/>
+                        <TextBlock Grid.Row="3" Grid.Column="1" Style="{StaticResource PageTextBlock}" Text="Find your wanted pictures!"/>
+                    </Grid>
                 </Border>
 
                 <TextBlock Style="{StaticResource PageSubHeading}">Notes About Your Files Collection</TextBlock>
                 <Border Style="{StaticResource BorderGroup}">
                     <StackPanel Orientation="Vertical">
-                        <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Margin="10">FileDB does not modify any files in your file collection. Files are read when adding files, viewing files or when reading Exif-data via the API.</TextBlock>
-                        <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Margin="10">Before adding your files, take a moment to think about the directory structure. Any directory structure can be used for sorting files in your existing collection. However, this layout has been proven to work very well:</TextBlock>
+                        <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap">FileDB does not modify any files in your file collection. Files are read when adding or viewing files.</TextBlock>
+                        <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap">Before adding your files, take a moment to think about the directory structure. Any directory structure can be used for sorting files in your existing collection. However, this layout has been proven to work very well:</TextBlock>
 
                         <TreeView Margin="10" Style="{StaticResource PageTreeView}">
                             <TreeViewItem Header="root" IsExpanded="True" Style="{StaticResource PageTreeViewItem}">
@@ -41,8 +63,8 @@
                             </TreeViewItem>
                         </TreeView>
 
-                        <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Margin="10">File paths in FileDB uses UNIX style directory separators ('/'), mostly because that is how FileDB stores the paths internally.</TextBlock>
-                        <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Margin="10">If you rename or delete files that has been added to FileDB you need to remove them in FileDB as well (and possibly add them again).</TextBlock>
+                        <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap">File paths in FileDB uses UNIX style directory separators ('/'), mostly because that is how FileDB stores the paths internally.</TextBlock>
+                        <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap">If you rename or delete files that has been added to FileDB you need to remove them in FileDB as well (and possibly add them again).</TextBlock>
                     </StackPanel>
                 </Border>
 
@@ -68,7 +90,7 @@
 
                 <TextBlock Style="{StaticResource PageSubHeading}">Changelog</TextBlock>
                 <Border Style="{StaticResource BorderGroup}">
-                    <TextBlock Style="{StaticResource PageTextBlock}" Margin="10" Text="{Binding Changes}"/>
+                    <TextBlock Style="{StaticResource PageTextBlock}" Text="{Binding Changes}"/>
                 </Border>
             </StackPanel>
         </ScrollViewer>
