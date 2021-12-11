@@ -3,7 +3,9 @@
 
     <SolidColorBrush x:Key="BgColor1" Color="#2d2d2d"/>
     <SolidColorBrush x:Key="BgColor2" Color="#252526"/>
+    <SolidColorBrush x:Key="BgColor2Opacity" Color="#252526" Opacity="0.9"/>
     <SolidColorBrush x:Key="BgColor3" Color="#434346"/>
+    <SolidColorBrush x:Key="BgColor3Opacity" Color="#434346" Opacity="0.9"/>
 
     <SolidColorBrush x:Key="FgColor1" Color="#FFFFFF"/>
     <SolidColorBrush x:Key="FgColor2" Color="#8b8b8b"/>
@@ -190,11 +192,14 @@
         <Setter Property="HorizontalAlignment" Value="Left" />
     </Style>
 
-    <Style x:Key="PageSubHeading" TargetType="TextBlock">
+    <Style x:Key="PageInnerSubHeading" TargetType="TextBlock">
         <Setter Property="Foreground" Value="{StaticResource FgColor1}"/>
-        <Setter Property="Margin" Value="10"/>
         <Setter Property="FontSize" Value="18"/>
         <Setter Property="HorizontalAlignment" Value="Left" />
+    </Style>
+
+    <Style x:Key="PageSubHeading" TargetType="TextBlock" BasedOn="{StaticResource PageInnerSubHeading}">
+        <Setter Property="Margin" Value="10"/>
     </Style>
 
     <Style x:Key="PageGrid" TargetType="Grid">
@@ -220,8 +225,12 @@
         <Setter Property="Margin" Value="10"/>
     </Style>
 
-    <Style x:Key="PageHighlightedTextBlock" TargetType="TextBlock">
+    <Style x:Key="PageInnerHighlightedTextBlock" TargetType="TextBlock">
         <Setter Property="Foreground" Value="{StaticResource FgColor1}"/>
+    </Style>
+
+    <Style x:Key="PageHighlightedTextBlock" TargetType="TextBlock">
+        <Setter Property="Margin" Value="10"/>
     </Style>
 
     <Style x:Key="PageInnerComboBox" TargetType="ComboBox">
@@ -276,6 +285,13 @@
         <Setter Property="BorderBrush" Value="{StaticResource BgColor3}"/>
         <Setter Property="BorderThickness" Value="2"/>
         <Setter Property="CornerRadius" Value="12"/>
+    </Style>
+
+    <Style x:Key="MaximizedBorderGroup" TargetType="Border">
+        <Setter Property="Background" Value="{StaticResource BgColor2Opacity}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource BgColor3Opacity}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CornerRadius" Value="5"/>
     </Style>
 
     <Style x:Key="Expander" TargetType="Expander">

@@ -2,7 +2,7 @@
 * Dark theme
 * Database validate tool
 * Data validation improvements
-* Imported file list can be copied
+* List of imported files can be copied to clipboard
 * Add button for clearing current search result
 * New configuration options: DefaultSortMethod, KeepSelectionAfterSort, MissingFilesRootDirNotification, MaximizeWindow
 * Sorting improvements
