@@ -9,7 +9,7 @@ namespace FileDB.Notifiers
 {
     public enum BirthdayNotificationFor { Alive, Deceased }
 
-    public class BirthdayNotifier : Notifier
+    public class BirthdayNotifier : INotifier
     {
         private readonly IEnumerable<PersonModel> persons;
         private readonly BirthdayNotificationFor birthdayNotificationFor;

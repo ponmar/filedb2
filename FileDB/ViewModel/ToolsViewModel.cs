@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows.Input;
@@ -10,25 +9,8 @@ using TextCopy;
 
 namespace FileDB.ViewModel
 {
-    public class BackupFile
-    {
-        public string Filename { get; }
-
-        public DateTime Timestamp { get; }
-
-        public TimeSpan Age => DateTime.Now - Timestamp;
-
-        public BackupFile(string filename, DateTime timestamp)
-        {
-            Filename = filename;
-            Timestamp = timestamp;
-        }
-    }
-
     public class ToolsViewModel : ViewModelBase
     {
-        private const string BackupFileTimestampFormat = "yyyy-MM-ddTHHmmss";
-
         public ICommand CreateBackupCommand => createBackupCommand ??= new CommandHandler(CreateBackup);
         private ICommand createBackupCommand;
 
@@ -71,26 +53,14 @@ namespace FileDB.ViewModel
 
         private void CreateBackup()
         {
-            var db = Utils.Config.Database;
-            if (File.Exists(db))
+            try
             {
-                var directoryPath = Path.GetDirectoryName(db);
-                var timestamp = DateTime.Now.ToString(BackupFileTimestampFormat);
-                var backupFilename = $"backup_{timestamp}.db";
-                var backupFilePath = Path.Combine(directoryPath, backupFilename);
-                if (!File.Exists(backupFilePath))
-                {
-                    File.Copy(db, backupFilePath);
-                    ScanBackupFiles();
-                }
-                else
-                {
-                    Utils.ShowErrorDialog($"Backup file already available");
-                }
+                new DatabaseBackup().CreateBackup();
+                ScanBackupFiles();
             }
-            else
+            catch (IOException e)
             {
-                Utils.ShowErrorDialog($"Missing database: {db}");
+                Utils.ShowErrorDialog(e.Message);
             }
         }
 
@@ -108,24 +78,13 @@ namespace FileDB.ViewModel
         {
             BackupFiles.Clear();
 
-            var backupDir = Path.GetDirectoryName(Utils.Config.Database);
-            if (Directory.Exists(backupDir))
+            var backupHandler = new DatabaseBackup();
+
+            if (Directory.Exists(backupHandler.BackupDirectory))
             {
-                foreach (var filePath in Directory.GetFiles(backupDir, "backup_*.db"))
+                foreach (var backupFile in backupHandler.ListAvailableBackupFiles())
                 {
-                    var filenameParts = filePath.Split("_");
-                    if (filenameParts.Length >= 2)
-                    {
-                        var timestampString = filenameParts[filenameParts.Length - 1].Replace(".db", "");
-                        try
-                        {
-                            var timestamp = DateTime.ParseExact(timestampString, BackupFileTimestampFormat, null);
-                            BackupFiles.Add(new BackupFile(filePath, timestamp));
-                        }
-                        catch (FormatException)
-                        {
-                        }
-                    }
+                    BackupFiles.Add(backupFile);
                 }
 
                 BackupResult = BackupFiles.Count > 0 ? $"{BackupFiles.Count} database backup files found:" : $"No database backup files found!";

@@ -7,7 +7,7 @@ using FileDBInterface.Model;
 
 namespace FileDB.Notifiers
 {
-    public class RestInPeaceNotifier : Notifier
+    public class RestInPeaceNotifier : INotifier
     {
         private readonly IEnumerable<PersonModel> persons;
 

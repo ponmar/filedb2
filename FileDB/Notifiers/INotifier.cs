@@ -6,7 +6,7 @@ namespace FileDB.Notifiers
 
     public record Notification(NotificationType Type, string Message);
 
-    interface Notifier
+    interface INotifier
     {
         List<Notification> GetNotifications();
     }

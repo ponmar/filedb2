@@ -3,7 +3,7 @@ using System.IO;
 
 namespace FileDB.Notifiers
 {
-    public class MissingFilesRootDirNotifier : Notifier
+    public class MissingFilesRootDirNotifier : INotifier
     {
         private readonly string rootDirectory;
 

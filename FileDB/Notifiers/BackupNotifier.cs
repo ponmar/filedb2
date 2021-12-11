@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using FileDB.ViewModel;
 
 namespace FileDB.Notifiers
 {
-    public class BackupNotifier : Notifier
+    public class BackupNotifier : INotifier
     {
         private readonly int afterDays;
         private readonly IEnumerable<BackupFile> backupFiles;
