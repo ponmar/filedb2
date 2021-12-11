@@ -4,6 +4,13 @@ namespace FileDB.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
+        public int NumNotifications
+        {
+            get => numNotifications;
+            set => SetProperty(ref numNotifications, value);
+        }
+        private int numNotifications = NotificationsViewModel.NumNotifications; // TODO: avoid static somehow
+
         public string Title
         {
             get => title;

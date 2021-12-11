@@ -6,6 +6,8 @@ namespace FileDB.ViewModel
 {
     public class NotificationsViewModel : ViewModelBase
     {
+        public static int NumNotifications { get; private set; } = 0;
+
         public ObservableCollection<Notification> Notifications { get; } = new();
 
         public NotificationsViewModel()
@@ -40,6 +42,8 @@ namespace FileDB.ViewModel
             }
 
             notifiers.ForEach(x => AddNotifications(x.GetNotifications()));
+
+            NumNotifications = Notifications.Count;
         }
 
         private void AddNotifications(List<Notification> notifications)

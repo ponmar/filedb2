@@ -233,6 +233,11 @@
         <Setter Property="Margin" Value="10"/>
     </Style>
 
+    <Style x:Key="NotificationBadge" TargetType="TextBlock" BasedOn="{StaticResource PageInnerHighlightedTextBlock}">
+        <Setter Property="Foreground" Value="{StaticResource FgColor1}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+    </Style>
+
     <Style x:Key="PageInnerComboBox" TargetType="ComboBox">
         <!--
         <Setter Property="Foreground" Value="{StaticResource FgColor1}"/>
@@ -294,6 +299,11 @@
         <Setter Property="CornerRadius" Value="5"/>
     </Style>
 
+    <Style x:Key="NotificationBadgeBg" TargetType ="Border">
+        <Setter Property="Background" Value="{StaticResource Highlight2Color}"/>
+        <Setter Property="CornerRadius" Value="4"/>
+    </Style>
+    
     <Style x:Key="Expander" TargetType="Expander">
         <Setter Property="Foreground" Value="{StaticResource FgColor1}"/>
     </Style>

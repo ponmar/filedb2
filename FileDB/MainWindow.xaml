@@ -74,7 +74,12 @@
 
             <TabItem Style="{StaticResource WindowTabItem}">
                 <TabItem.Header>
-                    <TextBlock Text="&#x1F514;" ToolTip="Notifications" Style="{StaticResource PageIcon}"/>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="&#x1F514;" ToolTip="Notifications" Style="{StaticResource PageIcon}"/>
+                        <Border Style="{StaticResource NotificationBadgeBg}" HorizontalAlignment="Center" Padding="6 1 6 1">
+                            <TextBlock Text="{Binding NumNotifications}" Style="{StaticResource NotificationBadge}" />
+                        </Border>
+                    </StackPanel>
                 </TabItem.Header>
                 <Views:NotificationsView Margin="10 0 10 10"/>
             </TabItem>
