@@ -44,8 +44,8 @@
                 <TextBlock Style="{StaticResource PageSubHeading}">Notes About Your Files Collection</TextBlock>
                 <Border Style="{StaticResource BorderGroup}">
                     <StackPanel Orientation="Vertical">
-                        <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap">FileDB does not modify any files in your file collection. Files are read when adding or viewing files.</TextBlock>
-                        <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap"><Run Text="Before "/><Run Language="sv-se" Text="importing your file meta-data"/><Run Text=", take a moment to think about the directory structure. Any directory structure can be used for sorting files in your existing collection. However, this layout has been proven to work very well:"/></TextBlock>
+                        <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap">FileDB only modifies data in the configured database. It does not modify any files in your files collection. Files are read when importing meta-data and when viewing files.</TextBlock>
+                        <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap">Although any directory structure can be imported to FileDB, take a moment to think about the directory structure before importing the meta-data. This layout has been proven to work very well:</TextBlock>
 
                         <TreeView Margin="10" Style="{StaticResource PageTreeView}">
                             <TreeViewItem Header="root" IsExpanded="True" Style="{StaticResource PageTreeViewItem}">
@@ -67,7 +67,7 @@
                             </TreeViewItem>
                         </TreeView>
 
-                        <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap">If you rename or delete files that has been added to FileDB you need to remove them in FileDB as well (and possibly add them again).</TextBlock>
+                        <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap">If you rename or delete files that has been imported to FileDB you need to remove the FileDB meta-data as well (and possibly add them again). A tool will be provided in the future that helps out with this procedure.</TextBlock>
                     </StackPanel>
                 </Border>
 
