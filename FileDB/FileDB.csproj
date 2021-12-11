@@ -25,6 +25,9 @@
     <Page Update="View\RipView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
+    <Page Update="View\NotificationsView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
   </ItemGroup>
 
   <Import Project="..\Shared\Shared.projitems" Label="Shared" />

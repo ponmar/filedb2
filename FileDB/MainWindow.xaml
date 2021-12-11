@@ -74,6 +74,13 @@
 
             <TabItem Style="{StaticResource WindowTabItem}">
                 <TabItem.Header>
+                    <TextBlock Text="&#x1F514;" ToolTip="Notifications" Style="{StaticResource PageIcon}"/>
+                </TabItem.Header>
+                <Views:NotificationsView Margin="10 0 10 10"/>
+            </TabItem>
+
+            <TabItem Style="{StaticResource WindowTabItem}">
+                <TabItem.Header>
                     <TextBlock Text="&#x1F527;" ToolTip="Settings" Style="{StaticResource PageIcon}"/>
                 </TabItem.Header>
                 <Views:SettingsView Margin="10 0 10 10"/>

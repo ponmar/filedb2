@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using FileDB.Notifiers;
-using FileDBInterface;
+using FileDB.Comparers;
 using FileDBInterface.DbAccess;
 
 namespace FileDB.ViewModel
@@ -14,14 +13,6 @@ namespace FileDB.ViewModel
         public DateTime Deceased { get; set; }
         public int Age { get; set; }
         public string ProfileFileIdPath { get; set; }
-    }
-
-    public class PersonsByDeceasedSorter : IComparer<DeceasedPerson>
-    {
-        public int Compare(DeceasedPerson x, DeceasedPerson y)
-        {
-            return x.Deceased.CompareTo(y.Deceased);
-        }
     }
 
     public class RipViewModel : ViewModelBase
@@ -52,13 +43,6 @@ namespace FileDB.ViewModel
 
             Persons.Sort(new PersonsByDeceasedSorter());
             Persons.Reverse();
-
-            if (Utils.Config.RipReminder)
-            {
-                var notifier = new RestInPeaceNotifier(persons);
-                var notifications = notifier.GetNotifications();
-                Utils.ShowNotifications(notifications);
-            }
         }
     }
 }

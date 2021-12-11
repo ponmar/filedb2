@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows.Input;
-using FileDB.Notifiers;
 using FileDBInterface.Model;
 using FileDBInterface.Validators;
 using TextCopy;
@@ -48,7 +47,6 @@ namespace FileDB.ViewModel
         public ToolsViewModel()
         {
             ScanBackupFiles();
-            ShowBackupReminder();
         }
 
         private void CreateBackup()
@@ -61,16 +59,6 @@ namespace FileDB.ViewModel
             catch (IOException e)
             {
                 Utils.ShowErrorDialog(e.Message);
-            }
-        }
-
-        private void ShowBackupReminder()
-        {
-            if (Utils.Config.BackupReminder)
-            {
-                var notifier = new BackupNotifier(BackupFiles, 30);
-                var notifications = notifier.GetNotifications();
-                Utils.ShowNotifications(notifications);
             }
         }
 

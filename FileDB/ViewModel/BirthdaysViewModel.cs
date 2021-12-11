@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using FileDB.Notifiers;
-using FileDBInterface;
 using FileDBInterface.DbAccess;
 
 namespace FileDB.ViewModel
@@ -74,28 +72,6 @@ namespace FileDB.ViewModel
             }
 
             Persons.Sort(new PersonsByDaysLeftUntilBirthdaySorter());
-
-            List<Notification> notifications = new();
-
-            if (Utils.Config.MissingFilesRootDirNotification)
-            {
-                var notifier = new MissingFilesRootDirNotifier(Utils.Config.FilesRootDirectory);
-                notifications.AddRange(notifier.GetNotifications());
-            }
-
-            if (Utils.Config.BirthdayReminder)
-            {
-                var notifier = new BirthdayNotifier(persons, BirthdayNotificationFor.Alive);
-                notifications.AddRange(notifier.GetNotifications());
-            }
-
-            if (Utils.Config.BirthdayReminderForDeceased)
-            {
-                var notifier = new BirthdayNotifier(persons, BirthdayNotificationFor.Deceased);
-                notifications.AddRange(notifier.GetNotifications());
-            }
-
-            Utils.ShowNotifications(notifications);
         }
     }
 }
