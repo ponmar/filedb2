@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 using FileDB.Notifiers;
 
 namespace FileDB.ViewModel
@@ -9,6 +10,15 @@ namespace FileDB.ViewModel
         public static int NumNotifications { get; private set; } = 0;
 
         public ObservableCollection<Notification> Notifications { get; } = new();
+
+        public ICommand ClearNotificationsCommand => clearNotificationsCommand ??= new CommandHandler(() =>
+        {
+            Notifications.Clear();
+            OnPropertyChanged(nameof(Notifications));
+
+            NumNotifications = 0;
+        });
+        private ICommand clearNotificationsCommand;
 
         public NotificationsViewModel()
         {
@@ -42,13 +52,14 @@ namespace FileDB.ViewModel
             }
 
             notifiers.ForEach(x => AddNotifications(x.GetNotifications()));
-
-            NumNotifications = Notifications.Count;
         }
 
         private void AddNotifications(List<Notification> notifications)
         {
             notifications.ForEach(x => Notifications.Add(x));
+            OnPropertyChanged(nameof(Notifications));
+
+            NumNotifications = Notifications.Count;
         }
     }
 }

@@ -951,7 +951,8 @@ namespace FileDB.ViewModel
                     var dateOfBirth = DatabaseParsing.ParsePersonsDateOfBirth(person.DateOfBirth);
                     foreach (var file in Utils.DbAccess.SearchFilesWithPersons(new List<int>() { person.Id }))
                     {
-                        if (DatabaseParsing.ParseFilesDatetime(file.Datetime, out var fileDatetime))
+                        var fileDatetime = DatabaseParsing.ParseFilesDatetime(file.Datetime);
+                        if (fileDatetime != null)
                         {
                             int personAgeInFile = DatabaseUtils.GetYearsAgo(fileDatetime.Value, dateOfBirth);
                             if (personAgeInFile >= ageFrom && personAgeInFile <= ageTo)

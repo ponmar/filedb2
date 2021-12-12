@@ -32,20 +32,38 @@ namespace FileDBInterfaceTests.DbAccess
         }
 
         [TestMethod]
-        public void ParseFilesDatetime()
+        public void ParseFilesDatetime_Null_ParseError()
         {
-            Assert.AreEqual(new DateTime(year: 2005, month: 08, day: 23, hour: 21, minute: 31, second: 51), DatabaseParsing.ParseFilesDatetime("2005-08-23T21:31:51"));
-            Assert.IsNull(DatabaseParsing.ParseFilesDatetime(null));
-
-            Assert.IsTrue(DatabaseParsing.ParseFilesDatetime("2005-08-23T21:31:51", out var result));
-            Assert.AreEqual(new DateTime(year: 2005, month: 08, day: 23, hour: 21, minute: 31, second: 51), result);
-            Assert.IsFalse(DatabaseParsing.ParseFilesDatetime(null, out var _));
+            var result = DatabaseParsing.ParseFilesDatetime(null);
+            Assert.IsNull(result);
         }
 
         [TestMethod]
-        public void DateTakenToFilesDatetime()
+        public void ParseFilesDatetime_DateAndTime_Success()
         {
-            Assert.AreEqual("1957-03-23T23:05:54", DatabaseParsing.DateTakenToFilesDatetime(new DateTime(year: 1957, month: 03, day: 23, hour: 23, minute: 5, second: 54, millisecond: 123)));
+            var result = DatabaseParsing.ParseFilesDatetime("2005-08-23T21:31:51");
+            Assert.AreEqual(new DateTime(year: 2005, month: 08, day: 23, hour: 21, minute: 31, second: 51), result);
+        }
+
+        [TestMethod]
+        public void ParseFilesDatetime_Date_Success()
+        {
+            var result = DatabaseParsing.ParseFilesDatetime("2005-08-23");
+            Assert.AreEqual(new DateTime(year: 2005, month: 08, day: 23), result);
+        }
+
+        [TestMethod]
+        public void ParseFilesDatetime_Year_Success()
+        {
+            var result = DatabaseParsing.ParseFilesDatetime("2005");
+            Assert.AreEqual(new DateTime(year: 2005, month: 1, day: 1), result);
+        }
+
+        [TestMethod]
+        public void DateTakenToFilesDatetime_DateAndTime_Success()
+        {
+            var result = DatabaseParsing.DateTakenToFilesDatetime(new DateTime(year: 1957, month: 03, day: 23, hour: 23, minute: 5, second: 54, millisecond: 123));
+            Assert.AreEqual("1957-03-23T23:05:54", result);
         }
 
         [TestMethod]

@@ -25,20 +25,26 @@ namespace FileDBInterface.DbAccess
             return deceased.ToString("yyyy-MM-dd");
         }
 
-        public static bool ParseFilesDatetime(string datetimeStr, out DateTime? result)
-        {
-            if (datetimeStr != null && DateTime.TryParse(datetimeStr, out var datetime))
-            {
-                result = datetime;
-                return true;
-            }
-            result = null;
-            return false;
-        }
-
         public static DateTime? ParseFilesDatetime(string datetimeStr)
         {
-            ParseFilesDatetime(datetimeStr, out var result);
+            DateTime? result = null;
+
+            if (datetimeStr != null)
+            {
+                if (DateTime.TryParseExact(datetimeStr, "yyyy-MM-ddTHH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var datetime1))
+                {
+                    result = datetime1;
+                }
+                else if (DateTime.TryParseExact(datetimeStr, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var datetime2))
+                {
+                    result = datetime2;
+                }
+                else if (DateTime.TryParseExact(datetimeStr, "yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out var datetime3))
+                {
+                    result = datetime3;
+                }
+            }
+
             return result;
         }
 

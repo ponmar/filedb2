@@ -1,6 +1,4 @@
-﻿using System;
-using System.Globalization;
-using FileDBInterface.DbAccess;
+﻿using FileDBInterface.DbAccess;
 using FileDBInterface.Model;
 using FluentValidation;
 
@@ -43,10 +41,7 @@ namespace FileDBInterface.Validators
 
         private bool IsFileDatetime(string datetime)
         {
-            return
-                DateTime.TryParseExact(datetime, "yyyy-MM-ddTHH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out _) ||
-                DateTime.TryParseExact(datetime, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out _) ||
-                DateTime.TryParseExact(datetime, "yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
+            return DatabaseParsing.ParseFilesDatetime(datetime) != null;
         }
     }
 }
