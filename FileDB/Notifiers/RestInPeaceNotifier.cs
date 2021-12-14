@@ -28,7 +28,7 @@ namespace FileDB.Notifiers
                     if (deceased.Month == today.Month &&
                         deceased.Day == today.Day)
                     {
-                        notifications.Add(new Notification(NotificationType.Info, $"Rest in Peace {person.Firstname} {person.Lastname}!"));
+                        notifications.Add(new Notification(NotificationType.Info, $"Rest in Peace {person.Firstname} {person.Lastname}!", DateTime.Now));
                     }
                 }
             }

@@ -15,26 +15,30 @@
         <converters:EnumerationHasContentConverter x:Key="EnumerationHasContentConverter"/>
 
         <DataTemplate x:Key="NotificationsTemplate">
-            <Border Style="{StaticResource BorderGroup}">
-                <TextBlock Text="{Binding Message}" Style="{StaticResource PageTextBlock}"/>
-            </Border>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding DateTime, StringFormat='{}{0:yyyy-MM-dd  HH:mm}'}" Style="{StaticResource PageTextBlock}" Margin="20, 5"/>
+                <TextBlock Text="{Binding Type}" Style="{StaticResource PageTextBlock}" Margin="20, 5"/>
+                <TextBlock Text="{Binding Message}" Style="{StaticResource PageTextBlock}" Margin="20, 5"/>
+            </StackPanel>
         </DataTemplate>
     </UserControl.Resources>
 
     <DockPanel>
         <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Notifications</TextBlock>
         <ScrollViewer>
-            <StackPanel Style="{StaticResource PageStackPanel}">
-                <Button Style="{StaticResource NormalButton}" Content="Clear" Command="{Binding ClearNotificationsCommand}" HorizontalAlignment="Left" IsEnabled="{Binding Notifications, Converter={StaticResource EnumerationHasContentConverter}}" />
-                <TextBlock Style="{StaticResource PageTextBlock}" Text="No notifications available." Visibility="{Binding Notifications, Converter={StaticResource EnumerationEmptyToVisibilityConverter}}" HorizontalAlignment="Left"/>
-                <ListView Visibility="{Binding Notifications, Converter={StaticResource EnumerationToVisibilityConverter}}" Background="Transparent" BorderThickness="0" Margin="10" ItemsSource="{Binding Notifications}" ItemTemplate="{StaticResource NotificationsTemplate}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                    <ListView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Vertical"/>
-                        </ItemsPanelTemplate>
-                    </ListView.ItemsPanel>
-                </ListView>
-            </StackPanel>
+            <Border Style="{StaticResource BorderGroup}" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <StackPanel Style="{StaticResource PageStackPanel}">
+                    <Button Style="{StaticResource NormalButton}" Content="Clear" Command="{Binding ClearNotificationsCommand}" HorizontalAlignment="Left" IsEnabled="{Binding Notifications, Converter={StaticResource EnumerationHasContentConverter}}" />
+                    <TextBlock Style="{StaticResource PageTextBlock}" Text="No notifications available." Visibility="{Binding Notifications, Converter={StaticResource EnumerationEmptyToVisibilityConverter}}" HorizontalAlignment="Left"/>
+                    <ListView Visibility="{Binding Notifications, Converter={StaticResource EnumerationToVisibilityConverter}}" Background="Transparent" BorderThickness="0" Margin="10" ItemsSource="{Binding Notifications}" ItemTemplate="{StaticResource NotificationsTemplate}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical"/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                    </ListView>
+                </StackPanel>
+            </Border>
         </ScrollViewer>
     </DockPanel>
 </UserControl>

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace FileDB.Notifiers
@@ -17,7 +18,7 @@ namespace FileDB.Notifiers
             List<Notification> notifications = new();
             if (!Directory.Exists(rootDirectory))
             {
-                notifications.Add(new Notification(NotificationType.Warning, $"Files root directory is missing: {rootDirectory}"));
+                notifications.Add(new Notification(NotificationType.Warning, $"Files root directory is missing: {rootDirectory}", DateTime.Now));
             }
             return notifications;
         }

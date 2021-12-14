@@ -43,11 +43,11 @@ namespace FileDB.Notifiers
                 {
                     if (isDeceased)
                     {
-                        notifications.Add(new Notification(NotificationType.Info, $"Today is the birthday for {person.Firstname} {person.Lastname}!"));
+                        notifications.Add(new Notification(NotificationType.Info, $"Today is the birthday for {person.Firstname} {person.Lastname}!", DateTime.Now));
                     }
                     else
                     {
-                        notifications.Add(new Notification(NotificationType.Info, $"Happy Birthday {person.Firstname} {person.Lastname}!"));
+                        notifications.Add(new Notification(NotificationType.Info, $"Happy Birthday {person.Firstname} {person.Lastname}!", DateTime.Now));
                     }
                 }
             }

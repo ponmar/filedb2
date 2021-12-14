@@ -22,6 +22,11 @@ namespace FileDB.Model
             NotificationsUpdated?.Invoke(this, EventArgs.Empty);
         }
 
+        public void AddNotification(NotificationType type, string message)
+        {
+            AddNotification(new Notification(type, message, DateTime.Now));
+        }
+
         public void ClearNotifications()
         {
             if (Notifications.Count > 0)
