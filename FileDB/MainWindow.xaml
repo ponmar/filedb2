@@ -75,12 +75,12 @@
 
             <TabItem Style="{StaticResource WindowTabItem}">
                 <TabItem.Header>
-                    <StackPanel Orientation="Vertical">
+                    <Grid>
                         <TextBlock Text="&#x1F514;" ToolTip="Notifications" Style="{StaticResource PageIcon}"/>
-                        <Border Style="{StaticResource NotificationBadgeBg}" HorizontalAlignment="Center" Padding="6 1 6 1" Visibility="{Binding NumNotifications, Converter={StaticResource GreaterThanZeroToVisibilityConverter}}">
+                        <Border Style="{StaticResource NotificationBadgeBg}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Padding="6 1 6 1" Visibility="{Binding NumNotifications, Converter={StaticResource GreaterThanZeroToVisibilityConverter}}">
                             <TextBlock Text="{Binding NumNotifications}" Style="{StaticResource NotificationBadge}" />
                         </Border>
-                    </StackPanel>
+                    </Grid>
                 </TabItem.Header>
                 <Views:NotificationsView Margin="10 0 10 10"/>
             </TabItem>
