@@ -10,25 +10,29 @@ namespace FileDBInterfaceTests.DbAccess
         [TestMethod]
         public void ParsePersonsDateOfBirth()
         {
-            Assert.AreEqual(new DateTime(year: 1957, month: 03, day: 23), DatabaseParsing.ParsePersonsDateOfBirth("1957-03-23"));
+            var result = DatabaseParsing.ParsePersonsDateOfBirth("1957-03-23");
+            Assert.AreEqual(new DateTime(year: 1957, month: 03, day: 23), result);
         }
 
         [TestMethod]
         public void ToPersonsDateOfBirth()
         {
-            Assert.AreEqual("1957-03-23", DatabaseParsing.ToPersonsDateOfBirth(new DateTime(year: 1957, month: 03, day: 23)));
+            var result = DatabaseParsing.ToPersonsDateOfBirth(new DateTime(year: 1957, month: 03, day: 23));
+            Assert.AreEqual("1957-03-23", result);
         }
 
         [TestMethod]
         public void ParsePersonsDeceased()
         {
-            Assert.AreEqual(new DateTime(year: 1957, month: 03, day: 23), DatabaseParsing.ParsePersonsDeceased("1957-03-23"));
+            var result = DatabaseParsing.ParsePersonsDeceased("1957-03-23");
+            Assert.AreEqual(new DateTime(year: 1957, month: 03, day: 23), result);
         }
 
         [TestMethod]
         public void ToPersonsDeceased()
         {
-            Assert.AreEqual("1957-03-23", DatabaseParsing.ToPersonsDeceased(new DateTime(year: 1957, month: 03, day: 23)));
+            var result = DatabaseParsing.ToPersonsDeceased(new DateTime(year: 1957, month: 03, day: 23));
+            Assert.AreEqual("1957-03-23", result);
         }
 
         [TestMethod]
@@ -67,9 +71,14 @@ namespace FileDBInterfaceTests.DbAccess
         }
 
         [TestMethod]
-        public void PathToFilesDatetime()
+        public void PathToFilesDatetime_ValidDate_Success()
         {
             Assert.AreEqual("1957-03-23", DatabaseParsing.PathToFilesDatetime("subdir/1957-03-23/file.jpg"));
+        }
+
+        [TestMethod]
+        public void PathToFilesDatetime_InvalidDate_Error()
+        {
             Assert.IsNull(DatabaseParsing.PathToFilesDatetime("subdir/19570323/file.jpg"));
         }
 
