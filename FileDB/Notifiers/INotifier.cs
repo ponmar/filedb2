@@ -8,6 +8,6 @@ namespace FileDB.Notifiers
 
     interface INotifier
     {
-        List<Notification> GetNotifications();
+        List<Notification> Run();
     }
 }

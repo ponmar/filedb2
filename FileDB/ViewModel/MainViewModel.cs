@@ -9,7 +9,7 @@ namespace FileDB.ViewModel
             get => numNotifications;
             set => SetProperty(ref numNotifications, value);
         }
-        private int numNotifications = NotificationsViewModel.NumNotifications; // TODO: avoid static somehow
+        private int numNotifications = 0;
 
         public string Title
         {
@@ -48,6 +48,15 @@ namespace FileDB.ViewModel
         public MainViewModel()
         {
             UpdateTitle();
+
+            var model = Model.Model.Instance;
+            NumNotifications = model.Notifications.Count;
+            model.NotificationsUpdated += Model_NotificationsUpdated;
+        }
+
+        private void Model_NotificationsUpdated(object sender, System.EventArgs e)
+        {
+            NumNotifications = Model.Model.Instance.Notifications.Count;
         }
 
         private void UpdateTitle()

@@ -15,7 +15,7 @@ namespace FileDB.Notifiers
             this.persons = persons;
         }
 
-        public List<Notification> GetNotifications()
+        public List<Notification> Run()
         {
             var today = DateTime.Today;
             List<Notification> notifications = new();

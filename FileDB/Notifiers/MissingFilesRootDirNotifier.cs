@@ -12,7 +12,7 @@ namespace FileDB.Notifiers
             this.rootDirectory = rootDirectory;
         }
 
-        public List<Notification> GetNotifications()
+        public List<Notification> Run()
         {
             List<Notification> notifications = new();
             if (!Directory.Exists(rootDirectory))

@@ -20,7 +20,7 @@ namespace FileDB.Notifiers
             this.birthdayNotificationFor = birthdayNotificationFor;
         }
 
-        public List<Notification> GetNotifications()
+        public List<Notification> Run()
         {
             var today = DateTime.Today;
             List<Notification> notifications = new();

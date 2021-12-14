@@ -14,7 +14,7 @@ namespace FileDB.Notifiers
             this.afterDays = afterDays;
         }
 
-        public List<Notification> GetNotifications()
+        public List<Notification> Run()
         {
             List<Notification> notifications = new();
             if (!backupFiles.Any())

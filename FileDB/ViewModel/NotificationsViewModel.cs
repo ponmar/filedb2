@@ -7,21 +7,16 @@ namespace FileDB.ViewModel
 {
     public class NotificationsViewModel : ViewModelBase
     {
-        public static int NumNotifications { get; private set; } = 0;
-
         public ObservableCollection<Notification> Notifications { get; } = new();
 
-        public ICommand ClearNotificationsCommand => clearNotificationsCommand ??= new CommandHandler(() =>
-        {
-            Notifications.Clear();
-            OnPropertyChanged(nameof(Notifications));
-
-            NumNotifications = 0;
-        });
+        public ICommand ClearNotificationsCommand => clearNotificationsCommand ??= new CommandHandler(() => Model.Model.Instance.ClearNotifications());
         private ICommand clearNotificationsCommand;
 
         public NotificationsViewModel()
         {
+            var model = Model.Model.Instance;
+            model.NotificationsUpdated += Model_NotificationsUpdated;
+
             var notifiers = new List<INotifier>();
 
             if (Utils.Config.BackupReminder)
@@ -51,15 +46,18 @@ namespace FileDB.ViewModel
                 notifiers.Add(new RestInPeaceNotifier(persons));
             }
 
-            notifiers.ForEach(x => AddNotifications(x.GetNotifications()));
+
+            notifiers.ForEach(x => x.Run().ForEach(y => model.AddNotification(y)));
+
+            // TODO: remove test
+            model.AddNotification(new Notification(NotificationType.Error, "Test"));
         }
 
-        private void AddNotifications(List<Notification> notifications)
+        private void Model_NotificationsUpdated(object sender, System.EventArgs e)
         {
-            notifications.ForEach(x => Notifications.Add(x));
+            Notifications.Clear();
+            Model.Model.Instance.Notifications.ForEach(x => Notifications.Add(x));
             OnPropertyChanged(nameof(Notifications));
-
-            NumNotifications = Notifications.Count;
         }
     }
 }
