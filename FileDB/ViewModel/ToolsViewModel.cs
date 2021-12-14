@@ -44,6 +44,8 @@ namespace FileDB.ViewModel
         }
         private string invalidFileList = string.Empty;
 
+        private readonly Model.Model model = Model.Model.Instance;
+
         public ToolsViewModel()
         {
             ScanBackupFiles();
@@ -91,7 +93,7 @@ namespace FileDB.ViewModel
 
             var filesValidator = new FilesModelValidator();
             List<FilesModel> invalidFiles = new();
-            foreach (var file in Utils.DbAccess.GetFiles())
+            foreach (var file in model.DbAccess.GetFiles())
             {
                 var result = filesValidator.Validate(file);
                 if (!result.IsValid)
@@ -106,7 +108,7 @@ namespace FileDB.ViewModel
             InvalidFileList = Utils.CreateFileList(invalidFiles);
 
             var personValidator = new PersonModelValidator();
-            foreach (var person in Utils.DbAccess.GetPersons())
+            foreach (var person in model.DbAccess.GetPersons())
             {
                 var result = personValidator.Validate(person);
                 if (!result.IsValid)
@@ -119,7 +121,7 @@ namespace FileDB.ViewModel
             }
 
             var locationValidator = new LocationModelValidator();
-            foreach (var location in Utils.DbAccess.GetLocations())
+            foreach (var location in model.DbAccess.GetLocations())
             {
                 var result = locationValidator.Validate(location);
                 if (!result.IsValid)
@@ -132,7 +134,7 @@ namespace FileDB.ViewModel
             }
 
             var tagValidator = new TagModelValidator();
-            foreach (var tag in Utils.DbAccess.GetTags())
+            foreach (var tag in model.DbAccess.GetTags())
             {
                 var result = tagValidator.Validate(tag);
                 if (!result.IsValid)

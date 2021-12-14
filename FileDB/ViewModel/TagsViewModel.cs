@@ -43,7 +43,7 @@ namespace FileDB.ViewModel
             get => readWriteMode;
             set => SetProperty(ref readWriteMode, value);
         }
-        private bool readWriteMode = !Utils.Config.ReadOnly;
+        private bool readWriteMode = !Model.Model.Instance.Config.ReadOnly;
 
         public ObservableCollection<Tag> Tags { get; } = new();
 
@@ -54,6 +54,8 @@ namespace FileDB.ViewModel
         }
         private Tag selectedTag;
 
+        private readonly Model.Model model = Model.Model.Instance;
+
         public TagsViewModel()
         {
             ReloadTags();
@@ -61,10 +63,10 @@ namespace FileDB.ViewModel
 
         public void RemoveTag()
         {
-            var filesWithTag = Utils.DbAccess.SearchFilesWithTags(new List<int>() { selectedTag.GetId() }).ToList();
+            var filesWithTag = model.DbAccess.SearchFilesWithTags(new List<int>() { selectedTag.GetId() }).ToList();
             if (filesWithTag.Count == 0 || Utils.ShowConfirmDialog($"Tag is used in {filesWithTag.Count} files, remove anyway?"))
             {
-                Utils.DbAccess.DeleteTag(selectedTag.GetId());
+                model.DbAccess.DeleteTag(selectedTag.GetId());
                 ReloadTags();
             }
         }
@@ -98,7 +100,7 @@ namespace FileDB.ViewModel
         {
             Tags.Clear();
 
-            var tags = Utils.DbAccess.GetTags().Select(tm => new Tag(tm.Id) { Name = tm.Name });
+            var tags = model.DbAccess.GetTags().Select(tm => new Tag(tm.Id) { Name = tm.Name });
             foreach (var tag in tags)
             {
                 Tags.Add(tag);

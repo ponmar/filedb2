@@ -25,6 +25,8 @@ namespace FileDB.ViewModel
         public ICommand SaveCommand => saveCommand ??= new CommandHandler(Save);
         private ICommand saveCommand;
 
+        private readonly Model.Model model = Model.Model.Instance;
+
         public AddTagViewModel(int? tagId = null)
         {
             this.tagId = tagId;
@@ -33,7 +35,7 @@ namespace FileDB.ViewModel
 
             if (tagId.HasValue)
             {
-                var tagModel = Utils.DbAccess.GetTagById(tagId.Value);
+                var tagModel = model.DbAccess.GetTagById(tagId.Value);
                 Name = tagModel.Name;
             }
         }
@@ -46,11 +48,11 @@ namespace FileDB.ViewModel
 
                 if (tagId.HasValue)
                 {
-                    Utils.DbAccess.UpdateTag(tag);
+                    model.DbAccess.UpdateTag(tag);
                 }
                 else
                 {
-                    Utils.DbAccess.InsertTag(tag);
+                    model.DbAccess.InsertTag(tag);
                 }
             }
             catch (DataValidationException e)

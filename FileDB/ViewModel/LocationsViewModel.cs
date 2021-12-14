@@ -47,7 +47,7 @@ namespace FileDB.ViewModel
             get => readWriteMode;
             set => SetProperty(ref readWriteMode, value);
         }
-        private bool readWriteMode = !Utils.Config.ReadOnly;
+        private bool readWriteMode = !Model.Model.Instance.Config.ReadOnly;
 
         public ObservableCollection<Location> Locations { get; } = new();
 
@@ -58,6 +58,8 @@ namespace FileDB.ViewModel
         }
         private Location selectedLocation;
 
+        private readonly Model.Model model = Model.Model.Instance;
+
         public LocationsViewModel()
         {
             ReloadLocations();
@@ -65,10 +67,10 @@ namespace FileDB.ViewModel
 
         public void RemoveLocation()
         {
-            var filesWithLocation = Utils.DbAccess.SearchFilesWithLocations(new List<int>() { selectedLocation.GetId() }).ToList();
+            var filesWithLocation = model.DbAccess.SearchFilesWithLocations(new List<int>() { selectedLocation.GetId() }).ToList();
             if (filesWithLocation.Count == 0 || Utils.ShowConfirmDialog($"Location is used in {filesWithLocation.Count} files, remove anyway?"))
             {
-                Utils.DbAccess.DeleteLocation(selectedLocation.GetId());
+                model.DbAccess.DeleteLocation(selectedLocation.GetId());
                 ReloadLocations();
             }
         }
@@ -102,7 +104,7 @@ namespace FileDB.ViewModel
         {
             Locations.Clear();
 
-            var locations = Utils.DbAccess.GetLocations().Select(lm => new Location(lm.Id) { Name = lm.Name, Description = lm.Description, Position = lm.Position });
+            var locations = model.DbAccess.GetLocations().Select(lm => new Location(lm.Id) { Name = lm.Name, Description = lm.Description, Position = lm.Position });
             foreach (var location in locations)
             {
                 Locations.Add(location);

@@ -23,24 +23,27 @@ namespace FileDB
 
             var appDataConfig = new AppDataConfig<Config.Config>(Utils.ApplicationName);
 
+            var model = Model.Model.Instance;
+
             if (demoModeEnabled)
             {
-                Utils.Config = DefaultConfigs.CreateDemo();
-                Model.Model.Instance.AddNotification(new Notification(NotificationType.Info, "Demo configuration enabled, have fun!"));
+                model.Config = DefaultConfigs.CreateDemo();
+                model.AddNotification(new Notification(NotificationType.Info, "Demo configuration enabled, have fun!"));
             }
             else if (!appDataConfig.FileExists())
             {
-                Utils.ShowInfoDialog($"No local {Utils.ApplicationName} configuration file exists. Loading demo configuration.");
-                Utils.Config = DefaultConfigs.CreateDemo();
+                model.AddNotification(new Notification(NotificationType.Warning, $"No local {Utils.ApplicationName} configuration file exists. Loading demo configuration."));
+                model.Config = DefaultConfigs.CreateDemo();
             }
             else
             {
-                Utils.Config = appDataConfig.Read() ?? DefaultConfigs.Default;
+                model.Config = appDataConfig.Read() ?? DefaultConfigs.Default;
 
                 var validator = new ConfigValidator();
-                var result = validator.Validate(Utils.Config);
+                var result = validator.Validate(model.Config);
                 if (!result.IsValid)
                 {
+                    model.AddNotification(new Notification(NotificationType.Error, "Configuration not valid"));
                     Utils.ShowErrorDialog(result);
                 }
             }

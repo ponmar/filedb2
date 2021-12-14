@@ -19,9 +19,11 @@ namespace FileDB.ViewModel
     {
         public List<DeceasedPerson> Persons { get; set; } = new();
 
+        private readonly Model.Model model = Model.Model.Instance;
+
         public RipViewModel()
         {
-            var persons = Utils.DbAccess.GetPersons();
+            var persons = model.DbAccess.GetPersons();
             foreach (var person in persons)
             {
                 if (person.DateOfBirth != null && person.Deceased != null)
@@ -36,7 +38,7 @@ namespace FileDB.ViewModel
                         DeceasedStr = person.Deceased,
                         Deceased = deceased,
                         Age = DatabaseUtils.GetYearsAgo(deceased, dateOfBirth),
-                        ProfileFileIdPath = person.ProfileFileId != null ? Utils.FilesystemAccess.ToAbsolutePath(Utils.DbAccess.GetFileById(person.ProfileFileId.Value).Path) : string.Empty,
+                        ProfileFileIdPath = person.ProfileFileId != null ? model.FilesystemAccess.ToAbsolutePath(model.DbAccess.GetFileById(person.ProfileFileId.Value).Path) : string.Empty,
                     }) ;
                 }
             }

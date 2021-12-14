@@ -23,14 +23,14 @@ namespace FileDB.ViewModel
             get => windowState;
             set => SetProperty(ref windowState, value);
         }
-        private WindowState windowState = Utils.Config.WindowMode == Config.WindowMode.Normal ? WindowState.Normal : WindowState.Maximized;
+        private WindowState windowState = Model.Model.Instance.Config.WindowMode == Config.WindowMode.Normal ? WindowState.Normal : WindowState.Maximized;
 
         public WindowStyle WindowStyle
         {
             get => windowStyle;
             set => SetProperty(ref windowStyle, value);
         }
-        private WindowStyle windowStyle = Utils.Config.WindowMode == Config.WindowMode.Fullscreen ? WindowStyle.None : WindowStyle.ThreeDBorderWindow;
+        private WindowStyle windowStyle = Model.Model.Instance.Config.WindowMode == Config.WindowMode.Fullscreen ? WindowStyle.None : WindowStyle.ThreeDBorderWindow;
 
         public bool ReadWriteMode
         {
@@ -43,7 +43,9 @@ namespace FileDB.ViewModel
                 }
             }
         }
-        private bool readWriteMode = !Utils.Config.ReadOnly;
+        private bool readWriteMode = !Model.Model.Instance.Config.ReadOnly;
+
+        private readonly Model.Model model = Model.Model.Instance;
 
         public MainViewModel()
         {
@@ -63,9 +65,9 @@ namespace FileDB.ViewModel
         {
             var title = $"{Utils.ApplicationName} {ReleaseInformation.Version.Major}.{ReleaseInformation.Version.Minor}";
 
-            if (!string.IsNullOrEmpty(Utils.Config.Name))
+            if (!string.IsNullOrEmpty(model.Config.Name))
             {
-                title += $" [{Utils.Config.Name}]";
+                title += $" [{model.Config.Name}]";
             }
 
             if (!ReadWriteMode)

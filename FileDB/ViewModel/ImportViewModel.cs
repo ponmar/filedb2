@@ -48,13 +48,15 @@ namespace FileDB.ViewModel
         }
         private string importedFileList = string.Empty;
 
+        private readonly Model.Model model = Model.Model.Instance;
+
         public ImportViewModel()
         {
         }
 
         public void ScanNewFiles()
         {
-            if (!Utils.ShowConfirmDialog($"Find all files, not yet imported, from directory {Utils.Config.FilesRootDirectory}?"))
+            if (!Utils.ShowConfirmDialog($"Find all files, not yet imported, from directory {model.Config.FilesRootDirectory}?"))
             {
                 return;
             }
@@ -64,10 +66,10 @@ namespace FileDB.ViewModel
             ImportedFileList = string.Empty;
             OnPropertyChanged(nameof(NewFilesAvailable));
 
-            var blacklistedFilePathPatterns = Utils.Config.BlacklistedFilePathPatterns.Split(";");
-            var whitelistedFilePathPatterns = Utils.Config.WhitelistedFilePathPatterns.Split(";");
+            var blacklistedFilePathPatterns = model.Config.BlacklistedFilePathPatterns.Split(";");
+            var whitelistedFilePathPatterns = model.Config.WhitelistedFilePathPatterns.Split(";");
 
-            foreach (var internalFilePath in Utils.FilesystemAccess.ListNewFilesystemFiles(blacklistedFilePathPatterns, whitelistedFilePathPatterns, Utils.Config.IncludeHiddenDirectories, Utils.DbAccess))
+            foreach (var internalFilePath in model.FilesystemAccess.ListNewFilesystemFiles(blacklistedFilePathPatterns, whitelistedFilePathPatterns, model.Config.IncludeHiddenDirectories, model.DbAccess))
             {
                 NewFiles.Add(new NewFile()
                 {
@@ -80,13 +82,13 @@ namespace FileDB.ViewModel
 
             if (NewFiles.Count == 0)
             {
-                Utils.ShowInfoDialog($"No new files found. Add files to directory {Utils.Config.FilesRootDirectory} or configure another files root directory.");
+                Utils.ShowInfoDialog($"No new files found. Add files to directory {model.Config.FilesRootDirectory} or configure another files root directory.");
             }
         }
 
         public void ImportNewFiles()
         {
-            var locations = Utils.DbAccess.GetLocations();
+            var locations = model.DbAccess.GetLocations();
 
             try
             {
@@ -94,15 +96,15 @@ namespace FileDB.ViewModel
 
                 foreach (var newFile in NewFiles)
                 {
-                    Utils.DbAccess.InsertFile(newFile.Path, null, Utils.FilesystemAccess);
+                    model.DbAccess.InsertFile(newFile.Path, null, model.FilesystemAccess);
 
-                    var importedFile = Utils.DbAccess.GetFileByPath(newFile.Path);
+                    var importedFile = model.DbAccess.GetFileByPath(newFile.Path);
 
                     if (importedFile != null)
                     {
                         importedFiles.Add(importedFile);
 
-                        if (importedFile.Position != null && Utils.Config.FileToLocationMaxDistance > 0.5)
+                        if (importedFile.Position != null && model.Config.FileToLocationMaxDistance > 0.5)
                         {
                             var importedFilePos = DatabaseParsing.ParseFilesPosition(importedFile.Position).Value;
 
@@ -110,9 +112,9 @@ namespace FileDB.ViewModel
                             {
                                 var locationPos = DatabaseParsing.ParseFilesPosition(locationWithPosition.Position).Value;
                                 var distance = DatabaseUtils.CalculateDistance(importedFilePos.lat, importedFilePos.lon, locationPos.lat, locationPos.lon);
-                                if (distance < Utils.Config.FileToLocationMaxDistance)
+                                if (distance < model.Config.FileToLocationMaxDistance)
                                 {
-                                    Utils.DbAccess.InsertFileLocation(importedFile.Id, locationWithPosition.Id);
+                                    model.DbAccess.InsertFileLocation(importedFile.Id, locationWithPosition.Id);
                                 }
                             }
                         }
@@ -138,7 +140,7 @@ namespace FileDB.ViewModel
 
         private string GetDateModified(string internalPath)
         {
-            var path = Utils.FilesystemAccess.ToAbsolutePath(internalPath);
+            var path = model.FilesystemAccess.ToAbsolutePath(internalPath);
             var dateModified = File.GetLastWriteTime(path);
             return dateModified.ToString("yyyy-MM-dd HH:mm");
         }

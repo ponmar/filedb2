@@ -12,6 +12,8 @@ namespace FileDB.ViewModel
         public ICommand ClearNotificationsCommand => clearNotificationsCommand ??= new CommandHandler(() => Model.Model.Instance.ClearNotifications());
         private ICommand clearNotificationsCommand;
 
+        private readonly Model.Model model = Model.Model.Instance;
+
         public NotificationsViewModel()
         {
             var model = Model.Model.Instance;
@@ -20,29 +22,29 @@ namespace FileDB.ViewModel
 
             var notifiers = new List<INotifier>();
 
-            if (Utils.Config.BackupReminder)
+            if (model.Config.BackupReminder)
             {
                 notifiers.Add(new BackupNotifier(new DatabaseBackup().ListAvailableBackupFiles(), 30));
             }
 
-            if (Utils.Config.MissingFilesRootDirNotification)
+            if (model.Config.MissingFilesRootDirNotification)
             {
-                notifiers.Add(new MissingFilesRootDirNotifier(Utils.Config.FilesRootDirectory));
+                notifiers.Add(new MissingFilesRootDirNotifier(model.Config.FilesRootDirectory));
             }
 
-            var persons = Utils.DbAccess.GetPersons();
+            var persons = model.DbAccess.GetPersons();
 
-            if (Utils.Config.BirthdayReminder)
+            if (model.Config.BirthdayReminder)
             {
                 notifiers.Add(new BirthdayNotifier(persons, BirthdayNotificationFor.Alive));
             }
 
-            if (Utils.Config.BirthdayReminderForDeceased)
+            if (model.Config.BirthdayReminderForDeceased)
             {
                 notifiers.Add(new BirthdayNotifier(persons, BirthdayNotificationFor.Deceased));
             }
 
-            if (Utils.Config.RipReminder)
+            if (model.Config.RipReminder)
             {
                 notifiers.Add(new RestInPeaceNotifier(persons));
             }

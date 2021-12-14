@@ -72,6 +72,8 @@ namespace FileDB.ViewModel
         public ICommand SaveCommand => saveCommand ??= new CommandHandler(Save);
         private ICommand saveCommand;
 
+        private readonly Model.Model model = Model.Model.Instance;
+
         public AddPersonViewModel(int? personId = null)
         {
             this.personId = personId;
@@ -80,7 +82,7 @@ namespace FileDB.ViewModel
 
             if (personId.HasValue)
             {
-                var personModel = Utils.DbAccess.GetPersonById(personId.Value);
+                var personModel = model.DbAccess.GetPersonById(personId.Value);
                 Firstname = personModel.Firstname;
                 Lastname = personModel.Lastname;
                 Description = personModel.Description;
@@ -127,11 +129,11 @@ namespace FileDB.ViewModel
 
                 if (personId.HasValue)
                 {
-                    Utils.DbAccess.UpdatePerson(person);
+                    model.DbAccess.UpdatePerson(person);
                 }
                 else
                 {
-                    Utils.DbAccess.InsertPerson(person);
+                    model.DbAccess.InsertPerson(person);
                 }
             }
             catch (DataValidationException e)

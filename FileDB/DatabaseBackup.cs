@@ -21,7 +21,7 @@ namespace FileDB
 
     public class DatabaseBackup
     {
-        public string BackupDirectory => Path.GetDirectoryName(Utils.Config.Database);
+        public string BackupDirectory => Path.GetDirectoryName(Model.Model.Instance.Config.Database);
 
         private const string BackupFileTimestampFormat = "yyyy-MM-ddTHHmmss";
 
@@ -51,7 +51,7 @@ namespace FileDB
 
         public void CreateBackup()
         {
-            var db = Utils.Config.Database;
+            var db = Model.Model.Instance.Config.Database;
             if (!File.Exists(db))
             {
                 throw new IOException($"Database to backup does not exist: {db}");

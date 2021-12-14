@@ -39,6 +39,8 @@ namespace FileDB.ViewModel
         public ICommand SaveCommand => saveCommand ??= new CommandHandler(Save);
         private ICommand saveCommand;
 
+        private readonly Model.Model model = Model.Model.Instance;
+
         public AddLocationViewModel(int? locationId = null)
         {
             this.locationId = locationId;
@@ -47,7 +49,7 @@ namespace FileDB.ViewModel
 
             if (locationId.HasValue)
             {
-                var locationModel = Utils.DbAccess.GetLocationById(locationId.Value);
+                var locationModel = model.DbAccess.GetLocationById(locationId.Value);
                 Name = locationModel.Name;
                 Description = locationModel.Description ?? string.Empty;
                 Position = locationModel.Position ?? string.Empty;
@@ -71,11 +73,11 @@ namespace FileDB.ViewModel
 
                 if (locationId.HasValue)
                 {
-                    Utils.DbAccess.UpdateLocation(location);
+                    model.DbAccess.UpdateLocation(location);
                 }
                 else
                 {
-                    Utils.DbAccess.InsertLocation(location);
+                    model.DbAccess.InsertLocation(location);
                 }
             }
             catch (DataValidationException e)

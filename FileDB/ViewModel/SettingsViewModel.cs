@@ -212,7 +212,9 @@ namespace FileDB.ViewModel
 
         public ICommand SetDefaultWindowModeCommand => setDefaultWindowModeCommand ??= new CommandHandler(x => WindowMode = DefaultConfigs.Default.WindowMode);
         private ICommand setDefaultWindowModeCommand;
-        
+
+        private readonly Model.Model model = Model.Model.Instance;
+
         public SettingsViewModel()
         {
             UpdateFromConfiguration();
@@ -220,25 +222,25 @@ namespace FileDB.ViewModel
 
         private void UpdateFromConfiguration()
         {
-            ConfigName = Utils.Config.Name;
-            Database = Utils.Config.Database;
-            FilesRootDirectory = Utils.Config.FilesRootDirectory;
-            SlideshowDelay = Utils.Config.SlideshowDelay;
-            SearchHistorySize = Utils.Config.SearchHistorySize;
-            DefaultSortMethod = Utils.Config.DefaultSortMethod;
-            KeepSelectionAfterSort = Utils.Config.KeepSelectionAfterSort;
-            IncludeHiddenDirectories = Utils.Config.IncludeHiddenDirectories;
-            BlacklistedFilePathPatterns = Utils.Config.BlacklistedFilePathPatterns;
-            WhitelistedFilePathPatterns = Utils.Config.WhitelistedFilePathPatterns;
-            ReadOnly = Utils.Config.ReadOnly;
-            BackupReminder = Utils.Config.BackupReminder;
-            BirthdayReminder = Utils.Config.BirthdayReminder;
-            BirthdayReminderForDeceased = Utils.Config.BirthdayReminderForDeceased;
-            RipReminder = Utils.Config.RipReminder;
-            MissingFilesRootDirNotification = Utils.Config.MissingFilesRootDirNotification;
-            LocationLink = Utils.Config.LocationLink;
-            FileToLocationMaxDistance = Utils.Config.FileToLocationMaxDistance;
-            WindowMode = Utils.Config.WindowMode;
+            ConfigName = model.Config.Name;
+            Database = model.Config.Database;
+            FilesRootDirectory = model.Config.FilesRootDirectory;
+            SlideshowDelay = model.Config.SlideshowDelay;
+            SearchHistorySize = model.Config.SearchHistorySize;
+            DefaultSortMethod = model.Config.DefaultSortMethod;
+            KeepSelectionAfterSort = model.Config.KeepSelectionAfterSort;
+            IncludeHiddenDirectories = model.Config.IncludeHiddenDirectories;
+            BlacklistedFilePathPatterns = model.Config.BlacklistedFilePathPatterns;
+            WhitelistedFilePathPatterns = model.Config.WhitelistedFilePathPatterns;
+            ReadOnly = model.Config.ReadOnly;
+            BackupReminder = model.Config.BackupReminder;
+            BirthdayReminder = model.Config.BirthdayReminder;
+            BirthdayReminderForDeceased = model.Config.BirthdayReminderForDeceased;
+            RipReminder = model.Config.RipReminder;
+            MissingFilesRootDirNotification = model.Config.MissingFilesRootDirNotification;
+            LocationLink = model.Config.LocationLink;
+            FileToLocationMaxDistance = model.Config.FileToLocationMaxDistance;
+            WindowMode = model.Config.WindowMode;
         }
 
         public void ResetConfiguration()
@@ -285,8 +287,8 @@ namespace FileDB.ViewModel
 
             if (appDataConfig.Write(config))
             {
-                Utils.Config = config;
-                Utils.ReloadHandles();
+                model.Config = config;
+                model.ReloadHandles();
                 Utils.ShowInfoDialog("Configuration saved. Restart to enable all settings.");
             }
             else

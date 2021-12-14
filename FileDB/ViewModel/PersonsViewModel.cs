@@ -54,7 +54,7 @@ namespace FileDB.ViewModel
             get => readWriteMode;
             set => SetProperty(ref readWriteMode, value);
         }
-        private bool readWriteMode = !Utils.Config.ReadOnly;
+        private bool readWriteMode = !Model.Model.Instance.Config.ReadOnly;
 
         public ObservableCollection<Person> Persons { get; } = new();
 
@@ -65,6 +65,8 @@ namespace FileDB.ViewModel
         }
         private Person selectedPerson;
 
+        private readonly Model.Model model = Model.Model.Instance;
+
         public PersonsViewModel()
         {
             ReloadPersons();
@@ -72,10 +74,10 @@ namespace FileDB.ViewModel
 
         public void RemovePerson()
         {
-            var filesWithPerson = Utils.DbAccess.SearchFilesWithPersons(new List<int>() { selectedPerson.GetId() }).ToList();
+            var filesWithPerson = model.DbAccess.SearchFilesWithPersons(new List<int>() { selectedPerson.GetId() }).ToList();
             if (filesWithPerson.Count == 0 || Utils.ShowConfirmDialog($"Person is used in {filesWithPerson.Count} files, remove anyway?"))
             {
-                Utils.DbAccess.DeletePerson(selectedPerson.GetId());
+                model.DbAccess.DeletePerson(selectedPerson.GetId());
                 ReloadPersons();
             }
         }
@@ -109,7 +111,7 @@ namespace FileDB.ViewModel
         {
             Persons.Clear();
 
-            var persons = Utils.DbAccess.GetPersons().Select(pm => new Person(pm.Id)
+            var persons = model.DbAccess.GetPersons().Select(pm => new Person(pm.Id)
             {
                 Firstname = pm.Firstname,
                 Lastname = pm.Lastname,
