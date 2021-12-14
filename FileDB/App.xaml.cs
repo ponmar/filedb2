@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows;
 using FileDB.Config;
+using FileDB.Notifiers;
 using FileDB.Validators;
 
 namespace FileDB
@@ -25,6 +26,7 @@ namespace FileDB
             if (demoModeEnabled)
             {
                 Utils.Config = DefaultConfigs.CreateDemo();
+                Model.Model.Instance.AddNotification(new Notification(NotificationType.Info, "Demo configuration enabled, have fun!"));
             }
             else if (!appDataConfig.FileExists())
             {

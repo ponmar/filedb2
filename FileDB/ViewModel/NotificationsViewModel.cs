@@ -16,6 +16,7 @@ namespace FileDB.ViewModel
         {
             var model = Model.Model.Instance;
             model.NotificationsUpdated += Model_NotificationsUpdated;
+            SetNotifications();
 
             var notifiers = new List<INotifier>();
 
@@ -46,14 +47,15 @@ namespace FileDB.ViewModel
                 notifiers.Add(new RestInPeaceNotifier(persons));
             }
 
-
             notifiers.ForEach(x => x.Run().ForEach(y => model.AddNotification(y)));
-
-            // TODO: remove test
-            model.AddNotification(new Notification(NotificationType.Error, "Test"));
         }
 
         private void Model_NotificationsUpdated(object sender, System.EventArgs e)
+        {
+            SetNotifications();
+        }
+
+        private void SetNotifications()
         {
             Notifications.Clear();
             Model.Model.Instance.Notifications.ForEach(x => Notifications.Add(x));
