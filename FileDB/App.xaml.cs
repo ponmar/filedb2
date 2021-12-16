@@ -28,7 +28,7 @@ namespace FileDB
             if (demoModeEnabled)
             {
                 model.Config = DefaultConfigs.CreateDemo();
-                model.AddNotification(NotificationType.Info, "Demo configuration enabled, have fun!");
+                model.AddNotification(NotificationType.Info, "Demo configuration enabled. Have fun!");
             }
             else if (!appDataConfig.FileExists())
             {

@@ -44,6 +44,7 @@
                 <TextBlock Style="{StaticResource PageSubHeading}">Database Data Validation</TextBlock>
                 <Border Style="{StaticResource BorderGroup}">
                     <StackPanel Orientation="Vertical">
+                        <TextBlock Style="{StaticResource PageTextBlock}" Text="Database data validation can be performed after an application upgrade or when data has been imported manually by via SQL statements."/>
                         <StackPanel Orientation="Horizontal">
                             <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding DatabaseValidationCommand}" HorizontalAlignment="Left">Run validation</Button>
                             <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding CopyInvalidFileListCommand}" IsEnabled="{Binding InvalidFileList, Converter={StaticResource StringContentToBoolConverter}}" HorizontalAlignment="Left">Copy invalid file list</Button>
