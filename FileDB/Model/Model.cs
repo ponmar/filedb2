@@ -96,5 +96,12 @@ namespace FileDB.Model
         {
             TagsUpdated?.Invoke(this, EventArgs.Empty);
         }
+
+        public event EventHandler<bool> TemporaryFullscreenRequested;
+
+        public void RequestTemporaryFullscreen(bool fullscreen)
+        {
+            TemporaryFullscreenRequested?.Invoke(this, fullscreen);
+        }
     }
 }

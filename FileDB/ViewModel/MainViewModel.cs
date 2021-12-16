@@ -23,14 +23,18 @@ namespace FileDB.ViewModel
             get => windowState;
             set => SetProperty(ref windowState, value);
         }
-        private WindowState windowState = Model.Model.Instance.Config.WindowMode == Config.WindowMode.Normal ? WindowState.Normal : WindowState.Maximized;
+        private WindowState windowState = DefaultWindowState;
+
+        private static WindowState DefaultWindowState => Model.Model.Instance.Config.WindowMode == Config.WindowMode.Normal ? WindowState.Normal : WindowState.Maximized;
 
         public WindowStyle WindowStyle
         {
             get => windowStyle;
             set => SetProperty(ref windowStyle, value);
         }
-        private WindowStyle windowStyle = Model.Model.Instance.Config.WindowMode == Config.WindowMode.Fullscreen ? WindowStyle.None : WindowStyle.ThreeDBorderWindow;
+        private WindowStyle windowStyle = DefaultWindowStyle;
+
+        private static WindowStyle DefaultWindowStyle => Model.Model.Instance.Config.WindowMode == Config.WindowMode.Fullscreen ? WindowStyle.None : WindowStyle.ThreeDBorderWindow;
 
         public bool ReadWriteMode
         {
@@ -52,8 +56,17 @@ namespace FileDB.ViewModel
             UpdateTitle();
 
             var model = Model.Model.Instance;
+
             NumNotifications = model.Notifications.Count;
             model.NotificationsUpdated += Model_NotificationsUpdated;
+
+            model.TemporaryFullscreenRequested += Model_TemporaryFullscreenRequested;
+        }
+
+        private void Model_TemporaryFullscreenRequested(object sender, bool fullscreen)
+        {
+            WindowState = fullscreen ? WindowState.Maximized : DefaultWindowState;
+            WindowStyle = fullscreen ? WindowStyle.None : DefaultWindowStyle;
         }
 
         private void Model_NotificationsUpdated(object sender, System.EventArgs e)

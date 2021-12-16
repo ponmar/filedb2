@@ -195,6 +195,7 @@ namespace FileDB.ViewModel
                 if (SetProperty(ref maximize, value))
                 {
                     OnPropertyChanged(nameof(ShowUpdateSection));
+                    model.RequestTemporaryFullscreen(maximize);
                 }
             }
         }
