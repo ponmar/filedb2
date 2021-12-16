@@ -79,6 +79,8 @@ namespace FileDB.ViewModel
                 {
                     model.DbAccess.InsertLocation(location);
                 }
+
+                model.NotifyLocationsUpdated();
             }
             catch (DataValidationException e)
             {

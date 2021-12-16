@@ -54,6 +54,8 @@ namespace FileDB.ViewModel
                 {
                     model.DbAccess.InsertTag(tag);
                 }
+
+                model.NotifyTagsUpdated();
             }
             catch (DataValidationException e)
             {

@@ -59,6 +59,12 @@ namespace FileDB.ViewModel
         public TagsViewModel()
         {
             ReloadTags();
+            model.TagsUpdated += Model_TagsUpdated;
+        }
+
+        private void Model_TagsUpdated(object sender, System.EventArgs e)
+        {
+            ReloadTags();
         }
 
         public void RemoveTag()
@@ -67,7 +73,7 @@ namespace FileDB.ViewModel
             if (filesWithTag.Count == 0 || Utils.ShowConfirmDialog($"Tag is used in {filesWithTag.Count} files, remove anyway?"))
             {
                 model.DbAccess.DeleteTag(selectedTag.GetId());
-                ReloadTags();
+                model.NotifyTagsUpdated();
             }
         }
 
@@ -78,7 +84,6 @@ namespace FileDB.ViewModel
                 Owner = Application.Current.MainWindow
             };
             window.ShowDialog();
-            ReloadTags();
         }
 
         public void AddTag()
@@ -88,7 +93,6 @@ namespace FileDB.ViewModel
                 Owner = Application.Current.MainWindow
             };
             window.ShowDialog();
-            ReloadTags();
         }
 
         public void TagSelectionChanged(object parameter)

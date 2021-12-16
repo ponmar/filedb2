@@ -63,6 +63,12 @@ namespace FileDB.ViewModel
         public LocationsViewModel()
         {
             ReloadLocations();
+            model.LocationsUpdated += Model_LocationsUpdated;
+        }
+
+        private void Model_LocationsUpdated(object sender, System.EventArgs e)
+        {
+            ReloadLocations();
         }
 
         public void RemoveLocation()
@@ -71,7 +77,7 @@ namespace FileDB.ViewModel
             if (filesWithLocation.Count == 0 || Utils.ShowConfirmDialog($"Location is used in {filesWithLocation.Count} files, remove anyway?"))
             {
                 model.DbAccess.DeleteLocation(selectedLocation.GetId());
-                ReloadLocations();
+                model.NotifyLocationsUpdated();
             }
         }
 
@@ -82,7 +88,6 @@ namespace FileDB.ViewModel
                 Owner = Application.Current.MainWindow
             };
             window.ShowDialog();
-            ReloadLocations();
         }
 
         public void AddLocation()
@@ -92,7 +97,6 @@ namespace FileDB.ViewModel
                 Owner = Application.Current.MainWindow
             };
             window.ShowDialog();
-            ReloadLocations();
         }
 
         public void LocationSelectionChanged(object parameter)

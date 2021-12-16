@@ -135,6 +135,8 @@ namespace FileDB.ViewModel
                 {
                     model.DbAccess.InsertPerson(person);
                 }
+
+                model.NotifyPersonsUpdated();
             }
             catch (DataValidationException e)
             {

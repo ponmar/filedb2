@@ -5,7 +5,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using FileDB.View;
-using FileDBInterface;
 using FileDBInterface.DbAccess;
 using FileDBInterface.Model;
 
@@ -70,6 +69,12 @@ namespace FileDB.ViewModel
         public PersonsViewModel()
         {
             ReloadPersons();
+            model.PersonsUpdated += Model_PersonsUpdated;
+        }
+
+        private void Model_PersonsUpdated(object sender, EventArgs e)
+        {
+            ReloadPersons();
         }
 
         public void RemovePerson()
@@ -78,7 +83,7 @@ namespace FileDB.ViewModel
             if (filesWithPerson.Count == 0 || Utils.ShowConfirmDialog($"Person is used in {filesWithPerson.Count} files, remove anyway?"))
             {
                 model.DbAccess.DeletePerson(selectedPerson.GetId());
-                ReloadPersons();
+                model.NotifyPersonsUpdated();
             }
         }
 
@@ -89,7 +94,6 @@ namespace FileDB.ViewModel
                 Owner = Application.Current.MainWindow
             };
             window.ShowDialog();
-            ReloadPersons();
         }
 
         public void AddPerson()
@@ -99,7 +103,6 @@ namespace FileDB.ViewModel
                 Owner = Application.Current.MainWindow
             };
             window.ShowDialog();
-            ReloadPersons();
         }
 
         public void PersonSelectionChanged(object parameter)

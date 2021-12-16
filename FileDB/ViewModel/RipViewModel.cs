@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using FileDB.Comparers;
 using FileDBInterface.DbAccess;
 
@@ -17,21 +18,33 @@ namespace FileDB.ViewModel
 
     public class RipViewModel : ViewModelBase
     {
-        public List<DeceasedPerson> Persons { get; set; } = new();
+        public ObservableCollection<DeceasedPerson> Persons { get; set; } = new();
 
         private readonly Model.Model model = Model.Model.Instance;
 
         public RipViewModel()
         {
-            var persons = model.DbAccess.GetPersons();
-            foreach (var person in persons)
+            UpdatePersons();
+            model.PersonsUpdated += Model_PersonsUpdated;
+        }
+
+        private void Model_PersonsUpdated(object sender, EventArgs e)
+        {
+            UpdatePersons();
+        }
+
+        private void UpdatePersons()
+        {
+            var persons = new List<DeceasedPerson>();
+
+            foreach (var person in model.DbAccess.GetPersons())
             {
                 if (person.DateOfBirth != null && person.Deceased != null)
                 {
                     var dateOfBirth = DatabaseParsing.ParsePersonsDateOfBirth(person.DateOfBirth);
                     var deceased = DatabaseParsing.ParsePersonsDeceased(person.Deceased);
 
-                    Persons.Add(new DeceasedPerson()
+                    persons.Add(new DeceasedPerson()
                     {
                         Name = person.Firstname + " " + person.Lastname,
                         DateOfBirth = person.DateOfBirth,
@@ -39,12 +52,15 @@ namespace FileDB.ViewModel
                         Deceased = deceased,
                         Age = DatabaseUtils.GetYearsAgo(deceased, dateOfBirth),
                         ProfileFileIdPath = person.ProfileFileId != null ? model.FilesystemAccess.ToAbsolutePath(model.DbAccess.GetFileById(person.ProfileFileId.Value).Path) : string.Empty,
-                    }) ;
+                    });
                 }
             }
 
-            Persons.Sort(new PersonsByDeceasedSorter());
-            Persons.Reverse();
+            persons.Sort(new PersonsByDeceasedSorter());
+            persons.Reverse();
+
+            Persons.Clear();
+            persons.ForEach(x => Persons.Add(x));
         }
     }
 }

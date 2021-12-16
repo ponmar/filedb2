@@ -77,5 +77,24 @@ namespace FileDB.Model
             }
         }
         private IFilesystemAccess filesystemAccess;
+
+        public event EventHandler PersonsUpdated;
+        public event EventHandler LocationsUpdated;
+        public event EventHandler TagsUpdated;
+
+        public void NotifyPersonsUpdated()
+        {
+            PersonsUpdated?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void NotifyLocationsUpdated()
+        {
+            LocationsUpdated?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void NotifyTagsUpdated()
+        {
+            TagsUpdated?.Invoke(this, EventArgs.Empty);
+        }
     }
 }

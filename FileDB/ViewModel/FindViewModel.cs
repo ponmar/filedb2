@@ -625,8 +625,27 @@ namespace FileDB.ViewModel
             ReloadTags();
             ReloadFolders();
 
+            model.PersonsUpdated += Model_PersonsUpdated;
+            model.LocationsUpdated += Model_LocationsUpdated;
+            model.TagsUpdated += Model_TagsUpdated;
+
             slideshowTimer.Tick += SlideshowTimer_Tick;
             slideshowTimer.Interval = TimeSpan.FromSeconds(model.Config.SlideshowDelay);
+        }
+
+        private void Model_PersonsUpdated(object sender, EventArgs e)
+        {
+            ReloadPersons();
+        }
+
+        private void Model_LocationsUpdated(object sender, EventArgs e)
+        {
+            ReloadLocations();
+        }
+
+        private void Model_TagsUpdated(object sender, EventArgs e)
+        {
+            ReloadTags();
         }
 
         public void StopSlideshowAndSelectPrevFile()
@@ -1404,8 +1423,6 @@ namespace FileDB.ViewModel
                 Owner = Application.Current.MainWindow
             };
             window.ShowDialog();
-
-            ReloadPersons();
         }
 
         public void CreateLocation()
@@ -1415,8 +1432,6 @@ namespace FileDB.ViewModel
                 Owner = Application.Current.MainWindow
             };
             window.ShowDialog();
-
-            ReloadLocations();
         }
 
         public void CreateTag()
@@ -1426,8 +1441,6 @@ namespace FileDB.ViewModel
                 Owner = Application.Current.MainWindow
             };
             window.ShowDialog();
-
-            ReloadTags();
         }
 
         private void ReloadPersons()

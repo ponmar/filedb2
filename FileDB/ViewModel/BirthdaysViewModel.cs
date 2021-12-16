@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using FileDBInterface.DbAccess;
 
 namespace FileDB.ViewModel
@@ -29,15 +30,26 @@ namespace FileDB.ViewModel
 
     public class BirthdaysViewModel : ViewModelBase
     {
-        public List<PersonBirthday> Persons { get; } = new();
+        public ObservableCollection<PersonBirthday> Persons { get; } = new();
 
         private readonly Model.Model model = Model.Model.Instance;
 
         public BirthdaysViewModel()
         {
-            var persons = model.DbAccess.GetPersons();
+            UpdatePersons();
+            model.PersonsUpdated += Model_PersonsUpdated;
+        }
 
-            foreach (var person in persons)
+        private void Model_PersonsUpdated(object sender, EventArgs e)
+        {
+            UpdatePersons();
+        }
+
+        private void UpdatePersons()
+        {
+            var persons = new List<PersonBirthday>();
+
+            foreach (var person in model.DbAccess.GetPersons())
             {
                 if (person.DateOfBirth != null && person.Deceased == null)
                 {
@@ -69,11 +81,14 @@ namespace FileDB.ViewModel
                         p.DaysLeftStr = string.Empty;
                     }
 
-                    Persons.Add(p);
+                    persons.Add(p);
                 }
             }
 
-            Persons.Sort(new PersonsByDaysLeftUntilBirthdaySorter());
+            persons.Sort(new PersonsByDaysLeftUntilBirthdaySorter());
+
+            Persons.Clear();
+            persons.ForEach(x => Persons.Add(x));
         }
     }
 }
