@@ -13,7 +13,13 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shared", "Shared\Shared.shp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileDBInterfaceTests", "FileDBInterfaceTests\FileDBInterfaceTests.csproj", "{1D49EFF7-00AC-4171-8D20-A0975BC044E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileDBTests", "FileDBTests\FileDBTests.csproj", "{9CDA4B29-FC75-49C3-9561-7241ABABE275}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileDBTests", "FileDBTests\FileDBTests.csproj", "{9CDA4B29-FC75-49C3-9561-7241ABABE275}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repo", "Repo", "{85037002-FF8E-4BCD-9B1B-C22F8FE64F5D}"
+	ProjectSection(SolutionItems) = preProject
+		CHANGES.txt = CHANGES.txt
+		release.bat = release.bat
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution

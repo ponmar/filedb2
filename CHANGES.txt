@@ -1,3 +1,13 @@
+2.3:
+* Startup popup dialogs replaced with a notifications tab
+* Add getting started content to About page
+* File browser can be maximized
+* File browser export and search history moved to new tabs
+* New configuration option: WindowMode (normal, maximized and fullscreen)
+* Dark theme styling improvements
+* Model updates for persons, locations and tags triggers page updates
+* Bug fix for dates without time included
+
 2.2:
 * Dark theme
 * Database validate tool
