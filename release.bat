@@ -25,3 +25,5 @@ xcopy CHANGES.txt %releaseDir%
 cd release
 "C:\Program Files\7-Zip\7z.exe" a -tzip %zipFilename% %zipDir%
 cd ..
+
+pause
