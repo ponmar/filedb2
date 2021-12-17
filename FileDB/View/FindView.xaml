@@ -272,7 +272,7 @@
                 <Grid>
                     <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{Binding CurrentFileLoadError}" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding CurrentFileLoadError, Converter={local1:StringNullOrEmptyToVisibilityConverter}}"/>
                     <Image x:Name="CurrentFileImage" Stretch="Uniform" RenderOptions.BitmapScalingMode="Fant" ToolTip="{Binding CurrentFileToolTip}"/>
-                    <ToggleButton Style="{StaticResource NavigationToggleButton}" IsChecked="{Binding Maximize}" VerticalAlignment="Top" HorizontalAlignment="Right" Content="&#x1F5B5;" Margin="5" ToolTip="Maximize"/>
+                    <ToggleButton Style="{StaticResource NavigationToggleButton}" IsChecked="{Binding Maximize}" VerticalAlignment="Top" HorizontalAlignment="Right" Content="&#x1F5B5;" Margin="5" ToolTip="Maximize" IsEnabled="{Binding HasNonEmptySearchResult}"/>
                 </Grid>
             </Border>
 
