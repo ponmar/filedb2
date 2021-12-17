@@ -78,7 +78,7 @@
                                 <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding FindFilesByTextCommand}" ToolTip="Search by text (matches file path/description)">Search</Button>
                             </StackPanel>
 
-                            <Button Margin="5" Grid.Row="0" Grid.Column="2" Style="{StaticResource NormalButton}" Command="{Binding FindFilesFromMissingCategorizationCommand}" HorizontalAlignment="Left">Search by missing categorization</Button>
+                            <Button Margin="5" Grid.Row="0" Grid.Column="2" Style="{StaticResource NormalButton}" Command="{Binding FindFilesFromMissingCategorizationCommand}" HorizontalAlignment="Left">All without meta-data</Button>
                             <Button Margin="5" Grid.Row="1" Grid.Column="2" Style="{StaticResource NormalButton}" Command="{Binding FindCurrentDirectoryFilesCommand}" ToolTip="Search all files within current file directory (recursive)" HorizontalAlignment="Left">All from current directory</Button>
                         </Grid>
                     </TabItem>
