@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Windows;
 using System.Windows.Data;
 
 namespace FileDB.Converters

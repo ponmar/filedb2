@@ -33,6 +33,8 @@
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
         <converters:NegatedBooleanToVisibilityConverter x:Key="NegatedBooleanToVisibilityConverter"/>
+        <converters:EnumerationToVisibilityConverter x:Key="EnumerationToVisibilityConverter"/>
+        <converters:EnumerationEmptyToVisibilityConverter x:Key="EnumerationEmptyToVisibilityConverter"/>
     </UserControl.Resources>
 
     <Grid Margin="0 0 0 0">
@@ -193,7 +195,8 @@
                             <TextBlock Text="History" Style="{StaticResource PageTabItemText}" />
                         </TabItem.Header>
                         <StackPanel Orientation="Vertical">
-                            <ListView Margin="5" ItemsSource="{Binding SearchResultHistory}" Background="Transparent" BorderThickness="0" Width="auto">
+                            <TextBlock Style="{StaticResource PageTextBlock}" Visibility="{Binding SearchResultHistory, Converter={StaticResource EnumerationEmptyToVisibilityConverter}}" Text="No search history available."/>
+                            <ListView Margin="5" ItemsSource="{Binding SearchResultHistory}" Visibility="{Binding SearchResultHistory, Converter={StaticResource EnumerationToVisibilityConverter}}" Background="Transparent" BorderThickness="0" Width="auto">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{Binding Name}" Margin="2"/>

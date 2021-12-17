@@ -465,7 +465,9 @@ namespace FileDB.ViewModel
             {
                 SearchResultHistory.RemoveAt(0);
             }
+
             SearchResultHistory.Add(searchResult);
+            OnPropertyChanged(nameof(SearchResultHistory));
         }
 
         private SearchResult searchResult = null;
