@@ -25,7 +25,7 @@
                         <Button Style="{StaticResource NormalButton}" Width="150" Margin="10" Command="{Binding CopyImportedFileListCommand}" IsEnabled="{Binding ImportedFileList, Converter={StaticResource StringContentToBoolConverter}}">Copy imported file list</Button>
                     </StackPanel>
                     <DataGrid Margin="10" ItemsSource="{Binding NewFiles}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="false" CanUserDeleteRows="false" IsReadOnly="True"/>
-                    <TextBlock Margin="10" Text="{Binding ImportResult}"/>
+                    <TextBlock Style="{StaticResource PageTextBlock}" Text="{Binding ImportResult}"/>
                 </StackPanel>
             </Border>
         </ScrollViewer>
