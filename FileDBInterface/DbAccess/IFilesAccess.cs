@@ -16,6 +16,7 @@ namespace FileDBInterface.DbAccess
         public void UpdateFileFromMetaData(int id, IFilesystemAccess filesystemAccess);
         public void UpdateFileDescription(int id, string description);
 
+        public IEnumerable<FilesModel> SearchFilesFromIds(IEnumerable<int> fileIds);
         public IEnumerable<FilesModel> SearchFiles(string criteria);
         public IEnumerable<FilesModel> SearchFilesBySex(Sex sex);
         public IEnumerable<FilesModel> SearchFilesByDate(DateTime start, DateTime end);

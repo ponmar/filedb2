@@ -894,9 +894,7 @@ namespace FileDB.ViewModel
             if (!string.IsNullOrEmpty(ImportedFileList))
             {
                 var fileIds = Utils.CreateFileIds(ImportedFileList);
-
-                // TODO: add query with many file ids
-                SearchResult = new SearchResult(fileIds.Select(f => model.DbAccess.GetFileById(f)).ToList());
+                SearchResult = new SearchResult(model.DbAccess.SearchFilesFromIds(fileIds));
             }
         }
 
@@ -1068,9 +1066,7 @@ namespace FileDB.ViewModel
             if (!string.IsNullOrEmpty(fileListSearch))
             {
                 var fileIds = Utils.CreateFileIds(fileListSearch);
-
-                // TODO: add query with many file ids
-                SearchResult = new SearchResult(fileIds.Select(f => model.DbAccess.GetFileById(f)).ToList());
+                SearchResult = new SearchResult(model.DbAccess.SearchFilesFromIds(fileIds));
             }
         }
 

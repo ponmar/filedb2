@@ -48,6 +48,14 @@ namespace FileDBInterface.DbAccess
             return connection.ExecuteScalar<int>("select count(*) from [files]");
         }
 
+        public IEnumerable<FilesModel> SearchFilesFromIds(IEnumerable<int> fileIds)
+        {
+            // TODO: dapper can not handle too many fileIds? Need to split into several queries?
+            using var connection = DatabaseUtils.CreateConnection(database);
+            var sql = "select * from [files] where Id in @ids";
+            return connection.Query<FilesModel>(sql, new { ids = fileIds });
+        }
+
         public IEnumerable<FilesModel> SearchFiles(string criteria)
         {
             using var connection = DatabaseUtils.CreateConnection(database);

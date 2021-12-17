@@ -18,6 +18,11 @@ namespace FileDB
             return 0;
         }
 
+        public IEnumerable<FilesModel> SearchFilesFromIds(IEnumerable<int> fileIds)
+        {
+            return new List<FilesModel>();
+        }
+
         public IEnumerable<FilesModel> SearchFiles(string criteria)
         {
             return new List<FilesModel>();
