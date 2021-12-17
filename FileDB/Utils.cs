@@ -67,6 +67,25 @@ namespace FileDB
             return files.Count > 0 ? string.Join(";", files.Select(x => x.Id)) : string.Empty;
         }
 
+        public static List<int> CreateFileIds(string fileList)
+        {
+            List<int> fileIds = new();
+
+            if (!string.IsNullOrEmpty(fileList))
+            {
+                var items = fileList.Split(';');
+                foreach (var item in items)
+                {
+                    if (int.TryParse(item, out var fileId))
+                    {
+                        fileIds.Add(fileId);
+                    }
+                }
+            }
+
+            return fileIds;
+        }
+
         public static List<SortMethodDescription> GetSortMethods()
         {
             List<SortMethodDescription> sortMethods = new();

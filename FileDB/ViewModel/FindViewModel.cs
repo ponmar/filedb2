@@ -223,6 +223,16 @@ namespace FileDB.ViewModel
         public ICommand FindAllFilesCommand => findAllFilesCommand ??= new CommandHandler(FindAllFiles);
         private ICommand findAllFilesCommand;
 
+        public ICommand FindImportedFilesCommand => findImportedFilesCommand ??= new CommandHandler(FindImportedFiles);
+        private ICommand findImportedFilesCommand;
+
+        public string ImportedFileList
+        {
+            get => importedFileList;
+            set => SetProperty(ref importedFileList, value);
+        }
+        private string importedFileList;
+
         public ICommand FindFilesByTextCommand => findFilesByTextCommand ??= new CommandHandler(FindFilesByText);
         private ICommand findFilesByTextCommand;
 
@@ -631,9 +641,15 @@ namespace FileDB.ViewModel
             model.PersonsUpdated += Model_PersonsUpdated;
             model.LocationsUpdated += Model_LocationsUpdated;
             model.TagsUpdated += Model_TagsUpdated;
+            model.FilesImported += Model_FilesImported;
 
             slideshowTimer.Tick += SlideshowTimer_Tick;
             slideshowTimer.Interval = TimeSpan.FromSeconds(model.Config.SlideshowDelay);
+        }
+
+        private void Model_FilesImported(object sender, List<FilesModel> files)
+        {
+            ImportedFileList = Utils.CreateFileList(files);
         }
 
         private void Model_PersonsUpdated(object sender, EventArgs e)
@@ -872,6 +888,18 @@ namespace FileDB.ViewModel
             SearchResult = new SearchResult(model.DbAccess.GetFiles());
         }
 
+        public void FindImportedFiles()
+        {
+            StopSlideshow();
+            if (!string.IsNullOrEmpty(ImportedFileList))
+            {
+                var fileIds = Utils.CreateFileIds(ImportedFileList);
+
+                // TODO: add query with many file ids
+                SearchResult = new SearchResult(fileIds.Select(f => model.DbAccess.GetFileById(f)).ToList());
+            }
+        }
+
         public void FindFilesByText()
         {
             StopSlideshow();
@@ -1039,15 +1067,7 @@ namespace FileDB.ViewModel
             StopSlideshow();
             if (!string.IsNullOrEmpty(fileListSearch))
             {
-                var items = fileListSearch.Split(';');
-                var fileIds = new List<int>();
-                foreach (var item in items)
-                {
-                    if (int.TryParse(item, out var fileId))
-                    {
-                        fileIds.Add(fileId);
-                    }
-                }
+                var fileIds = Utils.CreateFileIds(fileListSearch);
 
                 // TODO: add query with many file ids
                 SearchResult = new SearchResult(fileIds.Select(f => model.DbAccess.GetFileById(f)).ToList());

@@ -25,5 +25,23 @@ namespace FileDBTests
             };
             Assert.AreEqual("1;2;3", Utils.CreateFileList(files));
         }
+
+        [TestMethod]
+        public void CreateFileIds_EmptyString_ReturnsEmptyList()
+        {
+            Assert.AreEqual(0, Utils.CreateFileIds(null).Count);
+            Assert.AreEqual(0, Utils.CreateFileIds(string.Empty).Count);
+        }
+
+        [TestMethod]
+        public void CreateFileIds_ValidList_ReturnsValidIds()
+        {
+            var result = Utils.CreateFileIds("1;3;2");
+
+            Assert.AreEqual(3, result.Count);
+            Assert.AreEqual(result[0], 1);
+            Assert.AreEqual(result[1], 3);
+            Assert.AreEqual(result[2], 2);
+        }
     }
 }

@@ -35,6 +35,7 @@
         <converters:NegatedBooleanToVisibilityConverter x:Key="NegatedBooleanToVisibilityConverter"/>
         <converters:EnumerationToVisibilityConverter x:Key="EnumerationToVisibilityConverter"/>
         <converters:EnumerationEmptyToVisibilityConverter x:Key="EnumerationEmptyToVisibilityConverter"/>
+        <converters:StringContentToBoolConverter x:Key="StringContentToBoolConverter"/>
     </UserControl.Resources>
 
     <Grid Margin="0 0 0 0">
@@ -66,7 +67,8 @@
                                 <RowDefinition Height="auto"/>
                             </Grid.RowDefinitions>
 
-                            <Button Grid.Row="0" Grid.Column="0" Margin="5 5 20 5" Style="{StaticResource NormalButton}" Command="{Binding FindAllFilesCommand}" VerticalAlignment="Center" ToolTip="Search all files">All files</Button>
+                            <Button Grid.Row="0" Grid.Column="0" Margin="5 5 20 5" HorizontalAlignment="Left" Style="{StaticResource NormalButton}" Command="{Binding FindAllFilesCommand}" VerticalAlignment="Center" ToolTip="Search all files">All files</Button>
+                            <Button Grid.Row="1" Grid.Column="0" Margin="5 5 20 5" HorizontalAlignment="Left" Style="{StaticResource NormalButton}" Command="{Binding FindImportedFilesCommand}" IsEnabled="{Binding ImportedFileList, Converter={StaticResource StringContentToBoolConverter}}" VerticalAlignment="Center" ToolTip="Search imported files">Imported files</Button>
 
                             <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" Margin="0 0 20 0">
                                 <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="Random files:" Margin="3" VerticalAlignment="Center"/>

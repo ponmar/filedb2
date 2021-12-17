@@ -4,6 +4,7 @@ using FileDB.Notifiers;
 using FileDBInterface.DbAccess;
 using FileDBInterface.Exceptions;
 using FileDBInterface.FilesystemAccess;
+using FileDBInterface.Model;
 
 namespace FileDB.Model
 {
@@ -102,6 +103,13 @@ namespace FileDB.Model
         public void RequestTemporaryFullscreen(bool fullscreen)
         {
             TemporaryFullscreenRequested?.Invoke(this, fullscreen);
+        }
+
+        public event EventHandler<List<FilesModel>> FilesImported;
+
+        public void NotifyFilesImported(List<FilesModel> files)
+        {
+            FilesImported?.Invoke(this, files);
         }
     }
 }

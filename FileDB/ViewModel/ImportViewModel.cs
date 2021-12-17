@@ -120,9 +120,11 @@ namespace FileDB.ViewModel
                         }
                     }
                 }
-                
+
                 ImportedFileList = Utils.CreateFileList(importedFiles);
                 ImportResult = importedFiles.Count > 0 ? $"{importedFiles.Count} files imported." : string.Empty;
+
+                model.NotifyFilesImported(importedFiles);
             }
             catch (DataValidationException e)
             {
