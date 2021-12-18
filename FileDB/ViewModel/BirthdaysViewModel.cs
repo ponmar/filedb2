@@ -38,6 +38,12 @@ namespace FileDB.ViewModel
         {
             UpdatePersons();
             model.PersonsUpdated += Model_PersonsUpdated;
+            model.DateChanged += Model_DateChanged;
+        }
+
+        private void Model_DateChanged(object sender, EventArgs e)
+        {
+            UpdatePersons();
         }
 
         private void Model_PersonsUpdated(object sender, EventArgs e)

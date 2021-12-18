@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows.Threading;
 using FileDB.Notifiers;
 using FileDBInterface.DbAccess;
 using FileDBInterface.Exceptions;
@@ -12,6 +13,28 @@ namespace FileDB.Model
     {
         public static Model Instance => instance ??= new();
         private static Model instance;
+
+        public event EventHandler DateChanged;
+
+        private DateTime date = DateTime.Now;
+
+        private Model()
+        {
+            var dateCheckerTimer = new DispatcherTimer();
+            dateCheckerTimer.Interval = TimeSpan.FromMinutes(1);
+            dateCheckerTimer.Tick += DateCheckerTimer_Tick;
+            dateCheckerTimer.Start();
+        }
+
+        private void DateCheckerTimer_Tick(object sender, EventArgs e)
+        {
+            var now = DateTime.Now;
+            if (date.Date != now.Date)
+            {
+                date = now;
+                DateChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
 
         public List<Notification> Notifications { get; } = new();
 
