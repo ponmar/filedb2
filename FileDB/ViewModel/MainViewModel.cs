@@ -7,7 +7,13 @@ namespace FileDB.ViewModel
         public int NumNotifications
         {
             get => numNotifications;
-            set => SetProperty(ref numNotifications, value);
+            set
+            {
+                if (SetProperty(ref numNotifications, value))
+                {
+                    UpdateTitle();
+                }
+            }
         }
         private int numNotifications = 0;
 
@@ -86,6 +92,15 @@ namespace FileDB.ViewModel
             if (!ReadWriteMode)
             {
                 title += " (read only)";
+            }
+
+            if (NumNotifications > 1)
+            {
+                title += $" {NumNotifications} new notifications!";
+            }
+            else if (NumNotifications == 1)
+            {
+                title += $" {NumNotifications} new notification!";
             }
 
             Title = title;
