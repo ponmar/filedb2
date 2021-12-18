@@ -1,4 +1,4 @@
-﻿using FileDB.Config;
+﻿using FileDB.Configuration;
 
 namespace FileDB.Extensions
 {

@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using FileDB.Sorters;
 
-namespace FileDB.Config
+namespace FileDB.Configuration
 {
     public enum SortMethod { Date, DateDesc, Path, PathDesc }
 

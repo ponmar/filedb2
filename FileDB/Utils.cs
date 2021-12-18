@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
-using FileDB.Config;
+using FileDB.Configuration;
 using FileDB.Extensions;
 using FileDB.Sorters;
 using FileDBInterface.Model;

@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using FileDB.Configuration;
 
 namespace FileDB.ViewModel
 {
@@ -31,7 +32,7 @@ namespace FileDB.ViewModel
         }
         private WindowState windowState = DefaultWindowState;
 
-        private static WindowState DefaultWindowState => Model.Model.Instance.Config.WindowMode == Config.WindowMode.Normal ? WindowState.Normal : WindowState.Maximized;
+        private static WindowState DefaultWindowState => Model.Model.Instance.Config.WindowMode == WindowMode.Normal ? WindowState.Normal : WindowState.Maximized;
 
         public WindowStyle WindowStyle
         {
@@ -40,7 +41,7 @@ namespace FileDB.ViewModel
         }
         private WindowStyle windowStyle = DefaultWindowStyle;
 
-        private static WindowStyle DefaultWindowStyle => Model.Model.Instance.Config.WindowMode == Config.WindowMode.Fullscreen ? WindowStyle.None : WindowStyle.ThreeDBorderWindow;
+        private static WindowStyle DefaultWindowStyle => Model.Model.Instance.Config.WindowMode == WindowMode.Fullscreen ? WindowStyle.None : WindowStyle.ThreeDBorderWindow;
 
         public bool ReadWriteMode
         {

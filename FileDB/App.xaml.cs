@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Windows;
-using FileDB.Config;
+using FileDB.Configuration;
 using FileDB.Notifiers;
 using FileDB.Validators;
 
@@ -21,7 +21,7 @@ namespace FileDB
 
             bool demoModeEnabled = e.Args.Any(x => x == "--demo");
 
-            var appDataConfig = new AppDataConfig<Config.Config>(Utils.ApplicationName);
+            var appDataConfig = new AppDataConfig<Config>(Utils.ApplicationName);
 
             var model = Model.Model.Instance;
 

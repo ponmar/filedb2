@@ -1,11 +1,12 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using FileDB.Configuration;
 using FluentValidation;
 
 namespace FileDB.Validators
 {
-    public class ConfigValidator : AbstractValidator<Config.Config>
+    public class ConfigValidator : AbstractValidator<Config>
     {
         public ConfigValidator()
         {

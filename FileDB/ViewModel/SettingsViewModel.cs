@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Input;
-using FileDB.Config;
+using FileDB.Configuration;
 using FileDB.Sorters;
 using FileDB.Validators;
 using FileDBInterface.DbAccess;
@@ -250,7 +250,7 @@ namespace FileDB.ViewModel
 
         public void SaveConfiguration()
         {
-            var config = new Config.Config(
+            var config = new Config(
                 ConfigName,
                 Database,
                 FilesRootDirectory,
@@ -278,7 +278,7 @@ namespace FileDB.ViewModel
                 return;
             }
 
-            var appDataConfig = new AppDataConfig<Config.Config>(Utils.ApplicationName);
+            var appDataConfig = new AppDataConfig<Config>(Utils.ApplicationName);
 
             if (!Utils.ShowConfirmDialog($"Write your configuration to {appDataConfig.FilePath}?"))
             {

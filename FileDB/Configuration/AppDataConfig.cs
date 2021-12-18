@@ -2,7 +2,7 @@
 using System.IO;
 using Newtonsoft.Json;
 
-namespace FileDB.Config
+namespace FileDB.Configuration
 {
     public class AppDataConfig<T>
     {

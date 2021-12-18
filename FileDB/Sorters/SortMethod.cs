@@ -1,4 +1,4 @@
-﻿using FileDB.Config;
+﻿using FileDB.Configuration;
 using FileDB.Extensions;
 
 namespace FileDB.Sorters
