@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using System.Windows.Threading;
 using FileDB.Notifiers;
 
 namespace FileDB.ViewModel
@@ -14,6 +16,8 @@ namespace FileDB.ViewModel
 
         private readonly Model.Model model = Model.Model.Instance;
 
+        private readonly DispatcherTimer notifierTimer = new();
+
         public NotificationsViewModel()
         {
             var model = Model.Model.Instance;
@@ -21,28 +25,26 @@ namespace FileDB.ViewModel
             model.ConfigLoaded += Model_ConfigLoaded;
 
             LoadNotifications();
-            RunNotifiers();
+            RunAllNotifiers();
+
+            notifierTimer.Tick += NotifierTimer_Tick;
+            notifierTimer.Interval = TimeSpan.FromMinutes(5);
+            notifierTimer.Start();
+        }
+
+        private void NotifierTimer_Tick(object sender, EventArgs e)
+        {
+            RunContinousNotifiers();
         }
 
         private void Model_ConfigLoaded(object sender, System.EventArgs e)
         {
-            RunNotifiers();
+            RunAllNotifiers();
         }
 
-        private void RunNotifiers()
+        private List<INotifier> GetContinousNotifiers()
         {
             var notifiers = new List<INotifier>();
-
-            if (model.Config.BackupReminder)
-            {
-                notifiers.Add(new BackupNotifier(new DatabaseBackup().ListAvailableBackupFiles(), 30));
-            }
-
-            if (model.Config.MissingFilesRootDirNotification)
-            {
-                notifiers.Add(new MissingFilesRootDirNotifier(model.Config.FilesRootDirectory));
-            }
-
             var persons = model.DbAccess.GetPersons();
 
             if (model.Config.BirthdayReminder)
@@ -60,7 +62,42 @@ namespace FileDB.ViewModel
                 notifiers.Add(new RestInPeaceNotifier(persons));
             }
 
+            return notifiers;
+        }
+
+        private List<INotifier> GetStartupNotifiers()
+        {
+            var notifiers = new List<INotifier>();
+
+            if (model.Config.BackupReminder)
+            {
+                notifiers.Add(new BackupNotifier(new DatabaseBackup().ListAvailableBackupFiles(), 30));
+            }
+
+            if (model.Config.MissingFilesRootDirNotification)
+            {
+                notifiers.Add(new MissingFilesRootDirNotifier(model.Config.FilesRootDirectory));
+            }
+
+            return notifiers;
+        }
+
+        private void RunContinousNotifiers()
+        {
+            var notifiers = GetContinousNotifiers();
+            RunNotifiers(notifiers);
+        }
+
+        private void RunAllNotifiers()
+        {
             model.ClearNotifications();
+            var notifiers = GetContinousNotifiers();
+            notifiers.AddRange(GetStartupNotifiers());
+            RunNotifiers(notifiers);
+        }
+
+        private void RunNotifiers(List<INotifier> notifiers)
+        {
             notifiers.ForEach(x => x.Run().ForEach(y => model.AddNotification(y)));
         }
 

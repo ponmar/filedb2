@@ -42,6 +42,7 @@ namespace FileDB.Model
 
         public void AddNotification(Notification notification)
         {
+            Notifications.RemoveAll(x => x.Message == notification.Message);
             Notifications.Add(notification);
             NotificationsUpdated?.Invoke(this, EventArgs.Empty);
         }
