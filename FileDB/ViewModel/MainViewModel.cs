@@ -93,7 +93,7 @@ namespace FileDB.ViewModel
         {
             var title = $"{Utils.ApplicationName} {ReleaseInformation.Version.Major}.{ReleaseInformation.Version.Minor}";
 
-            if (!string.IsNullOrEmpty(model.Config.Name))  // TODO: update when new config loaded
+            if (!string.IsNullOrEmpty(model.Config.Name))
             {
                 title += $" [{model.Config.Name}]";
             }

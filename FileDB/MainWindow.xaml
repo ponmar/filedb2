@@ -98,6 +98,12 @@
                 </TabItem.Header>
                 <Views:AboutView Margin="10 0 10 10"/>
             </TabItem>
+
+            <TabItem Style="{StaticResource WindowTabItem}" PreviewMouseLeftButtonDown="TabItem_PreviewMouseLeftButtonDown">
+                <TabItem.Header>
+                    <TextBlock Text="&#x1F6AA;" ToolTip="Exit" Style="{StaticResource PageIcon}"/>
+                </TabItem.Header>
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>

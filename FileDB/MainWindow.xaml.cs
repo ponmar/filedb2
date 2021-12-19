@@ -13,5 +13,10 @@ namespace FileDB
             InitializeComponent();
             DataContext = new MainViewModel();
         }
+
+        private void TabItem_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
     }
 }
