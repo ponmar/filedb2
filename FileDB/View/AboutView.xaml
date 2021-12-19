@@ -25,7 +25,7 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="1."/>
-                        <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="Play around with the included demo configuration (files and meta-data). It is activated by default when no local configuration exists or by using a command line argument (see below)."/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="Play around with the included demo (files and meta-data). It is activated by default when no local configuration exists or by using a command line argument (see below)."/>
 
                         <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="2."/>
                         <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="Cleanup your files collection (see guideline below)"/>
@@ -37,7 +37,7 @@
                         <TextBlock Grid.Row="3" Grid.Column="1" Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="Tag persons, locations and tags"/>
 
                         <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="5."/>
-                        <TextBlock Grid.Row="4" Grid.Column="1" Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="Find your wanted pictures!"/>
+                        <TextBlock Grid.Row="4" Grid.Column="1" Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="Find your wanted pictures and run slideshows!"/>
                     </Grid>
                 </Border>
 
