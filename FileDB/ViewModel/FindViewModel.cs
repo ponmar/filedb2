@@ -642,8 +642,15 @@ namespace FileDB.ViewModel
             model.LocationsUpdated += Model_LocationsUpdated;
             model.TagsUpdated += Model_TagsUpdated;
             model.FilesImported += Model_FilesImported;
+            model.ConfigLoaded += Model_ConfigLoaded;
 
             slideshowTimer.Tick += SlideshowTimer_Tick;
+            slideshowTimer.Interval = TimeSpan.FromSeconds(model.Config.SlideshowDelay);
+        }
+
+        private void Model_ConfigLoaded(object sender, EventArgs e)
+        {
+            ReadWriteMode = !model.Config.ReadOnly;
             slideshowTimer.Interval = TimeSpan.FromSeconds(model.Config.SlideshowDelay);
         }
 

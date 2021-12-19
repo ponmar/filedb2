@@ -70,6 +70,12 @@ namespace FileDB.ViewModel
         {
             ReloadPersons();
             model.PersonsUpdated += Model_PersonsUpdated;
+            model.ConfigLoaded += Model_ConfigLoaded;
+        }
+
+        private void Model_ConfigLoaded(object sender, EventArgs e)
+        {
+            ReadWriteMode = !model.Config.ReadOnly;
         }
 
         private void Model_PersonsUpdated(object sender, EventArgs e)

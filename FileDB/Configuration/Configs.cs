@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using FileDB.Sorters;
 
 namespace FileDB.Configuration
 {

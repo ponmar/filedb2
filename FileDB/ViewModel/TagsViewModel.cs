@@ -60,6 +60,12 @@ namespace FileDB.ViewModel
         {
             ReloadTags();
             model.TagsUpdated += Model_TagsUpdated;
+            model.ConfigLoaded += Model_ConfigLoaded;
+        }
+
+        private void Model_ConfigLoaded(object sender, System.EventArgs e)
+        {
+            ReadWriteMode = !model.Config.ReadOnly;
         }
 
         private void Model_TagsUpdated(object sender, System.EventArgs e)

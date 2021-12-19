@@ -289,7 +289,6 @@ namespace FileDB.ViewModel
             {
                 model.Config = config;
                 model.ReloadHandles();
-                Utils.ShowInfoDialog("Configuration saved. Restart to enable all settings.");
             }
             else
             {

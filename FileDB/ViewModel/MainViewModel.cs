@@ -32,6 +32,7 @@ namespace FileDB.ViewModel
         }
         private WindowState windowState = DefaultWindowState;
 
+        // TODO: update when new config loaded
         private static WindowState DefaultWindowState => Model.Model.Instance.Config.WindowMode == WindowMode.Normal ? WindowState.Normal : WindowState.Maximized;
 
         public WindowStyle WindowStyle
@@ -41,6 +42,7 @@ namespace FileDB.ViewModel
         }
         private WindowStyle windowStyle = DefaultWindowStyle;
 
+        // TODO: update when new config loaded
         private static WindowStyle DefaultWindowStyle => Model.Model.Instance.Config.WindowMode == WindowMode.Fullscreen ? WindowStyle.None : WindowStyle.ThreeDBorderWindow;
 
         public bool ReadWriteMode
@@ -68,6 +70,12 @@ namespace FileDB.ViewModel
             model.NotificationsUpdated += Model_NotificationsUpdated;
 
             model.TemporaryFullscreenRequested += Model_TemporaryFullscreenRequested;
+            model.ConfigLoaded += Model_ConfigLoaded;
+        }
+
+        private void Model_ConfigLoaded(object sender, System.EventArgs e)
+        {
+            ReadWriteMode = !model.Config.ReadOnly;
         }
 
         private void Model_TemporaryFullscreenRequested(object sender, bool fullscreen)
@@ -85,7 +93,7 @@ namespace FileDB.ViewModel
         {
             var title = $"{Utils.ApplicationName} {ReleaseInformation.Version.Major}.{ReleaseInformation.Version.Minor}";
 
-            if (!string.IsNullOrEmpty(model.Config.Name))
+            if (!string.IsNullOrEmpty(model.Config.Name))  // TODO: update when new config loaded
             {
                 title += $" [{model.Config.Name}]";
             }

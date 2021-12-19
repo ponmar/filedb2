@@ -18,8 +18,19 @@ namespace FileDB.ViewModel
         {
             var model = Model.Model.Instance;
             model.NotificationsUpdated += Model_NotificationsUpdated;
-            SetNotifications();
+            model.ConfigLoaded += Model_ConfigLoaded;
 
+            LoadNotifications();
+            RunNotifiers();
+        }
+
+        private void Model_ConfigLoaded(object sender, System.EventArgs e)
+        {
+            RunNotifiers();
+        }
+
+        private void RunNotifiers()
+        {
             var notifiers = new List<INotifier>();
 
             if (model.Config.BackupReminder)
@@ -49,15 +60,16 @@ namespace FileDB.ViewModel
                 notifiers.Add(new RestInPeaceNotifier(persons));
             }
 
+            model.ClearNotifications();
             notifiers.ForEach(x => x.Run().ForEach(y => model.AddNotification(y)));
         }
 
         private void Model_NotificationsUpdated(object sender, System.EventArgs e)
         {
-            SetNotifications();
+            LoadNotifications();
         }
 
-        private void SetNotifications()
+        private void LoadNotifications()
         {
             Notifications.Clear();
             Model.Model.Instance.Notifications.ForEach(x => Notifications.Add(x));

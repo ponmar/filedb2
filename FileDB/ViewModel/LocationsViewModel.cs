@@ -64,6 +64,12 @@ namespace FileDB.ViewModel
         {
             ReloadLocations();
             model.LocationsUpdated += Model_LocationsUpdated;
+            model.ConfigLoaded += Model_ConfigLoaded;
+        }
+
+        private void Model_ConfigLoaded(object sender, System.EventArgs e)
+        {
+            ReadWriteMode = !model.Config.ReadOnly;
         }
 
         private void Model_LocationsUpdated(object sender, System.EventArgs e)
