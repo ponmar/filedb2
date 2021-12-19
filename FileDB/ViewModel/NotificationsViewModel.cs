@@ -90,7 +90,6 @@ namespace FileDB.ViewModel
 
         private void RunAllNotifiers()
         {
-            model.ClearNotifications();
             var notifiers = GetContinousNotifiers();
             notifiers.AddRange(GetStartupNotifiers());
             RunNotifiers(notifiers);
