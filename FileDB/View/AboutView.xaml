@@ -47,7 +47,7 @@
                         <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap">FileDB only modifies data in the configured database. It does not modify any files in your files collection. Files are read when importing meta-data and when viewing files.</TextBlock>
                         <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap">Although any directory structure can be imported to FileDB, take a moment to think about the directory structure before importing the meta-data. This layout has been proven to work very well:</TextBlock>
 
-                        <TreeView Margin="10" Style="{StaticResource PageTreeView}">
+                        <TreeView Margin="10" Style="{StaticResource PageTreeView}" IsHitTestVisible="False">
                             <TreeViewItem Header="root" IsExpanded="True" Style="{StaticResource PageTreeViewItem}">
                                 <TreeViewItem Header="2015" IsExpanded="True" Style="{StaticResource PageTreeViewItem}">
                                     <TreeViewItem Header="2015-06-12 - Biking" IsExpanded="True" Style="{StaticResource PageTreeViewItem}">
