@@ -286,9 +286,9 @@
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition Width="*" MinWidth="100"/>
-                                    <ColumnDefinition Width="25"/>
-                                    <ColumnDefinition Width="25"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="35"/>
+                                    <ColumnDefinition Width="35"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="auto"/>
@@ -316,10 +316,10 @@
                                 <TextBox Style="{StaticResource PageInnerTextBox}" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Text="{Binding NewFileDescription}" ToolTip="File description"></TextBox>
                                 <Button Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetFileDescriptionCommand}" ToolTip="Set file description">Set</Button>
                             </Grid>
-                            <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding UpdateFileFromMetaDataCommand}" ToolTip="Reload timestamp and GPS location from file">Reload meta-data</Button>
+                            <Button Margin="5" Style="{StaticResource NormalButton}" HorizontalAlignment="Left" Command="{Binding UpdateFileFromMetaDataCommand}" ToolTip="Reload timestamp and GPS location from file">Reload file meta-data</Button>
+                            <TextBlock Style="{StaticResource PageInnerTextBlock}">Create:</TextBlock>
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                     <ColumnDefinition Width="auto"/>
                                     <ColumnDefinition Width="auto"/>
@@ -327,10 +327,9 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="auto"/>
                                 </Grid.RowDefinitions>
-                                <TextBlock Style="{StaticResource PageInnerTextBlock}" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Create:</TextBlock>
-                                <Button Grid.Row="0" Grid.Column="1" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding CreatePersonCommand}">Person...</Button>
-                                <Button Grid.Row="0" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding CreateLocationCommand}">Location...</Button>
-                                <Button Grid.Row="0" Grid.Column="3" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding CreateTagCommand}">Tag...</Button>
+                                <Button Grid.Row="0" Grid.Column="0" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding CreatePersonCommand}">Person...</Button>
+                                <Button Grid.Row="0" Grid.Column="1" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding CreateLocationCommand}">Location...</Button>
+                                <Button Grid.Row="0" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding CreateTagCommand}">Tag...</Button>
                             </Grid>
                             <ListView ItemsSource="{Binding UpdateHistoryItems}" Visibility="{Binding HasNonEmptySearchResult, Converter={StaticResource BoolToVis}}" Background="Transparent" BorderThickness="0">
                                 <ListView.ItemContainerStyle>
