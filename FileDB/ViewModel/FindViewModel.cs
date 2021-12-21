@@ -559,6 +559,13 @@ namespace FileDB.ViewModel
         }
         private string currentFiledateTime;
 
+        public string CurrentFileHeader
+        {
+            get => currentFileHeader;
+            private set => SetProperty(ref currentFileHeader, value);
+        }
+        private string currentFileHeader;
+
         public string CurrentFilePosition
         {
             get => currentFilePosition;
@@ -1140,6 +1147,7 @@ namespace FileDB.ViewModel
                 CurrentFilePersons = GetFilePersonsString(selection);
                 CurrentFileLocations = GetFileLocationsString(selection.Id);
                 CurrentFileTags = GetFileTagsString(selection.Id);
+                CurrentFileHeader = CurrentFileDateTime != string.Empty ? CurrentFileDateTime : CurrentFileInternalPath;
 
                 NewFileDescription = CurrentFileDescription;
 
@@ -1177,6 +1185,7 @@ namespace FileDB.ViewModel
             CurrentFilePath = string.Empty;
             CurrentFileDescription = string.Empty;
             CurrentFileDateTime = string.Empty;
+            CurrentFileHeader = string.Empty;
             CurrentFilePosition = string.Empty;
             CurrentFilePositionLink = string.Empty;
             CurrentFilePersons = string.Empty;
