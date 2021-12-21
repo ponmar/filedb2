@@ -290,6 +290,12 @@ namespace FileDB.ViewModel
         public ICommand FindFilesWithPersonCommand => findFilesWithPersonCommand ??= new CommandHandler(FindFilesWithPerson);
         private ICommand findFilesWithPersonCommand;
 
+        public ICommand FindFilesWithPersonUniqueCommand => findFilesWithPersonUniqueCommand ??= new CommandHandler(FindFilesWithPersonUnique);
+        private ICommand findFilesWithPersonUniqueCommand;
+
+        public ICommand FindFilesWithPersonGroupCommand => findFilesWithPersonGroupCommand ??= new CommandHandler(FindFilesWithPersonGroup);
+        private ICommand findFilesWithPersonGroupCommand;
+
         public ICommand FindFilesWithLocationCommand => findFilesWithLocationCommand ??= new CommandHandler(FindFilesWithLocation);
         private ICommand findFilesWithLocationCommand;
 
@@ -964,6 +970,28 @@ namespace FileDB.ViewModel
             if (SelectedPersonSearch != null)
             {
                 SearchResult = new SearchResult(model.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPersonSearch.Id }));
+            }
+        }
+
+        public void FindFilesWithPersonUnique()
+        {
+            StopSlideshow();
+            if (SelectedPersonSearch != null)
+            {
+                var files = model.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPersonSearch.Id });
+                var result = files.Where(x => model.DbAccess.GetPersonsFromFile(x.Id).Count() == 1);
+                SearchResult = new SearchResult(result);
+            }
+        }
+
+        public void FindFilesWithPersonGroup()
+        {
+            StopSlideshow();
+            if (SelectedPersonSearch != null)
+            {
+                var files = model.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPersonSearch.Id });
+                var result = files.Where(x => model.DbAccess.GetPersonsFromFile(x.Id).Count() > 1);
+                SearchResult = new SearchResult(result);
             }
         }
 
