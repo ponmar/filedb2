@@ -1,3 +1,16 @@
+2.4:
+* Saved configuration takes effect immediately without requiring a restart
+* Add search for files from the most recent import
+* Add search for files with only selected person (unique)
+* Add search for files with selected person with others (group)
+* Birthday page is reloaded when the current date changes
+* Notifications are created continously (not only at startup)
+* Window title shows number of notifications
+* File browser maximize functionality changes window type to fullscreen temporarily
+* Add button for exiting, which is needed when running in fullscreen mode
+* Add some hints in the GUI
+* GUI layout improvements
+
 2.3:
 * Startup popup dialogs replaced with a notifications tab
 * Add getting started content to About page
