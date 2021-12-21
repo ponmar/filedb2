@@ -42,6 +42,9 @@
                         <Trigger Property="IsSelected" Value="False">
                             <Setter TargetName="Panel" Property="Background" Value="{StaticResource BgColor2}" />
                         </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Panel" Property="Background" Value="{StaticResource BgColor1}" />
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -109,7 +112,7 @@
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
     </Style>
-    
+
     <Style x:Key="NormalButton" TargetType="Button" BasedOn="{StaticResource ButtonBaseStyle}">
         <Setter Property="Template">
             <Setter.Value>
@@ -166,7 +169,7 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-    
+
     <Style x:Key="NavigationButton" TargetType="Button" BasedOn="{StaticResource NormalButton}">
         <Setter Property="Margin" Value="3"/>
         <Setter Property="Width" Value="50"/>
@@ -303,7 +306,7 @@
         <Setter Property="Background" Value="{StaticResource Highlight2Color}"/>
         <Setter Property="CornerRadius" Value="4"/>
     </Style>
-    
+
     <Style x:Key="Expander" TargetType="Expander">
         <Setter Property="Foreground" Value="{StaticResource FgColor1}"/>
     </Style>
