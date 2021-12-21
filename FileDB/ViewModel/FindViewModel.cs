@@ -1440,14 +1440,17 @@ namespace FileDB.ViewModel
         {
             if (SearchResultIndex != -1)
             {
-                var selection = SearchResult.Files[SearchResultIndex];
-                var fileId = selection.Id;
-                model.DbAccess.UpdateFileFromMetaData(selection.Id, model.FilesystemAccess);
+                if (Utils.ShowConfirmDialog("Reload date and GPS position from file meta-data?"))
+                {
+                    var selection = SearchResult.Files[SearchResultIndex];
+                    var fileId = selection.Id;
+                    model.DbAccess.UpdateFileFromMetaData(selection.Id, model.FilesystemAccess);
 
-                var updatedFile = model.DbAccess.GetFileById(fileId);
-                selection.Datetime = updatedFile.Datetime;
-                selection.Position = updatedFile.Position;
-                LoadFile(SearchResultIndex);
+                    var updatedFile = model.DbAccess.GetFileById(fileId);
+                    selection.Datetime = updatedFile.Datetime;
+                    selection.Position = updatedFile.Position;
+                    LoadFile(SearchResultIndex);
+                }
             }
         }
 
