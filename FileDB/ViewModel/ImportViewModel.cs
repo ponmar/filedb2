@@ -88,6 +88,11 @@ namespace FileDB.ViewModel
 
         public void ImportNewFiles()
         {
+            if (!Utils.ShowConfirmDialog($"Import meta-data from {NewFiles.Count} files?"))
+            {
+                return;
+            }
+
             var locations = model.DbAccess.GetLocations();
 
             try

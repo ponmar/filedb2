@@ -60,7 +60,7 @@
                         <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="This tool can be used to find outdated meta-data. This may happen if you have removed, moved or renamed files in your files collection."/>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Style="{StaticResource PageWarning}">&#x26A0;</TextBlock>
-                            <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap">This operation can be very slow for a large collection of files or if the media access is slow (for example when using a network share).</TextBlock>
+                            <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap">This operation can be slow for a large collection of files or if the media access is slow (for example when using a network share).</TextBlock>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding FileFinderCommand}" HorizontalAlignment="Left">Run</Button>
