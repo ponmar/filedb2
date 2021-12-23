@@ -150,6 +150,9 @@ namespace FileDBInterface.FilesystemAccess
             catch (ImageProcessingException)
             {
             }
+            catch (MetadataException)
+            {
+            }
         }
     }
 }
