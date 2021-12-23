@@ -114,7 +114,9 @@ create table filetags(
             var next = birthday.AddYears(today.Year - birthday.Year);
 
             if (next < today)
+            {
                 next = next.AddYears(1);
+            }
 
             return (next - today).Days;
         }

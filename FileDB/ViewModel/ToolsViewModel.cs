@@ -19,6 +19,15 @@ namespace FileDB.ViewModel
         public ICommand CopyInvalidFileListCommand => copyInvalidFileListCommand ??= new CommandHandler(CopyInvalidFileList);
         private ICommand copyInvalidFileListCommand;
 
+        public ICommand FileFinderCommand => fileFinderCommand ??= new CommandHandler(FileFinder);
+        private ICommand fileFinderCommand;
+
+        public ICommand CopyFileFinderResultCommand => copyFileFinderResultCommand ??= new CommandHandler(CopyFileFinderResult);
+        private ICommand copyFileFinderResultCommand;
+
+        public ICommand RemoveFileFinderResultCommand => removeFileFinderResultCommand ??= new CommandHandler(RemoveFileFinderResult);
+        private ICommand removeFileFinderResultCommand;
+
         public string BackupResult
         {
             get => backupResult;
@@ -43,6 +52,20 @@ namespace FileDB.ViewModel
             set => SetProperty(ref invalidFileList, value);
         }
         private string invalidFileList = string.Empty;
+
+        public string FileFinderResult
+        {
+            get => fileFinderResult;
+            set => SetProperty(ref fileFinderResult, value);
+        }
+        private string fileFinderResult = "Not executed.";
+
+        public string MissingFilesList
+        {
+            get => missingFilesList;
+            set => SetProperty(ref missingFilesList, value);
+        }
+        private string missingFilesList = string.Empty;
 
         private readonly Model.Model model = Model.Model.Instance;
 
@@ -153,6 +176,41 @@ namespace FileDB.ViewModel
         private void CopyInvalidFileList()
         {
             ClipboardService.SetText(InvalidFileList);
+        }
+
+        private void FileFinder()
+        {
+            FileFinderResult = "Running, please wait...";
+
+            List<FilesModel> missingFiles = new();
+            foreach (var file in model.DbAccess.GetFiles())
+            {
+                var fileAbsPath = model.FilesystemAccess.ToAbsolutePath(file.Path);
+                if (!File.Exists(fileAbsPath))
+                {
+                    missingFiles.Add(file);
+                }
+            }
+
+            FileFinderResult = missingFiles.Count == 0 ? "No missing files found." : $"{missingFiles.Count} meta-data for missing files found.";
+            MissingFilesList = Utils.CreateFileList(missingFiles);
+        }
+
+        private void CopyFileFinderResult()
+        {
+            ClipboardService.SetText(MissingFilesList);
+        }
+
+        private void RemoveFileFinderResult()
+        {
+            var fileIds = Utils.CreateFileIds(MissingFilesList);
+            if (Utils.ShowConfirmDialog($"Remove {fileIds.Count} meta-data for missing files?"))
+            {
+                foreach (var fileId in fileIds)
+                {
+                    model.DbAccess.DeleteFile(fileId);
+                }
+            }
         }
     }
 }
