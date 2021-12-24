@@ -1,3 +1,11 @@
+2.5:
+* Add tool for finding, copying and removing meta-data for files missing in the filesystem
+* Fix crash for importing a file with strange Exif data
+* Add confirm dialog for when importing listed files
+* Always show a confirm dialog when removing a person, location or tag (even when it is not used)
+* File browser indicates key-bindings when available
+* Renamed some buttons
+
 2.4:
 * Saved configuration takes effect immediately without requiring a restart
 * Add search for files from the most recent import

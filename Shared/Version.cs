@@ -2,7 +2,7 @@
 {
     public class ReleaseInformation
     {
-        public static Version Version = new(2, 4);
+        public static Version Version = new(2, 5);
     }
 
     public record Version(int Major, int Minor);
