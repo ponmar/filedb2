@@ -186,7 +186,7 @@
                             <TextBlock Text="Export" Style="{StaticResource PageTabItemText}" />
                         </TabItem.Header>
                         <StackPanel Orientation="Horizontal">
-                            <Button Margin="5 5 30 5" Style="{StaticResource NormalButton}" Command="{Binding ExportFileListCommand}" VerticalAlignment="Center">Copy file list</Button>
+                            <Button Margin="5 5 30 5" Style="{StaticResource NormalButton}" Command="{Binding ExportFileListCommand}" VerticalAlignment="Center">Copy search result file list</Button>
 
                             <StackPanel Orientation="Horizontal" Margin="3">
                                 <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="File list:" VerticalAlignment="Center"/>
