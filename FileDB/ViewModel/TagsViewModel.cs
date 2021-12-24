@@ -75,11 +75,14 @@ namespace FileDB.ViewModel
 
         public void RemoveTag()
         {
-            var filesWithTag = model.DbAccess.SearchFilesWithTags(new List<int>() { selectedTag.GetId() }).ToList();
-            if (filesWithTag.Count == 0 || Utils.ShowConfirmDialog($"Tag is used in {filesWithTag.Count} files, remove anyway?"))
+            if (Utils.ShowConfirmDialog($"Remove {selectedTag.Name}?"))
             {
-                model.DbAccess.DeleteTag(selectedTag.GetId());
-                model.NotifyTagsUpdated();
+                var filesWithTag = model.DbAccess.SearchFilesWithTags(new List<int>() { selectedTag.GetId() }).ToList();
+                if (filesWithTag.Count == 0 || Utils.ShowConfirmDialog($"Tag is used in {filesWithTag.Count} files, remove anyway?"))
+                {
+                    model.DbAccess.DeleteTag(selectedTag.GetId());
+                    model.NotifyTagsUpdated();
+                }
             }
         }
 

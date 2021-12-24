@@ -85,11 +85,14 @@ namespace FileDB.ViewModel
 
         public void RemovePerson()
         {
-            var filesWithPerson = model.DbAccess.SearchFilesWithPersons(new List<int>() { selectedPerson.GetId() }).ToList();
-            if (filesWithPerson.Count == 0 || Utils.ShowConfirmDialog($"Person is used in {filesWithPerson.Count} files, remove anyway?"))
+            if (Utils.ShowConfirmDialog($"Remove {selectedPerson.Firstname} {selectedPerson.Lastname}?"))
             {
-                model.DbAccess.DeletePerson(selectedPerson.GetId());
-                model.NotifyPersonsUpdated();
+                var filesWithPerson = model.DbAccess.SearchFilesWithPersons(new List<int>() { selectedPerson.GetId() }).ToList();
+                if (filesWithPerson.Count == 0 || Utils.ShowConfirmDialog($"Person is used in {filesWithPerson.Count} files, remove anyway?"))
+                {
+                    model.DbAccess.DeletePerson(selectedPerson.GetId());
+                    model.NotifyPersonsUpdated();
+                }
             }
         }
 
