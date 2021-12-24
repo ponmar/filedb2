@@ -183,13 +183,9 @@ namespace FileDB.ViewModel
             FileFinderResult = "Running, please wait...";
 
             List<FilesModel> missingFiles = new();
-            foreach (var file in model.DbAccess.GetFiles())
+            foreach (var file in model.FilesystemAccess.GetFilesMissingInFilesystem(model.DbAccess.GetFiles()))
             {
-                var fileAbsPath = model.FilesystemAccess.ToAbsolutePath(file.Path);
-                if (!File.Exists(fileAbsPath))
-                {
-                    missingFiles.Add(file);
-                }
+                missingFiles.Add(file);
             }
 
             FileFinderResult = missingFiles.Count == 0 ? "No missing files found." : $"{missingFiles.Count} meta-data for missing files found.";
