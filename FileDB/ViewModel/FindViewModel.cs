@@ -363,12 +363,22 @@ namespace FileDB.ViewModel
         public string FileListSearch
         {
             get => fileListSearch;
-            set { SetProperty(ref fileListSearch, value); }
+            set => SetProperty(ref fileListSearch, value);
         }
         private string fileListSearch;
 
+        public string ExportFilesDestinationDirectory
+        {
+            get => exportFilesDestinationDirectory;
+            set => SetProperty(ref exportFilesDestinationDirectory, value);
+        }
+        private string exportFilesDestinationDirectory;
+
         public ICommand ExportFileListCommand => exportFileListCommand ??= new CommandHandler(ExportFileList, () => HasNonEmptySearchResult);
         private ICommand exportFileListCommand;
+
+        public ICommand ExportFilesCommand => exportFilesCommand ??= new CommandHandler(ExportFiles, () => HasNonEmptySearchResult);
+        private ICommand exportFilesCommand;
 
         public ICommand AddFilePersonCommand => addFilePersonCommand ??= new CommandHandler(AddFilePerson, PersonSelected);
         private ICommand addFilePersonCommand;
@@ -1186,6 +1196,51 @@ namespace FileDB.ViewModel
         public void ExportFileList()
         {
             ClipboardService.SetText(Utils.CreateFileList(SearchResult.Files));
+        }
+
+        public void ExportFiles()
+        {
+            if (string.IsNullOrEmpty(ExportFilesDestinationDirectory))
+            {
+                Utils.ShowErrorDialog("No destination directory specified");
+                return;
+            }
+
+            if (!Directory.Exists(ExportFilesDestinationDirectory))
+            {
+                Utils.ShowErrorDialog("Destination directory does not exist");
+                return;
+            }
+
+            if (!IsDirectoryEmpty(ExportFilesDestinationDirectory))
+            {
+                Utils.ShowErrorDialog("Destination directory is not empty");
+                return;
+            }
+
+            if (Utils.ShowConfirmDialog($"Export {SearchResult.Count} files to {ExportFilesDestinationDirectory}?"))
+            {
+                int index = 1;
+                try
+                {
+                    foreach (var file in SearchResult.Files)
+                    {
+                        var sourcePath = model.FilesystemAccess.ToAbsolutePath(file.Path);
+                        var destPath = Path.Combine(ExportFilesDestinationDirectory, $"{index}{Path.GetExtension(file.Path)}");
+                        File.Copy(sourcePath, destPath);
+                        index++;
+                    }
+                }
+                catch (IOException e)
+                {
+                    Utils.ShowErrorDialog("File copy error: " + e.Message);
+                }
+            }
+        }
+
+        private bool IsDirectoryEmpty(string path)
+        {
+            return !Directory.EnumerateFileSystemEntries(path).Any();
         }
 
         private string CreatePositionLink(string position, string defaultValue)

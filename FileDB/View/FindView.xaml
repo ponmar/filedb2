@@ -196,12 +196,20 @@
                             <TextBlock Text="Export" Style="{StaticResource PageTabItemText}" />
                         </TabItem.Header>
                         <StackPanel Orientation="Horizontal">
-                            <Button Margin="5 5 30 5" Style="{StaticResource NormalButton}" Command="{Binding ExportFileListCommand}" VerticalAlignment="Center">Copy search result file list</Button>
+                            <StackPanel Orientation="Vertical" Margin="5,5,30,5">
+                                <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding ExportFileListCommand}" VerticalAlignment="Center">Copy search result file list</Button>
+                            </StackPanel>
 
-                            <StackPanel Orientation="Horizontal" Margin="3">
+                            <StackPanel Orientation="Horizontal" Margin="5,5,30,5">
                                 <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="File list:" VerticalAlignment="Center"/>
                                 <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3 0 0 0" Width="100" VerticalAlignment="Center" Text="{Binding FileListSearch}" ToolTip="file1;file2;..."/>
                                 <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding FindFilesFromListCommand}" ToolTip="Search by path/description">Search</Button>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="3">
+                                <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="Destination directory:" VerticalAlignment="Center"/>
+                                <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3 0 0 0" Width="100" VerticalAlignment="Center" Text="{Binding ExportFilesDestinationDirectory}" ToolTip="Copy files to destination directory"/>
+                                <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding ExportFilesCommand}" HorizontalAlignment="Left" VerticalAlignment="Center">Export...</Button>
                             </StackPanel>
                         </StackPanel>
                     </TabItem>
