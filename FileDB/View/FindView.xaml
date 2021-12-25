@@ -258,7 +258,7 @@
                             <ToggleButton Style="{StaticResource NavigationToggleButton}" Command="{Binding ToggleRandomCommand}" IsChecked="{Binding RandomActive}" ToolTip="Toggle slideshow random" Margin="3 3 3 3">&#x21AD;</ToggleButton>
                             <ToggleButton Style="{StaticResource NavigationToggleButton}" Command="{Binding ToggleRepeatCommand}" IsChecked="{Binding RepeatActive}" ToolTip="Toggle slideshow repeat" Margin="3 3 3 3">&#x21BB;</ToggleButton>
                         </StackPanel>
-                        <TextBlock Style="{StaticResource PageInnerTextBlock}" Margin="0 3 0 0" HorizontalAlignment="Center" Text="{Binding CurrentFileInternalDirectoryPath}"/>
+                        <TextBlock Style="{StaticResource PageInnerTextBlock}" Margin="0 3 0 0" HorizontalAlignment="Center" Text="{Binding CurrentFileToolTip}"/>
                     </StackPanel>
                     <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical">
                         <Button Style="{StaticResource NormalButton}" Command="{Binding ClearSearchCommand}" Margin="5" Content="Clear" Width="50" HorizontalAlignment="Right"/>

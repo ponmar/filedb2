@@ -539,13 +539,6 @@ namespace FileDB.ViewModel
         }
         private string currentFileToolTip;
 
-        public string CurrentFileInternalPath
-        {
-            get => currentFileInternalPath;
-            private set => SetProperty(ref currentFileInternalPath, value);
-        }
-        private string currentFileInternalPath;
-
         public string CurrentFileInternalDirectoryPath
         {
             get => currentFileInternalDirectoryPath;
@@ -1214,8 +1207,9 @@ namespace FileDB.ViewModel
 
                 var selection = SearchResult.Files[SearchResultIndex];
 
-                CurrentFileToolTip = $"{selection.Path} (Id: {selection.Id})";
-                CurrentFileInternalPath = selection.Path;
+                // TODO: set from config option?
+                CurrentFileToolTip = selection.Path;
+
                 CurrentFileInternalDirectoryPath = Path.GetDirectoryName(selection.Path).Replace(@"\", "/");
                 CurrentFilePath = model.FilesystemAccess.ToAbsolutePath(selection.Path);
                 CurrentFileDescription = selection.Description ?? string.Empty;
@@ -1225,7 +1219,7 @@ namespace FileDB.ViewModel
                 CurrentFilePersons = GetFilePersonsString(selection);
                 CurrentFileLocations = GetFileLocationsString(selection.Id);
                 CurrentFileTags = GetFileTagsString(selection.Id);
-                CurrentFileHeader = CurrentFileDateTime != string.Empty ? CurrentFileDateTime : CurrentFileInternalPath;
+                CurrentFileHeader = CurrentFileDateTime != string.Empty ? CurrentFileDateTime : selection.Path;
 
                 NewFileDescription = CurrentFileDescription;
 
@@ -1258,7 +1252,6 @@ namespace FileDB.ViewModel
             SearchResultIndex = -1;
 
             CurrentFileToolTip = string.Empty;
-            CurrentFileInternalPath = string.Empty;
             CurrentFileInternalDirectoryPath = string.Empty;
             CurrentFilePath = string.Empty;
             CurrentFileDescription = string.Empty;
