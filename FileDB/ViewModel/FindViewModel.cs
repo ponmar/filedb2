@@ -296,6 +296,15 @@ namespace FileDB.ViewModel
         public ICommand FindFilesWithPersonGroupCommand => findFilesWithPersonGroupCommand ??= new CommandHandler(FindFilesWithPersonGroup);
         private ICommand findFilesWithPersonGroupCommand;
 
+        public ICommand FindFilesWithPersonsCommand => findFilesWithPersonsCommand ??= new CommandHandler(FindFilesWithPersons);
+        private ICommand findFilesWithPersonsCommand;
+
+        public ICommand FindFilesWithPersonsUniqueCommand => findFilesWithPersonsUniqueCommand ??= new CommandHandler(FindFilesWithPersonsUnique);
+        private ICommand findFilesWithPersonsUniqueCommand;
+
+        public ICommand FindFilesWithPersonsGroupCommand => findFilesWithPersonsGroupCommand ??= new CommandHandler(FindFilesWithPersonsGroup);
+        private ICommand findFilesWithPersonsGroupCommand;
+
         public ICommand FindFilesWithLocationCommand => findFilesWithLocationCommand ??= new CommandHandler(FindFilesWithLocation);
         private ICommand findFilesWithLocationCommand;
 
@@ -621,6 +630,8 @@ namespace FileDB.ViewModel
         public PersonToUpdate SelectedPersonToUpdate { get; set; }
 
         public PersonToUpdate SelectedPersonSearch { get; set; }
+        public PersonToUpdate SelectedPerson1Search { get; set; }
+        public PersonToUpdate SelectedPerson2Search { get; set; }
 
         public ObservableCollection<LocationToUpdate> Locations { get; } = new();
 
@@ -995,6 +1006,45 @@ namespace FileDB.ViewModel
             }
         }
 
+        public void FindFilesWithPersons()
+        {
+            StopSlideshow();
+            if (SelectedPerson1Search != null && SelectedPerson2Search != null)
+            {
+                SearchResult = new SearchResult(model.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPerson1Search.Id, SelectedPerson2Search.Id }));
+            }
+        }
+
+        public void FindFilesWithPersonsUnique()
+        {
+            StopSlideshow();
+            if (SelectedPerson1Search != null && SelectedPerson2Search != null)
+            {
+                var files = model.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPerson1Search.Id });
+                var result = files.Where(x =>
+                {
+                    var filePersons = model.DbAccess.GetPersonsFromFile(x.Id).ToList();
+                    return filePersons.Count() == 2 && filePersons.Any(y => y.Id == SelectedPerson2Search.Id);
+                });
+                SearchResult = new SearchResult(result);
+            }
+        }
+
+        public void FindFilesWithPersonsGroup()
+        {
+            StopSlideshow();
+            if (SelectedPerson1Search != null && SelectedPerson2Search != null)
+            {
+                var files = model.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPerson1Search.Id });
+                var result = files.Where(x =>
+                {
+                    var filePersons = model.DbAccess.GetPersonsFromFile(x.Id).ToList();
+                    return filePersons.Count() > 2 && filePersons.Any(y => y.Id == SelectedPerson2Search.Id);
+                });
+                SearchResult = new SearchResult(result);
+            }
+        }
+
         public void FindFilesWithLocation()
         {
             StopSlideshow();
@@ -1219,6 +1269,8 @@ namespace FileDB.ViewModel
             CurrentFilePersons = string.Empty;
             CurrentFileLocations = string.Empty;
             CurrentFileTags = string.Empty;
+
+            NewFileDescription = string.Empty;
 
             CurrentFileLoadError = "No match";
             imagePresenter.ShowImage(null);
