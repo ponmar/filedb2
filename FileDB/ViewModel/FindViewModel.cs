@@ -1501,6 +1501,7 @@ namespace FileDB.ViewModel
             {
                 var selection = SearchResult.Files[SearchResultIndex];
                 var fileId = selection.Id;
+                NewFileDescription = NewFileDescription?.Trim();
                 var description = string.IsNullOrEmpty(NewFileDescription) ? null : NewFileDescription;
 
                 try
