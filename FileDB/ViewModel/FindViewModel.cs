@@ -1226,7 +1226,7 @@ namespace FileDB.ViewModel
                     foreach (var file in SearchResult.Files)
                     {
                         var sourcePath = model.FilesystemAccess.ToAbsolutePath(file.Path);
-                        var destPath = Path.Combine(ExportFilesDestinationDirectory, $"{index}{Path.GetExtension(file.Path)}");
+                        var destPath = Path.Combine(ExportFilesDestinationDirectory, $"{index}_id{file.Id}{Path.GetExtension(file.Path)}");
                         File.Copy(sourcePath, destPath);
                         index++;
                     }
