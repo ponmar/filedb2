@@ -88,9 +88,16 @@
                             </StackPanel>
 
                             <StackPanel Grid.Row="0" Grid.Column="3" Orientation="Horizontal" Margin="0,0,30,0">
-                                <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="File list:" VerticalAlignment="Center"/>
+                                <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="File list:" VerticalAlignment="Center" Margin="3"/>
                                 <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3 0 0 0" Width="100" VerticalAlignment="Center" Text="{Binding FileListSearch}" ToolTip="file1;file2;..."/>
                                 <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding FindFilesFromListCommand}" ToolTip="Search by file list">Search</Button>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,30,0">
+                                <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="File date:" Margin="3" VerticalAlignment="Center"/>
+                                <DatePicker Width="105" Margin="3 0 0 0" VerticalAlignment="center" Text="Start" IsTodayHighlighted="True" SelectedDate="{Binding SearchStartDate}" FirstDayOfWeek="Monday"/>
+                                <DatePicker Width="105" Margin="3 0 0 0" VerticalAlignment="center" Text="End" IsTodayHighlighted="True" SelectedDate="{Binding SearchEndDate}" FirstDayOfWeek="Monday"/>
+                                <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding FindFilesByDateCommand}" ToolTip="Seach files between dates" VerticalAlignment="Center">Search</Button>
                             </StackPanel>
                         </Grid>
                     </TabItem>
@@ -158,18 +165,18 @@
                                 </ComboBox>
                                 <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding FindFilesBySexCommand}" ToolTip="Search by sex (ISO/IEC 5218)">Search</Button>
                             </StackPanel>
-
-                            <StackPanel Grid.Row="0" Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0">
-                                <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="File date:" Margin="3" VerticalAlignment="Center"/>
-                                <DatePicker Width="105" Margin="3 0 0 0" VerticalAlignment="center" Text="Start" IsTodayHighlighted="True" SelectedDate="{Binding SearchStartDate}" FirstDayOfWeek="Monday"/>
-                                <DatePicker Width="105" Margin="3 0 0 0" VerticalAlignment="center" Text="End" IsTodayHighlighted="True" SelectedDate="{Binding SearchEndDate}" FirstDayOfWeek="Monday"/>
-                                <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding FindFilesByDateCommand}" ToolTip="Seach files between dates" VerticalAlignment="Center">Search</Button>
-                            </StackPanel>
-
-                            <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0">
-                                <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="File GPS position:" Margin="3" VerticalAlignment="Center"/>
-                                <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3 0 0 0" Width="105" VerticalAlignment="Center" Text="{Binding SearchFileGpsPosition}" ToolTip="Format: LAT LON"/>
-                                <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3 0 0 0" Width="105" VerticalAlignment="Center" Text="{Binding SearchFileGpsRadius}" ToolTip="Radius [m]"/>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Style="{StaticResource PageTabItem}">
+                        <TabItem.Header>
+                            <TextBlock Text="Position" Style="{StaticResource PageTabItemText}" />
+                        </TabItem.Header>
+                        <Grid Margin="3">
+                            <StackPanel Orientation="Horizontal" Margin="0">
+                                <TextBlock Style="{StaticResource PageInnerTextBlock}" Margin="3" Text="Latitude longitude GPS position:" VerticalAlignment="Center"/>
+                                <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3" Width="105" VerticalAlignment="Center" Text="{Binding SearchFileGpsPosition}" ToolTip="Format: LAT LON"/>
+                                <TextBlock Style="{StaticResource PageInnerTextBlock}" Margin="3" Text="Radius:" VerticalAlignment="Center"/>
+                                <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3" Width="105" VerticalAlignment="Center" Text="{Binding SearchFileGpsRadius}" ToolTip="Radius in meters"/>
                                 <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding FindFilesByGpsPositionCommand}" ToolTip="Seach files between dates" VerticalAlignment="Center">Search</Button>
                             </StackPanel>
                         </Grid>
