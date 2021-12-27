@@ -41,6 +41,18 @@
                     </StackPanel>
                 </Border>
 
+                <TextBlock Style="{StaticResource PageSubHeading}">Files Collection Filtering</TextBlock>
+                <Border Style="{StaticResource BorderGroup}">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="This tool can be used to find imported files that should, after updated confuration, no longer be included."/>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding FindImportedNoLongerApplicableFilesCommand}" HorizontalAlignment="Left">Find imported files no longer applicable</Button>
+                            <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding CopyImportedNoLongerApplicableFilesListCommand}" IsEnabled="{Binding ImportedNoLongerApplicableFileList, Converter={StaticResource StringContentToBoolConverter}}" HorizontalAlignment="Left">Copy file list</Button>
+                        </StackPanel>
+                        <TextBlock Style="{StaticResource PageTextBlock}" Text="{Binding FindImportedNoLongerApplicableFilesResult}"/>
+                    </StackPanel>
+                </Border>
+
                 <TextBlock Style="{StaticResource PageSubHeading}">Database Data Validation</TextBlock>
                 <Border Style="{StaticResource BorderGroup}">
                     <StackPanel Orientation="Vertical">

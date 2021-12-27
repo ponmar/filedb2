@@ -34,14 +34,19 @@ namespace FileDBInterface.FilesystemAccess
             foreach (var filename in System.IO.Directory.GetFiles(filesRootDirectory, "*.*", SearchOption.AllDirectories))
             {
                 var internalPath = ToInternalFilesPath(filename);
-                if (!PathIsBlacklisted(internalPath, blacklistedFilePathPatterns) &&
-                    PathIsWhitelisted(internalPath, whitelistedFilePathPatterns) &&
-                    PathIsVisible(internalPath, includeHiddenDirectories) &&
+                if (PathIsApplicable(internalPath, blacklistedFilePathPatterns, whitelistedFilePathPatterns, includeHiddenDirectories) &&
                     filesDbAccess.GetFileByPath(internalPath) == null)
                 {
                     yield return internalPath;
                 }
             }
+        }
+
+        public bool PathIsApplicable(string internalPath, IEnumerable<string> blacklistedFilePathPatterns, IEnumerable<string> whitelistedFilePathPatterns, bool includeHiddenDirectories)
+        {
+            return !PathIsBlacklisted(internalPath, blacklistedFilePathPatterns) &&
+                    PathIsWhitelisted(internalPath, whitelistedFilePathPatterns) &&
+                    PathIsVisible(internalPath, includeHiddenDirectories);
         }
 
         private bool PathIsBlacklisted(string internalPath, IEnumerable<string> blacklistedFilePathPatterns)

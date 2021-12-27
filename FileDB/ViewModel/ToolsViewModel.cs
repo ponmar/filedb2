@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Windows.Input;
 using FileDBInterface.Model;
 using FileDBInterface.Validators;
@@ -12,6 +13,12 @@ namespace FileDB.ViewModel
     {
         public ICommand CreateBackupCommand => createBackupCommand ??= new CommandHandler(CreateBackup);
         private ICommand createBackupCommand;
+
+        public ICommand FindImportedNoLongerApplicableFilesCommand => findImportedNoLongerApplicableFilesCommand ??= new CommandHandler(FindImportedNoLongerApplicableFiles);
+        private ICommand findImportedNoLongerApplicableFilesCommand;
+
+        public ICommand CopyImportedNoLongerApplicableFilesListCommand => copyImportedNoLongerApplicableFilesListCommand ??= new CommandHandler(CopyImportedNoLongerApplicableFilesList);
+        private ICommand copyImportedNoLongerApplicableFilesListCommand;
 
         public ICommand DatabaseValidationCommand => databaseValidationCommand ??= new CommandHandler(DatabaseValidation);
         private ICommand databaseValidationCommand;
@@ -36,6 +43,20 @@ namespace FileDB.ViewModel
         private string backupResult;
 
         public ObservableCollection<BackupFile> BackupFiles { get; } = new();
+
+        public string FindImportedNoLongerApplicableFilesResult
+        {
+            get => findImportedNoLongerApplicableFilesResult;
+            set => SetProperty(ref findImportedNoLongerApplicableFilesResult, value);
+        }
+        private string findImportedNoLongerApplicableFilesResult = "Not executed.";
+
+        public string ImportedNoLongerApplicableFileList
+        {
+            get => importedNoLongerApplicableFileList;
+            set => SetProperty(ref importedNoLongerApplicableFileList, value);
+        }
+        private string importedNoLongerApplicableFileList = string.Empty;
 
         public string DatabaseValidationResult
         {
@@ -108,6 +129,20 @@ namespace FileDB.ViewModel
             }
 
             OnPropertyChanged(nameof(BackupResult));
+        }
+
+        private void FindImportedNoLongerApplicableFiles()
+        {
+            var blacklistedFilePathPatterns = model.Config.BlacklistedFilePathPatterns.Split(";");
+            var whitelistedFilePathPatterns = model.Config.WhitelistedFilePathPatterns.Split(";");
+            var notApplicableFiles = model.DbAccess.GetFiles().Where(x => !model.FilesystemAccess.PathIsApplicable(x.Path, blacklistedFilePathPatterns, whitelistedFilePathPatterns, model.Config.IncludeHiddenDirectories)).ToList();
+            ImportedNoLongerApplicableFileList = Utils.CreateFileList(notApplicableFiles);
+            FindImportedNoLongerApplicableFilesResult = $"Found {notApplicableFiles.Count} files that now should be filtered.";
+        }
+
+        private void CopyImportedNoLongerApplicableFilesList()
+        {
+            ClipboardService.SetText(ImportedNoLongerApplicableFileList);
         }
 
         private void DatabaseValidation()
