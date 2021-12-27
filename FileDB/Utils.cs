@@ -62,6 +62,18 @@ namespace FileDB
             Process.Start(new ProcessStartInfo(uri) { UseShellExecute = true });
         }
 
+        public static void SelectFileInExplorer(string path)
+        {
+            var explorerPath = path.Replace("/", @"\");
+            Process.Start("explorer.exe", "/select, " + explorerPath);
+        }
+
+        public static void OpenDirectoryInExplorer(string path)
+        {
+            var explorerPath = path.Replace("/", @"\");
+            Process.Start("explorer.exe", "/open, " + explorerPath);
+        }
+
         public static string CreateFileList(List<FilesModel> files)
         {
             return files.Count > 0 ? string.Join(";", files.Select(x => x.Id)) : string.Empty;

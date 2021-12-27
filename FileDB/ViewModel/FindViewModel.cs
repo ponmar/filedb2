@@ -1188,8 +1188,7 @@ namespace FileDB.ViewModel
             if (!string.IsNullOrEmpty(CurrentFilePath) &&
                 File.Exists(CurrentFilePath))
             {
-                var explorerPath = CurrentFilePath.Replace("/", @"\");
-                Process.Start("explorer.exe", "/select, " + explorerPath);
+                Utils.SelectFileInExplorer(CurrentFilePath);
             }
         }
 

@@ -14,6 +14,9 @@ namespace FileDB.ViewModel
         public ICommand CreateBackupCommand => createBackupCommand ??= new CommandHandler(CreateBackup);
         private ICommand createBackupCommand;
 
+        public ICommand OpenDatabaseBackupDirectoryCommand => openDatabaseBackupDirectoryCommand ??= new CommandHandler(OpenDatabaseBackupDirectory);
+        private ICommand openDatabaseBackupDirectoryCommand;
+
         public ICommand FindImportedNoLongerApplicableFilesCommand => findImportedNoLongerApplicableFilesCommand ??= new CommandHandler(FindImportedNoLongerApplicableFiles);
         private ICommand findImportedNoLongerApplicableFilesCommand;
 
@@ -31,9 +34,6 @@ namespace FileDB.ViewModel
 
         public ICommand CopyFileFinderResultCommand => copyFileFinderResultCommand ??= new CommandHandler(CopyFileFinderResult);
         private ICommand copyFileFinderResultCommand;
-
-        public ICommand RemoveFileFinderResultCommand => removeFileFinderResultCommand ??= new CommandHandler(RemoveFileFinderResult);
-        private ICommand removeFileFinderResultCommand;
 
         public string BackupResult
         {
@@ -63,7 +63,7 @@ namespace FileDB.ViewModel
             get => databaseValidationResult;
             set => SetProperty(ref databaseValidationResult, value);
         }
-        private string databaseValidationResult = "Not validated.";
+        private string databaseValidationResult = "Not executed.";
 
         public ObservableCollection<string> DabaseValidationErrors { get; } = new();
 
@@ -106,6 +106,11 @@ namespace FileDB.ViewModel
             {
                 Utils.ShowErrorDialog(e.Message);
             }
+        }
+
+        private void OpenDatabaseBackupDirectory()
+        {
+            Utils.OpenDirectoryInExplorer(new DatabaseBackup().BackupDirectory);
         }
 
         private void ScanBackupFiles()
@@ -211,6 +216,7 @@ namespace FileDB.ViewModel
         private void CopyInvalidFileList()
         {
             ClipboardService.SetText(InvalidFileList);
+            DatabaseValidationResult = "File list copied to clipboard.";
         }
 
         private void FileFinder()
@@ -230,18 +236,7 @@ namespace FileDB.ViewModel
         private void CopyFileFinderResult()
         {
             ClipboardService.SetText(MissingFilesList);
-        }
-
-        private void RemoveFileFinderResult()
-        {
-            var fileIds = Utils.CreateFileIds(MissingFilesList);
-            if (Utils.ShowConfirmDialog($"Remove {fileIds.Count} meta-data for missing files?"))
-            {
-                foreach (var fileId in fileIds)
-                {
-                    model.DbAccess.DeleteFile(fileId);
-                }
-            }
+            FileFinderResult = "File list copied to clipboard.";
         }
     }
 }
