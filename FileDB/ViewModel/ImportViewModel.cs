@@ -30,6 +30,9 @@ namespace FileDB.ViewModel
         public ICommand CopyImportedFileListCommand => copyImportedFileListCommand ??= new CommandHandler(CopyImportedFileList);
         private ICommand copyImportedFileListCommand;
 
+        public ICommand RemoveFileListCommand => removeFileListCommand ??= new CommandHandler(RemoveFileListMethod);
+        private ICommand removeFileListCommand;
+
         public ObservableCollection<NewFile> NewFiles { get; } = new();
 
         public bool NewFilesAvailable => NewFiles.Count > 0;
@@ -47,6 +50,13 @@ namespace FileDB.ViewModel
             set => SetProperty(ref importedFileList, value);
         }
         private string importedFileList = string.Empty;
+
+        public string RemoveFileList
+        {
+            get => removeFileList;
+            set => SetProperty(ref removeFileList, value);
+        }
+        private string removeFileList;
 
         private readonly Model.Model model = Model.Model.Instance;
 
@@ -143,6 +153,21 @@ namespace FileDB.ViewModel
         private void CopyImportedFileList()
         {
             ClipboardService.SetText(ImportedFileList);
+        }
+
+        private void RemoveFileListMethod()
+        {
+            var fileIds = Utils.CreateFileIds(RemoveFileList);
+            if (fileIds.Count == 0)
+            {
+                Utils.ShowErrorDialog("No file ids specified");
+                return;
+            }
+
+            if (Utils.ShowConfirmDialog($"Remove meta-data for {fileIds.Count} files from the specified file list?"))
+            {
+                fileIds.ForEach(x => model.DbAccess.DeleteFile(x));
+            }
         }
 
         private string GetDateModified(string internalPath)

@@ -15,22 +15,34 @@
     <DockPanel>
         <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Import</TextBlock>
         <ScrollViewer>
-            <Border Style="{StaticResource BorderGroup}" HorizontalAlignment="Left" VerticalAlignment="Top">
-                <StackPanel Orientation="Vertical" Style="{StaticResource PageStackPanel}">
-                    <TextBlock Style="{StaticResource PageTextBlock}">Check your settings to adjust what files will be listed.</TextBlock>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Style="{StaticResource PageWarning}">&#x26A0;</TextBlock>
-                        <TextBlock Style="{StaticResource PageTextBlock}">This operation can be slow for a large collection of files or if the media access is slow (for example when using a network share).</TextBlock>
+            <StackPanel Orientation="Vertical" Style="{StaticResource PageStackPanel}">
+                <TextBlock Style="{StaticResource PageSubHeading}">Add Files Meta-Data</TextBlock>
+                <Border Style="{StaticResource BorderGroup}" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <StackPanel Orientation="Vertical" Style="{StaticResource PageStackPanel}">
+                        <TextBlock Style="{StaticResource PageTextBlock}">Check your settings to adjust what files will be listed.</TextBlock>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{StaticResource PageWarning}">&#x26A0;</TextBlock>
+                            <TextBlock Style="{StaticResource PageTextBlock}">This operation can be slow for a large collection of files or if the media access is slow (for example when using a network share).</TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Style="{StaticResource NormalButton}" Width="150" Margin="10" Command="{Binding ScanNewFilesCommand}">Find files...</Button>
+                            <Button Style="{StaticResource NormalButton}" Width="150" Margin="10" Command="{Binding ImportNewFilesCommand}" IsEnabled="{Binding NewFilesAvailable}">Import listed files...</Button>
+                            <Button Style="{StaticResource NormalButton}" Width="150" Margin="10" Command="{Binding CopyImportedFileListCommand}" IsEnabled="{Binding ImportedFileList, Converter={StaticResource StringContentToBoolConverter}}">Copy imported file list</Button>
+                        </StackPanel>
+                        <DataGrid Margin="10" ItemsSource="{Binding NewFiles}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="false" CanUserDeleteRows="false" IsReadOnly="True"/>
+                        <TextBlock Style="{StaticResource PageTextBlock}" Text="{Binding ImportResult}"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <Button Style="{StaticResource NormalButton}" Width="150" Margin="10" Command="{Binding ScanNewFilesCommand}">Find files...</Button>
-                        <Button Style="{StaticResource NormalButton}" Width="150" Margin="10" Command="{Binding ImportNewFilesCommand}" IsEnabled="{Binding NewFilesAvailable}">Import listed files...</Button>
-                        <Button Style="{StaticResource NormalButton}" Width="150" Margin="10" Command="{Binding CopyImportedFileListCommand}" IsEnabled="{Binding ImportedFileList, Converter={StaticResource StringContentToBoolConverter}}">Copy imported file list</Button>
+                </Border>
+
+                <TextBlock Style="{StaticResource PageSubHeading}">Remove Files Meta-Data</TextBlock>
+                <Border Style="{StaticResource BorderGroup}" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <StackPanel Orientation="Horizontal" Margin="15">
+                        <TextBlock Margin="5" Style="{StaticResource PageInnerTextBlock}" Text="File list:" VerticalAlignment="Center"/>
+                        <TextBox Margin="5" Style="{StaticResource PageInnerTextBox}" Width="200" VerticalAlignment="Center" Text="{Binding RemoveFileList}"></TextBox>
+                        <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding RemoveFileListCommand}" Content="Remove..."  VerticalAlignment="Center"/>
                     </StackPanel>
-                    <DataGrid Margin="10" ItemsSource="{Binding NewFiles}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="false" CanUserDeleteRows="false" IsReadOnly="True"/>
-                    <TextBlock Style="{StaticResource PageTextBlock}" Text="{Binding ImportResult}"/>
-                </StackPanel>
-            </Border>
+                </Border>
+            </StackPanel>
         </ScrollViewer>
     </DockPanel>
 </UserControl>
