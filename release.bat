@@ -1,9 +1,9 @@
 @echo off
 
-for /f "delims=" %%a in ('VersionPrinter\bin\Release\net5.0\VersionPrinter.exe') do @set version=%%a
+for /f "delims=" %%a in ('VersionPrinter\bin\Release\net6.0\VersionPrinter.exe') do @set version=%%a
 echo Detected version: %version%
 
-set appDir=FileDB\bin\Release\net5.0-windows
+set appDir=FileDB\bin\Release\net6.0-windows
 set zipDir=FileDB-%version%
 set releaseDir=release\%zipDir%
 set zipFilename=%zipDir%.zip
