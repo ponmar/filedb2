@@ -172,15 +172,27 @@
                         <TabItem.Header>
                             <TextBlock Text="Position" Style="{StaticResource PageTabItemText}" />
                         </TabItem.Header>
-                        <Grid Margin="3">
-                            <StackPanel Orientation="Horizontal" Margin="0">
-                                <TextBlock Style="{StaticResource PageInnerTextBlock}" Margin="3" Text="Latitude longitude GPS position:" VerticalAlignment="Center"/>
-                                <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3" Width="105" VerticalAlignment="Center" Text="{Binding SearchFileGpsPosition}" ToolTip="Format: LAT LON"/>
-                                <TextBlock Style="{StaticResource PageInnerTextBlock}" Margin="3" Text="Radius:" VerticalAlignment="Center"/>
-                                <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3" Width="105" VerticalAlignment="Center" Text="{Binding SearchFileGpsRadius}" ToolTip="Radius in meters"/>
-                                <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding FindFilesByGpsPositionCommand}" ToolTip="Seach files between dates" VerticalAlignment="Center">Search</Button>
+                        <StackPanel Orientation="Horizontal" Margin="3">
+                            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageInnerTextBlock}" Margin="3" Text="Latitude longitude:" VerticalAlignment="Center"/>
+                                    <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource PageInnerTextBox}" Margin="3" Width="200" VerticalAlignment="Center" Text="{Binding SearchFileGpsPosition}" ToolTip="Format: LAT LON"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageInnerTextBlock}" Margin="3" Text="Google Maps URL:" VerticalAlignment="Center"/>
+                                    <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource PageInnerTextBox}" Margin="3" Width="200" VerticalAlignment="Center" Text="{Binding SearchFileGpsPositionUrl}" ToolTip="Format: LAT LON"/>
+                                </Grid>
                             </StackPanel>
-                        </Grid>
+                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Margin="15 3 3 3" Text="Radius:" VerticalAlignment="Center"/>
+                            <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3" Width="50" VerticalAlignment="Center" Text="{Binding SearchFileGpsRadius}" ToolTip="Radius in meters"/>
+                            <Button Margin="15 5 5 5" Style="{StaticResource NormalButton}" Command="{Binding FindFilesByGpsPositionCommand}" ToolTip="Seach files in specified area" VerticalAlignment="Center">Search</Button>
+                        </StackPanel>
                     </TabItem>
                     <TabItem Style="{StaticResource PageTabItem}">
                         <TabItem.Header>

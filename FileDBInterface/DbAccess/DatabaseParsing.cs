@@ -88,6 +88,26 @@ namespace FileDBInterface.DbAccess
             return null;
         }
 
+        public static (double lat, double lon)? ParseFilesPositionFromUrl(string url)
+        {
+            if (!string.IsNullOrEmpty(url))
+            {
+                var latLonStartIndex = url.IndexOf("@") + 1;
+                if (latLonStartIndex > 0)
+                {
+                    var latLonToEnd = url.Substring(latLonStartIndex);
+                    var parts = latLonToEnd.Split(",");
+                    if (parts.Length >= 2 &&
+                        double.TryParse(parts[0], NumberStyles.Float, CultureInfo.InvariantCulture, out var latitude) &&
+                        double.TryParse(parts[1], NumberStyles.Float, CultureInfo.InvariantCulture, out var longitude))
+                    {
+                        return (latitude, longitude);
+                    }
+                }
+            }
+            return null;
+        }
+
         public static string ToFilesPosition(double lat, double lon)
         {
             return $"{lat.ToString(CultureInfo.InvariantCulture)} {lon.ToString(CultureInfo.InvariantCulture)}";

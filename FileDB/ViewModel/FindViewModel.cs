@@ -280,6 +280,13 @@ namespace FileDB.ViewModel
         }
         private string searchFileGpsPosition;
 
+        public string SearchFileGpsPositionUrl
+        {
+            get => searchFileGpsPositionUrl;
+            set => SetProperty(ref searchFileGpsPositionUrl, value);
+        }
+        private string searchFileGpsPositionUrl;
+
         public string SearchFileGpsRadius
         {
             get => searchFileGpsRadius;
@@ -962,20 +969,52 @@ namespace FileDB.ViewModel
         {
             StopSlideshow();
 
+            if (string.IsNullOrEmpty(SearchFileGpsPosition) &&
+                string.IsNullOrEmpty(SearchFileGpsPositionUrl))
+            {
+                Utils.ShowErrorDialog("No position specified");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(SearchFileGpsRadius))
+            {
+                Utils.ShowErrorDialog("No radius specified");
+                return;
+            }
+
             if (!double.TryParse(SearchFileGpsRadius, out var radius) || radius < 1)
             {
                 Utils.ShowErrorDialog("Invalid radius");
                 return;
             }
 
-            var gpsPos = DatabaseParsing.ParseFilesPosition(SearchFileGpsPosition);
-            if (gpsPos == null)
+            double latitude;
+            double longitude;
+
+            if (!string.IsNullOrEmpty(SearchFileGpsPosition))
             {
-                Utils.ShowErrorDialog("Invalid GPS position");
-                return;
+                var gpsPos = DatabaseParsing.ParseFilesPosition(SearchFileGpsPosition);
+                if (gpsPos == null)
+                {
+                    Utils.ShowErrorDialog("Invalid GPS position");
+                    return;
+                }
+                latitude = gpsPos.Value.lat;
+                longitude = gpsPos.Value.lon;
+            }
+            else
+            {
+                var gpsPos = DatabaseParsing.ParseFilesPositionFromUrl(SearchFileGpsPositionUrl);
+                if (gpsPos == null)
+                {
+                    Utils.ShowErrorDialog("Invalid Google Maps URL");
+                    return;
+                }
+                latitude = gpsPos.Value.lat;
+                longitude = gpsPos.Value.lon;
             }
 
-            SearchResult = new SearchResult(model.DbAccess.SearchFilesNearGpsPosition(gpsPos.Value.lat, gpsPos.Value.lon, radius));
+            SearchResult = new SearchResult(model.DbAccess.SearchFilesNearGpsPosition(latitude, longitude, radius));
         }
 
         public void FindFilesWithPerson()

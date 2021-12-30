@@ -103,6 +103,16 @@ namespace FileDBInterfaceTests.DbAccess
         }
 
         [TestMethod]
+        public void ParseFilesPositionFromUrl()
+        {
+            var result = DatabaseParsing.ParseFilesPositionFromUrl("https://www.google.se/maps/place/Enhagsv%C3%A4gen+47,+589+43+Link%C3%B6ping/@58.3839033,15.7028438,17z/data=!3m1!4b1!4m5!3m4!1s0x46596c268b2f8165:0xf9d7a0f58269b2a1!8m2!3d58.3839033!4d15.7050325");
+            Assert.AreEqual(58.3839033, result.Value.lat);
+            Assert.AreEqual(15.7028438, result.Value.lon);
+
+            Assert.IsNull(DatabaseParsing.ParseFilesPositionFromUrl("https://www.google.se"));
+        }
+
+        [TestMethod]
         public void ToFilesPosition()
         {
             Assert.AreEqual("34.123 75.321", DatabaseParsing.ToFilesPosition(34.123, 75.321));
