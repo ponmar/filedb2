@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:FileDB.View"
              xmlns:converters="clr-namespace:FileDB.Converters"
              xmlns:viewmodel="clr-namespace:FileDB.ViewModel"
+             d:DataContext="{d:DesignInstance Type=viewmodel:FindViewModel}"
              mc:Ignorable="d"
              d:DesignHeight="800" d:DesignWidth="1000"
              Focusable="True">
@@ -424,8 +425,8 @@
                         <TextBlock Style="{StaticResource PageInnerSubHeading}" Margin="0" Visibility="{Binding CurrentFilePosition, Converter={converters:StringNullOrEmptyToVisibilityConverter}}">
                             <Hyperlink NavigateUri="{Binding CurrentFilePositionLink}" RequestNavigate="OpenLocationUri">
                                 <TextBlock Text="{Binding CurrentFilePosition}" Visibility="{Binding CurrentFilePosition, Converter={converters:StringNullOrEmptyToVisibilityConverter}}"/>
-                                </Hyperlink>
-                            </TextBlock>
+                            </Hyperlink>
+                        </TextBlock>
                         <TextBlock Style="{StaticResource PageInnerSubHeading}" Margin="0 20 0 0" Text="&#x1F4DD;" Visibility="{Binding CurrentFileDescription, Converter={converters:StringNullOrEmptyToVisibilityConverter}}" ToolTip="Description"/>
                         <TextBlock Style="{StaticResource PageInnerSubHeading}" Margin="0 0 10 0" Text="{Binding CurrentFileDescription}" ToolTip="{Binding CurrentFileDescription}" TextWrapping="Wrap" Visibility="{Binding CurrentFileDescription, Converter={converters:StringNullOrEmptyToVisibilityConverter}}" HorizontalAlignment="Left"/>
                     </StackPanel>

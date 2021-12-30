@@ -591,12 +591,12 @@ namespace FileDB.ViewModel
         }
         private string currentFilePosition;
 
-        public string CurrentFilePositionLink
+        public Uri CurrentFilePositionLink
         {
             get => currentFilePositionLink;
             private set => SetProperty(ref currentFilePositionLink, value);
         }
-        private string currentFilePositionLink;
+        private Uri currentFilePositionLink;
 
         public string CurrentFilePersons
         {
@@ -1242,14 +1242,15 @@ namespace FileDB.ViewModel
             return !Directory.EnumerateFileSystemEntries(path).Any();
         }
 
-        private string CreatePositionLink(string position, string defaultValue)
+        private Uri CreatePositionLink(string position)
         {
             var positionParts = position.Split(" ");
             if (positionParts.Length == 2 && !string.IsNullOrEmpty(model.Config.LocationLink))
             {
-                return model.Config.LocationLink.Replace("LAT", positionParts[0]).Replace("LON", positionParts[1]);
+                var link = model.Config.LocationLink.Replace("LAT", positionParts[0]).Replace("LON", positionParts[1]);
+                return new Uri(link);
             }
-            return defaultValue;
+            return null;
         }
 
         private void LoadFile(int index)
@@ -1269,7 +1270,7 @@ namespace FileDB.ViewModel
                 CurrentFileDescription = selection.Description ?? string.Empty;
                 CurrentFileDateTime = GetFileDateTimeString(selection.Datetime);
                 CurrentFilePosition = selection.Position ?? string.Empty;
-                CurrentFilePositionLink = selection.Position != null ? CreatePositionLink(selection.Position, string.Empty) : string.Empty;
+                CurrentFilePositionLink = selection.Position != null ? CreatePositionLink(selection.Position) : null;
                 CurrentFilePersons = GetFilePersonsString(selection);
                 CurrentFileLocations = GetFileLocationsString(selection.Id);
                 CurrentFileTags = GetFileTagsString(selection.Id);
@@ -1312,7 +1313,7 @@ namespace FileDB.ViewModel
             CurrentFileDateTime = string.Empty;
             CurrentFileHeader = string.Empty;
             CurrentFilePosition = string.Empty;
-            CurrentFilePositionLink = string.Empty;
+            CurrentFilePositionLink = null;
             CurrentFilePersons = string.Empty;
             CurrentFileLocations = string.Empty;
             CurrentFileTags = string.Empty;
