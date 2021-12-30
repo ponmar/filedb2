@@ -84,6 +84,24 @@ namespace FileDBInterface.DbAccess
             return connection.Query<FilesModel>(sql);
         }
 
+        public IEnumerable<LocationModel> SearchLocationsNearGpsPosition(double latitude, double longitude, double radius)
+        {
+            using var connection = DatabaseUtils.CreateConnection(database);
+            var sql = "select * from [locations] where Position is not null";
+
+            foreach (var locationWithPosition in connection.Query<LocationModel>(sql))
+            {
+                var gpsPos = DatabaseParsing.ParseFilesPosition(locationWithPosition.Position);
+                if (gpsPos != null)
+                {
+                    if (DatabaseUtils.CalculateDistance(latitude, longitude, gpsPos.Value.lat, gpsPos.Value.lon) < radius)
+                    {
+                        yield return locationWithPosition;
+                    }
+                }
+            }
+        }
+
         public IEnumerable<FilesModel> SearchFilesNearGpsPosition(double latitude, double longitude, double radius)
         {
             using var connection = DatabaseUtils.CreateConnection(database);

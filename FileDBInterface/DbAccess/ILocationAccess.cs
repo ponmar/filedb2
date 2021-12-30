@@ -9,6 +9,7 @@ namespace FileDBInterface.DbAccess
         public LocationModel GetLocationById(int id);
         public bool HasLocationId(int id);
         public int GetLocationCount();
+        public IEnumerable<LocationModel> SearchLocationsNearGpsPosition(double latitude, double longitude, double radius);
         public void InsertLocation(LocationModel location);
         public void UpdateLocation(LocationModel location);
         public void DeleteLocation(int id);

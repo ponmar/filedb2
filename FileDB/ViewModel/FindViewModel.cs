@@ -1014,7 +1014,13 @@ namespace FileDB.ViewModel
                 longitude = gpsPos.Value.lon;
             }
 
-            SearchResult = new SearchResult(model.DbAccess.SearchFilesNearGpsPosition(latitude, longitude, radius));
+            var nearFiles = model.DbAccess.SearchFilesNearGpsPosition(latitude, longitude, radius).ToList();
+
+            // TODO: checkbox for selecting if this should be included?
+            var nearLocations = model.DbAccess.SearchLocationsNearGpsPosition(latitude, longitude, radius);
+            nearFiles.AddRange(model.DbAccess.SearchFilesWithLocations(nearLocations.Select(x => x.Id)));
+
+            SearchResult = new SearchResult(nearFiles);
         }
 
         public void FindFilesWithPerson()
