@@ -71,7 +71,7 @@
                             </Grid.RowDefinitions>
 
                             <Button Grid.Row="0" Grid.Column="0" Margin="5 5 30 5" HorizontalAlignment="Left" Style="{StaticResource NormalButton}" Command="{Binding FindAllFilesCommand}" VerticalAlignment="Center" ToolTip="Search all files">All files</Button>
-                            <Button Grid.Row="1" Grid.Column="0" Margin="5 5 30 5" HorizontalAlignment="Left" Style="{StaticResource NormalButton}" Command="{Binding FindImportedFilesCommand}" IsEnabled="{Binding ImportedFileList, Converter={StaticResource StringContentToBoolConverter}}" VerticalAlignment="Center" ToolTip="Search imported files">Imported files</Button>
+                            <Button Grid.Row="1" Grid.Column="0" Margin="5 5 30 5" HorizontalAlignment="Left" Style="{StaticResource NormalButton}" Command="{Binding FindImportedFilesCommand}" IsEnabled="{Binding ImportedFileList, Converter={StaticResource StringContentToBoolConverter}}" VerticalAlignment="Center" ToolTip="Search for newly added files meta-data">New files</Button>
 
                             <Button Grid.Row="0" Grid.Column="1" Margin="5 5 30 5" Style="{StaticResource NormalButton}" Command="{Binding FindFilesFromMissingCategorizationCommand}" HorizontalAlignment="Left">All without meta-data</Button>
                             <Button Grid.Row="1" Grid.Column="1" Margin="5 5 30 5" Style="{StaticResource NormalButton}" Command="{Binding FindCurrentDirectoryFilesCommand}" ToolTip="Search all files within current file directory (recursive)" HorizontalAlignment="Left">All from current directory</Button>

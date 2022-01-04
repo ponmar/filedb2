@@ -25,9 +25,9 @@
                             <TextBlock Style="{StaticResource PageTextBlock}">This operation can be slow for a large collection of files or if the media access is slow (for example when using a network share).</TextBlock>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <Button Style="{StaticResource NormalButton}" Width="150" Margin="10" Command="{Binding ScanNewFilesCommand}">Find files...</Button>
-                            <Button Style="{StaticResource NormalButton}" Width="150" Margin="10" Command="{Binding ImportNewFilesCommand}" IsEnabled="{Binding NewFilesAvailable}">Import listed files...</Button>
-                            <Button Style="{StaticResource NormalButton}" Width="150" Margin="10" Command="{Binding CopyImportedFileListCommand}" IsEnabled="{Binding ImportedFileList, Converter={StaticResource StringContentToBoolConverter}}">Copy imported file list</Button>
+                            <Button Style="{StaticResource NormalButton}" Width="200" Margin="10" Command="{Binding ScanNewFilesCommand}">Find new files...</Button>
+                            <Button Style="{StaticResource NormalButton}" Width="200" Margin="10" Command="{Binding ImportNewFilesCommand}" IsEnabled="{Binding NewFilesAvailable}">Add meta-data for listed files...</Button>
+                            <Button Style="{StaticResource NormalButton}" Width="200" Margin="10" Command="{Binding CopyImportedFileListCommand}" IsEnabled="{Binding ImportedFileList, Converter={StaticResource StringContentToBoolConverter}}">Copy file list for added files</Button>
                         </StackPanel>
                         <DataGrid Margin="10" ItemsSource="{Binding NewFiles}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="false" CanUserDeleteRows="false" IsReadOnly="True"/>
                         <TextBlock Style="{StaticResource PageTextBlock}" Text="{Binding ImportResult}"/>
