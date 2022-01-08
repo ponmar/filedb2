@@ -1,10 +1,13 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using FileDB.Configuration;
 using FileDB.Notifiers;
 using FileDB.Validators;
+using TextCopy;
 
 namespace FileDB
 {
@@ -47,6 +50,13 @@ namespace FileDB
                     Utils.ShowErrorDialog(result);
                 }
             }
+        }
+
+        private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            ClipboardService.SetText(e.Exception.StackTrace);
+            var message = $"Unhandled exception: {e.Exception.GetType().Name} ({e.Exception.Message}). Stacktrace has been copied to clipboard.";
+            Utils.ShowErrorDialog(message);
         }
     }
 }
