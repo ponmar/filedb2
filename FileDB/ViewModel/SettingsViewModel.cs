@@ -334,6 +334,12 @@ namespace FileDB.ViewModel
 
         public void CreateDatabase()
         {
+            if (!CreateDatabasePossible())
+            {
+                Utils.ShowErrorDialog("No database filename specified");
+                return;
+            }
+
             if (Utils.ShowConfirmDialog($"Create database {Database}?"))
             {
                 try
@@ -349,7 +355,7 @@ namespace FileDB.ViewModel
 
         public bool CreateDatabasePossible()
         {
-            return !File.Exists(Database);
+            return !string.IsNullOrEmpty(Database) && !File.Exists(Database);
         }
     }
 }
