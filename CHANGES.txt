@@ -1,3 +1,10 @@
+2.7:
+* Add search for files via a Google Maps search URL (it contains latitude and longitude)
+* Search via position includes files without position when they have a location in range
+* Crashfix for when trying to create a database without specifying a database filename
+* Use an exception handler that shows unhandled exception and copies the stacktrace to the clipboard
+* Rename some buttons
+
 2.6:
 * Add search for files with two selected persons (unique)
 * Add search for files with two selected persons with others (group)
