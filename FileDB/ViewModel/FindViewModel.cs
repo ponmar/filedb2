@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -17,10 +16,7 @@ using FileDBInterface.Model;
 using TextCopy;
 using FileDBInterface.DbAccess;
 using FileDB.Configuration;
-using Newtonsoft.Json;
-using System.Xml.Serialization;
 using FileDB.Export;
-using System.Xml;
 
 namespace FileDB.ViewModel
 {
@@ -1268,65 +1264,14 @@ namespace FileDB.ViewModel
 
             if (Utils.ShowConfirmDialog($"Export {SearchResult.Count} files to {ExportFilesDestinationDirectory}?"))
             {
-                int index = 1;
+                var exporter = new SearchResultExporter(ExportFilesDestinationDirectory);
                 try
                 {
-                    var files = new List<ExportedFile>();
-                    var persons = new List<PersonModel>();
-                    var locations = new List<LocationModel>();
-                    var tags = new List<TagModel>();
-
-                    foreach (var file in SearchResult.Files)
-                    {
-                        foreach (var person in model.DbAccess.GetPersonsFromFile(file.Id))
-                        {
-                            if (!persons.Any(x => x.Id == person.Id))
-                            {
-                                persons.Add(person);
-                            }
-                        }
-                        foreach (var location in model.DbAccess.GetLocationsFromFile(file.Id))
-                        {
-                            if (!locations.Any(x => x.Id == location.Id))
-                            {
-                                locations.Add(location);
-                            }
-                        }
-                        foreach (var tag in model.DbAccess.GetTagsFromFile(file.Id))
-                        {
-                            if (!tags.Any(x => x.Id == tag.Id))
-                            {
-                                tags.Add(tag);
-                            }
-                        }
-
-                        var sourcePath = model.FilesystemAccess.ToAbsolutePath(file.Path);
-                        var destFilename = $"{index}{Path.GetExtension(file.Path)}";
-                        var destPath = Path.Combine(ExportFilesDestinationDirectory, destFilename);
-                        File.Copy(sourcePath, destPath);
-                        index++;
-
-                        files.Add(new() { Id = file.Id, Path = destFilename, Description = file.Description, Datetime = file.Datetime, Position = file.Position, PersonIds = persons.Select(x => x.Id).ToList(), LocationIds = locations.Select(x => x.Id).ToList(), TagIds = tags.Select(x => x.Id).ToList()});
-                    }
-
-                    var exportedDataBaseFilename = Path.Combine(ExportFilesDestinationDirectory, $"{Utils.ApplicationName}Export");
-                    var exportedDataJsonFilename = $"{exportedDataBaseFilename}.json";
-                    var exportedDataXmlFilename = $"{exportedDataBaseFilename}.xml";
-
-                    var about = $"Exported with {Utils.ApplicationName} {ReleaseInformation.Version.Major}.{ReleaseInformation.Version.Minor}";
-                    var exportedData = new ExportedData() { About = about, CreationDate = DateTime.Now, Files = files, Persons = persons, Locations = locations, Tags = tags };
-
-                    var exportedDataJson = JsonConvert.SerializeObject(exportedData, Newtonsoft.Json.Formatting.Indented);
-                    File.WriteAllText(exportedDataJsonFilename, exportedDataJson);
-
-                    var xmlSerializer = new XmlSerializer(exportedData.GetType());
-                    using var xmlFileStream = new StreamWriter(exportedDataXmlFilename);
-                    using var xmlWriter = XmlWriter.Create(xmlFileStream, new XmlWriterSettings { Indent = true });
-                    xmlSerializer.Serialize(xmlWriter, exportedData);
+                    exporter.Export(SearchResult.Files);
                 }
                 catch (IOException e)
                 {
-                    Utils.ShowErrorDialog("File copy error: " + e.Message);
+                    Utils.ShowErrorDialog("Export error: " + e.Message);
                 }
             }
         }
