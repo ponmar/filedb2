@@ -12,10 +12,12 @@ namespace FileDB.Export
     public class SearchResultExporter
     {
         private readonly string destinationDirectory;
+        private readonly string header;
 
-        public SearchResultExporter(string destinationDirectory)
+        public SearchResultExporter(string destinationDirectory, string header)
         {
             this.destinationDirectory = destinationDirectory;
+            this.header = header;
         }
 
         public void Export(List<FilesModel> files)
@@ -79,7 +81,8 @@ namespace FileDB.Export
                 exportedFiles.Add(new ExportedFile()
                 {
                     Id = file.Id,
-                    Path = destFilename,
+                    ExportedPath = destFilename,
+                    OriginalPath = file.Path,
                     Description = file.Description,
                     Datetime = file.Datetime,
                     Position = file.Position,
@@ -91,7 +94,7 @@ namespace FileDB.Export
 
             return new ExportedData()
             {
-                Header = "My exported files", // TODO: set from input from user
+                Header = header,
                 About = $"Exported with {Utils.ApplicationName} {ReleaseInformation.Version.Major}.{ReleaseInformation.Version.Minor} {DateTime.Now:yyyy-MM-dd HH:mm}",
                 Files = exportedFiles,
                 Persons = persons,
@@ -192,7 +195,7 @@ img {
                     pictureText += $"<p>&#128278; {tagsStr}</p>";
                 }
 
-                var pictureHtml = pictureBase.Replace("%PATH%", file.Path).Replace("%PICTURETEXT%", pictureText);
+                var pictureHtml = pictureBase.Replace("%PATH%", file.ExportedPath).Replace("%PICTURETEXT%", pictureText);
                 content += pictureHtml;
 
                 index++;

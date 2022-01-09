@@ -381,6 +381,13 @@ namespace FileDB.ViewModel
         }
         private string exportFilesDestinationDirectory;
 
+        public string ExportFilesHeader
+        {
+            get => exportFilesHeader;
+            set => SetProperty(ref exportFilesHeader, value);
+        }
+        private string exportFilesHeader = $"{Utils.ApplicationName} Export";
+
         public ICommand ExportFileListCommand => exportFileListCommand ??= new CommandHandler(ExportFileList, () => HasNonEmptySearchResult);
         private ICommand exportFileListCommand;
 
@@ -1244,6 +1251,12 @@ namespace FileDB.ViewModel
 
         public void ExportFiles()
         {
+            if (string.IsNullOrEmpty(ExportFilesHeader))
+            {
+                Utils.ShowErrorDialog("No header specified");
+                return;
+            }
+
             if (string.IsNullOrEmpty(ExportFilesDestinationDirectory))
             {
                 Utils.ShowErrorDialog("No destination directory specified");
@@ -1264,7 +1277,7 @@ namespace FileDB.ViewModel
 
             if (Utils.ShowConfirmDialog($"Export {SearchResult.Count} files to {ExportFilesDestinationDirectory}?"))
             {
-                var exporter = new SearchResultExporter(ExportFilesDestinationDirectory);
+                var exporter = new SearchResultExporter(ExportFilesDestinationDirectory, ExportFilesHeader);
                 try
                 {
                     exporter.Export(SearchResult.Files);

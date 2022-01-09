@@ -222,16 +222,20 @@
                         <TabItem.Header>
                             <TextBlock Text="Export" Style="{StaticResource PageTabItemText}" />
                         </TabItem.Header>
-                        <StackPanel Orientation="Horizontal">
-                            <StackPanel Orientation="Vertical" Margin="5,5,30,5">
-                                <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding ExportFileListCommand}" VerticalAlignment="Center">Copy search result file list</Button>
-                            </StackPanel>
 
-                            <StackPanel Orientation="Horizontal" Margin="3">
-                                <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="Destination directory:" VerticalAlignment="Center"/>
-                                <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3 0 0 0" Width="100" VerticalAlignment="Center" Text="{Binding ExportFilesDestinationDirectory}" ToolTip="Copy files to destination directory"/>
-                                <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding ExportFilesCommand}" HorizontalAlignment="Left" VerticalAlignment="Center">Export...</Button>
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal" Margin="3" HorizontalAlignment="Right">
+                                    <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="Header (optional):" VerticalAlignment="Center"/>
+                                    <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3 0 0 0" Width="100" VerticalAlignment="Center" Text="{Binding ExportFilesHeader}" ToolTip="Copy files to destination directory"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal" Margin="3" HorizontalAlignment="Right">
+                                    <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="Destination directory:" VerticalAlignment="Center"/>
+                                    <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3 0 0 0" Width="100" VerticalAlignment="Center" Text="{Binding ExportFilesDestinationDirectory}" ToolTip="Copy files to destination directory"/>
+                                </StackPanel>
                             </StackPanel>
+                            <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding ExportFilesCommand}" HorizontalAlignment="Left" VerticalAlignment="Center">Export...</Button>
                         </StackPanel>
                     </TabItem>
                     <TabItem Style="{StaticResource PageTabItem}">
@@ -290,7 +294,10 @@
                         <TextBlock Style="{StaticResource PageInnerTextBlock}" Margin="0 3 0 0" HorizontalAlignment="Center" Text="{Binding CurrentFileToolTip}"/>
                     </StackPanel>
                     <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical">
-                        <Button Style="{StaticResource NormalButton}" Command="{Binding ClearSearchCommand}" Margin="5" Content="Clear" Width="50" HorizontalAlignment="Right"/>
+                        <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
+                            <Button Style="{StaticResource NormalButton}" Command="{Binding ExportFileListCommand}" ToolTip="Copy search result file list">Copy</Button>
+                            <Button Style="{StaticResource NormalButton}" Command="{Binding ClearSearchCommand}" Margin="5" Content="Clear" Width="50" HorizontalAlignment="Right"/>
+                        </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="5">
                             <TextBlock Style="{StaticResource PageInnerTextBlock}" VerticalAlignment="Center" Margin="20 3 7 3">Sort by:</TextBlock>
                             <ComboBox Width="125" ItemsSource="{Binding SortMethods}" DisplayMemberPath="Name" SelectedValuePath="Method" SelectedValue="{Binding SelectedSortMethod}" VerticalAlignment="Center"/>

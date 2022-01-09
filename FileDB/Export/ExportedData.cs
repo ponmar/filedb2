@@ -7,7 +7,8 @@ namespace FileDB.Export
     public class ExportedFile
     {
         public int Id { get; set; }
-        public string Path { get; set; }
+        public string ExportedPath { get; set; }
+        public string OriginalPath { get; set; }
         public string Description { get; set; }
         public string Datetime { get; set; }
         public string Position { get; set; }
