@@ -1,11 +1,8 @@
 ﻿using FileDBInterface.Model;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Xml;
-using System.Xml.Serialization;
 
 namespace FileDB.Export
 {
@@ -22,17 +19,17 @@ namespace FileDB.Export
 
         public void Export(List<FilesModel> files)
         {
-            var exportedData = GetExportedData(files);
+            var data = GetExportedData(files);
 
             var jsonPath = Path.Combine(destinationDirectory, "data.json");
             var xmlPath = Path.Combine(destinationDirectory, "data.xml");
             var htmlPath = Path.Combine(destinationDirectory, "index.html");
             var m3uPath = Path.Combine(destinationDirectory, "playlist.m3u");
 
-            WriteJson(exportedData, jsonPath);
-            WriteXml(exportedData, xmlPath);
-            WriteM3u(exportedData, m3uPath);
-            WriteHtml(exportedData, htmlPath);
+            new JsonExporter().Export(data, jsonPath);
+            new XmlExporter().Export(data, xmlPath);
+            new M3uExporter().Export(data, m3uPath);
+            new HtmlExporter().Export(data, htmlPath);
         }
 
         private ExportedData GetExportedData(List<FilesModel> files)
@@ -103,123 +100,6 @@ namespace FileDB.Export
                 Locations = locations,
                 Tags = tags
             };
-        }
-
-        private void WriteJson(ExportedData data, string filename)
-        {
-            var json = JsonConvert.SerializeObject(data, Newtonsoft.Json.Formatting.Indented);
-            File.WriteAllText(filename, json);
-        }
-
-        private void WriteXml(ExportedData data, string filename)
-        {
-            var xmlSerializer = new XmlSerializer(data.GetType());
-            using var xmlFileStream = new StreamWriter(filename);
-            using var xmlWriter = XmlWriter.Create(xmlFileStream, new XmlWriterSettings { Indent = true });
-            xmlSerializer.Serialize(xmlWriter, data);
-        }
-
-        private void WriteM3u(ExportedData data, string filename)
-        {
-            var m3uLinebreak = "\r\n";
-            int duration = 10; // Note: VLC ignore the duration information when showing images in a playlist
-            var content = $"#EXTM3U{m3uLinebreak}";
-            content += $"#PLAYLIST:{data.Header}{m3uLinebreak}";
-            foreach (var file in data.Files)
-            {
-                content += $"#EXTINF:{duration},{file.OriginalPath}{m3uLinebreak}";
-                content += $"{file.ExportedPath}{m3uLinebreak}";
-            }
-
-            File.WriteAllText(filename, content);
-        }
-
-        private void WriteHtml(ExportedData data, string filename)
-        {
-            var documentBase =
-@"<!DOCTYPE html>
-<html>
-<head>
-<title>%HEADER%</title>
-<style>
-img {
-  width: 100%;
-}
-.picture {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  border-radius: 10px;
-  background-color: lightgray;
-  padding: 10px;
-}
-</style>
-</head>
-<body>
-<h1>%HEADER%</h1>
-%CONTENT%
-<p>%ABOUT%</p>
-</body>
-</html>
-";
-
-            var pictureBase =
-@"<div class=""picture"">
-  %PICTURETEXT%
-  <a href=""%PATH%""><img src=""%PATH%"" alt=""%PATH%""></a>
-</div>
-";
-
-            string content = string.Empty;
-            int index = 1;
-            foreach (var file in data.Files)
-            {
-                var pictureDateText = string.Empty;
-                if (file.Datetime != null)
-                {
-                    pictureDateText = $"{file.Datetime}";
-                }
-
-                var pictureDescription = string.Empty;
-                if (file.Description != null)
-                {
-                    if (pictureDateText != string.Empty)
-                    {
-                        pictureDescription += ": ";
-                    }
-                    pictureDescription += $"{file.Description}";
-                }
-
-                var pictureText = $"<h2>[{index} / {data.Files.Count}] {pictureDateText}{pictureDescription}</h2>";
-
-                if (file.PersonIds.Count > 0)
-                {
-                    var persons = file.PersonIds.Select(x => data.Persons.First(y => y.Id == x));
-                    var personsStr = string.Join(", ", persons.Select(x => $"{x.Firstname} {x.Lastname}{Utils.GetPersonAgeInFileString(file.Datetime, x.DateOfBirth)}"));
-                    pictureText += $"<p>&#128578; {personsStr}</p>";
-                }
-
-                if (file.LocationIds.Count > 0)
-                {
-                    var locations = file.LocationIds.Select(x => data.Locations.First(y => y.Id == x));
-                    var locationsStr = string.Join(", ", locations.Select(x => x.Name));
-                    pictureText += $"<p>&#127968; {locationsStr}</p>";
-                }
-
-                if (file.TagIds.Count > 0)
-                {
-                    var tags = file.TagIds.Select(x => data.Tags.First(y => y.Id == x));
-                    var tagsStr = string.Join(", ", tags.Select(x => x.Name));
-                    pictureText += $"<p>&#128278; {tagsStr}</p>";
-                }
-
-                var pictureHtml = pictureBase.Replace("%PATH%", file.ExportedPath).Replace("%PICTURETEXT%", pictureText);
-                content += pictureHtml;
-
-                index++;
-            }
-
-            var html = documentBase.Replace("%HEADER%", data.Header).Replace("%ABOUT%", data.About).Replace("%CONTENT%", content);
-            File.WriteAllText(filename, html);
         }
     }
 }
