@@ -1,3 +1,8 @@
+2.8:
+* Search result files and meta-data can be exported to HTML, JSON, XML and M3u file formats.
+* Only try to parse Exif date and position from JPEG files to avoid problems with some broken files
+* Move button for copying current search file list from export tab to file browser
+
 2.7:
 * Add search for files via a Google Maps search URL (it contains latitude and longitude)
 * Search via position includes files without position when they have a location in range
