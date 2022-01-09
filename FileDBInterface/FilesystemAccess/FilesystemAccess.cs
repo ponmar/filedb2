@@ -119,19 +119,37 @@ namespace FileDBInterface.FilesystemAccess
         {
             var result = new FileMetadata() { AbsolutePath = path };
 
-            ParseFileExif(path, out var dateTaken, out var location);
-
-            if (dateTaken != null)
+            if (FileTypeSupportsExif(path))
             {
-                result.Datetime = DatabaseParsing.DateTakenToFilesDatetime(dateTaken.Value);
+                ParseFileExif(path, out var dateTaken, out var location);
+
+                if (dateTaken != null)
+                {
+                    result.Datetime = DatabaseParsing.DateTakenToFilesDatetime(dateTaken.Value);
+                }
+
+                if (location != null)
+                {
+                    result.Position = DatabaseParsing.ToFilesPosition(location.Latitude, location.Longitude);
+                }
             }
-            else
+
+            if (result.Datetime == null)
             {
                 result.Datetime = DatabaseParsing.PathToFilesDatetime(path);
             }
 
-            result.Position = location != null ? DatabaseParsing.ToFilesPosition(location.Latitude, location.Longitude) : null;
             return result;
+        }
+
+        private bool FileTypeSupportsExif(string path)
+        {
+            var fileExtension = Path.GetExtension(path);
+            return fileExtension switch
+            {
+                ".jpg" or ".jpeg" or ".JPG" or ".JPEG" => true,
+                _ => false,
+            };
         }
 
         private void ParseFileExif(string path, out DateTime? dateTaken, out GeoLocation location)
