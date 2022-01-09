@@ -27,9 +27,11 @@ namespace FileDB.Export
             var jsonPath = Path.Combine(destinationDirectory, "data.json");
             var xmlPath = Path.Combine(destinationDirectory, "data.xml");
             var htmlPath = Path.Combine(destinationDirectory, "index.html");
+            var m3uPath = Path.Combine(destinationDirectory, "playlist.m3u");
 
             WriteJson(exportedData, jsonPath);
             WriteXml(exportedData, xmlPath);
+            WriteM3u(exportedData, m3uPath);
             WriteHtml(exportedData, htmlPath);
         }
 
@@ -115,6 +117,21 @@ namespace FileDB.Export
             using var xmlFileStream = new StreamWriter(filename);
             using var xmlWriter = XmlWriter.Create(xmlFileStream, new XmlWriterSettings { Indent = true });
             xmlSerializer.Serialize(xmlWriter, data);
+        }
+
+        private void WriteM3u(ExportedData data, string filename)
+        {
+            var m3uLinebreak = "\r\n";
+            int duration = 10; // Note: VLC ignore the duration information when showing images in a playlist
+            var content = $"#EXTM3U{m3uLinebreak}";
+            content += $"#PLAYLIST:{data.Header}{m3uLinebreak}";
+            foreach (var file in data.Files)
+            {
+                content += $"#EXTINF:{duration},{file.OriginalPath}{m3uLinebreak}";
+                content += $"{file.ExportedPath}{m3uLinebreak}";
+            }
+
+            File.WriteAllText(filename, content);
         }
 
         private void WriteHtml(ExportedData data, string filename)
