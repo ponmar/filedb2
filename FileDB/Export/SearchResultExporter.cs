@@ -22,11 +22,13 @@ namespace FileDB.Export
         {
             var exportedData = GetExportedData(files);
 
-            var baseFilename = Path.Combine(destinationDirectory, $"{Utils.ApplicationName}Export");
+            var jsonPath = Path.Combine(destinationDirectory, "data.json");
+            var xmlPath = Path.Combine(destinationDirectory, "data.xml");
+            var htmlPath = Path.Combine(destinationDirectory, "index.html");
 
-            WriteJson(exportedData, $"{baseFilename}.json");
-            WriteXml(exportedData, $"{baseFilename}.xml");
-            WriteHtml(exportedData, $"{baseFilename}.html");
+            WriteJson(exportedData, jsonPath);
+            WriteXml(exportedData, xmlPath);
+            WriteHtml(exportedData, htmlPath);
         }
 
         private ExportedData GetExportedData(List<FilesModel> files)
@@ -41,21 +43,26 @@ namespace FileDB.Export
             int index = 1;
             foreach (var file in files)
             {
-                foreach (var person in model.DbAccess.GetPersonsFromFile(file.Id))
+                var filePersons = model.DbAccess.GetPersonsFromFile(file.Id);
+                foreach (var person in filePersons)
                 {
                     if (!persons.Any(x => x.Id == person.Id))
                     {
                         persons.Add(person);
                     }
                 }
-                foreach (var location in model.DbAccess.GetLocationsFromFile(file.Id))
+
+                var fileLocations = model.DbAccess.GetLocationsFromFile(file.Id);
+                foreach (var location in fileLocations)
                 {
                     if (!locations.Any(x => x.Id == location.Id))
                     {
                         locations.Add(location);
                     }
                 }
-                foreach (var tag in model.DbAccess.GetTagsFromFile(file.Id))
+
+                var fileTags = model.DbAccess.GetTagsFromFile(file.Id);
+                foreach (var tag in fileTags)
                 {
                     if (!tags.Any(x => x.Id == tag.Id))
                     {
@@ -69,7 +76,17 @@ namespace FileDB.Export
                 File.Copy(sourcePath, destPath);
                 index++;
 
-                exportedFiles.Add(new() { Id = file.Id, Path = destFilename, Description = file.Description, Datetime = file.Datetime, Position = file.Position, PersonIds = persons.Select(x => x.Id).ToList(), LocationIds = locations.Select(x => x.Id).ToList(), TagIds = tags.Select(x => x.Id).ToList() });
+                exportedFiles.Add(new ExportedFile()
+                {
+                    Id = file.Id,
+                    Path = destFilename,
+                    Description = file.Description,
+                    Datetime = file.Datetime,
+                    Position = file.Position,
+                    PersonIds = filePersons.Select(x => x.Id).ToList(),
+                    LocationIds = fileLocations.Select(x => x.Id).ToList(),
+                    TagIds = fileTags.Select(x => x.Id).ToList()
+                });
             }
 
             return new ExportedData()
@@ -111,6 +128,9 @@ img {
 .picture {
   margin-top: 20px;
   margin-bottom: 20px;
+  border-radius: 10px;
+  background-color: lightgray;
+  padding: 10px;
 }
 </style>
 </head>
@@ -124,15 +144,58 @@ img {
 
             var pictureBase =
 @"<div class=""picture"">
+  %PICTURETEXT%
   <a href=""%PATH%""><img src=""%PATH%"" alt=""%PATH%""></a>
 </div>
 ";
 
             string content = string.Empty;
+            int index = 1;
             foreach (var file in data.Files)
             {
-                var pictureHtml = pictureBase.Replace("%PATH%", file.Path);
+                var pictureDateText = string.Empty;
+                if (file.Datetime != null)
+                {
+                    pictureDateText = $"{file.Datetime}";
+                }
+
+                var pictureDescription = string.Empty;
+                if (file.Description != null)
+                {
+                    if (pictureDateText != string.Empty)
+                    {
+                        pictureDescription += ": ";
+                    }
+                    pictureDescription += $"{file.Description}";
+                }
+
+                var pictureText = $"<h2>[{index} / {data.Files.Count}] {pictureDateText}{pictureDescription}</h2>";
+
+                if (file.PersonIds.Count > 0)
+                {
+                    var persons = file.PersonIds.Select(x => data.Persons.First(y => y.Id == x));
+                    var personsStr = string.Join(", ", persons.Select(x => $"{x.Firstname} {x.Lastname}{Utils.GetPersonAgeInFileString(file.Datetime, x.DateOfBirth)}"));
+                    pictureText += $"<p>&#128578; {personsStr}</p>";
+                }
+
+                if (file.LocationIds.Count > 0)
+                {
+                    var locations = file.LocationIds.Select(x => data.Locations.First(y => y.Id == x));
+                    var locationsStr = string.Join(", ", locations.Select(x => x.Name));
+                    pictureText += $"<p>&#127968; {locationsStr}</p>";
+                }
+
+                if (file.TagIds.Count > 0)
+                {
+                    var tags = file.TagIds.Select(x => data.Tags.First(y => y.Id == x));
+                    var tagsStr = string.Join(", ", tags.Select(x => x.Name));
+                    pictureText += $"<p>&#128278; {tagsStr}</p>";
+                }
+
+                var pictureHtml = pictureBase.Replace("%PATH%", file.Path).Replace("%PICTURETEXT%", pictureText);
                 content += pictureHtml;
+
+                index++;
             }
 
             var html = documentBase.Replace("%HEADER%", data.Header).Replace("%ABOUT%", data.About).Replace("%CONTENT%", content);

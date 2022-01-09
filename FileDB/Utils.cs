@@ -6,6 +6,7 @@ using System.Windows;
 using FileDB.Configuration;
 using FileDB.Extensions;
 using FileDB.Sorters;
+using FileDBInterface.DbAccess;
 using FileDBInterface.Model;
 using FluentValidation.Results;
 
@@ -116,6 +117,24 @@ namespace FileDB
                 modes.Add(new WindowModeDescription(mode));
             }
             return modes;
+        }
+
+        public static string GetPersonAgeInFileString(string fileDatetimeStr, string personDateOfBirthStr)
+        {
+            DateTime? fileDatetime = fileDatetimeStr == null ? null : DatabaseParsing.ParseFilesDatetime(fileDatetimeStr);
+            if (fileDatetime == null)
+            {
+                return string.Empty;
+            }
+
+            DateTime? personDateOfBirth = personDateOfBirthStr == null ? null : DatabaseParsing.ParsePersonsDateOfBirth(personDateOfBirthStr);
+            if (personDateOfBirth == null)
+            {
+                return string.Empty;
+            }
+
+            var age = DatabaseUtils.GetYearsAgo(fileDatetime.Value, personDateOfBirth.Value);
+            return $" ({age})";
         }
     }
 }

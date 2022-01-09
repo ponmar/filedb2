@@ -1394,22 +1394,8 @@ namespace FileDB.ViewModel
         private string GetFilePersonsString(FilesModel selection)
         {
             var persons = model.DbAccess.GetPersonsFromFile(selection.Id);
-            var personStrings = persons.Select(p => $"{p.Firstname} {p.Lastname}{GetPersonAgeInFileString(selection.Datetime, p.DateOfBirth)}");
+            var personStrings = persons.Select(p => $"{p.Firstname} {p.Lastname}{Utils.GetPersonAgeInFileString(selection.Datetime, p.DateOfBirth)}");
             return string.Join("\n", personStrings);
-        }
-
-        private string GetPersonAgeInFileString(string fileDatetimeStr, string personDateOfBirthStr)
-        {
-            DateTime? fileDatetime = fileDatetimeStr == null ? null : DatabaseParsing.ParseFilesDatetime(fileDatetimeStr);
-            if (fileDatetime == null)
-                return string.Empty;
-
-            DateTime? personDateOfBirth = personDateOfBirthStr == null ? null : DatabaseParsing.ParsePersonsDateOfBirth(personDateOfBirthStr);
-            if (personDateOfBirth == null)
-                return string.Empty;
-
-            var age = DatabaseUtils.GetYearsAgo(fileDatetime.Value, personDateOfBirth.Value);
-            return $" ({age})";
         }
 
         private string GetFileLocationsString(int fileId)
