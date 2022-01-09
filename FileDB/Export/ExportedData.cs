@@ -18,8 +18,8 @@ namespace FileDB.Export
 
     public class ExportedData
     {
+        public string Header { get; set; }
         public string About { get; set; }
-        public DateTime CreationDate { get; set; }
         public List<ExportedFile> Files { get; set; }
         public List<PersonModel> Persons { get; set; }
         public List<LocationModel> Locations { get; set; }

@@ -3,11 +3,9 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Windows.Input;
-using FileDBInterface;
 using FileDBInterface.DbAccess;
 using FileDBInterface.Exceptions;
 using FileDBInterface.Model;
-using Newtonsoft.Json;
 using TextCopy;
 
 namespace FileDB.ViewModel

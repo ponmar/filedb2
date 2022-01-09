@@ -23,11 +23,10 @@ namespace FileDB.Export
             var exportedData = GetExportedData(files);
 
             var baseFilename = Path.Combine(destinationDirectory, $"{Utils.ApplicationName}Export");
-            var jsonFilename = $"{baseFilename}.json";
-            var xmlFilename = $"{baseFilename}.xml";
 
-            WriteJson(exportedData, jsonFilename);
-            WriteXml(exportedData, xmlFilename);
+            WriteJson(exportedData, $"{baseFilename}.json");
+            WriteXml(exportedData, $"{baseFilename}.xml");
+            WriteHtml(exportedData, $"{baseFilename}.html");
         }
 
         private ExportedData GetExportedData(List<FilesModel> files)
@@ -73,14 +72,21 @@ namespace FileDB.Export
                 exportedFiles.Add(new() { Id = file.Id, Path = destFilename, Description = file.Description, Datetime = file.Datetime, Position = file.Position, PersonIds = persons.Select(x => x.Id).ToList(), LocationIds = locations.Select(x => x.Id).ToList(), TagIds = tags.Select(x => x.Id).ToList() });
             }
 
-            var about = $"Exported with {Utils.ApplicationName} {ReleaseInformation.Version.Major}.{ReleaseInformation.Version.Minor}";
-            return new ExportedData() { About = about, CreationDate = DateTime.Now, Files = exportedFiles, Persons = persons, Locations = locations, Tags = tags };
+            return new ExportedData()
+            {
+                Header = "My exported files", // TODO: set from input from user
+                About = $"Exported with {Utils.ApplicationName} {ReleaseInformation.Version.Major}.{ReleaseInformation.Version.Minor} {DateTime.Now:yyyy-MM-dd HH:mm}",
+                Files = exportedFiles,
+                Persons = persons,
+                Locations = locations,
+                Tags = tags
+            };
         }
 
         private void WriteJson(ExportedData data, string filename)
         {
-            var exportedDataJson = JsonConvert.SerializeObject(data, Newtonsoft.Json.Formatting.Indented);
-            File.WriteAllText(filename, exportedDataJson);
+            var json = JsonConvert.SerializeObject(data, Newtonsoft.Json.Formatting.Indented);
+            File.WriteAllText(filename, json);
         }
 
         private void WriteXml(ExportedData data, string filename)
@@ -89,6 +95,48 @@ namespace FileDB.Export
             using var xmlFileStream = new StreamWriter(filename);
             using var xmlWriter = XmlWriter.Create(xmlFileStream, new XmlWriterSettings { Indent = true });
             xmlSerializer.Serialize(xmlWriter, data);
+        }
+
+        private void WriteHtml(ExportedData data, string filename)
+        {
+            var documentBase =
+@"<!DOCTYPE html>
+<html>
+<head>
+<title>%HEADER%</title>
+<style>
+img {
+  width: 100%;
+}
+.picture {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+</style>
+</head>
+<body>
+<h1>%HEADER%</h1>
+%CONTENT%
+<p>%ABOUT%</p>
+</body>
+</html>
+";
+
+            var pictureBase =
+@"<div class=""picture"">
+  <a href=""%PATH%""><img src=""%PATH%"" alt=""%PATH%""></a>
+</div>
+";
+
+            string content = string.Empty;
+            foreach (var file in data.Files)
+            {
+                var pictureHtml = pictureBase.Replace("%PATH%", file.Path);
+                content += pictureHtml;
+            }
+
+            var html = documentBase.Replace("%HEADER%", data.Header).Replace("%ABOUT%", data.About).Replace("%CONTENT%", content);
+            File.WriteAllText(filename, html);
         }
     }
 }
