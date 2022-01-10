@@ -13,15 +13,18 @@ namespace FileDB.Export
 <head>
 <title>%HEADER%</title>
 <style>
-img {
-  width: 100%;
-}
-.picture {
+.file {
   margin-top: 20px;
   margin-bottom: 20px;
   border-radius: 10px;
   background-color: lightgray;
   padding: 10px;
+}
+.picture {
+  width: 100%;
+  height: 800px;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 .index {
   border-radius: 5px;
@@ -39,9 +42,9 @@ img {
 ";
 
             var pictureBase =
-@"<div class=""picture"">
+@"<div class=""file"">
   %PICTURETEXT%
-  <a href=""%PATH%""><img src=""%PATH%"" alt=""%PATH%""></a>
+  <a href=""%PATH%""><div class=""picture"" style=""background-image: url(%PATH%);""></div></a>
 </div>
 ";
 
