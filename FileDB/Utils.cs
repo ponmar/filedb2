@@ -77,7 +77,12 @@ namespace FileDB
 
         public static string CreateFileList(List<FilesModel> files)
         {
-            return files.Count > 0 ? string.Join(";", files.Select(x => x.Id)) : string.Empty;
+            return CreateFileList(files.Select(x => x.Id));
+        }
+
+        public static string CreateFileList(IEnumerable<int> fileIds)
+        {
+            return string.Join(";", fileIds);
         }
 
         public static List<int> CreateFileIds(string fileList)

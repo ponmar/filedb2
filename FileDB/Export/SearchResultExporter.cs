@@ -1,4 +1,5 @@
-﻿using FileDBInterface.Model;
+﻿using FileDBInterface.DbAccess;
+using FileDBInterface.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -79,7 +80,7 @@ namespace FileDB.Export
                     ExportedPath = $"files/{index}{Path.GetExtension(file.Path)}",
                     OriginalPath = file.Path,
                     Description = file.Description,
-                    Datetime = file.Datetime,
+                    Datetime = CreateExportedFileDatetime(file.Datetime),
                     Position = file.Position,
                     PersonIds = filePersons.Select(x => x.Id).ToList(),
                     LocationIds = fileLocations.Select(x => x.Id).ToList(),
@@ -93,11 +94,24 @@ namespace FileDB.Export
             {
                 Header = header,
                 About = $"Exported with {Utils.ApplicationName} {ReleaseInformation.Version.Major}.{ReleaseInformation.Version.Minor} {DateTime.Now:yyyy-MM-dd HH:mm}",
+                FileList = Utils.CreateFileList(files.Select(x => x.Id)),
                 Files = exportedFiles,
                 Persons = persons,
                 Locations = locations,
                 Tags = tags
             };
+        }
+
+        public string CreateExportedFileDatetime(string fileDatetime)
+        {
+            var datetime = DatabaseParsing.ParseFilesDatetime(fileDatetime);
+            if (datetime == null)
+            {
+                return null;
+            }
+
+            // Note: when no time is available the string is used to avoid including time 00:00
+            return fileDatetime.Contains("T") ? datetime.Value.ToString("yyyy-MM-dd HH:mm") : fileDatetime;
         }
     }
 }

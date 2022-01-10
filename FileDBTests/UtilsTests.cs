@@ -27,6 +27,13 @@ namespace FileDBTests
         }
 
         [TestMethod]
+        public void CreateFileList_FromIds()
+        {
+            IEnumerable<int> files = new List<int>() { 1, 2, 3 };
+            Assert.AreEqual("1;2;3", Utils.CreateFileList(files));
+        }
+
+        [TestMethod]
         public void CreateFileIds_EmptyString_ReturnsEmptyList()
         {
             Assert.AreEqual(0, Utils.CreateFileIds(null).Count);
