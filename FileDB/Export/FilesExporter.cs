@@ -4,7 +4,7 @@ namespace FileDB.Export
 {
     public class FilesExporter : IExporter
     {
-        public void Export(ExportedData data, string path)
+        public void Export(DataFileFormat data, string path)
         {
             var model = Model.Model.Instance;
             foreach (var file in data.Files)

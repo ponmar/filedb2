@@ -33,7 +33,7 @@ namespace FileDB.Export
             new HtmlExporter().Export(data, htmlPath);
         }
 
-        private ExportedData GetExportedData(List<FilesModel> files)
+        private DataFileFormat GetExportedData(List<FilesModel> files)
         {
             var model = Model.Model.Instance;
 
@@ -88,7 +88,7 @@ namespace FileDB.Export
                 index++;
             }
 
-            return new ExportedData()
+            return new DataFileFormat()
             {
                 Header = header,
                 About = $"Exported with {Utils.ApplicationName} {ReleaseInformation.Version.Major}.{ReleaseInformation.Version.Minor} {DateTime.Now:yyyy-MM-dd HH:mm}",

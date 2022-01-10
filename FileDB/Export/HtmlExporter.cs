@@ -5,7 +5,7 @@ namespace FileDB.Export
 {
     public class HtmlExporter : IExporter
     {
-        public void Export(ExportedData data, string filename)
+        public void Export(DataFileFormat data, string filename)
         {
             var documentBase =
 @"<!DOCTYPE html>
@@ -22,6 +22,11 @@ img {
   border-radius: 10px;
   background-color: lightgray;
   padding: 10px;
+}
+.index {
+  border-radius: 5px;
+  background-color: gray;
+  padding: 3px;
 }
 </style>
 </head>
@@ -60,7 +65,7 @@ img {
                     pictureDescription += $"{file.Description}";
                 }
 
-                var pictureText = $"<h2>[{index} / {data.Files.Count}] {pictureDateText}{pictureDescription}</h2>";
+                var pictureText = $@"<h2><span class=""index"">{index} / {data.Files.Count}</span> {pictureDateText}{pictureDescription}</h2>";
 
                 if (file.PersonIds.Count > 0)
                 {

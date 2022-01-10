@@ -2,6 +2,6 @@
 {
     public interface IExporter
     {
-        void Export(ExportedData data, string path);
+        void Export(DataFileFormat data, string path);
     }
 }

@@ -1,5 +1,4 @@
 ﻿using FileDBInterface.Model;
-using System;
 using System.Collections.Generic;
 
 namespace FileDB.Export
@@ -17,7 +16,7 @@ namespace FileDB.Export
         public List<int> TagIds { get; set; }
     }
 
-    public class ExportedData
+    public class DataFileFormat
     {
         public string Header { get; set; }
         public string About { get; set; }

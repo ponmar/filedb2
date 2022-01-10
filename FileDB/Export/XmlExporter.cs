@@ -6,7 +6,7 @@ namespace FileDB.Export
 {
     public class XmlExporter : IExporter
     {
-        public void Export(ExportedData data, string filename)
+        public void Export(DataFileFormat data, string filename)
         {
             var xmlSerializer = new XmlSerializer(data.GetType());
             using var xmlFileStream = new StreamWriter(filename);

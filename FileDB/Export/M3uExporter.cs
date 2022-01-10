@@ -4,7 +4,7 @@ namespace FileDB.Export
 {
     public class M3uExporter : IExporter
     {
-        public void Export(ExportedData data, string filename)
+        public void Export(DataFileFormat data, string filename)
         {
             var m3uLinebreak = "\r\n";
             int duration = 10; // Note: VLC ignore the duration information when showing images in a playlist
