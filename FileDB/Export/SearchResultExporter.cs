@@ -80,7 +80,7 @@ namespace FileDB.Export
                     ExportedPath = $"files/{index}{Path.GetExtension(file.Path)}",
                     OriginalPath = file.Path,
                     Description = file.Description,
-                    Datetime = CreateExportedFileDatetime(file.Datetime),
+                    Datetime = file.Datetime,
                     Position = file.Position,
                     PersonIds = filePersons.Select(x => x.Id).ToList(),
                     LocationIds = fileLocations.Select(x => x.Id).ToList(),
@@ -100,18 +100,6 @@ namespace FileDB.Export
                 Locations = locations,
                 Tags = tags
             };
-        }
-
-        public string CreateExportedFileDatetime(string fileDatetime)
-        {
-            var datetime = DatabaseParsing.ParseFilesDatetime(fileDatetime);
-            if (datetime == null)
-            {
-                return null;
-            }
-
-            // Note: when no time is available the string is used to avoid including time 00:00
-            return fileDatetime.Contains("T") ? datetime.Value.ToString("yyyy-MM-dd HH:mm") : fileDatetime;
         }
     }
 }

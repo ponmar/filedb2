@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using FileDBInterface.DbAccess;
+using System.IO;
 using System.Linq;
 
 namespace FileDB.Export
@@ -55,7 +56,7 @@ namespace FileDB.Export
                 var pictureDateText = string.Empty;
                 if (file.Datetime != null)
                 {
-                    pictureDateText = $"{file.Datetime}";
+                    pictureDateText = $"{CreateExportedFileDatetime(file.Datetime)}";
                 }
 
                 var pictureDescription = string.Empty;
@@ -99,6 +100,18 @@ namespace FileDB.Export
 
             var html = documentBase.Replace("%HEADER%", data.Header).Replace("%ABOUT%", data.About).Replace("%CONTENT%", content);
             File.WriteAllText(filename, html);
+        }
+
+        private string CreateExportedFileDatetime(string fileDatetime)
+        {
+            var datetime = DatabaseParsing.ParseFilesDatetime(fileDatetime);
+            if (datetime == null)
+            {
+                return null;
+            }
+
+            // Note: when no time is available the string is used to avoid including time 00:00
+            return fileDatetime.Contains("T") ? datetime.Value.ToString("yyyy-MM-dd HH:mm") : fileDatetime;
         }
     }
 }
