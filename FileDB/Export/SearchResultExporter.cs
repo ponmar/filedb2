@@ -26,6 +26,7 @@ namespace FileDB.Export
             var htmlPath = Path.Combine(destinationDirectory, "index.html");
             var m3uPath = Path.Combine(destinationDirectory, "playlist.m3u");
 
+            new FilesExporter().Export(data, destinationDirectory);
             new JsonExporter().Export(data, jsonPath);
             new XmlExporter().Export(data, xmlPath);
             new M3uExporter().Export(data, m3uPath);
@@ -71,16 +72,10 @@ namespace FileDB.Export
                     }
                 }
 
-                var sourcePath = model.FilesystemAccess.ToAbsolutePath(file.Path);
-                var destFilename = $"{index}{Path.GetExtension(file.Path)}";
-                var destPath = Path.Combine(destinationDirectory, destFilename);
-                File.Copy(sourcePath, destPath);
-                index++;
-
                 exportedFiles.Add(new ExportedFile()
                 {
                     Id = file.Id,
-                    ExportedPath = destFilename,
+                    ExportedPath = $"files/{index}{Path.GetExtension(file.Path)}",
                     OriginalPath = file.Path,
                     Description = file.Description,
                     Datetime = file.Datetime,
@@ -89,6 +84,8 @@ namespace FileDB.Export
                     LocationIds = fileLocations.Select(x => x.Id).ToList(),
                     TagIds = fileTags.Select(x => x.Id).ToList()
                 });
+
+                index++;
             }
 
             return new ExportedData()
