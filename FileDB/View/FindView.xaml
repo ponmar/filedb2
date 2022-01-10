@@ -227,12 +227,12 @@
                             <StackPanel Orientation="Vertical">
                                 <StackPanel Orientation="Horizontal" Margin="3" HorizontalAlignment="Right">
                                     <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="Header (optional):" VerticalAlignment="Center"/>
-                                    <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3 0 0 0" Width="100" VerticalAlignment="Center" Text="{Binding ExportFilesHeader}" ToolTip="Copy files to destination directory"/>
+                                    <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3 0 0 0" Width="200" VerticalAlignment="Center" Text="{Binding ExportFilesHeader}" ToolTip="Copy files to destination directory"/>
                                 </StackPanel>
 
                                 <StackPanel Orientation="Horizontal" Margin="3" HorizontalAlignment="Right">
                                     <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="Destination directory:" VerticalAlignment="Center"/>
-                                    <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3 0 0 0" Width="100" VerticalAlignment="Center" Text="{Binding ExportFilesDestinationDirectory}" ToolTip="Copy files to destination directory"/>
+                                    <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3 0 0 0" Width="200" VerticalAlignment="Center" Text="{Binding ExportFilesDestinationDirectory}" ToolTip="Copy files to destination directory"/>
                                 </StackPanel>
                             </StackPanel>
                             <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding ExportFilesCommand}" HorizontalAlignment="Left" VerticalAlignment="Center">Export...</Button>
