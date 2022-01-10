@@ -27,6 +27,7 @@ namespace FileDB.Export
             var m3uPath = Path.Combine(destinationDirectory, "playlist.m3u");
 
             new FilesExporter().Export(data, destinationDirectory);
+            new FilesWithDataExporter().Export(data, destinationDirectory);
             new JsonExporter().Export(data, jsonPath);
             new XmlExporter().Export(data, xmlPath);
             new M3uExporter().Export(data, m3uPath);
