@@ -38,6 +38,7 @@ namespace FileDB.Export
 <h1>%HEADER%</h1>
 %CONTENT%
 <p>%ABOUT%</p>
+<p>The %APPLICATION_NAME% application can be downloaded <a href=""%APPLICATION_DOWNLOAD_URL%"">here</a>.</p>
 </body>
 </html>
 ";
@@ -98,7 +99,13 @@ namespace FileDB.Export
                 index++;
             }
 
-            var html = documentBase.Replace("%HEADER%", data.Header).Replace("%ABOUT%", data.About).Replace("%CONTENT%", content);
+            var html = documentBase
+                .Replace("%HEADER%", data.Header)
+                .Replace("%ABOUT%", data.About)
+                .Replace("%CONTENT%", content)
+                .Replace("%APPLICATION_DOWNLOAD_URL%", data.ApplicationDownloadUrl)
+                .Replace("%APPLICATION_NAME%", Utils.ApplicationName);
+
             File.WriteAllText(filename, html);
         }
 
@@ -111,7 +118,7 @@ namespace FileDB.Export
             }
 
             // Note: when no time is available the string is used to avoid including time 00:00
-            return fileDatetime.Contains("T") ? datetime.Value.ToString("yyyy-MM-dd HH:mm") : fileDatetime;
+            return fileDatetime.Contains('T') ? datetime.Value.ToString("yyyy-MM-dd HH:mm") : fileDatetime;
         }
     }
 }

@@ -93,12 +93,13 @@ namespace FileDB.Export
             return new DataFileFormat()
             {
                 Header = header,
-                About = $"Exported with {Utils.ApplicationName} {ReleaseInformation.Version.Major}.{ReleaseInformation.Version.Minor} {DateTime.Now:yyyy-MM-dd HH:mm}",
+                About = $"Exported with {Utils.ApplicationName} version {ReleaseInformation.Version.Major}.{ReleaseInformation.Version.Minor} at {DateTime.Now:yyyy-MM-dd HH:mm}.",
                 FileList = Utils.CreateFileList(files.Select(x => x.Id)),
                 Files = exportedFiles,
                 Persons = persons,
                 Locations = locations,
-                Tags = tags
+                Tags = tags,
+                ApplicationDownloadUrl = ReleaseInformation.ApplicationDownloadUrl
             };
         }
     }

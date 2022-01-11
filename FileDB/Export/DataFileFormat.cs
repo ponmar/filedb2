@@ -25,5 +25,6 @@ namespace FileDB.Export
         public List<PersonModel> Persons { get; set; }
         public List<LocationModel> Locations { get; set; }
         public List<TagModel> Tags { get; set; }
+        public string ApplicationDownloadUrl { get; set; }
     }
 }
