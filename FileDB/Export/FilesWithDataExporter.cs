@@ -113,10 +113,8 @@ namespace FileDB.Export
             using var headingFont = new Font("Arial", 18, FontStyle.Bold);
             using var font = new Font("Arial", 18);
 
-            var rectMargin = 10;
             var rectPadding = 20;
-
-            var bgRect = new Rectangle(rectMargin, rectMargin, 2 * rectPadding, 2 * rectPadding);
+            var bgRect = new Rectangle(10, 10, 2 * rectPadding, 2 * rectPadding);
 
             int emptyLineHeight = 15;
             int lineHeight = 0;
@@ -125,9 +123,9 @@ namespace FileDB.Export
                 if (textLine.Text != string.Empty)
                 {
                     var size = graphics.MeasureString(textLine.Text, textLine.Type == TextType.Normal ? font : headingFont);
-                    if (size.Width + rectPadding > bgRect.Width)
+                    if (size.Width + 2 * rectPadding > bgRect.Width)
                     {
-                        bgRect.Width = (int)size.Width + rectPadding;
+                        bgRect.Width = (int)size.Width + 2 * rectPadding;
                     }
                     bgRect.Height += (int)size.Height;
                     lineHeight = (int)size.Height;
