@@ -50,7 +50,6 @@ namespace FileDB.Export
             {
                 pictureDateText = $"{HtmlExporter.CreateExportedFileDatetime(file.Datetime)}";
             }
-
             var pictureDescription = string.Empty;
             if (file.Description != null)
             {
@@ -60,7 +59,6 @@ namespace FileDB.Export
                 }
                 pictureDescription += $"{file.Description}";
             }
-
             textLines.Add(new TextLine() { Text = $@"{pictureDateText}{pictureDescription}", Type = TextType.Heading });
 
             if (file.PersonIds.Count > 0)
@@ -68,7 +66,8 @@ namespace FileDB.Export
                 textLines.Add(new());
                 textLines.Add(new TextLine() { Text = "Persons:", Type = TextType.Heading });
                 var persons = file.PersonIds.Select(x => data.Persons.First(y => y.Id == x));
-                var personStrings = persons.Select(x => $"{x.Firstname} {x.Lastname}{Utils.GetPersonAgeInFileString(file.Datetime, x.DateOfBirth)}");
+                var personStrings = persons.Select(x => $"{x.Firstname} {x.Lastname}{Utils.GetPersonAgeInFileString(file.Datetime, x.DateOfBirth)}").ToList();
+                personStrings.Sort();
                 textLines.AddRange(personStrings.Select(x => new TextLine() { Text = x }));
             }
 
@@ -77,7 +76,8 @@ namespace FileDB.Export
                 textLines.Add(new());
                 textLines.Add(new TextLine() { Text = "Locations:", Type = TextType.Heading });
                 var locations = file.LocationIds.Select(x => data.Locations.First(y => y.Id == x));
-                var locationStrings = locations.Select(x => x.Name);
+                var locationStrings = locations.Select(x => x.Name).ToList();
+                locationStrings.Sort();
                 textLines.AddRange(locationStrings.Select(x => new TextLine() { Text = x }));
             }
 
@@ -86,7 +86,8 @@ namespace FileDB.Export
                 textLines.Add(new());
                 textLines.Add(new TextLine() { Text = "Tags:", Type = TextType.Heading });
                 var tags = file.TagIds.Select(x => data.Tags.First(y => y.Id == x));
-                var tagStrings = tags.Select(x => x.Name);
+                var tagStrings = tags.Select(x => x.Name).ToList();
+                tagStrings.Sort();
                 textLines.AddRange(tagStrings.Select(x => new TextLine() { Text = x }));
             }
 

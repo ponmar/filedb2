@@ -75,21 +75,27 @@ namespace FileDB.Export
                 if (file.PersonIds.Count > 0)
                 {
                     var persons = file.PersonIds.Select(x => data.Persons.First(y => y.Id == x));
-                    var personsStr = string.Join(", ", persons.Select(x => $"{x.Firstname} {x.Lastname}{Utils.GetPersonAgeInFileString(file.Datetime, x.DateOfBirth)}"));
+                    var personStrings = persons.Select(x => $"{x.Firstname} {x.Lastname}{Utils.GetPersonAgeInFileString(file.Datetime, x.DateOfBirth)}").ToList();
+                    personStrings.Sort();
+                    var personsStr = string.Join(", ", personStrings);
                     pictureText += $"<p>&#128578; {personsStr}</p>";
                 }
 
                 if (file.LocationIds.Count > 0)
                 {
                     var locations = file.LocationIds.Select(x => data.Locations.First(y => y.Id == x));
-                    var locationsStr = string.Join(", ", locations.Select(x => x.Name));
+                    var locationStrings = locations.Select(x => x.Name).ToList();
+                    locationStrings.Sort();
+                    var locationsStr = string.Join(", ", locationStrings);
                     pictureText += $"<p>&#127968; {locationsStr}</p>";
                 }
 
                 if (file.TagIds.Count > 0)
                 {
                     var tags = file.TagIds.Select(x => data.Tags.First(y => y.Id == x));
-                    var tagsStr = string.Join(", ", tags.Select(x => x.Name));
+                    var tagStrings = tags.Select(x => x.Name).ToList();
+                    tagStrings.Sort();
+                    var tagsStr = string.Join(", ", tagStrings);
                     pictureText += $"<p>&#128278; {tagsStr}</p>";
                 }
 
