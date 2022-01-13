@@ -64,7 +64,6 @@ namespace FileDB.Export
             if (file.PersonIds.Count > 0)
             {
                 textLines.Add(new());
-                textLines.Add(new TextLine() { Text = "Persons:", Type = TextType.Heading });
                 var persons = file.PersonIds.Select(x => data.Persons.First(y => y.Id == x));
                 var personStrings = persons.Select(x => $"{x.Firstname} {x.Lastname}{Utils.GetPersonAgeInFileString(file.Datetime, x.DateOfBirth)}").ToList();
                 personStrings.Sort();
@@ -74,7 +73,6 @@ namespace FileDB.Export
             if (file.LocationIds.Count > 0)
             {
                 textLines.Add(new());
-                textLines.Add(new TextLine() { Text = "Locations:", Type = TextType.Heading });
                 var locations = file.LocationIds.Select(x => data.Locations.First(y => y.Id == x));
                 var locationStrings = locations.Select(x => x.Name).ToList();
                 locationStrings.Sort();
@@ -84,7 +82,6 @@ namespace FileDB.Export
             if (file.TagIds.Count > 0)
             {
                 textLines.Add(new());
-                textLines.Add(new TextLine() { Text = "Tags:", Type = TextType.Heading });
                 var tags = file.TagIds.Select(x => data.Tags.First(y => y.Id == x));
                 var tagStrings = tags.Select(x => x.Name).ToList();
                 tagStrings.Sort();
