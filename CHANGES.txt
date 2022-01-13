@@ -1,3 +1,7 @@
+2.9:
+* Add export of images with meta-data added in top left corner
+* Exported html looks better
+
 2.8:
 * Search result files and meta-data can be exported to HTML, JSON, XML and M3u file formats
 * Only try to parse Exif date and position from JPEG files to avoid problems with some broken files
