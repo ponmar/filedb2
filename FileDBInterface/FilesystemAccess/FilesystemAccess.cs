@@ -29,12 +29,18 @@ namespace FileDBInterface.FilesystemAccess
             }
         }
 
-        public IEnumerable<string> ListNewFilesystemFiles(IEnumerable<string> blacklistedFilePathPatterns, IEnumerable<string> whitelistedFilePathPatterns, bool includeHiddenDirectories, IFilesAccess filesDbAccess)
+        public IEnumerable<string> ListNewFilesystemFiles(string path, IEnumerable<string> blacklistedFilePathPatterns, IEnumerable<string> whitelistedFilePathPatterns, bool includeHiddenDirectories, IFilesAccess filesDbAccess)
         {
-            foreach (var filename in System.IO.Directory.GetFiles(filesRootDirectory, "*.*", SearchOption.AllDirectories))
+            if (!path.StartsWith(filesRootDirectory))
+            {
+                yield break;
+            }
+
+            foreach (var filename in System.IO.Directory.GetFiles(path, "*.*", SearchOption.AllDirectories))
             {
                 var internalPath = ToInternalFilesPath(filename);
                 if (PathIsApplicable(internalPath, blacklistedFilePathPatterns, whitelistedFilePathPatterns, includeHiddenDirectories) &&
+                    // TODO: optimize by adding check if path exists
                     filesDbAccess.GetFileByPath(internalPath) == null)
                 {
                     yield return internalPath;

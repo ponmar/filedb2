@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -19,8 +20,11 @@ namespace FileDB.ViewModel
 
     public class ImportViewModel : ViewModelBase
     {
-        public ICommand ScanNewFilesCommand => scanNewFilesCommand ??= new CommandHandler(ScanNewFiles);
+        public ICommand ScanNewFilesCommand => scanNewFilesCommand ??= new CommandHandler(ScanAllNewFiles);
         private ICommand scanNewFilesCommand;
+
+        public ICommand ScanNewFilesInDirectoryCommand => scanNewFilesInDirectoryCommand ??= new CommandHandler(ScanNewFilesInDirectory);
+        private ICommand scanNewFilesInDirectoryCommand;
 
         public ICommand ImportNewFilesCommand => importNewFilesCommand ??= new CommandHandler(ImportNewFiles);
         private ICommand importNewFilesCommand;
@@ -30,6 +34,13 @@ namespace FileDB.ViewModel
 
         public ICommand RemoveFileListCommand => removeFileListCommand ??= new CommandHandler(RemoveFileListMethod);
         private ICommand removeFileListCommand;
+
+        public string SubdirToScan
+        {
+            get => subdirToScan;
+            set => SetProperty(ref subdirToScan, value);
+        }
+        private string subdirToScan;
 
         public ObservableCollection<NewFile> NewFiles { get; } = new();
 
@@ -60,11 +71,43 @@ namespace FileDB.ViewModel
 
         public ImportViewModel()
         {
+            SubdirToScan = model.Config.FilesRootDirectory;
+            model.ConfigLoaded += Model_ConfigLoaded;
         }
 
-        public void ScanNewFiles()
+        private void Model_ConfigLoaded(object sender, EventArgs e)
         {
-            if (!Utils.ShowConfirmDialog($"Find all files, not yet imported, from directory {model.Config.FilesRootDirectory}?"))
+            SubdirToScan = model.Config.FilesRootDirectory;
+        }
+
+        public void ScanAllNewFiles()
+        {
+            ScanAllNewFiles(model.Config.FilesRootDirectory);
+        }
+
+        public void ScanNewFilesInDirectory()
+        {
+            if (string.IsNullOrEmpty(SubdirToScan))
+            {
+                Utils.ShowErrorDialog("No directory specified");
+                return;
+            }
+            if (!Directory.Exists(SubdirToScan))
+            {
+                Utils.ShowErrorDialog("Specified directory does no exist");
+                return;
+            }
+            if (!SubdirToScan.StartsWith(model.Config.FilesRootDirectory))
+            {
+                Utils.ShowErrorDialog($"Specified directory is not within the configured files root directory: {model.Config.FilesRootDirectory}");
+                return;
+            }
+            ScanAllNewFiles(SubdirToScan);
+        }
+
+        public void ScanAllNewFiles(string pathToScan)
+        {
+            if (!Utils.ShowConfirmDialog($"Find all files, not yet imported, from '{pathToScan}'?"))
             {
                 return;
             }
@@ -77,7 +120,7 @@ namespace FileDB.ViewModel
             var blacklistedFilePathPatterns = model.Config.BlacklistedFilePathPatterns.Split(";");
             var whitelistedFilePathPatterns = model.Config.WhitelistedFilePathPatterns.Split(";");
 
-            foreach (var internalFilePath in model.FilesystemAccess.ListNewFilesystemFiles(blacklistedFilePathPatterns, whitelistedFilePathPatterns, model.Config.IncludeHiddenDirectories, model.DbAccess))
+            foreach (var internalFilePath in model.FilesystemAccess.ListNewFilesystemFiles(pathToScan, blacklistedFilePathPatterns, whitelistedFilePathPatterns, model.Config.IncludeHiddenDirectories, model.DbAccess))
             {
                 NewFiles.Add(new NewFile()
                 {
@@ -90,7 +133,7 @@ namespace FileDB.ViewModel
 
             if (NewFiles.Count == 0)
             {
-                Utils.ShowInfoDialog($"No new files found. Add files to directory {model.Config.FilesRootDirectory} or configure another files root directory.");
+                Utils.ShowInfoDialog($"No new files found. Add your files to '{model.Config.FilesRootDirectory}'.");
             }
         }
 

@@ -25,11 +25,19 @@
                             <TextBlock Style="{StaticResource PageTextBlock}">This operation can be slow for a large collection of files or if the media access is slow (for example when using a network share).</TextBlock>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <Button Style="{StaticResource NormalButton}" Width="200" Margin="10" Command="{Binding ScanNewFilesCommand}">Find new files...</Button>
+                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="From files collection:" VerticalAlignment="Center" Margin="10 0 0 0"/>
+                            <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding ScanNewFilesCommand}">Find...</Button>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="From files collection sub directory:" VerticalAlignment="Center" Margin="10 5 5 5"/>
+                            <TextBox Style="{StaticResource PageTextBox}" Width="250" Margin="5" Text="{Binding SubdirToScan}" VerticalContentAlignment="Center"/>
+                            <Button Margin="5" Style="{StaticResource NormalButton}" Content="Find..." Command="{Binding ScanNewFilesInDirectoryCommand}"/>
+                        </StackPanel>
+                        <DataGrid Margin="10" ItemsSource="{Binding NewFiles}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="false" CanUserDeleteRows="false" IsReadOnly="True"/>
+                        <StackPanel Orientation="Horizontal">
                             <Button Style="{StaticResource NormalButton}" Width="200" Margin="10" Command="{Binding ImportNewFilesCommand}" IsEnabled="{Binding NewFilesAvailable}">Add meta-data for listed files...</Button>
                             <Button Style="{StaticResource NormalButton}" Width="200" Margin="10" Command="{Binding CopyImportedFileListCommand}" IsEnabled="{Binding ImportedFileList, Converter={StaticResource StringContentToBoolConverter}}">Copy file list for added files</Button>
                         </StackPanel>
-                        <DataGrid Margin="10" ItemsSource="{Binding NewFiles}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="false" CanUserDeleteRows="false" IsReadOnly="True"/>
                         <TextBlock Style="{StaticResource PageTextBlock}" Text="{Binding ImportResult}"/>
                     </StackPanel>
                 </Border>
