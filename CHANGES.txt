@@ -1,3 +1,6 @@
+2.10:
+* Import page can scan for new files from a files collection subdirectory
+
 2.9:
 * Add export of images with meta-data added in top left corner
 * Exported html looks better
