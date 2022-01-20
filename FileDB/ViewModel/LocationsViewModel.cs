@@ -79,10 +79,10 @@ namespace FileDB.ViewModel
 
         public void RemoveLocation()
         {
-            if (Utils.ShowConfirmDialog($"Remove {selectedLocation.Name}?"))
+            if (Dialogs.ShowConfirmDialog($"Remove {selectedLocation.Name}?"))
             {
                 var filesWithLocation = model.DbAccess.SearchFilesWithLocations(new List<int>() { selectedLocation.GetId() }).ToList();
-                if (filesWithLocation.Count == 0 || Utils.ShowConfirmDialog($"Location is used in {filesWithLocation.Count} files, remove anyway?"))
+                if (filesWithLocation.Count == 0 || Dialogs.ShowConfirmDialog($"Location is used in {filesWithLocation.Count} files, remove anyway?"))
                 {
                     model.DbAccess.DeleteLocation(selectedLocation.GetId());
                     model.NotifyLocationsUpdated();

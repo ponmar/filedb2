@@ -921,7 +921,7 @@ namespace FileDB.ViewModel
             StopSlideshow();
             if (SearchResultIndex == -1)
             {
-                Utils.ShowErrorDialog("No file opened");
+                Dialogs.ShowErrorDialog("No file opened");
                 return;
             }
 
@@ -979,19 +979,19 @@ namespace FileDB.ViewModel
             if (string.IsNullOrEmpty(SearchFileGpsPosition) &&
                 string.IsNullOrEmpty(SearchFileGpsPositionUrl))
             {
-                Utils.ShowErrorDialog("No position specified");
+                Dialogs.ShowErrorDialog("No position specified");
                 return;
             }
 
             if (string.IsNullOrEmpty(SearchFileGpsRadius))
             {
-                Utils.ShowErrorDialog("No radius specified");
+                Dialogs.ShowErrorDialog("No radius specified");
                 return;
             }
 
             if (!double.TryParse(SearchFileGpsRadius, out var radius) || radius < 1)
             {
-                Utils.ShowErrorDialog("Invalid radius");
+                Dialogs.ShowErrorDialog("Invalid radius");
                 return;
             }
 
@@ -1003,7 +1003,7 @@ namespace FileDB.ViewModel
                 var gpsPos = DatabaseParsing.ParseFilesPosition(SearchFileGpsPosition);
                 if (gpsPos == null)
                 {
-                    Utils.ShowErrorDialog("Invalid GPS position");
+                    Dialogs.ShowErrorDialog("Invalid GPS position");
                     return;
                 }
                 latitude = gpsPos.Value.lat;
@@ -1014,7 +1014,7 @@ namespace FileDB.ViewModel
                 var gpsPos = DatabaseParsing.ParseFilesPositionFromUrl(SearchFileGpsPositionUrl);
                 if (gpsPos == null)
                 {
-                    Utils.ShowErrorDialog("Invalid Google Maps URL");
+                    Dialogs.ShowErrorDialog("Invalid Google Maps URL");
                     return;
                 }
                 latitude = gpsPos.Value.lat;
@@ -1125,7 +1125,7 @@ namespace FileDB.ViewModel
             {
                 if (!int.TryParse(SearchPersonAgeFrom, out var ageFrom))
                 {
-                    Utils.ShowErrorDialog("Invalid age format");
+                    Dialogs.ShowErrorDialog("Invalid age format");
                     return;
                 }
 
@@ -1136,7 +1136,7 @@ namespace FileDB.ViewModel
                 }
                 else if (!int.TryParse(SearchPersonAgeTo, out ageTo))
                 {
-                    Utils.ShowErrorDialog("Invalid age format");
+                    Dialogs.ShowErrorDialog("Invalid age format");
                     return;
                 }
 
@@ -1253,29 +1253,29 @@ namespace FileDB.ViewModel
         {
             if (string.IsNullOrEmpty(ExportFilesHeader))
             {
-                Utils.ShowErrorDialog("No header specified");
+                Dialogs.ShowErrorDialog("No header specified");
                 return;
             }
 
             if (string.IsNullOrEmpty(ExportFilesDestinationDirectory))
             {
-                Utils.ShowErrorDialog("No destination directory specified");
+                Dialogs.ShowErrorDialog("No destination directory specified");
                 return;
             }
 
             if (!Directory.Exists(ExportFilesDestinationDirectory))
             {
-                Utils.ShowErrorDialog("Destination directory does not exist");
+                Dialogs.ShowErrorDialog("Destination directory does not exist");
                 return;
             }
 
             if (!IsDirectoryEmpty(ExportFilesDestinationDirectory))
             {
-                Utils.ShowErrorDialog("Destination directory is not empty");
+                Dialogs.ShowErrorDialog("Destination directory is not empty");
                 return;
             }
 
-            if (Utils.ShowConfirmDialog($"Export {SearchResult.Count} files to {ExportFilesDestinationDirectory}?"))
+            if (Dialogs.ShowConfirmDialog($"Export {SearchResult.Count} files to {ExportFilesDestinationDirectory}?"))
             {
                 var exporter = new SearchResultExporter(ExportFilesDestinationDirectory, ExportFilesHeader);
                 try
@@ -1284,7 +1284,7 @@ namespace FileDB.ViewModel
                 }
                 catch (IOException e)
                 {
-                    Utils.ShowErrorDialog("Export error: " + e.Message);
+                    Dialogs.ShowErrorDialog("Export error: " + e.Message);
                 }
             }
         }
@@ -1429,13 +1429,13 @@ namespace FileDB.ViewModel
         {
             if (SearchResultIndex == -1)
             {
-                Utils.ShowErrorDialog("No file selected");
+                Dialogs.ShowErrorDialog("No file selected");
                 return;
             }
 
             if (SelectedPersonToUpdate == null)
             {
-                Utils.ShowErrorDialog("No person selected");
+                Dialogs.ShowErrorDialog("No person selected");
                 return;
             }
 
@@ -1448,7 +1448,7 @@ namespace FileDB.ViewModel
             }
             else
             {
-                Utils.ShowErrorDialog("This person has already been added");
+                Dialogs.ShowErrorDialog("This person has already been added");
             }
         }
 
@@ -1456,13 +1456,13 @@ namespace FileDB.ViewModel
         {
             if (SearchResultIndex == -1)
             {
-                Utils.ShowErrorDialog("No file selected");
+                Dialogs.ShowErrorDialog("No file selected");
                 return;
             }
 
             if (SelectedPersonToUpdate == null)
             {
-                Utils.ShowErrorDialog("No person selected");
+                Dialogs.ShowErrorDialog("No person selected");
                 return;
             }
 
@@ -1481,13 +1481,13 @@ namespace FileDB.ViewModel
         {
             if (SearchResultIndex == -1)
             {
-                Utils.ShowErrorDialog("No file selected");
+                Dialogs.ShowErrorDialog("No file selected");
                 return;
             }
 
             if (SelectedLocationToUpdate == null)
             {
-                Utils.ShowErrorDialog("No location selected");
+                Dialogs.ShowErrorDialog("No location selected");
                 return;
             }
 
@@ -1500,7 +1500,7 @@ namespace FileDB.ViewModel
             }
             else
             {
-                Utils.ShowErrorDialog("This location has already been added");
+                Dialogs.ShowErrorDialog("This location has already been added");
             }
         }
 
@@ -1508,13 +1508,13 @@ namespace FileDB.ViewModel
         {
             if (SearchResultIndex == -1)
             {
-                Utils.ShowErrorDialog("No file selected");
+                Dialogs.ShowErrorDialog("No file selected");
                 return;
             }
 
             if (SelectedLocationToUpdate == null)
             {
-                Utils.ShowErrorDialog("No location selected");
+                Dialogs.ShowErrorDialog("No location selected");
                 return;
             }
 
@@ -1533,13 +1533,13 @@ namespace FileDB.ViewModel
         {
             if (SearchResultIndex == -1)
             {
-                Utils.ShowErrorDialog("No file selected");
+                Dialogs.ShowErrorDialog("No file selected");
                 return;
             }
 
             if (SelectedTagToUpdate == null)
             {
-                Utils.ShowErrorDialog("No tag selected");
+                Dialogs.ShowErrorDialog("No tag selected");
                 return;
             }
 
@@ -1552,7 +1552,7 @@ namespace FileDB.ViewModel
             }
             else
             {
-                Utils.ShowErrorDialog("This tag has already been added");
+                Dialogs.ShowErrorDialog("This tag has already been added");
             }
         }
 
@@ -1560,13 +1560,13 @@ namespace FileDB.ViewModel
         {
             if (SearchResultIndex == -1)
             {
-                Utils.ShowErrorDialog("No file selected");
+                Dialogs.ShowErrorDialog("No file selected");
                 return;
             }
 
             if (SelectedTagToUpdate == null)
             {
-                Utils.ShowErrorDialog("No tag selected");
+                Dialogs.ShowErrorDialog("No tag selected");
                 return;
             }
 
@@ -1598,7 +1598,7 @@ namespace FileDB.ViewModel
                 }
                 catch (DataValidationException e)
                 {
-                    Utils.ShowErrorDialog(e.Message);
+                    Dialogs.ShowErrorDialog(e.Message);
                 }
             }
         }
@@ -1607,7 +1607,7 @@ namespace FileDB.ViewModel
         {
             if (SearchResultIndex != -1)
             {
-                if (Utils.ShowConfirmDialog("Reload date and GPS position from file meta-data?"))
+                if (Dialogs.ShowConfirmDialog("Reload date and GPS position from file meta-data?"))
                 {
                     var selection = SearchResult.Files[SearchResultIndex];
                     var fileId = selection.Id;

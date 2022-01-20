@@ -89,17 +89,17 @@ namespace FileDB.ViewModel
         {
             if (string.IsNullOrEmpty(SubdirToScan))
             {
-                Utils.ShowErrorDialog("No directory specified");
+                Dialogs.ShowErrorDialog("No directory specified");
                 return;
             }
             if (!Directory.Exists(SubdirToScan))
             {
-                Utils.ShowErrorDialog("Specified directory does no exist");
+                Dialogs.ShowErrorDialog("Specified directory does no exist");
                 return;
             }
             if (!SubdirToScan.StartsWith(model.Config.FilesRootDirectory))
             {
-                Utils.ShowErrorDialog($"Specified directory is not within the configured files root directory: {model.Config.FilesRootDirectory}");
+                Dialogs.ShowErrorDialog($"Specified directory is not within the configured files root directory: {model.Config.FilesRootDirectory}");
                 return;
             }
             ScanAllNewFiles(SubdirToScan);
@@ -107,7 +107,7 @@ namespace FileDB.ViewModel
 
         public void ScanAllNewFiles(string pathToScan)
         {
-            if (!Utils.ShowConfirmDialog($"Find all files, not yet imported, from '{pathToScan}'?"))
+            if (!Dialogs.ShowConfirmDialog($"Find all files, not yet imported, from '{pathToScan}'?"))
             {
                 return;
             }
@@ -133,13 +133,13 @@ namespace FileDB.ViewModel
 
             if (NewFiles.Count == 0)
             {
-                Utils.ShowInfoDialog($"No new files found. Add your files to '{model.Config.FilesRootDirectory}'.");
+                Dialogs.ShowInfoDialog($"No new files found. Add your files to '{model.Config.FilesRootDirectory}'.");
             }
         }
 
         public void ImportNewFiles()
         {
-            if (!Utils.ShowConfirmDialog($"Import meta-data from {NewFiles.Count} files?"))
+            if (!Dialogs.ShowConfirmDialog($"Import meta-data from {NewFiles.Count} files?"))
             {
                 return;
             }
@@ -184,7 +184,7 @@ namespace FileDB.ViewModel
             }
             catch (DataValidationException e)
             {
-                Utils.ShowErrorDialog(e.Message);
+                Dialogs.ShowErrorDialog(e.Message);
             }
 
             NewFiles.Clear();
@@ -201,11 +201,11 @@ namespace FileDB.ViewModel
             var fileIds = Utils.CreateFileIds(RemoveFileList);
             if (fileIds.Count == 0)
             {
-                Utils.ShowErrorDialog("No file ids specified");
+                Dialogs.ShowErrorDialog("No file ids specified");
                 return;
             }
 
-            if (Utils.ShowConfirmDialog($"Remove meta-data for {fileIds.Count} files from the specified file list?"))
+            if (Dialogs.ShowConfirmDialog($"Remove meta-data for {fileIds.Count} files from the specified file list?"))
             {
                 fileIds.ForEach(x => model.DbAccess.DeleteFile(x));
             }

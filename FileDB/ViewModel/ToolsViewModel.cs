@@ -104,7 +104,7 @@ namespace FileDB.ViewModel
             }
             catch (IOException e)
             {
-                Utils.ShowErrorDialog(e.Message);
+                Dialogs.ShowErrorDialog(e.Message);
             }
         }
 

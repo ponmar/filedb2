@@ -100,7 +100,7 @@ namespace FileDB.ViewModel
             {
                 if (!int.TryParse(profilePictureFileId, out var value))
                 {
-                    Utils.ShowErrorDialog("Given profile picture file id format not valid");
+                    Dialogs.ShowErrorDialog("Given profile picture file id format not valid");
                     return;
                 }
 
@@ -140,7 +140,7 @@ namespace FileDB.ViewModel
             }
             catch (DataValidationException e)
             {
-                Utils.ShowErrorDialog(e.Message);
+                Dialogs.ShowErrorDialog(e.Message);
             }
         }
     }

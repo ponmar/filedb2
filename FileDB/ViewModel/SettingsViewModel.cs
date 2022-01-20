@@ -274,13 +274,13 @@ namespace FileDB.ViewModel
             var result = new ConfigValidator().Validate(config);
             if (!result.IsValid)
             {
-                Utils.ShowErrorDialog(result);
+                Dialogs.ShowErrorDialog(result);
                 return;
             }
 
             var appDataConfig = new AppDataConfig<Config>(Utils.ApplicationName);
 
-            if (!Utils.ShowConfirmDialog($"Write your configuration to {appDataConfig.FilePath}?"))
+            if (!Dialogs.ShowConfirmDialog($"Write your configuration to {appDataConfig.FilePath}?"))
             {
                 return;
             }
@@ -292,7 +292,7 @@ namespace FileDB.ViewModel
             }
             else
             {
-                Utils.ShowErrorDialog("Unable to save configuration");
+                Dialogs.ShowErrorDialog("Unable to save configuration");
             }
         }
 
@@ -327,7 +327,7 @@ namespace FileDB.ViewModel
                 }
                 else
                 {
-                    Utils.ShowErrorDialog($"No such directory: {dir}");
+                    Dialogs.ShowErrorDialog($"No such directory: {dir}");
                 }
             }
         }
@@ -336,11 +336,11 @@ namespace FileDB.ViewModel
         {
             if (!CreateDatabasePossible())
             {
-                Utils.ShowErrorDialog("No database filename specified");
+                Dialogs.ShowErrorDialog("No database filename specified");
                 return;
             }
 
-            if (Utils.ShowConfirmDialog($"Create database {Database}?"))
+            if (Dialogs.ShowConfirmDialog($"Create database {Database}?"))
             {
                 try
                 {
@@ -348,7 +348,7 @@ namespace FileDB.ViewModel
                 }
                 catch (DatabaseWrapperException e)
                 {
-                    Utils.ShowErrorDialog(e.Message);
+                    Dialogs.ShowErrorDialog(e.Message);
                 }
             }
         }

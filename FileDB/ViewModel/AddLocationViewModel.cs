@@ -84,7 +84,7 @@ namespace FileDB.ViewModel
             }
             catch (DataValidationException e)
             {
-                Utils.ShowErrorDialog(e.Message);
+                Dialogs.ShowErrorDialog(e.Message);
             }
         }
     }
