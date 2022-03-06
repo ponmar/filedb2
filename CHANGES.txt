@@ -1,3 +1,6 @@
+2.11:
+* New tool: export database content to JSON format to be used by 3rd party applications
+
 2.10:
 * Import page can scan for new files from a files collection subdirectory
 

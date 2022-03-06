@@ -2,7 +2,7 @@
 {
     public class ReleaseInformation
     {
-        public static Version Version = new(2, 10);
+        public static Version Version = new(2, 11);
 
         public const string ApplicationDownloadUrl = "https://drive.google.com/drive/folders/1GyZpdDcMdUOlvvtwtKUuylazoy7XaIcm";
     }
