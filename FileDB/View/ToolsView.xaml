@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:FileDB.View"
-             xmlns:converters="clr-namespace:FileDB.Converters"
+             xmlns:converters="clr-namespace:FileDB.Converters" xmlns:viewmodel="clr-namespace:FileDB.ViewModel"
+             d:DataContext="{d:DesignInstance Type=viewmodel:ToolsViewModel}"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -41,6 +42,19 @@
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
+                    </StackPanel>
+                </Border>
+
+                <TextBlock Style="{StaticResource PageSubHeading}">Database Export</TextBlock>
+                <Border Style="{StaticResource BorderGroup}">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="This tool can be used to export data to 3rd party applications."/>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding DatabaseExportCommand}" HorizontalAlignment="Left">Run</Button>
+                            <TextBlock Text="Directory:" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center"/>
+                            <TextBox Style="{StaticResource PageTextBox}" Width="300" Text="{Binding DatabaseExportDirectory}"/>
+                        </StackPanel>
+                        <TextBlock Style="{StaticResource PageTextBlock}" Text="{Binding DatabaseExportResult}"/>
                     </StackPanel>
                 </Border>
 

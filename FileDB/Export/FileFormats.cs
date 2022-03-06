@@ -16,7 +16,7 @@ namespace FileDB.Export
         public List<int> TagIds { get; set; }
     }
 
-    public class DataFileFormat
+    public class SearchResultFileFormat
     {
         public string Header { get; set; }
         public string About { get; set; }
@@ -26,5 +26,13 @@ namespace FileDB.Export
         public List<LocationModel> Locations { get; set; }
         public List<TagModel> Tags { get; set; }
         public string ApplicationDownloadUrl { get; set; }
+    }
+
+    public class ExportedDatabaseFileFormat
+    {
+        public List<PersonModel> Persons { get; set; }
+        public List<LocationModel> Locations { get; set; }
+        public List<TagModel> Tags { get; set; }
+        public List<FilesModel> Files { get; set; }
     }
 }

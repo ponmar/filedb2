@@ -3,9 +3,9 @@ using System.IO;
 
 namespace FileDB.Export
 {
-    public class JsonExporter : IExporter
+    public class SearchResultJsonExporter : ISearchResultExporter
     {
-        public void Export(DataFileFormat data, string filename)
+        public void Export(SearchResultFileFormat data, string filename)
         {
             var json = JsonConvert.SerializeObject(data, Formatting.Indented);
             File.WriteAllText(filename, json);

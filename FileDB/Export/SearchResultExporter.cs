@@ -27,15 +27,15 @@ namespace FileDB.Export
             var htmlPath = Path.Combine(destinationDirectory, "index.html");
             var m3uPath = Path.Combine(destinationDirectory, "playlist.m3u");
 
-            new FilesExporter().Export(data, destinationDirectory);
-            new FilesWithDataExporter().Export(data, destinationDirectory);
-            new JsonExporter().Export(data, jsonPath);
-            new XmlExporter().Export(data, xmlPath);
-            new M3uExporter().Export(data, m3uPath);
-            new HtmlExporter().Export(data, htmlPath);
+            new SearchResultFilesExporter().Export(data, destinationDirectory);
+            new SearchResultFilesWithOverlayExporter().Export(data, destinationDirectory);
+            new SearchResultJsonExporter().Export(data, jsonPath);
+            new SearchResultXmlExporter().Export(data, xmlPath);
+            new SearchResultM3uExporter().Export(data, m3uPath);
+            new SearchResultHtmlExporter().Export(data, htmlPath);
         }
 
-        private DataFileFormat GetExportedData(List<FilesModel> files)
+        private SearchResultFileFormat GetExportedData(List<FilesModel> files)
         {
             var model = Model.Model.Instance;
 
@@ -90,7 +90,7 @@ namespace FileDB.Export
                 index++;
             }
 
-            return new DataFileFormat()
+            return new SearchResultFileFormat()
             {
                 Header = header,
                 About = $"Exported with {Utils.ApplicationName} version {ReleaseInformation.Version.Major}.{ReleaseInformation.Version.Minor} at {DateTime.Now:yyyy-MM-dd HH:mm}.",

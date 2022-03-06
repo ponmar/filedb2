@@ -14,9 +14,9 @@ namespace FileDB.Export
         public TextType Type { get; set; } = TextType.Normal;
     }
 
-    public class FilesWithDataExporter : IExporter
+    public class SearchResultFilesWithOverlayExporter : ISearchResultExporter
     {
-        public void Export(DataFileFormat data, string path)
+        public void Export(SearchResultFileFormat data, string path)
         {
             var subdir = Path.Combine(path, "filesWithData");
             if (!Directory.Exists(subdir))
@@ -41,14 +41,14 @@ namespace FileDB.Export
             }
         }
 
-        private List<TextLine> CreateTextLines(DataFileFormat data, ExportedFile file)
+        private List<TextLine> CreateTextLines(SearchResultFileFormat data, ExportedFile file)
         {
             var textLines = new List<TextLine>();
 
             var pictureDateText = string.Empty;
             if (file.Datetime != null)
             {
-                pictureDateText = $"{HtmlExporter.CreateExportedFileDatetime(file.Datetime)}";
+                pictureDateText = $"{SearchResultHtmlExporter.CreateExportedFileDatetime(file.Datetime)}";
             }
             var pictureDescription = string.Empty;
             if (file.Description != null)

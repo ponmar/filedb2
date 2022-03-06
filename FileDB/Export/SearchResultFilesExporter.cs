@@ -2,9 +2,9 @@
 
 namespace FileDB.Export
 {
-    public class FilesExporter : IExporter
+    public class SearchResultFilesExporter : ISearchResultExporter
     {
-        public void Export(DataFileFormat data, string path)
+        public void Export(SearchResultFileFormat data, string path)
         {
             var model = Model.Model.Instance;
             foreach (var file in data.Files)

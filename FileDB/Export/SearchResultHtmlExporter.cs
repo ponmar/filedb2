@@ -4,9 +4,9 @@ using System.Linq;
 
 namespace FileDB.Export
 {
-    public class HtmlExporter : IExporter
+    public class SearchResultHtmlExporter : ISearchResultExporter
     {
-        public void Export(DataFileFormat data, string filename)
+        public void Export(SearchResultFileFormat data, string filename)
         {
             var documentBase =
 @"<!DOCTYPE html>

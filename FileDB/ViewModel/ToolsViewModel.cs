@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Windows.Input;
+using FileDB.Export;
 using FileDBInterface.Model;
 using FileDBInterface.Validators;
 using TextCopy;
@@ -13,6 +15,9 @@ namespace FileDB.ViewModel
     {
         public ICommand CreateBackupCommand => createBackupCommand ??= new CommandHandler(CreateBackup);
         private ICommand createBackupCommand;
+
+        public ICommand DatabaseExportCommand => databaseExportCommand ??= new CommandHandler(DatabaseExport);
+        private ICommand databaseExportCommand;
 
         public ICommand OpenDatabaseBackupDirectoryCommand => openDatabaseBackupDirectoryCommand ??= new CommandHandler(OpenDatabaseBackupDirectory);
         private ICommand openDatabaseBackupDirectoryCommand;
@@ -87,6 +92,20 @@ namespace FileDB.ViewModel
             set => SetProperty(ref missingFilesList, value);
         }
         private string missingFilesList = string.Empty;
+
+        public string DatabaseExportDirectory
+        {
+            get => databaseExportDirectory;
+            set => SetProperty(ref databaseExportDirectory, value);
+        }
+        private string databaseExportDirectory;
+
+        public string DatabaseExportResult
+        {
+            get => databaseExportResult;
+            set => SetProperty(ref databaseExportResult, value);
+        }
+        private string databaseExportResult = "Not executed.";
 
         private readonly Model.Model model = Model.Model.Instance;
 
@@ -237,6 +256,36 @@ namespace FileDB.ViewModel
         {
             ClipboardService.SetText(MissingFilesList);
             FileFinderResult = "File list copied to clipboard.";
+        }
+
+        private void DatabaseExport()
+        {
+            if (!Directory.Exists(DatabaseExportDirectory))
+            {
+                DatabaseExportResult = "No such directory.";
+                return;
+            }
+
+            if (Directory.GetFileSystemEntries(DatabaseExportDirectory).Length > 0)
+            {
+                DatabaseExportResult = "Specified directory is not empty.";
+                return;
+            }
+
+            try
+            {
+                var exporter = new DatabaseExporter(DatabaseExportDirectory);
+                var persons = model.DbAccess.GetPersons().ToList();
+                var locations = model.DbAccess.GetLocations().ToList();
+                var tags = model.DbAccess.GetTags().ToList();
+                var files = model.DbAccess.GetFiles().ToList();
+                exporter.Export(persons, locations, tags, files);
+                DatabaseExportResult = $"Exported {persons.Count} persons, {locations.Count} locations, {tags.Count} tags and {files.Count} files.";
+            }
+            catch (Exception e)
+            {
+                DatabaseExportResult = e.Message;
+            }
         }
     }
 }

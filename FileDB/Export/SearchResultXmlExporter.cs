@@ -4,9 +4,9 @@ using System.Xml.Serialization;
 
 namespace FileDB.Export
 {
-    public class XmlExporter : IExporter
+    public class SearchResultXmlExporter : ISearchResultExporter
     {
-        public void Export(DataFileFormat data, string filename)
+        public void Export(SearchResultFileFormat data, string filename)
         {
             var xmlSerializer = new XmlSerializer(data.GetType());
             using var xmlFileStream = new StreamWriter(filename);
