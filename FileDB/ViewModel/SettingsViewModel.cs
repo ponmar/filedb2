@@ -148,6 +148,13 @@ namespace FileDB.ViewModel
         }
         private WindowMode windowMode;
 
+        public int CastHttpServerPort
+        {
+            get => castHttpServerPort;
+            set => SetProperty(ref castHttpServerPort, value);
+        }
+        private int castHttpServerPort;
+
         public List<WindowModeDescription> WindowModes => Utils.GetWindowModes();
 
         public ICommand ResetConfigurationCommand => resetConfigurationCommand ??= new CommandHandler(ResetConfiguration);
@@ -176,6 +183,9 @@ namespace FileDB.ViewModel
 
         public ICommand SetDefaultDefaultSortMethodCommand => setDefaultDefaultSortMethodCommand ??= new CommandHandler(x => DefaultSortMethod = DefaultConfigs.Default.DefaultSortMethod);
         private ICommand setDefaultDefaultSortMethodCommand;
+
+        public ICommand SetDefaultCastHttpServerPortCommand => setDefaultCastHttpServerPortCommand ??= new CommandHandler(x => CastHttpServerPort = DefaultConfigs.Default.CastHttpServerPort);
+        private ICommand setDefaultCastHttpServerPortCommand;
 
         public ICommand SetDefaultKeepSelectionAfterSortCommand => setDefaultKeepSelectionAfterSortCommand ??= new CommandHandler(x => KeepSelectionAfterSort = DefaultConfigs.Default.KeepSelectionAfterSort);
         private ICommand setDefaultKeepSelectionAfterSortCommand;
@@ -241,6 +251,7 @@ namespace FileDB.ViewModel
             LocationLink = model.Config.LocationLink;
             FileToLocationMaxDistance = model.Config.FileToLocationMaxDistance;
             WindowMode = model.Config.WindowMode;
+            CastHttpServerPort = model.Config.CastHttpServerPort;
         }
 
         public void ResetConfiguration()
@@ -269,7 +280,8 @@ namespace FileDB.ViewModel
                 RipReminder,
                 MissingFilesRootDirNotification,
                 LocationLink,
-                WindowMode);
+                WindowMode,
+                CastHttpServerPort);
 
             var result = new ConfigValidator().Validate(config);
             if (!result.IsValid)

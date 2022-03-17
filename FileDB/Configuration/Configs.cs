@@ -25,7 +25,8 @@ namespace FileDB.Configuration
         bool RipReminder,
         bool MissingFilesRootDirNotification,
         string LocationLink,
-        WindowMode WindowMode);
+        WindowMode WindowMode,
+        int CastHttpServerPort);
 
     public static class DefaultConfigs
     {
@@ -48,7 +49,8 @@ namespace FileDB.Configuration
                 true,
                 true,
                 "https://www.google.com/maps?q=loc:LAT,LON",
-                WindowMode.Maximized);
+                WindowMode.Maximized,
+                -1);
 
         public static Config CreateDemo() =>
             new("Demo",
@@ -69,6 +71,7 @@ namespace FileDB.Configuration
                 Default.RipReminder,
                 Default.MissingFilesRootDirNotification,
                 Default.LocationLink,
-                Default.WindowMode);
+                Default.WindowMode,
+                Default.CastHttpServerPort);
     }
 }

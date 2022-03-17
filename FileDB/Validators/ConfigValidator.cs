@@ -46,6 +46,12 @@ namespace FileDB.Validators
                     .Must(x => x.Contains("LAT")).WithMessage("LAT not included in url")
                     .Must(x => x.Contains("LON")).WithMessage("LON not included in url");
             });
+
+            When(c => c.CastHttpServerPort > 0, () =>
+            {
+                RuleFor(c => c.CastHttpServerPort)
+                    .InclusiveBetween(1, 65535);
+            });
         }
 
         private bool IsValidUrl(string url)
