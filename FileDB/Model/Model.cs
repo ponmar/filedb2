@@ -148,5 +148,18 @@ namespace FileDB.Model
         {
             FilesImported?.Invoke(this, files);
         }
+
+        public void CastFile(string filePath)
+        {
+            if (!FileCaster.IsRunning() &&
+                config.CastHttpServerPort > 0)
+            {
+                FileCaster.RunServer(config.CastHttpServerPort);
+            }
+
+            {
+                FileCaster.CastFile(filePath);
+            }
+        }
     }
 }

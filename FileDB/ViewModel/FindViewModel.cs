@@ -1335,6 +1335,8 @@ namespace FileDB.ViewModel
                 {
                     CurrentFileLoadError = string.Empty;
                     imagePresenter.ShowImage(new BitmapImage(uri));
+
+                    model.CastFile(CurrentFilePath);
                 }
                 catch (WebException)
                 {
