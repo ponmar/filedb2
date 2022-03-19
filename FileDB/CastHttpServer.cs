@@ -6,6 +6,81 @@ using System.Threading;
 
 namespace FileDB
 {
+    public static class MimeTypeCreator
+    {
+        public static string CreateMimeTypeFor(string filePath)
+        {
+            // See https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
+
+            var ext = Path.GetExtension(filePath);
+            
+            // Images
+            if (string.Compare(ext, ".jpg", true) == 0 ||
+                string.Compare(ext, ".jpeg", true) == 0)
+            {
+                return "image/jpeg";
+            }
+            if (string.Compare(ext, ".png", true) == 0)
+            {
+                return "image/png";
+            }
+            if (string.Compare(ext, ".gif", true) == 0)
+            {
+                return "image/gif";
+            }
+            if (string.Compare(ext, ".bmp", true) == 0)
+            {
+                return "image/bmp";
+            }
+            if (string.Compare(ext, ".svg", true) == 0)
+            {
+                return "image/svg+xml";
+            }
+
+            // Videos
+            if (string.Compare(ext, ".mpg", true) == 0 ||
+                string.Compare(ext, ".mpeg", true) == 0)
+            {
+                return "video/mpeg";
+            }
+            if (string.Compare(ext, ".mp4", true) == 0)
+            {
+                return "video/mp4";
+            }
+            if (string.Compare(ext, ".avi", true) == 0)
+            {
+                return "video/x-msvideo";
+            }
+
+            // Audio
+            if (string.Compare(ext, ".mp3", true) == 0)
+            {
+                return "audio/mpeg";
+            }
+            if (string.Compare(ext, ".wav", true) == 0)
+            {
+                return "audio/wav";
+            }
+
+            // Documents
+            if (string.Compare(ext, ".txt", true) == 0)
+            {
+                return "text/plain";
+            }
+            if (string.Compare(ext, ".html", true) == 0 ||
+                string.Compare(ext, ".htm", true) == 0)
+            {
+                return "text/html";
+            }
+            if (string.Compare(ext, ".pdf", true) == 0)
+            {
+                return "application/pdf";
+            }
+
+            return null;
+        }
+    }
+
     public class FileCaster
     {
         private static CastHttpServer server;
@@ -42,14 +117,14 @@ namespace FileDB
             if (IsRunning() &&
                 currentFilePath != filePath)
             {
-                // TODO: handle more files and MIME types
-                if (filePath.EndsWith(".jpg"))
+                var mimeType = MimeTypeCreator.CreateMimeTypeFor(filePath);
+                if (mimeType != null)
                 {
                     try
                     {
                         var fileContent = File.ReadAllBytes(filePath);
                         currentFilePath = filePath;
-                        server.NextFile = new FileToCast(fileContent, "image/jpg");
+                        server.NextFile = new FileToCast(fileContent, mimeType);
                     }
                     catch (IOException)
                     {
