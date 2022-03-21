@@ -7,6 +7,10 @@ using FileDBInterface.DbAccess;
 using FileDBInterface.Exceptions;
 using FileDBInterface.FilesystemAccess;
 using FileDBInterface.Model;
+using SharpCaster.Models;
+using SharpCaster.Services;
+using SharpCaster.Controllers;
+using System.Threading.Tasks;
 
 namespace FileDB.Model
 {
@@ -15,12 +19,20 @@ namespace FileDB.Model
         public static Model Instance => instance ??= new();
         private static Model instance;
 
+        private readonly ChromecastService chromecastService = ChromecastService.Current;
+        private Chromecast selectedChromecast = null;
+        private SharpCasterDemoController controller = null;
+
+        public List<Chromecast> Chromecasts = new();
+
         private Model()
         {
             var dateCheckerTimer = new DispatcherTimer();
             dateCheckerTimer.Interval = TimeSpan.FromMinutes(1);
             dateCheckerTimer.Tick += DateCheckerTimer_Tick;
             dateCheckerTimer.Start();
+
+            LoadCromecasts();
         }
 
         private DateTime date = DateTime.Now;
@@ -151,15 +163,63 @@ namespace FileDB.Model
 
         public void CastFile(string filePath)
         {
-            if (!FileCaster.IsRunning() &&
-                config.CastHttpServerPort > 0)
+            if (config.CastHttpServerPort > 0)
             {
-                FileCaster.RunServer(config.CastHttpServerPort);
-            }
+                if (!FileCaster.IsRunning())
+                {
+                    FileCaster.RunServer(config.CastHttpServerPort);
+                }
 
-            {
                 FileCaster.CastFile(filePath);
+
+                var castUrl = $"http://192.168.1.154:{config.CastHttpServerPort}/filedb/file/something";
+                if (selectedChromecast != null && controller != null)
+                {
+                    controller.LoadMedia(castUrl, "image/jpeg", null, "BUFFERED");
+                    controller.Play();
+                }
             }
+        }
+
+        private async void LoadCromecasts()
+        {
+            Chromecasts.Clear();
+            var foundChromecasts = await chromecastService.StartLocatingDevices();
+            foreach (var foundChromecast in foundChromecasts)
+            {
+                Chromecasts.Add(foundChromecast);
+            }
+        }
+
+        public void SelectCastDevice(Chromecast cc)
+        {
+            //CastDeviceStatus = "Loading...";
+
+            selectedChromecast = cc;
+
+            ChromecastService.Current.ChromeCastClient.ConnectedChanged +=
+            async delegate
+            {
+                if (controller == null)
+                {
+                    controller = await ChromecastService.Current.ChromeCastClient.LaunchSharpCaster();
+                }
+            };
+
+            ChromecastService.Current.ChromeCastClient.ApplicationStarted +=
+            async delegate
+            {
+                while (controller == null)
+                {
+                    await Task.Delay(500);
+                }
+
+                // TODO: run in gui thread?
+                //CastDeviceStatus = "Ready";
+
+                // TODO: do not use controller until this event has been received?
+            };
+            ChromecastService.Current.ConnectToChromecast(selectedChromecast);
         }
     }
 }
