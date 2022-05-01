@@ -11,6 +11,8 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <converters:StringContentToBoolConverter x:Key="StringContentToBoolConverter"/>
+        <converters:EnumerationToVisibilityConverter x:Key="EnumerationToVisibilityConverter"/>
+        <converters:StringNullOrEmptyToVisibilityConverter x:Key="StringNullOrEmptyToVisibilityConverter"/>
     </UserControl.Resources>
     <DockPanel>
         <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Import</TextBlock>
@@ -33,12 +35,12 @@
                             <TextBox Style="{StaticResource PageTextBox}" Width="250" Margin="5" Text="{Binding SubdirToScan}" VerticalContentAlignment="Center"/>
                             <Button Margin="5" Style="{StaticResource NormalButton}" Content="Find..." Command="{Binding ScanNewFilesInDirectoryCommand}"/>
                         </StackPanel>
-                        <DataGrid Margin="10" ItemsSource="{Binding NewFiles}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="false" CanUserDeleteRows="false" IsReadOnly="True"/>
+                        <DataGrid Margin="10" ItemsSource="{Binding NewFiles}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="false" CanUserDeleteRows="false" IsReadOnly="True" Visibility="{Binding NewFiles, Converter={StaticResource EnumerationToVisibilityConverter}}"/>
                         <StackPanel Orientation="Horizontal">
                             <Button Style="{StaticResource NormalButton}" Width="200" Margin="10" Command="{Binding ImportNewFilesCommand}" IsEnabled="{Binding NewFilesAvailable}">Add meta-data for listed files...</Button>
                             <Button Style="{StaticResource NormalButton}" Width="200" Margin="10" Command="{Binding CopyImportedFileListCommand}" IsEnabled="{Binding ImportedFileList, Converter={StaticResource StringContentToBoolConverter}}">Copy file list for added files</Button>
                         </StackPanel>
-                        <TextBlock Style="{StaticResource PageTextBlock}" Text="{Binding ImportResult}"/>
+                        <TextBlock Style="{StaticResource PageTextBlock}" Text="{Binding ImportResult}" Visibility="{Binding ImportResult, Converter={StaticResource StringNullOrEmptyToVisibilityConverter}}"/>
                     </StackPanel>
                 </Border>
 
