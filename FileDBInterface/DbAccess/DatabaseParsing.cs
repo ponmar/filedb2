@@ -92,17 +92,28 @@ namespace FileDBInterface.DbAccess
         {
             if (!string.IsNullOrEmpty(url))
             {
-                var latLonStartIndex = url.IndexOf("@") + 1;
-                if (latLonStartIndex > 0)
+                var searchCriteria = "@";
+                var latLonStartIndex = url.IndexOf(searchCriteria);
+
+                if (latLonStartIndex == -1)
                 {
-                    var latLonToEnd = url.Substring(latLonStartIndex);
-                    var parts = latLonToEnd.Split(",");
-                    if (parts.Length >= 2 &&
-                        double.TryParse(parts[0], NumberStyles.Float, CultureInfo.InvariantCulture, out var latitude) &&
-                        double.TryParse(parts[1], NumberStyles.Float, CultureInfo.InvariantCulture, out var longitude))
+                    searchCriteria = "/maps?q=loc:";
+                    latLonStartIndex = url.IndexOf(searchCriteria);
+                    if (latLonStartIndex == -1)
                     {
-                        return (latitude, longitude);
+                        return null;
                     }
+                }
+
+                latLonStartIndex += searchCriteria.Length;
+
+                var latLonToEnd = url.Substring(latLonStartIndex);
+                var parts = latLonToEnd.Split(",");
+                if (parts.Length >= 2 &&
+                    double.TryParse(parts[0], NumberStyles.Float, CultureInfo.InvariantCulture, out var latitude) &&
+                    double.TryParse(parts[1], NumberStyles.Float, CultureInfo.InvariantCulture, out var longitude))
+                {
+                    return (latitude, longitude);
                 }
             }
             return null;
