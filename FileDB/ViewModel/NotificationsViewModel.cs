@@ -82,10 +82,13 @@ namespace FileDB.ViewModel
                 notifiers.Add(new MissingFilesRootDirNotifier(model.Config.FilesRootDirectory));
             }
 
-            var configDir = new AppDataConfig<Config>(Utils.ApplicationName).ConfigDirectory;
-            var cacheDir = Path.Combine(configDir, DefaultConfigs.CacheSubdir);
-            var cacheFileIds = model.DbAccess.GetPersons().Where(x => x.ProfileFileId != null).Select(x => x.ProfileFileId.Value);
-            notifiers.Add(new CacheNotifier(cacheDir, cacheFileIds));
+            if (model.Config.CacheFiles)
+            {
+                var configDir = new AppDataConfig<Config>(Utils.ApplicationName).ConfigDirectory;
+                var cacheDir = Path.Combine(configDir, DefaultConfigs.CacheSubdir);
+                var cacheFileIds = model.DbAccess.GetPersons().Where(x => x.ProfileFileId != null).Select(x => x.ProfileFileId.Value);
+                notifiers.Add(new CacheNotifier(cacheDir, cacheFileIds));
+            }
 
             return notifiers;
         }

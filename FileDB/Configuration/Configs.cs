@@ -26,7 +26,8 @@ namespace FileDB.Configuration
         bool MissingFilesRootDirNotification,
         string LocationLink,
         WindowMode WindowMode,
-        int CastHttpServerPort);
+        int CastHttpServerPort,
+        bool CacheFiles);
 
     public static class DefaultConfigs
     {
@@ -52,7 +53,8 @@ namespace FileDB.Configuration
                 MissingFilesRootDirNotification: true,
                 LocationLink: "https://www.google.com/maps?q=loc:LAT,LON",
                 WindowMode: WindowMode.Maximized,
-                CastHttpServerPort: -1);
+                CastHttpServerPort: -1,
+                CacheFiles: false);
 
         public static Config CreateDemo() =>
             new("Demo",
@@ -74,6 +76,7 @@ namespace FileDB.Configuration
                 Default.MissingFilesRootDirNotification,
                 Default.LocationLink,
                 Default.WindowMode,
-                Default.CastHttpServerPort);
+                Default.CastHttpServerPort,
+                Default.CacheFiles);
     }
 }

@@ -36,6 +36,7 @@
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
 
                         <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextBlock}">Configuration name:</TextBlock>
@@ -59,6 +60,12 @@
                             <TextBlock Style="{StaticResource PageTextBlock}" Text="Read-only mode" VerticalAlignment="Center"/>
                         </StackPanel>
                         <Button Grid.Row="4" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultReadOnlyCommand}" ToolTip="Reset to default">Default</Button>
+
+                        <StackPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
+                            <CheckBox HorizontalAlignment="Right" Style="{StaticResource PageCheckBox}" IsChecked="{Binding Path=CacheFiles, Mode=TwoWay}" VerticalAlignment="Center"/>
+                            <TextBlock Style="{StaticResource PageTextBlock}" Text="Cache files" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <Button Grid.Row="5" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultCacheFilesCommand}" ToolTip="Reset to default">Default</Button>
                     </Grid>
                 </Border>
 

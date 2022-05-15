@@ -155,6 +155,13 @@ namespace FileDB.ViewModel
         }
         private int castHttpServerPort;
 
+        public bool CacheFiles
+        {
+            get => cacheFiles;
+            set => SetProperty(ref cacheFiles, value);
+        }
+        private bool cacheFiles;
+
         public List<WindowModeDescription> WindowModes => Utils.GetWindowModes();
 
         public ICommand ResetConfigurationCommand => resetConfigurationCommand ??= new CommandHandler(ResetConfiguration);
@@ -201,6 +208,9 @@ namespace FileDB.ViewModel
 
         public ICommand SetDefaultReadOnlyCommand => setDefaultReadOnlyCommand ??= new CommandHandler(x => ReadOnly = DefaultConfigs.Default.ReadOnly);
         private ICommand setDefaultReadOnlyCommand;
+
+        public ICommand SetDefaultCacheFilesCommand => setDefaultCacheFilesCommand ??= new CommandHandler(x => CacheFiles = DefaultConfigs.Default.CacheFiles);
+        private ICommand setDefaultCacheFilesCommand;
 
         public ICommand SetDefaultBirthdayReminderCommand => setDefaultBirthdayReminderCommand ??= new CommandHandler(x => BirthdayReminder = DefaultConfigs.Default.BirthdayReminder);
         private ICommand setDefaultBirthdayReminderCommand;
@@ -252,6 +262,7 @@ namespace FileDB.ViewModel
             FileToLocationMaxDistance = model.Config.FileToLocationMaxDistance;
             WindowMode = model.Config.WindowMode;
             CastHttpServerPort = model.Config.CastHttpServerPort;
+            CacheFiles = model.Config.CacheFiles;
         }
 
         public void ResetConfiguration()
@@ -281,7 +292,8 @@ namespace FileDB.ViewModel
                 MissingFilesRootDirNotification,
                 LocationLink,
                 WindowMode,
-                CastHttpServerPort);
+                CastHttpServerPort,
+                CacheFiles);
 
             var result = new ConfigValidator().Validate(config);
             if (!result.IsValid)

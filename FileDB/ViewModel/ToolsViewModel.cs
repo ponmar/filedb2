@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Windows.Input;
+using FileDB.Configuration;
 using FileDB.Export;
 using FileDBInterface.Model;
 using FileDBInterface.Validators;
@@ -16,11 +17,17 @@ namespace FileDB.ViewModel
         public ICommand CreateBackupCommand => createBackupCommand ??= new CommandHandler(CreateBackup);
         private ICommand createBackupCommand;
 
+        public ICommand CreateCacheCommand => createCacheCommand ??= new CommandHandler(CreateCache);
+        private ICommand createCacheCommand;
+
         public ICommand DatabaseExportCommand => databaseExportCommand ??= new CommandHandler(DatabaseExport);
         private ICommand databaseExportCommand;
 
         public ICommand OpenDatabaseBackupDirectoryCommand => openDatabaseBackupDirectoryCommand ??= new CommandHandler(OpenDatabaseBackupDirectory);
         private ICommand openDatabaseBackupDirectoryCommand;
+
+        public ICommand OpenCacheDirectoryCommand => openCacheDirectoryCommand ??= new CommandHandler(OpenCacheDirectory);
+        private ICommand openCacheDirectoryCommand;
 
         public ICommand FindImportedNoLongerApplicableFilesCommand => findImportedNoLongerApplicableFilesCommand ??= new CommandHandler(FindImportedNoLongerApplicableFiles);
         private ICommand findImportedNoLongerApplicableFilesCommand;
@@ -46,6 +53,13 @@ namespace FileDB.ViewModel
             set => SetProperty(ref backupResult, value);
         }
         private string backupResult;
+
+        public string CacheResult
+        {
+            get => cacheResult;
+            set => SetProperty(ref cacheResult, value);
+        }
+        private string cacheResult = "Not executed.";
 
         public ObservableCollection<BackupFile> BackupFiles { get; } = new();
 
@@ -130,6 +144,58 @@ namespace FileDB.ViewModel
         private void OpenDatabaseBackupDirectory()
         {
             Utils.OpenDirectoryInExplorer(new DatabaseBackup().BackupDirectory);
+        }
+
+        private void CreateCache()
+        {
+            CacheResult = "Running...";
+
+            var configDir = new AppDataConfig<Config>(Utils.ApplicationName).ConfigDirectory;
+            var cacheDir = Path.Combine(configDir, DefaultConfigs.CacheSubdir);
+            if (!Directory.Exists(cacheDir))
+            {
+                try
+                {
+                    Directory.CreateDirectory(cacheDir);
+                }
+                catch (Exception e)
+                {
+                    CacheResult = "Cache creation error: {e.Message}";
+                    return;
+                }
+            }
+
+            var profileFileIds = model.DbAccess.GetPersons().Where(x => x.ProfileFileId != null).Select(x => x.ProfileFileId.Value);
+            var numCachedFiles = 0;
+            foreach (var profileFileId in profileFileIds)
+            {
+                var file = model.DbAccess.GetFileById(profileFileId);
+                var sourcePath = model.FilesystemAccess.ToAbsolutePath(file.Path);
+                var destinationPath = Path.Combine(cacheDir, $"{profileFileId}");
+                try
+                {
+                    if (!File.Exists(destinationPath))
+                    {
+                        File.Copy(sourcePath, destinationPath);
+                        numCachedFiles++;
+                    }
+                }
+                catch (Exception e)
+                {
+                    CacheResult = $"Unable to cache file: {e.Message}";
+                    return;
+                }
+            }
+
+            CacheResult = $"Cached {numCachedFiles} files.";
+        }
+
+        private void OpenCacheDirectory()
+        {
+            var configDir = new AppDataConfig<Config>(Utils.ApplicationName).ConfigDirectory;
+            var cacheDir = Path.Combine(configDir, DefaultConfigs.CacheSubdir);
+            var dirToOpen = Directory.Exists(cacheDir) ? cacheDir : configDir;
+            Utils.OpenDirectoryInExplorer(dirToOpen);
         }
 
         private void ScanBackupFiles()

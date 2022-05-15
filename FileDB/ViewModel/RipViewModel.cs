@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using FileDB.Comparers;
+using FileDB.Configuration;
 using FileDBInterface.DbAccess;
 
 namespace FileDB.ViewModel
@@ -36,6 +38,8 @@ namespace FileDB.ViewModel
         private void UpdatePersons()
         {
             var persons = new List<DeceasedPerson>();
+            var configDir = new AppDataConfig<Config>(Utils.ApplicationName).ConfigDirectory;
+            var cacheDir = Path.Combine(configDir, DefaultConfigs.CacheSubdir);
 
             foreach (var person in model.DbAccess.GetPersons())
             {
@@ -44,6 +48,24 @@ namespace FileDB.ViewModel
                     var dateOfBirth = DatabaseParsing.ParsePersonsDateOfBirth(person.DateOfBirth);
                     var deceased = DatabaseParsing.ParsePersonsDeceased(person.Deceased);
 
+                    string profileFileIdPath;
+                    if (person.ProfileFileId != null)
+                    {
+                        if (model.Config.CacheFiles)
+                        {
+                            profileFileIdPath = Path.Combine(cacheDir, $"{person.ProfileFileId.Value}");
+                        }
+                        else
+                        {
+                            var profileFile = model.DbAccess.GetFileById(person.ProfileFileId.Value);
+                            profileFileIdPath = model.FilesystemAccess.ToAbsolutePath(profileFile.Path);
+                        }
+                    }
+                    else
+                    {
+                        profileFileIdPath = string.Empty;
+                    }
+
                     persons.Add(new DeceasedPerson()
                     {
                         Name = person.Firstname + " " + person.Lastname,
@@ -51,7 +73,7 @@ namespace FileDB.ViewModel
                         DeceasedStr = person.Deceased,
                         Deceased = deceased,
                         Age = DatabaseUtils.GetYearsAgo(deceased, dateOfBirth),
-                        ProfileFileIdPath = person.ProfileFileId != null ? model.FilesystemAccess.ToAbsolutePath(model.DbAccess.GetFileById(person.ProfileFileId.Value).Path) : string.Empty,
+                        ProfileFileIdPath = profileFileIdPath,
                     });
                 }
             }

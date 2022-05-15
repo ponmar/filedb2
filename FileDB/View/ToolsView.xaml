@@ -45,6 +45,18 @@
                     </StackPanel>
                 </Border>
 
+                <TextBlock Style="{StaticResource PageSubHeading}">File Cache</TextBlock>
+                <Border Style="{StaticResource BorderGroup}">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="This tool can be used to a local cache of person profile files (good when having files on a network share and having a fast storage locally)."/>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding CreateCacheCommand}" HorizontalAlignment="Left">Run</Button>
+                            <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding OpenCacheDirectoryCommand}" HorizontalAlignment="Left">Open cache directory</Button>
+                        </StackPanel>
+                        <TextBlock Style="{StaticResource PageTextBlock}" Text="{Binding CacheResult}"/>
+                    </StackPanel>
+                </Border>
+                
                 <TextBlock Style="{StaticResource PageSubHeading}">Database Export</TextBlock>
                 <Border Style="{StaticResource BorderGroup}">
                     <StackPanel Orientation="Vertical">

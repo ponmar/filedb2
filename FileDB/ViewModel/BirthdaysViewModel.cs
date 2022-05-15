@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
+using FileDB.Configuration;
 using FileDBInterface.DbAccess;
 
 namespace FileDB.ViewModel
@@ -54,6 +56,8 @@ namespace FileDB.ViewModel
         private void UpdatePersons()
         {
             var persons = new List<PersonBirthday>();
+            var configDir = new AppDataConfig<Config>(Utils.ApplicationName).ConfigDirectory;
+            var cacheDir = Path.Combine(configDir, DefaultConfigs.CacheSubdir);
 
             foreach (var person in model.DbAccess.GetPersons())
             {
@@ -61,13 +65,31 @@ namespace FileDB.ViewModel
                 {
                     var dateOfBirth = DatabaseParsing.ParsePersonsDateOfBirth(person.DateOfBirth);
 
+                    string profileFileIdPath;
+                    if (person.ProfileFileId != null)
+                    {
+                        if (model.Config.CacheFiles)
+                        {
+                            profileFileIdPath = Path.Combine(cacheDir, $"{person.ProfileFileId.Value}");
+                        }
+                        else
+                        {
+                            var profileFile = model.DbAccess.GetFileById(person.ProfileFileId.Value);
+                            profileFileIdPath = model.FilesystemAccess.ToAbsolutePath(profileFile.Path);
+                        }
+                    }
+                    else
+                    {
+                        profileFileIdPath = string.Empty;
+                    } 
+
                     var p = new PersonBirthday()
                     {
                         Name = person.Firstname + " " + person.Lastname,
                         Birthday = dateOfBirth.ToString("d MMMM"),
                         DaysLeft = DatabaseUtils.GetDaysToNextBirthday(dateOfBirth),
                         Age = DatabaseUtils.GetYearsAgo(DateTime.Now, dateOfBirth),
-                        ProfileFileIdPath = person.ProfileFileId != null ? model.FilesystemAccess.ToAbsolutePath(model.DbAccess.GetFileById(person.ProfileFileId.Value).Path) : string.Empty,
+                        ProfileFileIdPath = profileFileIdPath,
                     };
 
                     if (p.DaysLeft == 0)

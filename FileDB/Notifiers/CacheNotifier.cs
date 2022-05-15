@@ -25,15 +25,11 @@ namespace FileDB.Notifiers
             }
             else
             {
-                var cachedFiles = new List<string>(Directory.GetFiles(cacheDirectory));
-
-                foreach (var cacheFileId in cacheFileIds)
+                var cachedFiles = new List<string>(Directory.GetFiles(cacheDirectory)).Select(x => Path.GetFileName(x));
+                var fileIdsMissingInCache = cacheFileIds.Where(x => !cachedFiles.Contains(x.ToString())).ToList();
+                if (fileIdsMissingInCache.Count > 0)
                 {
-                    // Note: file extension not included in tested path
-                    if (!cachedFiles.Any(x => x.StartsWith($"{cacheFileId}.")))
-                    {
-                        notifications.Add(new Notification(NotificationType.Warning, $"File with id={cacheFileId} not in cache", DateTime.Now));
-                    }
+                    notifications.Add(new Notification(NotificationType.Warning, $"Files missing in cache: {string.Join(", ", fileIdsMissingInCache)}", DateTime.Now));
                 }
             }
             return notifications;
