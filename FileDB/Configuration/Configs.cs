@@ -30,6 +30,8 @@ namespace FileDB.Configuration
 
     public static class DefaultConfigs
     {
+        public const string CacheSubdir = "Cache";
+
         public static Config Default =>
             new("Default",
                 "filedb.db",

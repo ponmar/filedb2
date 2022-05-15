@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
 using System.Windows.Input;
 using System.Windows.Threading;
+using FileDB.Configuration;
 using FileDB.Notifiers;
 
 namespace FileDB.ViewModel
@@ -78,6 +81,11 @@ namespace FileDB.ViewModel
             {
                 notifiers.Add(new MissingFilesRootDirNotifier(model.Config.FilesRootDirectory));
             }
+
+            var configDir = new AppDataConfig<Config>(Utils.ApplicationName).ConfigDirectory;
+            var cacheDir = Path.Combine(configDir, DefaultConfigs.CacheSubdir);
+            var cacheFileIds = model.DbAccess.GetPersons().Where(x => x.ProfileFileId != null).Select(x => x.ProfileFileId.Value);
+            notifiers.Add(new CacheNotifier(cacheDir, cacheFileIds));
 
             return notifiers;
         }

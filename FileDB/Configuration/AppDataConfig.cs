@@ -8,8 +8,8 @@ namespace FileDB.Configuration
     {
         public string AppName { get; }
         public string Filename { get; }
-
-        public string FilePath { get; private set; }
+        public string ConfigDirectory { get; }
+        public string FilePath { get;  }
 
         public AppDataConfig(string appName)
         {
@@ -17,8 +17,8 @@ namespace FileDB.Configuration
             Filename = typeof(T).Name + ".json";
 
             var baseDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            var directory = Path.Combine(baseDirectory, AppName);
-            FilePath = Path.Combine(directory, Filename);
+            ConfigDirectory = Path.Combine(baseDirectory, AppName);
+            FilePath = Path.Combine(ConfigDirectory, Filename);
         }
 
         public bool Write(T config)
@@ -40,12 +40,11 @@ namespace FileDB.Configuration
 
         public T Read()
         {
-            var filePath = GetFilePath();
-            if (File.Exists(filePath))
+            if (File.Exists(FilePath))
             {
                 try
                 {
-                    var jsonString = File.ReadAllText(filePath);
+                    var jsonString = File.ReadAllText(FilePath);
                     return JsonConvert.DeserializeObject<T>(jsonString);
                 }
                 catch (JsonException)
@@ -61,15 +60,7 @@ namespace FileDB.Configuration
 
         public bool FileExists()
         {
-            var filePath = GetFilePath();
-            return File.Exists(filePath);
-        }
-
-        public string GetFilePath()
-        {
-            var baseDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            var directory = Path.Combine(baseDirectory, AppName);
-            return Path.Combine(directory, Filename);
+            return File.Exists(FilePath);
         }
     }
 }
