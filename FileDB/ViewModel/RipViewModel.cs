@@ -20,6 +20,21 @@ namespace FileDB.ViewModel
 
     public class RipViewModel : ViewModelBase
     {
+        public string FilterText
+        {
+            get => filterText;
+            set
+            {
+                if (SetProperty(ref filterText, value))
+                {
+                    FilterPersons();
+                }
+            }
+        }
+        private string filterText;
+
+        private readonly List<DeceasedPerson> allPersons = new();
+
         public ObservableCollection<DeceasedPerson> Persons { get; set; } = new();
 
         private readonly Model.Model model = Model.Model.Instance;
@@ -37,6 +52,7 @@ namespace FileDB.ViewModel
 
         private void UpdatePersons()
         {
+            allPersons.Clear();
             var persons = new List<DeceasedPerson>();
             var configDir = new AppDataConfig<Config>(Utils.ApplicationName).ConfigDirectory;
             var cacheDir = Path.Combine(configDir, DefaultConfigs.CacheSubdir);
@@ -66,7 +82,7 @@ namespace FileDB.ViewModel
                         profileFileIdPath = string.Empty;
                     }
 
-                    persons.Add(new DeceasedPerson()
+                    allPersons.Add(new DeceasedPerson()
                     {
                         Name = person.Firstname + " " + person.Lastname,
                         DateOfBirth = person.DateOfBirth,
@@ -78,11 +94,30 @@ namespace FileDB.ViewModel
                 }
             }
 
-            persons.Sort(new PersonsByDeceasedSorter());
-            persons.Reverse();
+            allPersons.Sort(new PersonsByDeceasedSorter());
+            allPersons.Reverse();
 
+            FilterPersons();
+        }
+
+        private void FilterPersons()
+        {
             Persons.Clear();
-            persons.ForEach(x => Persons.Add(x));
+
+            if (string.IsNullOrEmpty(FilterText))
+            {
+                allPersons.ForEach(x => Persons.Add(x));
+            }
+            else
+            {
+                foreach (var person in allPersons)
+                {
+                    if (person.Name.Contains(FilterText, StringComparison.OrdinalIgnoreCase))
+                    {
+                        Persons.Add(person);
+                    }
+                }
+            }
         }
     }
 }

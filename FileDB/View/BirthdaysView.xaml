@@ -36,6 +36,10 @@
         <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Birthdays</TextBlock>
         <ScrollViewer PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
             <StackPanel Style="{StaticResource PageStackPanel}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="Filter:" Margin="10" VerticalAlignment="Center"/>
+                    <TextBox Width="200" Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+                </StackPanel>
                 <ListView Visibility="{Binding Persons, Converter={StaticResource EnumerationToVisibilityConverter}}" Background="Transparent" BorderThickness="0" Margin="10" ItemsSource="{Binding Persons}" ItemTemplate="{StaticResource PersonTemplate}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                     <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
