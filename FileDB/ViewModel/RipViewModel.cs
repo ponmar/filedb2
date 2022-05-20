@@ -53,7 +53,6 @@ namespace FileDB.ViewModel
         private void UpdatePersons()
         {
             allPersons.Clear();
-            var persons = new List<DeceasedPerson>();
             var configDir = new AppDataConfig<Config>(Utils.ApplicationName).ConfigDirectory;
             var cacheDir = Path.Combine(configDir, DefaultConfigs.CacheSubdir);
 
