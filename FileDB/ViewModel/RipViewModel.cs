@@ -5,17 +5,33 @@ using System.IO;
 using FileDB.Comparers;
 using FileDB.Configuration;
 using FileDBInterface.DbAccess;
+using FileDBInterface.Model;
 
 namespace FileDB.ViewModel
 {
     public class DeceasedPerson
     {
-        public string Name { get; set; }
-        public string DateOfBirth { get; set; }
-        public string DeceasedStr { get; set; }
-        public DateTime Deceased { get; set; }
-        public int Age { get; set; }
-        public string ProfileFileIdPath { get; set; }
+        public string Name => $"{person.Firstname} {person.Lastname}";
+        public string DateOfBirth => person.DateOfBirth;
+        public string DeceasedStr => person.Deceased;
+        public DateTime Deceased => DatabaseParsing.ParsePersonsDeceased(person.Deceased);
+        public int Age => DatabaseUtils.GetYearsAgo(Deceased, DatabaseParsing.ParsePersonsDateOfBirth(person.DateOfBirth));
+        public string ProfileFileIdPath { get; }
+
+        private readonly PersonModel person;
+
+        public DeceasedPerson(PersonModel person, string profileFileIdPath)
+        {
+            this.person = person;
+            ProfileFileIdPath = profileFileIdPath;
+        }
+
+        public bool MatchesTextFilter(string textFilter)
+        {
+            return string.IsNullOrEmpty(textFilter) || 
+                Name.Contains(textFilter, StringComparison.OrdinalIgnoreCase) ||
+                (!string.IsNullOrEmpty(person.Description) && person.Description.Contains(textFilter, StringComparison.OrdinalIgnoreCase));
+        }
     }
 
     public class RipViewModel : ViewModelBase
@@ -81,15 +97,7 @@ namespace FileDB.ViewModel
                         profileFileIdPath = string.Empty;
                     }
 
-                    allPersons.Add(new DeceasedPerson()
-                    {
-                        Name = person.Firstname + " " + person.Lastname,
-                        DateOfBirth = person.DateOfBirth,
-                        DeceasedStr = person.Deceased,
-                        Deceased = deceased,
-                        Age = DatabaseUtils.GetYearsAgo(deceased, dateOfBirth),
-                        ProfileFileIdPath = profileFileIdPath,
-                    });
+                    allPersons.Add(new DeceasedPerson(person, profileFileIdPath));
                 }
             }
 
@@ -103,18 +111,11 @@ namespace FileDB.ViewModel
         {
             Persons.Clear();
 
-            if (string.IsNullOrEmpty(FilterText))
+            foreach (var person in allPersons)
             {
-                allPersons.ForEach(x => Persons.Add(x));
-            }
-            else
-            {
-                foreach (var person in allPersons)
+                if (person.MatchesTextFilter(FilterText))
                 {
-                    if (person.Name.Contains(FilterText, StringComparison.OrdinalIgnoreCase))
-                    {
-                        Persons.Add(person);
-                    }
+                    Persons.Add(person);
                 }
             }
         }

@@ -4,17 +4,55 @@ using System.Collections.ObjectModel;
 using System.IO;
 using FileDB.Configuration;
 using FileDBInterface.DbAccess;
+using FileDBInterface.Model;
 
 namespace FileDB.ViewModel
 {
     public class PersonBirthday
     {
-        public string Name { get; set; }
-        public string Birthday { get; set; }
-        public int DaysLeft { get; set; }
-        public string DaysLeftStr { get; set; }
-        public int Age { get; set; }
-        public string ProfileFileIdPath { get; set; }
+        public string Name => $"{person.Firstname} {person.Lastname}";
+        public string Birthday { get; }
+        public int DaysLeft { get; }
+        public string DaysLeftStr { get; }
+        public int Age { get; }
+        public string ProfileFileIdPath { get; }
+
+        private readonly PersonModel person;
+
+        public PersonBirthday(PersonModel person, string profileFileIdPath)
+        {
+            this.person = person;
+            ProfileFileIdPath = profileFileIdPath;
+
+            var dateOfBirth = DatabaseParsing.ParsePersonsDateOfBirth(person.DateOfBirth);
+            Birthday = dateOfBirth.ToString("d MMMM");
+            DaysLeft = DatabaseUtils.GetDaysToNextBirthday(dateOfBirth);
+            Age = DatabaseUtils.GetYearsAgo(DateTime.Now, dateOfBirth);
+
+            if (DaysLeft == 0)
+            {
+                DaysLeftStr = $"Turned {Age} today!";
+            }
+            else if (DaysLeft == 1)
+            {
+                DaysLeftStr = $"Turns {Age + 1} tomorrow!";
+            }
+            else if (DaysLeft <= 14)
+            {
+                DaysLeftStr = DaysLeft <= 14 ? $"Turns {Age + 1} in {DaysLeft} days" : string.Empty;
+            }
+            else
+            {
+                DaysLeftStr = string.Empty;
+            }
+        }
+
+        public bool MatchesTextFilter(string textFilter)
+        {
+            return string.IsNullOrEmpty(textFilter) ||
+                Name.Contains(textFilter, StringComparison.OrdinalIgnoreCase) ||
+                (!string.IsNullOrEmpty(person.Description) && person.Description.Contains(textFilter, StringComparison.OrdinalIgnoreCase));
+        }
     }
 
     public class PersonsByDaysLeftUntilBirthdaySorter : IComparer<PersonBirthday>
@@ -78,8 +116,6 @@ namespace FileDB.ViewModel
             {
                 if (person.DateOfBirth != null && person.Deceased == null)
                 {
-                    var dateOfBirth = DatabaseParsing.ParsePersonsDateOfBirth(person.DateOfBirth);
-
                     string profileFileIdPath;
                     if (person.ProfileFileId != null)
                     {
@@ -98,33 +134,7 @@ namespace FileDB.ViewModel
                         profileFileIdPath = string.Empty;
                     } 
 
-                    var p = new PersonBirthday()
-                    {
-                        Name = person.Firstname + " " + person.Lastname,
-                        Birthday = dateOfBirth.ToString("d MMMM"),
-                        DaysLeft = DatabaseUtils.GetDaysToNextBirthday(dateOfBirth),
-                        Age = DatabaseUtils.GetYearsAgo(DateTime.Now, dateOfBirth),
-                        ProfileFileIdPath = profileFileIdPath,
-                    };
-
-                    if (p.DaysLeft == 0)
-                    {
-                        p.DaysLeftStr = $"Turned {p.Age} today!";
-                    }
-                    else if (p.DaysLeft == 1)
-                    {
-                        p.DaysLeftStr = $"Turns {p.Age + 1} tomorrow!";
-                    }
-                    else if (p.DaysLeft <= 14)
-                    {
-                        p.DaysLeftStr = p.DaysLeft <= 14 ? $"Turns {p.Age + 1} in {p.DaysLeft} days" : string.Empty;
-                    }
-                    else
-                    {
-                        p.DaysLeftStr = string.Empty;
-                    }
-
-                    allPersons.Add(p);
+                    allPersons.Add(new PersonBirthday(person, profileFileIdPath));
                 }
             }
 
@@ -137,18 +147,11 @@ namespace FileDB.ViewModel
         {
             Persons.Clear();
 
-            if (string.IsNullOrEmpty(FilterText))
+            foreach (var person in allPersons)
             {
-                allPersons.ForEach(x => Persons.Add(x));
-            }
-            else
-            {
-                foreach (var person in allPersons)
+                if (person.MatchesTextFilter(FilterText))
                 {
-                    if (person.Name.Contains(FilterText, StringComparison.OrdinalIgnoreCase))
-                    {
-                        Persons.Add(person);
-                    }
+                    Persons.Add(person);
                 }
             }
         }
