@@ -226,7 +226,7 @@
                         <StackPanel Orientation="Horizontal">
                             <StackPanel Orientation="Vertical">
                                 <StackPanel Orientation="Horizontal" Margin="3" HorizontalAlignment="Right">
-                                    <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="Header (optional):" VerticalAlignment="Center"/>
+                                    <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="Header:" VerticalAlignment="Center"/>
                                     <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3 0 0 0" Width="200" VerticalAlignment="Center" Text="{Binding ExportFilesHeader}" ToolTip="Copy files to destination directory"/>
                                 </StackPanel>
 

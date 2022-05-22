@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace FileDB.Export
 {
@@ -107,8 +108,10 @@ namespace FileDB.Export
         private void AddTextToImage(List<TextLine> textLines, Bitmap bitmap)
         {
             using Graphics graphics = Graphics.FromImage(bitmap);
-            using var headingFont = new Font("Arial", 18, FontStyle.Bold);
-            using var font = new Font("Arial", 18);
+            const int AdaptForMinScreenHeight = 1080;
+            var textSize = (int)Math.Round(Math.Max(bitmap.Height, AdaptForMinScreenHeight) / 60.0);
+            using var headingFont = new Font("Arial", textSize, FontStyle.Bold, GraphicsUnit.Pixel);
+            using var font = new Font("Arial", textSize, GraphicsUnit.Pixel);
 
             var rectPadding = 20;
             var bgRect = new Rectangle(10, 10, 2 * rectPadding, 2 * rectPadding);
