@@ -39,7 +39,7 @@ namespace FileDB.ViewModel
             }
             else if (DaysLeft <= 14)
             {
-                DaysLeftStr = DaysLeft <= 14 ? $"Turns {Age + 1} in {DaysLeft} days" : string.Empty;
+                DaysLeftStr = $"Turns {Age + 1} in {DaysLeft} days";
             }
             else
             {
