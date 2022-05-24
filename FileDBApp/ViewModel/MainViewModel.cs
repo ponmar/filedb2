@@ -102,7 +102,7 @@ namespace FileDBApp.ViewModel
 
             var data = JsonConvert.DeserializeObject<FileFormat>(contents);
 
-            var persons = data.Persons.Where(x => x.DateOfBirth != null).Select(x => new Person(x)).ToList();
+            var persons = data.Persons.Where(x => x.DateOfBirth != null && x.Deceased == null).Select(x => new Person(x)).ToList();
             persons.Sort(new PersonsByDaysLeftUntilBirthdaySorter());
             persons.ForEach(x => Persons.Add(x));
         }
