@@ -4,10 +4,10 @@ namespace FileDBApp
 {
     public partial class MainPage : ContentPage
     {
-        public MainPage()
+        public MainPage(MainViewModel viewModel)
         {
-            BindingContext = new MainViewModel();
             InitializeComponent();
+            BindingContext = viewModel;
         }
     }
 }

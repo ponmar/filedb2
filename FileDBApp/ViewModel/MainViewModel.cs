@@ -1,5 +1,6 @@
 ﻿using FileDBApp.Comparers;
 using FileDBApp.Model;
+using FileDBApp.Services;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 
@@ -48,22 +49,27 @@ namespace FileDBApp.ViewModel
     {
         public ObservableCollection<Person> Persons { get; } = new();
 
-        public MainViewModel()
+        public Command GetPersonsCommand { get; }
+
+        private readonly PersonService personService;
+
+        public MainViewModel(PersonService personService)
         {
-            _ = LoadPersons();
+            this.personService = personService;
+            
+            GetPersonsCommand = new Command(async () => await GetPersonsAsync());
+            GetPersonsCommand.Execute(null);
         }
 
-        private async Task LoadPersons()
+        private async Task GetPersonsAsync()
         {
-            using var stream = await FileSystem.OpenAppPackageFileAsync("DatabaseExport.json");
-            using var reader = new StreamReader(stream);
-            var contents = reader.ReadToEnd();
+            var persons = await personService.GetPersons();
 
-            var data = JsonConvert.DeserializeObject<ExportedDatabaseFileFormat>(contents);
+            var personsVms = persons.Where(x => x.DateOfBirth != null && x.Deceased == null).Select(x => new Person(x)).ToList();
+            personsVms.Sort(new PersonsByDaysLeftUntilBirthdaySorter());
 
-            var persons = data.Persons.Where(x => x.DateOfBirth != null && x.Deceased == null).Select(x => new Person(x)).ToList();
-            persons.Sort(new PersonsByDaysLeftUntilBirthdaySorter());
-            persons.ForEach(x => Persons.Add(x));
+            Persons.Clear();
+            personsVms.ForEach(x => Persons.Add(x));
         }
     }
 }
