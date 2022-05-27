@@ -13,6 +13,10 @@ namespace FileDBApp.ViewModel
 
         public string Name => $"{person.Firstname} {person.Lastname}";
 
+        public string Details => $"{person.DateOfBirth} - {person.Deceased}";
+
+        public DateTime Deceased { get; }
+
         private readonly PersonModel person;
 
         public DeceasedPerson(PersonModel person)
@@ -20,8 +24,8 @@ namespace FileDBApp.ViewModel
             this.person = person;
 
             var dateOfBirth = Utils.ParsePersonsDateOfBirth(person.DateOfBirth);
-            var deceased = Utils.ParsePersonsDeceased(person.Deceased);
-            Age = Utils.GetYearsAgo(deceased, dateOfBirth);
+            Deceased = Utils.ParsePersonsDeceased(person.Deceased);
+            Age = Utils.GetYearsAgo(Deceased, dateOfBirth);
         }
     }
 
@@ -44,13 +48,6 @@ namespace FileDBApp.ViewModel
 
         public bool IsNotBusy => !IsBusy;
 
-        public bool IsRefreshing
-        {
-            get => isRefreshing;
-            set => SetProperty(ref isRefreshing, value);
-        }
-        private bool isRefreshing;
-
         public Command UpdatePersonsCommand { get; }
 
         private readonly PersonService personService;
@@ -70,12 +67,12 @@ namespace FileDBApp.ViewModel
 
             var personsVms = persons.Where(x => x.DateOfBirth != null && x.Deceased != null).Select(x => new DeceasedPerson(x)).ToList();
             personsVms.Sort(new PersonsByDeceasedSorter());
+            personsVms.Reverse();
 
             Persons.Clear();
             personsVms.ForEach(x => Persons.Add(x));
             
             IsBusy = false;
-            IsRefreshing = false;
         }
     }
 }

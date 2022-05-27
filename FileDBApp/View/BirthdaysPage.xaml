@@ -20,8 +20,8 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="viewmodel:Person">
                         <VerticalStackLayout Padding="10" VerticalOptions="Center">
-                            <Label Margin="10" Text="{Binding Header}" />
-                            <HorizontalStackLayout Padding="10">
+                            <Label FontSize="18" Margin="5" Text="{Binding Header}" />
+                            <HorizontalStackLayout Padding="5">
                                 <Label FontSize="12">
                                     <Label.Text>
                                         <MultiBinding StringFormat="{}{0} | {1}">

@@ -6,8 +6,7 @@ namespace FileDBApp.Comparers
     {
         public int Compare(DeceasedPerson x, DeceasedPerson y)
         {
-            // TODO: sort by deceased date?
-            return x.Header.CompareTo(y.Header);
+            return x.Deceased.CompareTo(y.Deceased);
         }
     }
 }
