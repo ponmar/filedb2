@@ -10,16 +10,18 @@
 
     <Grid ColumnDefinitions="*" RowDefinitions="*,Auto">
 
-        <CollectionView
+        <RefreshView
             Grid.Row="0"
             Grid.Column="0"
-            ItemsSource="{Binding Persons}"
-            SelectionMode="None">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="viewmodel:DeceasedPerson">
-                    <VerticalStackLayout Padding="10" VerticalOptions="Center">
-                        <Label Margin="10" Text="{Binding Header}" />
-                        <!--
+            Command="{Binding UpdatePersonsCommand}"
+            IsRefreshing="{Binding IsRefreshing}">
+
+            <CollectionView ItemsSource="{Binding Persons}" SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="viewmodel:DeceasedPerson">
+                        <VerticalStackLayout Padding="10" VerticalOptions="Center">
+                            <Label Margin="10" Text="{Binding Header}" />
+                            <!--
                         <HorizontalStackLayout Padding="10">
                             <Label FontSize="12">
                                 <Label.Text>
@@ -30,11 +32,13 @@
                                 </Label.Text>
                             </Label>
                         </HorizontalStackLayout>
-                        -->
-                    </VerticalStackLayout>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+                            -->
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </RefreshView>
 
         <Button
             Grid.Row="1"

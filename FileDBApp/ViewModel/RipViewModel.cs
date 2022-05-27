@@ -38,6 +38,13 @@ namespace FileDBApp.ViewModel
 
         public bool IsNotBusy => !IsBusy;
 
+        public bool IsRefreshing
+        {
+            get => isRefreshing;
+            set => SetProperty(ref isRefreshing, value);
+        }
+        private bool isRefreshing;
+
         public Command UpdatePersonsCommand { get; }
 
         private readonly PersonService personService;
@@ -60,7 +67,9 @@ namespace FileDBApp.ViewModel
 
             Persons.Clear();
             personsVms.ForEach(x => Persons.Add(x));
+            
             IsBusy = false;
+            IsRefreshing = false;
         }
     }
 }

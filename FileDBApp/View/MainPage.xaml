@@ -9,29 +9,33 @@
 
     <Grid ColumnDefinitions="*" RowDefinitions="*,Auto">
 
-        <CollectionView
+        <RefreshView
             Grid.Row="0"
             Grid.Column="0"
-            ItemsSource="{Binding Persons}"
-            SelectionMode="None">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="viewmodel:Person">
-                    <VerticalStackLayout Padding="10" VerticalOptions="Center">
-                        <Label Margin="10" Text="{Binding Header}" />
-                        <HorizontalStackLayout Padding="10">
-                            <Label FontSize="12">
-                                <Label.Text>
-                                    <MultiBinding StringFormat="{}{0} | {1}">
-                                        <Binding Path="Birthday" />
-                                        <Binding Path="DaysLeftStr" />
-                                    </MultiBinding>
-                                </Label.Text>
-                            </Label>
-                        </HorizontalStackLayout>
-                    </VerticalStackLayout>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+            Command="{Binding UpdatePersonsCommand}"
+            IsRefreshing="{Binding IsRefreshing}">
+
+            <CollectionView ItemsSource="{Binding Persons}" SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="viewmodel:Person">
+                        <VerticalStackLayout Padding="10" VerticalOptions="Center">
+                            <Label Margin="10" Text="{Binding Header}" />
+                            <HorizontalStackLayout Padding="10">
+                                <Label FontSize="12">
+                                    <Label.Text>
+                                        <MultiBinding StringFormat="{}{0} | {1}">
+                                            <Binding Path="Birthday" />
+                                            <Binding Path="DaysLeftStr" />
+                                        </MultiBinding>
+                                    </Label.Text>
+                                </Label>
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </RefreshView>
 
         <Button
             Grid.Row="1"
