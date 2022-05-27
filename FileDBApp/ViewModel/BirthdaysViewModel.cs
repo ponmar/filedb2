@@ -1,7 +1,6 @@
 ﻿using FileDBApp.Comparers;
 using FileDBApp.Model;
 using FileDBApp.Services;
-using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 
 namespace FileDBApp.ViewModel
@@ -45,7 +44,7 @@ namespace FileDBApp.ViewModel
         }
     }
 
-    public class MainViewModel : ViewModelBase
+    public class BirthdaysViewModel : ViewModelBase
     {
         public ObservableCollection<Person> Persons { get; } = new();
 
@@ -53,7 +52,7 @@ namespace FileDBApp.ViewModel
 
         private readonly PersonService personService;
 
-        public MainViewModel(PersonService personService)
+        public BirthdaysViewModel(PersonService personService)
         {
             this.personService = personService;
             

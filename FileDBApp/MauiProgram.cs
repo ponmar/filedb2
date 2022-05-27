@@ -17,7 +17,7 @@ namespace FileDBApp
                 });
 
             builder.Services.AddSingleton<PersonService>();
-            builder.Services.AddSingleton<MainViewModel>();
+            builder.Services.AddSingleton<BirthdaysViewModel>();
             builder.Services.AddSingleton<MainPage>();
 
             return builder.Build();

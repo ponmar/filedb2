@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:FileDBApp"
     xmlns:viewmodel="clr-namespace:FileDBApp.ViewModel"
-    x:DataType="viewmodel:MainViewModel">
+    x:DataType="viewmodel:BirthdaysViewModel">
 
     <VerticalStackLayout Padding="30,0" Spacing="25">
 
