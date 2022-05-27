@@ -57,6 +57,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="View\BirthdaysPage.xaml.cs">
+	    <DependentUpon>BirthdaysPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="View\RipPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

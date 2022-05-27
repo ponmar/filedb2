@@ -2,9 +2,9 @@
 
 namespace FileDBApp.View
 {
-    public partial class MainPage : ContentPage
+    public partial class BirthdaysPage : ContentPage
     {
-        public MainPage(BirthdaysViewModel viewModel)
+        public BirthdaysPage(BirthdaysViewModel viewModel)
         {
             InitializeComponent();
             BindingContext = viewModel;

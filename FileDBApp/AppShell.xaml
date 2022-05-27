@@ -9,7 +9,7 @@
     Shell.FlyoutBehavior="Flyout">
 
     <FlyoutItem Title="Birthdays">
-        <ShellContent ContentTemplate="{DataTemplate view:MainPage}" />
+        <ShellContent ContentTemplate="{DataTemplate view:BirthdaysPage}" />
         <ShellContent ContentTemplate="{DataTemplate view:RipPage}" />
     </FlyoutItem>
 
