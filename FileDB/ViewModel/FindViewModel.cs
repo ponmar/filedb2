@@ -1296,6 +1296,7 @@ namespace FileDB.ViewModel
 
         private Uri CreatePositionLink(string position)
         {
+            // TODO: Move this code somewhere else
             var positionParts = position.Split(" ");
             if (positionParts.Length == 2 && !string.IsNullOrEmpty(model.Config.LocationLink))
             {

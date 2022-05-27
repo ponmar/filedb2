@@ -145,13 +145,19 @@ namespace FileDB.ViewModel
 
         private void FilterPersons()
         {
-            Persons.Clear();
-
             foreach (var person in allPersons)
             {
                 if (person.MatchesTextFilter(FilterText))
                 {
-                    Persons.Add(person);
+                    if (!Persons.Contains(person))
+                    {
+                        // TODO: sorting is not correct after adding at end here
+                        Persons.Add(person);
+                    }
+                }
+                else
+                {
+                    Persons.Remove(person);
                 }
             }
         }
