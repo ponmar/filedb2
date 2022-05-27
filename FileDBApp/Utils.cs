@@ -9,6 +9,11 @@ namespace FileDBApp
             return DateTime.ParseExact(dateOfBirthStr, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None);
         }
 
+        public static DateTime ParsePersonsDeceased(string deceasedStr)
+        {
+            return DateTime.ParseExact(deceasedStr, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None);
+        }
+
         public static int GetDaysToNextBirthday(DateTime birthday)
         {
             var today = DateTime.Today;

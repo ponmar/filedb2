@@ -23,11 +23,10 @@ namespace FileDBApp.ViewModel
                 {
                     return $"Turns {Age + 1} tomorrow!";
                 }
-                else if (DaysLeft <= 14)
+                else
                 {
                     return $"Turns {Age + 1} in {DaysLeft} days";
                 }
-                return string.Empty;
             }
         }
         public int Age { get; }

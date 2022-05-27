@@ -7,7 +7,9 @@ namespace FileDBApp.ViewModel
 {
     public class DeceasedPerson
     {
-        public string Header => $"{Name}";
+        public string Header => $"{Name} {Age}";
+
+        public int Age { get; }
 
         public string Name => $"{person.Firstname} {person.Lastname}";
 
@@ -16,6 +18,10 @@ namespace FileDBApp.ViewModel
         public DeceasedPerson(PersonModel person)
         {
             this.person = person;
+
+            var dateOfBirth = Utils.ParsePersonsDateOfBirth(person.DateOfBirth);
+            var deceased = Utils.ParsePersonsDeceased(person.Deceased);
+            Age = Utils.GetYearsAgo(deceased, dateOfBirth);
         }
     }
 
