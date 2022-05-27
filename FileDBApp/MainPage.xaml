@@ -7,9 +7,13 @@
     xmlns:viewmodel="clr-namespace:FileDBApp.ViewModel"
     x:DataType="viewmodel:BirthdaysViewModel">
 
-    <VerticalStackLayout Padding="30,0" Spacing="25">
+    <Grid ColumnDefinitions="*" RowDefinitions="*,Auto">
 
-        <CollectionView ItemsSource="{Binding Persons}">
+        <CollectionView
+            Grid.Row="0"
+            Grid.Column="0"
+            ItemsSource="{Binding Persons}"
+            SelectionMode="None">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="viewmodel:Person">
                     <VerticalStackLayout Padding="10" VerticalOptions="Center">
@@ -38,6 +42,12 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-    </VerticalStackLayout>
+        <Button
+            Grid.Row="1"
+            Grid.Column="0"
+            Padding="10"
+            Command="{Binding GetPersonsCommand}"
+            Text="Update" />
+    </Grid>
 
 </ContentPage>
