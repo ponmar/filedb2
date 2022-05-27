@@ -1,37 +1,43 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="FileDBApp.MainPage"
-             xmlns:local="clr-namespace:FileDBApp"
-             xmlns:viewmodel="clr-namespace:FileDBApp.ViewModel"
-             x:DataType="viewmodel:MainViewModel">
-   
-    <ScrollView>
-        <VerticalStackLayout 
-            Spacing="25" 
-            Padding="30,0" 
-            VerticalOptions="Center">
+<ContentPage
+    x:Class="FileDBApp.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:FileDBApp"
+    xmlns:viewmodel="clr-namespace:FileDBApp.ViewModel"
+    x:DataType="viewmodel:MainViewModel">
 
-            <ListView ItemsSource="{Binding Persons}" SelectionMode="Single">
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="viewmodel:Person">
-                        <ViewCell>
-                            <VerticalStackLayout Margin="10">
-                                <HorizontalStackLayout Margin="5">
-                                    <Label Text="{Binding Name}" Margin="5" TextColor="Black"/>
-                                    <Label Text="{Binding Age}" Margin="5" TextColor="Black"/>
-                                </HorizontalStackLayout>
-                                <HorizontalStackLayout Margin="5">
-                                    <Label Text="{Binding Birthday}" Margin="5" TextColor="Black"/>
-                                    <Label Text="{Binding DaysLeftStr}" Margin="5" TextColor="Black"/>
-                                </HorizontalStackLayout>
-                            </VerticalStackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            
-        </VerticalStackLayout>
-    </ScrollView>
- 
+    <VerticalStackLayout Padding="30,0" Spacing="25">
+
+        <CollectionView ItemsSource="{Binding Persons}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="viewmodel:Person">
+                    <VerticalStackLayout Padding="10" VerticalOptions="Center">
+                        <Label Padding="10">
+                            <Label.Text>
+                                <MultiBinding StringFormat="{}{0} {1}}">
+                                    <Binding Path="Name" />
+                                    <Binding Path="Age" />
+                                </MultiBinding>
+                            </Label.Text>
+                        </Label>
+                        <HorizontalStackLayout Padding="10">
+                            <Label
+                                Margin="5"
+                                FontSize="12"
+                                Text="{Binding Birthday}"
+                                TextColor="Black" />
+                            <Label
+                                Margin="5"
+                                FontSize="12"
+                                Text="{Binding DaysLeftStr}"
+                                TextColor="Black" />
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </VerticalStackLayout>
+
 </ContentPage>
