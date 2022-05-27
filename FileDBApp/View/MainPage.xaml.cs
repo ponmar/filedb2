@@ -1,6 +1,6 @@
 ﻿using FileDBApp.ViewModel;
 
-namespace FileDBApp
+namespace FileDBApp.View
 {
     public partial class MainPage : ContentPage
     {

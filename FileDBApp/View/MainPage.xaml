@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="FileDBApp.MainPage"
+    x:Class="FileDBApp.View.MainPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:FileDBApp"
+    xmlns:local="clr-namespace:FileDBApp.View"
     xmlns:viewmodel="clr-namespace:FileDBApp.ViewModel"
     x:DataType="viewmodel:BirthdaysViewModel">
 
@@ -42,11 +42,11 @@
             Text="Update" />
 
         <ActivityIndicator
+            Grid.RowSpan="2"
             HorizontalOptions="FillAndExpand"
             IsRunning="{Binding IsBusy}"
             IsVisible="{Binding IsBusy}"
-            VerticalOptions="CenterAndExpand"
-            Grid.RowSpan="2"/>
+            VerticalOptions="CenterAndExpand" />
     </Grid>
 
 </ContentPage>

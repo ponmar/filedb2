@@ -1,4 +1,5 @@
 ﻿using FileDBApp.Services;
+using FileDBApp.View;
 using FileDBApp.ViewModel;
 
 namespace FileDBApp
@@ -17,8 +18,11 @@ namespace FileDBApp
                 });
 
             builder.Services.AddSingleton<PersonService>();
+
             builder.Services.AddSingleton<BirthdaysViewModel>();
+
             builder.Services.AddSingleton<MainPage>();
+            builder.Services.AddSingleton<RipPage>();
 
             return builder.Build();
         }

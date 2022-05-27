@@ -4,18 +4,13 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:FileDBApp"
+    xmlns:view="clr-namespace:FileDBApp.View"
     Title="FileDBApp"
     Shell.FlyoutBehavior="Flyout">
 
     <FlyoutItem Title="Birthdays">
-        <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
+        <ShellContent ContentTemplate="{DataTemplate view:MainPage}" />
+        <ShellContent ContentTemplate="{DataTemplate view:RipPage}" />
     </FlyoutItem>
-
-    <!--
-    <ShellContent
-        Title="Birthdays"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
-    -->
 
 </Shell>
