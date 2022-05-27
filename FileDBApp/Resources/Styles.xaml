@@ -364,4 +364,14 @@
         <Setter Property="SelectedTabColor" Value="{AppThemeBinding Light={StaticResource DarkGray}, Dark={StaticResource LightGray}}" />
     </Style>
 
+    <Style x:Key="CardHeader" TargetType="Label">
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="Margin" Value="5"/>
+    </Style>
+
+    <Style x:Key="CardDetails" TargetType="Label">
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Margin" Value="5"/>
+    </Style>
+
 </ResourceDictionary>

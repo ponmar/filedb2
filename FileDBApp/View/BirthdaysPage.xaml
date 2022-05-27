@@ -20,17 +20,8 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="viewmodel:Person">
                         <VerticalStackLayout Padding="10" VerticalOptions="Center">
-                            <Label FontSize="18" Margin="5" Text="{Binding Header}" />
-                            <HorizontalStackLayout Padding="5">
-                                <Label FontSize="12">
-                                    <Label.Text>
-                                        <MultiBinding StringFormat="{}{0} | {1}">
-                                            <Binding Path="Birthday" />
-                                            <Binding Path="DaysLeftStr" />
-                                        </MultiBinding>
-                                    </Label.Text>
-                                </Label>
-                            </HorizontalStackLayout>
+                            <Label Text="{Binding Header}" Style="{StaticResource CardHeader}" />
+                            <Label Text="{Binding Details}" Style="{StaticResource CardDetails}"/>
                         </VerticalStackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

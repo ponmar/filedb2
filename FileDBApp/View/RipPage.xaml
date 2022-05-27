@@ -12,8 +12,8 @@
         <CollectionView.ItemTemplate>
             <DataTemplate x:DataType="viewmodel:DeceasedPerson">
                 <VerticalStackLayout Padding="10" VerticalOptions="Center">
-                    <Label FontSize="18" Margin="5" Text="{Binding Header}" />
-                    <Label FontSize="12" Margin="5" Text="{Binding Details}" />
+                    <Label Text="{Binding Header}" Style="{StaticResource CardHeader}" />
+                    <Label Text="{Binding Details}" Style="{StaticResource CardDetails}" />
                 </VerticalStackLayout>
             </DataTemplate>
         </CollectionView.ItemTemplate>
