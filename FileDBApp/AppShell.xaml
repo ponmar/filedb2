@@ -10,7 +10,9 @@
 
     <FlyoutItem Title="Birthdays">
         <ShellContent ContentTemplate="{DataTemplate view:BirthdaysPage}" />
+    </FlyoutItem>
+    <FlyoutItem Title="Rest in Peace">
         <ShellContent ContentTemplate="{DataTemplate view:RipPage}" />
     </FlyoutItem>
-
+    
 </Shell>
