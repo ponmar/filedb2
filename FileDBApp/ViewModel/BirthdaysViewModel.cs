@@ -7,6 +7,7 @@ namespace FileDBApp.ViewModel
 {
     public class Person
     {
+        public string Header => $"{Name} {Age}";
         public string Name => $"{person.Firstname} {person.Lastname}";
         public string Birthday { get; }
         public int DaysLeft { get; }

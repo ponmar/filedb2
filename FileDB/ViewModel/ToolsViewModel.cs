@@ -160,7 +160,7 @@ namespace FileDB.ViewModel
                 }
                 catch (Exception e)
                 {
-                    CacheResult = "Cache creation error: {e.Message}";
+                    CacheResult = $"Cache creation error: {e.Message}";
                     return;
                 }
             }

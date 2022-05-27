@@ -17,25 +17,18 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="viewmodel:Person">
                     <VerticalStackLayout Padding="10" VerticalOptions="Center">
-                        <Label Padding="10">
-                            <Label.Text>
-                                <MultiBinding StringFormat="{}{0} {1}}">
-                                    <Binding Path="Name" />
-                                    <Binding Path="Age" />
-                                </MultiBinding>
-                            </Label.Text>
-                        </Label>
+                        <Label Margin="10" Text="{Binding Header}"/>
                         <HorizontalStackLayout Padding="10">
                             <Label
-                                Margin="5"
                                 FontSize="12"
-                                Text="{Binding Birthday}"
-                                TextColor="Black" />
-                            <Label
-                                Margin="5"
-                                FontSize="12"
-                                Text="{Binding DaysLeftStr}"
-                                TextColor="Black" />
+                                TextColor="Black">
+                                <Label.Text>
+                                    <MultiBinding StringFormat="{}{0} | {1}">
+                                        <Binding Path="Birthday"/>
+                                        <Binding Path="DaysLeftStr"/>
+                                    </MultiBinding>
+                                </Label.Text>
+                            </Label>
                         </HorizontalStackLayout>
                     </VerticalStackLayout>
                 </DataTemplate>
