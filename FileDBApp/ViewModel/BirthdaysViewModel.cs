@@ -49,7 +49,22 @@ namespace FileDBApp.ViewModel
     {
         public ObservableCollection<Person> Persons { get; } = new();
 
-        public Command GetPersonsCommand { get; }
+        public bool IsBusy
+        {
+            get => isBusy;
+            set
+            {
+                if (SetProperty(ref isBusy, value))
+                {
+                    OnPropertyChanged(nameof(IsNotBusy));
+                }
+            }
+        }
+        private bool isBusy;
+
+        public bool IsNotBusy => !IsBusy;
+
+        public Command UpdatePersonsCommand { get; }
 
         private readonly PersonService personService;
 
@@ -57,12 +72,13 @@ namespace FileDBApp.ViewModel
         {
             this.personService = personService;
             
-            GetPersonsCommand = new Command(async () => await GetPersonsAsync());
-            GetPersonsCommand.Execute(null);
+            UpdatePersonsCommand = new Command(async () => await UpdatePersonsAsync());
+            UpdatePersonsCommand.Execute(null);
         }
 
-        private async Task GetPersonsAsync()
+        private async Task UpdatePersonsAsync()
         {
+            IsBusy = true;
             var persons = await personService.GetPersons();
 
             var personsVms = persons.Where(x => x.DateOfBirth != null && x.Deceased == null).Select(x => new Person(x)).ToList();
@@ -70,6 +86,7 @@ namespace FileDBApp.ViewModel
 
             Persons.Clear();
             personsVms.ForEach(x => Persons.Add(x));
+            IsBusy = false;
         }
     }
 }

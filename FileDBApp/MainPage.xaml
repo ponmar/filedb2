@@ -17,15 +17,13 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="viewmodel:Person">
                     <VerticalStackLayout Padding="10" VerticalOptions="Center">
-                        <Label Margin="10" Text="{Binding Header}"/>
+                        <Label Margin="10" Text="{Binding Header}" />
                         <HorizontalStackLayout Padding="10">
-                            <Label
-                                FontSize="12"
-                                TextColor="Black">
+                            <Label FontSize="12">
                                 <Label.Text>
                                     <MultiBinding StringFormat="{}{0} | {1}">
-                                        <Binding Path="Birthday"/>
-                                        <Binding Path="DaysLeftStr"/>
+                                        <Binding Path="Birthday" />
+                                        <Binding Path="DaysLeftStr" />
                                     </MultiBinding>
                                 </Label.Text>
                             </Label>
@@ -39,8 +37,16 @@
             Grid.Row="1"
             Grid.Column="0"
             Padding="10"
-            Command="{Binding GetPersonsCommand}"
+            Command="{Binding UpdatePersonsCommand}"
+            IsEnabled="{Binding IsNotBusy}"
             Text="Update" />
+
+        <ActivityIndicator
+            HorizontalOptions="FillAndExpand"
+            IsRunning="{Binding IsBusy}"
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="CenterAndExpand"
+            Grid.RowSpan="2"/>
     </Grid>
 
 </ContentPage>
