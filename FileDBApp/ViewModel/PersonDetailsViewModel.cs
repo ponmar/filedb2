@@ -1,9 +1,4 @@
 ﻿using FileDBApp.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FileDBApp.ViewModel
 {
@@ -16,12 +11,30 @@ namespace FileDBApp.ViewModel
             set
             {
                 personModel = value;
-                OnPropertyChanged(nameof(Title));
+
+                Title = $"{personModel.Firstname} {personModel.Lastname}";
+                //var dateOfBirth = Utils.ParsePersonsDateOfBirth(personModel.DateOfBirth);
+                //Birthday = dateOfBirth.ToString("d MMMM");
+                //DaysLeft = Utils.GetDaysToNextBirthday(dateOfBirth);
+                //Age = Utils.GetYearsAgo(DateTime.Now, dateOfBirth);
+                Description = personModel.Description ?? "No description available";
             }
         }
         private PersonModel personModel;
 
-        public string Title => PersonModel != null ? $"{PersonModel.Firstname} {PersonModel.Lastname}" : String.Empty;
+        public string Title
+        {
+            get => title;
+            set => SetProperty(ref title, value);
+        }
+        private string title;
+
+        public string Description
+        {
+            get => description;
+            set => SetProperty(ref description, value);
+        }
+        private string description;
 
         public PersonDetailsViewModel()
         {

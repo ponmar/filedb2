@@ -5,9 +5,9 @@
              Title="{Binding Title}"
              xmlns:viewmodel="clr-namespace:FileDBApp.ViewModel"
              x:DataType="viewmodel:PersonDetailsViewModel">
-    <StackLayout>
-        <Label Text="Welcome to .NET MAUI!"
-                VerticalOptions="Center" 
-                HorizontalOptions="Center" />
-    </StackLayout>
+    <ScrollView>
+        <VerticalStackLayout Margin="20">
+            <Label Text="{Binding Description}" FontSize="14" />
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
