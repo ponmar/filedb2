@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace FileDBApp
+namespace FileDBApp.Model
 {
     public static class Utils
     {
