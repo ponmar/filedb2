@@ -20,6 +20,10 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="viewmodel:Person">
                         <VerticalStackLayout VerticalOptions="Center" Margin="10">
+                            <VerticalStackLayout.GestureRecognizers>
+                                <TapGestureRecognizer CommandParameter="{Binding .}"
+                                                      Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:BirthdaysViewModel}}, Path=GoToPersonDetailsCommand}"/>
+                            </VerticalStackLayout.GestureRecognizers>
                             <Label Text="{Binding Header}" Style="{StaticResource CardHeader}" />
                             <Label Text="{Binding Details}" Style="{StaticResource CardDetails}"/>
                         </VerticalStackLayout>

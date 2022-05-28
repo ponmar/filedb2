@@ -1,6 +1,7 @@
 ﻿using FileDBApp.Comparers;
 using FileDBApp.Model;
 using FileDBApp.Services;
+using FileDBApp.View;
 using System.Collections.ObjectModel;
 
 namespace FileDBApp.ViewModel
@@ -11,20 +12,20 @@ namespace FileDBApp.ViewModel
 
         public int Age { get; }
 
-        public string Name => $"{person.Firstname} {person.Lastname}";
+        public string Name => $"{PersonModel.Firstname} {PersonModel.Lastname}";
 
-        public string Details => $"{person.DateOfBirth} - {person.Deceased}";
+        public string Details => $"{PersonModel.DateOfBirth} - {PersonModel.Deceased}";
 
         public DateTime Deceased { get; }
 
-        private readonly PersonModel person;
+        public PersonModel PersonModel { get; }
 
-        public DeceasedPerson(PersonModel person)
+        public DeceasedPerson(PersonModel personModel)
         {
-            this.person = person;
+            PersonModel = personModel;
 
-            var dateOfBirth = Utils.ParsePersonsDateOfBirth(person.DateOfBirth);
-            Deceased = Utils.ParsePersonsDeceased(person.Deceased);
+            var dateOfBirth = Utils.ParsePersonsDateOfBirth(PersonModel.DateOfBirth);
+            Deceased = Utils.ParsePersonsDeceased(PersonModel.Deceased);
             Age = Utils.GetYearsAgo(Deceased, dateOfBirth);
         }
     }
@@ -48,6 +49,8 @@ namespace FileDBApp.ViewModel
 
         public bool IsNotBusy => !IsBusy;
 
+        public Command GoToPersonDetailsCommand { get; }
+
         public Command UpdatePersonsCommand { get; }
 
         private readonly PersonService personService;
@@ -58,6 +61,22 @@ namespace FileDBApp.ViewModel
             
             UpdatePersonsCommand = new Command(async () => await UpdatePersonsAsync());
             UpdatePersonsCommand.Execute(null);
+
+            GoToPersonDetailsCommand = new Command(async (x) => await GoToPersonDetailsAsync((x as DeceasedPerson).PersonModel));
+        }
+
+        private async Task GoToPersonDetailsAsync(PersonModel personModel)
+        {
+            if (personModel is null)
+            {
+                return;
+            }
+
+            await Shell.Current.GoToAsync(nameof(PersonDetailsPage), true,
+                new Dictionary<string, object>
+                {
+                    { "PersonModel", personModel },
+                });
         }
 
         private async Task UpdatePersonsAsync()

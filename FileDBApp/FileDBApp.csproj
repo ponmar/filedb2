@@ -63,6 +63,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="View\PersonDetailsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="View\RipPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
