@@ -5,14 +5,20 @@ namespace FileDBApp.Services
 {
     public class PersonService
     {
+        private List<PersonModel> persons = null;
+
         public async Task<List<PersonModel>> GetPersons()
         {
-            using var stream = await FileSystem.OpenAppPackageFileAsync("DatabaseExport.json");
-            using var reader = new StreamReader(stream);
-            var contents = reader.ReadToEnd();
+            if (persons == null)
+            {
+                using var stream = await FileSystem.OpenAppPackageFileAsync("DatabaseExport.json");
+                using var reader = new StreamReader(stream);
+                var contents = reader.ReadToEnd();
 
-            var data = JsonConvert.DeserializeObject<ExportedDatabaseFileFormat>(contents);
-            return data.Persons;
+                persons = JsonConvert.DeserializeObject<ExportedDatabaseFileFormat>(contents).Persons;
+            }
+
+            return persons;
         }
     }
 }
