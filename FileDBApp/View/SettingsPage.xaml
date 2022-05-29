@@ -2,12 +2,14 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FileDBApp.View.SettingsPage"
+             xmlns:viewmodel="clr-namespace:FileDBApp.ViewModel"
+             x:DataType="viewmodel:SettingsViewModel"
              Title="Settings">
     <Grid Margin="10" ColumnDefinitions="*" RowDefinitions="Auto,*,Auto" RowSpacing="10">
         <Label Text="Person JSON data (exported from FileDB):" Grid.Row="0"/>
         <ScrollView Grid.Row="1">
-            <Editor AutoSize="TextChanges"/>
+            <Editor AutoSize="TextChanges" Text="{Binding PersonsJson}"/>
         </ScrollView>
-        <Button Text="Import" Grid.Row="2"/>
+        <Button Text="Import" Grid.Row="2" Command="{Binding ImportPersonsCommand}"/>
     </Grid>
 </ContentPage>
