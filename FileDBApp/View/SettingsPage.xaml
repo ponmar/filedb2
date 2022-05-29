@@ -6,10 +6,10 @@
              x:DataType="viewmodel:SettingsViewModel"
              Title="Settings">
     <Grid Margin="10" ColumnDefinitions="*" RowDefinitions="Auto,*,Auto" RowSpacing="10">
-        <Label Text="Person JSON data (exported from FileDB):" Grid.Row="0"/>
+        <Label Text="FileDB JSON data to import:" Grid.Row="0"/>
         <ScrollView Grid.Row="1">
-            <Editor AutoSize="TextChanges" Text="{Binding PersonsJson}"/>
+            <Editor AutoSize="TextChanges" Text="{Binding DataJson}"/>
         </ScrollView>
-        <Button Text="Import" Grid.Row="2" Command="{Binding ImportPersonsCommand}"/>
+        <Button Text="Import" Grid.Row="2" Command="{Binding ImportCommand}" IsEnabled="{Binding ImportPossible}"/>
     </Grid>
 </ContentPage>
