@@ -1,6 +1,7 @@
 ﻿using FileDBApp.Model;
 using FileDBApp.Services;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace FileDBApp.ViewModel
 {
@@ -32,14 +33,15 @@ namespace FileDBApp.ViewModel
         {
             try
             {
-                // Make sure json can be deserialized
+                // Make sure json can be deserialized before saving data to file
                 _ = JsonConvert.DeserializeObject<ExportedDatabaseFileFormat>(DataJson);
                 await File.WriteAllTextAsync(PersonService.DataFilePath, DataJson);
-                DataJson = String.Empty;
+                DataJson = string.Empty;
             }
             catch (Exception e)
             {
-                // TODO: show error
+                Debug.WriteLine(e);
+                await Shell.Current.DisplayAlert("Error!", $"Unable to import data: {e.Message}", "OK");
             }
         }
     }
