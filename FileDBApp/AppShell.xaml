@@ -14,5 +14,8 @@
     <FlyoutItem Title="Rest in Peace">
         <ShellContent ContentTemplate="{DataTemplate view:RipPage}" />
     </FlyoutItem>
+    <FlyoutItem Title="Settings">
+        <ShellContent ContentTemplate="{DataTemplate view:SettingsPage}" />
+    </FlyoutItem>
     
 </Shell>

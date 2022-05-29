@@ -22,10 +22,12 @@ namespace FileDBApp
             builder.Services.AddSingleton<BirthdaysViewModel>();
             builder.Services.AddSingleton<RipViewModel>();
             builder.Services.AddTransient<PersonDetailsViewModel>();
+            builder.Services.AddTransient<SettingsViewModel>();
 
             builder.Services.AddSingleton<BirthdaysPage>();
             builder.Services.AddSingleton<RipPage>();
             builder.Services.AddTransient<PersonDetailsPage>();
+            builder.Services.AddSingleton<SettingsPage>();
 
             return builder.Build();
         }
