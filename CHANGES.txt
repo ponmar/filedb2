@@ -1,3 +1,12 @@
+2.12:
+* Position search handles more Google Maps URL formats
+* Add person filtering via text input for birtday and rest in peace page
+* Exported files with meta-data scales text to look the same in fullscreen mode
+* Add possibility to cache person profile files (useful with fast SSD locally and files on a remote server)
+* Add setting: CastHttpServerPort
+* Add setting: CacheFiles
+* Layout fixes
+
 2.11:
 * New tool: export database content to JSON format to be used by 3rd party applications
 
