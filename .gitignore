@@ -417,4 +417,4 @@ MigrationBackup/
 FodyWeavers.xsd
 
 # Visual studio project start settings (working directory absolute path that may differ between computers)
-*/Properties
+FileDB/Properties
