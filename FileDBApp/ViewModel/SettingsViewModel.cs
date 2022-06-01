@@ -7,41 +7,63 @@ namespace FileDBApp.ViewModel
 {
     public class SettingsViewModel : ViewModelBase
     {
-        public string DataJson
-        {
-            get => dataJson;
-            set
-            {
-                if (SetProperty(ref dataJson, value))
-                {
-                    OnPropertyChanged(nameof(ImportPossible));
-                }
-            }
-        }
-        private string dataJson;
-
-        public bool ImportPossible => !string.IsNullOrEmpty(dataJson);
-
         public Command ImportCommand { get; }
+
+        public Command ClearCommand { get; }
 
         public SettingsViewModel()
         {
             ImportCommand = new Command(async () => await ImportAsync());
+            ClearCommand = new Command(async () => await ClearAsync());
         }
 
         private async Task ImportAsync()
         {
+            var customFileType = new FilePickerFileType(
+                new Dictionary<DevicePlatform, IEnumerable<string>>
+                {
+                    { DevicePlatform.Android, new[] { "application/json" } },
+                    { DevicePlatform.WinUI, new[] { ".json" } },
+                });
+
+            PickOptions options = new()
+            {
+                PickerTitle = "Please select a JSON file",
+                FileTypes = customFileType,
+            };
+
+            var result = await FilePicker.Default.PickAsync(options);
+            if (result != null)
+            {
+                try
+                {
+                    // Make sure json can be deserialized before saving data to file
+                    var json = File.ReadAllText(result.FullPath);
+                    _ = JsonConvert.DeserializeObject<ExportedDatabaseFileFormat>(json);
+
+                    await File.WriteAllTextAsync(PersonService.DataFilePath, json);
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e);
+                    await Shell.Current.DisplayAlert("Error!", $"Unable to import data: {e.Message}", "OK");
+                }
+            }
+        }
+
+        private async Task ClearAsync()
+        {
             try
             {
-                // Make sure json can be deserialized before saving data to file
-                _ = JsonConvert.DeserializeObject<ExportedDatabaseFileFormat>(DataJson);
-                await File.WriteAllTextAsync(PersonService.DataFilePath, DataJson);
-                DataJson = string.Empty;
+                if (File.Exists(PersonService.DataFilePath))
+                {
+                    File.Delete(PersonService.DataFilePath);
+                }
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e);
-                await Shell.Current.DisplayAlert("Error!", $"Unable to import data: {e.Message}", "OK");
+                await Shell.Current.DisplayAlert("Error!", $"Unable to clear data: {e.Message}", "OK");
             }
         }
     }
