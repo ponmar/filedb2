@@ -93,7 +93,7 @@ namespace FileDB.Export
             return new SearchResultFileFormat()
             {
                 Header = header,
-                About = $"Exported with {Utils.ApplicationName} version {ReleaseInformation.Version.Major}.{ReleaseInformation.Version.Minor} at {DateTime.Now:yyyy-MM-dd HH:mm}.",
+                About = $"Exported with {Utils.ApplicationName} version {ReleaseInformation.VersionString} at {DateTime.Now:yyyy-MM-dd HH:mm}.",
                 FileList = Utils.CreateFileList(files.Select(x => x.Id)),
                 Files = exportedFiles,
                 Persons = persons,

@@ -1,4 +1,5 @@
 ﻿using FileDBInterface.Model;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -17,6 +18,8 @@ namespace FileDB.Export
         {
             var fileContent = new ExportedDatabaseFileFormat()
             {
+                FileDBVersion = ReleaseInformation.VersionString,
+                ExportDateTime = DateTime.Now,
                 Persons = persons,
                 Locations = locations,
                 Tags = tags,

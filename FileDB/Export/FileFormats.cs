@@ -1,4 +1,5 @@
 ﻿using FileDBInterface.Model;
+using System;
 using System.Collections.Generic;
 
 namespace FileDB.Export
@@ -30,6 +31,8 @@ namespace FileDB.Export
 
     public class ExportedDatabaseFileFormat
     {
+        public string FileDBVersion { get; set; }
+        public DateTime ExportDateTime { get; set; }
         public List<PersonModel> Persons { get; set; }
         public List<LocationModel> Locations { get; set; }
         public List<TagModel> Tags { get; set; }

@@ -91,7 +91,7 @@ namespace FileDB.ViewModel
 
         private void UpdateTitle()
         {
-            var title = $"{Utils.ApplicationName} {ReleaseInformation.Version.Major}.{ReleaseInformation.Version.Minor}";
+            var title = $"{Utils.ApplicationName} {ReleaseInformation.VersionString}";
 
             if (!string.IsNullOrEmpty(model.Config.Name))
             {
