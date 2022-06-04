@@ -15,11 +15,19 @@
         <converters:EnumerationHasContentConverter x:Key="EnumerationHasContentConverter"/>
 
         <DataTemplate x:Key="NotificationsTemplate">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding DateTime, StringFormat='{}{0:yyyy-MM-dd  HH:mm}'}" Style="{StaticResource PageInnerTextBlock}" Margin="0, 5"/>
-                <TextBlock Text="{Binding Type}" Style="{StaticResource PageInnerTextBlock}" Margin="20, 5"/>
-                <TextBlock Text="{Binding Message}" Style="{StaticResource PageInnerTextBlock}" Margin="20, 5"/>
-            </StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="column1"/>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="column2"/>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="column3"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Column="0" Text="{Binding DateTime, StringFormat='{}{0:yyyy-MM-dd  HH:mm}'}" Style="{StaticResource PageInnerTextBlock}" Margin="0, 5"/>
+                <TextBlock Grid.Column="1" Text="{Binding Type}" Style="{StaticResource PageInnerTextBlock}" Margin="20, 5"/>
+                <TextBlock Grid.Column="2" Text="{Binding Message}" Style="{StaticResource PageInnerTextBlock}" Margin="20, 5"/>
+            </Grid>
         </DataTemplate>
     </UserControl.Resources>
 
