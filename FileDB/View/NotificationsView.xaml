@@ -13,20 +13,20 @@
         <converters:EnumerationToVisibilityConverter x:Key="EnumerationToVisibilityConverter" />
         <converters:EnumerationEmptyToVisibilityConverter x:Key="EnumerationEmptyToVisibilityConverter"/>
         <converters:EnumerationHasContentConverter x:Key="EnumerationHasContentConverter"/>
+        <converters:NotificationTypeToStringConverter x:Key="NotificationTypeToStringConverter"/>
+        <converters:NotificationTypeToColorConverter x:Key="NotificationTypeToColorConverter"/>
 
         <DataTemplate x:Key="NotificationsTemplate">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" SharedSizeGroup="column1"/>
                     <ColumnDefinition Width="Auto" SharedSizeGroup="column2"/>
-                    <ColumnDefinition Width="Auto" SharedSizeGroup="column3"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Column="0" Text="{Binding DateTime, StringFormat='{}{0:yyyy-MM-dd  HH:mm}'}" Style="{StaticResource PageInnerTextBlock}" Margin="0, 5"/>
-                <TextBlock Grid.Column="1" Text="{Binding Type}" Style="{StaticResource PageInnerTextBlock}" Margin="20, 5"/>
-                <TextBlock Grid.Column="2" Text="{Binding Message}" Style="{StaticResource PageInnerTextBlock}" Margin="20, 5"/>
+                <TextBlock Grid.Column="0" Text="{Binding Type, Converter={StaticResource NotificationTypeToStringConverter}}" Style="{StaticResource PageTextBlock}" Foreground="{Binding Type, Converter={StaticResource NotificationTypeToColorConverter}}" VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="1" Text="{Binding Message}" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center"/>
             </Grid>
         </DataTemplate>
     </UserControl.Resources>
