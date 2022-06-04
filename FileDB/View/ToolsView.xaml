@@ -33,7 +33,7 @@
                             <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding OpenDatabaseBackupDirectoryCommand}" HorizontalAlignment="Left">Open database backup directory</Button>
                         </StackPanel>
                         <TextBlock Style="{StaticResource PageTextBlock}" Text="{Binding BackupResult}"/>
-                        <ListBox Visibility="{Binding BackupFiles, Converter={StaticResource EnumerationToVisibilityConverter}}" Margin="10" ItemsSource="{Binding BackupFiles}" HorizontalAlignment="Left">
+                        <ListBox Visibility="{Binding BackupFiles, Converter={StaticResource EnumerationToVisibilityConverter}}" Margin="10" ItemsSource="{Binding BackupFiles}" HorizontalAlignment="Left" MaxHeight="150">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
