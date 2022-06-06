@@ -277,6 +277,7 @@ namespace FileDB.ViewModel
 
                     OnPropertyChanged(nameof(HasSearchResult));
                     OnPropertyChanged(nameof(HasNonEmptySearchResult));
+                    FireBrowsingEnabledEvents();
                 }
             }
         }
@@ -499,16 +500,25 @@ namespace FileDB.ViewModel
         private void PrevFile()
         {
             StopSlideshow();
-            LoadFile(SearchResultIndex - 1);
+            SelectPrevFile();
         }
 
-        // TODO: fire property changed events for all when search result loaded and when browsing
         public bool PrevFileAvailable => SearchResultIndex > 0;
         public bool NextFileAvailable => searchResult != null && SearchResultIndex < searchResult.Count - 1;
         public bool FirstFileAvailable => searchResult != null && SearchResultIndex > 0;
         public bool LastFileAvailable => searchResult != null && SearchResultIndex < SearchResult.Count - 1;
         public bool PrevDirectoryAvailable => HasNonEmptySearchResult;
         public bool NextDirectoryAvailable => HasNonEmptySearchResult;
+
+        private void FireBrowsingEnabledEvents()
+        {
+            OnPropertyChanged(nameof(PrevFileAvailable));
+            OnPropertyChanged(nameof(NextFileAvailable));
+            OnPropertyChanged(nameof(FirstFileAvailable));
+            OnPropertyChanged(nameof(LastFileAvailable));
+            OnPropertyChanged(nameof(PrevDirectoryAvailable));
+            OnPropertyChanged(nameof(NextDirectoryAvailable));
+        }
 
         [ICommand]
         public void NextFile()
@@ -517,14 +527,22 @@ namespace FileDB.ViewModel
             SelectNextFile();
         }
 
+        private void SelectPrevFile()
+        {
+            LoadFile(SearchResultIndex - 1);
+            FireBrowsingEnabledEvents();
+        }
+
         private void SelectNextFile()
         {
             LoadFile(SearchResultIndex + 1);
+            FireBrowsingEnabledEvents();
         }
 
         private void SelectNextRandomFile()
         {
             LoadFile(random.Next(SearchResult.Count));
+            FireBrowsingEnabledEvents();
         }
 
         [ICommand]
@@ -551,6 +569,8 @@ namespace FileDB.ViewModel
                     return;
                 }
             }
+
+            FireBrowsingEnabledEvents();
         }
 
         [ICommand]
@@ -577,6 +597,8 @@ namespace FileDB.ViewModel
                     return;
                 }
             }
+
+            FireBrowsingEnabledEvents();
         }
 
         [ICommand]
@@ -584,6 +606,7 @@ namespace FileDB.ViewModel
         {
             StopSlideshow();
             LoadFile(0);
+            FireBrowsingEnabledEvents();
         }
 
         [ICommand]
@@ -594,6 +617,7 @@ namespace FileDB.ViewModel
             {
                 LoadFile(SearchResult.Count - 1);
             }
+            FireBrowsingEnabledEvents();
         }
 
         public void SortFilesByDate(bool preserveSelection)
