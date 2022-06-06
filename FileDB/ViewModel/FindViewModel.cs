@@ -451,6 +451,9 @@ namespace FileDB.ViewModel
 
         #region Search result
 
+        public ICommand RemoveHistoryItemCommand => removeHistoryItemCommand ??= new CommandHandler((x) => RemoveHistoryItem((UpdateHistoryItem)x));
+        private ICommand removeHistoryItemCommand;
+
         public ObservableCollection<SearchResult> SearchResultHistory { get; } = new();
 
         private SearchResult SearchResult
@@ -1175,7 +1178,7 @@ namespace FileDB.ViewModel
             {
                 var files1 = SearchResultHistory[SearchResultHistory.Count - 1].Files;
                 var files2 = SearchResultHistory[SearchResultHistory.Count - 2].Files;
-                SearchResult = new SearchResult(files1.Union(files2, new FilesModelIdComparer()).ToList());
+                SearchResult = new SearchResult(files1.Union(files2, new FilesModelIdComparer()));
             }
         }
 
@@ -1185,7 +1188,7 @@ namespace FileDB.ViewModel
             {
                 var files1 = SearchResultHistory[SearchResultHistory.Count - 1].Files;
                 var files2 = SearchResultHistory[SearchResultHistory.Count - 2].Files;
-                SearchResult = new SearchResult(files1.Intersect(files2, new FilesModelIdComparer()).ToList());
+                SearchResult = new SearchResult(files1.Intersect(files2, new FilesModelIdComparer()));
             }
         }
 
@@ -1197,7 +1200,7 @@ namespace FileDB.ViewModel
                 var files2 = SearchResultHistory[SearchResultHistory.Count - 2].Files;
                 var uniqueFiles1 = files1.Except(files2, new FilesModelIdComparer());
                 var uniqueFiles2 = files2.Except(files1, new FilesModelIdComparer());
-                SearchResult = new SearchResult(uniqueFiles1.Union(uniqueFiles2, new FilesModelIdComparer()).ToList());
+                SearchResult = new SearchResult(uniqueFiles1.Union(uniqueFiles2, new FilesModelIdComparer()));
             }
         }
 
@@ -1729,28 +1732,14 @@ namespace FileDB.ViewModel
             var duplicatedItem = UpdateHistoryItems.FirstOrDefault(x => x.Type == type && x.ItemName == itemName);
             if (duplicatedItem != null)
             {
-                UpdateHistoryItems.Remove(duplicatedItem);
+                return;
             }
 
-            UpdateHistoryItems.Insert(0, new UpdateHistoryItem(type, itemId, itemName));
-
-            while (UpdateHistoryItems.Count > 12)
+            if (UpdateHistoryItems.Count < 12)
             {
-                UpdateHistoryItems.Remove(UpdateHistoryItems.Last());
+                var shortcut = $"F{UpdateHistoryItems.Count + 1}";
+                UpdateHistoryItems.Add(new UpdateHistoryItem(type, itemId, itemName) { Shortcut = shortcut });
             }
-
-            for (int i = 0; i < UpdateHistoryItems.Count; i++)
-            {
-                var item = UpdateHistoryItems[i];
-                var newShortcut = $"F{i + 1}";
-
-                if (item.Shortcut != newShortcut)
-                {
-                    UpdateHistoryItems[i] = new UpdateHistoryItem(item.Type, item.ItemId, item.ItemName) { Shortcut = newShortcut };
-                }
-            }
-
-            OnPropertyChanged(nameof(UpdateHistoryItems));
         }
 
         public ICommand FunctionKeyCommand => functionKeyCommand ??= new CommandHandler(FunctionKey);
@@ -1831,6 +1820,11 @@ namespace FileDB.ViewModel
             }
 
             LoadFile(SearchResultIndex);
+        }
+
+        private void RemoveHistoryItem(UpdateHistoryItem itemToRemove)
+        {
+            UpdateHistoryItems.Remove(itemToRemove);
         }
     }
 }

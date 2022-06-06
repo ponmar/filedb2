@@ -379,7 +379,7 @@
                                 <Button Grid.Row="0" Grid.Column="1" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding CreateLocationCommand}">Location...</Button>
                                 <Button Grid.Row="0" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding CreateTagCommand}">Tag...</Button>
                             </Grid>
-                            <ListView ItemsSource="{Binding UpdateHistoryItems}" Visibility="{Binding HasNonEmptySearchResult, Converter={StaticResource BoolToVis}}" Background="Transparent" BorderThickness="0">
+                            <ListView ItemsSource="{Binding UpdateHistoryItems}" Visibility="{Binding HasNonEmptySearchResult, Converter={StaticResource BoolToVis}}" Background="Transparent" BorderThickness="0" Grid.IsSharedSizeScope="True" x:Name="HistoryItemsListView">
                                 <ListView.ItemContainerStyle>
                                     <Style TargetType="ListViewItem">
                                         <Setter Property="Focusable" Value="false"/>
@@ -387,10 +387,19 @@
                                 </ListView.ItemContainerStyle>
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{Binding Shortcut}" FontWeight="Bold" Margin="0,0,10,0"/>
-                                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{Binding Description}"/>
-                                        </StackPanel>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" SharedSizeGroup="column1"/>
+                                                <ColumnDefinition Width="Auto" SharedSizeGroup="column2"/>
+                                                <ColumnDefinition Width="Auto" SharedSizeGroup="column3"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock Grid.Column="0" Style="{StaticResource PageInnerTextBlock}" Text="{Binding Shortcut}" FontWeight="Bold" Margin="3" VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Column="1" Style="{StaticResource PageInnerTextBlock}" Text="{Binding Description}" Margin="3" VerticalAlignment="Center"/>
+                                            <Button Grid.Column="2" Style="{StaticResource NormalButton}" Command="{Binding ElementName=HistoryItemsListView, Path=DataContext.RemoveHistoryItemCommand}" CommandParameter="{Binding}" Margin="3" VerticalAlignment="Center">X</Button>
+                                        </Grid>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
                             </ListView>
