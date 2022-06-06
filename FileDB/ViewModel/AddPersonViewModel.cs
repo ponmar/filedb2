@@ -1,76 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using FileDBInterface.Exceptions;
 using FileDBInterface.Model;
 
 namespace FileDB.ViewModel
 {
-    public class AddPersonViewModel : ViewModelBase
+    public partial class AddPersonViewModel : ObservableObject
     {
         private readonly int? personId;
 
-        public string Title
-        {
-            get => title;
-            set { SetProperty(ref title, value); }
-        }
+        [ObservableProperty]
         private string title;
 
-        public string Firstname
-        {
-            get => firstname;
-            set { SetProperty(ref firstname, value); }
-        }
+        [ObservableProperty]
         private string firstname = string.Empty;
 
-        public string Lastname
-        {
-            get => lastname;
-            set { SetProperty(ref lastname, value); }
-        }
+        [ObservableProperty]
         private string lastname = string.Empty;
 
-        public string Description
-        {
-            get => description;
-            set { SetProperty(ref description, value); }
-        }
+        [ObservableProperty]
         private string description = string.Empty;
 
-        public string DateOfBirth
-        {
-            get => dateOfBirth;
-            set { SetProperty(ref dateOfBirth, value); }
-        }
+        [ObservableProperty]
         private string dateOfBirth = string.Empty;
 
-        public string Deceased
-        {
-            get => deceased;
-            set { SetProperty(ref deceased, value); }
-        }
+        [ObservableProperty]
         private string deceased = string.Empty;
 
-        public string ProfilePictureFileId
-        {
-            get => profilePictureFileId;
-            set { SetProperty(ref profilePictureFileId, value); }
-        }
+        [ObservableProperty]
         private string profilePictureFileId = string.Empty;
 
-        public string SexSelection
-        {
-            get => sex;
-            set { SetProperty(ref sex, value); }
-        }
-        private string sex = Sex.NotApplicable.ToString();
+        [ObservableProperty]
+        private string sexSelection = Sex.NotApplicable.ToString();
 
         public List<string> SexValues { get; } = Enum.GetNames(typeof(Sex)).ToList();
-
-        public ICommand SaveCommand => saveCommand ??= new CommandHandler(Save);
-        private ICommand saveCommand;
 
         private readonly Model.Model model = Model.Model.Instance;
 
@@ -93,7 +59,8 @@ namespace FileDB.ViewModel
             }
         }
 
-        public void Save()
+        [ICommand]
+        private void Save()
         {
             int? newProfileFileId = null;
             if (!string.IsNullOrEmpty(profilePictureFileId))

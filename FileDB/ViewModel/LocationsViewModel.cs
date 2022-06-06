@@ -2,7 +2,8 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
-using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using FileDB.View;
 
 namespace FileDB.ViewModel
@@ -28,34 +29,14 @@ namespace FileDB.ViewModel
         }
     }
 
-    public class LocationsViewModel : ViewModelBase
+    public partial class LocationsViewModel : ObservableObject
     {
-        public ICommand AddLocationCommand => addLocationCommand ??= new CommandHandler(AddLocation);
-        private ICommand addLocationCommand;
-
-        public ICommand EditLocationCommand => editLocationCommand ??= new CommandHandler(EditLocation);
-        private ICommand editLocationCommand;
-
-        public ICommand RemoveLocationCommand => removeLocationCommand ??= new CommandHandler(RemoveLocation);
-        private ICommand removeLocationCommand;
-
-        public ICommand LocationSelectionCommand => locationSelectionCommand ??= new CommandHandler(LocationSelectionChanged);
-        private ICommand locationSelectionCommand;
-
-        public bool ReadWriteMode
-        {
-            get => readWriteMode;
-            set => SetProperty(ref readWriteMode, value);
-        }
+        [ObservableProperty]
         private bool readWriteMode = !Model.Model.Instance.Config.ReadOnly;
 
         public ObservableCollection<Location> Locations { get; } = new();
 
-        public Location SelectedLocation
-        {
-            get => selectedLocation;
-            set => SetProperty(ref selectedLocation, value);
-        }
+        [ObservableProperty]
         private Location selectedLocation;
 
         private readonly Model.Model model = Model.Model.Instance;
@@ -77,7 +58,8 @@ namespace FileDB.ViewModel
             ReloadLocations();
         }
 
-        public void RemoveLocation()
+        [ICommand]
+        private void RemoveLocation()
         {
             if (Dialogs.ShowConfirmDialog($"Remove {selectedLocation.Name}?"))
             {
@@ -90,7 +72,8 @@ namespace FileDB.ViewModel
             }
         }
 
-        public void EditLocation()
+        [ICommand]
+        private void EditLocation()
         {
             var window = new AddLocationWindow(selectedLocation.GetId())
             {
@@ -99,7 +82,8 @@ namespace FileDB.ViewModel
             window.ShowDialog();
         }
 
-        public void AddLocation()
+        [ICommand]
+        private void AddLocation()
         {
             var window = new AddLocationWindow
             {
@@ -108,9 +92,10 @@ namespace FileDB.ViewModel
             window.ShowDialog();
         }
 
-        public void LocationSelectionChanged(object parameter)
+        [ICommand]
+        private void LocationSelection(Location parameter)
         {
-            SelectedLocation = (Location)parameter;
+            SelectedLocation = parameter;
         }
 
         private void ReloadLocations()

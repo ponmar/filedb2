@@ -1,9 +1,10 @@
 ﻿using System.Windows;
+using CommunityToolkit.Mvvm.ComponentModel;
 using FileDB.Configuration;
 
 namespace FileDB.ViewModel
 {
-    public class MainViewModel : ViewModelBase
+    public partial class MainViewModel : ObservableObject
     {
         public int NumNotifications
         {
@@ -18,28 +19,16 @@ namespace FileDB.ViewModel
         }
         private int numNotifications = 0;
 
-        public string Title
-        {
-            get => title;
-            set => SetProperty(ref title, value);
-        }
+        [ObservableProperty]
         private string title;
 
-        public WindowState WindowState
-        {
-            get => windowState;
-            set => SetProperty(ref windowState, value);
-        }
+        [ObservableProperty]
         private WindowState windowState = DefaultWindowState;
 
         // TODO: update when new config loaded
         private static WindowState DefaultWindowState => Model.Model.Instance.Config.WindowMode == WindowMode.Normal ? WindowState.Normal : WindowState.Maximized;
 
-        public WindowStyle WindowStyle
-        {
-            get => windowStyle;
-            set => SetProperty(ref windowStyle, value);
-        }
+        [ObservableProperty]
         private WindowStyle windowStyle = DefaultWindowStyle;
 
         // TODO: update when new config loaded

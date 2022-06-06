@@ -49,7 +49,7 @@
                     <StackPanel Orientation="Horizontal" Margin="15">
                         <TextBlock Margin="5" Style="{StaticResource PageInnerTextBlock}" Text="File list:" VerticalAlignment="Center"/>
                         <TextBox Margin="5" Style="{StaticResource PageInnerTextBox}" Width="200" VerticalAlignment="Center" Text="{Binding RemoveFileList}"></TextBox>
-                        <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding RemoveFileListCommand}" Content="Remove..."  VerticalAlignment="Center"/>
+                        <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding RemoveFileListMethodCommand}" Content="Remove..."  VerticalAlignment="Center"/>
                     </StackPanel>
                 </Border>
             </StackPanel>

@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Windows;
-using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using FileDB.Comparers;
@@ -17,6 +16,8 @@ using TextCopy;
 using FileDBInterface.DbAccess;
 using FileDB.Configuration;
 using FileDB.Export;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace FileDB.ViewModel
 {
@@ -113,7 +114,7 @@ namespace FileDB.ViewModel
         }
     }
 
-    public class FindViewModel : ViewModelBase
+    public partial class FindViewModel : ObservableObject
     {
         private const string RootFolderName = "root";
         private readonly IImagePresenter imagePresenter;
@@ -121,35 +122,11 @@ namespace FileDB.ViewModel
 
         #region Browsing and sorting commands
 
-        public ICommand PrevFileCommand => prevFileCommand ??= new CommandHandler(StopSlideshowAndSelectPrevFile, PrevFileAvailable);
-        private ICommand prevFileCommand;
-
-        public ICommand NextFileCommand => nextFileCommand ??= new CommandHandler(StopSlideshowAndSelectNextFile, NextFileAvailable);
-        private ICommand nextFileCommand;
-
-        public ICommand PrevDirectoryCommand => prevDirectoryCommand ??= new CommandHandler(PrevDirectory, () => HasNonEmptySearchResult);
-        private ICommand prevDirectoryCommand;
-
-        public ICommand NextDirectoryCommand => nextDirectoryCommand ??= new CommandHandler(NextDirectory, () => HasNonEmptySearchResult);
-        private ICommand nextDirectoryCommand;
-
-        public ICommand FirstFileCommand => firstFileCommand ??= new CommandHandler(FirstFile, FirstFileAvailable);
-        private ICommand firstFileCommand;
-
-        public ICommand LastFileCommand => lastFileCommand ??= new CommandHandler(LastFile, LastFileAvailable);
-        private ICommand lastFileCommand;
-
-        public ICommand ToggleSlideshowCommand => toggleSlideshowCommand ??= new CommandHandler(ToggleSlideshow, () => HasNonEmptySearchResult);
-        private ICommand toggleSlideshowCommand;
-
-        public ICommand ToggleRandomCommand => toggleRandomCommand ??= new CommandHandler(() => { }, () => HasNonEmptySearchResult);
-        private ICommand toggleRandomCommand;
-
-        public ICommand ToggleRepeatCommand => toggleRepeatCommand ??= new CommandHandler(() => { }, () => HasNonEmptySearchResult);
-        private ICommand toggleRepeatCommand;
-
-        public ICommand ClearSearchCommand => clearSearchCommand ??= new CommandHandler(() => { SearchResult = null; }, () => HasNonEmptySearchResult);
-        private ICommand clearSearchCommand;
+        [ICommand]
+        private void ClearSearch()
+        {
+            SearchResult = null;
+        }
 
         public List<SortMethodDescription> SortMethods { get; } = Utils.GetSortMethods();
 
@@ -166,25 +143,13 @@ namespace FileDB.ViewModel
         }
         private SortMethod selectedSortMethod = SortMethod.Date;
 
-        public bool SlideshowActive
-        {
-            get => slideshowActive;
-            set { SetProperty(ref slideshowActive, value); }
-        }
+        [ObservableProperty]
         private bool slideshowActive = false;
 
-        public bool RandomActive
-        {
-            get => randomActive;
-            set { SetProperty(ref randomActive, value); }
-        }
+        [ObservableProperty]
         private bool randomActive = false;
 
-        public bool RepeatActive
-        {
-            get => repeatActive;
-            set { SetProperty(ref repeatActive, value); }
-        }
+        [ObservableProperty]
         private bool repeatActive = false;
 
         public bool Maximize
@@ -207,44 +172,14 @@ namespace FileDB.ViewModel
 
         #region Search commands and properties
 
-        public ICommand FindRandomFilesCommand => findRandomFilesCommand ??= new CommandHandler(FindRandomFiles);
-        private ICommand findRandomFilesCommand;
-
-        public string NumRandomFiles
-        {
-            get => numRandomFiles;
-            set => SetProperty(ref numRandomFiles, value);
-        }
+        [ObservableProperty]
         private string numRandomFiles = "10";
 
-        public ICommand FindCurrentDirectoryFilesCommand => findCurrentDirectoryFilesCommand ??= new CommandHandler(FindCurrentDirectoryFiles, () => HasNonEmptySearchResult);
-        private ICommand findCurrentDirectoryFilesCommand;
-
-        public ICommand FindAllFilesCommand => findAllFilesCommand ??= new CommandHandler(FindAllFiles);
-        private ICommand findAllFilesCommand;
-
-        public ICommand FindImportedFilesCommand => findImportedFilesCommand ??= new CommandHandler(FindImportedFiles);
-        private ICommand findImportedFilesCommand;
-
-        public string ImportedFileList
-        {
-            get => importedFileList;
-            set => SetProperty(ref importedFileList, value);
-        }
+        [ObservableProperty]
         private string importedFileList;
 
-        public ICommand FindFilesByTextCommand => findFilesByTextCommand ??= new CommandHandler(FindFilesByText);
-        private ICommand findFilesByTextCommand;
-
-        public string SearchPattern
-        {
-            get => searchPattern;
-            set => SetProperty(ref searchPattern, value);
-        }
+        [ObservableProperty]
         private string searchPattern;
-
-        public ICommand FindFilesBySexCommand => findFilesBySexCommand ??= new CommandHandler(FindFilesBySex);
-        private ICommand findFilesBySexCommand;
 
         public string SearchBySexSelection
         {
@@ -253,97 +188,27 @@ namespace FileDB.ViewModel
         }
         private string searchBySexSelection = Sex.NotKnown.ToString();
 
-        public ICommand FindFilesByDateCommand => findFilesByDateCommand ??= new CommandHandler(FindFilesByDate);
-        private ICommand findFilesByDateCommand;
-
-        public ICommand FindFilesByGpsPositionCommand => findFilesByGpsPositionCommand ??= new CommandHandler(FindFilesByGpsPosition);
-        private ICommand findFilesByGpsPositionCommand;
-
-        public DateTime SearchStartDate
-        {
-            get => searchStartDate;
-            set => SetProperty(ref searchStartDate, value);
-        }
+        [ObservableProperty]
         private DateTime searchStartDate = DateTime.Now;
 
-        public DateTime SearchEndDate
-        {
-            get => searchEndDate;
-            set => SetProperty(ref searchEndDate, value);
-        }
+        [ObservableProperty]
         private DateTime searchEndDate = DateTime.Now;
 
-        public string SearchFileGpsPosition
-        {
-            get => searchFileGpsPosition;
-            set => SetProperty(ref searchFileGpsPosition, value);
-        }
+        [ObservableProperty]
         private string searchFileGpsPosition;
 
-        public string SearchFileGpsPositionUrl
-        {
-            get => searchFileGpsPositionUrl;
-            set => SetProperty(ref searchFileGpsPositionUrl, value);
-        }
+        [ObservableProperty]
         private string searchFileGpsPositionUrl;
 
-        public string SearchFileGpsRadius
-        {
-            get => searchFileGpsRadius;
-            set => SetProperty(ref searchFileGpsRadius, value);
-        }
+        [ObservableProperty]
         private string searchFileGpsRadius = "500";
 
-        public ICommand FindFilesWithPersonCommand => findFilesWithPersonCommand ??= new CommandHandler(FindFilesWithPerson);
-        private ICommand findFilesWithPersonCommand;
-
-        public ICommand FindFilesWithPersonUniqueCommand => findFilesWithPersonUniqueCommand ??= new CommandHandler(FindFilesWithPersonUnique);
-        private ICommand findFilesWithPersonUniqueCommand;
-
-        public ICommand FindFilesWithPersonGroupCommand => findFilesWithPersonGroupCommand ??= new CommandHandler(FindFilesWithPersonGroup);
-        private ICommand findFilesWithPersonGroupCommand;
-
-        public ICommand FindFilesWithPersonsCommand => findFilesWithPersonsCommand ??= new CommandHandler(FindFilesWithPersons);
-        private ICommand findFilesWithPersonsCommand;
-
-        public ICommand FindFilesWithPersonsUniqueCommand => findFilesWithPersonsUniqueCommand ??= new CommandHandler(FindFilesWithPersonsUnique);
-        private ICommand findFilesWithPersonsUniqueCommand;
-
-        public ICommand FindFilesWithPersonsGroupCommand => findFilesWithPersonsGroupCommand ??= new CommandHandler(FindFilesWithPersonsGroup);
-        private ICommand findFilesWithPersonsGroupCommand;
-
-        public ICommand FindFilesWithLocationCommand => findFilesWithLocationCommand ??= new CommandHandler(FindFilesWithLocation);
-        private ICommand findFilesWithLocationCommand;
-
-        public ICommand FindFilesWithTagCommand => findFilesWithTagCommand ??= new CommandHandler(FindFilesWithTag);
-        private ICommand findFilesWithTagCommand;
-
-        public ICommand FindFilesByPersonAgeCommand => findFilesByPersonAgeCommand ??= new CommandHandler(FindFilesByPersonAge);
-        private ICommand findFilesByPersonAgeCommand;
-
-        public string SearchPersonAgeFrom
-        {
-            get => searchPersonAgeFrom;
-            set => SetProperty(ref searchPersonAgeFrom, value);
-        }
+        [ObservableProperty]
         private string searchPersonAgeFrom;
 
-        public string SearchPersonAgeTo
-        {
-            get => searchPersonAgeTo;
-            set => SetProperty(ref searchPersonAgeTo, value);
-        }
+        [ObservableProperty]
         private string searchPersonAgeTo;
-
-        public ICommand FindFilesFromUnionCommand => findFilesFromUnionCommand ??= new CommandHandler(FindFilesFromUnion, FindFilesFromHistoryEnabled);
-        private ICommand findFilesFromUnionCommand;
-
-        public ICommand FindFilesFromIntersectionCommand => findFilesFromIntersectionCommand ??= new CommandHandler(FindFilesFromIntersection, FindFilesFromHistoryEnabled);
-        private ICommand findFilesFromIntersectionCommand;
-
-        public ICommand FindFilesFromDifferenceCommand => findFilesFromDifferenceCommand ??= new CommandHandler(FindFilesFromDifference, FindFilesFromHistoryEnabled);
-        private ICommand findFilesFromDifferenceCommand;
-
+        
         public List<IFolder> Folders { get; } = new();
 
         public IFolder SelectedFolder { get; set; }
@@ -352,87 +217,17 @@ namespace FileDB.ViewModel
 
         #region Meta-data change commands and properties
 
-        public ICommand OpenFileLocationCommand => openFileLocationCommand ??= new CommandHandler(OpenFileLocation, () => HasNonEmptySearchResult);
-        private ICommand openFileLocationCommand;
-
-        public ICommand FindFilesFromMissingCategorizationCommand => findFilesFromMissingCategorizationCommand ??= new CommandHandler(FindFilesFromMissingCategorization);
-        private ICommand findFilesFromMissingCategorizationCommand;
-
-        public ICommand FindFilesFromListCommand => findFilesFromListCommand ??= new CommandHandler(FindFilesFromList);
-        private ICommand findFilesFromListCommand;
-
-        public ICommand FindFilesSelectedFolderCommand => findFilesSelectedFolderCommand ??= new CommandHandler(FindFilesSelectedFolder);
-        private ICommand findFilesSelectedFolderCommand;
-
-        public ICommand ReloadFoldersCommand => reloadFoldersCommand ??= new CommandHandler(ReloadFolders);
-        private ICommand reloadFoldersCommand;
-
-        public string FileListSearch
-        {
-            get => fileListSearch;
-            set => SetProperty(ref fileListSearch, value);
-        }
+        [ObservableProperty]
         private string fileListSearch;
 
-        public string ExportFilesDestinationDirectory
-        {
-            get => exportFilesDestinationDirectory;
-            set => SetProperty(ref exportFilesDestinationDirectory, value);
-        }
+        [ObservableProperty]
         private string exportFilesDestinationDirectory;
 
-        public string ExportFilesHeader
-        {
-            get => exportFilesHeader;
-            set => SetProperty(ref exportFilesHeader, value);
-        }
+        [ObservableProperty]
         private string exportFilesHeader = $"{Utils.ApplicationName} Export";
 
-        public ICommand ExportFileListCommand => exportFileListCommand ??= new CommandHandler(ExportFileList, () => HasNonEmptySearchResult);
-        private ICommand exportFileListCommand;
-
-        public ICommand ExportFilesCommand => exportFilesCommand ??= new CommandHandler(ExportFiles, () => HasNonEmptySearchResult);
-        private ICommand exportFilesCommand;
-
-        public ICommand AddFilePersonCommand => addFilePersonCommand ??= new CommandHandler(AddFilePerson, PersonSelected);
-        private ICommand addFilePersonCommand;
-
-        public ICommand RemoveFilePersonCommand => removeFilePersonCommand ??= new CommandHandler(RemoveFilePerson, PersonSelected);
-        private ICommand removeFilePersonCommand;
-
-        public ICommand AddFileLocationCommand => addFileLocationCommand ??= new CommandHandler(AddFileLocation, LocationSelected);
-        private ICommand addFileLocationCommand;
-
-        public ICommand RemoveFileLocationCommand => removeFileLocationCommand ??= new CommandHandler(RemoveFileLocation, LocationSelected);
-        private ICommand removeFileLocationCommand;
-
-        public ICommand AddFileTagCommand => addFileTagCommand ??= new CommandHandler(AddFileTag, TagSelected);
-        private ICommand addFileTagCommand;
-
-        public ICommand RemoveFileTagCommand => removeFileTagCommand ??= new CommandHandler(RemoveFileTag, TagSelected);
-        private ICommand removeFileTagCommand;
-
-        public ICommand SetFileDescriptionCommand => setFileDescriptionCommand ??= new CommandHandler(SetFileDescription, () => HasNonEmptySearchResult);
-        private ICommand setFileDescriptionCommand;
-
-        public string NewFileDescription
-        {
-            get => newFileDescription;
-            set { SetProperty(ref newFileDescription, value); }
-        }
+        [ObservableProperty]
         private string newFileDescription;
-
-        public ICommand UpdateFileFromMetaDataCommand => updateFileFromMetaDataCommand ??= new CommandHandler(UpdateFileFromMetaData);
-        private ICommand updateFileFromMetaDataCommand;
-
-        public ICommand CreatePersonCommand => createPersonCommand ??= new CommandHandler(CreatePerson);
-        private ICommand createPersonCommand;
-
-        public ICommand CreateLocationCommand => createLocationCommand ??= new CommandHandler(CreateLocation);
-        private ICommand createLocationCommand;
-
-        public ICommand CreateTagCommand => createTagCommand ??= new CommandHandler(CreateTag);
-        private ICommand createTagCommand;
 
         public bool ReadWriteMode
         {
@@ -450,9 +245,6 @@ namespace FileDB.ViewModel
         #endregion
 
         #region Search result
-
-        public ICommand RemoveHistoryItemCommand => removeHistoryItemCommand ??= new CommandHandler((x) => RemoveHistoryItem((UpdateHistoryItem)x));
-        private ICommand removeHistoryItemCommand;
 
         public ObservableCollection<SearchResult> SearchResultHistory { get; } = new();
 
@@ -519,34 +311,19 @@ namespace FileDB.ViewModel
             }
 
             SearchResultHistory.Add(searchResult);
-            OnPropertyChanged(nameof(SearchResultHistory));
+
+            OnPropertyChanged(nameof(FindFilesFromHistoryEnabled));
         }
 
         private SearchResult searchResult = null;
 
-        public int SearchResultIndex
-        {
-            get => searchResultIndex;
-            private set
-            {
-                SetProperty(ref searchResultIndex, value);
-                SearchResultItemNumber = searchResultIndex + 1;
-            }
-        }
+        [ObservableProperty]
+        [AlsoNotifyChangeFor(nameof(SearchResultItemNumber))]
         private int searchResultIndex = -1;
 
-        public int SearchResultItemNumber
-        {
-            get => searchResultItemNumber;
-            private set { SetProperty(ref searchResultItemNumber, value); }
-        }
-        private int searchResultItemNumber = 0;
+        public int SearchResultItemNumber => searchResultIndex + 1;
 
-        public int SearchNumberOfHits
-        {
-            get => searchNumberOfHits;
-            private set { SetProperty(ref searchNumberOfHits, value); }
-        }
+        [ObservableProperty]
         private int searchNumberOfHits = 0;
 
         public int TotalNumberOfFiles { get; }
@@ -718,40 +495,46 @@ namespace FileDB.ViewModel
             ReloadTags();
         }
 
-        public void StopSlideshowAndSelectPrevFile()
+        [ICommand]
+        private void PrevFile()
         {
             StopSlideshow();
             LoadFile(SearchResultIndex - 1);
         }
 
-        public bool PrevFileAvailable()
-        {
-            return SearchResultIndex > 0;
-        }
+        // TODO: fire property changed events for all when search result loaded and when browsing
+        public bool PrevFileAvailable => SearchResultIndex > 0;
+        public bool NextFileAvailable => searchResult != null && SearchResultIndex < searchResult.Count - 1;
+        public bool FirstFileAvailable => searchResult != null && SearchResultIndex > 0;
+        public bool LastFileAvailable => searchResult != null && SearchResultIndex < SearchResult.Count - 1;
+        public bool PrevDirectoryAvailable => HasNonEmptySearchResult;
+        public bool NextDirectoryAvailable => HasNonEmptySearchResult;
 
-        public void StopSlideshowAndSelectNextFile()
+        [ICommand]
+        public void NextFile()
         {
             StopSlideshow();
-            NextFile();
+            SelectNextFile();
         }
 
-        private void NextFile()
+        private void SelectNextFile()
         {
             LoadFile(SearchResultIndex + 1);
         }
 
-        public bool NextFileAvailable()
-        {
-            return searchResult != null && SearchResultIndex < searchResult.Count - 1;
-        }
-
-        private void NextRandomFile()
+        private void SelectNextRandomFile()
         {
             LoadFile(random.Next(SearchResult.Count));
         }
 
-        public void PrevDirectory()
+        [ICommand]
+        private void PrevDirectory()
         {
+            if (!PrevDirectoryAvailable)
+            {
+                return;
+            }
+
             StopSlideshow();
 
             if (SearchResultIndex < 1)
@@ -770,8 +553,14 @@ namespace FileDB.ViewModel
             }
         }
 
-        public void NextDirectory()
+        [ICommand]
+        private void NextDirectory()
         {
+            if (!NextDirectoryAvailable)
+            {
+                return;
+            }
+
             StopSlideshow();
 
             if (SearchResultIndex == -1 || SearchResultIndex == searchResult.Count - 1)
@@ -790,29 +579,21 @@ namespace FileDB.ViewModel
             }
         }
 
-        public void FirstFile()
+        [ICommand]
+        private void FirstFile()
         {
             StopSlideshow();
             LoadFile(0);
         }
 
-        public bool FirstFileAvailable()
-        {
-            return searchResult != null && SearchResultIndex > 0;
-        }
-
-        public void LastFile()
+        [ICommand]
+        private void LastFile()
         {
             StopSlideshow();
             if (searchResult != null)
             {
                 LoadFile(SearchResult.Count - 1);
             }
-        }
-
-        public bool LastFileAvailable()
-        {
-            return searchResult != null && SearchResultIndex < SearchResult.Count - 1;
         }
 
         public void SortFilesByDate(bool preserveSelection)
@@ -853,7 +634,8 @@ namespace FileDB.ViewModel
             }
         }
 
-        public void ToggleSlideshow()
+        [ICommand]
+        private void ToggleSlideshow()
         {
             if (SlideshowActive)
             {
@@ -883,7 +665,7 @@ namespace FileDB.ViewModel
         {
             if (RandomActive)
             {
-                NextRandomFile();
+                SelectNextRandomFile();
             }
             else
             {
@@ -895,12 +677,12 @@ namespace FileDB.ViewModel
                     }
                     else
                     {
-                        NextFile();
+                        SelectNextFile();
                     }
                 }
                 else
                 {
-                    NextFile();
+                    SelectNextFile();
                     if (SearchResultIndex == SearchResult.Count - 1)
                     {
                         StopSlideshow();
@@ -909,7 +691,8 @@ namespace FileDB.ViewModel
             }
         }
 
-        public void FindRandomFiles()
+        [ICommand]
+        private void FindRandomFiles()
         {
             StopSlideshow();
 
@@ -919,7 +702,8 @@ namespace FileDB.ViewModel
             }
         }
 
-        public void FindCurrentDirectoryFiles()
+        [ICommand]
+        private void FindCurrentDirectoryFiles()
         {
             StopSlideshow();
             if (SearchResultIndex == -1)
@@ -933,13 +717,15 @@ namespace FileDB.ViewModel
             SearchResult = new SearchResult(model.DbAccess.SearchFilesByPath(dir));
         }
 
-        public void FindAllFiles()
+        [ICommand]
+        private void FindAllFiles()
         {
             StopSlideshow();
             SearchResult = new SearchResult(model.DbAccess.GetFiles());
         }
 
-        public void FindImportedFiles()
+        [ICommand]
+        private void FindImportedFiles()
         {
             StopSlideshow();
             if (!string.IsNullOrEmpty(ImportedFileList))
@@ -949,7 +735,8 @@ namespace FileDB.ViewModel
             }
         }
 
-        public void FindFilesByText()
+        [ICommand]
+        private void FindFilesByText()
         {
             StopSlideshow();
             if (!string.IsNullOrEmpty(SearchPattern))
@@ -962,20 +749,23 @@ namespace FileDB.ViewModel
             }
         }
 
-        public void FindFilesBySex()
+        [ICommand]
+        private void FindFilesBySex()
         {
             StopSlideshow();
             var sex = Enum.Parse<Sex>(searchBySexSelection);
             SearchResult = new SearchResult(model.DbAccess.SearchFilesBySex(sex));
         }
 
-        public void FindFilesByDate()
+        [ICommand]
+        private void FindFilesByDate()
         {
             StopSlideshow();
             SearchResult = new SearchResult(model.DbAccess.SearchFilesByDate(SearchStartDate.Date, SearchEndDate.Date));
         }
 
-        public void FindFilesByGpsPosition()
+        [ICommand]
+        private void FindFilesByGpsPosition()
         {
             StopSlideshow();
 
@@ -1033,7 +823,8 @@ namespace FileDB.ViewModel
             SearchResult = new SearchResult(nearFiles);
         }
 
-        public void FindFilesWithPerson()
+        [ICommand]
+        private void FindFilesWithPerson()
         {
             StopSlideshow();
             if (SelectedPersonSearch != null)
@@ -1042,7 +833,8 @@ namespace FileDB.ViewModel
             }
         }
 
-        public void FindFilesWithPersonUnique()
+        [ICommand]
+        private void FindFilesWithPersonUnique()
         {
             StopSlideshow();
             if (SelectedPersonSearch != null)
@@ -1053,7 +845,8 @@ namespace FileDB.ViewModel
             }
         }
 
-        public void FindFilesWithPersonGroup()
+        [ICommand]
+        private void FindFilesWithPersonGroup()
         {
             StopSlideshow();
             if (SelectedPersonSearch != null)
@@ -1064,7 +857,8 @@ namespace FileDB.ViewModel
             }
         }
 
-        public void FindFilesWithPersons()
+        [ICommand]
+        private void FindFilesWithPersons()
         {
             StopSlideshow();
             if (SelectedPerson1Search != null && SelectedPerson2Search != null)
@@ -1073,7 +867,8 @@ namespace FileDB.ViewModel
             }
         }
 
-        public void FindFilesWithPersonsUnique()
+        [ICommand]
+        private void FindFilesWithPersonsUnique()
         {
             StopSlideshow();
             if (SelectedPerson1Search != null && SelectedPerson2Search != null)
@@ -1088,7 +883,8 @@ namespace FileDB.ViewModel
             }
         }
 
-        public void FindFilesWithPersonsGroup()
+        [ICommand]
+        private void FindFilesWithPersonsGroup()
         {
             StopSlideshow();
             if (SelectedPerson1Search != null && SelectedPerson2Search != null)
@@ -1103,7 +899,8 @@ namespace FileDB.ViewModel
             }
         }
 
-        public void FindFilesWithLocation()
+        [ICommand]
+        private void FindFilesWithLocation()
         {
             StopSlideshow();
             if (SelectedLocationSearch != null)
@@ -1112,7 +909,8 @@ namespace FileDB.ViewModel
             }
         }
 
-        public void FindFilesWithTag()
+        [ICommand]
+        private void FindFilesWithTag()
         {
             StopSlideshow();
             if (SelectedTagSearch != null)
@@ -1121,7 +919,8 @@ namespace FileDB.ViewModel
             }
         }
 
-        public void FindFilesByPersonAge()
+        [ICommand]
+        private void FindFilesByPersonAge()
         {
             StopSlideshow();
             if (!string.IsNullOrEmpty(SearchPersonAgeFrom))
@@ -1167,12 +966,10 @@ namespace FileDB.ViewModel
             }
         }
 
-        public bool FindFilesFromHistoryEnabled()
-        {
-            return SearchResultHistory.Count >= 2;
-        }
+        public bool FindFilesFromHistoryEnabled => SearchResultHistory.Count >= 2;
 
-        public void FindFilesFromUnion()
+        [ICommand]
+        private void FindFilesFromUnion()
         {
             if (SearchResultHistory.Count >= 2)
             {
@@ -1182,7 +979,8 @@ namespace FileDB.ViewModel
             }
         }
 
-        public void FindFilesFromIntersection()
+        [ICommand]
+        private void FindFilesFromIntersection()
         {
             if (SearchResultHistory.Count >= 2)
             {
@@ -1192,7 +990,8 @@ namespace FileDB.ViewModel
             }
         }
 
-        public void FindFilesFromDifference()
+        [ICommand]
+        private void FindFilesFromDifference()
         {
             if (SearchResultHistory.Count >= 2)
             {
@@ -1204,13 +1003,15 @@ namespace FileDB.ViewModel
             }
         }
 
-        public void FindFilesFromMissingCategorization()
+        [ICommand]
+        private void FindFilesFromMissingCategorization()
         {
             StopSlideshow();
             SearchResult = new SearchResult(model.DbAccess.SearchFilesWithMissingData());
         }
 
-        public void FindFilesFromList()
+        [ICommand]
+        private void FindFilesFromList()
         {
             StopSlideshow();
             if (!string.IsNullOrEmpty(fileListSearch))
@@ -1220,6 +1021,7 @@ namespace FileDB.ViewModel
             }
         }
 
+        [ICommand]
         private void FindFilesSelectedFolder()
         {
             StopSlideshow();
@@ -1238,7 +1040,8 @@ namespace FileDB.ViewModel
             }
         }
 
-        public void OpenFileLocation()
+        [ICommand]
+        private void OpenFileLocation()
         {
             if (!string.IsNullOrEmpty(CurrentFilePath) &&
                 File.Exists(CurrentFilePath))
@@ -1247,12 +1050,14 @@ namespace FileDB.ViewModel
             }
         }
 
-        public void ExportFileList()
+        [ICommand]
+        private void ExportFileList()
         {
             ClipboardService.SetText(Utils.CreateFileList(SearchResult.Files));
         }
 
-        public void ExportFiles()
+        [ICommand]
+        private void ExportFiles()
         {
             if (string.IsNullOrEmpty(ExportFilesHeader))
             {
@@ -1431,7 +1236,8 @@ namespace FileDB.ViewModel
             return string.Join("\n", tagStrings);
         }
 
-        public void AddFilePerson()
+        [ICommand]
+        private void AddFilePerson()
         {
             if (SearchResultIndex == -1)
             {
@@ -1458,7 +1264,8 @@ namespace FileDB.ViewModel
             }
         }
 
-        public void RemoveFilePerson()
+        [ICommand]
+        private void RemoveFilePerson()
         {
             if (SearchResultIndex == -1)
             {
@@ -1478,12 +1285,10 @@ namespace FileDB.ViewModel
             AddUpdateHistoryItem(UpdateHistoryType.TogglePerson, SelectedPersonToUpdate.Id, SelectedPersonToUpdate.Name);
         }
 
-        public bool PersonSelected()
-        {
-            return SelectedPersonToUpdate != null;
-        }
+        public bool PersonSelected => SelectedPersonToUpdate != null;
 
-        public void AddFileLocation()
+        [ICommand]
+        private void AddFileLocation()
         {
             if (SearchResultIndex == -1)
             {
@@ -1510,7 +1315,8 @@ namespace FileDB.ViewModel
             }
         }
 
-        public void RemoveFileLocation()
+        [ICommand]
+        private void RemoveFileLocation()
         {
             if (SearchResultIndex == -1)
             {
@@ -1530,12 +1336,10 @@ namespace FileDB.ViewModel
             AddUpdateHistoryItem(UpdateHistoryType.ToggleLocation, SelectedLocationToUpdate.Id, SelectedLocationToUpdate.Name);
         }
 
-        public bool LocationSelected()
-        {
-            return SelectedLocationToUpdate != null;
-        }
+        public bool LocationSelected => SelectedLocationToUpdate != null;
 
-        public void AddFileTag()
+        [ICommand]
+        private void AddFileTag()
         {
             if (SearchResultIndex == -1)
             {
@@ -1562,7 +1366,8 @@ namespace FileDB.ViewModel
             }
         }
 
-        public void RemoveFileTag()
+        [ICommand]
+        private void RemoveFileTag()
         {
             if (SearchResultIndex == -1)
             {
@@ -1582,12 +1387,10 @@ namespace FileDB.ViewModel
             AddUpdateHistoryItem(UpdateHistoryType.ToggleTag, SelectedTagToUpdate.Id, SelectedTagToUpdate.Name);
         }
 
-        public bool TagSelected()
-        {
-            return SelectedTagToUpdate != null;
-        }
+        public bool TagSelected => SelectedTagToUpdate != null;
 
-        public void SetFileDescription()
+        [ICommand]
+        private void SetFileDescription()
         {
             if (SearchResultIndex != -1)
             {
@@ -1609,7 +1412,8 @@ namespace FileDB.ViewModel
             }
         }
 
-        public void UpdateFileFromMetaData()
+        [ICommand]
+        private void UpdateFileFromMetaData()
         {
             if (SearchResultIndex != -1)
             {
@@ -1627,7 +1431,8 @@ namespace FileDB.ViewModel
             }
         }
 
-        public void CreatePerson()
+        [ICommand]
+        private void CreatePerson()
         {
             var window = new AddPersonWindow
             {
@@ -1636,7 +1441,8 @@ namespace FileDB.ViewModel
             window.ShowDialog();
         }
 
-        public void CreateLocation()
+        [ICommand]
+        private void CreateLocation()
         {
             var window = new AddLocationWindow
             {
@@ -1645,7 +1451,8 @@ namespace FileDB.ViewModel
             window.ShowDialog();
         }
 
-        public void CreateTag()
+        [ICommand]
+        private void CreateTag()
         {
             var window = new AddTagWindow
             {
@@ -1687,6 +1494,7 @@ namespace FileDB.ViewModel
             }
         }
 
+        [ICommand]
         private void ReloadFolders()
         {
             var root = new Folder(RootFolderName);
@@ -1742,28 +1550,8 @@ namespace FileDB.ViewModel
             }
         }
 
-        public ICommand FunctionKeyCommand => functionKeyCommand ??= new CommandHandler(FunctionKey);
-        private ICommand functionKeyCommand;
-
-        public ICommand PrevKeyCommand => prevKeyCommand ??= new CommandHandler(() => { if (PrevFileCommand.CanExecute(null)) { PrevFileCommand.Execute(null); } });
-        private ICommand prevKeyCommand;
-
-        public ICommand NextKeyCommand => nextKeyCommand ??= new CommandHandler(() => { if (NextFileCommand.CanExecute(null)) { NextFileCommand.Execute(null); } });
-        private ICommand nextKeyCommand;
-
-        public ICommand HomeKeyCommand => homeKeyCommand ??= new CommandHandler(() => { if (FirstFileCommand.CanExecute(null)) { FirstFileCommand.Execute(null); } });
-        private ICommand homeKeyCommand;
-
-        public ICommand EndKeyCommand => endKeyCommand ??= new CommandHandler(() => { if (LastFileCommand.CanExecute(null)) { LastFileCommand.Execute(null); } });
-        private ICommand endKeyCommand;
-
-        public ICommand PgDownKeyCommand => pgDownKeyCommand ??= new CommandHandler(() => { if (NextDirectoryCommand.CanExecute(null)) { NextDirectoryCommand.Execute(null); } });
-        private ICommand pgDownKeyCommand;
-
-        public ICommand PgUpKeyCommand => pgUpKeyCommand ??= new CommandHandler(() => { if (PrevDirectoryCommand.CanExecute(null)) { PrevDirectoryCommand.Execute(null); } });
-        private ICommand pgUpKeyCommand;
-
-        private void FunctionKey(object parameter)
+        [ICommand]
+        private void FunctionKey(string parameter)
         {
             if (!ReadWriteMode || !HasNonEmptySearchResult)
             {
@@ -1772,7 +1560,7 @@ namespace FileDB.ViewModel
 
             var fileId = SearchResult.Files[SearchResultIndex].Id;
 
-            var number = int.Parse((string)parameter);
+            var number = int.Parse(parameter);
             var shortcut = $"F{number}";
             var historyItem = UpdateHistoryItems.FirstOrDefault(x => x.Shortcut == shortcut);
             if (historyItem == null)
@@ -1822,6 +1610,7 @@ namespace FileDB.ViewModel
             LoadFile(SearchResultIndex);
         }
 
+        [ICommand]
         private void RemoveHistoryItem(UpdateHistoryItem itemToRemove)
         {
             UpdateHistoryItems.Remove(itemToRemove);

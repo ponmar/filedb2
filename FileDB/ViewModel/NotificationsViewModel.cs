@@ -3,19 +3,23 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Windows.Input;
 using System.Windows.Threading;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using FileDB.Configuration;
 using FileDB.Notifiers;
 
 namespace FileDB.ViewModel
 {
-    public class NotificationsViewModel : ViewModelBase
+    public partial class NotificationsViewModel : ObservableObject
     {
         public ObservableCollection<Notification> Notifications { get; } = new();
 
-        public ICommand ClearNotificationsCommand => clearNotificationsCommand ??= new CommandHandler(() => Model.Model.Instance.ClearNotifications());
-        private ICommand clearNotificationsCommand;
+        [ICommand]
+        private void ClearNotifications()
+        {
+            Model.Model.Instance.ClearNotifications();
+        }
 
         private readonly Model.Model model = Model.Model.Instance;
 

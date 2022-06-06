@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using FileDB.Configuration;
 using FileDB.Sorters;
 using FileDB.Validators;
@@ -11,227 +11,182 @@ using Microsoft.Win32;
 
 namespace FileDB.ViewModel
 {
-     public class SettingsViewModel : ViewModelBase
+     public partial class SettingsViewModel : ObservableObject
     {
-        public string ConfigName
-        {
-            get => configName;
-            set => SetProperty(ref configName, value);
-        }
+        [ObservableProperty]
         private string configName;
 
-        public string Database
-        {
-            get => database;
-            set => SetProperty(ref database, value);
-        }
+        [ObservableProperty]
         private string database;
 
-        public string FilesRootDirectory
-        {
-            get => filesRootDirectory;
-            set => SetProperty(ref filesRootDirectory, value);
-        }
+        [ObservableProperty]
         private string filesRootDirectory;
 
-        public int SlideshowDelay
-        {
-            get => slideshowDelay;
-            set => SetProperty(ref slideshowDelay, value);
-        }
+        [ObservableProperty]
         private int slideshowDelay;
 
-        public int SearchHistorySize
-        {
-            get => searchHistorySize;
-            set => SetProperty(ref searchHistorySize, value);
-        }
+        [ObservableProperty]
         private int searchHistorySize;
 
-        public SortMethod DefaultSortMethod
-        {
-            get => defaultSortMethod;
-            set => SetProperty(ref defaultSortMethod, value);
-        }
+        [ObservableProperty]
         private SortMethod defaultSortMethod;
 
         public List<SortMethodDescription> SortMethods => Utils.GetSortMethods();
 
-        public bool KeepSelectionAfterSort
-        {
-            get => keepSelectionAfterSort;
-            set => SetProperty(ref keepSelectionAfterSort, value);
-        }
+        [ObservableProperty]
         private bool keepSelectionAfterSort;
 
-        public bool IncludeHiddenDirectories
-        {
-            get => includeHiddenDirectories;
-            set => SetProperty(ref includeHiddenDirectories, value);
-        }
+        [ObservableProperty]
         private bool includeHiddenDirectories;
 
-        public string BlacklistedFilePathPatterns
-        {
-            get => blacklistedFilePathPatterns;
-            set => SetProperty(ref blacklistedFilePathPatterns, value);
-        }
+        [ObservableProperty]
         private string blacklistedFilePathPatterns;
 
-        public string WhitelistedFilePathPatterns
-        {
-            get => whitelistedFilePathPatterns;
-            set => SetProperty(ref whitelistedFilePathPatterns, value);
-        }
+        [ObservableProperty]
         private string whitelistedFilePathPatterns;
 
-        public bool ReadOnly
-        {
-            get => readOnly;
-            set => SetProperty(ref readOnly, value);
-        }
+        [ObservableProperty]
         private bool readOnly;
 
-        public bool BackupReminder
-        {
-            get => backupReminder;
-            set => SetProperty(ref backupReminder, value);
-        }
+        [ObservableProperty]
         private bool backupReminder;
 
-        public bool BirthdayReminder
-        {
-            get => birthdayReminder;
-            set => SetProperty(ref birthdayReminder, value);
-        }
+        [ObservableProperty]
         private bool birthdayReminder;
 
-        public bool BirthdayReminderForDeceased
-        {
-            get => birthdayReminderForDeceased;
-            set => SetProperty(ref birthdayReminderForDeceased, value);
-        }
+        [ObservableProperty]
         private bool birthdayReminderForDeceased;
 
-        public bool RipReminder
-        {
-            get => ripReminder;
-            set => SetProperty(ref ripReminder, value);
-        }
+        [ObservableProperty]
         private bool ripReminder;
 
-        public bool MissingFilesRootDirNotification
-        {
-            get => missingFilesRootDirNotification;
-            set => SetProperty(ref missingFilesRootDirNotification, value);
-        }
+        [ObservableProperty]
         private bool missingFilesRootDirNotification;
 
-        public string LocationLink
-        {
-            get => locationLink;
-            set => SetProperty(ref locationLink, value);
-        }
+        [ObservableProperty]
         private string locationLink;
 
-        public int FileToLocationMaxDistance
-        {
-            get => fileToLocationMaxDistance;
-            set => SetProperty(ref fileToLocationMaxDistance, value);
-        }
+        [ObservableProperty]
         private int fileToLocationMaxDistance;
 
-        public WindowMode WindowMode
-        {
-            get => windowMode;
-            set => SetProperty(ref windowMode, value);
-        }
+        [ObservableProperty]
         private WindowMode windowMode;
 
-        public int CastHttpServerPort
-        {
-            get => castHttpServerPort;
-            set => SetProperty(ref castHttpServerPort, value);
-        }
+        [ObservableProperty]
         private int castHttpServerPort;
 
-        public bool CacheFiles
-        {
-            get => cacheFiles;
-            set => SetProperty(ref cacheFiles, value);
-        }
+        [ObservableProperty]
         private bool cacheFiles;
 
         public List<WindowModeDescription> WindowModes => Utils.GetWindowModes();
 
-        public ICommand ResetConfigurationCommand => resetConfigurationCommand ??= new CommandHandler(ResetConfiguration);
-        private ICommand resetConfigurationCommand;
+        [ICommand]
+        private void SetDefaultSlideshowDelay()
+        {
+            SlideshowDelay = DefaultConfigs.Default.SlideshowDelay;
+        }
 
-        public ICommand SaveConfigurationCommand => saveConfigurationCommand ??= new CommandHandler(SaveConfiguration);
-        private ICommand saveConfigurationCommand;
+        [ICommand]
+        private void SetDefaultBackupReminder()
+        {
+            BackupReminder = DefaultConfigs.Default.BackupReminder;
+        }
 
-        public ICommand BrowseDatabaseCommand => browseDatabaseCommand ??= new CommandHandler(BrowseDatabase);
-        private ICommand browseDatabaseCommand;
+        [ICommand]
+        private void SetDefaultSearchHistorySize()
+        {
+            SearchHistorySize = DefaultConfigs.Default.SearchHistorySize;
+        }
 
-        public ICommand BrowseFilesRootDirectoryCommand => browseFilesRootDirectoryCommand ??= new CommandHandler(BrowseFilesRootDirectory);
-        private ICommand browseFilesRootDirectoryCommand;
+        [ICommand]
+        private void SetDefaultDefaultSortMethod()
+        {
+            DefaultSortMethod = DefaultConfigs.Default.DefaultSortMethod;
+        }
 
-        public ICommand CreateDatabaseCommand => createDatabaseCommand ??= new CommandHandler(CreateDatabase, CreateDatabasePossible);
-        private ICommand createDatabaseCommand;
+        [ICommand]
+        private void SetDefaultCastHttpServerPort()
+        {
+            CastHttpServerPort = DefaultConfigs.Default.CastHttpServerPort;
+        }
 
-        public ICommand SetDefaultSlideshowDelayCommand => setDefaultSlideshowDelayCommand ??= new CommandHandler(x => SlideshowDelay = DefaultConfigs.Default.SlideshowDelay);
-        private ICommand setDefaultSlideshowDelayCommand;
+        [ICommand]
+        private void SetDefaultKeepSelectionAfterSort()
+        {
+            KeepSelectionAfterSort = DefaultConfigs.Default.KeepSelectionAfterSort;
+        }
 
-        public ICommand SetDefaultBackupReminderCommand => setDefaultBackupReminderCommand ??= new CommandHandler(x => BackupReminder = DefaultConfigs.Default.BackupReminder);
-        private ICommand setDefaultBackupReminderCommand;
+        [ICommand]
+        private void SetDefaultBlacklistedFilePathPatterns()
+        {
+            BlacklistedFilePathPatterns = DefaultConfigs.Default.BlacklistedFilePathPatterns;
+        }
 
-        public ICommand SetDefaultSearchHistorySizeCommand => setDefaultSearchHistorySizeCommand ??= new CommandHandler(x => SearchHistorySize = DefaultConfigs.Default.SearchHistorySize);
-        private ICommand setDefaultSearchHistorySizeCommand;
+        [ICommand]
+        private void SetDefaultWhitelistedFilePathPatterns()
+        {
+            WhitelistedFilePathPatterns = DefaultConfigs.Default.WhitelistedFilePathPatterns;
+        }
 
-        public ICommand SetDefaultDefaultSortMethodCommand => setDefaultDefaultSortMethodCommand ??= new CommandHandler(x => DefaultSortMethod = DefaultConfigs.Default.DefaultSortMethod);
-        private ICommand setDefaultDefaultSortMethodCommand;
+        [ICommand]
+        private void SetDefaultIncludeHiddenDirectories()
+        {
+            IncludeHiddenDirectories = DefaultConfigs.Default.IncludeHiddenDirectories;
+        }
 
-        public ICommand SetDefaultCastHttpServerPortCommand => setDefaultCastHttpServerPortCommand ??= new CommandHandler(x => CastHttpServerPort = DefaultConfigs.Default.CastHttpServerPort);
-        private ICommand setDefaultCastHttpServerPortCommand;
+        [ICommand]
+        private void SetDefaultReadOnly()
+        {
+            ReadOnly = DefaultConfigs.Default.ReadOnly;
+        }
 
-        public ICommand SetDefaultKeepSelectionAfterSortCommand => setDefaultKeepSelectionAfterSortCommand ??= new CommandHandler(x => KeepSelectionAfterSort = DefaultConfigs.Default.KeepSelectionAfterSort);
-        private ICommand setDefaultKeepSelectionAfterSortCommand;
+        [ICommand]
+        private void SetDefaultCacheFiles()
+        {
+            CacheFiles = DefaultConfigs.Default.CacheFiles;
+        }
 
-        public ICommand SetDefaultBlacklistedFilePathPatternsCommand => setDefaultBlacklistedFilePathPatternsCommand ??= new CommandHandler(x => BlacklistedFilePathPatterns = DefaultConfigs.Default.BlacklistedFilePathPatterns);
-        private ICommand setDefaultBlacklistedFilePathPatternsCommand;
+        [ICommand]
+        private void SetDefaultBirthdayReminder()
+        {
+            BirthdayReminder = DefaultConfigs.Default.BirthdayReminder;
+        }
 
-        public ICommand SetDefaultWhitelistedFilePathPatternsCommand => setDefaultWhitelistedFilePathPatternsCommand ??= new CommandHandler(x => WhitelistedFilePathPatterns = DefaultConfigs.Default.WhitelistedFilePathPatterns);
-        private ICommand setDefaultWhitelistedFilePathPatternsCommand;
+        [ICommand]
+        private void SetDefaultBirthdayReminderForDeceased()
+        {
+            BirthdayReminderForDeceased = DefaultConfigs.Default.BirthdayReminderForDeceased;
+        }
 
-        public ICommand SetDefaultIncludeHiddenDirectoriesCommand => setDefaultIncludeHiddenDirectoriesCommand ??= new CommandHandler(x => IncludeHiddenDirectories = DefaultConfigs.Default.IncludeHiddenDirectories);
-        private ICommand setDefaultIncludeHiddenDirectoriesCommand;
+        [ICommand]
+        private void SetDefaultRipReminder()
+        {
+            RipReminder = DefaultConfigs.Default.RipReminder;
+        }
 
-        public ICommand SetDefaultReadOnlyCommand => setDefaultReadOnlyCommand ??= new CommandHandler(x => ReadOnly = DefaultConfigs.Default.ReadOnly);
-        private ICommand setDefaultReadOnlyCommand;
+        [ICommand]
+        private void SetDefaultMissingFilesRootDirNotification()
+        {
+            MissingFilesRootDirNotification = DefaultConfigs.Default.MissingFilesRootDirNotification;
+        }
 
-        public ICommand SetDefaultCacheFilesCommand => setDefaultCacheFilesCommand ??= new CommandHandler(x => CacheFiles = DefaultConfigs.Default.CacheFiles);
-        private ICommand setDefaultCacheFilesCommand;
+        [ICommand]
+        private void SetDefaultLocationLink()
+        {
+            LocationLink = DefaultConfigs.Default.LocationLink;
+        }
 
-        public ICommand SetDefaultBirthdayReminderCommand => setDefaultBirthdayReminderCommand ??= new CommandHandler(x => BirthdayReminder = DefaultConfigs.Default.BirthdayReminder);
-        private ICommand setDefaultBirthdayReminderCommand;
+        [ICommand]
+        private void SetDefaultFileToLocationMaxDistance()
+        {
+            FileToLocationMaxDistance = DefaultConfigs.Default.FileToLocationMaxDistance;
+        }
 
-        public ICommand SetDefaultBirthdayReminderForDeceasedCommand => setDefaultBirthdayReminderForDeceasedCommand ??= new CommandHandler(x => BirthdayReminderForDeceased = DefaultConfigs.Default.BirthdayReminderForDeceased);
-        private ICommand setDefaultBirthdayReminderForDeceasedCommand;
-
-        public ICommand SetDefaultRipReminderCommand => setDefaultRipReminderCommand ??= new CommandHandler(x => RipReminder = DefaultConfigs.Default.RipReminder);
-        private ICommand setDefaultRipReminderCommand;
-
-        public ICommand SetDefaultMissingFilesRootDirNotificationCommand => setDefaultMissingFilesRootDirNotificationCommand ??= new CommandHandler(x => MissingFilesRootDirNotification = DefaultConfigs.Default.MissingFilesRootDirNotification);
-        private ICommand setDefaultMissingFilesRootDirNotificationCommand;
-
-        public ICommand SetDefaultLocationLinkCommand => setDefaultLocationLinkCommand ??= new CommandHandler(x => LocationLink = DefaultConfigs.Default.LocationLink);
-        private ICommand setDefaultLocationLinkCommand;
-
-        public ICommand SetDefaultFileToLocationMaxDistanceCommand => setDefaultFileToLocationMaxDistanceCommand ??= new CommandHandler(x => FileToLocationMaxDistance = DefaultConfigs.Default.FileToLocationMaxDistance);
-        private ICommand setDefaultFileToLocationMaxDistanceCommand;
-
-        public ICommand SetDefaultWindowModeCommand => setDefaultWindowModeCommand ??= new CommandHandler(x => WindowMode = DefaultConfigs.Default.WindowMode);
-        private ICommand setDefaultWindowModeCommand;
+        [ICommand]
+        private void SetDefaultWindowMode()
+        {
+            WindowMode = DefaultConfigs.Default.WindowMode;
+        }
 
         private readonly Model.Model model = Model.Model.Instance;
 
@@ -265,12 +220,14 @@ namespace FileDB.ViewModel
             CacheFiles = model.Config.CacheFiles;
         }
 
-        public void ResetConfiguration()
+        [ICommand]
+        private void ResetConfiguration()
         {
             UpdateFromConfiguration();
         }
 
-        public void SaveConfiguration()
+        [ICommand]
+        private void SaveConfiguration()
         {
             var config = new Config(
                 ConfigName,
@@ -320,7 +277,8 @@ namespace FileDB.ViewModel
             }
         }
 
-        public void BrowseDatabase()
+        [ICommand]
+        private void BrowseDatabase()
         {
             var fileDialog = new OpenFileDialog()
             {
@@ -333,7 +291,8 @@ namespace FileDB.ViewModel
             }
         }
 
-        public void BrowseFilesRootDirectory()
+        [ICommand]
+        private void BrowseFilesRootDirectory()
         {
             var fileDialog = new OpenFileDialog()
             {
@@ -356,11 +315,18 @@ namespace FileDB.ViewModel
             }
         }
 
+        [ICommand]
         public void CreateDatabase()
         {
-            if (!CreateDatabasePossible())
+            if (string.IsNullOrEmpty(Database))
             {
                 Dialogs.ShowErrorDialog("No database filename specified");
+                return;
+            }
+
+            if (File.Exists(Database))
+            {
+                Dialogs.ShowErrorDialog($"Database {Database} already exists");
                 return;
             }
 
@@ -375,11 +341,6 @@ namespace FileDB.ViewModel
                     Dialogs.ShowErrorDialog(e.Message);
                 }
             }
-        }
-
-        public bool CreateDatabasePossible()
-        {
-            return !string.IsNullOrEmpty(Database) && !File.Exists(Database);
         }
     }
 }

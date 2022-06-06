@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
-using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using FileDB.View;
 using FileDBInterface.DbAccess;
 using FileDBInterface.Model;
@@ -34,34 +35,14 @@ namespace FileDB.ViewModel
         }
     }
 
-    public class PersonsViewModel : ViewModelBase
+    public partial class PersonsViewModel : ObservableObject
     {
-        public ICommand RemovePersonCommand => removePersonCommand ??= new CommandHandler(RemovePerson);
-        private ICommand removePersonCommand;
-
-        public ICommand EditPersonCommand => editPersonCommand ??= new CommandHandler(EditPerson);
-        private ICommand editPersonCommand;
-
-        public ICommand AddPersonCommand => addPersonCommand ??= new CommandHandler(AddPerson);
-        private ICommand addPersonCommand;
-
-        public ICommand PersonSelectionCommand => personSelectionCommand ??= new CommandHandler(PersonSelectionChanged);
-        private ICommand personSelectionCommand;
-
-        public bool ReadWriteMode
-        {
-            get => readWriteMode;
-            set => SetProperty(ref readWriteMode, value);
-        }
+        [ObservableProperty]
         private bool readWriteMode = !Model.Model.Instance.Config.ReadOnly;
 
         public ObservableCollection<Person> Persons { get; } = new();
 
-        public Person SelectedPerson
-        {
-            get => selectedPerson;
-            set => SetProperty(ref selectedPerson, value);
-        }
+        [ObservableProperty]
         private Person selectedPerson;
 
         private readonly Model.Model model = Model.Model.Instance;
@@ -83,7 +64,8 @@ namespace FileDB.ViewModel
             ReloadPersons();
         }
 
-        public void RemovePerson()
+        [ICommand]
+        private void RemovePerson()
         {
             if (Dialogs.ShowConfirmDialog($"Remove {selectedPerson.Firstname} {selectedPerson.Lastname}?"))
             {
@@ -96,7 +78,8 @@ namespace FileDB.ViewModel
             }
         }
 
-        public void EditPerson()
+        [ICommand]
+        private void EditPerson()
         {
             var window = new AddPersonWindow(selectedPerson.GetId())
             {
@@ -105,7 +88,8 @@ namespace FileDB.ViewModel
             window.ShowDialog();
         }
 
-        public void AddPerson()
+        [ICommand]
+        private void AddPerson()
         {
             var window = new AddPersonWindow
             {
@@ -114,9 +98,10 @@ namespace FileDB.ViewModel
             window.ShowDialog();
         }
 
-        public void PersonSelectionChanged(object parameter)
+        [ICommand]
+        private void PersonSelection(Person parameter)
         {
-            SelectedPerson = (Person)parameter;
+            SelectedPerson = parameter;
         }
 
         private void ReloadPersons()

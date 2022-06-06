@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using CommunityToolkit.Mvvm.ComponentModel;
 using FileDB.Comparers;
 using FileDB.Configuration;
 using FileDBInterface.DbAccess;
@@ -34,7 +35,7 @@ namespace FileDB.ViewModel
         }
     }
 
-    public class RipViewModel : ViewModelBase
+    public partial class RipViewModel : ObservableObject
     {
         public string FilterText
         {

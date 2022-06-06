@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using FileDBInterface.DbAccess;
 using FileDBInterface.Exceptions;
 using FileDBInterface.Model;
@@ -18,53 +19,22 @@ namespace FileDB.ViewModel
         public string DateModified { get; set; }
     }
 
-    public class ImportViewModel : ViewModelBase
+    public partial class ImportViewModel : ObservableObject
     {
-        public ICommand ScanNewFilesCommand => scanNewFilesCommand ??= new CommandHandler(ScanAllNewFiles);
-        private ICommand scanNewFilesCommand;
-
-        public ICommand ScanNewFilesInDirectoryCommand => scanNewFilesInDirectoryCommand ??= new CommandHandler(ScanNewFilesInDirectory);
-        private ICommand scanNewFilesInDirectoryCommand;
-
-        public ICommand ImportNewFilesCommand => importNewFilesCommand ??= new CommandHandler(ImportNewFiles);
-        private ICommand importNewFilesCommand;
-
-        public ICommand CopyImportedFileListCommand => copyImportedFileListCommand ??= new CommandHandler(CopyImportedFileList);
-        private ICommand copyImportedFileListCommand;
-
-        public ICommand RemoveFileListCommand => removeFileListCommand ??= new CommandHandler(RemoveFileListMethod);
-        private ICommand removeFileListCommand;
-
-        public string SubdirToScan
-        {
-            get => subdirToScan;
-            set => SetProperty(ref subdirToScan, value);
-        }
+        [ObservableProperty]
         private string subdirToScan;
 
         public ObservableCollection<NewFile> NewFiles { get; } = new();
 
         public bool NewFilesAvailable => NewFiles.Count > 0;
 
-        public string ImportResult
-        {
-            get => importResult;
-            set => SetProperty(ref importResult, value);
-        }
+        [ObservableProperty]
         private string importResult = string.Empty;
 
-        public string ImportedFileList
-        {
-            get => importedFileList;
-            set => SetProperty(ref importedFileList, value);
-        }
+        [ObservableProperty]
         private string importedFileList = string.Empty;
 
-        public string RemoveFileList
-        {
-            get => removeFileList;
-            set => SetProperty(ref removeFileList, value);
-        }
+        [ObservableProperty]
         private string removeFileList;
 
         private readonly Model.Model model = Model.Model.Instance;
@@ -80,12 +50,14 @@ namespace FileDB.ViewModel
             SubdirToScan = model.Config.FilesRootDirectory;
         }
 
-        public void ScanAllNewFiles()
+        [ICommand]
+        private void ScanNewFiles()
         {
-            ScanAllNewFiles(model.Config.FilesRootDirectory);
+            ScanNewFiles(model.Config.FilesRootDirectory);
         }
 
-        public void ScanNewFilesInDirectory()
+        [ICommand]
+        private void ScanNewFilesInDirectory()
         {
             if (string.IsNullOrEmpty(SubdirToScan))
             {
@@ -102,10 +74,10 @@ namespace FileDB.ViewModel
                 Dialogs.ShowErrorDialog($"Specified directory is not within the configured files root directory: {model.Config.FilesRootDirectory}");
                 return;
             }
-            ScanAllNewFiles(SubdirToScan);
+            ScanNewFiles(SubdirToScan);
         }
 
-        public void ScanAllNewFiles(string pathToScan)
+        public void ScanNewFiles(string pathToScan)
         {
             if (!Dialogs.ShowConfirmDialog($"Find all files, not yet imported, from '{pathToScan}'?"))
             {
@@ -137,7 +109,8 @@ namespace FileDB.ViewModel
             }
         }
 
-        public void ImportNewFiles()
+        [ICommand]
+        private void ImportNewFiles()
         {
             if (!Dialogs.ShowConfirmDialog($"Import meta-data from {NewFiles.Count} files?"))
             {
@@ -191,11 +164,13 @@ namespace FileDB.ViewModel
             OnPropertyChanged(nameof(NewFilesAvailable));
         }
 
+        [ICommand]
         private void CopyImportedFileList()
         {
             ClipboardService.SetText(ImportedFileList);
         }
 
+        [ICommand]
         private void RemoveFileListMethod()
         {
             var fileIds = Utils.CreateFileIds(RemoveFileList);

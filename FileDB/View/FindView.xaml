@@ -23,12 +23,12 @@
         <KeyBinding Command="{Binding FunctionKeyCommand}" CommandParameter="10" Key="F10"/>
         <KeyBinding Command="{Binding FunctionKeyCommand}" CommandParameter="11" Key="F11"/>
         <KeyBinding Command="{Binding FunctionKeyCommand}" CommandParameter="12" Key="F12"/>
-        <KeyBinding Command="{Binding PrevKeyCommand}" Key="Left"/>
-        <KeyBinding Command="{Binding NextKeyCommand}" Key="Right"/>
-        <KeyBinding Command="{Binding HomeKeyCommand}" Key="Home"/>
-        <KeyBinding Command="{Binding EndKeyCommand}" Key="End"/>
-        <KeyBinding Command="{Binding PgDownKeyCommand}" Key="PageDown"/>
-        <KeyBinding Command="{Binding PgUpKeyCommand}" Key="PageUp"/>
+        <KeyBinding Command="{Binding PrevFileCommand}" Key="Left"/>
+        <KeyBinding Command="{Binding NextFileCommand}" Key="Right"/>
+        <KeyBinding Command="{Binding FirstFileCommand}" Key="Home"/>
+        <KeyBinding Command="{Binding LastFileCommand}" Key="End"/>
+        <KeyBinding Command="{Binding NextDirectoryCommand}" Key="PageDown"/>
+        <KeyBinding Command="{Binding PrevDirectoryCommand}" Key="PageUp"/>
         <!--<KeyBinding Command="{Binding EscKeyCommand}" Key="F" Modifiers="Alt"/>-->
     </UserControl.InputBindings>
 
@@ -74,7 +74,7 @@
                             <Button Grid.Row="1" Grid.Column="0" Margin="5 5 30 5" HorizontalAlignment="Left" Style="{StaticResource NormalButton}" Command="{Binding FindImportedFilesCommand}" IsEnabled="{Binding ImportedFileList, Converter={StaticResource StringContentToBoolConverter}}" VerticalAlignment="Center" ToolTip="Search for newly added files meta-data">New files</Button>
 
                             <Button Grid.Row="0" Grid.Column="1" Margin="5 5 30 5" Style="{StaticResource NormalButton}" Command="{Binding FindFilesFromMissingCategorizationCommand}" HorizontalAlignment="Left">All without meta-data</Button>
-                            <Button Grid.Row="1" Grid.Column="1" Margin="5 5 30 5" Style="{StaticResource NormalButton}" Command="{Binding FindCurrentDirectoryFilesCommand}" ToolTip="Search all files within current file directory (recursive)" HorizontalAlignment="Left">All from current directory</Button>
+                            <Button Grid.Row="1" Grid.Column="1" Margin="5 5 30 5" Style="{StaticResource NormalButton}" Command="{Binding FindCurrentDirectoryFilesCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip="Search all files within current file directory (recursive)" HorizontalAlignment="Left">All from current directory</Button>
 
                             <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right" Margin="0 0 30 0">
                                 <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="Random files:" Margin="3" VerticalAlignment="Center"/>
@@ -213,7 +213,7 @@
                                 </StackPanel>
                             </StackPanel>
 
-                            <Button Margin="50 5 5 5" Style="{StaticResource NormalButton}" Command="{Binding OpenFileLocationCommand}" VerticalAlignment="Top">Open current file directory</Button>
+                            <Button Margin="50 5 5 5" Style="{StaticResource NormalButton}" Command="{Binding OpenFileLocationCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" VerticalAlignment="Top">Open current file directory</Button>
                         </StackPanel>
                     </TabItem>
                     <TabItem Style="{StaticResource PageTabItem}">
@@ -233,7 +233,7 @@
                                     <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3 0 0 0" Width="200" VerticalAlignment="Center" Text="{Binding ExportFilesDestinationDirectory}" ToolTip="Copy files to destination directory"/>
                                 </StackPanel>
                             </StackPanel>
-                            <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding ExportFilesCommand}" HorizontalAlignment="Left" VerticalAlignment="Center">Export...</Button>
+                            <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding ExportFilesCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" HorizontalAlignment="Left" VerticalAlignment="Center">Export...</Button>
                         </StackPanel>
                     </TabItem>
                     <TabItem Style="{StaticResource PageTabItem}">
@@ -250,9 +250,9 @@
                                 </ListView.ItemTemplate>
                             </ListView>
                             <StackPanel Orientation="Horizontal">
-                                <Button Margin="5" Style="{StaticResource NormalButton}" ToolTip="Combine last two searches" Command="{Binding FindFilesFromUnionCommand}">Union</Button>
-                                <Button Margin="5" Style="{StaticResource NormalButton}" ToolTip="Combine last two searches" Command="{Binding FindFilesFromIntersectionCommand}">Intersection</Button>
-                                <Button Margin="5" Style="{StaticResource NormalButton}" ToolTip="Combine last two searches" Command="{Binding FindFilesFromDifferenceCommand}">Difference</Button>
+                                <Button Margin="5" Style="{StaticResource NormalButton}" ToolTip="Combine last two searches" Command="{Binding FindFilesFromUnionCommand}" IsEnabled="{Binding FindFilesFromHistoryEnabled}">Union</Button>
+                                <Button Margin="5" Style="{StaticResource NormalButton}" ToolTip="Combine last two searches" Command="{Binding FindFilesFromIntersectionCommand}" IsEnabled="{Binding FindFilesFromHistoryEnabled}">Intersection</Button>
+                                <Button Margin="5" Style="{StaticResource NormalButton}" ToolTip="Combine last two searches" Command="{Binding FindFilesFromDifferenceCommand}" IsEnabled="{Binding FindFilesFromHistoryEnabled}">Difference</Button>
                             </StackPanel>
                         </StackPanel>
                     </TabItem>
@@ -279,22 +279,22 @@
                             </TextBlock>
                         </Grid>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Button Style="{StaticResource NavigationButton}" Command="{Binding PrevFileCommand}" ToolTip="Go to previous (left)" Margin="3 3 3 3">&#x2B60;</Button>
-                            <Button Style="{StaticResource NavigationButton}" Command="{Binding NextFileCommand}" ToolTip="Go to next (right)" Margin="3 3 3 3">&#x2B62;</Button>
-                            <Button Style="{StaticResource NavigationButton}" Command="{Binding PrevDirectoryCommand}" ToolTip="Go to previous directory (page down)" Margin="20 3 3 3">&#x21C7;</Button>
-                            <Button Style="{StaticResource NavigationButton}" Command="{Binding NextDirectoryCommand}" ToolTip="Go to next directory (page up)" Margin="3 3 3 3">&#x21C9;</Button>
-                            <Button Style="{StaticResource NavigationButton}" Command="{Binding FirstFileCommand}" ToolTip="Go to first" Margin="20 3 3 3">&#x21E4;</Button>
-                            <Button Style="{StaticResource NavigationButton}" Command="{Binding LastFileCommand}" ToolTip="Go to last" Margin="3 3 3 3">&#x21E5;</Button>
-                            <ToggleButton Style="{StaticResource NavigationToggleButton}" Command="{Binding ToggleSlideshowCommand}" IsChecked="{Binding SlideshowActive}" ToolTip="Toggle slideshow" Margin="20 3 3 3">&#x1F39E;</ToggleButton>
-                            <ToggleButton Style="{StaticResource NavigationToggleButton}" Command="{Binding ToggleRandomCommand}" IsChecked="{Binding RandomActive}" ToolTip="Toggle slideshow random" Margin="3 3 3 3">&#x21AD;</ToggleButton>
-                            <ToggleButton Style="{StaticResource NavigationToggleButton}" Command="{Binding ToggleRepeatCommand}" IsChecked="{Binding RepeatActive}" ToolTip="Toggle slideshow repeat" Margin="3 3 3 3">&#x21BB;</ToggleButton>
+                            <Button Style="{StaticResource NavigationButton}" Command="{Binding PrevFileCommand}" IsEnabled="{Binding PrevFileAvailable}" ToolTip="Go to previous (left)" Margin="3 3 3 3">&#x2B60;</Button>
+                            <Button Style="{StaticResource NavigationButton}" Command="{Binding NextFileCommand}" IsEnabled="{Binding NextFileAvailable}" ToolTip="Go to next (right)" Margin="3 3 3 3">&#x2B62;</Button>
+                            <Button Style="{StaticResource NavigationButton}" Command="{Binding PrevDirectoryCommand}" IsEnabled="{Binding PrevDirectoryAvailable}" ToolTip="Go to previous directory (page down)" Margin="20 3 3 3">&#x21C7;</Button>
+                            <Button Style="{StaticResource NavigationButton}" Command="{Binding NextDirectoryCommand}" IsEnabled="{Binding NextDirectoryAvailable}" ToolTip="Go to next directory (page up)" Margin="3 3 3 3">&#x21C9;</Button>
+                            <Button Style="{StaticResource NavigationButton}" Command="{Binding FirstFileCommand}" IsEnabled="{Binding FirstFileAvailable}" ToolTip="Go to first" Margin="20 3 3 3">&#x21E4;</Button>
+                            <Button Style="{StaticResource NavigationButton}" Command="{Binding LastFileCommand}" IsEnabled="{Binding LastFileAvailable}" ToolTip="Go to last" Margin="3 3 3 3">&#x21E5;</Button>
+                            <ToggleButton Style="{StaticResource NavigationToggleButton}" Command="{Binding ToggleSlideshowCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" IsChecked="{Binding SlideshowActive}" ToolTip="Toggle slideshow" Margin="20 3 3 3">&#x1F39E;</ToggleButton>
+                            <ToggleButton Style="{StaticResource NavigationToggleButton}" IsEnabled="{Binding HasNonEmptySearchResult}" IsChecked="{Binding RandomActive}" ToolTip="Toggle slideshow random" Margin="3 3 3 3">&#x21AD;</ToggleButton>
+                            <ToggleButton Style="{StaticResource NavigationToggleButton}" IsEnabled="{Binding HasNonEmptySearchResult}" IsChecked="{Binding RepeatActive}" ToolTip="Toggle slideshow repeat" Margin="3 3 3 3">&#x21BB;</ToggleButton>
                         </StackPanel>
                         <TextBlock Style="{StaticResource PageInnerTextBlock}" Margin="0 3 0 0" HorizontalAlignment="Center" Text="{Binding CurrentFileToolTip}"/>
                     </StackPanel>
                     <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical">
                         <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
-                            <Button Style="{StaticResource NormalButton}" Command="{Binding ExportFileListCommand}" ToolTip="Copy search result file list">Copy</Button>
-                            <Button Style="{StaticResource NormalButton}" Command="{Binding ClearSearchCommand}" Margin="5" Content="Clear" Width="50" HorizontalAlignment="Right"/>
+                            <Button Style="{StaticResource NormalButton}" Command="{Binding ExportFileListCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip="Copy search result file list">Copy</Button>
+                            <Button Style="{StaticResource NormalButton}" Command="{Binding ClearSearchCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" Margin="5" Content="Clear" Width="50" HorizontalAlignment="Right"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="5">
                             <TextBlock Style="{StaticResource PageInnerTextBlock}" VerticalAlignment="Center" Margin="20 3 7 3">Sort by:</TextBlock>
@@ -345,22 +345,22 @@
 
                                 <TextBlock Style="{StaticResource PageInnerTextBlock}" Grid.Row="0" Grid.Column="0" Text="&#x1F642;" VerticalAlignment="Center" Margin="5" ToolTip="Person"/>
                                 <ComboBox Style="{StaticResource PageInnerComboBox}" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Persons}" VerticalAlignment="Center" SelectedItem="{Binding SelectedPersonToUpdate}" DisplayMemberPath="Name" ToolTip="Person"/>
-                                <Button Grid.Row="0" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding AddFilePersonCommand}" ToolTip="Add selected person to file">+</Button>
-                                <Button Grid.Row="0" Grid.Column="3" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding RemoveFilePersonCommand}" ToolTip="Remove selected person from file">-</Button>
+                                <Button Grid.Row="0" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding AddFilePersonCommand}" IsEnabled="{Binding PersonSelected}" ToolTip="Add selected person to file">+</Button>
+                                <Button Grid.Row="0" Grid.Column="3" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding RemoveFilePersonCommand}" IsEnabled="{Binding PersonSelected}" ToolTip="Remove selected person from file">-</Button>
 
                                 <TextBlock Style="{StaticResource PageInnerTextBlock}" Grid.Row="1" Grid.Column="0" Text="&#x1F3E0;" VerticalAlignment="Center" Margin="5" ToolTip="Location"/>
                                 <ComboBox Style="{StaticResource PageInnerComboBox}" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Locations}" VerticalAlignment="Center" SelectedItem="{Binding SelectedLocationToUpdate}" DisplayMemberPath="Name" ToolTip="Location"/>
-                                <Button Grid.Row="1" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding AddFileLocationCommand}" ToolTip="Add selected location to file">+</Button>
-                                <Button Grid.Row="1" Grid.Column="3" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding RemoveFileLocationCommand}" ToolTip="Remove selected location from file">-</Button>
+                                <Button Grid.Row="1" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding AddFileLocationCommand}" IsEnabled="{Binding LocationSelected}" ToolTip="Add selected location to file">+</Button>
+                                <Button Grid.Row="1" Grid.Column="3" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding RemoveFileLocationCommand}" IsEnabled="{Binding LocationSelected}" ToolTip="Remove selected location from file">-</Button>
 
                                 <TextBlock Style="{StaticResource PageInnerTextBlock}" Grid.Row="2" Grid.Column="0" Text="&#x1F516;" VerticalAlignment="Center" Margin="5" ToolTip="Tag"/>
                                 <ComboBox Style="{StaticResource PageInnerComboBox}" Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Tags}" VerticalAlignment="Center" SelectedItem="{Binding SelectedTagToUpdate}" DisplayMemberPath="Name" ToolTip="Tag"/>
-                                <Button Grid.Row="2" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding AddFileTagCommand}" ToolTip="Add selected tag to file">+</Button>
-                                <Button Grid.Row="2" Grid.Column="3" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding RemoveFileTagCommand}" ToolTip="Remove selected tag from file">-</Button>
+                                <Button Grid.Row="2" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding AddFileTagCommand}" IsEnabled="{Binding TagSelected}" ToolTip="Add selected tag to file">+</Button>
+                                <Button Grid.Row="2" Grid.Column="3" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding RemoveFileTagCommand}" IsEnabled="{Binding TagSelected}" ToolTip="Remove selected tag from file">-</Button>
 
                                 <TextBlock Style="{StaticResource PageInnerTextBlock}" Grid.Row="3" Grid.Column="0" Text="&#x1F4DD;" VerticalAlignment="Center" Margin="5" ToolTip="File description"/>
                                 <TextBox Style="{StaticResource PageInnerTextBox}" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Text="{Binding NewFileDescription}" ToolTip="File description"></TextBox>
-                                <Button Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetFileDescriptionCommand}" ToolTip="Set file description">Set</Button>
+                                <Button Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetFileDescriptionCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip="Set file description">Set</Button>
                             </Grid>
                             <Button Margin="5" Style="{StaticResource NormalButton}" HorizontalAlignment="Left" Command="{Binding UpdateFileFromMetaDataCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip="Reload timestamp and GPS location from file">Reload file meta-data...</Button>
                             <TextBlock Style="{StaticResource PageInnerTextBlock}">Create:</TextBlock>

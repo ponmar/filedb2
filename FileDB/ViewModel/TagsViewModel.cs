@@ -2,7 +2,8 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
-using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using FileDB.View;
 
 namespace FileDB.ViewModel
@@ -24,34 +25,14 @@ namespace FileDB.ViewModel
         }
     }
 
-    public class TagsViewModel : ViewModelBase
+    public partial class TagsViewModel : ObservableObject
     {
-        public ICommand AddTagCommand => addTagCommand ??= new CommandHandler(AddTag);
-        private ICommand addTagCommand;
-
-        public ICommand EditTagCommand => editTagCommand ??= new CommandHandler(EditTag);
-        private ICommand editTagCommand;
-
-        public ICommand RemoveTagCommand => removeTagCommand ??= new CommandHandler(RemoveTag);
-        private ICommand removeTagCommand;
-
-        public ICommand TagSelectionCommand => tagSelectionCommand ??= new CommandHandler(TagSelectionChanged);
-        private ICommand tagSelectionCommand;
-
-        public bool ReadWriteMode
-        {
-            get => readWriteMode;
-            set => SetProperty(ref readWriteMode, value);
-        }
+        [ObservableProperty]
         private bool readWriteMode = !Model.Model.Instance.Config.ReadOnly;
 
         public ObservableCollection<Tag> Tags { get; } = new();
 
-        public Tag SelectedTag
-        {
-            get => selectedTag;
-            set => SetProperty(ref selectedTag, value);
-        }
+        [ObservableProperty]
         private Tag selectedTag;
 
         private readonly Model.Model model = Model.Model.Instance;
@@ -73,7 +54,8 @@ namespace FileDB.ViewModel
             ReloadTags();
         }
 
-        public void RemoveTag()
+        [ICommand]
+        private void RemoveTag()
         {
             if (Dialogs.ShowConfirmDialog($"Remove {selectedTag.Name}?"))
             {
@@ -86,7 +68,8 @@ namespace FileDB.ViewModel
             }
         }
 
-        public void EditTag()
+        [ICommand]
+        private void EditTag()
         {
             var window = new AddTagWindow(selectedTag.GetId())
             {
@@ -95,7 +78,8 @@ namespace FileDB.ViewModel
             window.ShowDialog();
         }
 
-        public void AddTag()
+        [ICommand]
+        private void AddTag()
         {
             var window = new AddTagWindow
             {
@@ -104,9 +88,10 @@ namespace FileDB.ViewModel
             window.ShowDialog();
         }
 
-        public void TagSelectionChanged(object parameter)
+        [ICommand]
+        public void TagSelection(Tag parameter)
         {
-            SelectedTag = (Tag)parameter;
+            SelectedTag = parameter;
         }
 
         private void ReloadTags()

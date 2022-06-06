@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using CommunityToolkit.Mvvm.ComponentModel;
 using FileDB.Configuration;
 using FileDBInterface.DbAccess;
 using FileDBInterface.Model;
@@ -68,7 +69,7 @@ namespace FileDB.ViewModel
         }
     }
 
-    public class BirthdaysViewModel : ViewModelBase
+    public partial class BirthdaysViewModel : ObservableObject
     {
         public string FilterText
         {

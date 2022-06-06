@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using FileDB.Configuration;
 using FileDB.Export;
 using FileDBInterface.Model;
@@ -12,113 +13,40 @@ using TextCopy;
 
 namespace FileDB.ViewModel
 {
-    public class ToolsViewModel : ViewModelBase
+    public partial class ToolsViewModel : ObservableObject
     {
-        public ICommand CreateBackupCommand => createBackupCommand ??= new CommandHandler(CreateBackup);
-        private ICommand createBackupCommand;
-
-        public ICommand CreateCacheCommand => createCacheCommand ??= new CommandHandler(CreateCache);
-        private ICommand createCacheCommand;
-
-        public ICommand DatabaseExportCommand => databaseExportCommand ??= new CommandHandler(DatabaseExport);
-        private ICommand databaseExportCommand;
-
-        public ICommand OpenDatabaseBackupDirectoryCommand => openDatabaseBackupDirectoryCommand ??= new CommandHandler(OpenDatabaseBackupDirectory);
-        private ICommand openDatabaseBackupDirectoryCommand;
-
-        public ICommand OpenCacheDirectoryCommand => openCacheDirectoryCommand ??= new CommandHandler(OpenCacheDirectory);
-        private ICommand openCacheDirectoryCommand;
-
-        public ICommand FindImportedNoLongerApplicableFilesCommand => findImportedNoLongerApplicableFilesCommand ??= new CommandHandler(FindImportedNoLongerApplicableFiles);
-        private ICommand findImportedNoLongerApplicableFilesCommand;
-
-        public ICommand CopyImportedNoLongerApplicableFilesListCommand => copyImportedNoLongerApplicableFilesListCommand ??= new CommandHandler(CopyImportedNoLongerApplicableFilesList);
-        private ICommand copyImportedNoLongerApplicableFilesListCommand;
-
-        public ICommand DatabaseValidationCommand => databaseValidationCommand ??= new CommandHandler(DatabaseValidation);
-        private ICommand databaseValidationCommand;
-
-        public ICommand CopyInvalidFileListCommand => copyInvalidFileListCommand ??= new CommandHandler(CopyInvalidFileList);
-        private ICommand copyInvalidFileListCommand;
-
-        public ICommand FileFinderCommand => fileFinderCommand ??= new CommandHandler(FileFinder);
-        private ICommand fileFinderCommand;
-
-        public ICommand CopyFileFinderResultCommand => copyFileFinderResultCommand ??= new CommandHandler(CopyFileFinderResult);
-        private ICommand copyFileFinderResultCommand;
-
-        public string BackupResult
-        {
-            get => backupResult;
-            set => SetProperty(ref backupResult, value);
-        }
+        [ObservableProperty]
         private string backupResult;
 
-        public string CacheResult
-        {
-            get => cacheResult;
-            set => SetProperty(ref cacheResult, value);
-        }
+        [ObservableProperty]
         private string cacheResult = "Not executed.";
 
         public ObservableCollection<BackupFile> BackupFiles { get; } = new();
 
-        public string FindImportedNoLongerApplicableFilesResult
-        {
-            get => findImportedNoLongerApplicableFilesResult;
-            set => SetProperty(ref findImportedNoLongerApplicableFilesResult, value);
-        }
+        [ObservableProperty]
         private string findImportedNoLongerApplicableFilesResult = "Not executed.";
 
-        public string ImportedNoLongerApplicableFileList
-        {
-            get => importedNoLongerApplicableFileList;
-            set => SetProperty(ref importedNoLongerApplicableFileList, value);
-        }
+        [ObservableProperty]
         private string importedNoLongerApplicableFileList = string.Empty;
 
-        public string DatabaseValidationResult
-        {
-            get => databaseValidationResult;
-            set => SetProperty(ref databaseValidationResult, value);
-        }
+        [ObservableProperty]
         private string databaseValidationResult = "Not executed.";
 
         public ObservableCollection<string> DabaseValidationErrors { get; } = new();
 
-        public string InvalidFileList
-        {
-            get => invalidFileList;
-            set => SetProperty(ref invalidFileList, value);
-        }
+        [ObservableProperty]
         private string invalidFileList = string.Empty;
 
-        public string FileFinderResult
-        {
-            get => fileFinderResult;
-            set => SetProperty(ref fileFinderResult, value);
-        }
+        [ObservableProperty]
         private string fileFinderResult = "Not executed.";
 
-        public string MissingFilesList
-        {
-            get => missingFilesList;
-            set => SetProperty(ref missingFilesList, value);
-        }
+        [ObservableProperty]
         private string missingFilesList = string.Empty;
 
-        public string DatabaseExportDirectory
-        {
-            get => databaseExportDirectory;
-            set => SetProperty(ref databaseExportDirectory, value);
-        }
+        [ObservableProperty]
         private string databaseExportDirectory;
 
-        public string DatabaseExportResult
-        {
-            get => databaseExportResult;
-            set => SetProperty(ref databaseExportResult, value);
-        }
+        [ObservableProperty]
         private string databaseExportResult = "Not executed.";
 
         private readonly Model.Model model = Model.Model.Instance;
@@ -128,6 +56,7 @@ namespace FileDB.ViewModel
             ScanBackupFiles();
         }
 
+        [ICommand]
         private void CreateBackup()
         {
             try
@@ -141,11 +70,13 @@ namespace FileDB.ViewModel
             }
         }
 
+        [ICommand]
         private void OpenDatabaseBackupDirectory()
         {
             Utils.OpenDirectoryInExplorer(new DatabaseBackup().BackupDirectory);
         }
 
+        [ICommand]
         private void CreateCache()
         {
             CacheResult = "Running...";
@@ -190,6 +121,7 @@ namespace FileDB.ViewModel
             CacheResult = $"Cached {numCachedFiles} files.";
         }
 
+        [ICommand]
         private void OpenCacheDirectory()
         {
             var configDir = new AppDataConfig<Config>(Utils.ApplicationName).ConfigDirectory;
@@ -221,6 +153,7 @@ namespace FileDB.ViewModel
             OnPropertyChanged(nameof(BackupResult));
         }
 
+        [ICommand]
         private void FindImportedNoLongerApplicableFiles()
         {
             var blacklistedFilePathPatterns = model.Config.BlacklistedFilePathPatterns.Split(";");
@@ -230,11 +163,13 @@ namespace FileDB.ViewModel
             FindImportedNoLongerApplicableFilesResult = $"Found {notApplicableFiles.Count} files that now should be filtered.";
         }
 
+        [ICommand]
         private void CopyImportedNoLongerApplicableFilesList()
         {
             ClipboardService.SetText(ImportedNoLongerApplicableFileList);
         }
 
+        [ICommand]
         private void DatabaseValidation()
         {
             DabaseValidationErrors.Clear();
@@ -298,12 +233,14 @@ namespace FileDB.ViewModel
             OnPropertyChanged(nameof(DabaseValidationErrors));
         }
 
+        [ICommand]
         private void CopyInvalidFileList()
         {
             ClipboardService.SetText(InvalidFileList);
             DatabaseValidationResult = "File list copied to clipboard.";
         }
 
+        [ICommand]
         private void FileFinder()
         {
             FileFinderResult = "Running, please wait...";
@@ -318,12 +255,14 @@ namespace FileDB.ViewModel
             MissingFilesList = Utils.CreateFileList(missingFiles);
         }
 
+        [ICommand]
         private void CopyFileFinderResult()
         {
             ClipboardService.SetText(MissingFilesList);
             FileFinderResult = "File list copied to clipboard.";
         }
 
+        [ICommand]
         private void DatabaseExport()
         {
             if (!Directory.Exists(DatabaseExportDirectory))
