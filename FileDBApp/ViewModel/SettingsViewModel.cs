@@ -1,22 +1,15 @@
-﻿using FileDBApp.Model;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using FileDBApp.Model;
 using FileDBApp.Services;
 using Newtonsoft.Json;
 using System.Diagnostics;
 
 namespace FileDBApp.ViewModel
 {
-    public class SettingsViewModel : ViewModelBase
+    public partial class SettingsViewModel : ObservableObject
     {
-        public Command ImportCommand { get; }
-
-        public Command ClearCommand { get; }
-
-        public SettingsViewModel()
-        {
-            ImportCommand = new Command(async () => await ImportAsync());
-            ClearCommand = new Command(async () => await ClearAsync());
-        }
-
+        [ICommand]
         private async Task ImportAsync()
         {
             var customFileType = new FilePickerFileType(
@@ -51,6 +44,7 @@ namespace FileDBApp.ViewModel
             }
         }
 
+        [ICommand]
         private async Task ClearAsync()
         {
             try

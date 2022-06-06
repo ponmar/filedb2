@@ -1,4 +1,6 @@
-﻿using FileDBApp.Comparers;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using FileDBApp.Comparers;
 using FileDBApp.Model;
 using FileDBApp.Services;
 using FileDBApp.View;
@@ -46,48 +48,28 @@ namespace FileDBApp.ViewModel
         }
     }
 
-    public class BirthdaysViewModel : ViewModelBase
+    public partial class BirthdaysViewModel : ObservableObject
     {
         public ObservableCollection<Person> Persons { get; } = new();
 
-        public bool IsBusy
-        {
-            get => isBusy;
-            set
-            {
-                if (SetProperty(ref isBusy, value))
-                {
-                    OnPropertyChanged(nameof(IsNotBusy));
-                }
-            }
-        }
-        private bool isBusy;
+        [ObservableProperty]
+        [AlsoNotifyChangeFor(nameof(IsNotBusy))]
+        bool isBusy;
 
-        public bool IsNotBusy => !IsBusy;
+        public bool IsNotBusy => !isBusy;
 
-        public bool IsRefreshing
-        {
-            get => isRefreshing;
-            set => SetProperty(ref isRefreshing, value);
-        }
-        private bool isRefreshing;
-
-        public Command UpdatePersonsCommand { get; }
-
-        public Command GoToPersonDetailsCommand { get; }
+        [ObservableProperty]
+        bool isRefreshing;
 
         private readonly PersonService personService;
 
         public BirthdaysViewModel(PersonService personService)
         {
             this.personService = personService;
-            
-            UpdatePersonsCommand = new Command(async () => await UpdatePersonsAsync());
-            UpdatePersonsCommand.Execute(null);
-
-            GoToPersonDetailsCommand = new Command(async (x) => await GoToPersonDetailsAsync((x as Person).PersonModel));
+            _ = UpdatePersonsAsync();
         }
 
+        [ICommand]
         private async Task GoToPersonDetailsAsync(PersonModel personModel)
         {
             if (personModel is null)
@@ -102,6 +84,7 @@ namespace FileDBApp.ViewModel
                 });
         }
 
+        [ICommand]
         private async Task UpdatePersonsAsync()
         {
             IsBusy = true;
