@@ -257,7 +257,6 @@ namespace FileDB.ViewModel
                 {
                     if (searchResult != null)
                     {
-                        SearchNumberOfHits = searchResult.Count;
                         if (searchResult.Count > 0)
                         {
                             LoadFile(0);
@@ -271,12 +270,10 @@ namespace FileDB.ViewModel
                     }
                     else
                     {
-                        SearchNumberOfHits = 0;
                         ResetFile();
                     }
 
-                    OnPropertyChanged(nameof(HasSearchResult));
-                    OnPropertyChanged(nameof(HasNonEmptySearchResult));
+                    FireSearchResultUpdatedEvents();
                     FireBrowsingEnabledEvents();
                 }
             }
@@ -324,8 +321,7 @@ namespace FileDB.ViewModel
 
         public int SearchResultItemNumber => searchResultIndex + 1;
 
-        [ObservableProperty]
-        private int searchNumberOfHits = 0;
+        public int SearchNumberOfHits => SearchResult != null ? SearchResult.Count : 0;
 
         public int TotalNumberOfFiles { get; }
 
@@ -337,88 +333,40 @@ namespace FileDB.ViewModel
 
         #region Current file properties
 
-        public string CurrentFileToolTip
-        {
-            get => currentFileToolTip;
-            private set => SetProperty(ref currentFileToolTip, value);
-        }
+        [ObservableProperty]
         private string currentFileToolTip;
 
-        public string CurrentFileInternalDirectoryPath
-        {
-            get => currentFileInternalDirectoryPath;
-            private set => SetProperty(ref currentFileInternalDirectoryPath, value);
-        }
+        [ObservableProperty]
         private string currentFileInternalDirectoryPath;
 
-        public string CurrentFilePath
-        {
-            get => currentFilePath;
-            private set => SetProperty(ref currentFilePath, value);
-        }
+        [ObservableProperty]
         private string currentFilePath;
 
-        public string CurrentFileDescription
-        {
-            get => currentFileDescription;
-            private set => SetProperty(ref currentFileDescription, value);
-        }
+        [ObservableProperty]
         private string currentFileDescription;
 
-        public string CurrentFileDateTime
-        {
-            get => currentFiledateTime;
-            private set => SetProperty(ref currentFiledateTime, value);
-        }
+        [ObservableProperty]
         private string currentFiledateTime;
 
-        public string CurrentFileHeader
-        {
-            get => currentFileHeader;
-            private set => SetProperty(ref currentFileHeader, value);
-        }
+        [ObservableProperty]
         private string currentFileHeader;
 
-        public string CurrentFilePosition
-        {
-            get => currentFilePosition;
-            private set => SetProperty(ref currentFilePosition, value);
-        }
+        [ObservableProperty]
         private string currentFilePosition;
 
-        public Uri CurrentFilePositionLink
-        {
-            get => currentFilePositionLink;
-            private set => SetProperty(ref currentFilePositionLink, value);
-        }
+        [ObservableProperty]
         private Uri currentFilePositionLink;
 
-        public string CurrentFilePersons
-        {
-            get => currentFilePersons;
-            private set => SetProperty(ref currentFilePersons, value);
-        }
+        [ObservableProperty]
         private string currentFilePersons;
 
-        public string CurrentFileLocations
-        {
-            get => currentFileLocations;
-            private set => SetProperty(ref currentFileLocations, value);
-        }
+        [ObservableProperty]
         private string currentFileLocations;
 
-        public string CurrentFileTags
-        {
-            get => currentFileTags;
-            private set => SetProperty(ref currentFileTags, value);
-        }
+        [ObservableProperty]
         private string currentFileTags;
 
-        public string CurrentFileLoadError
-        {
-            get => currentFileLoadError;
-            private set => SetProperty(ref currentFileLoadError, value);
-        }
+        [ObservableProperty]
         private string currentFileLoadError;
 
         #endregion
@@ -509,6 +457,13 @@ namespace FileDB.ViewModel
         public bool LastFileAvailable => searchResult != null && SearchResultIndex < SearchResult.Count - 1;
         public bool PrevDirectoryAvailable => HasNonEmptySearchResult;
         public bool NextDirectoryAvailable => HasNonEmptySearchResult;
+
+        private void FireSearchResultUpdatedEvents()
+        {
+            OnPropertyChanged(nameof(HasSearchResult));
+            OnPropertyChanged(nameof(HasNonEmptySearchResult));
+            OnPropertyChanged(nameof(SearchNumberOfHits));
+        }
 
         private void FireBrowsingEnabledEvents()
         {
