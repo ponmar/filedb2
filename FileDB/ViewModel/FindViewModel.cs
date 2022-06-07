@@ -229,17 +229,8 @@ namespace FileDB.ViewModel
         [ObservableProperty]
         private string newFileDescription;
 
-        public bool ReadWriteMode
-        {
-            get => readWriteMode;
-            set
-            {
-                if (SetProperty(ref readWriteMode, value))
-                {
-                    OnPropertyChanged(nameof(ShowUpdateSection));
-                }
-            }
-        }
+        [ObservableProperty]
+        [AlsoNotifyChangeFor(nameof(ShowUpdateSection))]
         private bool readWriteMode = !Model.Model.Instance.Config.ReadOnly;
 
         #endregion
@@ -278,6 +269,7 @@ namespace FileDB.ViewModel
                 }
             }
         }
+        private SearchResult searchResult = null;
 
         private void SortSearchResult(bool preserveSelection)
         {
@@ -312,8 +304,6 @@ namespace FileDB.ViewModel
 
             OnPropertyChanged(nameof(FindFilesFromHistoryEnabled));
         }
-
-        private SearchResult searchResult = null;
 
         [ObservableProperty]
         [AlsoNotifyChangeFor(nameof(SearchResultItemNumber))]
