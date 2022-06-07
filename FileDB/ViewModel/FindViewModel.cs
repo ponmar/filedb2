@@ -346,7 +346,7 @@ namespace FileDB.ViewModel
         private string currentFileDescription;
 
         [ObservableProperty]
-        private string currentFiledateTime;
+        private string currentFileDateTime;
 
         [ObservableProperty]
         private string currentFileHeader;
@@ -373,23 +373,42 @@ namespace FileDB.ViewModel
 
         public ObservableCollection<PersonToUpdate> Persons { get; } = new();
 
-        public PersonToUpdate SelectedPersonToUpdate { get; set; }
+        [ObservableProperty]
+        [AlsoNotifyChangeFor(nameof(PersonSelected))]
+        private PersonToUpdate selectedPersonToUpdate;
 
-        public PersonToUpdate SelectedPersonSearch { get; set; }
-        public PersonToUpdate SelectedPerson1Search { get; set; }
-        public PersonToUpdate SelectedPerson2Search { get; set; }
+        public bool PersonSelected => SelectedPersonToUpdate != null;
+
+        [ObservableProperty]
+        private PersonToUpdate selectedPersonSearch;
+
+        [ObservableProperty]
+        private PersonToUpdate selectedPerson1Search;
+
+        [ObservableProperty]
+        private PersonToUpdate selectedPerson2Search;
 
         public ObservableCollection<LocationToUpdate> Locations { get; } = new();
 
-        public LocationToUpdate SelectedLocationToUpdate { get; set; }
+        [ObservableProperty]
+        [AlsoNotifyChangeFor(nameof(LocationSelected))]
+        public LocationToUpdate selectedLocationToUpdate;
 
-        public LocationToUpdate SelectedLocationSearch { get; set; }
+        public bool LocationSelected => SelectedLocationToUpdate != null;
+
+        [ObservableProperty]
+        private LocationToUpdate selectedLocationSearch;
 
         public ObservableCollection<TagToUpdate> Tags { get; } = new();
 
-        public TagToUpdate SelectedTagToUpdate { get; set; }
+        [ObservableProperty]
+        [AlsoNotifyChangeFor(nameof(TagSelected))]
+        private TagToUpdate selectedTagToUpdate;
 
-        public TagToUpdate SelectedTagSearch { get; set; }
+        public bool TagSelected => SelectedTagToUpdate != null;
+
+        [ObservableProperty]
+        private TagToUpdate selectedTagSearch;
 
         public ObservableCollection<UpdateHistoryItem> UpdateHistoryItems { get; } = new();
 
@@ -1264,8 +1283,6 @@ namespace FileDB.ViewModel
             AddUpdateHistoryItem(UpdateHistoryType.TogglePerson, SelectedPersonToUpdate.Id, SelectedPersonToUpdate.Name);
         }
 
-        public bool PersonSelected => SelectedPersonToUpdate != null;
-
         [ICommand]
         private void AddFileLocation()
         {
@@ -1315,8 +1332,6 @@ namespace FileDB.ViewModel
             AddUpdateHistoryItem(UpdateHistoryType.ToggleLocation, SelectedLocationToUpdate.Id, SelectedLocationToUpdate.Name);
         }
 
-        public bool LocationSelected => SelectedLocationToUpdate != null;
-
         [ICommand]
         private void AddFileTag()
         {
@@ -1365,8 +1380,6 @@ namespace FileDB.ViewModel
             LoadFile(SearchResultIndex);
             AddUpdateHistoryItem(UpdateHistoryType.ToggleTag, SelectedTagToUpdate.Id, SelectedTagToUpdate.Name);
         }
-
-        public bool TagSelected => SelectedTagToUpdate != null;
 
         [ICommand]
         private void SetFileDescription()
