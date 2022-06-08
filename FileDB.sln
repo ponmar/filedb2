@@ -18,10 +18,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repo", "Repo", "{85037002-FF8E-4BCD-9B1B-C22F8FE64F5D}"
 	ProjectSection(SolutionItems) = preProject
 		CHANGES.txt = CHANGES.txt
+		LICENSE.txt = LICENSE.txt
+		README.md = README.md
 		release.bat = release.bat
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileDBApp", "FileDBApp\FileDBApp.csproj", "{E53A09DE-58CC-42D8-8973-A7489807A204}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileDBApp", "FileDBApp\FileDBApp.csproj", "{E53A09DE-58CC-42D8-8973-A7489807A204}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
