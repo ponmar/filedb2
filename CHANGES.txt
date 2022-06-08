@@ -1,3 +1,10 @@
+2.13:
+* Add FileDB version and export date to exported database JSON file
+* Align columns at notification page and show notification icons
+* Add scrollbar to limit number of shown backup files
+* File meta-data toggle history reworked (new items added at end to not change used keybindings)
+* Refactored MVVM code based on nuget package CommunityToolkit.Mvvm
+
 2.12:
 * Position search handles more Google Maps URL formats
 * Add person filtering via text input for birtday and rest in peace page

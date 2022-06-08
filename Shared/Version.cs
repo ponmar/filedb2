@@ -2,7 +2,7 @@
 {
     public class ReleaseInformation
     {
-        public static Version Version = new(2, 12);
+        public static Version Version = new(2, 13);
 
         public static string VersionString => $"{Version.Major}.{Version.Minor}";
 
