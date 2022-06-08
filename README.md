@@ -23,9 +23,15 @@ FileDB cons:
 
 The FileDB main application is the GUI towards the internal database that stores the file meta-data. It is a C# WPF application. The application uses one configuration file that, for example, points out the file collection root directory.
 
+A demo configuration with some images and meta-data is available to show case the FileDB potential.
+
 ### MAUI App ###
 
-TODO
+A .NET MAUI app is being developed for visualizing exported FileDB data.
+
+### 3rd Party Application Integrations ###
+
+FileDB gives you the possibility to export FileDB data to your own applications.
 
 ## Getting Started ##
 
