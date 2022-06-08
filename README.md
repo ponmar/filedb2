@@ -45,7 +45,7 @@ FileDB prerequisites:
 
 ### Download ###
 
-Download official releases [here](https://drive.google.com/drive/folders/11Szo61hu4RMdCkmkg08y4zbVgI-BYYAf).
+Download official releases [here](https://drive.google.com/drive/folders/1GyZpdDcMdUOlvvtwtKUuylazoy7XaIcm).
 
 ### Documentation ###
 
