@@ -10,9 +10,12 @@ namespace FileDB.ViewModel
 
     public class AboutViewModel
     {
+        private const string ChangesFilePath = "CHANGES.txt";
+        private readonly string LicensesJsonFilePath = Path.Combine(AppContext.BaseDirectory, "Resources", "licenses.json");
+
         public string DownloadLink => "https://drive.google.com/drive/folders/1GyZpdDcMdUOlvvtwtKUuylazoy7XaIcm?usp=sharing";
 
-        public string Changes => File.Exists("CHANGES.txt") ? File.ReadAllText("CHANGES.txt") : "Not deployed";
+        public string Changes => File.Exists(ChangesFilePath) ? File.ReadAllText(ChangesFilePath) : "Not deployed";
 
         public string Heading => $"About {Utils.ApplicationName} version {ReleaseInformation.VersionString}";
 
@@ -20,7 +23,7 @@ namespace FileDB.ViewModel
 
         public AboutViewModel()
         {
-            var licensesJson = File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "Resources", "licenses.json"));
+            var licensesJson = File.ReadAllText(LicensesJsonFilePath);
             var licenses = JsonConvert.DeserializeObject<List<LicenseFileFormatDto>>(licensesJson);
             licenses.ForEach(x => Licenses.Add(x));
         }

@@ -11,7 +11,7 @@
     <DockPanel>
         <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageHeading}" Text="{Binding Heading}"></TextBlock>
         <ScrollViewer>
-            <StackPanel Orientation="Vertical" Margin="10">
+            <StackPanel Orientation="Vertical" Style="{StaticResource PageStackPanel}">
                 <TextBlock Style="{StaticResource PageSubHeading}">Getting Started</TextBlock>
                 <Border Style="{StaticResource BorderGroup}">
                     <Grid>
@@ -45,7 +45,7 @@
 
                 <TextBlock Style="{StaticResource PageSubHeading}">Notes About Your Files Collection</TextBlock>
                 <Border Style="{StaticResource BorderGroup}">
-                    <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Vertical" Style="{StaticResource PageStackPanel}">
                         <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap">FileDB only modifies data in the configured database. It does not modify any files in your files collection. Files are read when importing meta-data and when viewing files.</TextBlock>
                         <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap">Although any directory structure can be imported to FileDB, take a moment to think about the directory structure before importing the meta-data. This layout has been proven to work very well:</TextBlock>
 
@@ -75,7 +75,7 @@
 
                 <TextBlock Style="{StaticResource PageSubHeading}">Command Line Arguments</TextBlock>
                 <Border Style="{StaticResource BorderGroup}">
-                    <StackPanel Orientation="Horizontal" Margin="10">
+                    <StackPanel Orientation="Horizontal" Style="{StaticResource PageStackPanel}">
                         <TextBlock Style="{StaticResource PageTextBlock}">--demo</TextBlock>
                         <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap">Enable demo configuration to play around with</TextBlock>
                     </StackPanel>
@@ -83,7 +83,7 @@
 
                 <TextBlock Style="{StaticResource PageSubHeading}">Downloads</TextBlock>
                 <Border Style="{StaticResource BorderGroup}">
-                    <StackPanel Orientation="Horizontal" Margin="10">
+                    <StackPanel Orientation="Horizontal" Style="{StaticResource PageStackPanel}">
                         <TextBlock Style="{StaticResource PageTextBlock}" Text="Releases:"/>
                         <TextBlock Style="{StaticResource PageTextBlock}">
                             <Hyperlink NavigateUri="{Binding DownloadLink}" RequestNavigate="OpenUri">
@@ -95,17 +95,17 @@
 
                 <TextBlock Style="{StaticResource PageSubHeading}">Changelog</TextBlock>
                 <Border Style="{StaticResource BorderGroup}">
-                    <TextBlock Style="{StaticResource PageTextBlock}" Text="{Binding Changes}" TextWrapping="Wrap"/>
+                    <TextBlock Style="{StaticResource PageTextBlock}" Margin="20" Text="{Binding Changes}" TextWrapping="Wrap"/>
                 </Border>
 
                 <TextBlock Style="{StaticResource PageSubHeading}">License</TextBlock>
                 <Border Style="{StaticResource BorderGroup}">
-                    <TextBlock Style="{StaticResource PageTextBlock}" Text="MIT (see LICENSE.txt)"/>
+                    <TextBlock Style="{StaticResource PageTextBlock}" Margin="20" Text="MIT (see LICENSE.txt)"/>
                 </Border>
                 
                 <TextBlock Style="{StaticResource PageSubHeading}">NuGet Package Licenses</TextBlock>
                 <Border Style="{StaticResource BorderGroup}">
-                    <ListView ItemsSource="{Binding Licenses}" Grid.IsSharedSizeScope="True" Background="Transparent" BorderThickness="0">
+                    <ListView ItemsSource="{Binding Licenses}" Grid.IsSharedSizeScope="True" Background="Transparent" BorderThickness="0" Margin="10">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <Grid>
