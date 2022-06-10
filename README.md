@@ -62,3 +62,5 @@ So far this project has been developed by me, Pontus Markstrom, and I would love
 ## Licenses ##
 
 This project uses the [MIT license](LICENSE.txt).
+
+See licenses for used NuGet packages at the About page in the FileDB application.
