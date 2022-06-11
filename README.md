@@ -43,21 +43,32 @@ FileDB prerequisites:
 
 - .NET6
 
-### Download ###
+### Downloads ###
 
 Download official releases [here](https://drive.google.com/drive/folders/1GyZpdDcMdUOlvvtwtKUuylazoy7XaIcm).
 
-### Documentation ###
+## Developer Information ##
+
+### Building from Source ###
+1. Clone GIT repository
+2. Checkout wanted branch (master for released features, dev for development)
+3. Open FileDB.sln in Visual Studio 2022
+4. Disable FileDBApp project if not wanted (it requires .NET MAUI)
+5. Build solution
+6. Set FileDB project as startup project
+7. Start project
+
+### Contribute ###
+
+So far this project has been developed by me, Pontus Markstrom, and I would love to see that change both regarding number of developers and users. Feel free to contribute!
+
+## Documentation ##
 
 The release contains the following documentation:
 
 * This README
 * [Changelog](CHANGES.txt)
 * Main application About page
-
-## Contribute ##
-
-So far this project has been developed by me, Pontus Markstrom, and I would love to see that change both regarding number of developers and users. Feel free to contribute!
 
 ## Licenses ##
 
