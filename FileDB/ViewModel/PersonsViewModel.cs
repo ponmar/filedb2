@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using FileDB.Sorters;
 using FileDB.View;
 using FileDBInterface.DbAccess;
 using FileDBInterface.Model;
@@ -107,8 +108,9 @@ namespace FileDB.ViewModel
         private void ReloadPersons()
         {
             Persons.Clear();
-
-            var persons = model.DbAccess.GetPersons().Select(pm => new Person(pm.Id)
+            var persons = model.DbAccess.GetPersons().ToList();
+            persons.Sort(new PersonModelByNameSorter());
+            var personVms = persons.Select(pm => new Person(pm.Id)
             {
                 Firstname = pm.Firstname,
                 Lastname = pm.Lastname,
@@ -119,9 +121,9 @@ namespace FileDB.ViewModel
                 ProfileFileId = pm.ProfileFileId,
                 Sex = pm.Sex,
             });
-            foreach (var person in persons)
+            foreach (var personVm in personVms)
             {
-                Persons.Add(person);
+                Persons.Add(personVm);
             }
         }
 

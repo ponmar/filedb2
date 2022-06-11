@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using FileDB.Sorters;
 using FileDB.View;
 
 namespace FileDB.ViewModel
@@ -102,8 +103,9 @@ namespace FileDB.ViewModel
         {
             Locations.Clear();
 
-            var locations = model.DbAccess.GetLocations().Select(lm => new Location(lm.Id) { Name = lm.Name, Description = lm.Description, Position = lm.Position });
-            foreach (var location in locations)
+            var locations = model.DbAccess.GetLocations().ToList();
+            locations.Sort(new LocationModelByNameSorter());
+            foreach (var location in locations.Select(lm => new Location(lm.Id) { Name = lm.Name, Description = lm.Description, Position = lm.Position }))
             {
                 Locations.Add(location);
             }

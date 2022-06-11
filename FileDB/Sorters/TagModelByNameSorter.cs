@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using FileDB.ViewModel;
+using FileDBInterface.Model;
 
 namespace FileDB.Sorters
 {
-    public class TagToUpdateSorter : IComparer<TagToUpdate>
+    public class TagModelByNameSorter : IComparer<TagModel>
     {
-        public int Compare(TagToUpdate x, TagToUpdate y)
+        public int Compare(TagModel x, TagModel y)
         {
             return x.Name.CompareTo(y.Name);
         }

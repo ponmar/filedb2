@@ -586,22 +586,22 @@ namespace FileDB.ViewModel
 
         public void SortFilesByDate(bool preserveSelection)
         {
-            SortFiles(new FilesByDateSorter(), false, preserveSelection);
+            SortFiles(new FilesModelByDateSorter(), false, preserveSelection);
         }
 
         public void SortFilesByDateDesc(bool preserveSelection)
         {
-            SortFiles(new FilesByDateSorter(), true, preserveSelection);
+            SortFiles(new FilesModelByDateSorter(), true, preserveSelection);
         }
 
         public void SortFilesByPath(bool preserveSelection)
         {
-            SortFiles(new FilesByPathSorter(), false, preserveSelection);
+            SortFiles(new FilesModelByPathSorter(), false, preserveSelection);
         }
 
         public void SortFilesByPathDesc(bool preserveSelection)
         {
-            SortFiles(new FilesByPathSorter(), true, preserveSelection);
+            SortFiles(new FilesModelByPathSorter(), true, preserveSelection);
         }
 
         private void SortFiles(IComparer<FilesModel> comparer, bool desc, bool preserveSelection)
@@ -1446,9 +1446,9 @@ namespace FileDB.ViewModel
         private void ReloadPersons()
         {
             Persons.Clear();
-            var persons = model.DbAccess.GetPersons().Select(p => new PersonToUpdate() { Id = p.Id, Name = p.Firstname + " " + p.Lastname }).ToList();
-            persons.Sort(new PersonToUpdateSorter());
-            foreach (var person in persons)
+            var persons = model.DbAccess.GetPersons().ToList();
+            persons.Sort(new PersonModelByNameSorter());
+            foreach (var person in persons.Select(p => new PersonToUpdate() { Id = p.Id, Name = $"{p.Firstname} {p.Lastname}" }))
             {
                 Persons.Add(person);
             }
@@ -1457,9 +1457,9 @@ namespace FileDB.ViewModel
         private void ReloadLocations()
         {
             Locations.Clear();
-            var locations = model.DbAccess.GetLocations().Select(l => new LocationToUpdate() { Id = l.Id, Name = l.Name }).ToList();
-            locations.Sort(new LocationToUpdateSorter());
-            foreach (var location in locations)
+            var locations = model.DbAccess.GetLocations().ToList();
+            locations.Sort(new LocationModelByNameSorter());
+            foreach (var location in locations.Select(l => new LocationToUpdate() { Id = l.Id, Name = l.Name }))
             {
                 Locations.Add(location);
             }
@@ -1468,9 +1468,9 @@ namespace FileDB.ViewModel
         private void ReloadTags()
         {
             Tags.Clear();
-            var tags = model.DbAccess.GetTags().Select(t => new TagToUpdate() { Id = t.Id, Name = t.Name }).ToList();
-            tags.Sort(new TagToUpdateSorter());
-            foreach (var tag in tags)
+            var tags = model.DbAccess.GetTags().ToList();
+            tags.Sort(new TagModelByNameSorter());
+            foreach (var tag in tags.Select(t => new TagToUpdate() { Id = t.Id, Name = t.Name }))
             {
                 Tags.Add(tag);
             }

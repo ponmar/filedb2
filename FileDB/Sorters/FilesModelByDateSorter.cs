@@ -4,7 +4,7 @@ using FileDBInterface.Model;
 
 namespace FileDB.Sorters
 {
-    public class FilesByDateSorter : IComparer<FilesModel>
+    public class FilesModelByDateSorter : IComparer<FilesModel>
     {
         public int Compare(FilesModel x, FilesModel y)
         {

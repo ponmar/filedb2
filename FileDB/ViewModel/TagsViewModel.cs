@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using FileDB.Sorters;
 using FileDB.View;
 
 namespace FileDB.ViewModel
@@ -98,8 +99,9 @@ namespace FileDB.ViewModel
         {
             Tags.Clear();
 
-            var tags = model.DbAccess.GetTags().Select(tm => new Tag(tm.Id) { Name = tm.Name });
-            foreach (var tag in tags)
+            var tags = model.DbAccess.GetTags().ToList();
+            tags.Sort(new TagModelByNameSorter());
+            foreach (var tag in tags.Select(tm => new Tag(tm.Id) { Name = tm.Name }))
             {
                 Tags.Add(tag);
             }

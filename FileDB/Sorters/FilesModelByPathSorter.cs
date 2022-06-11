@@ -3,7 +3,7 @@ using FileDBInterface.Model;
 
 namespace FileDB.Sorters
 {
-    public class FilesByPathSorter : IComparer<FilesModel>
+    public class FilesModelByPathSorter : IComparer<FilesModel>
     {
         public int Compare(FilesModel x, FilesModel y)
         {

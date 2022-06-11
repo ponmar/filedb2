@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
 using FileDB.Sorters;
 using FileDB.ViewModel;
+using FileDBInterface.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FileDBTests.Sorters
 {
     [TestClass]
-    public class TagToUpdateSorterTests
+    public class TagModelByNameSorterTests
     {
-        private TagToUpdateSorter sorter;
+        private TagModelByNameSorter sorter;
 
         [TestInitialize]
         public void Initialize()
@@ -19,11 +20,11 @@ namespace FileDBTests.Sorters
         [TestMethod]
         public void Compare()
         {
-            var items = new List<TagToUpdate>()
+            var items = new List<TagModel>()
             {
-                new TagToUpdate() { Id = 0, Name = "aaa" },
-                new TagToUpdate() { Id = 2, Name = "ccc" },
-                new TagToUpdate() { Id = 1, Name = "bbb" },
+                new TagModel() { Id = 0, Name = "aaa" },
+                new TagModel() { Id = 2, Name = "ccc" },
+                new TagModel() { Id = 1, Name = "bbb" },
             };
 
             items.Sort(sorter);

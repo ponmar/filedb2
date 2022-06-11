@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using FileDB.Sorters;
-using FileDB.ViewModel;
+using FileDBInterface.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FileDBTests.Sorters
 {
     [TestClass]
-    public class LocationToUpdateSorterTests
+    public class PersonModelByNameSorterTests
     {
-        private LocationToUpdateSorter sorter;
+        private PersonModelByNameSorter sorter;
 
         [TestInitialize]
         public void Initialize()
@@ -19,11 +19,11 @@ namespace FileDBTests.Sorters
         [TestMethod]
         public void Compare()
         {
-            var items = new List<LocationToUpdate>()
+            var items = new List<PersonModel>()
             {
-                new LocationToUpdate() { Id = 0, Name = "aaa" },
-                new LocationToUpdate() { Id = 2, Name = "ccc" },
-                new LocationToUpdate() { Id = 1, Name = "bbb" },
+                new PersonModel() { Id = 0, Firstname = "A", Lastname = "A" },
+                new PersonModel() { Id = 2, Firstname = "A", Lastname = "B" },
+                new PersonModel() { Id = 1, Firstname = "C", Lastname = "C" },
             };
 
             items.Sort(sorter);
