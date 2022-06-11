@@ -22,8 +22,8 @@ namespace FileDBTests.Sorters
             var items = new List<PersonModel>()
             {
                 new PersonModel() { Id = 0, Firstname = "A", Lastname = "A" },
-                new PersonModel() { Id = 2, Firstname = "A", Lastname = "B" },
-                new PersonModel() { Id = 1, Firstname = "C", Lastname = "C" },
+                new PersonModel() { Id = 2, Firstname = "C", Lastname = "C" },
+                new PersonModel() { Id = 1, Firstname = "A", Lastname = "B" },
             };
 
             items.Sort(sorter);
