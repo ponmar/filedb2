@@ -2,18 +2,17 @@
 
 ## About ##
 
-This is a project for storing, maintaining and presenting meta-data (persons, locations and tags) for files. A typical use case is to make a picture and video collection searchable and for running slideshows.
+This is a project for storing, maintaining and presenting meta-data (persons, locations and tags) for files. A typical use case is to make a picture and video collection searchable and for running slideshows with extra information.
 
 FileDB provides a main application, a MAUI based app and ways for exporting data to 3rd party applications.
 
 FileDB pros:
 
 * Own your data: No data is shared with other parties
-* Control your data: All data is stored in an SQLite database and may be converted for future use depending on your future needs (no lock-in effect)
+* Control your data: All data is stored in an SQLite database and may be converted for future use depending on your future needs (no lock-in effect). The FileDB application has support for exporting to JSON format.
 * Search cababilities: Find files given a basic search criteria. Combine basic search criterias for creating an advanced search criteria
-* Present extra statisticts: People age, etc are presented when browsing files
-* 3rd party software integrations: Data may be exported to be used by other software and there is also an API to be used by custom software
-* Open source: Contributions and feedback are welcome!
+* File browser supports showing extra data such as person age
+* 3rd party software integrations: the internal database and file searches can be exported
 
 FileDB cons:
 
