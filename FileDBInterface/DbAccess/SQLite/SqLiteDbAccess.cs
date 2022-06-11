@@ -13,15 +13,15 @@ using FileDBInterface.Exceptions;
 using FileDBInterface.Validators;
 using FileDBInterface.FilesystemAccess;
 
-namespace FileDBInterface.DbAccess
+namespace FileDBInterface.DbAccess.SQLite
 {
-    public class DbAccess : IDbAccess
+    public class SqLiteDbAccess : IDbAccess
     {
-        private static readonly ILog log = LogManager.GetLogger(nameof(DbAccess));
+        private static readonly ILog log = LogManager.GetLogger(nameof(SqLiteDbAccess));
 
         private readonly string database;
 
-        public DbAccess(string database)
+        public SqLiteDbAccess(string database)
         {
             var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
             XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
@@ -123,13 +123,13 @@ namespace FileDBInterface.DbAccess
         public FilesModel GetFileById(int id)
         {
             using var connection = DatabaseUtils.CreateConnection(database);
-            return connection.QueryFirst<FilesModel>("select * from [files] where Id = @id", new { id = id });
+            return connection.QueryFirst<FilesModel>("select * from [files] where Id = @id", new { id });
         }
 
         public FilesModel GetFileByPath(string path)
         {
             using var connection = DatabaseUtils.CreateConnection(database);
-            return connection.QueryFirstOrDefault<FilesModel>("select * from [files] where Path = @path", new { path = path });
+            return connection.QueryFirstOrDefault<FilesModel>("select * from [files] where Path = @path", new { path });
         }
 
         public IEnumerable<FilesModel> SearchFilesByDate(DateTime start, DateTime end)
@@ -215,7 +215,7 @@ namespace FileDBInterface.DbAccess
             {
                 using var connection = DatabaseUtils.CreateConnection(database);
                 var sql = "update [files] set Datetime = @datetime, Position = @position where Id = @id";
-                connection.Execute(sql, new { datetime = fileMetadata.Datetime, position = fileMetadata.Position, id = id });
+                connection.Execute(sql, new { datetime = fileMetadata.Datetime, position = fileMetadata.Position, id });
             }
             catch (SQLiteException e)
             {
@@ -234,7 +234,7 @@ namespace FileDBInterface.DbAccess
             {
                 using var connection = DatabaseUtils.CreateConnection(database);
                 var sql = "update [files] set Description = @description where Id = @id";
-                connection.Execute(sql, new { description = description, id = id });
+                connection.Execute(sql, new { description, id });
             }
             catch (SQLiteException e)
             {
@@ -246,49 +246,49 @@ namespace FileDBInterface.DbAccess
         {
             using var connection = DatabaseUtils.CreateConnection(database);
             var sql = "delete from [files] where Id = @id";
-            connection.Execute(sql, new { id = id });
+            connection.Execute(sql, new { id });
         }
 
         public void InsertFilePerson(int fileId, int personId)
         {
             using var connection = DatabaseUtils.CreateConnection(database);
             var sql = "insert into [filepersons] (FileId, PersonId) values (@fileId, @personId)";
-            connection.Execute(sql, new { fileId = fileId, personId = personId });
+            connection.Execute(sql, new { fileId, personId });
         }
 
         public void DeleteFilePerson(int fileId, int personId)
         {
             using var connection = DatabaseUtils.CreateConnection(database);
             var sql = "delete from [filepersons] where FileId = @fileId and PersonId = @personId";
-            connection.Execute(sql, new { fileId = fileId, personId = personId });
+            connection.Execute(sql, new { fileId, personId });
         }
 
         public void InsertFileLocation(int fileId, int locationId)
         {
             using var connection = DatabaseUtils.CreateConnection(database);
             var sql = "insert into [filelocations] (Fileid, LocationId) values (@fileId, @locationId)";
-            connection.Execute(sql, new { fileId = fileId, locationId = locationId });
+            connection.Execute(sql, new { fileId, locationId });
         }
 
         public void DeleteFileLocation(int fileId, int locationId)
         {
             using var connection = DatabaseUtils.CreateConnection(database);
             var sql = "delete from [filelocations] where FileId = @fileId and LocationId = @locationId";
-            connection.Execute(sql, new { fileId = fileId, locationId = locationId });
+            connection.Execute(sql, new { fileId, locationId });
         }
 
         public void InsertFileTag(int fileId, int tagId)
         {
             using var connection = DatabaseUtils.CreateConnection(database);
             var sql = "insert into [filetags] (FileId, TagId) values (@fileId, @tagId)";
-            connection.Execute(sql, new { fileId = fileId, tagId = tagId });
+            connection.Execute(sql, new { fileId, tagId });
         }
 
         public void DeleteFileTag(int fileId, int tagId)
         {
             using var connection = DatabaseUtils.CreateConnection(database);
             var sql = "delete from [filetags] where FileId = @fileId and TagId = @tagId";
-            connection.Execute(sql, new { fileId = fileId, tagId = tagId });
+            connection.Execute(sql, new { fileId, tagId });
         }
 
         #endregion
@@ -323,13 +323,13 @@ namespace FileDBInterface.DbAccess
         {
             using var connection = DatabaseUtils.CreateConnection(database);
             var sql = "select * from [persons] where Sex = @sex";
-            return connection.Query<PersonModel>(sql, new { sex = sex });
+            return connection.Query<PersonModel>(sql, new { sex });
         }
 
         public PersonModel GetPersonById(int id)
         {
             using var connection = DatabaseUtils.CreateConnection(database);
-            return connection.QueryFirst<PersonModel>("select * from [persons] where Id = @ID", new { id = id });
+            return connection.QueryFirst<PersonModel>("select * from [persons] where Id = @ID", new { id });
         }
 
         public bool HasPersonId(int id)
@@ -384,7 +384,7 @@ namespace FileDBInterface.DbAccess
         {
             using var connection = DatabaseUtils.CreateConnection(database);
             var sql = "delete from [persons] where Id = @id";
-            connection.Execute(sql, new { id = id });
+            connection.Execute(sql, new { id });
         }
 
         #endregion
@@ -418,7 +418,7 @@ namespace FileDBInterface.DbAccess
         public LocationModel GetLocationById(int id)
         {
             using var connection = DatabaseUtils.CreateConnection(database);
-            return connection.QueryFirst<LocationModel>("select * from [locations] where Id = @id", new { id = id });
+            return connection.QueryFirst<LocationModel>("select * from [locations] where Id = @id", new { id });
         }
 
         public bool HasLocationId(int id)
@@ -474,7 +474,7 @@ namespace FileDBInterface.DbAccess
         {
             using var connection = DatabaseUtils.CreateConnection(database);
             var sql = "delete from [locations] where Id = @id";
-            connection.Execute(sql, new { id = id });
+            connection.Execute(sql, new { id });
         }
 
         #endregion
@@ -508,7 +508,7 @@ namespace FileDBInterface.DbAccess
         public TagModel GetTagById(int id)
         {
             using var connection = DatabaseUtils.CreateConnection(database);
-            return connection.QueryFirst<TagModel>("select * from [tags] where Id = @id", new { id = id });
+            return connection.QueryFirst<TagModel>("select * from [tags] where Id = @id", new { id });
         }
 
         public bool HasTagId(int id)
@@ -563,7 +563,7 @@ namespace FileDBInterface.DbAccess
         {
             using var connection = DatabaseUtils.CreateConnection(database);
             var sql = "delete from [tags] where Id = @id";
-            connection.Execute(sql, new { id = id });
+            connection.Execute(sql, new { id });
         }
 
         #endregion

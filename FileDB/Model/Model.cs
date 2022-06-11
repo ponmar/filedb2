@@ -11,6 +11,7 @@ using SharpCaster.Models;
 using SharpCaster.Services;
 using SharpCaster.Controllers;
 using System.Threading.Tasks;
+using FileDBInterface.DbAccess.SQLite;
 
 namespace FileDB.Model
 {
@@ -105,7 +106,7 @@ namespace FileDB.Model
         {
             try
             {
-                dbAccess = new DbAccess(Config.Database);
+                dbAccess = new SqLiteDbAccess(Config.Database);
             }
             catch (DatabaseWrapperException)
             {
