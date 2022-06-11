@@ -1090,18 +1090,6 @@ namespace FileDB.ViewModel
             return !Directory.EnumerateFileSystemEntries(path).Any();
         }
 
-        private Uri CreatePositionLink(string position)
-        {
-            // TODO: Move this code somewhere else
-            var positionParts = position.Split(" ");
-            if (positionParts.Length == 2 && !string.IsNullOrEmpty(model.Config.LocationLink))
-            {
-                var link = model.Config.LocationLink.Replace("LAT", positionParts[0]).Replace("LON", positionParts[1]);
-                return new Uri(link);
-            }
-            return null;
-        }
-
         private void LoadFile(int index)
         {
             if (SearchResult != null &&
@@ -1119,7 +1107,7 @@ namespace FileDB.ViewModel
                 CurrentFileDescription = selection.Description ?? string.Empty;
                 CurrentFileDateTime = GetFileDateTimeString(selection.Datetime);
                 CurrentFilePosition = selection.Position ?? string.Empty;
-                CurrentFilePositionLink = selection.Position != null ? CreatePositionLink(selection.Position) : null;
+                CurrentFilePositionLink = selection.Position != null ? Utils.CreatePositionUri(selection.Position, model.Config.LocationLink) : null;
                 CurrentFilePersons = GetFilePersonsString(selection);
                 CurrentFileLocations = GetFileLocationsString(selection.Id);
                 CurrentFileTags = GetFileTagsString(selection.Id);

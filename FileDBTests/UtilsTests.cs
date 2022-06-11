@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using FileDB;
 using FileDBInterface.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -49,6 +50,20 @@ namespace FileDBTests
             Assert.AreEqual(result[0], 1);
             Assert.AreEqual(result[1], 3);
             Assert.AreEqual(result[2], 2);
+        }
+
+        [TestMethod]
+        public void CreatePositionLink()
+        {
+            var result = Utils.CreatePositionLink("10.5 11.2", "https://example.com/LAT_LON");
+            Assert.AreEqual("https://example.com/10.5_11.2", result);
+        }
+
+        [TestMethod]
+        public void CreatePositionUri()
+        {
+            var result = Utils.CreatePositionUri("10.5 11.2", "https://example.com/LAT_LON");
+            Assert.AreEqual(new Uri("https://example.com/10.5_11.2"), result);
         }
     }
 }

@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:FileDB.View"
-             xmlns:converters="clr-namespace:FileDB.Converters"
+             xmlns:converters="clr-namespace:FileDB.Converters" xmlns:viewmodel="clr-namespace:FileDB.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:TagsViewModel}"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
 
@@ -20,9 +20,9 @@
             <Border Style="{StaticResource BorderGroup}" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <StackPanel Style="{StaticResource PageStackPanel}">
                     <StackPanel Orientation="Horizontal" Visibility="{Binding ReadWriteMode, Converter={StaticResource BoolToVis}}">
-                        <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding AddTagCommand}">Add tag...</Button>
-                        <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding EditTagCommand}" IsEnabled="{Binding SelectedTag, Converter={StaticResource ValueToBoolConverter}}">Edit selected tag...</Button>
-                        <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding RemoveTagCommand}" IsEnabled="{Binding SelectedTag, Converter={StaticResource ValueToBoolConverter}}">Delete selected tag...</Button>
+                        <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding AddTagCommand}">Add...</Button>
+                        <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding EditTagCommand}" IsEnabled="{Binding SelectedTag, Converter={StaticResource ValueToBoolConverter}}">Edit selected...</Button>
+                        <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding RemoveTagCommand}" IsEnabled="{Binding SelectedTag, Converter={StaticResource ValueToBoolConverter}}">Delete selected...</Button>
                     </StackPanel>
 
                     <DataGrid Margin="10" ItemsSource="{Binding Tags}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single">

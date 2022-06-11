@@ -111,5 +111,27 @@ namespace FileDB
             var age = DatabaseUtils.GetYearsAgo(fileDatetime.Value, personDateOfBirth.Value);
             return $" ({age})";
         }
+
+        public static string CreatePositionLink(string position, string locationLinkConfig)
+        {
+            if (string.IsNullOrEmpty(position) || string.IsNullOrEmpty(locationLinkConfig))
+            {
+                return null;
+            }
+
+            var positionParts = position.Split(" ");
+            if (positionParts.Length != 2)
+            {
+                return null;
+            }
+
+            return locationLinkConfig.Replace("LAT", positionParts[0]).Replace("LON", positionParts[1]);
+        }
+
+        public static Uri CreatePositionUri(string position, string locationLinkConfig)
+        {
+            var link = CreatePositionLink(position, locationLinkConfig);
+            return link != null ? new Uri(link) : null;
+        }
     }
 }

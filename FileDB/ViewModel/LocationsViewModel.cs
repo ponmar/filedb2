@@ -38,7 +38,10 @@ namespace FileDB.ViewModel
         public ObservableCollection<Location> Locations { get; } = new();
 
         [ObservableProperty]
+        [AlsoNotifyChangeFor(nameof(SelectedLocationHasPosition))]
         private Location selectedLocation;
+
+        public bool SelectedLocationHasPosition => selectedLocation != null && !string.IsNullOrEmpty(selectedLocation.Position);
 
         private readonly Model.Model model = Model.Model.Instance;
 
@@ -91,6 +94,16 @@ namespace FileDB.ViewModel
                 Owner = Application.Current.MainWindow
             };
             window.ShowDialog();
+        }
+
+        [ICommand]
+        private void ShowLocationOnMap()
+        {
+            var link = Utils.CreatePositionLink(selectedLocation.Position, model.Config.LocationLink);
+            if (link != null)
+            {
+                Utils.OpenUriInBrowser(link);
+            }
         }
 
         [ICommand]
