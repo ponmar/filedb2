@@ -12,7 +12,7 @@ FileDB pros:
 * Control your data: All data is stored in an SQLite database and may be converted for future use depending on your future needs (no lock-in effect). The FileDB application has support for exporting to JSON format.
 * Search cababilities: Find files given a basic search criteria. Combine basic search criterias for creating an advanced search criteria
 * File browser supports showing extra data such as person age
-* 3rd party software integrations: the internal database and file searches can be exported
+* 3rd party software integrations
 
 FileDB cons:
 
@@ -20,17 +20,17 @@ FileDB cons:
 
 ### Main Application ###
 
-The FileDB main application is the GUI towards the internal database that stores the file meta-data. It is a C# WPF application. The application uses one configuration file that, for example, points out the file collection root directory.
+The FileDB main application is the GUI towards the internal database that stores the file meta-data. The application uses one configuration file that, for example, points out the file collection root directory.
 
 A demo configuration with some images and meta-data is available to show case the FileDB potential.
 
-### MAUI App ###
+### App ###
 
-A .NET MAUI app is being developed for visualizing exported FileDB data.
+An app is being developed for visualizing exported FileDB data.
 
-### 3rd Party Application Integrations ###
+### 3rd Party Software Integrations ###
 
-FileDB gives you the possibility to export FileDB data to your own applications.
+FileDB gives you the possibility to export the internal database and file searches to your own applications.
 
 ## Getting Started ##
 
@@ -55,6 +55,12 @@ The release contains the following documentation:
 * Main application About page
 
 ## Developer Information ##
+
+### About ###
+
+The main application is a C# WPF application. Accessing the internal database and files are done via the FileDBInterface project. Dapper is used for all database access.
+
+The app is based on .NET MAUI. It has been tested on Android and Windows.
 
 ### Building from Source ###
 
