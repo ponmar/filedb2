@@ -46,11 +46,20 @@ FileDB prerequisites:
 
 Download official releases [here](https://drive.google.com/drive/folders/1GyZpdDcMdUOlvvtwtKUuylazoy7XaIcm).
 
+## Documentation ##
+
+The release contains the following documentation:
+
+* This README
+* [Changelog](CHANGES.txt)
+* Main application About page
+
 ## Developer Information ##
 
 ### Building from Source ###
+
 1. Clone GIT repository
-2. Checkout wanted branch (master for released features, dev for development)
+2. Checkout wanted branch
 3. Open FileDB.sln in Visual Studio 2022
 4. Disable FileDBApp project if not wanted (it requires .NET MAUI)
 5. Build solution
@@ -61,13 +70,11 @@ Download official releases [here](https://drive.google.com/drive/folders/1GyZpdD
 
 So far this project has been developed by me, Pontus Markstrom, and I would love to see that change both regarding number of developers and users. Feel free to contribute!
 
-## Documentation ##
+### Branch Strategy ###
 
-The release contains the following documentation:
-
-* This README
-* [Changelog](CHANGES.txt)
-* Main application About page
+* master: branch used for official releases in combination with vX.Y version tags
+* dev: development branch, merged to master when ready for new release
+* feature/*: feature-branches merged to dev via pull-requests
 
 ## Licenses ##
 
