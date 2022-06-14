@@ -11,7 +11,7 @@ FileDB pros:
 * Own your data: No data is shared with other parties
 * Control your data: All data is stored in an SQLite database and may be converted for future use depending on your future needs (no lock-in effect). The FileDB application has support for exporting to JSON format.
 * Search cababilities: Find files given a basic search criteria. Combine basic search criterias for creating an advanced search criteria
-* File browser supports showing extra data such as person age
+* The built-in file browser supports showing extra data such as person age
 * 3rd party software integrations
 
 FileDB cons:
@@ -20,7 +20,9 @@ FileDB cons:
 
 ### Main Application ###
 
-The FileDB main application is the GUI towards the internal database that stores the file meta-data. The application uses one configuration file that, for example, points out the file collection root directory.
+The FileDB main application is the GUI towards the internal database that stores the file meta-data. This application includes file browsing, meta-data editing and advanced search features.
+
+The application uses one configuration file that, for example, points out the file collection root directory.
 
 A demo configuration with some images and meta-data is available to show case the FileDB potential.
 
@@ -36,11 +38,8 @@ FileDB gives you the possibility to export the internal database and file search
 
 ### Prerequisites ###
 
-Note that it is recommended to have a backup procedure for your file collection before running FileDB (although FileDB itself does not modify your files).
-
-FileDB prerequisites:
-
-- .NET6
+* A collection of files. Note that it is recommended to have a backup procedure for your file collection before running FileDB (although FileDB itself does not modify your files). A demo configuration and file collection is included for demo purposes.
+* .NET6 desktop runtime
 
 ### Downloads ###
 
