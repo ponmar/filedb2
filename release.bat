@@ -1,5 +1,15 @@
 @echo off
 
+dotnet clean FileDB\FileDB.csproj -c Release
+if not %ERRORLEVEL%==0 (
+    echo "Clean failed" && exit /b 1
+)
+
+dotnet build FileDB\FileDB.csproj -c Release
+if not %ERRORLEVEL%==0 (
+    echo "Build failed" && exit /b 1
+)
+
 for /f "delims=" %%a in ('VersionPrinter\bin\Release\net6.0\VersionPrinter.exe') do @set version=%%a
 echo Detected version: %version%
 
