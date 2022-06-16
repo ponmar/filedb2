@@ -1,11 +1,16 @@
 @echo off
 
-dotnet clean FileDB\FileDB.csproj -c Release
+dotnet clean FileDB.sln -c Release
 if not %ERRORLEVEL%==0 (
-    echo "Clean failed" && exit /b 1
+    echo "Clean solution failed" && exit /b 1
 )
 
 dotnet build FileDB\FileDB.csproj -c Release
+if not %ERRORLEVEL%==0 (
+    echo "Build failed" && exit /b 1
+)
+
+dotnet build VersionPrinter\VersionPrinter.csproj -c Release
 if not %ERRORLEVEL%==0 (
     echo "Build failed" && exit /b 1
 )
