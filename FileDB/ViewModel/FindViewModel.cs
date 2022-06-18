@@ -117,7 +117,6 @@ namespace FileDB.ViewModel
     public partial class FindViewModel : ObservableObject
     {
         private const string RootFolderName = "root";
-        private readonly IImagePresenter imagePresenter;
         private readonly Random random = new();
 
         #region Browsing and sorting commands
@@ -406,10 +405,11 @@ namespace FileDB.ViewModel
 
         private readonly Model.Model model = Model.Model.Instance;
 
-        public FindViewModel(IImagePresenter imagePresenter)
-        {
-            this.imagePresenter = imagePresenter;
+        public static FindViewModel Instance => instance ??= new();
+        private static FindViewModel instance;
 
+        private FindViewModel()
+        {
             TotalNumberOfFiles = model.DbAccess.GetFileCount();
 
             ReloadPersons();
@@ -1119,24 +1119,24 @@ namespace FileDB.ViewModel
                 try
                 {
                     CurrentFileLoadError = string.Empty;
-                    imagePresenter.ShowImage(new BitmapImage(uri));
+                    model.ImagePresenter.ShowImage(new BitmapImage(uri));
 
                     model.CastFile(CurrentFilePath);
                 }
                 catch (WebException)
                 {
                     CurrentFileLoadError = "Image loading error";
-                    imagePresenter.ShowImage(null);
+                    model.ImagePresenter.ShowImage(null);
                 }
                 catch (IOException)
                 {
                     CurrentFileLoadError = "Image loading error";
-                    imagePresenter.ShowImage(null);
+                    model.ImagePresenter.ShowImage(null);
                 }
                 catch (NotSupportedException)
                 {
                     CurrentFileLoadError = "File format not supported";
-                    imagePresenter.ShowImage(null);
+                    model.ImagePresenter.ShowImage(null);
                 }
             }
         }
@@ -1160,7 +1160,7 @@ namespace FileDB.ViewModel
             NewFileDescription = string.Empty;
 
             CurrentFileLoadError = "No match";
-            imagePresenter.ShowImage(null);
+            model.ImagePresenter.ShowImage(null);
         }
 
         private string GetFileDateTimeString(string datetimeString)

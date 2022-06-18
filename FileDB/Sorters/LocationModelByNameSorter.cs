@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using FileDB.ViewModel;
 using FileDBInterface.Model;
 
 namespace FileDB.Sorters

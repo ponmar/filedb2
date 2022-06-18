@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Windows;
 using FileDB.Configuration;
 using FileDB.Extensions;
 using FileDB.Sorters;
 using FileDBInterface.DbAccess;
 using FileDBInterface.Model;
-using FluentValidation.Results;
 
 namespace FileDB
 {

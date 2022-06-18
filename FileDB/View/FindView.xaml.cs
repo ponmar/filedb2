@@ -1,7 +1,4 @@
-﻿using System.Diagnostics;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
+﻿using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using FileDB.ViewModel;
 
@@ -15,18 +12,14 @@ namespace FileDB.View
         public FindView()
         {
             InitializeComponent();
-            DataContext = new FindViewModel(this);
+
+            Model.Model.Instance.ImagePresenter = this;
+            DataContext = FindViewModel.Instance;
         }
 
         public void ShowImage(BitmapImage image)
         {
             CurrentFileImage.Source = image;
-        }
-
-        private void OpenLocationUri(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
-        {
-            Utils.OpenUriInBrowser(e.Uri.AbsoluteUri);
-            e.Handled = true;
         }
     }
 }

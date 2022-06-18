@@ -12,6 +12,7 @@ using SharpCaster.Services;
 using SharpCaster.Controllers;
 using System.Threading.Tasks;
 using FileDBInterface.DbAccess.SQLite;
+using FileDB.ViewModel;
 
 namespace FileDB.Model
 {
@@ -25,6 +26,8 @@ namespace FileDB.Model
         private SharpCasterDemoController controller = null;
 
         public List<Chromecast> Chromecasts = new();
+
+        public IImagePresenter ImagePresenter { get; set; }
 
         private Model()
         {

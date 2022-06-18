@@ -1,0 +1,96 @@
+﻿<UserControl x:Class="FileDB.View.FileCategorization"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:FileDB.View" xmlns:viewmodel="clr-namespace:FileDB.ViewModel" xmlns:converters="clr-namespace:FileDB.Converters" d:DataContext="{d:DesignInstance Type=viewmodel:FindViewModel}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        <converters:NegatedBooleanToVisibilityConverter x:Key="NegatedBooleanToVisibilityConverter"/>
+        <converters:EnumerationToVisibilityConverter x:Key="EnumerationToVisibilityConverter"/>
+        <converters:EnumerationEmptyToVisibilityConverter x:Key="EnumerationEmptyToVisibilityConverter"/>
+        <converters:StringContentToBoolConverter x:Key="StringContentToBoolConverter"/>
+    </UserControl.Resources>
+
+    <Border Margin="0 0 0 20" Style="{StaticResource BorderGroup}" Visibility="{Binding ReadWriteMode, Converter={StaticResource BoolToVis}}">
+        <Expander Style="{StaticResource Expander}" Header="Update" Margin="5" IsExpanded="False">
+            <StackPanel Orientation="Vertical">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="35"/>
+                        <ColumnDefinition Width="35"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Style="{StaticResource PageInnerTextBlock}" Grid.Row="0" Grid.Column="0" Text="&#x1F642;" VerticalAlignment="Center" Margin="5" ToolTip="Person"/>
+                    <ComboBox Style="{StaticResource PageInnerComboBox}" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Persons}" VerticalAlignment="Center" SelectedItem="{Binding SelectedPersonToUpdate}" DisplayMemberPath="Name" ToolTip="Person"/>
+                    <Button Grid.Row="0" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding AddFilePersonCommand}" IsEnabled="{Binding PersonSelected}" ToolTip="Add selected person to file">+</Button>
+                    <Button Grid.Row="0" Grid.Column="3" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding RemoveFilePersonCommand}" IsEnabled="{Binding PersonSelected}" ToolTip="Remove selected person from file">-</Button>
+
+                    <TextBlock Style="{StaticResource PageInnerTextBlock}" Grid.Row="1" Grid.Column="0" Text="&#x1F3E0;" VerticalAlignment="Center" Margin="5" ToolTip="Location"/>
+                    <ComboBox Style="{StaticResource PageInnerComboBox}" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Locations}" VerticalAlignment="Center" SelectedItem="{Binding SelectedLocationToUpdate}" DisplayMemberPath="Name" ToolTip="Location"/>
+                    <Button Grid.Row="1" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding AddFileLocationCommand}" IsEnabled="{Binding LocationSelected}" ToolTip="Add selected location to file">+</Button>
+                    <Button Grid.Row="1" Grid.Column="3" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding RemoveFileLocationCommand}" IsEnabled="{Binding LocationSelected}" ToolTip="Remove selected location from file">-</Button>
+
+                    <TextBlock Style="{StaticResource PageInnerTextBlock}" Grid.Row="2" Grid.Column="0" Text="&#x1F516;" VerticalAlignment="Center" Margin="5" ToolTip="Tag"/>
+                    <ComboBox Style="{StaticResource PageInnerComboBox}" Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Tags}" VerticalAlignment="Center" SelectedItem="{Binding SelectedTagToUpdate}" DisplayMemberPath="Name" ToolTip="Tag"/>
+                    <Button Grid.Row="2" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding AddFileTagCommand}" IsEnabled="{Binding TagSelected}" ToolTip="Add selected tag to file">+</Button>
+                    <Button Grid.Row="2" Grid.Column="3" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding RemoveFileTagCommand}" IsEnabled="{Binding TagSelected}" ToolTip="Remove selected tag from file">-</Button>
+
+                    <TextBlock Style="{StaticResource PageInnerTextBlock}" Grid.Row="3" Grid.Column="0" Text="&#x1F4DD;" VerticalAlignment="Center" Margin="5" ToolTip="File description"/>
+                    <TextBox Style="{StaticResource PageInnerTextBox}" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Text="{Binding NewFileDescription}" ToolTip="File description"></TextBox>
+                    <Button Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetFileDescriptionCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip="Set file description">Set</Button>
+                </Grid>
+                <Button Margin="5" Style="{StaticResource NormalButton}" HorizontalAlignment="Left" Command="{Binding UpdateFileFromMetaDataCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip="Reload timestamp and GPS location from file">Reload file meta-data...</Button>
+                <TextBlock Style="{StaticResource PageInnerTextBlock}">Create:</TextBlock>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Button Grid.Row="0" Grid.Column="0" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding CreatePersonCommand}">Person...</Button>
+                    <Button Grid.Row="0" Grid.Column="1" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding CreateLocationCommand}">Location...</Button>
+                    <Button Grid.Row="0" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding CreateTagCommand}">Tag...</Button>
+                </Grid>
+                <ListView ItemsSource="{Binding UpdateHistoryItems}" Visibility="{Binding HasNonEmptySearchResult, Converter={StaticResource BoolToVis}}" Background="Transparent" BorderThickness="0" Grid.IsSharedSizeScope="True" x:Name="HistoryItemsListView">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="Focusable" Value="false"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="column1"/>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="column2"/>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="column3"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Column="0" Style="{StaticResource PageInnerTextBlock}" Text="{Binding Shortcut}" FontWeight="Bold" Margin="3" VerticalAlignment="Center"/>
+                                <TextBlock Grid.Column="1" Style="{StaticResource PageInnerTextBlock}" Text="{Binding Description}" Margin="3" VerticalAlignment="Center"/>
+                                <Button Grid.Column="2" Style="{StaticResource NormalButton}" Command="{Binding ElementName=HistoryItemsListView, Path=DataContext.RemoveHistoryItemCommand}" CommandParameter="{Binding}" Margin="3" VerticalAlignment="Center">X</Button>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
+        </Expander>
+    </Border>
+</UserControl>
