@@ -1,5 +1,10 @@
 @echo off
 
+set /p version=< CHANGES.txt
+set version=%version:~0,-1%
+echo Detected version: %version%
+pause
+
 dotnet clean FileDB.sln -c Release
 if not %ERRORLEVEL%==0 (
     echo "Clean solution failed" && exit /b 1
@@ -9,14 +14,6 @@ dotnet build FileDB\FileDB.csproj -c Release
 if not %ERRORLEVEL%==0 (
     echo "Build failed" && exit /b 1
 )
-
-dotnet build VersionPrinter\VersionPrinter.csproj -c Release
-if not %ERRORLEVEL%==0 (
-    echo "Build failed" && exit /b 1
-)
-
-for /f "delims=" %%a in ('VersionPrinter\bin\Release\net6.0\VersionPrinter.exe') do @set version=%%a
-echo Detected version: %version%
 
 set appDir=FileDB\bin\Release\net6.0-windows
 set zipDir=FileDB-%version%
