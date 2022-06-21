@@ -10,7 +10,7 @@ if not %ERRORLEVEL%==0 (
     echo "Clean solution failed" && exit /b 1
 )
 
-dotnet build FileDB\FileDB.csproj -c Release
+dotnet build FileDB\FileDB.csproj -c Release /property:Version=%version%.0.0
 if not %ERRORLEVEL%==0 (
     echo "Build failed" && exit /b 1
 )
