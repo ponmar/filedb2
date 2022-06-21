@@ -18,7 +18,7 @@ namespace FileDB.Export
         {
             var fileContent = new ExportedDatabaseFileFormat()
             {
-                FileDBVersion = ReleaseInformation.VersionString,
+                FileDBVersion = Utils.GetVersionString(),
                 ExportDateTime = DateTime.Now,
                 Persons = persons,
                 Locations = locations,

@@ -92,13 +92,13 @@ namespace FileDB.Export
             return new SearchResultFileFormat()
             {
                 Header = header,
-                About = $"Exported with {Utils.ApplicationName} version {ReleaseInformation.VersionString} at {DateTime.Now:yyyy-MM-dd HH:mm}.",
+                About = $"Exported with {Utils.ApplicationName} version {Utils.GetVersionString()} at {DateTime.Now:yyyy-MM-dd HH:mm}.",
                 FileList = Utils.CreateFileList(files.Select(x => x.Id)),
                 Files = exportedFiles,
                 Persons = persons,
                 Locations = locations,
                 Tags = tags,
-                ApplicationDownloadUrl = ReleaseInformation.ApplicationDownloadUrl
+                ApplicationDownloadUrl = Utils.ApplicationDownloadUrl
             };
         }
     }

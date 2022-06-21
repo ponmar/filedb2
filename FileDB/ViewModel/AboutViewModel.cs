@@ -13,11 +13,11 @@ namespace FileDB.ViewModel
         private const string ChangesFilePath = "CHANGES.txt";
         private readonly string LicensesJsonFilePath = Path.Combine(AppContext.BaseDirectory, "Resources", "licenses.json");
 
-        public string DownloadLink => "https://drive.google.com/drive/folders/1GyZpdDcMdUOlvvtwtKUuylazoy7XaIcm?usp=sharing";
+        public string DownloadLink => Utils.ApplicationDownloadUrl;
 
         public string Changes => File.Exists(ChangesFilePath) ? File.ReadAllText(ChangesFilePath) : "Not deployed";
 
-        public string Heading => $"About {Utils.ApplicationName} version {ReleaseInformation.VersionString}";
+        public string Heading => $"About {Utils.ApplicationName} version {Utils.GetVersionString()}";
 
         public ObservableCollection<LicenseFileFormatDto> Licenses { get; } = new();
 

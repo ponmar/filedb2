@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using FileDB.Configuration;
 using FileDB.Extensions;
 using FileDB.Sorters;
@@ -131,5 +132,13 @@ namespace FileDB
             var link = CreatePositionLink(position, locationLinkConfig);
             return link != null ? new Uri(link) : null;
         }
+
+        public static string GetVersionString()
+        {
+            var version = Assembly.GetEntryAssembly().GetName().Version;
+            return $"{version.Major}.{version.Minor}";
+        }
+
+        public const string ApplicationDownloadUrl = "https://drive.google.com/drive/folders/1GyZpdDcMdUOlvvtwtKUuylazoy7XaIcm?usp=sharing";
     }
 }

@@ -80,7 +80,7 @@ namespace FileDB.ViewModel
 
         private void UpdateTitle()
         {
-            var title = $"{Utils.ApplicationName} {ReleaseInformation.VersionString}";
+            var title = $"{Utils.ApplicationName} {Utils.GetVersionString()}";
 
             if (!string.IsNullOrEmpty(model.Config.Name))
             {

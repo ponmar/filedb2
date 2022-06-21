@@ -7,10 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileDBInterface", "FileDBIn
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileDB", "FileDB\FileDB.csproj", "{AD7348A5-8874-44CD-977E-DF2FB0E5CE00}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VersionPrinter", "VersionPrinter\VersionPrinter.csproj", "{E5814BDF-5D44-46AE-9954-B6971BAC651F}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shared", "Shared\Shared.shproj", "{0BF4213A-948E-4DB9-AC40-7B03098EE718}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileDBInterfaceTests", "FileDBInterfaceTests\FileDBInterfaceTests.csproj", "{1D49EFF7-00AC-4171-8D20-A0975BC044E6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileDBTests", "FileDBTests\FileDBTests.csproj", "{9CDA4B29-FC75-49C3-9561-7241ABABE275}"
@@ -39,10 +35,6 @@ Global
 		{AD7348A5-8874-44CD-977E-DF2FB0E5CE00}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD7348A5-8874-44CD-977E-DF2FB0E5CE00}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD7348A5-8874-44CD-977E-DF2FB0E5CE00}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E5814BDF-5D44-46AE-9954-B6971BAC651F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E5814BDF-5D44-46AE-9954-B6971BAC651F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E5814BDF-5D44-46AE-9954-B6971BAC651F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E5814BDF-5D44-46AE-9954-B6971BAC651F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1D49EFF7-00AC-4171-8D20-A0975BC044E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1D49EFF7-00AC-4171-8D20-A0975BC044E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D49EFF7-00AC-4171-8D20-A0975BC044E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -63,10 +55,5 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {08E00FB7-E14F-46E8-95BF-67CC9B9F40CA}
-	EndGlobalSection
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Shared\Shared.projitems*{0bf4213a-948e-4db9-ac40-7b03098ee718}*SharedItemsImports = 13
-		Shared\Shared.projitems*{ad7348a5-8874-44cd-977e-df2fb0e5ce00}*SharedItemsImports = 5
-		Shared\Shared.projitems*{e5814bdf-5d44-46ae-9954-b6971bac651f}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal
