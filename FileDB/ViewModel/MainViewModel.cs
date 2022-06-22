@@ -9,40 +9,41 @@ namespace FileDB.ViewModel
         [ObservableProperty]
         private int numNotifications = 0;
 
-        [ObservableProperty]
-        private string title;
+        public string Title
+        {
+            get
+            {
+                var title = $"{Utils.ApplicationName} {Utils.GetVersionString()}";
+                if (!string.IsNullOrEmpty(model.Config.Name))
+                {
+                    title += $" [{model.Config.Name}]";
+                }
+                if (!ReadWriteMode)
+                {
+                    title += " (read only)";
+                }
+                return title;
+            }
+        }
 
         [ObservableProperty]
         private WindowState windowState = DefaultWindowState;
 
-        // TODO: update when new config loaded
         private static WindowState DefaultWindowState => Model.Model.Instance.Config.WindowMode == WindowMode.Normal ? WindowState.Normal : WindowState.Maximized;
 
         [ObservableProperty]
         private WindowStyle windowStyle = DefaultWindowStyle;
 
-        // TODO: update when new config loaded
         private static WindowStyle DefaultWindowStyle => Model.Model.Instance.Config.WindowMode == WindowMode.Fullscreen ? WindowStyle.None : WindowStyle.ThreeDBorderWindow;
 
-        public bool ReadWriteMode
-        {
-            get => readWriteMode;
-            set
-            {
-                if (SetProperty(ref readWriteMode, value))
-                {
-                    UpdateTitle();
-                }
-            }
-        }
-        private bool readWriteMode = !Model.Model.Instance.Config.ReadOnly;
+        [ObservableProperty]
+        [AlsoNotifyChangeFor(nameof(Title))]
+        public bool readWriteMode = !Model.Model.Instance.Config.ReadOnly;
 
         private readonly Model.Model model = Model.Model.Instance;
 
         public MainViewModel()
         {
-            UpdateTitle();
-
             var model = Model.Model.Instance;
 
             NumNotifications = model.Notifications.Count;
@@ -66,23 +67,6 @@ namespace FileDB.ViewModel
         private void Model_NotificationsUpdated(object sender, System.EventArgs e)
         {
             NumNotifications = Model.Model.Instance.Notifications.Count;
-        }
-
-        private void UpdateTitle()
-        {
-            var title = $"{Utils.ApplicationName} {Utils.GetVersionString()}";
-
-            if (!string.IsNullOrEmpty(model.Config.Name))
-            {
-                title += $" [{model.Config.Name}]";
-            }
-
-            if (!ReadWriteMode)
-            {
-                title += " (read only)";
-            }
-
-            Title = title;
         }
     }
 }
