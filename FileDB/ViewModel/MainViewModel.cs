@@ -6,17 +6,7 @@ namespace FileDB.ViewModel
 {
     public partial class MainViewModel : ObservableObject
     {
-        public int NumNotifications
-        {
-            get => numNotifications;
-            set
-            {
-                if (SetProperty(ref numNotifications, value))
-                {
-                    UpdateTitle();
-                }
-            }
-        }
+        [ObservableProperty]
         private int numNotifications = 0;
 
         [ObservableProperty]
@@ -90,15 +80,6 @@ namespace FileDB.ViewModel
             if (!ReadWriteMode)
             {
                 title += " (read only)";
-            }
-
-            if (NumNotifications > 1)
-            {
-                title += $" {NumNotifications} new notifications!";
-            }
-            else if (NumNotifications == 1)
-            {
-                title += $" {NumNotifications} new notification!";
             }
 
             Title = title;
