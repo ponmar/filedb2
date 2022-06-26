@@ -73,6 +73,9 @@ namespace FileDB.ViewModel
         private WindowMode windowMode;
 
         [ObservableProperty]
+        private string castHttpServerInterface;
+
+        [ObservableProperty]
         private int castHttpServerPort;
 
         [ObservableProperty]
@@ -102,6 +105,12 @@ namespace FileDB.ViewModel
         private void SetDefaultDefaultSortMethod()
         {
             DefaultSortMethod = DefaultConfigs.Default.DefaultSortMethod;
+        }
+
+        [ICommand]
+        private void SetDefaultCastHttpServerInterface()
+        {
+            CastHttpServerInterface = DefaultConfigs.Default.CastHttpServerInterface;
         }
 
         [ICommand]
@@ -216,6 +225,7 @@ namespace FileDB.ViewModel
             LocationLink = model.Config.LocationLink;
             FileToLocationMaxDistance = model.Config.FileToLocationMaxDistance;
             WindowMode = model.Config.WindowMode;
+            CastHttpServerInterface = model.Config.CastHttpServerInterface;
             CastHttpServerPort = model.Config.CastHttpServerPort;
             CacheFiles = model.Config.CacheFiles;
         }
@@ -249,6 +259,7 @@ namespace FileDB.ViewModel
                 MissingFilesRootDirNotification,
                 LocationLink,
                 WindowMode,
+                CastHttpServerInterface,
                 CastHttpServerPort,
                 CacheFiles);
 

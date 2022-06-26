@@ -1099,7 +1099,6 @@ namespace FileDB.ViewModel
 
                 var selection = SearchResult.Files[SearchResultIndex];
 
-                // TODO: set from config option?
                 CurrentFileToolTip = selection.Path;
 
                 CurrentFileInternalDirectoryPath = Path.GetDirectoryName(selection.Path).Replace(@"\", "/");
@@ -1121,21 +1120,21 @@ namespace FileDB.ViewModel
                     CurrentFileLoadError = string.Empty;
                     model.ImagePresenter.ShowImage(new BitmapImage(uri));
 
-                    model.CastFile(CurrentFilePath);
+                    model.FileLoaded(selection);
                 }
-                catch (WebException)
+                catch (WebException e)
                 {
-                    CurrentFileLoadError = "Image loading error";
+                    CurrentFileLoadError = $"Image loading error: {e.Message}";
                     model.ImagePresenter.ShowImage(null);
                 }
-                catch (IOException)
+                catch (IOException e)
                 {
-                    CurrentFileLoadError = "Image loading error";
+                    CurrentFileLoadError = $"Image loading error: {e.Message}";
                     model.ImagePresenter.ShowImage(null);
                 }
-                catch (NotSupportedException)
+                catch (NotSupportedException e)
                 {
-                    CurrentFileLoadError = "File format not supported";
+                    CurrentFileLoadError = $"File format not supported: {e.Message}";
                     model.ImagePresenter.ShowImage(null);
                 }
             }

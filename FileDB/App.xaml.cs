@@ -47,6 +47,8 @@ namespace FileDB
                     model.AddNotification(NotificationType.Error, "Configuration not valid");
                     Dialogs.ShowErrorDialog(result);
                 }
+
+                model.StartFileBrowsingPlugins();
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Net;
 using FileDB.Configuration;
 using FluentValidation;
 
@@ -52,6 +53,18 @@ namespace FileDB.Validators
                 RuleFor(c => c.CastHttpServerPort)
                     .InclusiveBetween(1, 65535);
             });
+
+            When(c => !string.IsNullOrEmpty(c.CastHttpServerInterface), () =>
+            {
+                RuleFor(c => c.CastHttpServerInterface)
+                    .Must(IsValidIpAddress).WithMessage("Cast HTTP server interface is not a valid IP address");
+            });
+        }
+
+        public bool CastingEnabled(Config config)
+        {
+            return config.CastHttpServerPort > 0 &&
+                !string.IsNullOrEmpty(config.CastHttpServerInterface) && IsValidIpAddress(config.CastHttpServerInterface);
         }
 
         private bool IsValidUrl(string url)
@@ -65,6 +78,11 @@ namespace FileDB.Validators
             {
                 return false;
             }
+        }
+
+        private bool IsValidIpAddress(string ipAddress)
+        {
+            return ipAddress != null && IPAddress.TryParse(ipAddress, out var _);
         }
 
         private bool IsSemicolonSeparatedFilePatterns(string text)

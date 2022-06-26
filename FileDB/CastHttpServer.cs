@@ -87,14 +87,11 @@ namespace FileDB
         private static Thread serverThread;
         private static string currentFilePath;
 
-        public static bool IsRunning()
-        {
-            return server != null && serverThread.IsAlive;
-        }
+        public static bool Started => server != null && serverThread.IsAlive;
 
-        public static void RunServer(int port)
+        public static void StartServer(int port)
         {
-            if (IsRunning())
+            if (Started)
             {
                 return;
             }
@@ -112,9 +109,9 @@ namespace FileDB
             server.Run();
         }
 
-        public static void CastFile(string filePath)
+        public static void LoadFile(string filePath)
         {
-            if (IsRunning() &&
+            if (Started &&
                 currentFilePath != filePath)
             {
                 var mimeType = MimeTypeCreator.CreateMimeTypeFor(filePath);
@@ -158,8 +155,7 @@ namespace FileDB
 
         public CastHttpServer(int port)
         {
-            // TODO: access denied when specifying * instead of localhost
-            var prefix = $"http://localhost:{port}/filedb/";
+            var prefix = $"http://+:{port}/";
 
             httpListener = new HttpListener();
             httpListener.Prefixes.Add(prefix);
