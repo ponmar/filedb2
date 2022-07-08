@@ -18,6 +18,7 @@ using FileDB.Configuration;
 using FileDB.Export;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using static System.Net.WebRequestMethods;
 
 namespace FileDB.ViewModel
 {
@@ -407,6 +408,8 @@ namespace FileDB.ViewModel
 
         public static FindViewModel Instance => instance ??= new();
         private static FindViewModel instance;
+
+        private int? prevEditedFileId = null;
 
         private FindViewModel()
         {
@@ -1032,7 +1035,7 @@ namespace FileDB.ViewModel
         private void OpenFileLocation()
         {
             if (!string.IsNullOrEmpty(CurrentFilePath) &&
-                File.Exists(CurrentFilePath))
+                System.IO.File.Exists(CurrentFilePath))
             {
                 Utils.SelectFileInExplorer(CurrentFilePath);
             }
@@ -1232,6 +1235,7 @@ namespace FileDB.ViewModel
                 model.DbAccess.InsertFilePerson(fileId, SelectedPersonToUpdate.Id);
                 LoadFile(SearchResultIndex);
                 AddUpdateHistoryItem(UpdateHistoryType.TogglePerson, SelectedPersonToUpdate.Id, SelectedPersonToUpdate.Name);
+                prevEditedFileId = fileId;
             }
             else
             {
@@ -1258,6 +1262,7 @@ namespace FileDB.ViewModel
             model.DbAccess.DeleteFilePerson(fileId, SelectedPersonToUpdate.Id);
             LoadFile(SearchResultIndex);
             AddUpdateHistoryItem(UpdateHistoryType.TogglePerson, SelectedPersonToUpdate.Id, SelectedPersonToUpdate.Name);
+            prevEditedFileId = fileId;
         }
 
         [ICommand]
@@ -1281,6 +1286,7 @@ namespace FileDB.ViewModel
                 model.DbAccess.InsertFileLocation(fileId, SelectedLocationToUpdate.Id);
                 LoadFile(SearchResultIndex);
                 AddUpdateHistoryItem(UpdateHistoryType.ToggleLocation, SelectedLocationToUpdate.Id, SelectedLocationToUpdate.Name);
+                prevEditedFileId = fileId;
             }
             else
             {
@@ -1307,6 +1313,7 @@ namespace FileDB.ViewModel
             model.DbAccess.DeleteFileLocation(fileId, SelectedLocationToUpdate.Id);
             LoadFile(SearchResultIndex);
             AddUpdateHistoryItem(UpdateHistoryType.ToggleLocation, SelectedLocationToUpdate.Id, SelectedLocationToUpdate.Name);
+            prevEditedFileId = fileId;
         }
 
         [ICommand]
@@ -1330,6 +1337,7 @@ namespace FileDB.ViewModel
                 model.DbAccess.InsertFileTag(fileId, SelectedTagToUpdate.Id);
                 LoadFile(SearchResultIndex);
                 AddUpdateHistoryItem(UpdateHistoryType.ToggleTag, SelectedTagToUpdate.Id, SelectedTagToUpdate.Name);
+                prevEditedFileId = fileId;
             }
             else
             {
@@ -1356,6 +1364,7 @@ namespace FileDB.ViewModel
             model.DbAccess.DeleteFileTag(fileId, SelectedTagToUpdate.Id);
             LoadFile(SearchResultIndex);
             AddUpdateHistoryItem(UpdateHistoryType.ToggleTag, SelectedTagToUpdate.Id, SelectedTagToUpdate.Name);
+            prevEditedFileId = fileId;
         }
 
         [ICommand]
@@ -1373,11 +1382,66 @@ namespace FileDB.ViewModel
                     model.DbAccess.UpdateFileDescription(fileId, description);
                     selection.Description = description;
                     LoadFile(SearchResultIndex);
+                    prevEditedFileId = fileId;
                 }
                 catch (DataValidationException e)
                 {
                     Dialogs.ShowErrorDialog(e.Message);
                 }
+            }
+        }
+
+        [ICommand]
+        private void ReApplyFileMetaData()
+        {
+            if (SearchResultIndex == -1)
+            {
+                Dialogs.ShowErrorDialog("No file selected");
+                return;
+            }
+
+            if (prevEditedFileId == null)
+            {
+                Dialogs.ShowErrorDialog("Meta-data not edited previously");
+                return;
+            }
+
+            var selection = SearchResult.Files[SearchResultIndex];
+            var fileId = selection.Id;
+
+            try
+            {
+                var prevEditedFile = model.DbAccess.GetFileById(prevEditedFileId.Value);
+                
+                var prevPersons = model.DbAccess.GetPersonsFromFile(prevEditedFileId.Value);
+                var prevLocations = model.DbAccess.GetLocationsFromFile(prevEditedFileId.Value);
+                var prevTags = model.DbAccess.GetTagsFromFile(prevEditedFileId.Value);
+
+                var persons = model.DbAccess.GetPersonsFromFile(fileId);
+                var locations = model.DbAccess.GetLocationsFromFile(fileId);
+                var tags = model.DbAccess.GetTagsFromFile(fileId);
+
+                foreach (var person in prevPersons.Where(x => !persons.Select(x => x.Id).Contains(x.Id)))
+                {
+                    model.DbAccess.InsertFilePerson(fileId, person.Id);
+                }
+                foreach (var location in prevLocations.Where(x => !locations.Select(x => x.Id).Contains(x.Id)))
+                {
+                    model.DbAccess.InsertFileLocation(fileId, location.Id);
+                }
+                foreach (var tag in prevTags.Where(x => !tags.Select(x => x.Id).Contains(x.Id)))
+                {
+                    model.DbAccess.InsertFileTag(fileId, tag.Id);
+                }
+                
+                model.DbAccess.UpdateFileDescription(fileId, prevEditedFile.Description);
+                selection.Description = prevEditedFile.Description;
+
+                LoadFile(SearchResultIndex);
+            }
+            catch (DataValidationException e)
+            {
+                Dialogs.ShowErrorDialog(e.Message);
             }
         }
 
