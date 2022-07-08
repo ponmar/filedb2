@@ -11,6 +11,8 @@ namespace FileDB.FileBrowsingPlugins
     {
         private readonly string castUrl;
 
+        private readonly Model.Model model = Model.Model.Instance;
+
         public Cast(string httpServerInterface, int httpServerPort)
         {
             castUrl = $"http://{httpServerInterface}:{httpServerPort}/filedb/file/something";
@@ -26,7 +28,7 @@ namespace FileDB.FileBrowsingPlugins
             var absFilePath = model.FilesystemAccess.ToAbsolutePath(file.Path);
             FileCaster.LoadFile(absFilePath);
 
-            // TODO: make sender and receiver members of this class (only connect once when program start)
+            // TODO: make sender and receiver members of this class (only connect once when program start?)
 
             var receiver = (await new DeviceLocator().FindReceiversAsync()).First();
 
