@@ -1,3 +1,13 @@
+2.14:
+* Version is now included in assemblies
+* License included
+* Show nuget package licenses at the about page
+* Add a show-on-map button at the locations page
+* Removed number of notifications from window title
+* Add config option CastHttpServerInterface
+* Add button for applying file meta-data from previous edit to current file
+* Minor layout fixes
+
 2.13:
 * Add FileDB version and export date to exported database JSON file
 * Align columns at notification page and show notification icons
