@@ -40,7 +40,7 @@
 
             <TabItem Style="{StaticResource WindowTabItem}">
                 <TabItem.Header>
-                    <TextBlock Text="&#x1FAA6;" ToolTip="Rest in Peace" Style="{StaticResource PageIcon}"/>
+                    <TextBlock Text="&#x271E;" ToolTip="Rest in Peace" Style="{StaticResource PageIcon}"/>
                 </TabItem.Header>
                 <Views:RipView Margin="10 0 10 10"/>
             </TabItem>
