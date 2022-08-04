@@ -102,6 +102,7 @@ namespace FileDB.ViewModel
             }
 
             OnPropertyChanged(nameof(NewFilesAvailable));
+            OnPropertyChanged(nameof(NewFiles));
 
             if (NewFiles.Count == 0)
             {
