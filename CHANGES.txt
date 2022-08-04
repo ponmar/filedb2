@@ -1,3 +1,7 @@
+2.15:
+* Change icon for rest in peace tab
+* Fix visibility for grid containing new files at import page
+
 2.14:
 * Version is now included in assemblies
 * License included
