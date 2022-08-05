@@ -18,7 +18,6 @@ using FileDB.Configuration;
 using FileDB.Export;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using static System.Net.WebRequestMethods;
 
 namespace FileDB.ViewModel
 {
@@ -104,14 +103,16 @@ namespace FileDB.ViewModel
         public UpdateHistoryType Type { get; }
         public int ItemId { get; }
         public string ItemName { get; }
-        public string Shortcut { get; set; }
+        public int FunctionKey { get; }
+        public string FunctionKeyText => $"F{FunctionKey}";
         public string Description => $"Toggle '{ItemName}'";
 
-        public UpdateHistoryItem(UpdateHistoryType type, int itemId, string itemName)
+        public UpdateHistoryItem(UpdateHistoryType type, int itemId, string itemName, int functionKey)
         {
             Type = type;
             ItemId = itemId;
             ItemName = itemName;
+            FunctionKey = functionKey;
         }
     }
 
@@ -1570,16 +1571,25 @@ namespace FileDB.ViewModel
 
         private void AddUpdateHistoryItem(UpdateHistoryType type, int itemId, string itemName)
         {
+            if (UpdateHistoryItems.Count >= 12)
+            {
+                return;
+            }
+
             var duplicatedItem = UpdateHistoryItems.FirstOrDefault(x => x.Type == type && x.ItemName == itemName);
             if (duplicatedItem != null)
             {
                 return;
             }
 
-            if (UpdateHistoryItems.Count < 12)
+            for (int i=1; i<=12; i++)
             {
-                var shortcut = $"F{UpdateHistoryItems.Count + 1}";
-                UpdateHistoryItems.Add(new UpdateHistoryItem(type, itemId, itemName) { Shortcut = shortcut });
+                var item = UpdateHistoryItems.FirstOrDefault(x => x.FunctionKey == i);
+                if (item == null)
+                {
+                    UpdateHistoryItems.Add(new UpdateHistoryItem(type, itemId, itemName, i));
+                    return;
+                }
             }
         }
 
@@ -1593,9 +1603,8 @@ namespace FileDB.ViewModel
 
             var fileId = SearchResult.Files[SearchResultIndex].Id;
 
-            var number = int.Parse(parameter);
-            var shortcut = $"F{number}";
-            var historyItem = UpdateHistoryItems.FirstOrDefault(x => x.Shortcut == shortcut);
+            var functionKey = int.Parse(parameter);
+            var historyItem = UpdateHistoryItems.FirstOrDefault(x => x.FunctionKey == functionKey);
             if (historyItem == null)
             {
                 return;

@@ -92,7 +92,7 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Column="0" Style="{StaticResource PageInnerTextBlock}" Text="{Binding Shortcut}" FontWeight="Bold" Margin="3" VerticalAlignment="Center"/>
+                                <TextBlock Grid.Column="0" Style="{StaticResource PageInnerTextBlock}" Text="{Binding FunctionKeyText}" FontWeight="Bold" Margin="3" VerticalAlignment="Center"/>
                                 <TextBlock Grid.Column="1" Style="{StaticResource PageInnerTextBlock}" Text="{Binding Description}" Margin="3" VerticalAlignment="Center"/>
                                 <Button Grid.Column="2" Style="{StaticResource NormalButton}" Command="{Binding ElementName=HistoryItemsListView, Path=DataContext.RemoveHistoryItemCommand}" CommandParameter="{Binding}" Margin="3" VerticalAlignment="Center">X</Button>
                             </Grid>
