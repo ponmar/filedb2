@@ -1,3 +1,6 @@
+2.16:
+* Fix for avoiding duplicated function key usage in toggle meta-data history
+
 2.15:
 * Change icon for rest in peace tab
 * Fix visibility for grid containing new files at import page
