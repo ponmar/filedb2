@@ -19,8 +19,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repo", "Repo", "{85037002-F
 		release.bat = release.bat
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileDBApp", "FileDBApp\FileDBApp.csproj", "{E53A09DE-58CC-42D8-8973-A7489807A204}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,12 +41,6 @@ Global
 		{9CDA4B29-FC75-49C3-9561-7241ABABE275}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CDA4B29-FC75-49C3-9561-7241ABABE275}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9CDA4B29-FC75-49C3-9561-7241ABABE275}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E53A09DE-58CC-42D8-8973-A7489807A204}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E53A09DE-58CC-42D8-8973-A7489807A204}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E53A09DE-58CC-42D8-8973-A7489807A204}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{E53A09DE-58CC-42D8-8973-A7489807A204}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E53A09DE-58CC-42D8-8973-A7489807A204}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E53A09DE-58CC-42D8-8973-A7489807A204}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
