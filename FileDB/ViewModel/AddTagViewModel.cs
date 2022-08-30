@@ -30,7 +30,7 @@ namespace FileDB.ViewModel
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private void Save()
         {
             try

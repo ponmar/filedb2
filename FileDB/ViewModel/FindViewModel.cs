@@ -123,7 +123,7 @@ namespace FileDB.ViewModel
 
         #region Browsing and sorting commands
 
-        [ICommand]
+        [RelayCommand]
         private void ClearSearch()
         {
             SearchResult = null;
@@ -131,18 +131,13 @@ namespace FileDB.ViewModel
 
         public List<SortMethodDescription> SortMethods { get; } = Utils.GetSortMethods();
 
-        public SortMethod SelectedSortMethod
-        {
-            get => selectedSortMethod;
-            set
-            {
-                if (SetProperty(ref selectedSortMethod, value))
-                {
-                    SortSearchResult(model.Config.KeepSelectionAfterSort);
-                }
-            }
-        }
+        [ObservableProperty]
         private SortMethod selectedSortMethod = SortMethod.Date;
+
+        partial void OnSelectedSortMethodChanged(SortMethod value)
+        {
+            SortSearchResult(model.Config.KeepSelectionAfterSort);
+        }
 
         [ObservableProperty]
         private bool slideshowActive = false;
@@ -153,19 +148,14 @@ namespace FileDB.ViewModel
         [ObservableProperty]
         private bool repeatActive = false;
 
-        public bool Maximize
-        {
-            get => maximize;
-            set
-            {
-                if (SetProperty(ref maximize, value))
-                {
-                    OnPropertyChanged(nameof(ShowUpdateSection));
-                    model.RequestTemporaryFullscreen(maximize);
-                }
-            }
-        }
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(ShowUpdateSection))]
         private bool maximize = false;
+
+        partial void OnMaximizeChanged(bool value)
+        {
+            model.RequestTemporaryFullscreen(maximize);
+        }
 
         public bool ShowUpdateSection => !Maximize && ReadWriteMode;
 
@@ -231,7 +221,7 @@ namespace FileDB.ViewModel
         private string newFileDescription;
 
         [ObservableProperty]
-        [AlsoNotifyChangeFor(nameof(ShowUpdateSection))]
+        [NotifyPropertyChangedFor(nameof(ShowUpdateSection))]
         private bool readWriteMode = !Model.Model.Instance.Config.ReadOnly;
 
         #endregion
@@ -245,8 +235,9 @@ namespace FileDB.ViewModel
             get => searchResult;
             set
             {
-                if (SetProperty(ref searchResult, value))
+                if (!EqualityComparer<SearchResult>.Default.Equals(searchResult, value))
                 {
+                    searchResult = value;
                     if (searchResult != null)
                     {
                         if (searchResult.Count > 0)
@@ -307,7 +298,7 @@ namespace FileDB.ViewModel
         }
 
         [ObservableProperty]
-        [AlsoNotifyChangeFor(nameof(SearchResultItemNumber))]
+        [NotifyPropertyChangedFor(nameof(SearchResultItemNumber))]
         private int searchResultIndex = -1;
 
         public int SearchResultItemNumber => searchResultIndex + 1;
@@ -365,7 +356,7 @@ namespace FileDB.ViewModel
         public ObservableCollection<PersonToUpdate> Persons { get; } = new();
 
         [ObservableProperty]
-        [AlsoNotifyChangeFor(nameof(PersonSelected))]
+        [NotifyPropertyChangedFor(nameof(PersonSelected))]
         private PersonToUpdate selectedPersonToUpdate;
 
         public bool PersonSelected => SelectedPersonToUpdate != null;
@@ -382,7 +373,7 @@ namespace FileDB.ViewModel
         public ObservableCollection<LocationToUpdate> Locations { get; } = new();
 
         [ObservableProperty]
-        [AlsoNotifyChangeFor(nameof(LocationSelected))]
+        [NotifyPropertyChangedFor(nameof(LocationSelected))]
         public LocationToUpdate selectedLocationToUpdate;
 
         public bool LocationSelected => SelectedLocationToUpdate != null;
@@ -393,7 +384,7 @@ namespace FileDB.ViewModel
         public ObservableCollection<TagToUpdate> Tags { get; } = new();
 
         [ObservableProperty]
-        [AlsoNotifyChangeFor(nameof(TagSelected))]
+        [NotifyPropertyChangedFor(nameof(TagSelected))]
         private TagToUpdate selectedTagToUpdate;
 
         public bool TagSelected => SelectedTagToUpdate != null;
@@ -457,7 +448,7 @@ namespace FileDB.ViewModel
             ReloadTags();
         }
 
-        [ICommand]
+        [RelayCommand]
         private void PrevFile()
         {
             StopSlideshow();
@@ -488,7 +479,7 @@ namespace FileDB.ViewModel
             OnPropertyChanged(nameof(NextDirectoryAvailable));
         }
 
-        [ICommand]
+        [RelayCommand]
         public void NextFile()
         {
             StopSlideshow();
@@ -513,7 +504,7 @@ namespace FileDB.ViewModel
             FireBrowsingEnabledEvents();
         }
 
-        [ICommand]
+        [RelayCommand]
         private void PrevDirectory()
         {
             if (!PrevDirectoryAvailable)
@@ -541,7 +532,7 @@ namespace FileDB.ViewModel
             FireBrowsingEnabledEvents();
         }
 
-        [ICommand]
+        [RelayCommand]
         private void NextDirectory()
         {
             if (!NextDirectoryAvailable)
@@ -569,7 +560,7 @@ namespace FileDB.ViewModel
             FireBrowsingEnabledEvents();
         }
 
-        [ICommand]
+        [RelayCommand]
         private void FirstFile()
         {
             StopSlideshow();
@@ -577,7 +568,7 @@ namespace FileDB.ViewModel
             FireBrowsingEnabledEvents();
         }
 
-        [ICommand]
+        [RelayCommand]
         private void LastFile()
         {
             StopSlideshow();
@@ -626,7 +617,7 @@ namespace FileDB.ViewModel
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private void ToggleSlideshow()
         {
             if (SlideshowActive)
@@ -683,7 +674,7 @@ namespace FileDB.ViewModel
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private void FindRandomFiles()
         {
             StopSlideshow();
@@ -694,7 +685,7 @@ namespace FileDB.ViewModel
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private void FindCurrentDirectoryFiles()
         {
             StopSlideshow();
@@ -709,14 +700,14 @@ namespace FileDB.ViewModel
             SearchResult = new SearchResult(model.DbAccess.SearchFilesByPath(dir));
         }
 
-        [ICommand]
+        [RelayCommand]
         private void FindAllFiles()
         {
             StopSlideshow();
             SearchResult = new SearchResult(model.DbAccess.GetFiles());
         }
 
-        [ICommand]
+        [RelayCommand]
         private void FindImportedFiles()
         {
             StopSlideshow();
@@ -727,7 +718,7 @@ namespace FileDB.ViewModel
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private void FindFilesByText()
         {
             StopSlideshow();
@@ -741,7 +732,7 @@ namespace FileDB.ViewModel
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private void FindFilesBySex()
         {
             StopSlideshow();
@@ -749,14 +740,14 @@ namespace FileDB.ViewModel
             SearchResult = new SearchResult(model.DbAccess.SearchFilesBySex(sex));
         }
 
-        [ICommand]
+        [RelayCommand]
         private void FindFilesByDate()
         {
             StopSlideshow();
             SearchResult = new SearchResult(model.DbAccess.SearchFilesByDate(SearchStartDate.Date, SearchEndDate.Date));
         }
 
-        [ICommand]
+        [RelayCommand]
         private void FindFilesByGpsPosition()
         {
             StopSlideshow();
@@ -815,7 +806,7 @@ namespace FileDB.ViewModel
             SearchResult = new SearchResult(nearFiles);
         }
 
-        [ICommand]
+        [RelayCommand]
         private void FindFilesWithPerson()
         {
             StopSlideshow();
@@ -825,7 +816,7 @@ namespace FileDB.ViewModel
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private void FindFilesWithPersonUnique()
         {
             StopSlideshow();
@@ -837,7 +828,7 @@ namespace FileDB.ViewModel
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private void FindFilesWithPersonGroup()
         {
             StopSlideshow();
@@ -849,7 +840,7 @@ namespace FileDB.ViewModel
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private void FindFilesWithPersons()
         {
             StopSlideshow();
@@ -859,7 +850,7 @@ namespace FileDB.ViewModel
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private void FindFilesWithPersonsUnique()
         {
             StopSlideshow();
@@ -875,7 +866,7 @@ namespace FileDB.ViewModel
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private void FindFilesWithPersonsGroup()
         {
             StopSlideshow();
@@ -891,7 +882,7 @@ namespace FileDB.ViewModel
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private void FindFilesWithLocation()
         {
             StopSlideshow();
@@ -901,7 +892,7 @@ namespace FileDB.ViewModel
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private void FindFilesWithTag()
         {
             StopSlideshow();
@@ -911,7 +902,7 @@ namespace FileDB.ViewModel
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private void FindFilesByPersonAge()
         {
             StopSlideshow();
@@ -960,7 +951,7 @@ namespace FileDB.ViewModel
 
         public bool FindFilesFromHistoryEnabled => SearchResultHistory.Count >= 2;
 
-        [ICommand]
+        [RelayCommand]
         private void FindFilesFromUnion()
         {
             if (SearchResultHistory.Count >= 2)
@@ -971,7 +962,7 @@ namespace FileDB.ViewModel
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private void FindFilesFromIntersection()
         {
             if (SearchResultHistory.Count >= 2)
@@ -982,7 +973,7 @@ namespace FileDB.ViewModel
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private void FindFilesFromDifference()
         {
             if (SearchResultHistory.Count >= 2)
@@ -995,14 +986,14 @@ namespace FileDB.ViewModel
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private void FindFilesFromMissingCategorization()
         {
             StopSlideshow();
             SearchResult = new SearchResult(model.DbAccess.SearchFilesWithMissingData());
         }
 
-        [ICommand]
+        [RelayCommand]
         private void FindFilesFromList()
         {
             StopSlideshow();
@@ -1013,7 +1004,7 @@ namespace FileDB.ViewModel
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private void FindFilesSelectedFolder()
         {
             StopSlideshow();
@@ -1032,7 +1023,7 @@ namespace FileDB.ViewModel
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private void OpenFileLocation()
         {
             if (!string.IsNullOrEmpty(CurrentFilePath) &&
@@ -1042,13 +1033,13 @@ namespace FileDB.ViewModel
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private void ExportFileList()
         {
             ClipboardService.SetText(Utils.CreateFileList(SearchResult.Files));
         }
 
-        [ICommand]
+        [RelayCommand]
         private void ExportFiles()
         {
             if (string.IsNullOrEmpty(ExportFilesHeader))
@@ -1215,7 +1206,7 @@ namespace FileDB.ViewModel
             return string.Join("\n", tagStrings);
         }
 
-        [ICommand]
+        [RelayCommand]
         private void AddFilePerson()
         {
             if (SearchResultIndex == -1)
@@ -1244,7 +1235,7 @@ namespace FileDB.ViewModel
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private void RemoveFilePerson()
         {
             if (SearchResultIndex == -1)
@@ -1266,7 +1257,7 @@ namespace FileDB.ViewModel
             prevEditedFileId = fileId;
         }
 
-        [ICommand]
+        [RelayCommand]
         private void AddFileLocation()
         {
             if (SearchResultIndex == -1)
@@ -1295,7 +1286,7 @@ namespace FileDB.ViewModel
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private void RemoveFileLocation()
         {
             if (SearchResultIndex == -1)
@@ -1317,7 +1308,7 @@ namespace FileDB.ViewModel
             prevEditedFileId = fileId;
         }
 
-        [ICommand]
+        [RelayCommand]
         private void AddFileTag()
         {
             if (SearchResultIndex == -1)
@@ -1346,7 +1337,7 @@ namespace FileDB.ViewModel
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private void RemoveFileTag()
         {
             if (SearchResultIndex == -1)
@@ -1368,7 +1359,7 @@ namespace FileDB.ViewModel
             prevEditedFileId = fileId;
         }
 
-        [ICommand]
+        [RelayCommand]
         private void SetFileDescription()
         {
             if (SearchResultIndex != -1)
@@ -1392,7 +1383,7 @@ namespace FileDB.ViewModel
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private void ReApplyFileMetaData()
         {
             if (SearchResultIndex == -1)
@@ -1446,7 +1437,7 @@ namespace FileDB.ViewModel
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private void UpdateFileFromMetaData()
         {
             if (SearchResultIndex != -1)
@@ -1465,7 +1456,7 @@ namespace FileDB.ViewModel
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private void CreatePerson()
         {
             var window = new AddPersonWindow
@@ -1475,7 +1466,7 @@ namespace FileDB.ViewModel
             window.ShowDialog();
         }
 
-        [ICommand]
+        [RelayCommand]
         private void CreateLocation()
         {
             var window = new AddLocationWindow
@@ -1485,7 +1476,7 @@ namespace FileDB.ViewModel
             window.ShowDialog();
         }
 
-        [ICommand]
+        [RelayCommand]
         private void CreateTag()
         {
             var window = new AddTagWindow
@@ -1528,7 +1519,7 @@ namespace FileDB.ViewModel
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private void ReloadFolders()
         {
             var root = new Folder(RootFolderName);
@@ -1593,7 +1584,7 @@ namespace FileDB.ViewModel
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private void FunctionKey(string parameter)
         {
             if (!ReadWriteMode || !HasNonEmptySearchResult)
@@ -1652,7 +1643,7 @@ namespace FileDB.ViewModel
             LoadFile(SearchResultIndex);
         }
 
-        [ICommand]
+        [RelayCommand]
         private void RemoveHistoryItem(UpdateHistoryItem itemToRemove)
         {
             UpdateHistoryItems.Remove(itemToRemove);

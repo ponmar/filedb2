@@ -50,13 +50,13 @@ namespace FileDB.ViewModel
             SubdirToScan = model.Config.FilesRootDirectory;
         }
 
-        [ICommand]
+        [RelayCommand]
         private void ScanNewFiles()
         {
             ScanNewFiles(model.Config.FilesRootDirectory);
         }
 
-        [ICommand]
+        [RelayCommand]
         private void ScanNewFilesInDirectory()
         {
             if (string.IsNullOrEmpty(SubdirToScan))
@@ -110,7 +110,7 @@ namespace FileDB.ViewModel
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private void ImportNewFiles()
         {
             if (!Dialogs.ShowConfirmDialog($"Import meta-data from {NewFiles.Count} files?"))
@@ -165,13 +165,13 @@ namespace FileDB.ViewModel
             OnPropertyChanged(nameof(NewFilesAvailable));
         }
 
-        [ICommand]
+        [RelayCommand]
         private void CopyImportedFileList()
         {
             ClipboardService.SetText(ImportedFileList);
         }
 
-        [ICommand]
+        [RelayCommand]
         private void RemoveFileListMethod()
         {
             var fileIds = Utils.CreateFileIds(RemoveFileList);

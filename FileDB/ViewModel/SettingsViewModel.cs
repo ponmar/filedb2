@@ -83,115 +83,115 @@ namespace FileDB.ViewModel
 
         public List<WindowModeDescription> WindowModes => Utils.GetWindowModes();
 
-        [ICommand]
+        [RelayCommand]
         private void SetDefaultSlideshowDelay()
         {
             SlideshowDelay = DefaultConfigs.Default.SlideshowDelay;
         }
 
-        [ICommand]
+        [RelayCommand]
         private void SetDefaultBackupReminder()
         {
             BackupReminder = DefaultConfigs.Default.BackupReminder;
         }
 
-        [ICommand]
+        [RelayCommand]
         private void SetDefaultSearchHistorySize()
         {
             SearchHistorySize = DefaultConfigs.Default.SearchHistorySize;
         }
 
-        [ICommand]
+        [RelayCommand]
         private void SetDefaultDefaultSortMethod()
         {
             DefaultSortMethod = DefaultConfigs.Default.DefaultSortMethod;
         }
 
-        [ICommand]
+        [RelayCommand]
         private void SetDefaultCastHttpServerInterface()
         {
             CastHttpServerInterface = DefaultConfigs.Default.CastHttpServerInterface;
         }
 
-        [ICommand]
+        [RelayCommand]
         private void SetDefaultCastHttpServerPort()
         {
             CastHttpServerPort = DefaultConfigs.Default.CastHttpServerPort;
         }
 
-        [ICommand]
+        [RelayCommand]
         private void SetDefaultKeepSelectionAfterSort()
         {
             KeepSelectionAfterSort = DefaultConfigs.Default.KeepSelectionAfterSort;
         }
 
-        [ICommand]
+        [RelayCommand]
         private void SetDefaultBlacklistedFilePathPatterns()
         {
             BlacklistedFilePathPatterns = DefaultConfigs.Default.BlacklistedFilePathPatterns;
         }
 
-        [ICommand]
+        [RelayCommand]
         private void SetDefaultWhitelistedFilePathPatterns()
         {
             WhitelistedFilePathPatterns = DefaultConfigs.Default.WhitelistedFilePathPatterns;
         }
 
-        [ICommand]
+        [RelayCommand]
         private void SetDefaultIncludeHiddenDirectories()
         {
             IncludeHiddenDirectories = DefaultConfigs.Default.IncludeHiddenDirectories;
         }
 
-        [ICommand]
+        [RelayCommand]
         private void SetDefaultReadOnly()
         {
             ReadOnly = DefaultConfigs.Default.ReadOnly;
         }
 
-        [ICommand]
+        [RelayCommand]
         private void SetDefaultCacheFiles()
         {
             CacheFiles = DefaultConfigs.Default.CacheFiles;
         }
 
-        [ICommand]
+        [RelayCommand]
         private void SetDefaultBirthdayReminder()
         {
             BirthdayReminder = DefaultConfigs.Default.BirthdayReminder;
         }
 
-        [ICommand]
+        [RelayCommand]
         private void SetDefaultBirthdayReminderForDeceased()
         {
             BirthdayReminderForDeceased = DefaultConfigs.Default.BirthdayReminderForDeceased;
         }
 
-        [ICommand]
+        [RelayCommand]
         private void SetDefaultRipReminder()
         {
             RipReminder = DefaultConfigs.Default.RipReminder;
         }
 
-        [ICommand]
+        [RelayCommand]
         private void SetDefaultMissingFilesRootDirNotification()
         {
             MissingFilesRootDirNotification = DefaultConfigs.Default.MissingFilesRootDirNotification;
         }
 
-        [ICommand]
+        [RelayCommand]
         private void SetDefaultLocationLink()
         {
             LocationLink = DefaultConfigs.Default.LocationLink;
         }
 
-        [ICommand]
+        [RelayCommand]
         private void SetDefaultFileToLocationMaxDistance()
         {
             FileToLocationMaxDistance = DefaultConfigs.Default.FileToLocationMaxDistance;
         }
 
-        [ICommand]
+        [RelayCommand]
         private void SetDefaultWindowMode()
         {
             WindowMode = DefaultConfigs.Default.WindowMode;
@@ -230,13 +230,13 @@ namespace FileDB.ViewModel
             CacheFiles = model.Config.CacheFiles;
         }
 
-        [ICommand]
+        [RelayCommand]
         private void ResetConfiguration()
         {
             UpdateFromConfiguration();
         }
 
-        [ICommand]
+        [RelayCommand]
         private void SaveConfiguration()
         {
             var config = new Config(
@@ -288,7 +288,7 @@ namespace FileDB.ViewModel
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private void BrowseDatabase()
         {
             var fileDialog = new OpenFileDialog()
@@ -302,7 +302,7 @@ namespace FileDB.ViewModel
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private void BrowseFilesRootDirectory()
         {
             var fileDialog = new OpenFileDialog()
@@ -326,7 +326,7 @@ namespace FileDB.ViewModel
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         public void CreateDatabase()
         {
             if (string.IsNullOrEmpty(Database))

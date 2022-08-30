@@ -56,7 +56,7 @@ namespace FileDB.ViewModel
             ScanBackupFiles();
         }
 
-        [ICommand]
+        [RelayCommand]
         private void CreateBackup()
         {
             try
@@ -70,13 +70,13 @@ namespace FileDB.ViewModel
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private void OpenDatabaseBackupDirectory()
         {
             Utils.OpenDirectoryInExplorer(new DatabaseBackup().BackupDirectory);
         }
 
-        [ICommand]
+        [RelayCommand]
         private void CreateCache()
         {
             CacheResult = "Running...";
@@ -121,7 +121,7 @@ namespace FileDB.ViewModel
             CacheResult = $"Cached {numCachedFiles} files.";
         }
 
-        [ICommand]
+        [RelayCommand]
         private void OpenCacheDirectory()
         {
             var configDir = new AppDataConfig<Config>(Utils.ApplicationName).ConfigDirectory;
@@ -153,7 +153,7 @@ namespace FileDB.ViewModel
             OnPropertyChanged(nameof(BackupResult));
         }
 
-        [ICommand]
+        [RelayCommand]
         private void FindImportedNoLongerApplicableFiles()
         {
             var blacklistedFilePathPatterns = model.Config.BlacklistedFilePathPatterns.Split(";");
@@ -163,13 +163,13 @@ namespace FileDB.ViewModel
             FindImportedNoLongerApplicableFilesResult = $"Found {notApplicableFiles.Count} files that now should be filtered.";
         }
 
-        [ICommand]
+        [RelayCommand]
         private void CopyImportedNoLongerApplicableFilesList()
         {
             ClipboardService.SetText(ImportedNoLongerApplicableFileList);
         }
 
-        [ICommand]
+        [RelayCommand]
         private void DatabaseValidation()
         {
             DabaseValidationErrors.Clear();
@@ -233,14 +233,14 @@ namespace FileDB.ViewModel
             OnPropertyChanged(nameof(DabaseValidationErrors));
         }
 
-        [ICommand]
+        [RelayCommand]
         private void CopyInvalidFileList()
         {
             ClipboardService.SetText(InvalidFileList);
             DatabaseValidationResult = "File list copied to clipboard.";
         }
 
-        [ICommand]
+        [RelayCommand]
         private void FileFinder()
         {
             FileFinderResult = "Running, please wait...";
@@ -255,14 +255,14 @@ namespace FileDB.ViewModel
             MissingFilesList = Utils.CreateFileList(missingFiles);
         }
 
-        [ICommand]
+        [RelayCommand]
         private void CopyFileFinderResult()
         {
             ClipboardService.SetText(MissingFilesList);
             FileFinderResult = "File list copied to clipboard.";
         }
 
-        [ICommand]
+        [RelayCommand]
         private void DatabaseExport()
         {
             if (!Directory.Exists(DatabaseExportDirectory))

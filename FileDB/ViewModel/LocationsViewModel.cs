@@ -38,7 +38,7 @@ namespace FileDB.ViewModel
         public ObservableCollection<Location> Locations { get; } = new();
 
         [ObservableProperty]
-        [AlsoNotifyChangeFor(nameof(SelectedLocationHasPosition))]
+        [NotifyPropertyChangedFor(nameof(SelectedLocationHasPosition))]
         private Location selectedLocation;
 
         public bool SelectedLocationHasPosition => selectedLocation != null && !string.IsNullOrEmpty(selectedLocation.Position);
@@ -62,7 +62,7 @@ namespace FileDB.ViewModel
             ReloadLocations();
         }
 
-        [ICommand]
+        [RelayCommand]
         private void RemoveLocation()
         {
             if (Dialogs.ShowConfirmDialog($"Remove {selectedLocation.Name}?"))
@@ -76,7 +76,7 @@ namespace FileDB.ViewModel
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private void EditLocation()
         {
             var window = new AddLocationWindow(selectedLocation.GetId())
@@ -86,7 +86,7 @@ namespace FileDB.ViewModel
             window.ShowDialog();
         }
 
-        [ICommand]
+        [RelayCommand]
         private void AddLocation()
         {
             var window = new AddLocationWindow
@@ -96,7 +96,7 @@ namespace FileDB.ViewModel
             window.ShowDialog();
         }
 
-        [ICommand]
+        [RelayCommand]
         private void ShowLocationOnMap()
         {
             var link = Utils.CreatePositionLink(selectedLocation.Position, model.Config.LocationLink);
@@ -106,7 +106,7 @@ namespace FileDB.ViewModel
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private void LocationSelection(Location parameter)
         {
             SelectedLocation = parameter;

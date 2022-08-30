@@ -71,18 +71,13 @@ namespace FileDB.ViewModel
 
     public partial class BirthdaysViewModel : ObservableObject
     {
-        public string FilterText
-        {
-            get => filterText;
-            set
-            {
-                if (SetProperty(ref filterText, value))
-                {
-                    FilterPersons();
-                }
-            }
-        }
+        [ObservableProperty]
         private string filterText;
+
+        partial void OnFilterTextChanged(string value)
+        {
+            FilterPersons();
+        }
 
         private readonly List<PersonBirthday> allPersons = new();
 

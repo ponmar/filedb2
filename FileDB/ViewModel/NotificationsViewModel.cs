@@ -15,7 +15,7 @@ namespace FileDB.ViewModel
     {
         public ObservableCollection<Notification> Notifications { get; } = new();
 
-        [ICommand]
+        [RelayCommand]
         private void ClearNotifications()
         {
             Model.Model.Instance.ClearNotifications();

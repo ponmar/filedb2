@@ -65,7 +65,7 @@ namespace FileDB.ViewModel
             ReloadPersons();
         }
 
-        [ICommand]
+        [RelayCommand]
         private void RemovePerson()
         {
             if (Dialogs.ShowConfirmDialog($"Remove {selectedPerson.Firstname} {selectedPerson.Lastname}?"))
@@ -79,7 +79,7 @@ namespace FileDB.ViewModel
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private void EditPerson()
         {
             var window = new AddPersonWindow(selectedPerson.GetId())
@@ -89,7 +89,7 @@ namespace FileDB.ViewModel
             window.ShowDialog();
         }
 
-        [ICommand]
+        [RelayCommand]
         private void AddPerson()
         {
             var window = new AddPersonWindow
@@ -99,7 +99,7 @@ namespace FileDB.ViewModel
             window.ShowDialog();
         }
 
-        [ICommand]
+        [RelayCommand]
         private void PersonSelection(Person parameter)
         {
             SelectedPerson = parameter;

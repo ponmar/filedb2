@@ -55,7 +55,7 @@ namespace FileDB.ViewModel
             ReloadTags();
         }
 
-        [ICommand]
+        [RelayCommand]
         private void RemoveTag()
         {
             if (Dialogs.ShowConfirmDialog($"Remove {selectedTag.Name}?"))
@@ -69,7 +69,7 @@ namespace FileDB.ViewModel
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private void EditTag()
         {
             var window = new AddTagWindow(selectedTag.GetId())
@@ -79,7 +79,7 @@ namespace FileDB.ViewModel
             window.ShowDialog();
         }
 
-        [ICommand]
+        [RelayCommand]
         private void AddTag()
         {
             var window = new AddTagWindow
@@ -89,7 +89,7 @@ namespace FileDB.ViewModel
             window.ShowDialog();
         }
 
-        [ICommand]
+        [RelayCommand]
         public void TagSelection(Tag parameter)
         {
             SelectedTag = parameter;

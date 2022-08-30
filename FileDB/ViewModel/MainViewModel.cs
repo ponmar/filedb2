@@ -37,7 +37,7 @@ namespace FileDB.ViewModel
         private static WindowStyle DefaultWindowStyle => Model.Model.Instance.Config.WindowMode == WindowMode.Fullscreen ? WindowStyle.None : WindowStyle.ThreeDBorderWindow;
 
         [ObservableProperty]
-        [AlsoNotifyChangeFor(nameof(Title))]
+        [NotifyPropertyChangedFor(nameof(Title))]
         public bool readWriteMode = !Model.Model.Instance.Config.ReadOnly;
 
         private readonly Model.Model model = Model.Model.Instance;
