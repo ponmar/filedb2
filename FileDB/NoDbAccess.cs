@@ -100,6 +100,10 @@ namespace FileDB
         {
         }
 
+        public void UpdateFileDatetime(int id, string datetime)
+        {
+        }
+
         public void DeleteFile(int id)
         {
         }

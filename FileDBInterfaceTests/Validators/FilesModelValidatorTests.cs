@@ -57,7 +57,23 @@ namespace FileDBInterfaceTests.Validators
         }
 
         [TestMethod]
-        public void Validate_DatetimeIsYear_Error()
+        public void Validate_DatetimeIsNull()
+        {
+            var model = new FilesModel() { Id = -1, Path = "my/path/file.jpg", Description = string.Empty, Datetime = null, Position = "15.1 64.10" };
+            var result = validator.TestValidate(model);
+            result.ShouldNotHaveValidationErrorFor(x => x.Datetime);
+        }
+
+        [TestMethod]
+        public void Validate_DatetimeIsEmpty()
+        {
+            var model = new FilesModel() { Id = -1, Path = "my/path/file.jpg", Description = string.Empty, Datetime = string.Empty, Position = "15.1 64.10" };
+            var result = validator.TestValidate(model);
+            result.ShouldHaveValidationErrorFor(x => x.Datetime);
+        }
+
+        [TestMethod]
+        public void Validate_DatetimeIsYear()
         {
             var model = new FilesModel() { Id = -1, Path = "my/path/file.jpg", Description = string.Empty, Datetime = "2010", Position = "15.1 64.10" };
             var result = validator.TestValidate(model);
@@ -65,7 +81,7 @@ namespace FileDBInterfaceTests.Validators
         }
 
         [TestMethod]
-        public void Validate_DatetimeIsDate_Error()
+        public void Validate_DatetimeIsDate()
         {
             var model = new FilesModel() { Id = -1, Path = "my/path/file.jpg", Description = string.Empty, Datetime = "2010-03-05", Position = "15.1 64.10" };
             var result = validator.TestValidate(model);
@@ -73,7 +89,7 @@ namespace FileDBInterfaceTests.Validators
         }
 
         [TestMethod]
-        public void Validate_DatetimeIsDateAndTime_Error()
+        public void Validate_DatetimeIsDateAndTime()
         {
             var model = new FilesModel() { Id = -1, Path = "my/path/file.jpg", Description = string.Empty, Datetime = "2010-03-05T20:50:10", Position = "15.1 64.10" };
             var result = validator.TestValidate(model);

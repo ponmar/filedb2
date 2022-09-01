@@ -221,6 +221,9 @@ namespace FileDB.ViewModel
         private string newFileDescription;
 
         [ObservableProperty]
+        private string newFileDateTime;
+
+        [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(ShowUpdateSection))]
         private bool readWriteMode = !Model.Model.Instance.Config.ReadOnly;
 
@@ -1108,6 +1111,7 @@ namespace FileDB.ViewModel
                 CurrentFileHeader = CurrentFileDateTime != string.Empty ? CurrentFileDateTime : selection.Path;
 
                 NewFileDescription = CurrentFileDescription;
+                NewFileDateTime = selection.Datetime;
 
                 var uri = new Uri(CurrentFilePath, UriKind.Absolute);
                 try
@@ -1373,6 +1377,31 @@ namespace FileDB.ViewModel
                 {
                     model.DbAccess.UpdateFileDescription(fileId, description);
                     selection.Description = description;
+                    LoadFile(SearchResultIndex);
+                    prevEditedFileId = fileId;
+                }
+                catch (DataValidationException e)
+                {
+                    Dialogs.ShowErrorDialog(e.Message);
+                }
+            }
+        }
+
+        [RelayCommand]
+        private void SetFileDateTime()
+        {
+            if (SearchResultIndex != -1)
+            {
+                var selection = SearchResult.Files[SearchResultIndex];
+                var fileId = selection.Id;
+                NewFileDateTime = NewFileDateTime?.Trim();
+
+                var dateTime = string.IsNullOrEmpty(NewFileDateTime) ? null : NewFileDateTime;
+
+                try
+                {
+                    model.DbAccess.UpdateFileDatetime(fileId, dateTime);
+                    selection.Datetime = dateTime;
                     LoadFile(SearchResultIndex);
                     prevEditedFileId = fileId;
                 }

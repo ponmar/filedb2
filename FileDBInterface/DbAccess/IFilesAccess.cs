@@ -15,6 +15,7 @@ namespace FileDBInterface.DbAccess
         public void DeleteFile(int id);
         public void UpdateFileFromMetaData(int id, IFilesystemAccess filesystemAccess);
         public void UpdateFileDescription(int id, string description);
+        public void UpdateFileDatetime(int id, string datetime);
 
         public IEnumerable<FilesModel> SearchFilesFromIds(IEnumerable<int> fileIds);
         public IEnumerable<FilesModel> SearchFiles(string criteria);

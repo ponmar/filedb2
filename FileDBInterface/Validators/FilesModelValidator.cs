@@ -16,11 +16,8 @@ namespace FileDBInterface.Validators
             RuleFor(x => x.Description)
                 .Must(ValidateDescription).WithMessage("{PropertyName} invalid)");
 
-            When(x => x.Datetime != null, () =>
-            {
-                RuleFor(x => x.Datetime)
-                    .Must(IsFileDatetime).WithMessage("{PropertyName} invalid");
-            });
+            RuleFor(x => x.Datetime)
+                .Must(ValidateDatetime).WithMessage("{PropertyName} invalid");
 
             When(x => x.Position != null, () =>
             {
@@ -39,9 +36,9 @@ namespace FileDBInterface.Validators
             return description != string.Empty;
         }
 
-        private bool IsFileDatetime(string datetime)
+        public static bool ValidateDatetime(string datetime)
         {
-            return DatabaseParsing.ParseFilesDatetime(datetime) != null;
+            return datetime == null || DatabaseParsing.ParseFilesDatetime(datetime) != null;
         }
     }
 }

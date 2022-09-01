@@ -54,11 +54,17 @@
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
                     <TextBlock Style="{StaticResource PageInnerTextBlock}" Grid.Row="0" Grid.Column="0" Text="&#x1F4DD;" VerticalAlignment="Center" Margin="5" ToolTip="File description"/>
                     <TextBox Style="{StaticResource PageInnerTextBox}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Text="{Binding NewFileDescription}" ToolTip="File description"></TextBox>
                     <Button Grid.Row="0" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetFileDescriptionCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip="Set file description">Set</Button>
+
+                    <TextBlock Style="{StaticResource PageInnerTextBlock}" Grid.Row="1" Grid.Column="0" Text="&#x1F4C5;" VerticalAlignment="Center" Margin="5" ToolTip="File date &amp; time"/>
+                    <TextBox Style="{StaticResource PageInnerTextBox}" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Text="{Binding NewFileDateTime}" ToolTip="Date &amp; time formats:&#x0a;YYYY&#x0a;YYYY-MM-DD&#x0a;YYYY-MM-DDTHH:MM:SS"></TextBox>
+                    <Button Grid.Row="1" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetFileDateTimeCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip="Set file date &amp; time">Set</Button>
                 </Grid>
+                
                 <Button Margin="5" Style="{StaticResource NormalButton}" HorizontalAlignment="Left" Command="{Binding ReApplyFileMetaDataCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip="Apply meta-data (persons, locations, tags and description) from last edit">Apply meta-data from last edit</Button>
                 <Button Margin="5" Style="{StaticResource NormalButton}" HorizontalAlignment="Left" Command="{Binding UpdateFileFromMetaDataCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip="Reload timestamp and GPS location from file Exif data">Reload Exif data...</Button>
                 <TextBlock Style="{StaticResource PageInnerTextBlock}">Create:</TextBlock>

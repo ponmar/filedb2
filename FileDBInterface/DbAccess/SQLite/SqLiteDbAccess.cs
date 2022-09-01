@@ -242,6 +242,25 @@ namespace FileDBInterface.DbAccess.SQLite
             }
         }
 
+        public void UpdateFileDatetime(int id, string datetime)
+        {
+            if (!FilesModelValidator.ValidateDatetime(datetime))
+            {
+                throw new DataValidationException("Invalid datetime");
+            }
+
+            try
+            {
+                using var connection = DatabaseUtils.CreateConnection(database);
+                var sql = "update [files] set Datetime = @datetime where Id = @id";
+                connection.Execute(sql, new { datetime, id });
+            }
+            catch (SQLiteException e)
+            {
+                throw new DatabaseWrapperException("SQL error", e);
+            }
+        }
+
         public void DeleteFile(int id)
         {
             using var connection = DatabaseUtils.CreateConnection(database);
