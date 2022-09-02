@@ -1,3 +1,6 @@
+2.17:
+* File date and time can be manually overriden (useful when no valid Exif data exists)
+
 2.16:
 * Fix for avoiding duplicated function key usage in toggle meta-data history
 
