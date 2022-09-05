@@ -126,7 +126,7 @@ namespace FileDBInterface.DbAccess.SQLite
             return connection.QueryFirst<FilesModel>("select * from [files] where Id = @id", new { id });
         }
 
-        public FilesModel GetFileByPath(string path)
+        public FilesModel? GetFileByPath(string path)
         {
             using var connection = DatabaseUtils.CreateConnection(database);
             return connection.QueryFirstOrDefault<FilesModel>("select * from [files] where Path = @path", new { path });
@@ -178,7 +178,7 @@ namespace FileDBInterface.DbAccess.SQLite
             }
         }
 
-        public void InsertFile(string internalPath, string description, IFilesystemAccess filesystemAccess)
+        public void InsertFile(string internalPath, string? description, IFilesystemAccess filesystemAccess)
         {
             if (!FilesModelValidator.ValidateDescription(description))
             {
@@ -223,7 +223,7 @@ namespace FileDBInterface.DbAccess.SQLite
             }
         }
 
-        public void UpdateFileDescription(int id, string description)
+        public void UpdateFileDescription(int id, string? description)
         {
             if (!FilesModelValidator.ValidateDescription(description))
             {
@@ -242,7 +242,7 @@ namespace FileDBInterface.DbAccess.SQLite
             }
         }
 
-        public void UpdateFileDatetime(int id, string datetime)
+        public void UpdateFileDatetime(int id, string? datetime)
         {
             if (!FilesModelValidator.ValidateDatetime(datetime))
             {

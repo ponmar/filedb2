@@ -13,10 +13,10 @@ namespace FileDB.ViewModel
     public class DeceasedPerson
     {
         public string Name => $"{person.Firstname} {person.Lastname}";
-        public string DateOfBirth => person.DateOfBirth;
-        public string DeceasedStr => person.Deceased;
-        public DateTime Deceased => DatabaseParsing.ParsePersonsDeceased(person.Deceased);
-        public int Age => DatabaseUtils.GetYearsAgo(Deceased, DatabaseParsing.ParsePersonsDateOfBirth(person.DateOfBirth));
+        public string DateOfBirth => person.DateOfBirth!;
+        public string DeceasedStr => person.Deceased!;
+        public DateTime Deceased => DatabaseParsing.ParsePersonsDeceased(person.Deceased!);
+        public int Age => DatabaseUtils.GetYearsAgo(Deceased, DatabaseParsing.ParsePersonsDateOfBirth(person.DateOfBirth!));
         public string ProfileFileIdPath { get; }
 
         private readonly PersonModel person;
@@ -38,7 +38,7 @@ namespace FileDB.ViewModel
     public partial class RipViewModel : ObservableObject
     {
         [ObservableProperty]
-        private string filterText;
+        private string filterText = string.Empty;
 
         partial void OnFilterTextChanged(string value)
         {
@@ -57,7 +57,7 @@ namespace FileDB.ViewModel
             model.PersonsUpdated += Model_PersonsUpdated;
         }
 
-        private void Model_PersonsUpdated(object sender, EventArgs e)
+        private void Model_PersonsUpdated(object? sender, EventArgs e)
         {
             UpdatePersons();
         }
@@ -72,9 +72,6 @@ namespace FileDB.ViewModel
             {
                 if (person.DateOfBirth != null && person.Deceased != null)
                 {
-                    var dateOfBirth = DatabaseParsing.ParsePersonsDateOfBirth(person.DateOfBirth);
-                    var deceased = DatabaseParsing.ParsePersonsDeceased(person.Deceased);
-
                     string profileFileIdPath;
                     if (person.ProfileFileId != null)
                     {
@@ -85,7 +82,7 @@ namespace FileDB.ViewModel
                         else
                         {
                             var profileFile = model.DbAccess.GetFileById(person.ProfileFileId.Value);
-                            profileFileIdPath = model.FilesystemAccess.ToAbsolutePath(profileFile.Path);
+                            profileFileIdPath = model.FilesystemAccess.ToAbsolutePath(profileFile!.Path);
                         }
                     }
                     else

@@ -16,7 +16,7 @@ namespace FileDB.ViewModel
     public partial class ToolsViewModel : ObservableObject
     {
         [ObservableProperty]
-        private string backupResult;
+        private string backupResult = string.Empty;
 
         [ObservableProperty]
         private string cacheResult = "Not executed.";
@@ -44,7 +44,7 @@ namespace FileDB.ViewModel
         private string missingFilesList = string.Empty;
 
         [ObservableProperty]
-        private string databaseExportDirectory;
+        private string databaseExportDirectory = string.Empty;
 
         [ObservableProperty]
         private string databaseExportResult = "Not executed.";
@@ -96,11 +96,11 @@ namespace FileDB.ViewModel
                 }
             }
 
-            var profileFileIds = model.DbAccess.GetPersons().Where(x => x.ProfileFileId != null).Select(x => x.ProfileFileId.Value);
+            var profileFileIds = model.DbAccess.GetPersons().Where(x => x.ProfileFileId != null).Select(x => x.ProfileFileId!.Value);
             var numCachedFiles = 0;
             foreach (var profileFileId in profileFileIds)
             {
-                var file = model.DbAccess.GetFileById(profileFileId);
+                var file = model.DbAccess.GetFileById(profileFileId)!;
                 var sourcePath = model.FilesystemAccess.ToAbsolutePath(file.Path);
                 var destinationPath = Path.Combine(cacheDir, $"{profileFileId}");
                 try

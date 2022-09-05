@@ -6,9 +6,9 @@ namespace FileDB.Sorters
 {
     public class FilesModelByDateSorter : IComparer<FilesModel>
     {
-        public int Compare(FilesModel x, FilesModel y)
+        public int Compare(FilesModel? x, FilesModel? y)
         {
-            if (x.Datetime == y.Datetime)
+            if (x!.Datetime == y!.Datetime)
             {
                 // Note: covers same datetime and when both are null
                 return x.Path.CompareTo(y.Path);
@@ -22,8 +22,8 @@ namespace FileDB.Sorters
                 return -1;
             }
 
-            var xDatetime = DatabaseParsing.ParseFilesDatetime(x.Datetime).Value;
-            var yDatetime = DatabaseParsing.ParseFilesDatetime(y.Datetime).Value;
+            var xDatetime = DatabaseParsing.ParseFilesDatetime(x.Datetime)!.Value;
+            var yDatetime = DatabaseParsing.ParseFilesDatetime(y.Datetime)!.Value;
 
             return xDatetime.CompareTo(yDatetime);
         }

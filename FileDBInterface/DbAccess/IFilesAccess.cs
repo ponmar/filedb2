@@ -9,13 +9,13 @@ namespace FileDBInterface.DbAccess
     {
         public IEnumerable<FilesModel> GetFiles();
         public int GetFileCount();
-        public FilesModel GetFileById(int id);
-        public FilesModel GetFileByPath(string path);
-        public void InsertFile(string internalPath, string description, IFilesystemAccess filesystemAccess);
+        public FilesModel? GetFileById(int id);
+        public FilesModel? GetFileByPath(string path);
+        public void InsertFile(string internalPath, string? description, IFilesystemAccess filesystemAccess);
         public void DeleteFile(int id);
         public void UpdateFileFromMetaData(int id, IFilesystemAccess filesystemAccess);
-        public void UpdateFileDescription(int id, string description);
-        public void UpdateFileDatetime(int id, string datetime);
+        public void UpdateFileDescription(int id, string? description);
+        public void UpdateFileDatetime(int id, string? datetime);
 
         public IEnumerable<FilesModel> SearchFilesFromIds(IEnumerable<int> fileIds);
         public IEnumerable<FilesModel> SearchFiles(string criteria);

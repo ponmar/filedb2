@@ -93,7 +93,7 @@ namespace FileDB
             return modes;
         }
 
-        public static string GetPersonAgeInFileString(string fileDatetimeStr, string personDateOfBirthStr)
+        public static string GetPersonAgeInFileString(string? fileDatetimeStr, string? personDateOfBirthStr)
         {
             DateTime? fileDatetime = fileDatetimeStr == null ? null : DatabaseParsing.ParseFilesDatetime(fileDatetimeStr);
             if (fileDatetime == null)
@@ -111,7 +111,7 @@ namespace FileDB
             return $" ({age})";
         }
 
-        public static string CreatePositionLink(string position, string locationLinkConfig)
+        public static string? CreatePositionLink(string? position, string? locationLinkConfig)
         {
             if (string.IsNullOrEmpty(position) || string.IsNullOrEmpty(locationLinkConfig))
             {
@@ -127,7 +127,7 @@ namespace FileDB
             return locationLinkConfig.Replace("LAT", positionParts[0]).Replace("LON", positionParts[1]);
         }
 
-        public static Uri CreatePositionUri(string position, string locationLinkConfig)
+        public static Uri? CreatePositionUri(string position, string locationLinkConfig)
         {
             var link = CreatePositionLink(position, locationLinkConfig);
             return link != null ? new Uri(link) : null;
@@ -135,7 +135,7 @@ namespace FileDB
 
         public static string GetVersionString()
         {
-            var version = Assembly.GetEntryAssembly().GetName().Version;
+            var version = Assembly.GetEntryAssembly()!.GetName().Version!;
             return $"{version.Major}.{version.Minor}";
         }
 

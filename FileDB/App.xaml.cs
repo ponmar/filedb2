@@ -54,7 +54,10 @@ namespace FileDB
 
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
-            ClipboardService.SetText(e.Exception.StackTrace);
+            if (e.Exception.StackTrace != null)
+            {
+                ClipboardService.SetText(e.Exception.StackTrace);
+            }
             var message = $"Unhandled exception: {e.Exception.GetType().Name} ({e.Exception.Message}). Stacktrace has been copied to clipboard.";
             Dialogs.ShowErrorDialog(message);
         }

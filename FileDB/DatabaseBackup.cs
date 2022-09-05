@@ -21,7 +21,7 @@ namespace FileDB
 
     public class DatabaseBackup
     {
-        public string BackupDirectory => Path.GetDirectoryName(Model.Model.Instance.Config.Database);
+        public string BackupDirectory => Path.GetDirectoryName(Model.Model.Instance.Config.Database)!;
 
         private const string BackupFileTimestampFormat = "yyyy-MM-ddTHHmmss";
 
@@ -60,7 +60,7 @@ namespace FileDB
             var directoryPath = Path.GetDirectoryName(db);
             var timestamp = DateTime.Now.ToString(BackupFileTimestampFormat);
             var backupFilename = $"backup_{timestamp}.db";
-            var backupFilePath = Path.Combine(directoryPath, backupFilename);
+            var backupFilePath = Path.Combine(directoryPath!, backupFilename);
 
             if (File.Exists(backupFilePath))
             {

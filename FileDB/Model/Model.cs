@@ -17,16 +17,18 @@ namespace FileDB.Model
     public class Model
     {
         public static Model Instance => instance ??= new();
-        private static Model instance;
+        private static Model? instance;
 
-        public IImagePresenter ImagePresenter { get; set; }
+        public IImagePresenter? ImagePresenter { get; set; } = null;
 
         private readonly List<IBrowsingPlugin> browsingPlugins = new();
 
         private Model()
         {
-            var dateCheckerTimer = new DispatcherTimer();
-            dateCheckerTimer.Interval = TimeSpan.FromMinutes(1);
+            var dateCheckerTimer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromMinutes(1)
+            };
             dateCheckerTimer.Tick += DateCheckerTimer_Tick;
             dateCheckerTimer.Start();
         }
@@ -37,14 +39,14 @@ namespace FileDB.Model
             if (configValidator.CastingEnabled(Config))
             {
                 FileCaster.StartServer(Config.CastHttpServerPort);
-                browsingPlugins.Add(new Cast(Config.CastHttpServerInterface, Config.CastHttpServerPort));
+                browsingPlugins.Add(new Cast(Config.CastHttpServerInterface!, Config.CastHttpServerPort));
             }
         }
 
         private DateTime date = DateTime.Now;
-        public event EventHandler DateChanged;
+        public event EventHandler? DateChanged;
 
-        private void DateCheckerTimer_Tick(object sender, EventArgs e)
+        private void DateCheckerTimer_Tick(object? sender, EventArgs e)
         {
             var now = DateTime.Now;
             if (date.Date != now.Date)
@@ -56,7 +58,7 @@ namespace FileDB.Model
 
         public List<Notification> Notifications { get; } = new();
 
-        public event EventHandler NotificationsUpdated;
+        public event EventHandler? NotificationsUpdated;
 
         public void AddNotification(Notification notification)
         {
@@ -79,7 +81,7 @@ namespace FileDB.Model
             }
         }
 
-        public event EventHandler ConfigLoaded;
+        public event EventHandler? ConfigLoaded;
         public Config Config
         {
             get => config;
@@ -102,10 +104,10 @@ namespace FileDB.Model
                 {
                     ReloadHandles();
                 }
-                return dbAccess;
+                return dbAccess!;
             }
         }
-        private IDbAccess dbAccess;
+        private IDbAccess? dbAccess;
 
         public void ReloadHandles()
         {
@@ -129,14 +131,14 @@ namespace FileDB.Model
                 {
                     ReloadHandles();
                 }
-                return filesystemAccess;
+                return filesystemAccess!;
             }
         }
-        private IFilesystemAccess filesystemAccess;
+        private IFilesystemAccess? filesystemAccess;
 
-        public event EventHandler PersonsUpdated;
-        public event EventHandler LocationsUpdated;
-        public event EventHandler TagsUpdated;
+        public event EventHandler? PersonsUpdated;
+        public event EventHandler? LocationsUpdated;
+        public event EventHandler? TagsUpdated;
 
         public void NotifyPersonsUpdated()
         {
@@ -153,14 +155,14 @@ namespace FileDB.Model
             TagsUpdated?.Invoke(this, EventArgs.Empty);
         }
 
-        public event EventHandler<bool> TemporaryFullscreenRequested;
+        public event EventHandler<bool>? TemporaryFullscreenRequested;
 
         public void RequestTemporaryFullscreen(bool fullscreen)
         {
             TemporaryFullscreenRequested?.Invoke(this, fullscreen);
         }
 
-        public event EventHandler<List<FilesModel>> FilesImported;
+        public event EventHandler<List<FilesModel>>? FilesImported;
 
         public void NotifyFilesImported(List<FilesModel> files)
         {

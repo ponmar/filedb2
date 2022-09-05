@@ -14,9 +14,15 @@ namespace FileDB.ViewModel
 {
     public class NewFile
     {
-        public string Path { get; set; }
+        public string Path { get; }
 
-        public string DateModified { get; set; }
+        public string DateModified { get; }
+
+        public NewFile(string path, string dateModified)
+        {
+            Path = path;
+            DateModified = dateModified;
+        }
     }
 
     public partial class ImportViewModel : ObservableObject
@@ -35,17 +41,17 @@ namespace FileDB.ViewModel
         private string importedFileList = string.Empty;
 
         [ObservableProperty]
-        private string removeFileList;
+        private string removeFileList = string.Empty;
 
         private readonly Model.Model model = Model.Model.Instance;
 
         public ImportViewModel()
         {
-            SubdirToScan = model.Config.FilesRootDirectory;
+            subdirToScan = model.Config.FilesRootDirectory;
             model.ConfigLoaded += Model_ConfigLoaded;
         }
 
-        private void Model_ConfigLoaded(object sender, EventArgs e)
+        private void Model_ConfigLoaded(object? sender, EventArgs e)
         {
             SubdirToScan = model.Config.FilesRootDirectory;
         }
@@ -94,11 +100,7 @@ namespace FileDB.ViewModel
 
             foreach (var internalFilePath in model.FilesystemAccess.ListNewFilesystemFiles(pathToScan, blacklistedFilePathPatterns, whitelistedFilePathPatterns, model.Config.IncludeHiddenDirectories, model.DbAccess))
             {
-                NewFiles.Add(new NewFile()
-                {
-                    Path = internalFilePath,
-                    DateModified = GetDateModified(internalFilePath),
-                });
+                NewFiles.Add(new NewFile(internalFilePath, GetDateModified(internalFilePath)));
             }
 
             OnPropertyChanged(nameof(NewFilesAvailable));
@@ -136,11 +138,11 @@ namespace FileDB.ViewModel
 
                         if (importedFile.Position != null && model.Config.FileToLocationMaxDistance > 0.5)
                         {
-                            var importedFilePos = DatabaseParsing.ParseFilesPosition(importedFile.Position).Value;
+                            var importedFilePos = DatabaseParsing.ParseFilesPosition(importedFile.Position)!.Value;
 
                             foreach (var locationWithPosition in locations.Where(x => x.Position != null))
                             {
-                                var locationPos = DatabaseParsing.ParseFilesPosition(locationWithPosition.Position).Value;
+                                var locationPos = DatabaseParsing.ParseFilesPosition(locationWithPosition.Position)!.Value;
                                 var distance = DatabaseUtils.CalculateDistance(importedFilePos.lat, importedFilePos.lon, locationPos.lat, locationPos.lon);
                                 if (distance < model.Config.FileToLocationMaxDistance)
                                 {

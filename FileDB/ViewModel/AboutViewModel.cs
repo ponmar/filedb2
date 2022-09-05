@@ -25,7 +25,7 @@ namespace FileDB.ViewModel
         {
             var licensesJson = File.ReadAllText(LicensesJsonFilePath);
             var licenses = JsonConvert.DeserializeObject<List<LicenseFileFormatDto>>(licensesJson);
-            licenses.ForEach(x => Licenses.Add(x));
+            licenses!.ForEach(x => Licenses.Add(x));
         }
     }
 }

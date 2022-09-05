@@ -39,12 +39,12 @@ namespace FileDB.ViewModel
             notifierTimer.Start();
         }
 
-        private void NotifierTimer_Tick(object sender, EventArgs e)
+        private void NotifierTimer_Tick(object? sender, EventArgs e)
         {
             RunContinousNotifiers();
         }
 
-        private void Model_ConfigLoaded(object sender, System.EventArgs e)
+        private void Model_ConfigLoaded(object? sender, EventArgs e)
         {
             RunAllNotifiers();
         }
@@ -90,7 +90,7 @@ namespace FileDB.ViewModel
             {
                 var configDir = new AppDataConfig<Config>(Utils.ApplicationName).ConfigDirectory;
                 var cacheDir = Path.Combine(configDir, DefaultConfigs.CacheSubdir);
-                var cacheFileIds = model.DbAccess.GetPersons().Where(x => x.ProfileFileId != null).Select(x => x.ProfileFileId.Value);
+                var cacheFileIds = model.DbAccess.GetPersons().Where(x => x.ProfileFileId != null).Select(x => x.ProfileFileId!.Value);
                 notifiers.Add(new CacheNotifier(cacheDir, cacheFileIds));
             }
 
@@ -115,7 +115,7 @@ namespace FileDB.ViewModel
             notifiers.ForEach(x => x.Run().ForEach(y => model.AddNotification(y)));
         }
 
-        private void Model_NotificationsUpdated(object sender, System.EventArgs e)
+        private void Model_NotificationsUpdated(object? sender, EventArgs e)
         {
             LoadNotifications();
         }

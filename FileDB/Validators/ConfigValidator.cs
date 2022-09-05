@@ -57,7 +57,7 @@ namespace FileDB.Validators
             When(c => !string.IsNullOrEmpty(c.CastHttpServerInterface), () =>
             {
                 RuleFor(c => c.CastHttpServerInterface)
-                    .Must(IsValidIpAddress).WithMessage("Cast HTTP server interface is not a valid IP address");
+                    .Must(IsValidIpAddress!).WithMessage("Cast HTTP server interface is not a valid IP address");
             });
         }
 

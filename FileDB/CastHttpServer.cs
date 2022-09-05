@@ -8,7 +8,7 @@ namespace FileDB
 {
     public static class MimeTypeCreator
     {
-        public static string CreateMimeTypeFor(string filePath)
+        public static string? CreateMimeTypeFor(string filePath)
         {
             // See https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
 
@@ -83,11 +83,11 @@ namespace FileDB
 
     public class FileCaster
     {
-        private static CastHttpServer server;
-        private static Thread serverThread;
-        private static string currentFilePath;
+        private static CastHttpServer? server;
+        private static Thread? serverThread;
+        private static string? currentFilePath;
 
-        public static bool Started => server != null && serverThread.IsAlive;
+        public static bool Started => server != null && serverThread != null && serverThread.IsAlive;
 
         public static void StartServer(int port)
         {
@@ -97,16 +97,11 @@ namespace FileDB
             }
 
             server = new CastHttpServer(port);
-            serverThread = new Thread(Start)
+            serverThread = new Thread(() => server.Run())
             {
                 IsBackground = true,
             };
             serverThread.Start();
-        }
-
-        private static void Start()
-        {
-            server.Run();
         }
 
         public static void LoadFile(string filePath)
@@ -121,7 +116,7 @@ namespace FileDB
                     {
                         var fileContent = File.ReadAllBytes(filePath);
                         currentFilePath = filePath;
-                        server.NextFile = new FileToCast(fileContent, mimeType);
+                        server!.NextFile = new FileToCast(fileContent, mimeType);
                     }
                     catch (IOException)
                     {
@@ -171,7 +166,7 @@ namespace FileDB
                 var context = httpListener.GetContext();
                 var result = false;
 
-                switch (context.Request.Url.Segments.Last())
+                switch (context.Request.Url!.Segments.Last())
                 {
                     case "stop":
                         run = false;

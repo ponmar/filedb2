@@ -55,10 +55,10 @@ namespace FileDB
 
         public FilesModel GetFileById(int id)
         {
-            return null;
+            throw new NotImplementedException();
         }
 
-        public FilesModel GetFileByPath(string path)
+        public FilesModel? GetFileByPath(string path)
         {
             return null;
         }
@@ -88,7 +88,7 @@ namespace FileDB
             return new List<FilesModel>();
         }
 
-        public void InsertFile(string internalPath, string description, IFilesystemAccess fileSystemAccess)
+        public void InsertFile(string internalPath, string? description, IFilesystemAccess fileSystemAccess)
         {
         }
 
@@ -96,11 +96,11 @@ namespace FileDB
         {
         }
 
-        public void UpdateFileDescription(int id, string description)
+        public void UpdateFileDescription(int id, string? description)
         {
         }
 
-        public void UpdateFileDatetime(int id, string datetime)
+        public void UpdateFileDatetime(int id, string? datetime)
         {
         }
 
@@ -154,7 +154,7 @@ namespace FileDB
 
         public PersonModel GetPersonById(int id)
         {
-            return null;
+            throw new NotImplementedException();
         }
 
         public bool HasPersonId(int id)
@@ -191,7 +191,7 @@ namespace FileDB
 
         public LocationModel GetLocationById(int id)
         {
-            return null;
+            throw new NotImplementedException();
         }
 
         public bool HasLocationId(int id)
@@ -228,7 +228,7 @@ namespace FileDB
 
         public TagModel GetTagById(int id)
         {
-            return null;
+            throw new NotImplementedException();
         }
 
         public bool HasTagId(int id)
@@ -246,11 +246,6 @@ namespace FileDB
 
         public void DeleteTag(int id)
         {
-        }
-
-        public string ToAbsolutePath(string internalPath)
-        {
-            return string.Empty;
         }
     }
 }

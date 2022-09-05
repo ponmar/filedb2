@@ -14,25 +14,26 @@ namespace FileDB.ViewModel
 {
     public class Person
     {
-        public string Firstname { get; set; }
-        public string Lastname { get; set; }
-        public string Description { get; set; }
-        public string DateOfBirth { get; set; }
-        public string Deceased { get; set; }
-        public int Age { get; set; }
-        public int? ProfileFileId { get; set; }
-        public Sex Sex { get; set; }
+        public int Id { get; }
+        public string Firstname { get; }
+        public string Lastname { get; }
+        public string? Description { get; }
+        public string? DateOfBirth { get; }
+        public string? Deceased { get; }
+        public int Age { get; }
+        public int? ProfileFileId { get; }
+        public Sex Sex { get; }
 
-        private readonly int id;
-
-        public Person(int id)
+        public Person(int id, string firstname, string lastname, string? description, string? dateOfBirth, string? deceased, int age, int? profileFileId, Sex sex)
         {
-            this.id = id;
-        }
-
-        public int GetId()
-        {
-            return id;
+            Id = id;
+            Firstname = firstname;
+            Lastname = lastname;
+            Description = description;
+            DateOfBirth = dateOfBirth;
+            Deceased = deceased;
+            Age = age;
+            ProfileFileId = profileFileId;
         }
     }
 
@@ -44,7 +45,7 @@ namespace FileDB.ViewModel
         public ObservableCollection<Person> Persons { get; } = new();
 
         [ObservableProperty]
-        private Person selectedPerson;
+        private Person? selectedPerson;
 
         private readonly Model.Model model = Model.Model.Instance;
 
@@ -55,12 +56,12 @@ namespace FileDB.ViewModel
             model.ConfigLoaded += Model_ConfigLoaded;
         }
 
-        private void Model_ConfigLoaded(object sender, EventArgs e)
+        private void Model_ConfigLoaded(object? sender, EventArgs e)
         {
             ReadWriteMode = !model.Config.ReadOnly;
         }
 
-        private void Model_PersonsUpdated(object sender, EventArgs e)
+        private void Model_PersonsUpdated(object? sender, EventArgs e)
         {
             ReloadPersons();
         }
@@ -68,12 +69,12 @@ namespace FileDB.ViewModel
         [RelayCommand]
         private void RemovePerson()
         {
-            if (Dialogs.ShowConfirmDialog($"Remove {selectedPerson.Firstname} {selectedPerson.Lastname}?"))
+            if (Dialogs.ShowConfirmDialog($"Remove {selectedPerson!.Firstname} {selectedPerson.Lastname}?"))
             {
-                var filesWithPerson = model.DbAccess.SearchFilesWithPersons(new List<int>() { selectedPerson.GetId() }).ToList();
+                var filesWithPerson = model.DbAccess.SearchFilesWithPersons(new List<int>() { selectedPerson.Id }).ToList();
                 if (filesWithPerson.Count == 0 || Dialogs.ShowConfirmDialog($"Person is used in {filesWithPerson.Count} files, remove anyway?"))
                 {
-                    model.DbAccess.DeletePerson(selectedPerson.GetId());
+                    model.DbAccess.DeletePerson(selectedPerson.Id);
                     model.NotifyPersonsUpdated();
                 }
             }
@@ -82,7 +83,7 @@ namespace FileDB.ViewModel
         [RelayCommand]
         private void EditPerson()
         {
-            var window = new AddPersonWindow(selectedPerson.GetId())
+            var window = new AddPersonWindow(selectedPerson!.Id)
             {
                 Owner = Application.Current.MainWindow
             };
@@ -110,17 +111,7 @@ namespace FileDB.ViewModel
             Persons.Clear();
             var persons = model.DbAccess.GetPersons().ToList();
             persons.Sort(new PersonModelByNameSorter());
-            var personVms = persons.Select(pm => new Person(pm.Id)
-            {
-                Firstname = pm.Firstname,
-                Lastname = pm.Lastname,
-                Description = pm.Description,
-                DateOfBirth = pm.DateOfBirth,
-                Deceased = pm.Deceased,
-                Age = GetPersonAge(pm),
-                ProfileFileId = pm.ProfileFileId,
-                Sex = pm.Sex,
-            });
+            var personVms = persons.Select(pm => new Person(pm.Id, pm.Firstname, pm.Lastname, pm.Description, pm.DateOfBirth, pm.Deceased, GetPersonAge(pm), pm.ProfileFileId, pm.Sex));
             foreach (var personVm in personVms)
             {
                 Persons.Add(personVm);

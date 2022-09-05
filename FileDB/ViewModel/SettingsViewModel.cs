@@ -11,16 +11,16 @@ using Microsoft.Win32;
 
 namespace FileDB.ViewModel
 {
-     public partial class SettingsViewModel : ObservableObject
+    public partial class SettingsViewModel : ObservableObject
     {
         [ObservableProperty]
-        private string configName;
+        private string configName = string.Empty;
 
         [ObservableProperty]
-        private string database;
+        private string database = string.Empty;
 
         [ObservableProperty]
-        private string filesRootDirectory;
+        private string filesRootDirectory = string.Empty;
 
         [ObservableProperty]
         private int slideshowDelay;
@@ -40,10 +40,10 @@ namespace FileDB.ViewModel
         private bool includeHiddenDirectories;
 
         [ObservableProperty]
-        private string blacklistedFilePathPatterns;
+        private string blacklistedFilePathPatterns = string.Empty;
 
         [ObservableProperty]
-        private string whitelistedFilePathPatterns;
+        private string whitelistedFilePathPatterns = string.Empty;
 
         [ObservableProperty]
         private bool readOnly;
@@ -64,7 +64,7 @@ namespace FileDB.ViewModel
         private bool missingFilesRootDirNotification;
 
         [ObservableProperty]
-        private string locationLink;
+        private string locationLink = string.Empty;
 
         [ObservableProperty]
         private int fileToLocationMaxDistance;
@@ -73,7 +73,7 @@ namespace FileDB.ViewModel
         private WindowMode windowMode;
 
         [ObservableProperty]
-        private string castHttpServerInterface;
+        private string? castHttpServerInterface;
 
         [ObservableProperty]
         private int castHttpServerPort;

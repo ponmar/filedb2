@@ -92,7 +92,7 @@ namespace FileDB.Export
             return textLines;
         }
 
-        private Bitmap LoadBitmap(ExportedFile file)
+        private Bitmap? LoadBitmap(ExportedFile file)
         {
             try
             {

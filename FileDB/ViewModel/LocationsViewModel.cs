@@ -11,22 +11,20 @@ namespace FileDB.ViewModel
 {
     public class Location
     {
-        public string Name { get; set; }
+        public int Id { get; }
 
-        public string Description { get; set; }
+        public string Name { get; }
 
-        public string Position { get; set; }
+        public string? Description { get; }
 
-        private readonly int id;
+        public string? Position { get; }
 
-        public Location(int id)
+        public Location(int id, string name, string? description, string? position)
         {
-            this.id = id;
-        }
-
-        public int GetId()
-        {
-            return id;
+            Id = id;
+            Name = name;
+            Description = description;
+            Position = position;
         }
     }
 
@@ -39,7 +37,7 @@ namespace FileDB.ViewModel
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(SelectedLocationHasPosition))]
-        private Location selectedLocation;
+        private Location? selectedLocation;
 
         public bool SelectedLocationHasPosition => selectedLocation != null && !string.IsNullOrEmpty(selectedLocation.Position);
 
@@ -52,12 +50,12 @@ namespace FileDB.ViewModel
             model.ConfigLoaded += Model_ConfigLoaded;
         }
 
-        private void Model_ConfigLoaded(object sender, System.EventArgs e)
+        private void Model_ConfigLoaded(object? sender, System.EventArgs e)
         {
             ReadWriteMode = !model.Config.ReadOnly;
         }
 
-        private void Model_LocationsUpdated(object sender, System.EventArgs e)
+        private void Model_LocationsUpdated(object? sender, System.EventArgs e)
         {
             ReloadLocations();
         }
@@ -65,12 +63,12 @@ namespace FileDB.ViewModel
         [RelayCommand]
         private void RemoveLocation()
         {
-            if (Dialogs.ShowConfirmDialog($"Remove {selectedLocation.Name}?"))
+            if (Dialogs.ShowConfirmDialog($"Remove {selectedLocation!.Name}?"))
             {
-                var filesWithLocation = model.DbAccess.SearchFilesWithLocations(new List<int>() { selectedLocation.GetId() }).ToList();
+                var filesWithLocation = model.DbAccess.SearchFilesWithLocations(new List<int>() { selectedLocation.Id }).ToList();
                 if (filesWithLocation.Count == 0 || Dialogs.ShowConfirmDialog($"Location is used in {filesWithLocation.Count} files, remove anyway?"))
                 {
-                    model.DbAccess.DeleteLocation(selectedLocation.GetId());
+                    model.DbAccess.DeleteLocation(selectedLocation.Id);
                     model.NotifyLocationsUpdated();
                 }
             }
@@ -79,7 +77,7 @@ namespace FileDB.ViewModel
         [RelayCommand]
         private void EditLocation()
         {
-            var window = new AddLocationWindow(selectedLocation.GetId())
+            var window = new AddLocationWindow(selectedLocation!.Id)
             {
                 Owner = Application.Current.MainWindow
             };
@@ -99,7 +97,7 @@ namespace FileDB.ViewModel
         [RelayCommand]
         private void ShowLocationOnMap()
         {
-            var link = Utils.CreatePositionLink(selectedLocation.Position, model.Config.LocationLink);
+            var link = Utils.CreatePositionLink(selectedLocation!.Position, model.Config.LocationLink);
             if (link != null)
             {
                 Utils.OpenUriInBrowser(link);
@@ -118,7 +116,7 @@ namespace FileDB.ViewModel
 
             var locations = model.DbAccess.GetLocations().ToList();
             locations.Sort(new LocationModelByNameSorter());
-            foreach (var location in locations.Select(lm => new Location(lm.Id) { Name = lm.Name, Description = lm.Description, Position = lm.Position }))
+            foreach (var location in locations.Select(lm => new Location(lm.Id, lm.Name, lm.Description, lm.Position)))
             {
                 Locations.Add(location);
             }

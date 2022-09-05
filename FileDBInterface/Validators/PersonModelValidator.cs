@@ -28,20 +28,20 @@ namespace FileDBInterface.Validators
 
             When(x => x.DateOfBirth != null, () =>
             {
-                RuleFor(x => x.DateOfBirth)
+                RuleFor(x => x.DateOfBirth!)
                     .Must(IsDate).WithMessage("{PropertyName} is not in format YYYY-MM-DD");
             });
 
             When(x => x.Deceased != null, () =>
             {
-                RuleFor(x => x.Deceased)
+                RuleFor(x => x.Deceased!)
                     .Must(IsDate).WithMessage("{PropertyName} is not in format YYYY-MM-DD");
             });
 
             When(x => x.ProfileFileId != null, () =>
             {
                 RuleFor(x => x.ProfileFileId)
-                    .Must(p => p.Value >= 0).WithMessage("{PropertyName} must be greater than or equal to 0");
+                    .Must(p => p!.Value >= 0).WithMessage("{PropertyName} must be greater than or equal to 0");
             });
         }
 

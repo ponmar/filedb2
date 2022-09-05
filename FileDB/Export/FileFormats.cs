@@ -4,38 +4,32 @@ using System.Collections.Generic;
 
 namespace FileDB.Export
 {
-    public class ExportedFile
-    {
-        public int Id { get; set; }
-        public string ExportedPath { get; set; }
-        public string OriginalPath { get; set; }
-        public string Description { get; set; }
-        public string Datetime { get; set; }
-        public string Position { get; set; }
-        public List<int> PersonIds { get; set; }
-        public List<int> LocationIds { get; set; }
-        public List<int> TagIds { get; set; }
-    }
+    public record ExportedFile(
+        int Id,
+        string ExportedPath,
+        string OriginalPath,
+        string? Description,
+        string? Datetime,
+        string? Position,
+        List<int> PersonIds,
+        List<int> LocationIds,
+        List<int> TagIds);
 
-    public class SearchResultFileFormat
-    {
-        public string Header { get; set; }
-        public string About { get; set; }
-        public string FileList { get; set; }
-        public List<ExportedFile> Files { get; set; }
-        public List<PersonModel> Persons { get; set; }
-        public List<LocationModel> Locations { get; set; }
-        public List<TagModel> Tags { get; set; }
-        public string ApplicationDownloadUrl { get; set; }
-    }
+    public record SearchResultFileFormat(
+        string Header,
+        string About,
+        string FileList,
+        List<ExportedFile> Files,
+        List<PersonModel> Persons,
+        List<LocationModel> Locations,
+        List<TagModel> Tags,
+        string ApplicationDownloadUrl);
 
-    public class ExportedDatabaseFileFormat
-    {
-        public string FileDBVersion { get; set; }
-        public DateTime ExportDateTime { get; set; }
-        public List<PersonModel> Persons { get; set; }
-        public List<LocationModel> Locations { get; set; }
-        public List<TagModel> Tags { get; set; }
-        public List<FilesModel> Files { get; set; }
-    }
+    public record ExportedDatabaseFileFormat(
+        string FileDBVersion,
+        DateTime ExportDateTime,
+        List<PersonModel> Persons,
+        List<LocationModel> Locations,
+        List<TagModel> Tags,
+        List<FilesModel> Files);
 }

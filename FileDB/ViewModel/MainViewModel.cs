@@ -53,18 +53,18 @@ namespace FileDB.ViewModel
             model.ConfigLoaded += Model_ConfigLoaded;
         }
 
-        private void Model_ConfigLoaded(object sender, System.EventArgs e)
+        private void Model_ConfigLoaded(object? sender, System.EventArgs e)
         {
             ReadWriteMode = !model.Config.ReadOnly;
         }
 
-        private void Model_TemporaryFullscreenRequested(object sender, bool fullscreen)
+        private void Model_TemporaryFullscreenRequested(object? sender, bool fullscreen)
         {
             WindowState = fullscreen ? WindowState.Maximized : DefaultWindowState;
             WindowStyle = fullscreen ? WindowStyle.None : DefaultWindowStyle;
         }
 
-        private void Model_NotificationsUpdated(object sender, System.EventArgs e)
+        private void Model_NotificationsUpdated(object? sender, System.EventArgs e)
         {
             NumNotifications = Model.Model.Instance.Notifications.Count;
         }

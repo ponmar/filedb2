@@ -28,7 +28,7 @@ namespace FileDB.Configuration
             try
             {
                 var directory = Path.GetDirectoryName(FilePath);
-                Directory.CreateDirectory(directory);
+                Directory.CreateDirectory(directory!);
                 File.WriteAllText(FilePath, jsonString);
                 return true;
             }
@@ -38,7 +38,7 @@ namespace FileDB.Configuration
             }
         }
 
-        public T Read()
+        public T? Read()
         {
             if (File.Exists(FilePath))
             {

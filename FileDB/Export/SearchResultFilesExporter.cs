@@ -11,7 +11,7 @@ namespace FileDB.Export
             {
                 var sourceFilePath = model.FilesystemAccess.ToAbsolutePath(file.OriginalPath);
                 var destFilePath = Path.Combine(path, file.ExportedPath);
-                var destDir = Path.GetDirectoryName(destFilePath);
+                var destDir = Path.GetDirectoryName(destFilePath)!;
                 if (!Directory.Exists(destDir))
                 {
                     Directory.CreateDirectory(destDir);

@@ -73,33 +73,29 @@ namespace FileDB.Export
                     }
                 }
 
-                exportedFiles.Add(new ExportedFile()
-                {
-                    Id = file.Id,
-                    ExportedPath = $"files/{index}{Path.GetExtension(file.Path)}",
-                    OriginalPath = file.Path,
-                    Description = file.Description,
-                    Datetime = file.Datetime,
-                    Position = file.Position,
-                    PersonIds = filePersons.Select(x => x.Id).ToList(),
-                    LocationIds = fileLocations.Select(x => x.Id).ToList(),
-                    TagIds = fileTags.Select(x => x.Id).ToList()
-                });
+                exportedFiles.Add(new ExportedFile(
+                    file.Id,
+                    $"files/{index}{Path.GetExtension(file.Path)}",
+                    file.Path,
+                    file.Description,
+                    file.Datetime,
+                    file.Position,
+                    filePersons.Select(x => x.Id).ToList(),
+                    fileLocations.Select(x => x.Id).ToList(),
+                    fileTags.Select(x => x.Id).ToList()));
 
                 index++;
             }
 
-            return new SearchResultFileFormat()
-            {
-                Header = header,
-                About = $"Exported with {Utils.ApplicationName} version {Utils.GetVersionString()} at {DateTime.Now:yyyy-MM-dd HH:mm}.",
-                FileList = Utils.CreateFileList(files.Select(x => x.Id)),
-                Files = exportedFiles,
-                Persons = persons,
-                Locations = locations,
-                Tags = tags,
-                ApplicationDownloadUrl = Utils.ApplicationDownloadUrl
-            };
+            return new SearchResultFileFormat(
+                header,
+                $"Exported with {Utils.ApplicationName} version {Utils.GetVersionString()} at {DateTime.Now:yyyy-MM-dd HH:mm}.",
+                Utils.CreateFileList(files.Select(x => x.Id)),
+                exportedFiles,
+                persons,
+                locations,
+                tags,
+                Utils.ApplicationDownloadUrl);
         }
     }
 }

@@ -25,7 +25,7 @@ namespace FileDB.ViewModel
             this.person = person;
             ProfileFileIdPath = profileFileIdPath;
 
-            var dateOfBirth = DatabaseParsing.ParsePersonsDateOfBirth(person.DateOfBirth);
+            var dateOfBirth = DatabaseParsing.ParsePersonsDateOfBirth(person.DateOfBirth!);
             Birthday = dateOfBirth.ToString("d MMMM");
             DaysLeft = DatabaseUtils.GetDaysToNextBirthday(dateOfBirth);
             Age = DatabaseUtils.GetYearsAgo(DateTime.Now, dateOfBirth);
@@ -58,9 +58,9 @@ namespace FileDB.ViewModel
 
     public class PersonsByDaysLeftUntilBirthdaySorter : IComparer<PersonBirthday>
     {
-        public int Compare(PersonBirthday x, PersonBirthday y)
+        public int Compare(PersonBirthday? x, PersonBirthday? y)
         {
-            if (x.DaysLeft == y.DaysLeft)
+            if (x!.DaysLeft == y!.DaysLeft)
             {
                 return x.Name.CompareTo(y.Name);
             }
@@ -72,7 +72,7 @@ namespace FileDB.ViewModel
     public partial class BirthdaysViewModel : ObservableObject
     {
         [ObservableProperty]
-        private string filterText;
+        private string filterText = string.Empty;
 
         partial void OnFilterTextChanged(string value)
         {
@@ -92,12 +92,12 @@ namespace FileDB.ViewModel
             model.DateChanged += Model_DateChanged;
         }
 
-        private void Model_DateChanged(object sender, EventArgs e)
+        private void Model_DateChanged(object? sender, EventArgs e)
         {
             UpdatePersons();
         }
 
-        private void Model_PersonsUpdated(object sender, EventArgs e)
+        private void Model_PersonsUpdated(object? sender, EventArgs e)
         {
             UpdatePersons();
         }
@@ -122,7 +122,7 @@ namespace FileDB.ViewModel
                         else
                         {
                             var profileFile = model.DbAccess.GetFileById(person.ProfileFileId.Value);
-                            profileFileIdPath = model.FilesystemAccess.ToAbsolutePath(profileFile.Path);
+                            profileFileIdPath = model.FilesystemAccess.ToAbsolutePath(profileFile!.Path);
                         }
                     }
                     else

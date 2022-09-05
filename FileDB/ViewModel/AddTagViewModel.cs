@@ -21,7 +21,7 @@ namespace FileDB.ViewModel
         {
             this.tagId = tagId;
 
-            Title = tagId.HasValue ? "Edit Tag" : "Add Tag";
+            title = tagId.HasValue ? "Edit Tag" : "Add Tag";
 
             if (tagId.HasValue)
             {

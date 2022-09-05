@@ -16,10 +16,10 @@ namespace FileDB.ViewModel
         private string name = string.Empty;
 
         [ObservableProperty]
-        private string description = string.Empty;
+        private string? description = string.Empty;
 
         [ObservableProperty]
-        private string position = string.Empty;
+        private string? position = string.Empty;
 
         private readonly Model.Model model = Model.Model.Instance;
 
@@ -27,7 +27,7 @@ namespace FileDB.ViewModel
         {
             this.locationId = locationId;
 
-            Title = locationId.HasValue ? "Edit Location" : "Add Location";
+            title = locationId.HasValue ? "Edit Location" : "Add Location";
 
             if (locationId.HasValue)
             {
@@ -43,8 +43,8 @@ namespace FileDB.ViewModel
         {
             try
             {
-                string newDescription = string.IsNullOrEmpty(description) ? null : description;
-                string newPosition = string.IsNullOrEmpty(position) ? null : position;
+                string? newDescription = string.IsNullOrEmpty(description) ? null : description;
+                string? newPosition = string.IsNullOrEmpty(position) ? null : position;
 
                 var location = new LocationModel()
                 {

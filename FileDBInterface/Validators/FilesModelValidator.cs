@@ -31,12 +31,12 @@ namespace FileDBInterface.Validators
             return !string.IsNullOrEmpty(path) && !path.Contains(@"\") && !path.StartsWith("/") && !path.EndsWith("/");
         }
 
-        public static bool ValidateDescription(string description)
+        public static bool ValidateDescription(string? description)
         {
             return description != string.Empty;
         }
 
-        public static bool ValidateDatetime(string datetime)
+        public static bool ValidateDatetime(string? datetime)
         {
             return datetime == null || DatabaseParsing.ParseFilesDatetime(datetime) != null;
         }

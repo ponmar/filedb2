@@ -36,7 +36,7 @@ namespace FileDB.Notifiers
                     continue;
                 }
 
-                var dateOfBirth = DatabaseParsing.ParsePersonsDateOfBirth(person.DateOfBirth);
+                var dateOfBirth = DatabaseParsing.ParsePersonsDateOfBirth(person.DateOfBirth!);
                 if (dateOfBirth.Month == today.Month &&
                     dateOfBirth.Day == today.Day)
                 {

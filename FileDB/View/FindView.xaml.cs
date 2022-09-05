@@ -17,7 +17,7 @@ namespace FileDB.View
             DataContext = FindViewModel.Instance;
         }
 
-        public void ShowImage(BitmapImage image)
+        public void ShowImage(BitmapImage? image)
         {
             CurrentFileImage.Source = image;
         }

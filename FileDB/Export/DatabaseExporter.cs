@@ -16,15 +16,7 @@ namespace FileDB.Export
 
         public void Export(List<PersonModel> persons, List<LocationModel> locations, List<TagModel> tags, List<FilesModel> files)
         {
-            var fileContent = new ExportedDatabaseFileFormat()
-            {
-                FileDBVersion = Utils.GetVersionString(),
-                ExportDateTime = DateTime.Now,
-                Persons = persons,
-                Locations = locations,
-                Tags = tags,
-                Files = files,
-            };
+            var fileContent = new ExportedDatabaseFileFormat(Utils.GetVersionString(), DateTime.Now, persons, locations, tags, files);
 
             // TODO: where to check that directory is empty?
             var filename = Path.Combine(destinationDirectory, "DatabaseExport.json");

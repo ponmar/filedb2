@@ -22,13 +22,13 @@ namespace FileDB.ViewModel
         private string lastname = string.Empty;
 
         [ObservableProperty]
-        private string description = string.Empty;
+        private string? description = null;
 
         [ObservableProperty]
-        private string dateOfBirth = string.Empty;
+        private string? dateOfBirth = null;
 
         [ObservableProperty]
-        private string deceased = string.Empty;
+        private string? deceased = null;
 
         [ObservableProperty]
         private string profilePictureFileId = string.Empty;
@@ -44,7 +44,7 @@ namespace FileDB.ViewModel
         {
             this.personId = personId;
 
-            Title = personId.HasValue ? "Edit Person" : "Add Person";
+            title = personId.HasValue ? "Edit Person" : "Add Person";
 
             if (personId.HasValue)
             {

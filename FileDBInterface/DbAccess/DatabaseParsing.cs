@@ -25,7 +25,7 @@ namespace FileDBInterface.DbAccess
             return deceased.ToString("yyyy-MM-dd");
         }
 
-        public static DateTime? ParseFilesDatetime(string datetimeStr)
+        public static DateTime? ParseFilesDatetime(string? datetimeStr)
         {
             DateTime? result = null;
 
@@ -53,7 +53,7 @@ namespace FileDBInterface.DbAccess
             return dateTaken.ToString("yyyy-MM-ddTHH:mm:ss");
         }
 
-        public static string PathToFilesDatetime(string path)
+        public static string? PathToFilesDatetime(string path)
         {
             var pathParts = path.Split('/');
             foreach (var pathPart in pathParts)
@@ -71,7 +71,7 @@ namespace FileDBInterface.DbAccess
             return null;
         }
 
-        public static (double lat, double lon)? ParseFilesPosition(string positionString)
+        public static (double lat, double lon)? ParseFilesPosition(string? positionString)
         {
             if (positionString != null)
             {
@@ -88,7 +88,7 @@ namespace FileDBInterface.DbAccess
             return null;
         }
 
-        public static (double lat, double lon)? ParseFilesPositionFromUrl(string url)
+        public static (double lat, double lon)? ParseFilesPositionFromUrl(string? url)
         {
             if (!string.IsNullOrEmpty(url))
             {

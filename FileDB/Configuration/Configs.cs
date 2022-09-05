@@ -26,7 +26,7 @@ namespace FileDB.Configuration
         bool MissingFilesRootDirNotification,
         string LocationLink,
         WindowMode WindowMode,
-        string CastHttpServerInterface,
+        string? CastHttpServerInterface,
         int CastHttpServerPort,
         bool CacheFiles);
 

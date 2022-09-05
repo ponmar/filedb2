@@ -14,14 +14,14 @@ namespace FileDB.Comparers
             return co.Id.GetHashCode();
         }
 
-        public bool Equals(FilesModel x1, FilesModel x2)
+        public bool Equals(FilesModel? x1, FilesModel? x2)
         {
-            if (object.ReferenceEquals(x1, x2))
+            if (ReferenceEquals(x1, x2))
             {
                 return true;
             }
-            if (object.ReferenceEquals(x1, null) ||
-                object.ReferenceEquals(x2, null))
+            if (ReferenceEquals(x1, null) ||
+                ReferenceEquals(x2, null))
             {
                 return false;
             }

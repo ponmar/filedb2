@@ -115,7 +115,7 @@ namespace FileDB.Export
             File.WriteAllText(filename, html);
         }
 
-        public static string CreateExportedFileDatetime(string fileDatetime)
+        public static string? CreateExportedFileDatetime(string fileDatetime)
         {
             var datetime = DatabaseParsing.ParseFilesDatetime(fileDatetime);
             if (datetime == null)
