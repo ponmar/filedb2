@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDBInterface.DbAccess;
@@ -98,10 +99,18 @@ namespace FileDB.ViewModel
             var blacklistedFilePathPatterns = model.Config.BlacklistedFilePathPatterns.Split(";");
             var whitelistedFilePathPatterns = model.Config.WhitelistedFilePathPatterns.Split(";");
 
-            foreach (var internalFilePath in model.FilesystemAccess.ListNewFilesystemFiles(pathToScan, blacklistedFilePathPatterns, whitelistedFilePathPatterns, model.Config.IncludeHiddenDirectories, model.DbAccess))
+            Dialogs.ShowProgressDialog(progress =>
             {
-                NewFiles.Add(new NewFile(internalFilePath, GetDateModified(internalFilePath)));
-            }
+                progress.Report("Scanning...");
+
+                foreach (var internalFilePath in model.FilesystemAccess.ListNewFilesystemFiles(pathToScan, blacklistedFilePathPatterns, whitelistedFilePathPatterns, model.Config.IncludeHiddenDirectories, model.DbAccess))
+                {
+                    NewFiles.Add(new NewFile(internalFilePath, GetDateModified(internalFilePath)));
+                    progress.Report($"Scanning... New files: {NewFiles.Count}");
+                }
+
+                Thread.Sleep(1000);
+            });
 
             OnPropertyChanged(nameof(NewFilesAvailable));
             OnPropertyChanged(nameof(NewFiles));
