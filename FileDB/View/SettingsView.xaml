@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:FileDB.View"
              xmlns:converters="clr-namespace:FileDB.Converters" xmlns:viewmodel="clr-namespace:FileDB.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:SettingsViewModel}"
              mc:Ignorable="d"
-             d:DesignHeight="1000" d:DesignWidth="800">
+             d:DesignHeight="1500" d:DesignWidth="800">
 
     <UserControl.Resources>
         <converters:IntToStringConverter x:Key="IntToStringConverter"/>
@@ -84,8 +84,6 @@
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
 
                         <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextBlock}">Slideshow delay (seconds):</TextBlock>
@@ -109,14 +107,30 @@
                             <TextBlock Style="{StaticResource PageTextBlock}" Text="Keep selection after sort" VerticalAlignment="Center"></TextBlock>
                         </StackPanel>
                         <Button Grid.Row="4" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultKeepSelectionAfterSortCommand}" ToolTip="Reset to default">Default</Button>
+                    </Grid>
+                </Border>
 
-                        <TextBlock Grid.Row="5" Grid.Column="0" Style="{StaticResource PageTextBlock}">HTTP server interface for casting:</TextBlock>
-                        <TextBox Grid.Row="5" Grid.Column="1" Width="250" Style="{StaticResource PageTextBox}" Text="{Binding CastHttpServerInterface}" ToolTip="Enter an IP address"></TextBox>
-                        <Button Grid.Row="5" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultCastHttpServerInterfaceCommand}" ToolTip="Reset to default">Default</Button>
+                <TextBlock Text="Casting (Beta)" Style="{StaticResource PageSubHeading}"/>
+                <Border Style="{StaticResource BorderGroup}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition SharedSizeGroup="Column1"/>
+                            <ColumnDefinition SharedSizeGroup="Column2"/>
+                            <ColumnDefinition SharedSizeGroup="Column3"/>
+                            <ColumnDefinition SharedSizeGroup="Column4"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
 
-                        <TextBlock Grid.Row="6" Grid.Column="0" Style="{StaticResource PageTextBlock}">HTTP server port for casting:</TextBlock>
-                        <TextBox Grid.Row="6" Grid.Column="1" Width="250" Style="{StaticResource PageTextBox}" Text="{Binding CastHttpServerPort, Converter={StaticResource IntToStringConverter}}" ToolTip="Set -1 to disable"></TextBox>
-                        <Button Grid.Row="6" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultCastHttpServerPortCommand}" ToolTip="Reset to default">Default</Button>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextBlock}">HTTP server interface:</TextBlock>
+                        <TextBox Grid.Row="0" Grid.Column="1" Width="250" Style="{StaticResource PageTextBox}" Text="{Binding CastHttpServerInterface}" ToolTip="Enter an IP address"></TextBox>
+                        <Button Grid.Row="0" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultCastHttpServerInterfaceCommand}" ToolTip="Reset to default">Default</Button>
+
+                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageTextBlock}">HTTP server port:</TextBlock>
+                        <TextBox Grid.Row="1" Grid.Column="1" Width="250" Style="{StaticResource PageTextBox}" Text="{Binding CastHttpServerPort, Converter={StaticResource IntToStringConverter}}" ToolTip="Set -1 to disable"></TextBox>
+                        <Button Grid.Row="1" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultCastHttpServerPortCommand}" ToolTip="Reset to default">Default</Button>
                     </Grid>
                 </Border>
 
