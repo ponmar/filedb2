@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDBInterface.DbAccess;
@@ -105,20 +106,24 @@ namespace FileDB.ViewModel
 
                 foreach (var internalFilePath in model.FilesystemAccess.ListNewFilesystemFiles(pathToScan, blacklistedFilePathPatterns, whitelistedFilePathPatterns, model.Config.IncludeHiddenDirectories, model.DbAccess))
                 {
-                    NewFiles.Add(new NewFile(internalFilePath, GetDateModified(internalFilePath)));
+                    Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        NewFiles.Add(new NewFile(internalFilePath, GetDateModified(internalFilePath)));
+                    }));
                     progress.Report($"Scanning... New files: {NewFiles.Count}");
                 }
 
-                Thread.Sleep(1000);
+                Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    OnPropertyChanged(nameof(NewFilesAvailable));
+                    OnPropertyChanged(nameof(NewFiles));
+
+                    if (NewFiles.Count == 0)
+                    {
+                        Dialogs.ShowInfoDialog($"No new files found. Add your files to '{model.Config.FilesRootDirectory}'.");
+                    }
+                }));
             });
-
-            OnPropertyChanged(nameof(NewFilesAvailable));
-            OnPropertyChanged(nameof(NewFiles));
-
-            if (NewFiles.Count == 0)
-            {
-                Dialogs.ShowInfoDialog($"No new files found. Add your files to '{model.Config.FilesRootDirectory}'.");
-            }
         }
 
         [RelayCommand]
@@ -129,51 +134,69 @@ namespace FileDB.ViewModel
                 return;
             }
 
-            var locations = model.DbAccess.GetLocations();
-
-            try
+            Dialogs.ShowProgressDialog(progress =>
             {
-                List<FilesModel> importedFiles = new();
+                var locations = model.DbAccess.GetLocations();
 
-                foreach (var newFile in NewFiles)
+                try
                 {
-                    model.DbAccess.InsertFile(newFile.Path, null, model.FilesystemAccess);
+                    List<FilesModel> importedFiles = new();
 
-                    var importedFile = model.DbAccess.GetFileByPath(newFile.Path);
-
-                    if (importedFile != null)
+                    var counter = 1;
+                    foreach (var newFile in NewFiles)
                     {
-                        importedFiles.Add(importedFile);
+                        progress.Report($"Adding file {counter} / {NewFiles.Count}...");
+                        Thread.Sleep(1000);
 
-                        if (importedFile.Position != null && model.Config.FileToLocationMaxDistance > 0.5)
+                        model.DbAccess.InsertFile(newFile.Path, null, model.FilesystemAccess);
+
+                        var importedFile = model.DbAccess.GetFileByPath(newFile.Path);
+
+                        if (importedFile != null)
                         {
-                            var importedFilePos = DatabaseParsing.ParseFilesPosition(importedFile.Position)!.Value;
+                            importedFiles.Add(importedFile);
 
-                            foreach (var locationWithPosition in locations.Where(x => x.Position != null))
+                            if (importedFile.Position != null && model.Config.FileToLocationMaxDistance > 0.5)
                             {
-                                var locationPos = DatabaseParsing.ParseFilesPosition(locationWithPosition.Position)!.Value;
-                                var distance = DatabaseUtils.CalculateDistance(importedFilePos.lat, importedFilePos.lon, locationPos.lat, locationPos.lon);
-                                if (distance < model.Config.FileToLocationMaxDistance)
+                                var importedFilePos = DatabaseParsing.ParseFilesPosition(importedFile.Position)!.Value;
+
+                                foreach (var locationWithPosition in locations.Where(x => x.Position != null))
                                 {
-                                    model.DbAccess.InsertFileLocation(importedFile.Id, locationWithPosition.Id);
+                                    var locationPos = DatabaseParsing.ParseFilesPosition(locationWithPosition.Position)!.Value;
+                                    var distance = DatabaseUtils.CalculateDistance(importedFilePos.lat, importedFilePos.lon, locationPos.lat, locationPos.lon);
+                                    if (distance < model.Config.FileToLocationMaxDistance)
+                                    {
+                                        model.DbAccess.InsertFileLocation(importedFile.Id, locationWithPosition.Id);
+                                    }
                                 }
                             }
                         }
+
+                        counter++;
                     }
+
+                    Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        ImportedFileList = Utils.CreateFileList(importedFiles);
+                        ImportResult = importedFiles.Count > 0 ? $"{importedFiles.Count} files imported." : string.Empty;
+
+                        model.NotifyFilesImported(importedFiles);
+
+                        NewFiles.Clear();
+                        OnPropertyChanged(nameof(NewFilesAvailable));
+                    }));
                 }
+                catch (DataValidationException e)
+                {
+                    Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        Dialogs.ShowErrorDialog(e.Message);
 
-                ImportedFileList = Utils.CreateFileList(importedFiles);
-                ImportResult = importedFiles.Count > 0 ? $"{importedFiles.Count} files imported." : string.Empty;
-
-                model.NotifyFilesImported(importedFiles);
-            }
-            catch (DataValidationException e)
-            {
-                Dialogs.ShowErrorDialog(e.Message);
-            }
-
-            NewFiles.Clear();
-            OnPropertyChanged(nameof(NewFilesAvailable));
+                        NewFiles.Clear();
+                        OnPropertyChanged(nameof(NewFilesAvailable));
+                    }));
+                }
+            });
         }
 
         [RelayCommand]

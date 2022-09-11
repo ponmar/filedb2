@@ -10,8 +10,8 @@
         SizeToContent="WidthAndHeight"
         WindowStyle="None"
         WindowStartupLocation="CenterOwner"
-        MinHeight="100"
-        MinWidth="200"
+        MinHeight="150"
+        MinWidth="400"
         Style="{StaticResource Window}">
     <Grid>
         <Border Style="{StaticResource BorderGroup}">
