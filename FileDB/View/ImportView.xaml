@@ -13,6 +13,21 @@
         <converters:StringContentToBoolConverter x:Key="StringContentToBoolConverter"/>
         <converters:EnumerationToVisibilityConverter x:Key="EnumerationToVisibilityConverter"/>
         <converters:StringNullOrEmptyToVisibilityConverter x:Key="StringNullOrEmptyToVisibilityConverter"/>
+
+        <DataTemplate x:Key="NewFileTemplate">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="PathColumn"/>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="DateModifiedColumn"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                
+                <TextBlock Grid.Column="0" Text="{Binding Path}" Margin="0,0,50,0" Style="{StaticResource PageTextBlock}"/>
+                <TextBlock Grid.Column="1" Text="{Binding DateModified}" ToolTip="File date modified" Margin="0" Style="{StaticResource PageTextBlock}"/>
+            </Grid>
+        </DataTemplate>
     </UserControl.Resources>
     <DockPanel>
         <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Import</TextBlock>
@@ -35,9 +50,9 @@
                             <TextBox Style="{StaticResource PageTextBox}" Width="250" Margin="5" Text="{Binding SubdirToScan}" VerticalContentAlignment="Center"/>
                             <Button Margin="5" Style="{StaticResource NormalButton}" Content="Find..." Command="{Binding ScanNewFilesInDirectoryCommand}"/>
                         </StackPanel>
-                        <DataGrid Margin="10" ItemsSource="{Binding NewFiles}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserAddRows="false" CanUserDeleteRows="false" IsReadOnly="True" Visibility="{Binding NewFiles, Converter={StaticResource EnumerationToVisibilityConverter}}"/>
+                        <ListView Visibility="{Binding NewFiles, Converter={StaticResource EnumerationToVisibilityConverter}}" Background="Transparent" BorderThickness="0" Margin="10" ItemsSource="{Binding NewFiles}" ItemTemplate="{StaticResource NewFileTemplate}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.IsSharedSizeScope="True" SelectionChanged="ListView_SelectionChanged"/>
                         <StackPanel Orientation="Horizontal">
-                            <Button Style="{StaticResource NormalButton}" Width="200" Margin="10" Command="{Binding ImportNewFilesCommand}" IsEnabled="{Binding NewFilesAvailable}">Add meta-data for listed files...</Button>
+                            <Button Style="{StaticResource NormalButton}" Width="200" Margin="10" Command="{Binding ImportNewFilesCommand}" IsEnabled="{Binding NewFilesSelected}">Add meta-data for selected files...</Button>
                             <Button Style="{StaticResource NormalButton}" Width="200" Margin="10" Command="{Binding CopyImportedFileListCommand}" IsEnabled="{Binding ImportedFileList, Converter={StaticResource StringContentToBoolConverter}}">Copy file list for added files</Button>
                         </StackPanel>
                         <TextBlock Style="{StaticResource PageTextBlock}" Text="{Binding ImportResult}" Visibility="{Binding ImportResult, Converter={StaticResource StringNullOrEmptyToVisibilityConverter}}"/>

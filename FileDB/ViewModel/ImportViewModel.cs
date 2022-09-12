@@ -20,6 +20,8 @@ namespace FileDB.ViewModel
 
         public string DateModified { get; }
 
+        public bool IsSelected { get; set; } = false;
+
         public NewFile(string path, string dateModified)
         {
             Path = path;
@@ -34,7 +36,7 @@ namespace FileDB.ViewModel
 
         public ObservableCollection<NewFile> NewFiles { get; } = new();
 
-        public bool NewFilesAvailable => NewFiles.Count > 0;
+        public bool NewFilesSelected => NewFiles.Any(x => x.IsSelected);
 
         [ObservableProperty]
         private string importResult = string.Empty;
@@ -95,7 +97,7 @@ namespace FileDB.ViewModel
             NewFiles.Clear();
             ImportResult = string.Empty;
             ImportedFileList = string.Empty;
-            OnPropertyChanged(nameof(NewFilesAvailable));
+            OnPropertyChanged(nameof(NewFilesSelected));
 
             var blacklistedFilePathPatterns = model.Config.BlacklistedFilePathPatterns.Split(";");
             var whitelistedFilePathPatterns = model.Config.WhitelistedFilePathPatterns.Split(";");
@@ -115,7 +117,7 @@ namespace FileDB.ViewModel
 
                 Application.Current.Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    OnPropertyChanged(nameof(NewFilesAvailable));
+                    OnPropertyChanged(nameof(NewFilesSelected));
                     OnPropertyChanged(nameof(NewFiles));
 
                     if (NewFiles.Count == 0)
@@ -129,7 +131,8 @@ namespace FileDB.ViewModel
         [RelayCommand]
         private void ImportNewFiles()
         {
-            if (!Dialogs.ShowConfirmDialog($"Import meta-data from {NewFiles.Count} files?"))
+            var filesToAdd = NewFiles.Where(x => x.IsSelected).ToList();
+            if (!Dialogs.ShowConfirmDialog($"Add meta-data from {filesToAdd.Count} files?"))
             {
                 return;
             }
@@ -143,14 +146,14 @@ namespace FileDB.ViewModel
                     List<FilesModel> importedFiles = new();
 
                     var counter = 1;
-                    foreach (var newFile in NewFiles)
+                    foreach (var fileToAdd in filesToAdd)
                     {
-                        progress.Report($"Adding file {counter} / {NewFiles.Count}...");
+                        progress.Report($"Adding file {counter} / {filesToAdd.Count}...");
                         Thread.Sleep(1000);
 
-                        model.DbAccess.InsertFile(newFile.Path, null, model.FilesystemAccess);
+                        model.DbAccess.InsertFile(fileToAdd.Path, null, model.FilesystemAccess);
 
-                        var importedFile = model.DbAccess.GetFileByPath(newFile.Path);
+                        var importedFile = model.DbAccess.GetFileByPath(fileToAdd.Path);
 
                         if (importedFile != null)
                         {
@@ -178,12 +181,12 @@ namespace FileDB.ViewModel
                     Application.Current.Dispatcher.BeginInvoke(new Action(() =>
                     {
                         ImportedFileList = Utils.CreateFileList(importedFiles);
-                        ImportResult = importedFiles.Count > 0 ? $"{importedFiles.Count} files imported." : string.Empty;
+                        ImportResult = importedFiles.Count > 0 ? $"{importedFiles.Count} files added." : string.Empty;
 
                         model.NotifyFilesImported(importedFiles);
 
-                        NewFiles.Clear();
-                        OnPropertyChanged(nameof(NewFilesAvailable));
+                        filesToAdd.ForEach(x => NewFiles.Remove(x));
+                        OnPropertyChanged(nameof(NewFilesSelected));
                     }));
                 }
                 catch (DataValidationException e)
@@ -192,8 +195,8 @@ namespace FileDB.ViewModel
                     {
                         Dialogs.ShowErrorDialog(e.Message);
 
-                        NewFiles.Clear();
-                        OnPropertyChanged(nameof(NewFilesAvailable));
+                        filesToAdd.ForEach(x => NewFiles.Remove(x));
+                        OnPropertyChanged(nameof(NewFilesSelected));
                     }));
                 }
             });
@@ -226,6 +229,11 @@ namespace FileDB.ViewModel
             var path = model.FilesystemAccess.ToAbsolutePath(internalPath);
             var dateModified = File.GetLastWriteTime(path);
             return dateModified.ToString("yyyy-MM-dd HH:mm");
+        }
+
+        public void SelectionChanged()
+        {
+            OnPropertyChanged(nameof(NewFilesSelected));
         }
     }
 }
