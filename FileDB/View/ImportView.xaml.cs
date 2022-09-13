@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Collections.Generic;
+using System.Windows.Controls;
 using FileDB.ViewModel;
 
 namespace FileDB.View
@@ -26,7 +27,17 @@ namespace FileDB.View
                 (addedItem as NewFile)!.IsSelected = false;
             }
 
-            (DataContext as ImportViewModel).SelectionChanged();
+            (DataContext as ImportViewModel)!.SelectionChanged();
+        }
+
+        private void SelectAll_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            NewFilesListView.SelectAll();
+        }
+
+        private void DeselectAllButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            NewFilesListView.SelectedItems.Clear();
         }
     }
 }
