@@ -2,12 +2,13 @@
 using CommunityToolkit.Mvvm.Input;
 using FileDBInterface.Exceptions;
 using FileDBInterface.Model;
+using System.Linq;
 
 namespace FileDB.ViewModel
 {
     public partial class AddLocationViewModel : ObservableObject
     {
-        private readonly int? locationId;
+        private int? locationId;
 
         [ObservableProperty]
         private string title;
@@ -22,6 +23,8 @@ namespace FileDB.ViewModel
         private string? position = string.Empty;
 
         private readonly Model.Model model = Model.Model.Instance;
+
+        public LocationModel? AffectedLocation { get; private set; }
 
         public AddLocationViewModel(int? locationId = null)
         {
@@ -48,7 +51,7 @@ namespace FileDB.ViewModel
 
                 var location = new LocationModel()
                 {
-                    Id = locationId.HasValue ? locationId.Value : default,
+                    Id = locationId ?? default,
                     Name = name,
                     Description = newDescription,
                     Position = newPosition
@@ -57,11 +60,13 @@ namespace FileDB.ViewModel
                 if (locationId.HasValue)
                 {
                     model.DbAccess.UpdateLocation(location);
+                    AffectedLocation = model.DbAccess.GetLocationById(location.Id);
                 }
                 else
                 {
                     model.DbAccess.InsertLocation(location);
-                }
+                    AffectedLocation = model.DbAccess.GetLocations().First(x => x.Name == location.Name);
+                }                
 
                 model.NotifyLocationsUpdated();
             }

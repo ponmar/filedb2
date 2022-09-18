@@ -10,7 +10,7 @@ namespace FileDB.ViewModel
 {
     public partial class AddPersonViewModel : ObservableObject
     {
-        private readonly int? personId;
+        private int? personId;
 
         [ObservableProperty]
         private string title;
@@ -39,6 +39,8 @@ namespace FileDB.ViewModel
         public List<string> SexValues { get; } = Enum.GetNames(typeof(Sex)).ToList();
 
         private readonly Model.Model model = Model.Model.Instance;
+
+        public PersonModel? AffectedPerson { get; private set; }
 
         public AddPersonViewModel(int? personId = null)
         {
@@ -84,7 +86,7 @@ namespace FileDB.ViewModel
 
                 var person = new PersonModel()
                 {
-                    Id = personId.HasValue ? personId.Value : default,
+                    Id = personId ?? default,
                     Firstname = firstname,
                     Lastname = lastname,
                     DateOfBirth = newDateOfBirth,
@@ -97,10 +99,12 @@ namespace FileDB.ViewModel
                 if (personId.HasValue)
                 {
                     model.DbAccess.UpdatePerson(person);
+                    AffectedPerson = model.DbAccess.GetPersonById(person.Id);
                 }
                 else
                 {
                     model.DbAccess.InsertPerson(person);
+                    AffectedPerson = model.DbAccess.GetPersons().First(x => x.Firstname == person.Firstname && x.Lastname == person.Lastname && x.DateOfBirth == person.DateOfBirth && x.Deceased == person.Deceased && x.Description == person.Description);
                 }
 
                 model.NotifyPersonsUpdated();

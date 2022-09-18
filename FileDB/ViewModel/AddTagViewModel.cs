@@ -2,12 +2,13 @@
 using CommunityToolkit.Mvvm.Input;
 using FileDBInterface.Exceptions;
 using FileDBInterface.Model;
+using System.Linq;
 
 namespace FileDB.ViewModel
 {
     public partial class AddTagViewModel : ObservableObject
     {
-        private readonly int? tagId;
+        private int? tagId;
 
         [ObservableProperty]
         private string title;
@@ -16,6 +17,8 @@ namespace FileDB.ViewModel
         private string name = string.Empty;
 
         private readonly Model.Model model = Model.Model.Instance;
+
+        public TagModel? AffectedTag { get; private set; }
 
         public AddTagViewModel(int? tagId = null)
         {
@@ -35,16 +38,18 @@ namespace FileDB.ViewModel
         {
             try
             {
-                var tag = new TagModel() { Id = tagId.HasValue ? tagId.Value : default, Name = name };
+                var tag = new TagModel() { Id = tagId ?? default, Name = name };
 
                 if (tagId.HasValue)
                 {
                     model.DbAccess.UpdateTag(tag);
+                    AffectedTag = model.DbAccess.GetTagById(tag.Id);
                 }
                 else
                 {
                     model.DbAccess.InsertTag(tag);
-                }
+                    AffectedTag = model.DbAccess.GetTags().First(x => x.Name == tag.Name);
+                }                
 
                 model.NotifyTagsUpdated();
             }

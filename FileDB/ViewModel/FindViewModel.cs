@@ -1208,12 +1208,17 @@ namespace FileDB.ViewModel
                 return;
             }
 
+            AddFilePersonToCurrentFile(SelectedPersonToUpdate);
+        }
+
+        private void AddFilePersonToCurrentFile(PersonToUpdate person)
+        {
             var fileId = SearchResult!.Files[SearchResultIndex].Id;
-            if (!model.DbAccess.GetPersonsFromFile(fileId).Any(p => p.Id == SelectedPersonToUpdate.Id))
+            if (!model.DbAccess.GetPersonsFromFile(fileId).Any(p => p.Id == person.Id))
             {
-                model.DbAccess.InsertFilePerson(fileId, SelectedPersonToUpdate.Id);
+                model.DbAccess.InsertFilePerson(fileId, person.Id);
                 LoadFile(SearchResultIndex);
-                AddUpdateHistoryItem(UpdateHistoryType.TogglePerson, SelectedPersonToUpdate.Id, SelectedPersonToUpdate.Name);
+                AddUpdateHistoryItem(UpdateHistoryType.TogglePerson, person.Id, person.Name);
                 prevEditedFileId = fileId;
             }
             else
@@ -1259,12 +1264,17 @@ namespace FileDB.ViewModel
                 return;
             }
 
+            AddFileLocationToCurrentFile(SelectedLocationToUpdate);
+        }
+
+        private void AddFileLocationToCurrentFile(LocationToUpdate location)
+        {
             var fileId = SearchResult!.Files[SearchResultIndex].Id;
-            if (!model.DbAccess.GetLocationsFromFile(fileId).Any(l => l.Id == SelectedLocationToUpdate.Id))
+            if (!model.DbAccess.GetLocationsFromFile(fileId).Any(l => l.Id == location.Id))
             {
-                model.DbAccess.InsertFileLocation(fileId, SelectedLocationToUpdate.Id);
+                model.DbAccess.InsertFileLocation(fileId, location.Id);
                 LoadFile(SearchResultIndex);
-                AddUpdateHistoryItem(UpdateHistoryType.ToggleLocation, SelectedLocationToUpdate.Id, SelectedLocationToUpdate.Name);
+                AddUpdateHistoryItem(UpdateHistoryType.ToggleLocation, location.Id, location.Name);
                 prevEditedFileId = fileId;
             }
             else
@@ -1310,12 +1320,17 @@ namespace FileDB.ViewModel
                 return;
             }
 
+            AddFileTagToCurrentFile(SelectedTagToUpdate);
+        }
+
+        private void AddFileTagToCurrentFile(TagToUpdate tag)
+        {
             var fileId = SearchResult!.Files[SearchResultIndex].Id;
-            if (!model.DbAccess.GetTagsFromFile(fileId).Any(t => t.Id == SelectedTagToUpdate.Id))
+            if (!model.DbAccess.GetTagsFromFile(fileId).Any(t => t.Id == tag.Id))
             {
-                model.DbAccess.InsertFileTag(fileId, SelectedTagToUpdate.Id);
+                model.DbAccess.InsertFileTag(fileId, tag.Id);
                 LoadFile(SearchResultIndex);
-                AddUpdateHistoryItem(UpdateHistoryType.ToggleTag, SelectedTagToUpdate.Id, SelectedTagToUpdate.Name);
+                AddUpdateHistoryItem(UpdateHistoryType.ToggleTag, tag.Id, tag.Name);
                 prevEditedFileId = fileId;
             }
             else
@@ -1476,6 +1491,11 @@ namespace FileDB.ViewModel
                 Owner = Application.Current.MainWindow
             };
             window.ShowDialog();
+
+            if (window.DataContext is AddPersonViewModel viewModel && viewModel.AffectedPerson != null)
+            {
+                AddFilePersonToCurrentFile(new PersonToUpdate(viewModel.AffectedPerson.Id, $"{viewModel.AffectedPerson.Firstname} {viewModel.AffectedPerson.Lastname}"));
+            }
         }
 
         [RelayCommand]
@@ -1486,6 +1506,11 @@ namespace FileDB.ViewModel
                 Owner = Application.Current.MainWindow
             };
             window.ShowDialog();
+
+            if (window.DataContext is AddLocationViewModel viewModel && viewModel.AffectedLocation != null)
+            {
+                AddFileLocationToCurrentFile(new LocationToUpdate(viewModel.AffectedLocation.Id, viewModel.AffectedLocation.Name));
+            }
         }
 
         [RelayCommand]
@@ -1496,6 +1521,11 @@ namespace FileDB.ViewModel
                 Owner = Application.Current.MainWindow
             };
             window.ShowDialog();
+            
+            if (window.DataContext is AddTagViewModel viewModel && viewModel.AffectedTag != null)
+            {
+                AddFileTagToCurrentFile(new TagToUpdate(viewModel.AffectedTag.Id, viewModel.AffectedTag.Name));
+            }
         }
 
         private void ReloadPersons()

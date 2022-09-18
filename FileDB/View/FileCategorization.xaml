@@ -67,7 +67,7 @@
                 
                 <Button Margin="5" Style="{StaticResource NormalButton}" HorizontalAlignment="Left" Command="{Binding ReApplyFileMetaDataCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip="Apply meta-data (persons, locations, tags and description) from last edit">Apply meta-data from last edit</Button>
                 <Button Margin="5" Style="{StaticResource NormalButton}" HorizontalAlignment="Left" Command="{Binding UpdateFileFromMetaDataCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip="Reload timestamp and GPS location from file Exif data">Reload Exif data...</Button>
-                <TextBlock Style="{StaticResource PageInnerTextBlock}">Create:</TextBlock>
+                <TextBlock Style="{StaticResource PageInnerTextBlock}">Add new:</TextBlock>
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
