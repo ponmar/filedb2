@@ -302,7 +302,7 @@ namespace FileDB.ViewModel
         #region Current file properties
 
         [ObservableProperty]
-        private string currentFileToolTip = string.Empty;
+        private string currentFileInternalPath = string.Empty;
 
         [ObservableProperty]
         private string currentFileInternalDirectoryPath = string.Empty;
@@ -1012,8 +1012,7 @@ namespace FileDB.ViewModel
         [RelayCommand]
         private void OpenFileLocation()
         {
-            if (!string.IsNullOrEmpty(CurrentFilePath) &&
-                System.IO.File.Exists(CurrentFilePath))
+            if (!string.IsNullOrEmpty(CurrentFilePath) && File.Exists(CurrentFilePath))
             {
                 Utils.SelectFileInExplorer(CurrentFilePath);
             }
@@ -1080,9 +1079,8 @@ namespace FileDB.ViewModel
 
                 var selection = SearchResult.Files[SearchResultIndex];
 
-                CurrentFileToolTip = selection.Path;
-
                 CurrentFileInternalDirectoryPath = Path.GetDirectoryName(selection.Path)!.Replace(@"\", "/");
+                CurrentFileInternalPath = selection.Path;
                 CurrentFilePath = model.FilesystemAccess.ToAbsolutePath(selection.Path);
                 CurrentFileDescription = selection.Description ?? string.Empty;
                 CurrentFileDateTime = GetFileDateTimeString(selection.Datetime);
@@ -1126,7 +1124,7 @@ namespace FileDB.ViewModel
         {
             SearchResultIndex = -1;
 
-            CurrentFileToolTip = string.Empty;
+            CurrentFileInternalPath = string.Empty;
             CurrentFileInternalDirectoryPath = string.Empty;
             CurrentFilePath = string.Empty;
             CurrentFileDescription = string.Empty;
