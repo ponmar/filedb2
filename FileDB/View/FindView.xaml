@@ -75,8 +75,9 @@
                     <TextBlock Grid.ColumnSpan="2" Style="{StaticResource PageInnerTextBlock}" Text="{Binding CurrentFileLoadError}" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding CurrentFileLoadError, Converter={converters:StringNullOrEmptyToVisibilityConverter}}"/>
                     <Image Grid.ColumnSpan="2" x:Name="CurrentFileImage" Stretch="Uniform" RenderOptions.BitmapScalingMode="Fant"/>
                     <StackPanel Grid.Column="1" Orientation="Vertical" Margin="5">
-                        <ToggleButton Style="{StaticResource NavigationToggleButton}" IsChecked="{Binding Maximize}" VerticalAlignment="Top" HorizontalAlignment="Right" Content="&#x1F5B5;" ToolTip="Maximize" IsEnabled="{Binding HasNonEmptySearchResult}"/>
-                        <Button Command="{Binding OpenFileLocationCommand}" Style="{StaticResource NormalButton}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip="Open in Explorer" Visibility="{Binding Maximize, Converter={StaticResource NegatedBooleanToVisibilityConverter}}">Open</Button>
+                        <ToggleButton Margin="3" Style="{StaticResource NavigationToggleButton}" IsChecked="{Binding Maximize}" VerticalAlignment="Top" HorizontalAlignment="Right" Content="&#x1F5B5;" ToolTip="Maximize" IsEnabled="{Binding HasNonEmptySearchResult}"/>
+                        <Button Margin="3" Width="50" Command="{Binding OpenFileLocationCommand}" Style="{StaticResource NormalButton}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip="Locate file in Explorer" Visibility="{Binding Maximize, Converter={StaticResource NegatedBooleanToVisibilityConverter}}">Locate</Button>
+                        <Button Margin="3" Width="50" Command="{Binding OpenFileWithDefaultAppCommand}" Style="{StaticResource NormalButton}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip="Open file with default application" Visibility="{Binding Maximize, Converter={StaticResource NegatedBooleanToVisibilityConverter}}">Open</Button>
                     </StackPanel>
                 </Grid>
             </Border>

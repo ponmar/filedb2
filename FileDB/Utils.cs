@@ -44,6 +44,12 @@ namespace FileDB
             Process.Start("explorer.exe", "/open, " + explorerPath);
         }
 
+        public static void OpenFileWithDefaultApp(string path)
+        {
+            var explorerPath = path.Replace("/", @"\");
+            Process.Start("explorer", $"\"{explorerPath}\"");
+        }
+
         public static string CreateFileList(List<FilesModel> files)
         {
             return CreateFileList(files.Select(x => x.Id));

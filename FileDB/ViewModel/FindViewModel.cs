@@ -1019,6 +1019,15 @@ namespace FileDB.ViewModel
         }
 
         [RelayCommand]
+        private void OpenFileWithDefaultApp()
+        {
+            if (!string.IsNullOrEmpty(CurrentFilePath) && File.Exists(CurrentFilePath))
+            {
+                Utils.OpenFileWithDefaultApp(CurrentFilePath);
+            }
+        }
+
+        [RelayCommand]
         private void ExportFileList()
         {
             ClipboardService.SetText(Utils.CreateFileList(SearchResult!.Files));
