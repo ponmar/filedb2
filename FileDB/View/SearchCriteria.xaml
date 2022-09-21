@@ -177,8 +177,6 @@
                             <Button Margin="5" Width="100" Style="{StaticResource NormalButton}" Command="{Binding FindFilesSelectedFolderCommand}" ToolTip="Search for files within selected directory" HorizontalAlignment="Left">Search</Button>
                         </StackPanel>
                     </StackPanel>
-
-                    <Button Margin="50 5 5 5" Style="{StaticResource NormalButton}" Command="{Binding OpenFileLocationCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" VerticalAlignment="Top">Open current file directory</Button>
                 </StackPanel>
             </TabItem>
             <TabItem Style="{StaticResource PageTabItem}">
