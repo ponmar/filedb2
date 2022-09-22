@@ -69,7 +69,7 @@ The app is based on .NET MAUI. It has been tested on Android and Windows.
 4. Disable FileDBApp project if not wanted (it requires .NET MAUI)
 5. Build solution
 6. Set FileDB project as startup project
-7. Start project
+7. Start project. Note that a command line argument can be used to enable demo mode to avoid affecting the real database during development.
 
 ### Contribute ###
 
