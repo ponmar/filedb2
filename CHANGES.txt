@@ -1,3 +1,9 @@
+2.19:
+* Allow line endings in file description
+* Move button for opening a file in explorer to file browse view
+* Add button for opening current file with its default application
+* Fix that new file date and time is cleared when closing search result
+
 2.18:
 * Add the created person/location/tag to current file when categorizing files
 * Move create buttons at the file categorization page to use less vertical space
