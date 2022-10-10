@@ -22,7 +22,6 @@ namespace FileDB.Export
             var data = GetExportedData(files);
 
             var jsonPath = Path.Combine(destinationDirectory, "data.json");
-            var xmlPath = Path.Combine(destinationDirectory, "data.xml");
             var htmlPath = Path.Combine(destinationDirectory, "index.html");
             var m3uPath = Path.Combine(destinationDirectory, "playlist.m3u");
 
@@ -88,7 +87,7 @@ namespace FileDB.Export
 
             return new SearchResultFileFormat(
                 header,
-                $"Exported with {Utils.ApplicationName} version {Utils.GetVersionString()} at {DateTime.Now:yyyy-MM-dd HH:mm}.",
+                $"Exported with {Utils.ApplicationName} version {Utils.GetVersionString()} at {DateTime.Now:yyyy-MM-dd HH:mm}",
                 Utils.CreateFileList(files.Select(x => x.Id)),
                 exportedFiles,
                 persons,
