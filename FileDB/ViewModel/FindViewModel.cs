@@ -1146,6 +1146,7 @@ namespace FileDB.ViewModel
             CurrentFileTags = string.Empty;
 
             NewFileDescription = string.Empty;
+            NewFileDateTime = string.Empty;
 
             CurrentFileLoadError = "No match";
             model.ImagePresenter!.ShowImage(null);
