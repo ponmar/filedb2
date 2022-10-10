@@ -1375,7 +1375,7 @@ namespace FileDB.ViewModel
             {
                 var selection = SearchResult!.Files[SearchResultIndex];
                 var fileId = selection.Id;
-                NewFileDescription = NewFileDescription?.Trim();
+                NewFileDescription = NewFileDescription?.Trim().ReplaceLineEndings("\n");
                 var description = string.IsNullOrEmpty(NewFileDescription) ? null : NewFileDescription;
 
                 try

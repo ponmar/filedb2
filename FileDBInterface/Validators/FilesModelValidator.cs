@@ -33,7 +33,8 @@ namespace FileDBInterface.Validators
 
         public static bool ValidateDescription(string? description)
         {
-            return description != string.Empty;
+            return description is null ||
+                (description != string.Empty && !description.Contains("\r\n"));
         }
 
         public static bool ValidateDatetime(string? datetime)

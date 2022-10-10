@@ -57,6 +57,22 @@ namespace FileDBInterfaceTests.Validators
         }
 
         [TestMethod]
+        public void Validate_DescriptonHasInvalidLineEnding_Error()
+        {
+            var model = new FilesModel() { Id = -1, Path = "my/path/file.jpg", Description = "First line\r\nSecond line", Datetime = "2010-07-20T20:50:10", Position = "15.1 64.10" };
+            var result = validator.TestValidate(model);
+            result.ShouldHaveValidationErrorFor(x => x.Description);
+        }
+
+        [TestMethod]
+        public void Validate_DescriptonHasValidLineEnding_Error()
+        {
+            var model = new FilesModel() { Id = -1, Path = "my/path/file.jpg", Description = "First line\nSecond line", Datetime = "2010-07-20T20:50:10", Position = "15.1 64.10" };
+            var result = validator.TestValidate(model);
+            result.ShouldNotHaveValidationErrorFor(x => x.Description);
+        }
+
+        [TestMethod]
         public void Validate_DatetimeIsNull()
         {
             var model = new FilesModel() { Id = -1, Path = "my/path/file.jpg", Description = string.Empty, Datetime = null, Position = "15.1 64.10" };

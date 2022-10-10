@@ -61,7 +61,7 @@
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
                     <TextBlock Style="{StaticResource PageInnerTextBlock}" Grid.Row="0" Grid.Column="0" Text="&#x1F4DD;" VerticalAlignment="Center" Margin="5" ToolTip="File description"/>
-                    <TextBox Style="{StaticResource PageInnerTextBox}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Text="{Binding NewFileDescription}" ToolTip="File description"></TextBox>
+                    <TextBox Style="{StaticResource PageInnerTextBox}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Text="{Binding NewFileDescription}" ToolTip="File description" TextWrapping="Wrap" AcceptsReturn="True"/>
                     <Button Grid.Row="0" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetFileDescriptionCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip="Set file description">Set</Button>
 
                     <TextBlock Style="{StaticResource PageInnerTextBlock}" Grid.Row="1" Grid.Column="0" Text="&#x1F4C5;" VerticalAlignment="Center" Margin="5" ToolTip="File date &amp; time"/>
