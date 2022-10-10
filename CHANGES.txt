@@ -1,3 +1,6 @@
+2.20:
+* Remove XML search result exporter (the serializer could not handle C# records)
+
 2.19:
 * Allow line endings in file description
 * Move button for opening a file in explorer to file browse view
