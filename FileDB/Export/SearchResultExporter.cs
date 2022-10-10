@@ -29,7 +29,6 @@ namespace FileDB.Export
             new SearchResultFilesExporter().Export(data, destinationDirectory);
             new SearchResultFilesWithOverlayExporter().Export(data, destinationDirectory);
             new SearchResultJsonExporter().Export(data, jsonPath);
-            new SearchResultXmlExporter().Export(data, xmlPath);
             new SearchResultM3uExporter().Export(data, m3uPath);
             new SearchResultHtmlExporter().Export(data, htmlPath);
         }
