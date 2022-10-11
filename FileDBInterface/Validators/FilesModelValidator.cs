@@ -6,6 +6,8 @@ namespace FileDBInterface.Validators
 {
     public class FilesModelValidator : AbstractValidator<FilesModel>
     {
+        public const string DescriptionLineEnding = "\n";
+
         public FilesModelValidator()
         {
             RuleFor(x => x.Id).GreaterThanOrEqualTo(0).WithMessage("{PropertyName} must be greater than or equal to 0");

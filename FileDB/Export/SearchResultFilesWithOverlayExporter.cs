@@ -4,19 +4,30 @@ using System.Drawing.Imaging;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using FileDBInterface.Validators;
 
 namespace FileDB.Export;
 
 enum TextType { Normal, Heading }
 
-class TextLine
-{
-    public string Text { get; set; } = string.Empty;
-    public TextType Type { get; set; } = TextType.Normal;
-}
+record TextLine(string Text, TextType Type);
+
+public enum DescriptionPlacement { Heading, Subtitle }
 
 public class SearchResultFilesWithOverlayExporter : ISearchResultExporter
 {
+    private const int EmptyLineHeight = 15;
+    private const int BackgroundMargin = 20;
+    private const int BackgroundPadding = 20;
+    private readonly SolidBrush textBgBrush = new(Color.FromArgb(229, 37, 37, 38));
+
+    private readonly DescriptionPlacement descriptionPlacement;
+
+    public SearchResultFilesWithOverlayExporter(DescriptionPlacement descriptionPlacement)
+    {
+        this.descriptionPlacement = descriptionPlacement;
+    }
+
     public void Export(SearchResultFileFormat data, string path)
     {
         var subdir = Path.Combine(path, "filesWithData");
@@ -32,7 +43,8 @@ public class SearchResultFilesWithOverlayExporter : ISearchResultExporter
             if (bitmap != null)
             {
                 var textLines = CreateTextLines(data, file);
-                AddTextToImage(textLines, bitmap);
+                var subtitleLines = CreateSubtitleTextLines(file);
+                AddTextToImage(textLines, subtitleLines, bitmap);
 
                 var destFilePath = Path.Combine(subdir, $"{index}.png");
                 SaveBitmap(bitmap, destFilePath);
@@ -52,7 +64,7 @@ public class SearchResultFilesWithOverlayExporter : ISearchResultExporter
             pictureDateText = $"{SearchResultHtmlExporter.CreateExportedFileDatetime(file.Datetime)}";
         }
         var pictureDescription = string.Empty;
-        if (file.Description != null)
+        if (file.Description != null && descriptionPlacement == DescriptionPlacement.Heading)
         {
             if (pictureDateText != string.Empty)
             {
@@ -60,33 +72,49 @@ public class SearchResultFilesWithOverlayExporter : ISearchResultExporter
             }
             pictureDescription += $"{file.Description}";
         }
-        textLines.Add(new TextLine() { Text = $@"{pictureDateText}{pictureDescription}", Type = TextType.Heading });
+        textLines.Add(new TextLine($@"{pictureDateText}{pictureDescription}", TextType.Heading));
 
         if (file.PersonIds.Count > 0)
         {
-            textLines.Add(new());
+            textLines.Add(new(string.Empty, TextType.Normal));
             var persons = file.PersonIds.Select(x => data.Persons.First(y => y.Id == x));
             var personStrings = persons.Select(x => $"{x.Firstname} {x.Lastname}{Utils.GetPersonAgeInFileString(file.Datetime, x.DateOfBirth)}").ToList();
             personStrings.Sort();
-            textLines.AddRange(personStrings.Select(x => new TextLine() { Text = x }));
+            textLines.AddRange(personStrings.Select(x => new TextLine(x, TextType.Normal)));
         }
 
         if (file.LocationIds.Count > 0)
         {
-            textLines.Add(new());
+            textLines.Add(new(string.Empty, TextType.Normal));
             var locations = file.LocationIds.Select(x => data.Locations.First(y => y.Id == x));
             var locationStrings = locations.Select(x => x.Name).ToList();
             locationStrings.Sort();
-            textLines.AddRange(locationStrings.Select(x => new TextLine() { Text = x }));
+            textLines.AddRange(locationStrings.Select(x => new TextLine(x, TextType.Normal)));
         }
 
         if (file.TagIds.Count > 0)
         {
-            textLines.Add(new());
+            textLines.Add(new(string.Empty, TextType.Normal));
             var tags = file.TagIds.Select(x => data.Tags.First(y => y.Id == x));
             var tagStrings = tags.Select(x => x.Name).ToList();
             tagStrings.Sort();
-            textLines.AddRange(tagStrings.Select(x => new TextLine() { Text = x }));
+            textLines.AddRange(tagStrings.Select(x => new TextLine(x, TextType.Normal)));
+        }
+
+        return textLines;
+    }
+
+    private List<TextLine> CreateSubtitleTextLines(ExportedFile file)
+    {
+        var textLines = new List<TextLine>();
+
+        if (file.Description != null && descriptionPlacement == DescriptionPlacement.Subtitle)
+        {
+            var lines = file.Description.Split(FilesModelValidator.DescriptionLineEnding);
+            foreach (var line in lines)
+            {
+                textLines.Add(new TextLine(line, TextType.Normal));
+            }
         }
 
         return textLines;
@@ -105,7 +133,7 @@ public class SearchResultFilesWithOverlayExporter : ISearchResultExporter
         }
     }
 
-    private void AddTextToImage(List<TextLine> textLines, Bitmap bitmap)
+    private void AddTextToImage(List<TextLine> textLines, List<TextLine> subtitleLines, Bitmap bitmap)
     {
         using Graphics graphics = Graphics.FromImage(bitmap);
         const int AdaptForMinScreenHeight = 1080;
@@ -113,45 +141,70 @@ public class SearchResultFilesWithOverlayExporter : ISearchResultExporter
         using var headingFont = new Font("Arial", textSize, FontStyle.Bold, GraphicsUnit.Pixel);
         using var font = new Font("Arial", textSize, GraphicsUnit.Pixel);
 
-        var rectPadding = 20;
-        var bgRect = new Rectangle(10, 10, 2 * rectPadding, 2 * rectPadding);
-
-        int emptyLineHeight = 15;
-        int lineHeight = 0;
-        foreach (var textLine in textLines)
+        if (textLines.Count > 0)
         {
-            if (textLine.Text != string.Empty)
+            var (rect, lineHeight) = MeasureLines(textLines, graphics, font, headingFont);
+            rect.X += BackgroundMargin;
+            rect.Y += BackgroundMargin;
+            rect.Width += 2 * BackgroundPadding;
+            rect.Height += 2 * BackgroundPadding;
+
+            DrawLines(textLines, graphics, font, headingFont, rect, lineHeight);
+        }
+        
+        if (subtitleLines.Count > 0)
+        {
+            var (rect, lineHeight) = MeasureLines(subtitleLines, graphics, font, headingFont);
+            rect.Width += 2 * BackgroundPadding;
+            rect.Height += 2 * BackgroundPadding;
+            rect.X = ((int)graphics.VisibleClipBounds.Width - rect.Width) / 2;
+            rect.Y = (int)graphics.VisibleClipBounds.Height - rect.Height - BackgroundMargin;
+
+            DrawLines(subtitleLines, graphics, font, headingFont, rect, lineHeight);
+        }
+    }
+
+    private (Rectangle rect, int lineHeight) MeasureLines(List<TextLine> lines, Graphics graphics, Font font, Font headingFont)
+    {
+        var rect = new Rectangle();
+        int lineHeight = 0;
+
+        foreach (var line in lines)
+        {
+            if (line.Text != string.Empty)
             {
-                var size = graphics.MeasureString(textLine.Text, textLine.Type == TextType.Normal ? font : headingFont);
-                if (size.Width + 2 * rectPadding > bgRect.Width)
+                var size = graphics.MeasureString(line.Text, line.Type == TextType.Normal ? font : headingFont);
+                if (size.Width > rect.Width)
                 {
-                    bgRect.Width = (int)size.Width + 2 * rectPadding;
+                    rect.Width = (int)size.Width;
                 }
-                bgRect.Height += (int)size.Height;
+                rect.Height += (int)size.Height;
                 lineHeight = (int)size.Height;
             }
             else
             {
-                bgRect.Height += emptyLineHeight;
+                rect.Height += EmptyLineHeight;
             }
         }
 
-        var bgColor = Color.FromArgb(229, 37, 37, 38);
-        var textBgBrush = new SolidBrush(bgColor);
+        return (rect, lineHeight);
+    }
 
-        graphics.FillRectangle(textBgBrush, bgRect);
+    private void DrawLines(List<TextLine> lines, Graphics graphics, Font font, Font headingFont, Rectangle rect, int lineHeight)
+    {
+        graphics.FillRectangle(textBgBrush, rect);
 
-        var pos = new PointF(bgRect.X + rectPadding, bgRect.Y + rectPadding);
-        foreach (var textLine in textLines)
+        var pos = new PointF(rect.X + BackgroundPadding, rect.Y + BackgroundPadding);
+        foreach (var line in lines)
         {
-            if (textLine.Text != string.Empty)
+            if (line.Text != string.Empty)
             {
-                graphics.DrawString(textLine.Text, textLine.Type == TextType.Normal ? font : headingFont, Brushes.White, pos);
+                graphics.DrawString(line.Text, line.Type == TextType.Normal ? font : headingFont, Brushes.White, pos);
                 pos.Y += lineHeight;
             }
             else
             {
-                pos.Y += emptyLineHeight;
+                pos.Y += EmptyLineHeight;
             }
         }
     }

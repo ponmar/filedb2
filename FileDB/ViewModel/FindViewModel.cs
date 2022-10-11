@@ -18,6 +18,7 @@ using FileDB.Configuration;
 using FileDB.Export;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using FileDBInterface.Validators;
 
 namespace FileDB.ViewModel;
 
@@ -1376,7 +1377,7 @@ public partial class FindViewModel : ObservableObject
         {
             var selection = SearchResult!.Files[SearchResultIndex];
             var fileId = selection.Id;
-            NewFileDescription = NewFileDescription?.Trim().ReplaceLineEndings("\n");
+            NewFileDescription = NewFileDescription?.Trim().ReplaceLineEndings(FilesModelValidator.DescriptionLineEnding);
             var description = string.IsNullOrEmpty(NewFileDescription) ? null : NewFileDescription;
 
             try

@@ -26,7 +26,7 @@ public class SearchResultExporter
         var m3uPath = Path.Combine(destinationDirectory, "playlist.m3u");
 
         new SearchResultFilesExporter().Export(data, destinationDirectory);
-        new SearchResultFilesWithOverlayExporter().Export(data, destinationDirectory);
+        new SearchResultFilesWithOverlayExporter(DescriptionPlacement.Subtitle).Export(data, destinationDirectory);
         new SearchResultJsonExporter().Export(data, jsonPath);
         new SearchResultM3uExporter().Export(data, m3uPath);
         new SearchResultHtmlExporter().Export(data, htmlPath);
