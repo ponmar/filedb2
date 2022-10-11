@@ -31,7 +31,7 @@ namespace FileDBInterface.DbAccess
 create table files(
     Id integer primary key autoincrement not null,
     Path text unique not null, /* Format: path/to/file/filename */
-    Description text,
+    Description text, /* Format: May contain \n line-endings */
     Datetime varchar(19), /* Format: YYYY, YYYY-MM-DD or YYYY-MM-DDTHH:MM:SS */
     Position text /* Format: <latitude> <longitude> */
 );

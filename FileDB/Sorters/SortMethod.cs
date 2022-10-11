@@ -1,17 +1,16 @@
 ﻿using FileDB.Configuration;
 using FileDB.Extensions;
 
-namespace FileDB.Sorters
+namespace FileDB.Sorters;
+
+public class SortMethodDescription
 {
-    public class SortMethodDescription
+    public string Name => Method.GetDescription();
+
+    public SortMethod Method { get; }
+
+    public SortMethodDescription(SortMethod method)
     {
-        public string Name => Method.GetDescription();
-
-        public SortMethod Method { get; }
-
-        public SortMethodDescription(SortMethod method)
-        {
-            Method = method;
-        }
+        Method = method;
     }
 }

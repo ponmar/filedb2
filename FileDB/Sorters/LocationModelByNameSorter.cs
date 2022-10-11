@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using FileDBInterface.Model;
 
-namespace FileDB.Sorters
+namespace FileDB.Sorters;
+
+public class LocationModelByNameSorter : IComparer<LocationModel>
 {
-    public class LocationModelByNameSorter : IComparer<LocationModel>
+    public int Compare(LocationModel? x, LocationModel? y)
     {
-        public int Compare(LocationModel? x, LocationModel? y)
-        {
-            return x!.Name.CompareTo(y!.Name);
-        }
+        return x!.Name.CompareTo(y!.Name);
     }
 }

@@ -4,54 +4,53 @@ using System.Linq;
 using FileDBInterface.DbAccess;
 using FileDBInterface.Model;
 
-namespace FileDB.Notifiers
+namespace FileDB.Notifiers;
+
+public enum BirthdayNotificationFor { Alive, Deceased }
+
+public class BirthdayNotifier : INotifier
 {
-    public enum BirthdayNotificationFor { Alive, Deceased }
+    private readonly IEnumerable<PersonModel> persons;
+    private readonly BirthdayNotificationFor birthdayNotificationFor;
 
-    public class BirthdayNotifier : INotifier
+    public BirthdayNotifier(IEnumerable<PersonModel> persons, BirthdayNotificationFor birthdayNotificationFor)
     {
-        private readonly IEnumerable<PersonModel> persons;
-        private readonly BirthdayNotificationFor birthdayNotificationFor;
+        this.persons = persons;
+        this.birthdayNotificationFor = birthdayNotificationFor;
+    }
 
-        public BirthdayNotifier(IEnumerable<PersonModel> persons, BirthdayNotificationFor birthdayNotificationFor)
+    public List<Notification> Run()
+    {
+        var today = DateTime.Today;
+        List<Notification> notifications = new();
+
+        foreach (var person in persons.Where(x => x.DateOfBirth != null))
         {
-            this.persons = persons;
-            this.birthdayNotificationFor = birthdayNotificationFor;
-        }
+            var isDeceased = person.Deceased != null;
+            var checkPerson =
+                (!isDeceased && birthdayNotificationFor == BirthdayNotificationFor.Alive) ||
+                (isDeceased && (birthdayNotificationFor == BirthdayNotificationFor.Deceased));
 
-        public List<Notification> Run()
-        {
-            var today = DateTime.Today;
-            List<Notification> notifications = new();
-
-            foreach (var person in persons.Where(x => x.DateOfBirth != null))
+            if (!checkPerson)
             {
-                var isDeceased = person.Deceased != null;
-                var checkPerson =
-                    (!isDeceased && birthdayNotificationFor == BirthdayNotificationFor.Alive) ||
-                    (isDeceased && (birthdayNotificationFor == BirthdayNotificationFor.Deceased));
-
-                if (!checkPerson)
-                {
-                    continue;
-                }
-
-                var dateOfBirth = DatabaseParsing.ParsePersonsDateOfBirth(person.DateOfBirth!);
-                if (dateOfBirth.Month == today.Month &&
-                    dateOfBirth.Day == today.Day)
-                {
-                    if (isDeceased)
-                    {
-                        notifications.Add(new Notification(NotificationType.Info, $"Today is the birthday for {person.Firstname} {person.Lastname}!", DateTime.Now));
-                    }
-                    else
-                    {
-                        notifications.Add(new Notification(NotificationType.Info, $"Happy Birthday {person.Firstname} {person.Lastname}!", DateTime.Now));
-                    }
-                }
+                continue;
             }
 
-            return notifications;
+            var dateOfBirth = DatabaseParsing.ParsePersonsDateOfBirth(person.DateOfBirth!);
+            if (dateOfBirth.Month == today.Month &&
+                dateOfBirth.Day == today.Day)
+            {
+                if (isDeceased)
+                {
+                    notifications.Add(new Notification(NotificationType.Info, $"Today is the birthday for {person.Firstname} {person.Lastname}!", DateTime.Now));
+                }
+                else
+                {
+                    notifications.Add(new Notification(NotificationType.Info, $"Happy Birthday {person.Firstname} {person.Lastname}!", DateTime.Now));
+                }
+            }
         }
+
+        return notifications;
     }
 }

@@ -1,9 +1,8 @@
 ﻿using FileDBInterface.Model;
 
-namespace FileDB.FileBrowsingPlugins
+namespace FileDB.FileBrowsingPlugins;
+
+public interface IBrowsingPlugin
 {
-    public interface IBrowsingPlugin
-    {
-        void FileLoaded(FilesModel file);
-    }
+    void FileLoaded(FilesModel file);
 }

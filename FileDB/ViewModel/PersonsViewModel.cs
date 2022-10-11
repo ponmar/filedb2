@@ -10,131 +10,130 @@ using FileDB.View;
 using FileDBInterface.DbAccess;
 using FileDBInterface.Model;
 
-namespace FileDB.ViewModel
-{
-    public class Person
-    {
-        public int Id { get; }
-        public string Firstname { get; }
-        public string Lastname { get; }
-        public string? Description { get; }
-        public string? DateOfBirth { get; }
-        public string? Deceased { get; }
-        public int Age { get; }
-        public int? ProfileFileId { get; }
-        public Sex Sex { get; }
+namespace FileDB.ViewModel;
 
-        public Person(int id, string firstname, string lastname, string? description, string? dateOfBirth, string? deceased, int age, int? profileFileId, Sex sex)
+public class Person
+{
+    public int Id { get; }
+    public string Firstname { get; }
+    public string Lastname { get; }
+    public string? Description { get; }
+    public string? DateOfBirth { get; }
+    public string? Deceased { get; }
+    public int Age { get; }
+    public int? ProfileFileId { get; }
+    public Sex Sex { get; }
+
+    public Person(int id, string firstname, string lastname, string? description, string? dateOfBirth, string? deceased, int age, int? profileFileId, Sex sex)
+    {
+        Id = id;
+        Firstname = firstname;
+        Lastname = lastname;
+        Description = description;
+        DateOfBirth = dateOfBirth;
+        Deceased = deceased;
+        Age = age;
+        ProfileFileId = profileFileId;
+    }
+}
+
+public partial class PersonsViewModel : ObservableObject
+{
+    [ObservableProperty]
+    private bool readWriteMode = !Model.Model.Instance.Config.ReadOnly;
+
+    public ObservableCollection<Person> Persons { get; } = new();
+
+    [ObservableProperty]
+    private Person? selectedPerson;
+
+    private readonly Model.Model model = Model.Model.Instance;
+
+    public PersonsViewModel()
+    {
+        ReloadPersons();
+        model.PersonsUpdated += Model_PersonsUpdated;
+        model.ConfigLoaded += Model_ConfigLoaded;
+    }
+
+    private void Model_ConfigLoaded(object? sender, EventArgs e)
+    {
+        ReadWriteMode = !model.Config.ReadOnly;
+    }
+
+    private void Model_PersonsUpdated(object? sender, EventArgs e)
+    {
+        ReloadPersons();
+    }
+
+    [RelayCommand]
+    private void RemovePerson()
+    {
+        if (Dialogs.ShowConfirmDialog($"Remove {selectedPerson!.Firstname} {selectedPerson.Lastname}?"))
         {
-            Id = id;
-            Firstname = firstname;
-            Lastname = lastname;
-            Description = description;
-            DateOfBirth = dateOfBirth;
-            Deceased = deceased;
-            Age = age;
-            ProfileFileId = profileFileId;
+            var filesWithPerson = model.DbAccess.SearchFilesWithPersons(new List<int>() { selectedPerson.Id }).ToList();
+            if (filesWithPerson.Count == 0 || Dialogs.ShowConfirmDialog($"Person is used in {filesWithPerson.Count} files, remove anyway?"))
+            {
+                model.DbAccess.DeletePerson(selectedPerson.Id);
+                model.NotifyPersonsUpdated();
+            }
         }
     }
 
-    public partial class PersonsViewModel : ObservableObject
+    [RelayCommand]
+    private void EditPerson()
     {
-        [ObservableProperty]
-        private bool readWriteMode = !Model.Model.Instance.Config.ReadOnly;
-
-        public ObservableCollection<Person> Persons { get; } = new();
-
-        [ObservableProperty]
-        private Person? selectedPerson;
-
-        private readonly Model.Model model = Model.Model.Instance;
-
-        public PersonsViewModel()
+        var window = new AddPersonWindow(selectedPerson!.Id)
         {
-            ReloadPersons();
-            model.PersonsUpdated += Model_PersonsUpdated;
-            model.ConfigLoaded += Model_ConfigLoaded;
+            Owner = Application.Current.MainWindow
+        };
+        window.ShowDialog();
+    }
+
+    [RelayCommand]
+    private void AddPerson()
+    {
+        var window = new AddPersonWindow
+        {
+            Owner = Application.Current.MainWindow
+        };
+        window.ShowDialog();
+    }
+
+    [RelayCommand]
+    private void PersonSelection(Person parameter)
+    {
+        SelectedPerson = parameter;
+    }
+
+    private void ReloadPersons()
+    {
+        Persons.Clear();
+        var persons = model.DbAccess.GetPersons().ToList();
+        persons.Sort(new PersonModelByNameSorter());
+        var personVms = persons.Select(pm => new Person(pm.Id, pm.Firstname, pm.Lastname, pm.Description, pm.DateOfBirth, pm.Deceased, GetPersonAge(pm), pm.ProfileFileId, pm.Sex));
+        foreach (var personVm in personVms)
+        {
+            Persons.Add(personVm);
         }
+    }
 
-        private void Model_ConfigLoaded(object? sender, EventArgs e)
+    private int GetPersonAge(PersonModel person)
+    {
+        if (person.DateOfBirth != null)
         {
-            ReadWriteMode = !model.Config.ReadOnly;
-        }
-
-        private void Model_PersonsUpdated(object? sender, EventArgs e)
-        {
-            ReloadPersons();
-        }
-
-        [RelayCommand]
-        private void RemovePerson()
-        {
-            if (Dialogs.ShowConfirmDialog($"Remove {selectedPerson!.Firstname} {selectedPerson.Lastname}?"))
+            var dateOfBirth = DatabaseParsing.ParsePersonsDateOfBirth(person.DateOfBirth);
+            if (person.Deceased != null)
             {
-                var filesWithPerson = model.DbAccess.SearchFilesWithPersons(new List<int>() { selectedPerson.Id }).ToList();
-                if (filesWithPerson.Count == 0 || Dialogs.ShowConfirmDialog($"Person is used in {filesWithPerson.Count} files, remove anyway?"))
-                {
-                    model.DbAccess.DeletePerson(selectedPerson.Id);
-                    model.NotifyPersonsUpdated();
-                }
+                var deceased = DatabaseParsing.ParsePersonsDeceased(person.Deceased);
+                return DatabaseUtils.GetYearsAgo(deceased, dateOfBirth);
+            }
+            else
+            {
+                return DatabaseUtils.GetYearsAgo(DateTime.Now, dateOfBirth);
             }
         }
 
-        [RelayCommand]
-        private void EditPerson()
-        {
-            var window = new AddPersonWindow(selectedPerson!.Id)
-            {
-                Owner = Application.Current.MainWindow
-            };
-            window.ShowDialog();
-        }
-
-        [RelayCommand]
-        private void AddPerson()
-        {
-            var window = new AddPersonWindow
-            {
-                Owner = Application.Current.MainWindow
-            };
-            window.ShowDialog();
-        }
-
-        [RelayCommand]
-        private void PersonSelection(Person parameter)
-        {
-            SelectedPerson = parameter;
-        }
-
-        private void ReloadPersons()
-        {
-            Persons.Clear();
-            var persons = model.DbAccess.GetPersons().ToList();
-            persons.Sort(new PersonModelByNameSorter());
-            var personVms = persons.Select(pm => new Person(pm.Id, pm.Firstname, pm.Lastname, pm.Description, pm.DateOfBirth, pm.Deceased, GetPersonAge(pm), pm.ProfileFileId, pm.Sex));
-            foreach (var personVm in personVms)
-            {
-                Persons.Add(personVm);
-            }
-        }
-
-        private int GetPersonAge(PersonModel person)
-        {
-            if (person.DateOfBirth != null)
-            {
-                var dateOfBirth = DatabaseParsing.ParsePersonsDateOfBirth(person.DateOfBirth);
-                if (person.Deceased != null)
-                {
-                    var deceased = DatabaseParsing.ParsePersonsDeceased(person.Deceased);
-                    return DatabaseUtils.GetYearsAgo(deceased, dateOfBirth);
-                }
-                else
-                {
-                    return DatabaseUtils.GetYearsAgo(DateTime.Now, dateOfBirth);
-                }
-            }
-
-            return -1;
-        }
+        return -1;
     }
 }

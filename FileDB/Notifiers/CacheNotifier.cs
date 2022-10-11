@@ -3,36 +3,35 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace FileDB.Notifiers
+namespace FileDB.Notifiers;
+
+public class CacheNotifier : INotifier
 {
-    public class CacheNotifier : INotifier
+    private readonly string cacheDirectory;
+    private readonly IEnumerable<int> cacheFileIds;
+
+    public CacheNotifier(string cacheDirectory, IEnumerable<int> cacheFileIds)
     {
-        private readonly string cacheDirectory;
-        private readonly IEnumerable<int> cacheFileIds;
+        this.cacheDirectory = cacheDirectory;
+        this.cacheFileIds = cacheFileIds;
+    }
 
-        public CacheNotifier(string cacheDirectory, IEnumerable<int> cacheFileIds)
+    public List<Notification> Run()
+    {
+        List<Notification> notifications = new();
+        if (!Directory.Exists(cacheDirectory))
         {
-            this.cacheDirectory = cacheDirectory;
-            this.cacheFileIds = cacheFileIds;
+            notifications.Add(new Notification(NotificationType.Warning, $"File cache directory is missing: {cacheDirectory}", DateTime.Now));
         }
-
-        public List<Notification> Run()
+        else
         {
-            List<Notification> notifications = new();
-            if (!Directory.Exists(cacheDirectory))
+            var cachedFiles = new List<string>(Directory.GetFiles(cacheDirectory)).Select(x => Path.GetFileName(x));
+            var fileIdsMissingInCache = cacheFileIds.Where(x => !cachedFiles.Contains(x.ToString())).ToList();
+            if (fileIdsMissingInCache.Count > 0)
             {
-                notifications.Add(new Notification(NotificationType.Warning, $"File cache directory is missing: {cacheDirectory}", DateTime.Now));
+                notifications.Add(new Notification(NotificationType.Warning, $"Files missing in cache: {string.Join(", ", fileIdsMissingInCache)}", DateTime.Now));
             }
-            else
-            {
-                var cachedFiles = new List<string>(Directory.GetFiles(cacheDirectory)).Select(x => Path.GetFileName(x));
-                var fileIdsMissingInCache = cacheFileIds.Where(x => !cachedFiles.Contains(x.ToString())).ToList();
-                if (fileIdsMissingInCache.Count > 0)
-                {
-                    notifications.Add(new Notification(NotificationType.Warning, $"Files missing in cache: {string.Join(", ", fileIdsMissingInCache)}", DateTime.Now));
-                }
-            }
-            return notifications;
         }
+        return notifications;
     }
 }

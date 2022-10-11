@@ -2,36 +2,35 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace FileDB.Notifiers
+namespace FileDB.Notifiers;
+
+public class BackupNotifier : INotifier
 {
-    public class BackupNotifier : INotifier
+    private readonly int afterDays;
+    private readonly IEnumerable<BackupFile> backupFiles;
+
+    public BackupNotifier(IEnumerable<BackupFile> backupFiles, int afterDays = 30)
     {
-        private readonly int afterDays;
-        private readonly IEnumerable<BackupFile> backupFiles;
+        this.backupFiles = backupFiles;
+        this.afterDays = afterDays;
+    }
 
-        public BackupNotifier(IEnumerable<BackupFile> backupFiles, int afterDays = 30)
+    public List<Notification> Run()
+    {
+        List<Notification> notifications = new();
+        if (!backupFiles.Any())
         {
-            this.backupFiles = backupFiles;
-            this.afterDays = afterDays;
+            notifications.Add(new Notification(NotificationType.Warning, "Backup reminder: No database backup has been created!", DateTime.Now));
+        }
+        else
+        {
+            var latestBackupDaysAge = (int)backupFiles.Min(x => x.Age).TotalDays;
+            if (latestBackupDaysAge >= afterDays)
+            {
+                notifications.Add(new Notification(NotificationType.Warning, $"Backup reminder: Last database backup created {latestBackupDaysAge} days ago!", DateTime.Now));
+            }
         }
 
-        public List<Notification> Run()
-        {
-            List<Notification> notifications = new();
-            if (!backupFiles.Any())
-            {
-                notifications.Add(new Notification(NotificationType.Warning, "Backup reminder: No database backup has been created!", DateTime.Now));
-            }
-            else
-            {
-                var latestBackupDaysAge = (int)backupFiles.Min(x => x.Age).TotalDays;
-                if (latestBackupDaysAge >= afterDays)
-                {
-                    notifications.Add(new Notification(NotificationType.Warning, $"Backup reminder: Last database backup created {latestBackupDaysAge} days ago!", DateTime.Now));
-                }
-            }
-
-            return notifications;
-        }
+        return notifications;
     }
 }

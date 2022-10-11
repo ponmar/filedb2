@@ -9,348 +9,347 @@ using FileDBInterface.DbAccess;
 using FileDBInterface.Exceptions;
 using Microsoft.Win32;
 
-namespace FileDB.ViewModel
+namespace FileDB.ViewModel;
+
+public partial class SettingsViewModel : ObservableObject
 {
-    public partial class SettingsViewModel : ObservableObject
+    [ObservableProperty]
+    private string configName = string.Empty;
+
+    [ObservableProperty]
+    private string database = string.Empty;
+
+    [ObservableProperty]
+    private string filesRootDirectory = string.Empty;
+
+    [ObservableProperty]
+    private int slideshowDelay;
+
+    [ObservableProperty]
+    private int searchHistorySize;
+
+    [ObservableProperty]
+    private SortMethod defaultSortMethod;
+
+    public List<SortMethodDescription> SortMethods => Utils.GetSortMethods();
+
+    [ObservableProperty]
+    private bool keepSelectionAfterSort;
+
+    [ObservableProperty]
+    private bool includeHiddenDirectories;
+
+    [ObservableProperty]
+    private string blacklistedFilePathPatterns = string.Empty;
+
+    [ObservableProperty]
+    private string whitelistedFilePathPatterns = string.Empty;
+
+    [ObservableProperty]
+    private bool readOnly;
+
+    [ObservableProperty]
+    private bool backupReminder;
+
+    [ObservableProperty]
+    private bool birthdayReminder;
+
+    [ObservableProperty]
+    private bool birthdayReminderForDeceased;
+
+    [ObservableProperty]
+    private bool ripReminder;
+
+    [ObservableProperty]
+    private bool missingFilesRootDirNotification;
+
+    [ObservableProperty]
+    private string locationLink = string.Empty;
+
+    [ObservableProperty]
+    private int fileToLocationMaxDistance;
+
+    [ObservableProperty]
+    private WindowMode windowMode;
+
+    [ObservableProperty]
+    private string? castHttpServerInterface;
+
+    [ObservableProperty]
+    private int castHttpServerPort;
+
+    [ObservableProperty]
+    private bool cacheFiles;
+
+    public List<WindowModeDescription> WindowModes => Utils.GetWindowModes();
+
+    [RelayCommand]
+    private void SetDefaultSlideshowDelay()
     {
-        [ObservableProperty]
-        private string configName = string.Empty;
+        SlideshowDelay = DefaultConfigs.Default.SlideshowDelay;
+    }
 
-        [ObservableProperty]
-        private string database = string.Empty;
+    [RelayCommand]
+    private void SetDefaultBackupReminder()
+    {
+        BackupReminder = DefaultConfigs.Default.BackupReminder;
+    }
 
-        [ObservableProperty]
-        private string filesRootDirectory = string.Empty;
+    [RelayCommand]
+    private void SetDefaultSearchHistorySize()
+    {
+        SearchHistorySize = DefaultConfigs.Default.SearchHistorySize;
+    }
 
-        [ObservableProperty]
-        private int slideshowDelay;
+    [RelayCommand]
+    private void SetDefaultDefaultSortMethod()
+    {
+        DefaultSortMethod = DefaultConfigs.Default.DefaultSortMethod;
+    }
 
-        [ObservableProperty]
-        private int searchHistorySize;
+    [RelayCommand]
+    private void SetDefaultCastHttpServerInterface()
+    {
+        CastHttpServerInterface = DefaultConfigs.Default.CastHttpServerInterface;
+    }
 
-        [ObservableProperty]
-        private SortMethod defaultSortMethod;
+    [RelayCommand]
+    private void SetDefaultCastHttpServerPort()
+    {
+        CastHttpServerPort = DefaultConfigs.Default.CastHttpServerPort;
+    }
 
-        public List<SortMethodDescription> SortMethods => Utils.GetSortMethods();
+    [RelayCommand]
+    private void SetDefaultKeepSelectionAfterSort()
+    {
+        KeepSelectionAfterSort = DefaultConfigs.Default.KeepSelectionAfterSort;
+    }
 
-        [ObservableProperty]
-        private bool keepSelectionAfterSort;
+    [RelayCommand]
+    private void SetDefaultBlacklistedFilePathPatterns()
+    {
+        BlacklistedFilePathPatterns = DefaultConfigs.Default.BlacklistedFilePathPatterns;
+    }
 
-        [ObservableProperty]
-        private bool includeHiddenDirectories;
+    [RelayCommand]
+    private void SetDefaultWhitelistedFilePathPatterns()
+    {
+        WhitelistedFilePathPatterns = DefaultConfigs.Default.WhitelistedFilePathPatterns;
+    }
 
-        [ObservableProperty]
-        private string blacklistedFilePathPatterns = string.Empty;
+    [RelayCommand]
+    private void SetDefaultIncludeHiddenDirectories()
+    {
+        IncludeHiddenDirectories = DefaultConfigs.Default.IncludeHiddenDirectories;
+    }
 
-        [ObservableProperty]
-        private string whitelistedFilePathPatterns = string.Empty;
+    [RelayCommand]
+    private void SetDefaultReadOnly()
+    {
+        ReadOnly = DefaultConfigs.Default.ReadOnly;
+    }
 
-        [ObservableProperty]
-        private bool readOnly;
+    [RelayCommand]
+    private void SetDefaultCacheFiles()
+    {
+        CacheFiles = DefaultConfigs.Default.CacheFiles;
+    }
 
-        [ObservableProperty]
-        private bool backupReminder;
+    [RelayCommand]
+    private void SetDefaultBirthdayReminder()
+    {
+        BirthdayReminder = DefaultConfigs.Default.BirthdayReminder;
+    }
 
-        [ObservableProperty]
-        private bool birthdayReminder;
+    [RelayCommand]
+    private void SetDefaultBirthdayReminderForDeceased()
+    {
+        BirthdayReminderForDeceased = DefaultConfigs.Default.BirthdayReminderForDeceased;
+    }
 
-        [ObservableProperty]
-        private bool birthdayReminderForDeceased;
+    [RelayCommand]
+    private void SetDefaultRipReminder()
+    {
+        RipReminder = DefaultConfigs.Default.RipReminder;
+    }
 
-        [ObservableProperty]
-        private bool ripReminder;
+    [RelayCommand]
+    private void SetDefaultMissingFilesRootDirNotification()
+    {
+        MissingFilesRootDirNotification = DefaultConfigs.Default.MissingFilesRootDirNotification;
+    }
 
-        [ObservableProperty]
-        private bool missingFilesRootDirNotification;
+    [RelayCommand]
+    private void SetDefaultLocationLink()
+    {
+        LocationLink = DefaultConfigs.Default.LocationLink;
+    }
 
-        [ObservableProperty]
-        private string locationLink = string.Empty;
+    [RelayCommand]
+    private void SetDefaultFileToLocationMaxDistance()
+    {
+        FileToLocationMaxDistance = DefaultConfigs.Default.FileToLocationMaxDistance;
+    }
 
-        [ObservableProperty]
-        private int fileToLocationMaxDistance;
+    [RelayCommand]
+    private void SetDefaultWindowMode()
+    {
+        WindowMode = DefaultConfigs.Default.WindowMode;
+    }
 
-        [ObservableProperty]
-        private WindowMode windowMode;
+    private readonly Model.Model model = Model.Model.Instance;
 
-        [ObservableProperty]
-        private string? castHttpServerInterface;
+    public SettingsViewModel()
+    {
+        UpdateFromConfiguration();
+    }
 
-        [ObservableProperty]
-        private int castHttpServerPort;
+    private void UpdateFromConfiguration()
+    {
+        ConfigName = model.Config.Name;
+        Database = model.Config.Database;
+        FilesRootDirectory = model.Config.FilesRootDirectory;
+        SlideshowDelay = model.Config.SlideshowDelay;
+        SearchHistorySize = model.Config.SearchHistorySize;
+        DefaultSortMethod = model.Config.DefaultSortMethod;
+        KeepSelectionAfterSort = model.Config.KeepSelectionAfterSort;
+        IncludeHiddenDirectories = model.Config.IncludeHiddenDirectories;
+        BlacklistedFilePathPatterns = model.Config.BlacklistedFilePathPatterns;
+        WhitelistedFilePathPatterns = model.Config.WhitelistedFilePathPatterns;
+        ReadOnly = model.Config.ReadOnly;
+        BackupReminder = model.Config.BackupReminder;
+        BirthdayReminder = model.Config.BirthdayReminder;
+        BirthdayReminderForDeceased = model.Config.BirthdayReminderForDeceased;
+        RipReminder = model.Config.RipReminder;
+        MissingFilesRootDirNotification = model.Config.MissingFilesRootDirNotification;
+        LocationLink = model.Config.LocationLink;
+        FileToLocationMaxDistance = model.Config.FileToLocationMaxDistance;
+        WindowMode = model.Config.WindowMode;
+        CastHttpServerInterface = model.Config.CastHttpServerInterface;
+        CastHttpServerPort = model.Config.CastHttpServerPort;
+        CacheFiles = model.Config.CacheFiles;
+    }
 
-        [ObservableProperty]
-        private bool cacheFiles;
+    [RelayCommand]
+    private void ResetConfiguration()
+    {
+        UpdateFromConfiguration();
+    }
 
-        public List<WindowModeDescription> WindowModes => Utils.GetWindowModes();
+    [RelayCommand]
+    private void SaveConfiguration()
+    {
+        var config = new Config(
+            ConfigName,
+            Database,
+            FilesRootDirectory,
+            fileToLocationMaxDistance,
+            BlacklistedFilePathPatterns,
+            WhitelistedFilePathPatterns,
+            IncludeHiddenDirectories,
+            SlideshowDelay,
+            SearchHistorySize,
+            DefaultSortMethod,
+            KeepSelectionAfterSort,
+            ReadOnly,
+            BackupReminder,
+            BirthdayReminder,
+            BirthdayReminderForDeceased,
+            RipReminder,
+            MissingFilesRootDirNotification,
+            LocationLink,
+            WindowMode,
+            CastHttpServerInterface,
+            CastHttpServerPort,
+            CacheFiles);
 
-        [RelayCommand]
-        private void SetDefaultSlideshowDelay()
+        var result = new ConfigValidator().Validate(config);
+        if (!result.IsValid)
         {
-            SlideshowDelay = DefaultConfigs.Default.SlideshowDelay;
+            Dialogs.ShowErrorDialog(result);
+            return;
         }
 
-        [RelayCommand]
-        private void SetDefaultBackupReminder()
+        var appDataConfig = new AppDataConfig<Config>(Utils.ApplicationName);
+
+        if (!Dialogs.ShowConfirmDialog($"Write your configuration to {appDataConfig.FilePath}?"))
         {
-            BackupReminder = DefaultConfigs.Default.BackupReminder;
+            return;
         }
 
-        [RelayCommand]
-        private void SetDefaultSearchHistorySize()
+        if (appDataConfig.Write(config))
         {
-            SearchHistorySize = DefaultConfigs.Default.SearchHistorySize;
+            model.Config = config;
+            model.ReloadHandles();
         }
-
-        [RelayCommand]
-        private void SetDefaultDefaultSortMethod()
+        else
         {
-            DefaultSortMethod = DefaultConfigs.Default.DefaultSortMethod;
+            Dialogs.ShowErrorDialog("Unable to save configuration");
         }
+    }
 
-        [RelayCommand]
-        private void SetDefaultCastHttpServerInterface()
+    [RelayCommand]
+    private void BrowseDatabase()
+    {
+        var fileDialog = new OpenFileDialog()
         {
-            CastHttpServerInterface = DefaultConfigs.Default.CastHttpServerInterface;
+            Filter = $"{Utils.ApplicationName} database files (*.db)|*.db",
+            InitialDirectory = @"c:\",
+        };
+        if (fileDialog.ShowDialog() == true)
+        {
+            Database = fileDialog.FileName;
         }
+    }
 
-        [RelayCommand]
-        private void SetDefaultCastHttpServerPort()
+    [RelayCommand]
+    private void BrowseFilesRootDirectory()
+    {
+        var fileDialog = new OpenFileDialog()
         {
-            CastHttpServerPort = DefaultConfigs.Default.CastHttpServerPort;
-        }
-
-        [RelayCommand]
-        private void SetDefaultKeepSelectionAfterSort()
+            Filter = "Any file within files root directory (*.*)|*.*",
+            InitialDirectory = @"c:\",
+            ValidateNames = false,
+            CheckFileExists = false,
+        };
+        if (fileDialog.ShowDialog() == true)
         {
-            KeepSelectionAfterSort = DefaultConfigs.Default.KeepSelectionAfterSort;
-        }
-
-        [RelayCommand]
-        private void SetDefaultBlacklistedFilePathPatterns()
-        {
-            BlacklistedFilePathPatterns = DefaultConfigs.Default.BlacklistedFilePathPatterns;
-        }
-
-        [RelayCommand]
-        private void SetDefaultWhitelistedFilePathPatterns()
-        {
-            WhitelistedFilePathPatterns = DefaultConfigs.Default.WhitelistedFilePathPatterns;
-        }
-
-        [RelayCommand]
-        private void SetDefaultIncludeHiddenDirectories()
-        {
-            IncludeHiddenDirectories = DefaultConfigs.Default.IncludeHiddenDirectories;
-        }
-
-        [RelayCommand]
-        private void SetDefaultReadOnly()
-        {
-            ReadOnly = DefaultConfigs.Default.ReadOnly;
-        }
-
-        [RelayCommand]
-        private void SetDefaultCacheFiles()
-        {
-            CacheFiles = DefaultConfigs.Default.CacheFiles;
-        }
-
-        [RelayCommand]
-        private void SetDefaultBirthdayReminder()
-        {
-            BirthdayReminder = DefaultConfigs.Default.BirthdayReminder;
-        }
-
-        [RelayCommand]
-        private void SetDefaultBirthdayReminderForDeceased()
-        {
-            BirthdayReminderForDeceased = DefaultConfigs.Default.BirthdayReminderForDeceased;
-        }
-
-        [RelayCommand]
-        private void SetDefaultRipReminder()
-        {
-            RipReminder = DefaultConfigs.Default.RipReminder;
-        }
-
-        [RelayCommand]
-        private void SetDefaultMissingFilesRootDirNotification()
-        {
-            MissingFilesRootDirNotification = DefaultConfigs.Default.MissingFilesRootDirNotification;
-        }
-
-        [RelayCommand]
-        private void SetDefaultLocationLink()
-        {
-            LocationLink = DefaultConfigs.Default.LocationLink;
-        }
-
-        [RelayCommand]
-        private void SetDefaultFileToLocationMaxDistance()
-        {
-            FileToLocationMaxDistance = DefaultConfigs.Default.FileToLocationMaxDistance;
-        }
-
-        [RelayCommand]
-        private void SetDefaultWindowMode()
-        {
-            WindowMode = DefaultConfigs.Default.WindowMode;
-        }
-
-        private readonly Model.Model model = Model.Model.Instance;
-
-        public SettingsViewModel()
-        {
-            UpdateFromConfiguration();
-        }
-
-        private void UpdateFromConfiguration()
-        {
-            ConfigName = model.Config.Name;
-            Database = model.Config.Database;
-            FilesRootDirectory = model.Config.FilesRootDirectory;
-            SlideshowDelay = model.Config.SlideshowDelay;
-            SearchHistorySize = model.Config.SearchHistorySize;
-            DefaultSortMethod = model.Config.DefaultSortMethod;
-            KeepSelectionAfterSort = model.Config.KeepSelectionAfterSort;
-            IncludeHiddenDirectories = model.Config.IncludeHiddenDirectories;
-            BlacklistedFilePathPatterns = model.Config.BlacklistedFilePathPatterns;
-            WhitelistedFilePathPatterns = model.Config.WhitelistedFilePathPatterns;
-            ReadOnly = model.Config.ReadOnly;
-            BackupReminder = model.Config.BackupReminder;
-            BirthdayReminder = model.Config.BirthdayReminder;
-            BirthdayReminderForDeceased = model.Config.BirthdayReminderForDeceased;
-            RipReminder = model.Config.RipReminder;
-            MissingFilesRootDirNotification = model.Config.MissingFilesRootDirNotification;
-            LocationLink = model.Config.LocationLink;
-            FileToLocationMaxDistance = model.Config.FileToLocationMaxDistance;
-            WindowMode = model.Config.WindowMode;
-            CastHttpServerInterface = model.Config.CastHttpServerInterface;
-            CastHttpServerPort = model.Config.CastHttpServerPort;
-            CacheFiles = model.Config.CacheFiles;
-        }
-
-        [RelayCommand]
-        private void ResetConfiguration()
-        {
-            UpdateFromConfiguration();
-        }
-
-        [RelayCommand]
-        private void SaveConfiguration()
-        {
-            var config = new Config(
-                ConfigName,
-                Database,
-                FilesRootDirectory,
-                fileToLocationMaxDistance,
-                BlacklistedFilePathPatterns,
-                WhitelistedFilePathPatterns,
-                IncludeHiddenDirectories,
-                SlideshowDelay,
-                SearchHistorySize,
-                DefaultSortMethod,
-                KeepSelectionAfterSort,
-                ReadOnly,
-                BackupReminder,
-                BirthdayReminder,
-                BirthdayReminderForDeceased,
-                RipReminder,
-                MissingFilesRootDirNotification,
-                LocationLink,
-                WindowMode,
-                CastHttpServerInterface,
-                CastHttpServerPort,
-                CacheFiles);
-
-            var result = new ConfigValidator().Validate(config);
-            if (!result.IsValid)
+            var dir = Path.GetDirectoryName(fileDialog.FileName);
+            if (Directory.Exists(dir))
             {
-                Dialogs.ShowErrorDialog(result);
-                return;
-            }
-
-            var appDataConfig = new AppDataConfig<Config>(Utils.ApplicationName);
-
-            if (!Dialogs.ShowConfirmDialog($"Write your configuration to {appDataConfig.FilePath}?"))
-            {
-                return;
-            }
-
-            if (appDataConfig.Write(config))
-            {
-                model.Config = config;
-                model.ReloadHandles();
+                FilesRootDirectory = dir;
             }
             else
             {
-                Dialogs.ShowErrorDialog("Unable to save configuration");
+                Dialogs.ShowErrorDialog($"No such directory: {dir}");
             }
         }
+    }
 
-        [RelayCommand]
-        private void BrowseDatabase()
+    [RelayCommand]
+    public void CreateDatabase()
+    {
+        if (string.IsNullOrEmpty(Database))
         {
-            var fileDialog = new OpenFileDialog()
-            {
-                Filter = $"{Utils.ApplicationName} database files (*.db)|*.db",
-                InitialDirectory = @"c:\",
-            };
-            if (fileDialog.ShowDialog() == true)
-            {
-                Database = fileDialog.FileName;
-            }
+            Dialogs.ShowErrorDialog("No database filename specified");
+            return;
         }
 
-        [RelayCommand]
-        private void BrowseFilesRootDirectory()
+        if (File.Exists(Database))
         {
-            var fileDialog = new OpenFileDialog()
-            {
-                Filter = "Any file within files root directory (*.*)|*.*",
-                InitialDirectory = @"c:\",
-                ValidateNames = false,
-                CheckFileExists = false,
-            };
-            if (fileDialog.ShowDialog() == true)
-            {
-                var dir = Path.GetDirectoryName(fileDialog.FileName);
-                if (Directory.Exists(dir))
-                {
-                    FilesRootDirectory = dir;
-                }
-                else
-                {
-                    Dialogs.ShowErrorDialog($"No such directory: {dir}");
-                }
-            }
+            Dialogs.ShowErrorDialog($"Database {Database} already exists");
+            return;
         }
 
-        [RelayCommand]
-        public void CreateDatabase()
+        if (Dialogs.ShowConfirmDialog($"Create database {Database}?"))
         {
-            if (string.IsNullOrEmpty(Database))
+            try
             {
-                Dialogs.ShowErrorDialog("No database filename specified");
-                return;
+                DatabaseUtils.CreateDatabase(Database);
             }
-
-            if (File.Exists(Database))
+            catch (DatabaseWrapperException e)
             {
-                Dialogs.ShowErrorDialog($"Database {Database} already exists");
-                return;
-            }
-
-            if (Dialogs.ShowConfirmDialog($"Create database {Database}?"))
-            {
-                try
-                {
-                    DatabaseUtils.CreateDatabase(Database);
-                }
-                catch (DatabaseWrapperException e)
-                {
-                    Dialogs.ShowErrorDialog(e.Message);
-                }
+                Dialogs.ShowErrorDialog(e.Message);
             }
         }
     }

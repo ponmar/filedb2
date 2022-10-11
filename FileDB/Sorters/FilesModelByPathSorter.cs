@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using FileDBInterface.Model;
 
-namespace FileDB.Sorters
+namespace FileDB.Sorters;
+
+public class FilesModelByPathSorter : IComparer<FilesModel>
 {
-    public class FilesModelByPathSorter : IComparer<FilesModel>
+    public int Compare(FilesModel? x, FilesModel? y)
     {
-        public int Compare(FilesModel? x, FilesModel? y)
-        {
-            return x!.Path.CompareTo(y!.Path);
-        }
+        return x!.Path.CompareTo(y!.Path);
     }
 }

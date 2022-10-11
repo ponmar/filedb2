@@ -2,65 +2,64 @@
 using System.IO;
 using Newtonsoft.Json;
 
-namespace FileDB.Configuration
+namespace FileDB.Configuration;
+
+public class AppDataConfig<T>
 {
-    public class AppDataConfig<T>
+    public string AppName { get; }
+    public string Filename { get; }
+    public string ConfigDirectory { get; }
+    public string FilePath { get;  }
+
+    public AppDataConfig(string appName)
     {
-        public string AppName { get; }
-        public string Filename { get; }
-        public string ConfigDirectory { get; }
-        public string FilePath { get;  }
+        AppName = appName;
+        Filename = typeof(T).Name + ".json";
 
-        public AppDataConfig(string appName)
+        var baseDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        ConfigDirectory = Path.Combine(baseDirectory, AppName);
+        FilePath = Path.Combine(ConfigDirectory, Filename);
+    }
+
+    public bool Write(T config)
+    {
+        string jsonString = JsonConvert.SerializeObject(config, Formatting.Indented);
+
+        try
         {
-            AppName = appName;
-            Filename = typeof(T).Name + ".json";
-
-            var baseDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            ConfigDirectory = Path.Combine(baseDirectory, AppName);
-            FilePath = Path.Combine(ConfigDirectory, Filename);
+            var directory = Path.GetDirectoryName(FilePath);
+            Directory.CreateDirectory(directory!);
+            File.WriteAllText(FilePath, jsonString);
+            return true;
         }
-
-        public bool Write(T config)
+        catch (IOException)
         {
-            string jsonString = JsonConvert.SerializeObject(config, Formatting.Indented);
+            return false;
+        }
+    }
 
+    public T? Read()
+    {
+        if (File.Exists(FilePath))
+        {
             try
             {
-                var directory = Path.GetDirectoryName(FilePath);
-                Directory.CreateDirectory(directory!);
-                File.WriteAllText(FilePath, jsonString);
-                return true;
+                var jsonString = File.ReadAllText(FilePath);
+                return JsonConvert.DeserializeObject<T>(jsonString);
+            }
+            catch (JsonException)
+            {
             }
             catch (IOException)
             {
-                return false;
             }
         }
 
-        public T? Read()
-        {
-            if (File.Exists(FilePath))
-            {
-                try
-                {
-                    var jsonString = File.ReadAllText(FilePath);
-                    return JsonConvert.DeserializeObject<T>(jsonString);
-                }
-                catch (JsonException)
-                {
-                }
-                catch (IOException)
-                {
-                }
-            }
+        return default;
+    }
 
-            return default;
-        }
-
-        public bool FileExists()
-        {
-            return File.Exists(FilePath);
-        }
+    public bool FileExists()
+    {
+        return File.Exists(FilePath);
     }
 }

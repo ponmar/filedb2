@@ -2,25 +2,24 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace FileDB.Notifiers
+namespace FileDB.Notifiers;
+
+public class MissingFilesRootDirNotifier : INotifier
 {
-    public class MissingFilesRootDirNotifier : INotifier
+    private readonly string rootDirectory;
+
+    public MissingFilesRootDirNotifier(string rootDirectory)
     {
-        private readonly string rootDirectory;
+        this.rootDirectory = rootDirectory;
+    }
 
-        public MissingFilesRootDirNotifier(string rootDirectory)
+    public List<Notification> Run()
+    {
+        List<Notification> notifications = new();
+        if (!Directory.Exists(rootDirectory))
         {
-            this.rootDirectory = rootDirectory;
+            notifications.Add(new Notification(NotificationType.Warning, $"Files root directory is missing: {rootDirectory}", DateTime.Now));
         }
-
-        public List<Notification> Run()
-        {
-            List<Notification> notifications = new();
-            if (!Directory.Exists(rootDirectory))
-            {
-                notifications.Add(new Notification(NotificationType.Warning, $"Files root directory is missing: {rootDirectory}", DateTime.Now));
-            }
-            return notifications;
-        }
+        return notifications;
     }
 }

@@ -4,76 +4,75 @@ using FileDBInterface.Exceptions;
 using FileDBInterface.Model;
 using System.Linq;
 
-namespace FileDB.ViewModel
+namespace FileDB.ViewModel;
+
+public partial class AddLocationViewModel : ObservableObject
 {
-    public partial class AddLocationViewModel : ObservableObject
+    private int? locationId;
+
+    [ObservableProperty]
+    private string title;
+
+    [ObservableProperty]
+    private string name = string.Empty;
+
+    [ObservableProperty]
+    private string? description = string.Empty;
+
+    [ObservableProperty]
+    private string? position = string.Empty;
+
+    private readonly Model.Model model = Model.Model.Instance;
+
+    public LocationModel? AffectedLocation { get; private set; }
+
+    public AddLocationViewModel(int? locationId = null)
     {
-        private int? locationId;
+        this.locationId = locationId;
 
-        [ObservableProperty]
-        private string title;
+        title = locationId.HasValue ? "Edit Location" : "Add Location";
 
-        [ObservableProperty]
-        private string name = string.Empty;
-
-        [ObservableProperty]
-        private string? description = string.Empty;
-
-        [ObservableProperty]
-        private string? position = string.Empty;
-
-        private readonly Model.Model model = Model.Model.Instance;
-
-        public LocationModel? AffectedLocation { get; private set; }
-
-        public AddLocationViewModel(int? locationId = null)
+        if (locationId.HasValue)
         {
-            this.locationId = locationId;
+            var locationModel = model.DbAccess.GetLocationById(locationId.Value);
+            Name = locationModel.Name;
+            Description = locationModel.Description ?? string.Empty;
+            Position = locationModel.Position ?? string.Empty;
+        }
+    }
 
-            title = locationId.HasValue ? "Edit Location" : "Add Location";
+    [RelayCommand]
+    private void Save()
+    {
+        try
+        {
+            string? newDescription = string.IsNullOrEmpty(description) ? null : description;
+            string? newPosition = string.IsNullOrEmpty(position) ? null : position;
+
+            var location = new LocationModel()
+            {
+                Id = locationId ?? default,
+                Name = name,
+                Description = newDescription,
+                Position = newPosition
+            };
 
             if (locationId.HasValue)
             {
-                var locationModel = model.DbAccess.GetLocationById(locationId.Value);
-                Name = locationModel.Name;
-                Description = locationModel.Description ?? string.Empty;
-                Position = locationModel.Position ?? string.Empty;
+                model.DbAccess.UpdateLocation(location);
+                AffectedLocation = model.DbAccess.GetLocationById(location.Id);
             }
+            else
+            {
+                model.DbAccess.InsertLocation(location);
+                AffectedLocation = model.DbAccess.GetLocations().First(x => x.Name == location.Name);
+            }                
+
+            model.NotifyLocationsUpdated();
         }
-
-        [RelayCommand]
-        private void Save()
+        catch (DataValidationException e)
         {
-            try
-            {
-                string? newDescription = string.IsNullOrEmpty(description) ? null : description;
-                string? newPosition = string.IsNullOrEmpty(position) ? null : position;
-
-                var location = new LocationModel()
-                {
-                    Id = locationId ?? default,
-                    Name = name,
-                    Description = newDescription,
-                    Position = newPosition
-                };
-
-                if (locationId.HasValue)
-                {
-                    model.DbAccess.UpdateLocation(location);
-                    AffectedLocation = model.DbAccess.GetLocationById(location.Id);
-                }
-                else
-                {
-                    model.DbAccess.InsertLocation(location);
-                    AffectedLocation = model.DbAccess.GetLocations().First(x => x.Name == location.Name);
-                }                
-
-                model.NotifyLocationsUpdated();
-            }
-            catch (DataValidationException e)
-            {
-                Dialogs.ShowErrorDialog(e.Message);
-            }
+            Dialogs.ShowErrorDialog(e.Message);
         }
     }
 }
