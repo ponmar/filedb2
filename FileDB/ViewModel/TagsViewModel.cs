@@ -9,17 +9,7 @@ using FileDB.View;
 
 namespace FileDB.ViewModel;
 
-public class Tag
-{
-    public int Id { get; }
-    public string Name { get; }
-
-    public Tag(int id, string name)
-    {
-        Id = id;
-        Name = name;
-    }
-}
+public record Tag(int Id, string Name);
 
 public partial class TagsViewModel : ObservableObject
 {

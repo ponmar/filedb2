@@ -12,30 +12,7 @@ using FileDBInterface.Model;
 
 namespace FileDB.ViewModel;
 
-public class Person
-{
-    public int Id { get; }
-    public string Firstname { get; }
-    public string Lastname { get; }
-    public string? Description { get; }
-    public string? DateOfBirth { get; }
-    public string? Deceased { get; }
-    public int Age { get; }
-    public int? ProfileFileId { get; }
-    public Sex Sex { get; }
-
-    public Person(int id, string firstname, string lastname, string? description, string? dateOfBirth, string? deceased, int age, int? profileFileId, Sex sex)
-    {
-        Id = id;
-        Firstname = firstname;
-        Lastname = lastname;
-        Description = description;
-        DateOfBirth = dateOfBirth;
-        Deceased = deceased;
-        Age = age;
-        ProfileFileId = profileFileId;
-    }
-}
+public record Person(int Id, string Firstname, string Lastname, string? Description, string? DateOfBirth, string? Deceased, int Age, int? ProfileFileId, Sex Sex);
 
 public partial class PersonsViewModel : ObservableObject
 {

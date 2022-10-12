@@ -9,24 +9,7 @@ using FileDB.View;
 
 namespace FileDB.ViewModel;
 
-public class Location
-{
-    public int Id { get; }
-
-    public string Name { get; }
-
-    public string? Description { get; }
-
-    public string? Position { get; }
-
-    public Location(int id, string name, string? description, string? position)
-    {
-        Id = id;
-        Name = name;
-        Description = description;
-        Position = position;
-    }
-}
+public record Location(int Id, string Name, string? Description, string? Position);
 
 public partial class LocationsViewModel : ObservableObject
 {
