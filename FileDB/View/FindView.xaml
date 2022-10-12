@@ -96,7 +96,7 @@
 
             <!-- Bottom file info when maximized -->
             <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" HorizontalAlignment="Center" Visibility="{Binding Maximize, Converter={StaticResource BoolToVis}}">
-                <Border Style="{StaticResource MaximizedBorderGroup}" Margin="0 0 0 10" Padding="10" Visibility="{Binding CurrentFileDescription, Converter={converters:StringNullOrEmptyToVisibilityConverter}}">
+                <Border Style="{StaticResource MaximizedBorderGroup}" Margin="20 0 20 20" Padding="10" Visibility="{Binding CurrentFileDescription, Converter={converters:StringNullOrEmptyToVisibilityConverter}}">
                     <TextBlock Style="{StaticResource PageInnerSubHeading}" Text="{Binding CurrentFileDescription}" ToolTip="{Binding CurrentFileDescription}" TextWrapping="Wrap"/>
                 </Border>
             </StackPanel>
