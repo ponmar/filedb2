@@ -1,3 +1,8 @@
+2.21:
+* Show file description as a subtitle when in maximized mode
+* Exported files with meta-data shows file description as a subtitle
+* Fix that person sex did not show up at the update persons page
+
 2.20:
 * Remove XML search result exporter (the serializer could not handle C# records)
 
