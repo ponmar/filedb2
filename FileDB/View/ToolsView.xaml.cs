@@ -1,17 +1,16 @@
 ﻿using System.Windows.Controls;
 using FileDB.ViewModel;
 
-namespace FileDB.View
+namespace FileDB.View;
+
+/// <summary>
+/// Interaction logic for ToolsView.xaml
+/// </summary>
+public partial class ToolsView : UserControl
 {
-    /// <summary>
-    /// Interaction logic for ToolsView.xaml
-    /// </summary>
-    public partial class ToolsView : UserControl
+    public ToolsView()
     {
-        public ToolsView()
-        {
-            InitializeComponent();
-            DataContext = new ToolsViewModel();
-        }
+        InitializeComponent();
+        DataContext = new ToolsViewModel();
     }
 }

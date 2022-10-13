@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using FileDB.Sorters;
-using FileDB.ViewModel;
 using FileDBInterface.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

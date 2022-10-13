@@ -2,24 +2,23 @@
 using System.Windows.Media.Imaging;
 using FileDB.ViewModel;
 
-namespace FileDB.View
+namespace FileDB.View;
+
+/// <summary>
+/// Interaction logic for FindView.xaml
+/// </summary>
+public partial class FindView : UserControl, IImagePresenter
 {
-    /// <summary>
-    /// Interaction logic for FindView.xaml
-    /// </summary>
-    public partial class FindView : UserControl, IImagePresenter
+    public FindView()
     {
-        public FindView()
-        {
-            InitializeComponent();
+        InitializeComponent();
 
-            Model.Model.Instance.ImagePresenter = this;
-            DataContext = FindViewModel.Instance;
-        }
+        Model.Model.Instance.ImagePresenter = this;
+        DataContext = FindViewModel.Instance;
+    }
 
-        public void ShowImage(BitmapImage? image)
-        {
-            CurrentFileImage.Source = image;
-        }
+    public void ShowImage(BitmapImage? image)
+    {
+        CurrentFileImage.Source = image;
     }
 }

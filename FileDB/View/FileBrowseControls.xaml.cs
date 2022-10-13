@@ -1,17 +1,16 @@
 ﻿using FileDB.ViewModel;
 using System.Windows.Controls;
 
-namespace FileDB.View
+namespace FileDB.View;
+
+/// <summary>
+/// Interaction logic for FileBrowseControls.xaml
+/// </summary>
+public partial class FileBrowseControls : UserControl
 {
-    /// <summary>
-    /// Interaction logic for FileBrowseControls.xaml
-    /// </summary>
-    public partial class FileBrowseControls : UserControl
+    public FileBrowseControls()
     {
-        public FileBrowseControls()
-        {
-            InitializeComponent();
-            DataContext = FindViewModel.Instance;
-        }
+        InitializeComponent();
+        DataContext = FindViewModel.Instance;
     }
 }

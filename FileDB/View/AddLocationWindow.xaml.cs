@@ -1,17 +1,16 @@
 ﻿using System.Windows;
 using FileDB.ViewModel;
 
-namespace FileDB.View
+namespace FileDB.View;
+
+/// <summary>
+/// Interaction logic for AddLocationWindow.xaml
+/// </summary>
+public partial class AddLocationWindow : Window
 {
-    /// <summary>
-    /// Interaction logic for AddLocationWindow.xaml
-    /// </summary>
-    public partial class AddLocationWindow : Window
+    public AddLocationWindow(int? locationId = null)
     {
-        public AddLocationWindow(int? locationId = null)
-        {
-            InitializeComponent();
-            DataContext = new AddLocationViewModel(locationId);
-        }
+        InitializeComponent();
+        DataContext = new AddLocationViewModel(locationId);
     }
 }

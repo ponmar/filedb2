@@ -1,17 +1,16 @@
 ﻿using FileDB.ViewModel;
 using System.Windows.Controls;
 
-namespace FileDB.View
+namespace FileDB.View;
+
+/// <summary>
+/// Interaction logic for FileCategorization.xaml
+/// </summary>
+public partial class FileCategorization : UserControl
 {
-    /// <summary>
-    /// Interaction logic for FileCategorization.xaml
-    /// </summary>
-    public partial class FileCategorization : UserControl
+    public FileCategorization()
     {
-        public FileCategorization()
-        {
-            InitializeComponent();
-            DataContext = FindViewModel.Instance;
-        }
+        InitializeComponent();
+        DataContext = FindViewModel.Instance;
     }
 }

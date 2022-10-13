@@ -1,5 +1,4 @@
-﻿using System;
-using FileDB.Comparers;
+﻿using FileDB.Comparers;
 using FileDBInterface.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

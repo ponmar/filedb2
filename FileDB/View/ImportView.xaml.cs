@@ -1,43 +1,41 @@
-﻿using System.Collections.Generic;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using FileDB.ViewModel;
 
-namespace FileDB.View
+namespace FileDB.View;
+
+/// <summary>
+/// Interaction logic for ImportView.xaml
+/// </summary>
+public partial class ImportView : UserControl
 {
-    /// <summary>
-    /// Interaction logic for ImportView.xaml
-    /// </summary>
-    public partial class ImportView : UserControl
+    public ImportView()
     {
-        public ImportView()
+        InitializeComponent();
+        DataContext = new ImportViewModel();
+    }
+
+    private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        foreach (var addedItem in e.AddedItems)
         {
-            InitializeComponent();
-            DataContext = new ImportViewModel();
+            (addedItem as NewFile)!.IsSelected = true;
         }
 
-        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        foreach (var addedItem in e.RemovedItems)
         {
-            foreach (var addedItem in e.AddedItems)
-            {
-                (addedItem as NewFile)!.IsSelected = true;
-            }
-
-            foreach (var addedItem in e.RemovedItems)
-            {
-                (addedItem as NewFile)!.IsSelected = false;
-            }
-
-            (DataContext as ImportViewModel)!.SelectionChanged();
+            (addedItem as NewFile)!.IsSelected = false;
         }
 
-        private void SelectAll_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            NewFilesListView.SelectAll();
-        }
+        (DataContext as ImportViewModel)!.SelectionChanged();
+    }
 
-        private void DeselectAllButton_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            NewFilesListView.SelectedItems.Clear();
-        }
+    private void SelectAll_Click(object sender, System.Windows.RoutedEventArgs e)
+    {
+        NewFilesListView.SelectAll();
+    }
+
+    private void DeselectAllButton_Click(object sender, System.Windows.RoutedEventArgs e)
+    {
+        NewFilesListView.SelectedItems.Clear();
     }
 }

@@ -1,17 +1,16 @@
 ﻿using System.Windows.Controls;
 using FileDB.ViewModel;
 
-namespace FileDB.View
+namespace FileDB.View;
+
+/// <summary>
+/// Interaction logic for ToolsView.xaml
+/// </summary>
+public partial class NotificationsView : UserControl
 {
-    /// <summary>
-    /// Interaction logic for ToolsView.xaml
-    /// </summary>
-    public partial class NotificationsView : UserControl
+    public NotificationsView()
     {
-        public NotificationsView()
-        {
-            InitializeComponent();
-            DataContext = new NotificationsViewModel();
-        }
+        InitializeComponent();
+        DataContext = new NotificationsViewModel();
     }
 }

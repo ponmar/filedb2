@@ -1,17 +1,16 @@
 ﻿using FileDB.ViewModel;
 using System.Windows.Controls;
 
-namespace FileDB.View
+namespace FileDB.View;
+
+/// <summary>
+/// Interaction logic for SearchCriteria.xaml
+/// </summary>
+public partial class SearchCriteria : UserControl
 {
-    /// <summary>
-    /// Interaction logic for SearchCriteria.xaml
-    /// </summary>
-    public partial class SearchCriteria : UserControl
+    public SearchCriteria()
     {
-        public SearchCriteria()
-        {
-            InitializeComponent();
-            DataContext = FindViewModel.Instance;
-        }
+        InitializeComponent();
+        DataContext = FindViewModel.Instance;
     }
 }
