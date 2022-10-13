@@ -202,6 +202,46 @@ public partial class FindViewModel : ObservableObject
     private string exportFilesHeader = $"{Utils.ApplicationName} Export";
 
     [ObservableProperty]
+    private bool exportIncludesFiles = true;
+
+    partial void OnExportIncludesFilesChanged(bool value)
+    {
+        if (!value)
+        {
+            ExportIncludesHtml = false;
+            ExportIncludesM3u = false;
+        }
+    }
+
+    [ObservableProperty]
+    private bool exportIncludesHtml = true;
+
+    partial void OnExportIncludesHtmlChanged(bool value)
+    {
+        if (value)
+        {
+            ExportIncludesFiles = true;
+        }
+    }
+
+    [ObservableProperty]
+    private bool exportIncludesM3u = true;
+
+    partial void OnExportIncludesM3uChanged(bool value)
+    {
+        if (value)
+        {
+            ExportIncludesFiles = true;
+        }
+    }
+
+    [ObservableProperty]
+    private bool exportIncludesFilesWithMetaData = true;
+
+    [ObservableProperty]
+    private bool exportIncludesJson = true;
+
+    [ObservableProperty]
     private string? newFileDescription;
 
     [ObservableProperty]
@@ -1061,12 +1101,19 @@ public partial class FindViewModel : ObservableObject
             return;
         }
 
-        if (Dialogs.ShowConfirmDialog($"Export {SearchResult!.Count} files to {ExportFilesDestinationDirectory}?"))
+        var selection = new List<bool>() { ExportIncludesFiles, ExportIncludesHtml, ExportIncludesM3u, ExportIncludesFilesWithMetaData, ExportIncludesJson };
+        if (!selection.Any(x => x))
         {
-            var exporter = new SearchResultExporter(ExportFilesDestinationDirectory, ExportFilesHeader);
+            Dialogs.ShowErrorDialog("Nothing to export");
+            return;
+        }
+
+        if (Dialogs.ShowConfirmDialog($"Export selected data for {SearchResult!.Count} files to {ExportFilesDestinationDirectory}?"))
+        {
             try
             {
-                exporter.Export(SearchResult.Files);
+                new SearchResultExporter().Export(ExportFilesDestinationDirectory, ExportFilesHeader, SearchResult.Files,
+                    ExportIncludesFiles, ExportIncludesHtml, ExportIncludesM3u, ExportIncludesFilesWithMetaData, ExportIncludesJson);
             }
             catch (IOException e)
             {

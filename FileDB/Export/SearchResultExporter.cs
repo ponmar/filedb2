@@ -8,31 +8,41 @@ namespace FileDB.Export;
 
 public class SearchResultExporter
 {
-    private readonly string destinationDirectory;
-    private readonly string header;
-
-    public SearchResultExporter(string destinationDirectory, string header)
+    public void Export(string destinationDirectory, string header, List<FilesModel> files, bool exportIncludesFiles, bool exportIncludesHtml, bool exportIncludesM3u, bool exportIncludesFilesWithMetaData, bool exportIncludesJson)
     {
-        this.destinationDirectory = destinationDirectory;
-        this.header = header;
-    }
-
-    public void Export(List<FilesModel> files)
-    {
-        var data = GetExportedData(files);
+        var data = GetExportedData(files, header);
 
         var jsonPath = Path.Combine(destinationDirectory, "data.json");
         var htmlPath = Path.Combine(destinationDirectory, "index.html");
         var m3uPath = Path.Combine(destinationDirectory, "playlist.m3u");
 
-        new SearchResultFilesExporter().Export(data, destinationDirectory);
-        new SearchResultFilesWithOverlayExporter(DescriptionPlacement.Subtitle).Export(data, destinationDirectory);
-        new SearchResultJsonExporter().Export(data, jsonPath);
-        new SearchResultM3uExporter().Export(data, m3uPath);
-        new SearchResultHtmlExporter().Export(data, htmlPath);
+        if (exportIncludesFiles)
+        {
+            new SearchResultFilesExporter().Export(data, destinationDirectory);
+        }
+
+        if (exportIncludesFilesWithMetaData)
+        {
+            new SearchResultFilesWithOverlayExporter(DescriptionPlacement.Subtitle).Export(data, destinationDirectory);
+        }
+
+        if (exportIncludesJson)
+        {
+            new SearchResultJsonExporter().Export(data, jsonPath);
+        }
+
+        if (exportIncludesM3u)
+        {
+            new SearchResultM3uExporter().Export(data, m3uPath);
+        }
+
+        if (exportIncludesHtml)
+        {
+            new SearchResultHtmlExporter().Export(data, htmlPath);
+        }
     }
 
-    private SearchResultFileFormat GetExportedData(List<FilesModel> files)
+    private SearchResultFileFormat GetExportedData(List<FilesModel> files, string header)
     {
         var model = Model.Model.Instance;
 
