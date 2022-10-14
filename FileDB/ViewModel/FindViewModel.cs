@@ -46,7 +46,8 @@ public class Folder : IFolder
 
 public interface IImagePresenter
 {
-    void ShowImage(BitmapImage? image);
+    void ShowImage(BitmapImage image, double rotateDegrees);
+    void CloseImage();
 }
 
 public record PersonToUpdate(int Id, string Name);
@@ -377,6 +378,9 @@ public partial class FindViewModel : ObservableObject
 
     [ObservableProperty]
     private string currentFileLoadError = string.Empty;
+
+    [ObservableProperty]
+    private int currentFileRotation = 0;
 
     #endregion
 
@@ -1127,7 +1131,7 @@ public partial class FindViewModel : ObservableObject
         return !Directory.EnumerateFileSystemEntries(path).Any();
     }
 
-    private void LoadFile(int index)
+    private void LoadFile(int index, int rotateDegrees = 0)
     {
         if (SearchResult != null &&
             index >= 0 && index < SearchResult.Count)
@@ -1147,6 +1151,7 @@ public partial class FindViewModel : ObservableObject
             CurrentFileLocations = GetFileLocationsString(selection.Id);
             CurrentFileTags = GetFileTagsString(selection.Id);
             CurrentFileHeader = CurrentFileDateTime != string.Empty ? CurrentFileDateTime : selection.Path;
+            CurrentFileRotation = rotateDegrees; // TODO: set from meta-data when available
 
             NewFileDescription = CurrentFileDescription;
             NewFileDateTime = selection.Datetime;
@@ -1155,24 +1160,24 @@ public partial class FindViewModel : ObservableObject
             try
             {
                 CurrentFileLoadError = string.Empty;
-                model.ImagePresenter!.ShowImage(new BitmapImage(uri));
+                model.ImagePresenter!.ShowImage(new BitmapImage(uri), currentFileRotation);
 
                 model.FileLoaded(selection);
             }
             catch (WebException e)
             {
                 CurrentFileLoadError = $"Image loading error: {e.Message}";
-                model.ImagePresenter!.ShowImage(null);
+                model.ImagePresenter!.CloseImage();
             }
             catch (IOException e)
             {
                 CurrentFileLoadError = $"Image loading error: {e.Message}";
-                model.ImagePresenter!.ShowImage(null);
+                model.ImagePresenter!.CloseImage();
             }
             catch (NotSupportedException e)
             {
                 CurrentFileLoadError = $"File format not supported: {e.Message}";
-                model.ImagePresenter!.ShowImage(null);
+                model.ImagePresenter!.CloseImage();
             }
         }
     }
@@ -1192,12 +1197,13 @@ public partial class FindViewModel : ObservableObject
         CurrentFilePersons = string.Empty;
         CurrentFileLocations = string.Empty;
         CurrentFileTags = string.Empty;
+        CurrentFileRotation = 0;
 
         NewFileDescription = string.Empty;
         NewFileDateTime = string.Empty;
 
         CurrentFileLoadError = "No match";
-        model.ImagePresenter!.ShowImage(null);
+        model.ImagePresenter!.CloseImage();
     }
 
     private string GetFileDateTimeString(string? datetimeString)
@@ -1517,6 +1523,36 @@ public partial class FindViewModel : ObservableObject
         catch (DataValidationException e)
         {
             Dialogs.ShowErrorDialog(e.Message);
+        }
+    }
+
+    [RelayCommand]
+    private void RotateFileClockwise()
+    {
+        RotateFile(90);
+    }
+
+    [RelayCommand]
+    private void RotateFileCounterClockwise()
+    {
+        RotateFile(-90);
+    }
+
+    private void RotateFile(int degrees)
+    {
+        if (SearchResultIndex != -1)
+        {
+            var newRotation = CurrentFileRotation + degrees;
+            if (newRotation >= 360)
+            {
+                newRotation -= 360;
+            }
+            else if (newRotation < 0)
+            {
+                newRotation += 360;
+            }
+            // TODO: store new rotation in database when possible
+            LoadFile(SearchResultIndex, newRotation);
         }
     }
 

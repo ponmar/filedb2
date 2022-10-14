@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using FileDB.ViewModel;
 
@@ -17,8 +18,19 @@ public partial class FindView : UserControl, IImagePresenter
         DataContext = FindViewModel.Instance;
     }
 
-    public void ShowImage(BitmapImage? image)
+    public void ShowImage(BitmapImage image, double rotateDegrees)
     {
-        CurrentFileImage.Source = image;
+        var transformBmp = new TransformedBitmap();
+        transformBmp.BeginInit();
+        transformBmp.Source = image;
+        transformBmp.Transform = new RotateTransform(rotateDegrees);
+        transformBmp.EndInit();
+
+        CurrentFileImage.Source = transformBmp;
+    }
+
+    public void CloseImage()
+    {
+        CurrentFileImage.Source = null;
     }
 }
