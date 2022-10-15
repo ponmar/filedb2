@@ -1601,6 +1601,7 @@ public partial class FindViewModel : ObservableObject
                 var updatedFile = model.DbAccess.GetFileById(selection.Id)!;
                 selection.Datetime = updatedFile.Datetime;
                 selection.Position = updatedFile.Position;
+                selection.Orientation = updatedFile.Orientation;
                 LoadFile(SearchResultIndex);
             }
         }
