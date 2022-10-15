@@ -1,3 +1,10 @@
+3.0:
+* Database format updated to include file orientation
+  !!! Use Python script UpgradeDatabase.py to upgrade your database before starting FileDB !!!
+* Add buttons for rotating a file
+* Remove build workaround for keeping an older .NET version now that the source generator bug has been fixed
+* Checkboxes for selecting what to export for a search result. Improved checkbox style.
+
 2.21:
 * Show file description as a subtitle when in maximized mode
 * Exported files with meta-data shows file description as a subtitle
