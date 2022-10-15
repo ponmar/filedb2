@@ -19,6 +19,7 @@ using FileDB.Export;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDBInterface.Validators;
+using FileDBInterface.FilesystemAccess;
 
 namespace FileDB.ViewModel;
 
@@ -1572,6 +1573,22 @@ public partial class FindViewModel : ObservableObject
     }
 
     [RelayCommand]
+    private void UpdateFileOrientationFromMetaData()
+    {
+        if (SearchResultIndex != -1)
+        {
+            if (Dialogs.ShowConfirmDialog("Reload orientation from file meta-data?"))
+            {
+                var selection = SearchResult!.Files[SearchResultIndex];
+                var fileMetadata = model.FilesystemAccess.ParseFileMetadata(model.FilesystemAccess.ToAbsolutePath(selection.Path));
+                model.DbAccess.UpdateFileOrientation(selection.Id, fileMetadata.Orientation);
+                selection.Orientation = fileMetadata.Orientation;
+                LoadFile(SearchResultIndex);
+            }
+        }
+    }
+
+    [RelayCommand]
     private void UpdateFileFromMetaData()
     {
         if (SearchResultIndex != -1)
@@ -1579,10 +1596,9 @@ public partial class FindViewModel : ObservableObject
             if (Dialogs.ShowConfirmDialog("Reload date and GPS position from file meta-data?"))
             {
                 var selection = SearchResult!.Files[SearchResultIndex];
-                var fileId = selection.Id;
                 model.DbAccess.UpdateFileFromMetaData(selection.Id, model.FilesystemAccess);
 
-                var updatedFile = model.DbAccess.GetFileById(fileId)!;
+                var updatedFile = model.DbAccess.GetFileById(selection.Id)!;
                 selection.Datetime = updatedFile.Datetime;
                 selection.Position = updatedFile.Position;
                 LoadFile(SearchResultIndex);

@@ -3,7 +3,8 @@
   !!! Use Python script UpgradeDatabase.py to upgrade your database before starting FileDB !!!
 * Read orientation from file Exif data when adding files and when reloading file Exif data
 * Add buttons for rotating a file (it does not affect the file itself)
-* Checkboxes for selecting what to export for a search result. Improved checkbox style.
+* Add button for reloading file orientation from Exif data
+* Add checkboxes for selecting what to export for a search result. Improved checkbox style.
 * Remove build workaround for keeping an older .NET SDK version now that the source generator bug has been fixed
 
 2.21:
