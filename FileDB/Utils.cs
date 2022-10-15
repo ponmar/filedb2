@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using FileDB.Configuration;
 using FileDB.Extensions;
 using FileDB.Sorters;
@@ -26,6 +28,13 @@ public class WindowModeDescription
 public static class Utils
 {
     public const string ApplicationName = "FileDB";
+
+    public static void SetInvariantCulture()
+    {
+        CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
+        Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+        Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
+    }
 
     public static void OpenUriInBrowser(string uri)
     {
@@ -115,6 +124,12 @@ public static class Utils
 
         var age = DatabaseUtils.GetYearsAgo(fileDatetime.Value, personDateOfBirth.Value);
         return $" ({age})";
+    }
+
+    public static string CreateShortFilePositionString(string filePosition)
+    {
+        (var lat, var lon) = DatabaseParsing.ParseFilesPosition(filePosition)!.Value;
+        return $"{lat:0.000}... {lon:0.000}...";
     }
 
     public static string? CreatePositionLink(string? position, string? locationLinkConfig)

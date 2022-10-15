@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-using System.Linq;
-using System.Threading;
+﻿using System.Linq;
 using System.Windows;
 using FileDB.Configuration;
 using FileDB.Notifiers;
@@ -16,9 +14,7 @@ namespace FileDB
     {
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
-            Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
-            Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
+            Utils.SetInvariantCulture();
 
             bool demoModeEnabled = e.Args.Any(x => x == "--demo");
 

@@ -47,9 +47,18 @@ namespace FileDBTests
             var result = Utils.CreateFileIds("1;3;2");
 
             Assert.AreEqual(3, result.Count);
-            Assert.AreEqual(result[0], 1);
-            Assert.AreEqual(result[1], 3);
-            Assert.AreEqual(result[2], 2);
+            Assert.AreEqual(1, result[0]);
+            Assert.AreEqual(3, result[1]);
+            Assert.AreEqual(2, result[2]);
+        }
+
+        [TestMethod]
+        public void CreateShortFilePositionString()
+        {
+            Utils.SetInvariantCulture();
+
+            var result = Utils.CreateShortFilePositionString("50.123456789 49.987654321");
+            Assert.AreEqual("50.123... 49.988...", result);
         }
 
         [TestMethod]

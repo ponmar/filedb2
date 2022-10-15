@@ -1148,7 +1148,7 @@ public partial class FindViewModel : ObservableObject
             CurrentFilePath = model.FilesystemAccess.ToAbsolutePath(selection.Path);
             CurrentFileDescription = selection.Description ?? string.Empty;
             CurrentFileDateTime = GetFileDateTimeString(selection.Datetime);
-            CurrentFilePosition = selection.Position ?? string.Empty;
+            CurrentFilePosition = selection.Position != null ? Utils.CreateShortFilePositionString(selection.Position) : string.Empty;
             CurrentFilePositionLink = selection.Position != null ? Utils.CreatePositionUri(selection.Position, model.Config.LocationLink) : null;
             CurrentFilePersons = GetFilePersonsString(selection);
             CurrentFileLocations = GetFileLocationsString(selection.Id);
