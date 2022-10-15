@@ -88,6 +88,7 @@ public class SearchResultExporter
                 file.Description,
                 file.Datetime,
                 file.Position,
+                file.Orientation,
                 filePersons.Select(x => x.Id).ToList(),
                 fileLocations.Select(x => x.Id).ToList(),
                 fileTags.Select(x => x.Id).ToList()));

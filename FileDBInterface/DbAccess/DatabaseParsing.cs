@@ -123,5 +123,29 @@ namespace FileDBInterface.DbAccess
         {
             return $"{lat.ToString(CultureInfo.InvariantCulture)} {lon.ToString(CultureInfo.InvariantCulture)}";
         }
+
+        public static int OrientationToDegrees(int? orientation)
+        {
+            return orientation switch
+            {
+                1 => 0,
+                8 => 90,
+                3 => 180,
+                6 => 270,
+                _ => 0,
+            };
+        }
+
+        public static int DegreesToOrientation(int degrees)
+        {
+            return degrees switch
+            {
+                0 => 1,
+                90 => 8,
+                180 => 3,
+                270 => 6,
+                _ => 0,
+            };
+        }
     }
 }

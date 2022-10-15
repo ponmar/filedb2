@@ -80,6 +80,32 @@ namespace FileDBInterfaceTests.Validators
             result.ShouldNotHaveValidationErrorFor(x => x.Datetime);
         }
 
+        [DataTestMethod]
+        [DataRow(null, true)]
+        [DataRow(0, false)]
+        [DataRow(1, true)]
+        [DataRow(2, true)]
+        [DataRow(3, true)]
+        [DataRow(4, true)]
+        [DataRow(5, true)]
+        [DataRow(6, true)]
+        [DataRow(7, true)]
+        [DataRow(8, true)]
+        [DataRow(9, false)]
+        public void Validate_Orientation(int? orientation, bool isValid)
+        {
+            var model = new FilesModel() { Id = -1, Path = "my/path/file.jpg", Description = string.Empty, Datetime = "2010-03-05", Position = "15.1 64.10", Orientation = orientation };
+            var result = validator.TestValidate(model);
+            if (isValid)
+            {
+                result.ShouldNotHaveValidationErrorFor(x => x.Orientation);
+            }
+            else
+            {
+                result.ShouldHaveValidationErrorFor(x => x.Orientation);
+            }
+        }
+
         [TestMethod]
         public void Validate_DatetimeIsEmpty()
         {

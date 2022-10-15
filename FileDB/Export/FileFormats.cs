@@ -11,6 +11,7 @@ public record ExportedFile(
     string? Description,
     string? Datetime,
     string? Position,
+    int ? Orientation,
     List<int> PersonIds,
     List<int> LocationIds,
     List<int> TagIds);

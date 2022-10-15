@@ -9,5 +9,6 @@
         public string? Description { get; set; }
         public string? Datetime { get; set; } // Format: YYYY, YYYY-MM-DD or YYYY-MM-DDTHH:MM:SS
         public string? Position { get; set; } // Format: <latitude> <longitude>
+        public int? Orientation { get; set; } // Format: null (no orientation set), 1-8 according to Exif
     }
 }

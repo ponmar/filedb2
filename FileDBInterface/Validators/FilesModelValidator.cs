@@ -21,6 +21,9 @@ namespace FileDBInterface.Validators
             RuleFor(x => x.Datetime)
                 .Must(ValidateDatetime).WithMessage("{PropertyName} invalid");
 
+            RuleFor(x => x.Orientation)
+                .Must(ValidateOrientation).WithMessage("{PropertyName} invalid");
+
             When(x => x.Position != null, () =>
             {
                 RuleFor(x => x.Position)
@@ -42,6 +45,11 @@ namespace FileDBInterface.Validators
         public static bool ValidateDatetime(string? datetime)
         {
             return datetime == null || DatabaseParsing.ParseFilesDatetime(datetime) != null;
+        }
+
+        public static bool ValidateOrientation(int? orientation)
+        {
+            return orientation == null || (orientation >= 1 && orientation <= 8);
         }
     }
 }

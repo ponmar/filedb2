@@ -104,6 +104,10 @@ public class NoDbAccess : IDbAccess
     {
     }
 
+    public void UpdateFileOrientation(int id, int? orientation)
+    {
+    }
+
     public void DeleteFile(int id)
     {
     }

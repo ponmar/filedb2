@@ -129,5 +129,34 @@ namespace FileDBInterfaceTests.DbAccess
         {
             Assert.AreEqual("34.123 75.321", DatabaseParsing.ToFilesPosition(34.123, 75.321));
         }
+
+        [DataTestMethod]
+        [DataRow(-72, 0)]
+        [DataRow(0, 1)]
+        [DataRow(90, 8)]
+        [DataRow(180, 3)]
+        [DataRow(270, 6)]
+        [DataRow(561, 0)]
+        public void DegreesToOrientation(int degrees, int orientation)
+        {
+            Assert.AreEqual(orientation, DatabaseParsing.DegreesToOrientation(degrees));
+        }
+
+        [DataTestMethod]
+        [DataRow(null, 0)]
+        [DataRow(0, 0)]
+        [DataRow(1, 0)]
+        [DataRow(2, 0)]
+        [DataRow(3, 180)]
+        [DataRow(4, 0)]
+        [DataRow(5, 0)]
+        [DataRow(6, 270)]
+        [DataRow(7, 0)]
+        [DataRow(8, 90)]
+        [DataRow(9, 0)]
+        public void OrientationToDegrees(int? orientation, int degrees)
+        {
+            Assert.AreEqual(degrees, DatabaseParsing.OrientationToDegrees(orientation));
+        }
     }
 }

@@ -12,6 +12,7 @@ using log4net.Config;
 using FileDBInterface.Exceptions;
 using FileDBInterface.Validators;
 using FileDBInterface.FilesystemAccess;
+using static log4net.Appender.RollingFileAppender;
 
 namespace FileDBInterface.DbAccess.SQLite
 {
@@ -254,6 +255,25 @@ namespace FileDBInterface.DbAccess.SQLite
                 using var connection = DatabaseUtils.CreateConnection(database);
                 var sql = "update [files] set Datetime = @datetime where Id = @id";
                 connection.Execute(sql, new { datetime, id });
+            }
+            catch (SQLiteException e)
+            {
+                throw new DatabaseWrapperException("SQL error", e);
+            }
+        }
+
+        public void UpdateFileOrientation(int id, int? orientation)
+        {
+            if (!FilesModelValidator.ValidateOrientation(orientation))
+            {
+                throw new DataValidationException("Invalid orientation");
+            }
+
+            try
+            {
+                using var connection = DatabaseUtils.CreateConnection(database);
+                var sql = "update [files] set Orientation = @orientation where Id = @id";
+                connection.Execute(sql, new { orientation, id });
             }
             catch (SQLiteException e)
             {

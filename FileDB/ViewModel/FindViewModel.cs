@@ -22,6 +22,8 @@ using FileDBInterface.Validators;
 
 namespace FileDB.ViewModel;
 
+public enum RotationDirection { Clockwise, CounterClockwise };
+
 public interface IFolder
 {
     string Name { get; }
@@ -1131,7 +1133,7 @@ public partial class FindViewModel : ObservableObject
         return !Directory.EnumerateFileSystemEntries(path).Any();
     }
 
-    private void LoadFile(int index, int rotateDegrees = 0)
+    private void LoadFile(int index)
     {
         if (SearchResult != null &&
             index >= 0 && index < SearchResult.Count)
@@ -1151,7 +1153,7 @@ public partial class FindViewModel : ObservableObject
             CurrentFileLocations = GetFileLocationsString(selection.Id);
             CurrentFileTags = GetFileTagsString(selection.Id);
             CurrentFileHeader = CurrentFileDateTime != string.Empty ? CurrentFileDateTime : selection.Path;
-            CurrentFileRotation = rotateDegrees; // TODO: set from meta-data when available
+            CurrentFileRotation = DatabaseParsing.OrientationToDegrees(selection.Orientation);
 
             NewFileDescription = CurrentFileDescription;
             NewFileDateTime = selection.Datetime;
@@ -1529,30 +1531,43 @@ public partial class FindViewModel : ObservableObject
     [RelayCommand]
     private void RotateFileClockwise()
     {
-        RotateFile(90);
+        RotateFile(RotationDirection.Clockwise);
     }
 
     [RelayCommand]
     private void RotateFileCounterClockwise()
     {
-        RotateFile(-90);
+        RotateFile(RotationDirection.CounterClockwise);
     }
 
-    private void RotateFile(int degrees)
+    private void RotateFile(RotationDirection direction)
     {
         if (SearchResultIndex != -1)
         {
-            var newRotation = CurrentFileRotation + degrees;
-            if (newRotation >= 360)
+            int newDegrees = CurrentFileRotation;
+            if (direction == RotationDirection.Clockwise)
             {
-                newRotation -= 360;
+                newDegrees += 90;
+                if (newDegrees > 270)
+                {
+                    newDegrees = 0;
+                }
             }
-            else if (newRotation < 0)
+            else if (direction == RotationDirection.CounterClockwise)
             {
-                newRotation += 360;
+                newDegrees -= 90;
+                if (newDegrees < 0)
+                {
+                    newDegrees = 270;
+                }
             }
-            // TODO: store new rotation in database when possible
-            LoadFile(SearchResultIndex, newRotation);
+
+            var selection = SearchResult!.Files[SearchResultIndex];
+            var newOrientation = DatabaseParsing.DegreesToOrientation(newDegrees);
+            model.DbAccess.UpdateFileOrientation(selection.Id, newOrientation);
+            selection.Orientation = newOrientation;
+
+            LoadFile(SearchResultIndex);
         }
     }
 
