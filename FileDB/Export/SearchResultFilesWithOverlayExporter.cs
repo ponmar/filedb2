@@ -42,6 +42,35 @@ public class SearchResultFilesWithOverlayExporter : ISearchResultExporter
             var bitmap = LoadBitmap(file);
             if (bitmap != null)
             {
+                // TODO: read orientation from file of no meta-data in db?
+                if (file.Orientation != null)
+                {
+                    // TODO: add support for flipped values
+                    switch (file.Orientation)
+                    {
+                        case 1:
+                            // Do nothing
+                            break;
+                        case 2:
+                            break;
+                        case 3:
+                            bitmap.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                            break;
+                        case 4:
+                            break;
+                        case 5:
+                            break;
+                        case 6:
+                            bitmap.RotateFlip(RotateFlipType.Rotate270FlipNone);
+                            break;
+                        case 7:
+                            break;
+                        case 8:
+                            bitmap.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                            break;
+                    }
+                }
+
                 var textLines = CreateTextLines(data, file);
                 var subtitleLines = CreateSubtitleTextLines(file);
                 AddTextToImage(textLines, subtitleLines, bitmap);
