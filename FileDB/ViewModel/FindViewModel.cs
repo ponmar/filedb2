@@ -1288,10 +1288,6 @@ public partial class FindViewModel : ObservableObject
             AddUpdateHistoryItem(UpdateHistoryType.TogglePerson, person.Id, person.Name);
             prevEditedFileId = fileId;
         }
-        else
-        {
-            Dialogs.ShowErrorDialog("This person has already been added");
-        }
     }
 
     [RelayCommand]
@@ -1344,10 +1340,6 @@ public partial class FindViewModel : ObservableObject
             AddUpdateHistoryItem(UpdateHistoryType.ToggleLocation, location.Id, location.Name);
             prevEditedFileId = fileId;
         }
-        else
-        {
-            Dialogs.ShowErrorDialog("This location has already been added");
-        }
     }
 
     [RelayCommand]
@@ -1399,10 +1391,6 @@ public partial class FindViewModel : ObservableObject
             LoadFile(SearchResultIndex);
             AddUpdateHistoryItem(UpdateHistoryType.ToggleTag, tag.Id, tag.Name);
             prevEditedFileId = fileId;
-        }
-        else
-        {
-            Dialogs.ShowErrorDialog("This tag has already been added");
         }
     }
 
