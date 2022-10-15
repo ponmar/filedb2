@@ -7,6 +7,7 @@ using FileDBInterface.Model;
 using log4net;
 using MetadataExtractor;
 using MetadataExtractor.Formats.Exif;
+using MetadataExtractor.Formats.Iptc;
 
 namespace FileDBInterface.FilesystemAccess
 {
@@ -125,10 +126,11 @@ namespace FileDBInterface.FilesystemAccess
         {
             string? datetime = null;
             string? position = null;
+            int? orientation = null;
 
             if (FileTypeSupportsExif(path))
             {
-                ParseFileExif(path, out var dateTaken, out var location);
+                ParseFileExif(path, out var dateTaken, out var location, out orientation);
 
                 if (dateTaken != null)
                 {
@@ -146,7 +148,7 @@ namespace FileDBInterface.FilesystemAccess
                 datetime = DatabaseParsing.PathToFilesDatetime(path);
             }
 
-            return new FileMetadata(path, datetime, position);
+            return new FileMetadata(path, datetime, position, orientation);
         }
 
         private bool FileTypeSupportsExif(string path)
@@ -159,10 +161,11 @@ namespace FileDBInterface.FilesystemAccess
             };
         }
 
-        private void ParseFileExif(string path, out DateTime? dateTaken, out GeoLocation? location)
+        private void ParseFileExif(string path, out DateTime? dateTaken, out GeoLocation? location, out int? orientation)
         {
             dateTaken = null;
             location = null;
+            orientation = null;
 
             try
             {
@@ -171,8 +174,15 @@ namespace FileDBInterface.FilesystemAccess
                 var subIfdDirectory = directories.OfType<ExifSubIfdDirectory>().FirstOrDefault();
                 dateTaken = subIfdDirectory?.GetDateTime(ExifDirectoryBase.TagDateTimeOriginal);
 
-                var gps = directories.OfType<GpsDirectory>().FirstOrDefault();
-                location = gps?.GetGeoLocation();
+                var gpsDir = directories.OfType<GpsDirectory>().FirstOrDefault();
+                location = gpsDir?.GetGeoLocation();
+
+                if (TryGetOrientationTag(directories, out var orientationTagValue) &&
+                    int.TryParse(orientationTagValue, out var orientationFromFile) &&
+                    orientationFromFile >= 1 && orientationFromFile <= 8)
+                {
+                    orientation = orientationFromFile;
+                }
             }
             catch (IOException)
             {
@@ -183,6 +193,41 @@ namespace FileDBInterface.FilesystemAccess
             catch (MetadataException)
             {
             }
+        }
+
+        private static bool TryGetOrientationTag(IEnumerable<MetadataExtractor.Directory> directories, out string? orientationTag)
+        {
+            orientationTag = null;
+
+            foreach (var directory in directories)
+            {
+                switch (directory)
+                {
+                    case ExifDirectoryBase e:
+                        foreach (var tag in e.Tags)
+                        {
+                            if (tag.Type is not ExifDirectoryBase.TagOrientation || tag.Description is null)
+                                continue;
+
+                            orientationTag = tag.Description;
+                            return true;
+                        }
+                        break;
+
+                    case IptcDirectory i:
+                        foreach (var tag in i.Tags)
+                        {
+                            if (tag.Type is not IptcDirectory.TagImageOrientation || tag.Description is null)
+                                continue;
+
+                            orientationTag = tag.Description;
+                            return true;
+                        }
+                        break;
+                }
+            }
+
+            return false;
         }
     }
 }

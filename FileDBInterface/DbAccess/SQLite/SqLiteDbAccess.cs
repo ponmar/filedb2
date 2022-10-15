@@ -197,8 +197,8 @@ namespace FileDBInterface.DbAccess.SQLite
             try
             {
                 using var connection = DatabaseUtils.CreateConnection(database);
-                var files = new FilesModel() { Path = internalPath, Description = description, Datetime = fileMetadata.Datetime, Position = fileMetadata.Position };
-                var sql = "insert into [files] (Path, Description, Datetime, Position) values (@Path, @Description, @Datetime, @Position)";
+                var files = new FilesModel() { Path = internalPath, Description = description, Datetime = fileMetadata.Datetime, Position = fileMetadata.Position, Orientation = fileMetadata.Orientation };
+                var sql = "insert into [files] (Path, Description, Datetime, Position, Orientation) values (@Path, @Description, @Datetime, @Position, @Orientation)";
                 connection.Execute(sql, files);
             }
             catch (SQLiteException e)
@@ -215,8 +215,8 @@ namespace FileDBInterface.DbAccess.SQLite
             try
             {
                 using var connection = DatabaseUtils.CreateConnection(database);
-                var sql = "update [files] set Datetime = @datetime, Position = @position where Id = @id";
-                connection.Execute(sql, new { datetime = fileMetadata.Datetime, position = fileMetadata.Position, id });
+                var sql = "update [files] set Datetime = @datetime, Position = @position, Orientation = @orientation where Id = @id";
+                connection.Execute(sql, new { datetime = fileMetadata.Datetime, position = fileMetadata.Position, orientation = fileMetadata.Orientation, id });
             }
             catch (SQLiteException e)
             {
