@@ -1,5 +1,7 @@
 import sqlite3
 import argparse
+import os.path
+import sys
 
 
 def version2_to_version3(cur):
@@ -16,7 +18,11 @@ def main():
     parser.add_argument('--database', help='Path to database file', default='filedb.db')
     args = parser.parse_args()
 
-    print("Upgrading database for '" + args.database + "'...")
+    if not os.path.isfile(args.database):
+        print('No such database: ' + args.database)
+        sys.exit(1)
+    
+    print("Upgrading database '" + args.database + "'...")
     dbCon = sqlite3.connect(args.database)
     cur = dbCon.cursor()
     
@@ -25,6 +31,7 @@ def main():
     dbCon.close()
     
     print("Finished")
-    
+
+
 if __name__ == "__main__":
     main()
