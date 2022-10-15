@@ -1163,7 +1163,7 @@ public partial class FindViewModel : ObservableObject
             try
             {
                 CurrentFileLoadError = string.Empty;
-                model.ImagePresenter!.ShowImage(new BitmapImage(uri), currentFileRotation);
+                model.ImagePresenter!.ShowImage(new BitmapImage(uri), -currentFileRotation);
 
                 model.FileLoaded(selection);
             }
@@ -1541,30 +1541,30 @@ public partial class FindViewModel : ObservableObject
         RotateFile(RotationDirection.CounterClockwise);
     }
 
-    private void RotateFile(RotationDirection direction)
+    private void RotateFile(RotationDirection imageRotationDirection)
     {
         if (SearchResultIndex != -1)
         {
-            int newDegrees = CurrentFileRotation;
-            if (direction == RotationDirection.Clockwise)
+            int cameraNewDegrees = CurrentFileRotation;
+            if (imageRotationDirection == RotationDirection.CounterClockwise)
             {
-                newDegrees += 90;
-                if (newDegrees > 270)
+                cameraNewDegrees += 90;
+                if (cameraNewDegrees > 270)
                 {
-                    newDegrees = 0;
+                    cameraNewDegrees = 0;
                 }
             }
-            else if (direction == RotationDirection.CounterClockwise)
+            else if (imageRotationDirection == RotationDirection.Clockwise)
             {
-                newDegrees -= 90;
-                if (newDegrees < 0)
+                cameraNewDegrees -= 90;
+                if (cameraNewDegrees < 0)
                 {
-                    newDegrees = 270;
+                    cameraNewDegrees = 270;
                 }
             }
 
             var selection = SearchResult!.Files[SearchResultIndex];
-            var newOrientation = DatabaseParsing.DegreesToOrientation(newDegrees);
+            var newOrientation = DatabaseParsing.DegreesToOrientation(cameraNewDegrees);
             model.DbAccess.UpdateFileOrientation(selection.Id, newOrientation);
             selection.Orientation = newOrientation;
 

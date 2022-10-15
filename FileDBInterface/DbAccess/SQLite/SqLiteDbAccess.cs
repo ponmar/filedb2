@@ -12,7 +12,6 @@ using log4net.Config;
 using FileDBInterface.Exceptions;
 using FileDBInterface.Validators;
 using FileDBInterface.FilesystemAccess;
-using static log4net.Appender.RollingFileAppender;
 
 namespace FileDBInterface.DbAccess.SQLite
 {

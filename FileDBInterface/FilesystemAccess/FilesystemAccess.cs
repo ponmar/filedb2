@@ -177,11 +177,10 @@ namespace FileDBInterface.FilesystemAccess
                 var gpsDir = directories.OfType<GpsDirectory>().FirstOrDefault();
                 location = gpsDir?.GetGeoLocation();
 
-                if (TryGetOrientationTag(directories, out var orientationTagValue) &&
-                    int.TryParse(orientationTagValue, out var orientationFromFile) &&
-                    orientationFromFile >= 1 && orientationFromFile <= 8)
+                if (TryGetOrientationTag(directories, out var orientationTag) &&
+                    orientationTag >= 1 && orientationTag <= 8)
                 {
-                    orientation = orientationFromFile;
+                    orientation = orientationTag;
                 }
             }
             catch (IOException)
@@ -195,39 +194,15 @@ namespace FileDBInterface.FilesystemAccess
             }
         }
 
-        private static bool TryGetOrientationTag(IEnumerable<MetadataExtractor.Directory> directories, out string? orientationTag)
+        private static bool TryGetOrientationTag(IEnumerable<MetadataExtractor.Directory> directories, out int? orientation)
         {
-            orientationTag = null;
-
-            foreach (var directory in directories)
+            orientation = null;
+            var ifd0Directory = directories.OfType<ExifIfd0Directory>().FirstOrDefault();
+            if (ifd0Directory != null)
             {
-                switch (directory)
-                {
-                    case ExifDirectoryBase e:
-                        foreach (var tag in e.Tags)
-                        {
-                            if (tag.Type is not ExifDirectoryBase.TagOrientation || tag.Description is null)
-                                continue;
-
-                            orientationTag = tag.Description;
-                            return true;
-                        }
-                        break;
-
-                    case IptcDirectory i:
-                        foreach (var tag in i.Tags)
-                        {
-                            if (tag.Type is not IptcDirectory.TagImageOrientation || tag.Description is null)
-                                continue;
-
-                            orientationTag = tag.Description;
-                            return true;
-                        }
-                        break;
-                }
+                orientation = ifd0Directory.TryGetInt32(ExifDirectoryBase.TagOrientation, out int value) ? value : null;
             }
-
-            return false;
+            return orientation != null;
         }
     }
 }
