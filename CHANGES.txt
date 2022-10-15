@@ -5,6 +5,7 @@
 * Add buttons for rotating a file (it does not affect the file itself)
 * Add button for reloading file orientation from Exif data
 * Add checkboxes for selecting what to export for a search result. Improved checkbox style.
+* Move file categorization area to the right size of the image
 * Remove build workaround for keeping an older .NET SDK version now that the source generator bug has been fixed
 
 2.21:
