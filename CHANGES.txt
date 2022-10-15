@@ -1,3 +1,6 @@
+3.1:
+* Database creation SQL fix
+
 3.0:
 * Database format updated to include file orientation
   !!! Use Python script UpgradeDatabase.py to upgrade your database before starting FileDB !!!

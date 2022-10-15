@@ -34,7 +34,7 @@ create table files(
     Description text, /* Format: May contain \n line-endings */
     Datetime varchar(19), /* Format: YYYY, YYYY-MM-DD or YYYY-MM-DDTHH:MM:SS */
     Position text, /* Format: <latitude> <longitude> */
-    Orientation integer // Format: null (no orientation set), 1-8 according to Exif
+    Orientation integer /* Format: null (no orientation set), 1-8 according to Exif */
 );
 
 create table persons(
