@@ -19,7 +19,6 @@ using FileDB.Export;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDBInterface.Validators;
-using FileDBInterface.FilesystemAccess;
 
 namespace FileDB.ViewModel;
 
@@ -120,7 +119,7 @@ public partial class FindViewModel : ObservableObject
     public List<SortMethodDescription> SortMethods { get; } = Utils.GetSortMethods();
 
     [ObservableProperty]
-    private SortMethod selectedSortMethod = SortMethod.Date;
+    private SortMethod selectedSortMethod = Model.Model.Instance.Config.DefaultSortMethod;
 
     partial void OnSelectedSortMethodChanged(SortMethod value)
     {
