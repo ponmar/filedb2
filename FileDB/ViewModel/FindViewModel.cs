@@ -1075,6 +1075,16 @@ public partial class FindViewModel : ObservableObject
     }
 
     [RelayCommand]
+    private void CopyFileId()
+    {
+        if (SearchResultIndex != -1)
+        {
+            var selection = SearchResult!.Files[SearchResultIndex];
+            ClipboardService.SetText(Utils.CreateFileList(new List<FilesModel>() { selection }));
+        }
+    }
+
+    [RelayCommand]
     private void ExportFileList()
     {
         ClipboardService.SetText(Utils.CreateFileList(SearchResult!.Files));
