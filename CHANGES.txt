@@ -1,3 +1,12 @@
+3.2:
+* Add button for copying current file id
+* Set initial focus to first checkbox in add person/location/tag dialogs to avoid extra clicks
+* Shorten latitude and longitude text to avoid making the Information area too wide
+* Enable select/deselect all buttons depending on if any new files found at the import page
+* Remove annoying "This person/location/tag has already been added" popups
+* Fix that default sort method in settings was not used
+* Fix error handling for add/update dialogs. The dialog is closed after each add/update.
+
 3.1:
 * Database creation SQL fix
 
