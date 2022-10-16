@@ -64,9 +64,15 @@ public partial class AddLocationViewModel : ObservableObject
             }
             else
             {
+                if (model.DbAccess.GetLocations().Any(x => x.Name == location.Name))
+                {
+                    Dialogs.ShowErrorDialog($"Location '{location.Name}' already added");
+                    return;
+                }
+
                 model.DbAccess.InsertLocation(location);
                 AffectedLocation = model.DbAccess.GetLocations().First(x => x.Name == location.Name);
-            }                
+            }
 
             model.NotifyLocationsUpdated();
         }
