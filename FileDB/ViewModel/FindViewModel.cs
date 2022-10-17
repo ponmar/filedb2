@@ -173,10 +173,44 @@ public partial class FindViewModel : ObservableObject
     private DateTime searchEndDate = DateTime.Now;
 
     [ObservableProperty]
+    private LocationToUpdate? selectedLocationForPositionSearch;
+
+    partial void OnSelectedLocationForPositionSearchChanged(LocationToUpdate? value)
+    {
+        if (value != null)
+        {
+            var location = model.DbAccess.GetLocationById(value.Id);
+            if (location.Position != null)
+            {
+                SearchFileGpsPosition = location.Position;
+            }
+            else
+            {
+                SearchFileGpsPosition = string.Empty;
+                Dialogs.ShowInfoDialog("This location has no GPS position set.");
+            }
+        }        
+    }
+
+    [ObservableProperty]
     private string? searchFileGpsPosition;
 
     [ObservableProperty]
     private string? searchFileGpsPositionUrl;
+
+    partial void OnSearchFileGpsPositionUrlChanged(string? value)
+    {
+        if (!string.IsNullOrEmpty(value))
+        {
+            var gpsPos = DatabaseParsing.ParseFilesPositionFromUrl(SearchFileGpsPositionUrl);
+            if (gpsPos != null)
+            {
+                SearchFileGpsPosition = $"{gpsPos.Value.lat} {gpsPos.Value.lon}";
+                return;
+            }
+        }
+        SearchFileGpsPosition = string.Empty;
+    }
 
     [ObservableProperty]
     private string searchFileGpsRadius = "500";
@@ -404,6 +438,8 @@ public partial class FindViewModel : ObservableObject
     private PersonToUpdate? selectedPerson2Search;
 
     public ObservableCollection<LocationToUpdate> Locations { get; } = new();
+
+    public ObservableCollection<LocationToUpdate> LocationsWithPosition { get; } = new();
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(LocationSelected))]
@@ -781,12 +817,17 @@ public partial class FindViewModel : ObservableObject
     }
 
     [RelayCommand]
+    private void SearchFilePositionFromCurrentFile()
+    {
+        SearchFileGpsPosition = currentFilePosition;
+    }
+
+    [RelayCommand]
     private void FindFilesByGpsPosition()
     {
         StopSlideshow();
 
-        if (string.IsNullOrEmpty(SearchFileGpsPosition) &&
-            string.IsNullOrEmpty(SearchFileGpsPositionUrl))
+        if (string.IsNullOrEmpty(SearchFileGpsPosition))
         {
             Dialogs.ShowErrorDialog("No position specified");
             return;
@@ -797,43 +838,23 @@ public partial class FindViewModel : ObservableObject
             Dialogs.ShowErrorDialog("No radius specified");
             return;
         }
-
         if (!double.TryParse(SearchFileGpsRadius, out var radius) || radius < 1)
         {
             Dialogs.ShowErrorDialog("Invalid radius");
             return;
         }
 
-        double latitude;
-        double longitude;
-
-        if (!string.IsNullOrEmpty(SearchFileGpsPosition))
+        var gpsPos = DatabaseParsing.ParseFilesPosition(SearchFileGpsPosition);
+        if (gpsPos == null)
         {
-            var gpsPos = DatabaseParsing.ParseFilesPosition(SearchFileGpsPosition);
-            if (gpsPos == null)
-            {
-                Dialogs.ShowErrorDialog("Invalid GPS position");
-                return;
-            }
-            latitude = gpsPos.Value.lat;
-            longitude = gpsPos.Value.lon;
-        }
-        else
-        {
-            var gpsPos = DatabaseParsing.ParseFilesPositionFromUrl(SearchFileGpsPositionUrl);
-            if (gpsPos == null)
-            {
-                Dialogs.ShowErrorDialog("Invalid Google Maps URL");
-                return;
-            }
-            latitude = gpsPos.Value.lat;
-            longitude = gpsPos.Value.lon;
+            Dialogs.ShowErrorDialog("Invalid GPS position");
+            return;
         }
 
-        var nearFiles = model.DbAccess.SearchFilesNearGpsPosition(latitude, longitude, radius).ToList();
+        var nearFiles = model.DbAccess.SearchFilesNearGpsPosition(gpsPos.Value.lat, gpsPos.Value.lon, radius).ToList();
 
         // TODO: checkbox for selecting if this should be included?
-        var nearLocations = model.DbAccess.SearchLocationsNearGpsPosition(latitude, longitude, radius);
+        var nearLocations = model.DbAccess.SearchLocationsNearGpsPosition(gpsPos.Value.lat, gpsPos.Value.lon, radius);
         nearFiles.AddRange(model.DbAccess.SearchFilesWithLocations(nearLocations.Select(x => x.Id)));
 
         SearchResult = new SearchResult(nearFiles);
@@ -1665,11 +1686,19 @@ public partial class FindViewModel : ObservableObject
     private void ReloadLocations()
     {
         Locations.Clear();
+        LocationsWithPosition.Clear();
+        
         var locations = model.DbAccess.GetLocations().ToList();
         locations.Sort(new LocationModelByNameSorter());
-        foreach (var location in locations.Select(l => new LocationToUpdate(l.Id, l.Name)))
+        
+        foreach (var location in locations)
         {
-            Locations.Add(location);
+            var locationToUpdate = new LocationToUpdate(location.Id, location.Name);
+            Locations.Add(locationToUpdate);
+            if (location.Position != null)
+            {
+                LocationsWithPosition.Add(locationToUpdate);
+            }
         }
     }
 

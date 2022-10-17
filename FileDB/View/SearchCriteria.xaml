@@ -140,21 +140,29 @@
                 <StackPanel Orientation="Horizontal" Margin="3">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageInnerTextBlock}" Margin="3" Text="Latitude longitude:" VerticalAlignment="Center"/>
-                        <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource PageInnerTextBox}" Margin="3" Width="200" VerticalAlignment="Center" Text="{Binding SearchFileGpsPosition}" ToolTip="Format: LAT LON"/>
+                        
+                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageInnerTextBlock}" Margin="3" Text="Location (with GPS position):" VerticalAlignment="Center"/>
+                        <ComboBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource PageInnerComboBox}" Margin="3" VerticalAlignment="Center" ItemsSource="{Binding LocationsWithPosition}" SelectedItem="{Binding SelectedLocationForPositionSearch}" DisplayMemberPath="Name" />
+                        
                         <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageInnerTextBlock}" Margin="3" Text="Google Maps URL:" VerticalAlignment="Center"/>
-                        <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource PageInnerTextBox}" Margin="3" Width="200" VerticalAlignment="Center" Text="{Binding SearchFileGpsPositionUrl}" ToolTip="Format: LAT LON"/>
+                        <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"  Style="{StaticResource PageInnerTextBox}" Margin="3" VerticalAlignment="Center" Text="{Binding SearchFileGpsPositionUrl, UpdateSourceTrigger=PropertyChanged}" ToolTip="Format: LAT LON"/>
+                        
+                        <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource PageInnerTextBlock}" Margin="3" Text="Latitude longitude:" VerticalAlignment="Center"/>
+                        <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource PageInnerTextBox}" Margin="3" VerticalAlignment="Center" Text="{Binding SearchFileGpsPosition, UpdateSourceTrigger=PropertyChanged}" ToolTip="Format: LAT LON"/>
+                        <Button Grid.Row="2" Grid.Column="2" Style="{StaticResource NormalButton}" Margin="3" VerticalAlignment="Center" Command="{Binding SearchFilePositionFromCurrentFileCommand}" IsEnabled="{Binding CurrentFilePosition, Converter={StaticResource StringContentToBoolConverter}}">From current file</Button>
                     </Grid>
                     <TextBlock Style="{StaticResource PageInnerTextBlock}" Margin="15 3 3 3" Text="Radius [m]:" VerticalAlignment="Center"/>
                     <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3" Width="50" VerticalAlignment="Center" Text="{Binding SearchFileGpsRadius}" ToolTip="Radius in meters"/>
-                    <Button Margin="15 5 5 5" Style="{StaticResource NormalButton}" Command="{Binding FindFilesByGpsPositionCommand}" ToolTip="Seach files in specified area" VerticalAlignment="Center">Search</Button>
+                    <Button Margin="15 5 5 5" Style="{StaticResource NormalButton}" Command="{Binding FindFilesByGpsPositionCommand}" IsEnabled="{Binding SearchFileGpsPosition, Converter={StaticResource StringContentToBoolConverter}}" ToolTip="Seach files in specified area" VerticalAlignment="Center">Search</Button>
                 </StackPanel>
             </TabItem>
             <TabItem Style="{StaticResource PageTabItem}">
