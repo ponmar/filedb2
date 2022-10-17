@@ -30,10 +30,9 @@ public class SearchResultFilesWithOverlayExporter : ISearchResultExporter
 
     public void Export(SearchResultFileFormat data, string path)
     {
-        var subdir = Path.Combine(path, "filesWithData");
-        if (!Directory.Exists(subdir))
+        if (!Directory.Exists(path))
         {
-            Directory.CreateDirectory(subdir);
+            Directory.CreateDirectory(path);
         }
 
         int index = 1;
@@ -75,7 +74,7 @@ public class SearchResultFilesWithOverlayExporter : ISearchResultExporter
                 var subtitleLines = CreateSubtitleTextLines(file);
                 AddTextToImage(textLines, subtitleLines, bitmap);
 
-                var destFilePath = Path.Combine(subdir, $"{index}.png");
+                var destFilePath = Path.Combine(path, $"{index}.png");
                 SaveBitmap(bitmap, destFilePath);
 
                 index++;

@@ -10,11 +10,7 @@ public class SearchResultExporter
 {
     public void Export(string destinationDirectory, string header, List<FilesModel> files, bool exportIncludesFiles, bool exportIncludesHtml, bool exportIncludesM3u, bool exportIncludesFilesWithMetaData, bool exportIncludesJson)
     {
-        var data = GetExportedData(files, header);
-
-        var jsonPath = Path.Combine(destinationDirectory, "data.json");
-        var htmlPath = Path.Combine(destinationDirectory, "index.html");
-        var m3uPath = Path.Combine(destinationDirectory, "playlist.m3u");
+        var data = GetExportedData(files, header, "UnmodifiedFiles");
 
         if (exportIncludesFiles)
         {
@@ -23,26 +19,30 @@ public class SearchResultExporter
 
         if (exportIncludesFilesWithMetaData)
         {
-            new SearchResultFilesWithOverlayExporter(DescriptionPlacement.Subtitle).Export(data, destinationDirectory);
+            var filesWithDataDirPath = Path.Combine(destinationDirectory, "FilesWithData");
+            new SearchResultFilesWithOverlayExporter(DescriptionPlacement.Subtitle).Export(data, filesWithDataDirPath);
         }
 
         if (exportIncludesJson)
         {
+            var jsonPath = Path.Combine(destinationDirectory, "data.json");
             new SearchResultJsonExporter().Export(data, jsonPath);
         }
 
         if (exportIncludesM3u)
         {
+            var m3uPath = Path.Combine(destinationDirectory, "playlist.m3u");
             new SearchResultM3uExporter().Export(data, m3uPath);
         }
 
         if (exportIncludesHtml)
         {
-            new SearchResultHtmlExporter().Export(data, htmlPath);
+            var htmlSubdirPath = Path.Combine(destinationDirectory, "Html");
+            new SearchResultHtmlExporter().Export(data, htmlSubdirPath);
         }
     }
 
-    private SearchResultFileFormat GetExportedData(List<FilesModel> files, string header)
+    private SearchResultFileFormat GetExportedData(List<FilesModel> files, string header, string filesSubdir)
     {
         var model = Model.Model.Instance;
 
@@ -81,9 +81,11 @@ public class SearchResultExporter
                 }
             }
 
+            var exportedFilePath = Path.Combine(filesSubdir, $"{index}{Path.GetExtension(file.Path)}");
+
             exportedFiles.Add(new ExportedFile(
                 file.Id,
-                $"files/{index}{Path.GetExtension(file.Path)}",
+                exportedFilePath,
                 file.Path,
                 file.Description,
                 file.Datetime,

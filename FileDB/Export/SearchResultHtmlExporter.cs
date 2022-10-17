@@ -6,8 +6,13 @@ namespace FileDB.Export;
 
 public class SearchResultHtmlExporter : ISearchResultExporter
 {
-    public void Export(SearchResultFileFormat data, string filename)
+    public void Export(SearchResultFileFormat data, string destinationDirPath)
     {
+        if (!Directory.Exists(destinationDirPath))
+        {
+            Directory.CreateDirectory(destinationDirPath);
+        }
+
         var documentBase =
 @"<!DOCTYPE html>
 <html>
@@ -54,6 +59,11 @@ public class SearchResultHtmlExporter : ISearchResultExporter
         int index = 1;
         foreach (var file in data.Files)
         {
+            var sourceFilePath = Model.Model.Instance.FilesystemAccess.ToAbsolutePath(file.OriginalPath);
+            var destinationFilename = Path.GetFileName(file.ExportedPath);
+            var destFilePath = Path.Combine(destinationDirPath, destinationFilename);
+            File.Copy(sourceFilePath, destFilePath);
+
             var pictureDateText = string.Empty;
             if (file.Datetime != null)
             {
@@ -99,7 +109,7 @@ public class SearchResultHtmlExporter : ISearchResultExporter
                 pictureText += $"<p>&#128278; {tagsStr}</p>";
             }
 
-            var pictureHtml = pictureBase.Replace("%PATH%", file.ExportedPath).Replace("%PICTURETEXT%", pictureText);
+            var pictureHtml = pictureBase.Replace("%PATH%", destinationFilename).Replace("%PICTURETEXT%", pictureText);
             content += pictureHtml;
 
             index++;
@@ -112,7 +122,8 @@ public class SearchResultHtmlExporter : ISearchResultExporter
             .Replace("%APPLICATION_DOWNLOAD_URL%", data.ApplicationDownloadUrl)
             .Replace("%APPLICATION_NAME%", Utils.ApplicationName);
 
-        File.WriteAllText(filename, html);
+        var htmlPath = Path.Combine(destinationDirPath, "index.html");
+        File.WriteAllText(htmlPath, html);
     }
 
     public static string? CreateExportedFileDatetime(string fileDatetime)
