@@ -22,7 +22,7 @@ using FileDBInterface.Validators;
 
 namespace FileDB.ViewModel;
 
-public enum RotationDirection { Clockwise, CounterClockwise };
+public enum RotationDirection { Clockwise, CounterClockwise }
 
 public interface IFolder
 {
@@ -171,6 +171,9 @@ public partial class FindViewModel : ObservableObject
 
     [ObservableProperty]
     private DateTime searchEndDate = DateTime.Now;
+
+    [ObservableProperty]
+    private string? selectedFileType = null;
 
     [ObservableProperty]
     private LocationToUpdate? selectedLocationForPositionSearch;
@@ -814,6 +817,31 @@ public partial class FindViewModel : ObservableObject
     {
         StopSlideshow();
         SearchResult = new SearchResult(model.DbAccess.SearchFilesByDate(SearchStartDate.Date, SearchEndDate.Date));
+    }
+
+    [RelayCommand]
+    private void FindFilesByType()
+    {
+        if (SelectedFileType == null)
+        {
+            return;
+        }
+
+        string fileType = SelectedFileType.Split(" ")[1];
+        List<string> extensions = fileType switch
+        {
+            "Picture" => new() { ".jpg", ".png", ".bmp", ".gif" },
+            "Movie" => new() { ".mkv", ".avi", ".mpg", ".mov", ".mp4" },
+            "Document" => new() { ".doc", ".pdf", ".txt" },
+            _ => throw new NotImplementedException(),
+        };
+        var result = new List<FilesModel>();
+        foreach (var extension in extensions)
+        {
+            result.AddRange(model.DbAccess.SearchFilesByExtension(extension));
+        }
+
+        SearchResult = new SearchResult(result);
     }
 
     [RelayCommand]

@@ -58,6 +58,7 @@ namespace FileDBInterface.DbAccess.SQLite
 
         public IEnumerable<FilesModel> SearchFiles(string criteria)
         {
+            // Note: 'like' is case insensitive
             using var connection = DatabaseUtils.CreateConnection(database);
             var sql = "select * from [files] where (Path like @criteria or Description like @criteria)";
             return connection.Query<FilesModel>(sql, new { criteria = $"%{criteria}%" });
@@ -71,6 +72,7 @@ namespace FileDBInterface.DbAccess.SQLite
 
         public IEnumerable<FilesModel> SearchFilesByPath(string criteria)
         {
+            // Note: 'like' is case insensitive
             using var connection = DatabaseUtils.CreateConnection(database);
             var sql = "select * from [files] where Path like @criteria";
             return connection.Query<FilesModel>(sql, new { criteria = criteria + "%" });
@@ -78,6 +80,7 @@ namespace FileDBInterface.DbAccess.SQLite
 
         public IEnumerable<FilesModel> SearchFilesByExtension(string extension)
         {
+            // Note: 'like' is case insensitive
             using var connection = DatabaseUtils.CreateConnection(database);
             var sql = "select * from [files] where Path like @criteria";
             return connection.Query<FilesModel>(sql, new { criteria = "%" + extension });
