@@ -23,6 +23,7 @@ namespace FileDBInterface.DbAccess
         public IEnumerable<FilesModel> SearchFilesBySex(Sex sex);
         public IEnumerable<FilesModel> SearchFilesByDate(DateTime start, DateTime end);
         public IEnumerable<FilesModel> SearchFilesByPath(string criteria);
+        public IEnumerable<FilesModel> SearchFilesByExtension(string extension);
         public IEnumerable<FilesModel> SearchFilesRandom(int numFiles);
         public IEnumerable<FilesModel> SearchFilesNearGpsPosition(double latitude, double longitude, double radius);
         public IEnumerable<FilesModel> SearchFilesWithPersons(IEnumerable<int> personIds);

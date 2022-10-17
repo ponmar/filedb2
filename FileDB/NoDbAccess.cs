@@ -38,6 +38,11 @@ public class NoDbAccess : IDbAccess
         return new List<FilesModel>();
     }
 
+    public IEnumerable<FilesModel> SearchFilesByExtension(string extension)
+    {
+        return new List<FilesModel>();
+    }
+
     public IEnumerable<FilesModel> SearchFilesRandom(int numFiles)
     {
         return new List<FilesModel>();

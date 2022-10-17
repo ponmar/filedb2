@@ -73,8 +73,14 @@ namespace FileDBInterface.DbAccess.SQLite
         {
             using var connection = DatabaseUtils.CreateConnection(database);
             var sql = "select * from [files] where Path like @criteria";
-            // TODO: missing a % before criteria?
             return connection.Query<FilesModel>(sql, new { criteria = criteria + "%" });
+        }
+
+        public IEnumerable<FilesModel> SearchFilesByExtension(string extension)
+        {
+            using var connection = DatabaseUtils.CreateConnection(database);
+            var sql = "select * from [files] where Path like @criteria";
+            return connection.Query<FilesModel>(sql, new { criteria = "%" + extension });
         }
 
         public IEnumerable<FilesModel> SearchFilesRandom(int numFiles)
