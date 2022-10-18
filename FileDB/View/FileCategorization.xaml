@@ -70,8 +70,6 @@
                 </Grid>
                 
                 <Button Margin="5" Style="{StaticResource NormalButton}" HorizontalAlignment="Left" Command="{Binding ReApplyFileMetaDataCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip="Apply meta-data (persons, locations, tags and description) from last edit">Apply meta-data from last edit</Button>
-                <Button Margin="5" Style="{StaticResource NormalButton}" HorizontalAlignment="Left" Command="{Binding UpdateFileFromMetaDataCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip="Reload timestamp, GPS location and orientation from file Exif data">Reload Exif data...</Button>
-
                 <Grid Margin="5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -79,14 +77,11 @@
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Rotation:" VerticalAlignment="Center" Style="{StaticResource PageInnerTextBlock}"/>
-                        <TextBlock Margin="5,0" Text="{Binding CurrentFileRotation}" VerticalAlignment="Center" Style="{StaticResource PageInnerTextBlock}"/>
-                        <TextBlock Text="degrees" VerticalAlignment="Center" Style="{StaticResource PageInnerTextBlock}"/>
-                    </StackPanel>
-                    <Button Grid.Column="1" Style="{StaticResource NormalButton}" HorizontalAlignment="Right" ToolTip="Rotate 90 degrees clockwise" Command="{Binding RotateFileClockwiseCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" VerticalAlignment="Center" Width="25">&#8635;</Button>
-                    <Button Grid.Column="2" Margin="5,0,0,0" Style="{StaticResource NormalButton}" HorizontalAlignment="Right" ToolTip="Rotate 90 degrees counter clockwise" Command="{Binding RotateFileCounterClockwiseCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" VerticalAlignment="Center" Width="25">&#8634;</Button>
-                    <Button Grid.Column="3" Margin="5,0,0,0" Style="{StaticResource NormalButton}" HorizontalAlignment="Right" ToolTip="Reload orientation from Exif data" Command="{Binding UpdateFileOrientationFromMetaDataCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" VerticalAlignment="Center" Width="25">x</Button>
+                    
+                    <Button Grid.Column="0" Style="{StaticResource NormalButton}" HorizontalAlignment="Left" Command="{Binding UpdateFileFromMetaDataCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip="Reload timestamp, GPS location and orientation from file Exif data">Reload Exif data...</Button>
+                    <Button Grid.Column="1" Margin="5,0,0,0" Style="{StaticResource NormalButton}" ToolTip="Rotate 90 degrees clockwise" Command="{Binding RotateFileClockwiseCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" Width="25">&#8635;</Button>
+                    <Button Grid.Column="2" Margin="5,0,0,0" Style="{StaticResource NormalButton}" ToolTip="Rotate 90 degrees counter clockwise" Command="{Binding RotateFileCounterClockwiseCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" Width="25">&#8634;</Button>
+                    <Button Grid.Column="3" Margin="5,0,0,0" Style="{StaticResource NormalButton}" ToolTip="Reload orientation from Exif data" Command="{Binding UpdateFileOrientationFromMetaDataCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" Width="25">x</Button>
                 </Grid>
 
                 <ListView ItemsSource="{Binding UpdateHistoryItems}" Visibility="{Binding HasNonEmptySearchResult, Converter={StaticResource BoolToVis}}" Background="Transparent" BorderThickness="0" Grid.IsSharedSizeScope="True" x:Name="HistoryItemsListView">

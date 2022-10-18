@@ -418,7 +418,6 @@ public partial class FindViewModel : ObservableObject
     [ObservableProperty]
     private string currentFileLoadError = string.Empty;
 
-    [ObservableProperty]
     private int currentFileRotation = 0;
 
     #endregion
@@ -1213,8 +1212,8 @@ public partial class FindViewModel : ObservableObject
             CurrentFileTags = GetFileTagsString(selection.Id);
             CurrentFileHeader = CurrentFileDateTime != string.Empty ? CurrentFileDateTime : selection.Path;
 
-            // Note: reading of orientation is done here to get correct visualization for files added to database before orientation was parsed
-            CurrentFileRotation = DatabaseParsing.OrientationToDegrees(selection.Orientation ?? model.FilesystemAccess.ParseFileMetadata(CurrentFilePath).Orientation);
+            // Note: reading of orientation from Exif is done here to get correct visualization for files added to database before orientation was parsed
+            currentFileRotation = DatabaseParsing.OrientationToDegrees(selection.Orientation ?? model.FilesystemAccess.ParseFileMetadata(CurrentFilePath).Orientation);
 
             NewFileDescription = CurrentFileDescription;
             NewFileDateTime = selection.Datetime;
@@ -1260,7 +1259,7 @@ public partial class FindViewModel : ObservableObject
         CurrentFilePersons = string.Empty;
         CurrentFileLocations = string.Empty;
         CurrentFileTags = string.Empty;
-        CurrentFileRotation = 0;
+        currentFileRotation = 0;
 
         NewFileDescription = string.Empty;
         NewFileDateTime = string.Empty;
@@ -1593,7 +1592,7 @@ public partial class FindViewModel : ObservableObject
     {
         if (SearchResultIndex != -1)
         {
-            int cameraNewDegrees = CurrentFileRotation;
+            int cameraNewDegrees = currentFileRotation;
             if (imageRotationDirection == RotationDirection.CounterClockwise)
             {
                 cameraNewDegrees += 90;
