@@ -236,6 +236,7 @@ public partial class FindViewModel : ObservableObject
     private string? fileListSearch;
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(ExportEnabled))]
     private string? exportFilesDestinationDirectory;
 
     [ObservableProperty]
@@ -243,6 +244,8 @@ public partial class FindViewModel : ObservableObject
 
     [ObservableProperty]
     private bool exportIncludesFiles = true;
+
+    public bool ExportEnabled => !string.IsNullOrEmpty(ExportFilesDestinationDirectory) && HasNonEmptySearchResult;
 
     partial void OnExportIncludesFilesChanged(bool value)
     {
@@ -529,6 +532,7 @@ public partial class FindViewModel : ObservableObject
         OnPropertyChanged(nameof(HasSearchResult));
         OnPropertyChanged(nameof(HasNonEmptySearchResult));
         OnPropertyChanged(nameof(SearchNumberOfHits));
+        OnPropertyChanged(nameof(ExportEnabled));
     }
 
     private void FireBrowsingEnabledEvents()
