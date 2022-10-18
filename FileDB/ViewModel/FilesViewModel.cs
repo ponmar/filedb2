@@ -29,7 +29,7 @@ public class NewFile
     }
 }
 
-public partial class ImportViewModel : ObservableObject
+public partial class FilesViewModel : ObservableObject
 {
     [ObservableProperty]
     private string subdirToScan;
@@ -49,7 +49,7 @@ public partial class ImportViewModel : ObservableObject
 
     private readonly Model.Model model = Model.Model.Instance;
 
-    public ImportViewModel()
+    public FilesViewModel()
     {
         subdirToScan = model.Config.FilesRootDirectory;
         model.ConfigLoaded += Model_ConfigLoaded;

@@ -26,9 +26,9 @@
 
             <TabItem Style="{StaticResource WindowTabItem}" Visibility="{Binding ReadWriteMode, Converter={StaticResource BoolToVis}}">
                 <TabItem.Header>
-                    <TextBlock Text="&#x1F4C2;" ToolTip="Import" Style="{StaticResource PageIcon}"/>
+                    <TextBlock Text="&#x1F4C2;" ToolTip="Files" Style="{StaticResource PageIcon}"/>
                 </TabItem.Header>
-                <Views:ImportView Margin="10 0 10 10"/>
+                <Views:FilesView Margin="10 0 10 10"/>
             </TabItem>
 
             <TabItem Style="{StaticResource WindowTabItem}">

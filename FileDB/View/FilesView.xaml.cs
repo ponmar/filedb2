@@ -4,14 +4,14 @@ using FileDB.ViewModel;
 namespace FileDB.View;
 
 /// <summary>
-/// Interaction logic for ImportView.xaml
+/// Interaction logic for FilesView.xaml
 /// </summary>
-public partial class ImportView : UserControl
+public partial class FilesView : UserControl
 {
-    public ImportView()
+    public FilesView()
     {
         InitializeComponent();
-        DataContext = new ImportViewModel();
+        DataContext = new FilesViewModel();
     }
 
     private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -26,7 +26,7 @@ public partial class ImportView : UserControl
             (addedItem as NewFile)!.IsSelected = false;
         }
 
-        (DataContext as ImportViewModel)!.SelectionChanged();
+        (DataContext as FilesViewModel)!.SelectionChanged();
     }
 
     private void SelectAll_Click(object sender, System.Windows.RoutedEventArgs e)
