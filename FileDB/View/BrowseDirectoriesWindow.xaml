@@ -1,0 +1,36 @@
+﻿<Window x:Class="FileDB.View.BrowseDirectoriesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FileDB.View"
+        xmlns:viewmodel="clr-namespace:FileDB.ViewModel"
+        d:DataContext="{d:DesignInstance Type=viewmodel:BrowseDirectoriesViewModel}"
+        mc:Ignorable="d"
+        Title="Browse..."
+        Width="500"
+        Height="400" 
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner" Style="{StaticResource Window}">
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        
+        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageInnerTextBlock}" Margin="5" Text="Select your directory:"/>
+        <local:ExtendedTreeView Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Folders}" SelectedItem_="{Binding SelectedFolder, Mode=TwoWay}" Style="{StaticResource PageTreeView}" Margin="5">
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding Folders}" DataType="{x:Type viewmodel:IFolder}">
+                    <TextBlock Text="{Binding Name}" Foreground="{StaticResource FgColor1}" />
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+        </local:ExtendedTreeView>
+        <Button Grid.Row="2" Grid.Column="0" Margin="5" Width="100" Style="{StaticResource NormalButton}" Command="{Binding SelectFolderCommand}" ToolTip="Search for files within selected directory" HorizontalAlignment="Right">Select</Button>
+    </Grid>
+</Window>

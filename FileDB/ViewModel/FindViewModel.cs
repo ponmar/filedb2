@@ -24,28 +24,6 @@ namespace FileDB.ViewModel;
 
 public enum RotationDirection { Clockwise, CounterClockwise }
 
-public interface IFolder
-{
-    string Name { get; }
-    List<IFolder> Folders { get; }
-    string Path { get; }
-}
-
-public class Folder : IFolder
-{
-    private readonly IFolder? parent;
-    public string Name { get; }
-    public List<IFolder> Folders { get; } = new();
-
-    public string Path => parent != null ? parent.Path + "/" + Name : Name;
-
-    public Folder(string name, IFolder? parent = null)
-    {
-        Name = name;
-        this.parent = parent;
-    }
-}
-
 public interface IImagePresenter
 {
     void ShowImage(BitmapImage image, double rotateDegrees);
@@ -105,7 +83,6 @@ public class UpdateHistoryItem
 
 public partial class FindViewModel : ObservableObject
 {
-    private const string RootFolderName = "root";
     private readonly Random random = new();
 
     #region Browsing and sorting commands
@@ -223,10 +200,6 @@ public partial class FindViewModel : ObservableObject
 
     [ObservableProperty]
     private string? searchPersonAgeTo;
-    
-    public List<IFolder> Folders { get; } = new();
-
-    public IFolder? SelectedFolder { get; set; }
 
     #endregion
 
@@ -475,7 +448,6 @@ public partial class FindViewModel : ObservableObject
         ReloadPersons();
         ReloadLocations();
         ReloadTags();
-        ReloadFolders();
 
         model.PersonsUpdated += Model_PersonsUpdated;
         model.LocationsUpdated += Model_LocationsUpdated;
@@ -785,6 +757,25 @@ public partial class FindViewModel : ObservableObject
     }
 
     [RelayCommand]
+    private void FindBrowsedFiles()
+    {
+        StopSlideshow();
+
+        var window = new BrowseDirectoriesWindow
+        {
+            Owner = Application.Current.MainWindow
+        };
+        window.ShowDialog();
+
+        var windowVm = (BrowseDirectoriesViewModel)window.DataContext;
+        var selectedDir = windowVm.SelectedDirectoryPath;
+        if (selectedDir != null)
+        {
+            SearchResult = new SearchResult(model.DbAccess.SearchFilesByPath(selectedDir));
+        }
+    }
+
+    [RelayCommand]
     private void FindFilesByText()
     {
         StopSlideshow();
@@ -1077,25 +1068,6 @@ public partial class FindViewModel : ObservableObject
         {
             var fileIds = Utils.CreateFileIds(fileListSearch);
             SearchResult = new SearchResult(model.DbAccess.SearchFilesFromIds(fileIds));
-        }
-    }
-
-    [RelayCommand]
-    private void FindFilesSelectedFolder()
-    {
-        StopSlideshow();
-        if (SelectedFolder != null)
-        {
-            var folderPath = SelectedFolder.Path;
-            if (folderPath.StartsWith(RootFolderName))
-            {
-                folderPath = folderPath.Substring(RootFolderName.Length);
-            }
-            if (folderPath.StartsWith("/"))
-            {
-                folderPath = folderPath.Substring("/".Length);
-            }
-            SearchResult = new SearchResult(model.DbAccess.SearchFilesByPath(folderPath));
         }
     }
 
@@ -1733,47 +1705,6 @@ public partial class FindViewModel : ObservableObject
         {
             Tags.Add(tag);
         }
-    }
-
-    [RelayCommand]
-    private void ReloadFolders()
-    {
-        var root = new Folder(RootFolderName);
-
-        Folders.Clear();
-        Folders.Add(root);
-
-        foreach (var file in model.DbAccess.GetFiles())
-        {
-            var directoryEndIndex = file.Path.LastIndexOf("/");
-            if (directoryEndIndex == -1)
-            {
-                // This fils is in the root directory
-                continue;
-            }
-
-            var directoryPath = file.Path.Substring(0, directoryEndIndex);
-            var directories = directoryPath.Split("/");
-
-            if (directories.Length > 0)
-            {
-                var currentFolder = root;
-
-                foreach (var pathPart in directories)
-                {
-                    var subFolder = currentFolder.Folders.FirstOrDefault(x => x.Name == pathPart);
-                    if (subFolder == null)
-                    {
-                        subFolder = new Folder(pathPart, currentFolder);
-                        currentFolder.Folders.Add(subFolder);
-                    }
-
-                    currentFolder = (Folder)subFolder;
-                }
-            }
-        }
-
-        OnPropertyChanged(nameof(Folders));
     }
 
     private void AddUpdateHistoryItem(UpdateHistoryType type, int itemId, string itemName)

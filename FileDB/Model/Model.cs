@@ -173,4 +173,11 @@ public class Model
     {
         browsingPlugins.ForEach(x => x.FileLoaded(file));
     }
+
+    public event EventHandler? CloseModalDialogRequested;
+
+    public void RequestCloseModalDialog()
+    {
+        CloseModalDialogRequested?.Invoke(this, EventArgs.Empty);
+    }
 }

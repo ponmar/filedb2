@@ -27,7 +27,7 @@
                 <WrapPanel>
                     <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding FindAllFilesCommand}" VerticalAlignment="Center" ToolTip="Search all files">All files</Button>
                     <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding FindImportedFilesCommand}" IsEnabled="{Binding ImportedFileList, Converter={StaticResource StringContentToBoolConverter}}" VerticalAlignment="Center" ToolTip="Search for newly added files meta-data">New files</Button>
-
+                    <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding FindBrowsedFilesCommand}" VerticalAlignment="Center" ToolTip="Search for files within selected directory">Browse...</Button>
                     <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding FindFilesFromMissingCategorizationCommand}" HorizontalAlignment="Left">All without meta-data</Button>
                     <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding FindCurrentDirectoryFilesCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip="Search all files within current file directory (recursive)" HorizontalAlignment="Left">All from current directory</Button>
 
@@ -163,28 +163,6 @@
                     <TextBlock Style="{StaticResource PageInnerTextBlock}" Margin="15 3 3 3" Text="Radius [m]:" VerticalAlignment="Center"/>
                     <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3" Width="50" VerticalAlignment="Center" Text="{Binding SearchFileGpsRadius}" ToolTip="Radius in meters"/>
                     <Button Margin="15 5 5 5" Style="{StaticResource NormalButton}" Command="{Binding FindFilesByGpsPositionCommand}" IsEnabled="{Binding SearchFileGpsPosition, Converter={StaticResource StringContentToBoolConverter}}" ToolTip="Seach files in specified area" VerticalAlignment="Center">Search</Button>
-                </StackPanel>
-            </TabItem>
-            <TabItem Style="{StaticResource PageTabItem}">
-                <TabItem.Header>
-                    <TextBlock Text="Browse" Style="{StaticResource PageTabItemText}" />
-                </TabItem.Header>
-
-                <StackPanel Orientation="Horizontal">
-                    <StackPanel Orientation="Vertical" Margin="3" HorizontalAlignment="Left">
-                        <TextBlock Style="{StaticResource PageInnerTextBlock}" Margin="5" Text="Browse database:"/>
-                        <local:ExtendedTreeView ItemsSource="{Binding Folders}" SelectedItem_="{Binding SelectedFolder, Mode=TwoWay}" Style="{StaticResource PageTreeView}" Margin="5">
-                            <TreeView.ItemTemplate>
-                                <HierarchicalDataTemplate ItemsSource="{Binding Folders}" DataType="{x:Type viewmodel:IFolder}">
-                                    <TextBlock Text="{Binding Name}" Foreground="{StaticResource FgColor1}" />
-                                </HierarchicalDataTemplate>
-                            </TreeView.ItemTemplate>
-                        </local:ExtendedTreeView>
-                        <StackPanel Orientation="Horizontal">
-                            <Button Margin="5" Width="100" Style="{StaticResource NormalButton}" Command="{Binding ReloadFoldersCommand}">Reload</Button>
-                            <Button Margin="5" Width="100" Style="{StaticResource NormalButton}" Command="{Binding FindFilesSelectedFolderCommand}" ToolTip="Search for files within selected directory" HorizontalAlignment="Left">Search</Button>
-                        </StackPanel>
-                    </StackPanel>
                 </StackPanel>
             </TabItem>
             <TabItem Style="{StaticResource PageTabItem}">
