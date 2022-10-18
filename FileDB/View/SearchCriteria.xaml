@@ -25,35 +25,16 @@
                 </TabItem.Header>
 
                 <WrapPanel>
-                    <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding FindAllFilesCommand}" VerticalAlignment="Center" ToolTip="Search all files">All files</Button>
-                    <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding FindImportedFilesCommand}" IsEnabled="{Binding ImportedFileList, Converter={StaticResource StringContentToBoolConverter}}" VerticalAlignment="Center" ToolTip="Search for newly added files meta-data">New files</Button>
                     <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding FindBrowsedFilesCommand}" VerticalAlignment="Center" ToolTip="Search for files within selected directory">Browse...</Button>
+                    <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding FindImportedFilesCommand}" IsEnabled="{Binding ImportedFileList, Converter={StaticResource StringContentToBoolConverter}}" VerticalAlignment="Center" ToolTip="Search for newly added files meta-data">New files</Button>
                     <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding FindFilesFromMissingCategorizationCommand}" HorizontalAlignment="Left">All without meta-data</Button>
+                    <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding FindAllFilesCommand}" VerticalAlignment="Center" ToolTip="Search all files">All files</Button>
                     <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding FindCurrentDirectoryFilesCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip="Search all files within current file directory (recursive)" HorizontalAlignment="Left">All from current directory</Button>
-
-                    <StackPanel Orientation="Horizontal" Margin="10 5">
-                        <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="Random files:" VerticalAlignment="Center"/>
-                        <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3 0" Width="100" VerticalAlignment="Center" Text="{Binding NumRandomFiles}"/>
-                        <Button Style="{StaticResource NormalButton}" Command="{Binding FindRandomFilesCommand}" ToolTip="Search random files">Search</Button>
-                    </StackPanel>
 
                     <StackPanel Orientation="Horizontal" Margin="10 5">
                         <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="Text:" VerticalAlignment="Center" ToolTip="Search criteria for text (matches file path/description)"/>
                         <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3 0" Width="100" VerticalAlignment="Center" Text="{Binding SearchPattern}" ToolTip="Search criteria for text (matches file path/description)"/>
                         <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesByTextCommand}" ToolTip="Search by text (matches file path/description)">Search</Button>
-                    </StackPanel>
-
-                    <StackPanel Orientation="Horizontal" Margin="10 5">
-                        <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="File list:" VerticalAlignment="Center"/>
-                        <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3 0" Width="100" VerticalAlignment="Center" Text="{Binding FileListSearch}" ToolTip="file1;file2;..."/>
-                        <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesFromListCommand}" ToolTip="Search by file list">Search</Button>
-                    </StackPanel>
-
-                    <StackPanel Orientation="Horizontal" Margin="10 5">
-                        <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="File date:" VerticalAlignment="Center"/>
-                        <DatePicker Width="105" Margin="3 0" VerticalAlignment="center" Text="Start" IsTodayHighlighted="True" SelectedDate="{Binding SearchStartDate}" FirstDayOfWeek="Monday"/>
-                        <DatePicker Width="105" Margin="3 0" VerticalAlignment="center" Text="End" IsTodayHighlighted="True" SelectedDate="{Binding SearchEndDate}" FirstDayOfWeek="Monday"/>
-                        <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesByDateCommand}" ToolTip="Seach files between dates" VerticalAlignment="Center">Search</Button>
                     </StackPanel>
 
                     <StackPanel Margin="10 5" Orientation="Horizontal">
@@ -64,6 +45,19 @@
                             <ComboBoxItem>Document</ComboBoxItem>
                         </ComboBox>
                         <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesByTypeCommand}" ToolTip="Seach files by type" VerticalAlignment="Center">Search</Button>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="10 5">
+                        <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="File date:" VerticalAlignment="Center"/>
+                        <DatePicker Width="105" Margin="3 0" VerticalAlignment="center" Text="Start" IsTodayHighlighted="True" SelectedDate="{Binding SearchStartDate}" FirstDayOfWeek="Monday"/>
+                        <DatePicker Width="105" Margin="3 0" VerticalAlignment="center" Text="End" IsTodayHighlighted="True" SelectedDate="{Binding SearchEndDate}" FirstDayOfWeek="Monday"/>
+                        <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesByDateCommand}" ToolTip="Seach files between dates" VerticalAlignment="Center">Search</Button>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="10 5">
+                        <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="Random files:" VerticalAlignment="Center"/>
+                        <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3 0" Width="100" VerticalAlignment="Center" Text="{Binding NumRandomFiles}"/>
+                        <Button Style="{StaticResource NormalButton}" Command="{Binding FindRandomFilesCommand}" ToolTip="Search random files">Search</Button>
                     </StackPanel>
                 </WrapPanel>
             </TabItem>
@@ -164,6 +158,18 @@
                     <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3" Width="50" VerticalAlignment="Center" Text="{Binding SearchFileGpsRadius}" ToolTip="Radius in meters"/>
                     <Button Margin="15 5 5 5" Style="{StaticResource NormalButton}" Command="{Binding FindFilesByGpsPositionCommand}" IsEnabled="{Binding SearchFileGpsPosition, Converter={StaticResource StringContentToBoolConverter}}" ToolTip="Seach files in specified area" VerticalAlignment="Center">Search</Button>
                 </StackPanel>
+            </TabItem>
+            <TabItem Style="{StaticResource PageTabItem}">
+                <TabItem.Header>
+                    <TextBlock Text="Advanced" Style="{StaticResource PageTabItemText}" />
+                </TabItem.Header>
+                <WrapPanel>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="File list:" VerticalAlignment="Center"/>
+                        <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3 0" Width="100" VerticalAlignment="Center" Text="{Binding FileListSearch}" ToolTip="file1;file2;..."/>
+                        <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesFromListCommand}" ToolTip="Search by file list">Search</Button>
+                    </StackPanel>
+                </WrapPanel>
             </TabItem>
             <TabItem Style="{StaticResource PageTabItem}">
                 <TabItem.Header>
