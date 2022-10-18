@@ -208,11 +208,11 @@
                         <CheckBox Style="{StaticResource PageInnerCheckBox}" Margin="3" IsChecked="{Binding ExportIncludesFiles}">
                             <TextBlock Style="{StaticResource PageInnerTextBlock}">Search result files</TextBlock>
                         </CheckBox>
-                        <CheckBox Style="{StaticResource PageInnerCheckBox}" Margin="15,3,3,3" IsChecked="{Binding ExportIncludesHtml}">
-                            <TextBlock Style="{StaticResource PageInnerTextBlock}">HTML with meta-data</TextBlock>
-                        </CheckBox>
                         <CheckBox Style="{StaticResource PageInnerCheckBox}" Margin="15,3,3,3" IsChecked="{Binding ExportIncludesM3u}">
                             <TextBlock Style="{StaticResource PageInnerTextBlock}">M3U playlist</TextBlock>
+                        </CheckBox>
+                        <CheckBox Style="{StaticResource PageInnerCheckBox}" Margin="3" IsChecked="{Binding ExportIncludesHtml}">
+                            <TextBlock Style="{StaticResource PageInnerTextBlock}">HTML with meta-data and search result files</TextBlock>
                         </CheckBox>
                         <CheckBox Style="{StaticResource PageInnerCheckBox}" Margin="3" IsChecked="{Binding ExportIncludesFilesWithMetaData}">
                             <TextBlock Style="{StaticResource PageInnerTextBlock}">Search result files with meta-data</TextBlock>

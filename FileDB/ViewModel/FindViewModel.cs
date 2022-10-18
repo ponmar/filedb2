@@ -248,21 +248,12 @@ public partial class FindViewModel : ObservableObject
     {
         if (!value)
         {
-            ExportIncludesHtml = false;
             ExportIncludesM3u = false;
         }
     }
 
     [ObservableProperty]
     private bool exportIncludesHtml = true;
-
-    partial void OnExportIncludesHtmlChanged(bool value)
-    {
-        if (value)
-        {
-            ExportIncludesFiles = true;
-        }
-    }
 
     [ObservableProperty]
     private bool exportIncludesM3u = true;
