@@ -97,7 +97,7 @@
                     <ToggleButton Grid.RowSpan="2" Margin="0" Style="{StaticResource NavigationToggleButton}" IsChecked="{Binding Maximize}" Content="&#x1F5B5;" ToolTip="Maximize" IsEnabled="{Binding HasNonEmptySearchResult}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding Maximize, Converter={StaticResource NegatedBooleanToVisibilityConverter}}">
-                    <view:FileCategorizationHistory VerticalAlignment="Top"/>
+                    <view:FileCategorizationHistory VerticalAlignment="Top" Margin="0,0,10,0"/>
                     <view:FileCategorization VerticalAlignment="Top"/>
                 </StackPanel>
             </StackPanel>
