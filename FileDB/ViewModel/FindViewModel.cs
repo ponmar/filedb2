@@ -329,6 +329,7 @@ public partial class FindViewModel : ObservableObject
         SearchResultHistory.Add(searchResult!);
 
         OnPropertyChanged(nameof(FindFilesFromHistoryEnabled));
+        OnPropertyChanged(nameof(SearchResultHistory));
     }
 
     [ObservableProperty]
