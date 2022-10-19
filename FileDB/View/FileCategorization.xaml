@@ -3,7 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:FileDB.View" xmlns:viewmodel="clr-namespace:FileDB.ViewModel" xmlns:converters="clr-namespace:FileDB.Converters" d:DataContext="{d:DesignInstance Type=viewmodel:FindViewModel}"
+             xmlns:local="clr-namespace:FileDB.View"
+             xmlns:viewmodel="clr-namespace:FileDB.ViewModel"
+             xmlns:converters="clr-namespace:FileDB.Converters"
+             d:DataContext="{d:DesignInstance Type=viewmodel:FindViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
@@ -15,7 +18,7 @@
         <converters:StringContentToBoolConverter x:Key="StringContentToBoolConverter"/>
     </UserControl.Resources>
 
-    <Border Margin="0 0 0 20" Style="{StaticResource BorderGroup}" Visibility="{Binding ReadWriteMode, Converter={StaticResource BoolToVis}}">
+    <Border Style="{StaticResource BorderGroup}" Visibility="{Binding ReadWriteMode, Converter={StaticResource BoolToVis}}">
         <Expander Style="{StaticResource Expander}" Header="Update" Margin="5" IsExpanded="False">
             <StackPanel Orientation="Vertical">
                 <Grid>
@@ -61,7 +64,7 @@
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
                     <TextBlock Style="{StaticResource PageInnerTextBlock}" Grid.Row="0" Grid.Column="0" Text="&#x1F4DD;" VerticalAlignment="Center" Margin="5" ToolTip="File description"/>
-                    <TextBox Style="{StaticResource PageInnerTextBox}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Text="{Binding NewFileDescription}" ToolTip="File description" TextWrapping="Wrap" AcceptsReturn="True"/>
+                    <TextBox Style="{StaticResource PageInnerTextBox}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Text="{Binding NewFileDescription}" ToolTip="File description" TextWrapping="Wrap" AcceptsReturn="True" MaxWidth="200"/>
                     <Button Grid.Row="0" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetFileDescriptionCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip="Set file description">Set</Button>
 
                     <TextBlock Style="{StaticResource PageInnerTextBlock}" Grid.Row="1" Grid.Column="0" Text="&#x1F4C5;" VerticalAlignment="Center" Margin="5" ToolTip="File date &amp; time"/>
@@ -83,31 +86,6 @@
                     <Button Grid.Column="2" Margin="5,0,0,0" Style="{StaticResource NormalButton}" ToolTip="Rotate 90 degrees counter clockwise" Command="{Binding RotateFileCounterClockwiseCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" Width="25">&#8634;</Button>
                     <Button Grid.Column="3" Margin="5,0,0,0" Style="{StaticResource NormalButton}" ToolTip="Reload orientation from Exif data" Command="{Binding UpdateFileOrientationFromMetaDataCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" Width="25">x</Button>
                 </Grid>
-
-                <ListView ItemsSource="{Binding UpdateHistoryItems}" Visibility="{Binding HasNonEmptySearchResult, Converter={StaticResource BoolToVis}}" Background="Transparent" BorderThickness="0" Grid.IsSharedSizeScope="True" x:Name="HistoryItemsListView">
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="Focusable" Value="false"/>
-                        </Style>
-                    </ListView.ItemContainerStyle>
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" SharedSizeGroup="column1"/>
-                                    <ColumnDefinition Width="Auto" SharedSizeGroup="column2"/>
-                                    <ColumnDefinition Width="Auto" SharedSizeGroup="column3"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                <TextBlock Grid.Column="0" Style="{StaticResource PageInnerTextBlock}" Text="{Binding FunctionKeyText}" FontWeight="Bold" Margin="3" VerticalAlignment="Center"/>
-                                <TextBlock Grid.Column="1" Style="{StaticResource PageInnerTextBlock}" Text="{Binding Description}" Margin="3" VerticalAlignment="Center"/>
-                                <Button Grid.Column="2" Style="{StaticResource NormalButton}" Command="{Binding ElementName=HistoryItemsListView, Path=DataContext.RemoveHistoryItemCommand}" CommandParameter="{Binding}" Margin="3" VerticalAlignment="Center">X</Button>
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
             </StackPanel>
         </Expander>
     </Border>

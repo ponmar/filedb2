@@ -432,6 +432,8 @@ public partial class FindViewModel : ObservableObject
 
     public ObservableCollection<UpdateHistoryItem> UpdateHistoryItems { get; } = new();
 
+    public bool HasUpdateHistory => UpdateHistoryItems.Count > 0;
+
     private readonly DispatcherTimer slideshowTimer = new();
 
     private readonly Model.Model model = Model.Model.Instance;
@@ -1726,6 +1728,7 @@ public partial class FindViewModel : ObservableObject
             if (item == null)
             {
                 UpdateHistoryItems.Add(new UpdateHistoryItem(type, itemId, itemName, i));
+                OnPropertyChanged(nameof(HasUpdateHistory));
                 return;
             }
         }
@@ -1793,6 +1796,9 @@ public partial class FindViewModel : ObservableObject
     [RelayCommand]
     private void RemoveHistoryItem(UpdateHistoryItem itemToRemove)
     {
-        UpdateHistoryItems.Remove(itemToRemove);
+        if (UpdateHistoryItems.Remove(itemToRemove))
+        {
+            OnPropertyChanged(nameof(HasUpdateHistory));
+        }
     }
 }
