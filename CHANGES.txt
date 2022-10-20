@@ -1,3 +1,16 @@
+3.3:
+* Add search by file type (picture/movie/document)
+* Add GPS position search via selected location and via current file
+* Replace Browse tab at the search page with a browse button at the basic tab that opens a new dialog
+* Move file list search to new advanced tab
+* Move file update history to an own expandable area to use less vertical space
+* Exported files directory structure changed
+* Add database query to find files with specified file extension
+* Layout improvements in all search criteria tabs
+* HTML export does not depend on files option
+* Rename Import page to Files
+* Fix search history not being shown
+
 3.2:
 * Add button for copying current file id
 * Set initial focus to first checkbox in add person/location/tag dialogs to avoid extra clicks
