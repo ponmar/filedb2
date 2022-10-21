@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Configuration;
 using FileDB.Sorters;
 using FileDB.Validators;
+using FileDB.View;
 using FileDBInterface.DbAccess;
 using FileDBInterface.Exceptions;
 using Microsoft.Win32;
@@ -329,28 +331,16 @@ public partial class SettingsViewModel : ObservableObject
     [RelayCommand]
     public void CreateDatabase()
     {
-        if (string.IsNullOrEmpty(Database))
+        var window = new CreateDatabaseWindow
         {
-            Dialogs.ShowErrorDialog("No database filename specified");
-            return;
-        }
+            Owner = Application.Current.MainWindow
+        };
+        window.ShowDialog();
 
-        if (File.Exists(Database))
+        var viewModel = (CreateDatabaseViewModel)window.DataContext;
+        if (!string.IsNullOrEmpty(viewModel.CreatedDatabasePath))
         {
-            Dialogs.ShowErrorDialog($"Database {Database} already exists");
-            return;
-        }
-
-        if (Dialogs.ShowConfirmDialog($"Create database {Database}?"))
-        {
-            try
-            {
-                DatabaseUtils.CreateDatabase(Database);
-            }
-            catch (DatabaseWrapperException e)
-            {
-                Dialogs.ShowErrorDialog(e.Message);
-            }
+            Database = viewModel.CreatedDatabasePath;
         }
     }
 }

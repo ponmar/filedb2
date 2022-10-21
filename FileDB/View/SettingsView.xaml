@@ -45,7 +45,7 @@
                         <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageTextBlock}">Database:</TextBlock>
                         <TextBox Grid.Row="1" Grid.Column="1" Width="250" Style="{StaticResource PageTextBox}" Text="{Binding Database}"></TextBox>
                         <Button Grid.Row="1" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding BrowseDatabaseCommand}">Browse...</Button>
-                        <Button Grid.Row="1" Grid.Column="3" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding CreateDatabaseCommand}">Create database...</Button>
+                        <Button Grid.Row="1" Grid.Column="3" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding CreateDatabaseCommand}">Create...</Button>
 
                         <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource PageTextBlock}">Files root directory:</TextBlock>
                         <TextBox Grid.Row="2" Grid.Column="1" Width="250" Style="{StaticResource PageTextBox}" Text="{Binding FilesRootDirectory}"></TextBox>
