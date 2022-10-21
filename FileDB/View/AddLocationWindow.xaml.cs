@@ -15,11 +15,16 @@ public partial class AddLocationWindow : Window
         InitializeComponent();
         DataContext = new AddLocationViewModel(locationId);
 
-        model.LocationsUpdated += Model_LocationsUpdated;
+        model.CloseModalDialogRequested += Model_CloseModalDialogRequested;
     }
 
-    private void Model_LocationsUpdated(object? sender, System.EventArgs e)
+    private void Model_CloseModalDialogRequested(object? sender, System.EventArgs e)
     {
         Close();
+    }
+
+    private void Window_Closed(object sender, System.EventArgs e)
+    {
+        model.CloseModalDialogRequested -= Model_CloseModalDialogRequested;
     }
 }

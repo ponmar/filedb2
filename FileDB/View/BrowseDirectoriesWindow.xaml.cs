@@ -34,5 +34,10 @@ namespace FileDB.View
         {
             Close();
         }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            model.CloseModalDialogRequested -= Model_CloseModalDialogRequested;
+        }
     }
 }

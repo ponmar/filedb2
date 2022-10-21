@@ -15,11 +15,16 @@ public partial class AddPersonWindow : Window
         InitializeComponent();
         DataContext = new AddPersonViewModel(personId);
 
-        model.PersonsUpdated += Model_PersonsUpdated;
+        model.CloseModalDialogRequested += Model_CloseModalDialogRequested;
     }
 
-    private void Model_PersonsUpdated(object? sender, System.EventArgs e)
+    private void Model_CloseModalDialogRequested(object? sender, System.EventArgs e)
     {
         Close();
+    }
+
+    private void Window_Closed(object sender, System.EventArgs e)
+    {
+        model.CloseModalDialogRequested -= Model_CloseModalDialogRequested;
     }
 }

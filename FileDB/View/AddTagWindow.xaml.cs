@@ -15,11 +15,16 @@ public partial class AddTagWindow : Window
         InitializeComponent();
         DataContext = new AddTagViewModel(tagId);
 
-        model.TagsUpdated += Model_TagsUpdated;
+        model.CloseModalDialogRequested += Model_CloseModalDialogRequested;
     }
 
-    private void Model_TagsUpdated(object? sender, System.EventArgs e)
+    private void Model_CloseModalDialogRequested(object? sender, System.EventArgs e)
     {
         Close();
+    }
+
+    private void Window_Closed(object sender, System.EventArgs e)
+    {
+        model.CloseModalDialogRequested -= Model_CloseModalDialogRequested;
     }
 }

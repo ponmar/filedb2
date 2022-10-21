@@ -8,6 +8,7 @@
         Title="{Binding Title}"
         SizeToContent="WidthAndHeight"
         ResizeMode="NoResize"
+        Closed="Window_Closed"
         WindowStartupLocation="CenterOwner" Style="{StaticResource Window}"
         FocusManager.FocusedElement="{Binding ElementName=TextBoxWithInitialFocus}">
     <StackPanel Orientation="Vertical">

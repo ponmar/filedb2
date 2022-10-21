@@ -57,6 +57,7 @@ public partial class AddTagViewModel : ObservableObject
                 AffectedTag = model.DbAccess.GetTags().First(x => x.Name == tag.Name);
             }
 
+            model.RequestCloseModalDialog();
             model.NotifyTagsUpdated();
         }
         catch (DataValidationException e)

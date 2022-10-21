@@ -107,6 +107,7 @@ public partial class AddPersonViewModel : ObservableObject
                 AffectedPerson = model.DbAccess.GetPersons().First(x => x.Firstname == person.Firstname && x.Lastname == person.Lastname && x.DateOfBirth == person.DateOfBirth && x.Deceased == person.Deceased && x.Description == person.Description);
             }
 
+            model.RequestCloseModalDialog();
             model.NotifyPersonsUpdated();
         }
         catch (DataValidationException e)
