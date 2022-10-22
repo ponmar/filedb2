@@ -207,17 +207,10 @@
             </TabItem>
             <TabItem Style="{StaticResource PageTabItem}">
                 <TabItem.Header>
-                    <TextBlock Text="History" Style="{StaticResource PageTabItemText}" />
+                    <TextBlock Text="Chain" Style="{StaticResource PageTabItemText}" />
                 </TabItem.Header>
                 <StackPanel Orientation="Vertical">
                     <TextBlock Style="{StaticResource PageTextBlock}" Visibility="{Binding SearchResultHistory, Converter={StaticResource EnumerationEmptyToVisibilityConverter}}" Text="No search history available."/>
-                    <ListView Margin="5" ItemsSource="{Binding SearchResultHistory}" Visibility="{Binding SearchResultHistory, Converter={StaticResource EnumerationToVisibilityConverter}}" Background="Transparent" BorderThickness="0" Width="auto">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{Binding Name}" Margin="2"/>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
                     <StackPanel Orientation="Horizontal">
                         <Button Margin="5" Style="{StaticResource NormalButton}" ToolTip="Combine last two searches" Command="{Binding FindFilesFromUnionCommand}" IsEnabled="{Binding FindFilesFromHistoryEnabled}">Union</Button>
                         <Button Margin="5" Style="{StaticResource NormalButton}" ToolTip="Combine last two searches" Command="{Binding FindFilesFromIntersectionCommand}" IsEnabled="{Binding FindFilesFromHistoryEnabled}">Intersection</Button>

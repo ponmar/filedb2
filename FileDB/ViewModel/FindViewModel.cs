@@ -264,6 +264,18 @@ public partial class FindViewModel : ObservableObject
 
     public ObservableCollection<SearchResult> SearchResultHistory { get; } = new();
 
+    [ObservableProperty]
+    private SearchResult? searchResultHistorySelection;
+
+    partial void OnSearchResultHistorySelectionChanged(SearchResult? value)
+    {
+        if (value != null)
+        {
+            StopSlideshow();
+            SearchResult = value;
+        }
+    }
+
     private SearchResult? SearchResult
     {
         get => searchResult;
@@ -272,13 +284,21 @@ public partial class FindViewModel : ObservableObject
             if (!EqualityComparer<SearchResult>.Default.Equals(searchResult, value))
             {
                 searchResult = value;
+
+                var updateViaHistorySelection = searchResult == searchResultHistorySelection;
+                SearchResultHistorySelection = null;
+
                 if (searchResult != null)
                 {
                     if (searchResult.Count > 0)
                     {
                         LoadFile(0);
                         SortSearchResult(false);
-                        AddSearchResultToHistory();
+                        if (!updateViaHistorySelection)
+                        {
+                            // Searching via history should not add more items to history
+                            AddSearchResultToHistory();
+                        }
                     }
                     else
                     {
