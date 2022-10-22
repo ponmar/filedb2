@@ -15,14 +15,40 @@ using FileDBInterface.Model;
 using TextCopy;
 using FileDBInterface.DbAccess;
 using FileDB.Configuration;
-using FileDB.Export;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDBInterface.Validators;
+using FileDB.Extensions;
 
 namespace FileDB.ViewModel;
 
 public enum RotationDirection { Clockwise, CounterClockwise }
+
+[AttributeUsage(AttributeTargets.Field)]
+public class FileExtensionAttribute : Attribute
+{
+    public string[] FileExtensions { get; }
+
+    public FileExtensionAttribute(string[] fileExtensions)
+    {
+        FileExtensions = fileExtensions;
+    }
+}
+
+public enum FileType
+{
+    [FileExtension(new string[] { ".jpg", ".png", ".bmp", ".gif" })]
+    Picture,
+
+    [FileExtension(new string[] { ".mkv", ".avi", ".mpg", ".mov", ".mp4" })]
+    Movie,
+
+    [FileExtension(new string[] { ".doc", ".pdf", ".txt" })]
+    Document,
+
+    [FileExtension(new string[] { ".mp3", ".wav" })]
+    Audio,
+}
 
 public interface IImagePresenter
 {
@@ -136,21 +162,21 @@ public partial class FindViewModel : ObservableObject
     [ObservableProperty]
     private string? searchPattern;
 
-    public string SearchBySexSelection
-    {
-        get => searchBySexSelection;
-        set => SetProperty(ref searchBySexSelection, value.Split(" ")[1]);
-    }
-    private string searchBySexSelection = Sex.NotKnown.ToString();
-
     [ObservableProperty]
     private DateTime searchStartDate = DateTime.Now;
 
     [ObservableProperty]
     private DateTime searchEndDate = DateTime.Now;
 
+    public static IEnumerable<Sex> PersonSexValues => Enum.GetValues<Sex>().OrderBy(x => x.ToString());
+
     [ObservableProperty]
-    private string? selectedFileType = null;
+    private Sex? searchBySexSelection;
+
+    public static IEnumerable<FileType> FileTypes => Enum.GetValues<FileType>().OrderBy(x => x.ToString());
+
+    [ObservableProperty]
+    private FileType? selectedFileType = null;
 
     [ObservableProperty]
     private LocationToUpdate? selectedLocationForPositionSearch;
@@ -775,8 +801,10 @@ public partial class FindViewModel : ObservableObject
     private void FindFilesBySex()
     {
         StopSlideshow();
-        var sex = Enum.Parse<Sex>(searchBySexSelection);
-        SearchResult = new SearchResult(model.DbAccess.SearchFilesBySex(sex));
+        if (SearchBySexSelection != null)
+        {
+            SearchResult = new SearchResult(model.DbAccess.SearchFilesBySex(SearchBySexSelection.Value));
+        }
     }
 
     [RelayCommand]
@@ -789,21 +817,16 @@ public partial class FindViewModel : ObservableObject
     [RelayCommand]
     private void FindFilesByType()
     {
+        StopSlideshow();
         if (SelectedFileType == null)
         {
             return;
         }
 
-        string fileType = SelectedFileType.Split(" ")[1];
-        List<string> extensions = fileType switch
-        {
-            "Picture" => new() { ".jpg", ".png", ".bmp", ".gif" },
-            "Movie" => new() { ".mkv", ".avi", ".mpg", ".mov", ".mp4" },
-            "Document" => new() { ".doc", ".pdf", ".txt" },
-            _ => throw new NotImplementedException(),
-        };
+        var fileExtensions = SelectedFileType.GetAttribute<FileExtensionAttribute>().FileExtensions;
+        
         var result = new List<FilesModel>();
-        foreach (var extension in extensions)
+        foreach (var extension in fileExtensions)
         {
             result.AddRange(model.DbAccess.SearchFilesByExtension(extension));
         }

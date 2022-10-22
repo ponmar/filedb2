@@ -39,11 +39,7 @@
 
                     <StackPanel Margin="10 5" Orientation="Horizontal">
                         <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="File type:" VerticalAlignment="Center"/>
-                        <ComboBox Margin="3 0" Style="{StaticResource PageInnerComboBox}" Width="100" VerticalAlignment="Center" SelectedValue="{Binding SelectedFileType}">
-                            <ComboBoxItem>Picture</ComboBoxItem>
-                            <ComboBoxItem>Movie</ComboBoxItem>
-                            <ComboBoxItem>Document</ComboBoxItem>
-                        </ComboBox>
+                        <ComboBox ItemsSource="{Binding FileTypes}" Margin="3 0" Style="{StaticResource PageInnerComboBox}" Width="100" VerticalAlignment="Center" SelectedValue="{Binding SelectedFileType}"/>
                         <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesByTypeCommand}" ToolTip="Seach files by type" VerticalAlignment="Center">Search</Button>
                     </StackPanel>
 
@@ -110,12 +106,7 @@
 
                         <StackPanel Orientation="Horizontal" Margin="10 5">
                             <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="Person sex:" Margin="3 0" VerticalAlignment="Center" ToolTip="ISO/IEC 5218"/>
-                            <ComboBox Style="{StaticResource PageInnerComboBox}" Margin="3 0" VerticalAlignment="Center" ToolTip="ISO/IEC 5218" SelectedItem="{Binding SearchBySexSelection}" Width="100">
-                                <ComboBoxItem IsSelected="True">NotKnown</ComboBoxItem>
-                                <ComboBoxItem>Male</ComboBoxItem>
-                                <ComboBoxItem>Female</ComboBoxItem>
-                                <ComboBoxItem>NotApplicable</ComboBoxItem>
-                            </ComboBox>
+                            <ComboBox ItemsSource="{Binding PersonSexValues}" Style="{StaticResource PageInnerComboBox}" Margin="3 0" VerticalAlignment="Center" ToolTip="ISO/IEC 5218" SelectedValue="{Binding SearchBySexSelection}" Width="100"/>
                             <Button Margin="3 0" Style="{StaticResource NormalButton}" Command="{Binding FindFilesBySexCommand}" ToolTip="Search by sex (ISO/IEC 5218)">Search</Button>
                         </StackPanel>
                     </StackPanel>
