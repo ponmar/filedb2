@@ -3,9 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:FileDB.View" xmlns:viewmodel="clr-namespace:FileDB.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:FindViewModel}"
+             xmlns:local="clr-namespace:FileDB.View"
+             xmlns:viewmodel="clr-namespace:FileDB.ViewModel"
+             d:DataContext="{d:DesignInstance Type=viewmodel:FindViewModel}"
+             xmlns:converters="clr-namespace:FileDB.Converters" 
              mc:Ignorable="d" 
              d:DesignHeight="130" d:DesignWidth="1000">
+    <UserControl.Resources>
+        <converters:EnumerationHasContentConverter x:Key="EnumerationHasContentConverter"/>
+    </UserControl.Resources>
+    
     <Border Style="{StaticResource BorderGroup}">
         <Grid>
             <Grid.ColumnDefinitions>
@@ -19,7 +26,7 @@
 
             <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical" Margin="10" VerticalAlignment="Center">
                 <TextBlock Style="{StaticResource PageInnerTextBlock}" Margin="0,0,0,5">Search history:</TextBlock>
-                <ComboBox Style="{StaticResource PageInnerComboBox}" ItemsSource="{Binding SearchResultHistory}" SelectedItem="{Binding SearchResultHistorySelection}" DisplayMemberPath="Name" Width="75"/>
+                <ComboBox Style="{StaticResource PageInnerComboBox}" ItemsSource="{Binding SearchResultHistory}" SelectedItem="{Binding SearchResultHistorySelection}" DisplayMemberPath="Name" Width="75" IsEnabled="{Binding SearchResultHistory, Converter={StaticResource EnumerationHasContentConverter}}"/>
             </StackPanel>
 
             <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical" Margin="5" VerticalAlignment="Center">
