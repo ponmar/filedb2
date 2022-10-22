@@ -38,27 +38,7 @@ namespace FileDB.ViewModel
         [ObservableProperty]
         private IFolder? selectedFolder;
 
-        public string? SelectedDirectoryPath
-        {
-            get
-            {
-                if (SelectedFolder == null)
-                {
-                    return null;
-                }
-
-                var path = SelectedFolder.Path;
-                if (path.StartsWith(RootFolderName))
-                {
-                    path = path.Substring(RootFolderName.Length);
-                }
-                if (path.StartsWith("/"))
-                {
-                    path = path.Substring("/".Length);
-                }
-                return path;
-            }
-        }
+        public string? SelectedDirectoryPath { get; private set; }
 
         private readonly Model.Model model = Model.Model.Instance;
 
@@ -111,6 +91,20 @@ namespace FileDB.ViewModel
         private void SelectFolder()
         {
             model.RequestCloseModalDialog();
+
+            if (SelectedFolder != null)
+            {
+                var path = SelectedFolder.Path;
+                if (path.StartsWith(RootFolderName))
+                {
+                    path = path.Substring(RootFolderName.Length);
+                }
+                if (path.StartsWith("/"))
+                {
+                    path = path.Substring("/".Length);
+                }
+                SelectedDirectoryPath = path;
+            }
         }
     }
 }
