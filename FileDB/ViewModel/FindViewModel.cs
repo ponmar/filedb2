@@ -1136,17 +1136,17 @@ public partial class FindViewModel : ObservableObject
             }
             catch (WebException e)
             {
-                CurrentFileLoadError = $"Image loading error: {e.Message}";
+                CurrentFileLoadError = $"Image loading error:\n{e.Message}";
                 model.ImagePresenter!.CloseImage();
             }
             catch (IOException e)
             {
-                CurrentFileLoadError = $"Image loading error: {e.Message}";
+                CurrentFileLoadError = $"Image loading error:\n{e.Message}";
                 model.ImagePresenter!.CloseImage();
             }
             catch (NotSupportedException e)
             {
-                CurrentFileLoadError = $"File format not supported: {e.Message}";
+                CurrentFileLoadError = $"File format not supported:\n{e.Message}";
                 model.ImagePresenter!.CloseImage();
             }
         }
