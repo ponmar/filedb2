@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -7,9 +6,6 @@ using FileDB.Configuration;
 using FileDB.Sorters;
 using FileDB.Validators;
 using FileDB.View;
-using FileDBInterface.DbAccess;
-using FileDBInterface.Exceptions;
-using Microsoft.Win32;
 
 namespace FileDB.ViewModel;
 

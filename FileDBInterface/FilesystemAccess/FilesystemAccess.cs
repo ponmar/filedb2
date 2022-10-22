@@ -7,7 +7,6 @@ using FileDBInterface.Model;
 using log4net;
 using MetadataExtractor;
 using MetadataExtractor.Formats.Exif;
-using MetadataExtractor.Formats.Iptc;
 
 namespace FileDBInterface.FilesystemAccess
 {
