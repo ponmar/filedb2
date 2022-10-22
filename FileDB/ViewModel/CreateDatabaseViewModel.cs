@@ -22,7 +22,11 @@ namespace FileDB.ViewModel
         [RelayCommand]
         private void Select()
         {
-            Dialogs.ShowErrorDialog("Not implemented");
+            var result = Dialogs.SelectNewFileDialog("Select new database filename", "db", "db files (*.db)|*.db");
+            if (result != null)
+            {
+                DatabasePath = result;
+            }
         }
 
         [RelayCommand]

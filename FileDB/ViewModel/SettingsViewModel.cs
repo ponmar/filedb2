@@ -293,38 +293,20 @@ public partial class SettingsViewModel : ObservableObject
     [RelayCommand]
     private void BrowseDatabase()
     {
-        var fileDialog = new OpenFileDialog()
+        var result = Dialogs.BrowseExistingFileDialog(@"c:\", $"{Utils.ApplicationName} database files (*.db)|*.db");
+        if (result != null)
         {
-            Filter = $"{Utils.ApplicationName} database files (*.db)|*.db",
-            InitialDirectory = @"c:\",
-        };
-        if (fileDialog.ShowDialog() == true)
-        {
-            Database = fileDialog.FileName;
+            Database = result;
         }
     }
 
     [RelayCommand]
     private void BrowseFilesRootDirectory()
     {
-        var fileDialog = new OpenFileDialog()
+        var result = Dialogs.BrowseExistingDirectory(@"c:\", "Any file within files root directory (*.*)|*.*");
+        if (result != null)
         {
-            Filter = "Any file within files root directory (*.*)|*.*",
-            InitialDirectory = @"c:\",
-            ValidateNames = false,
-            CheckFileExists = false,
-        };
-        if (fileDialog.ShowDialog() == true)
-        {
-            var dir = Path.GetDirectoryName(fileDialog.FileName);
-            if (Directory.Exists(dir))
-            {
-                FilesRootDirectory = dir;
-            }
-            else
-            {
-                Dialogs.ShowErrorDialog($"No such directory: {dir}");
-            }
+            FilesRootDirectory = result;
         }
     }
 
