@@ -54,8 +54,9 @@
 
             <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Vertical" VerticalAlignment="Center" Margin="10">
                 <StackPanel Orientation="Horizontal" Margin="0,5" HorizontalAlignment="Right">
-                    <Button Style="{StaticResource NormalButton}" Command="{Binding ExportFileListCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip="Copy search result file list">Copy</Button>
-                    <Button Style="{StaticResource NormalButton}" Command="{Binding ClearSearchCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" Margin="5,0,0,0" Content="X" ToolTip="Close search result" HorizontalAlignment="Right"/>
+                    <Button Style="{StaticResource NormalButton}" Command="{Binding ExportFileListCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip="Copy search result file list">Export...</Button>
+                    <Button Style="{StaticResource NormalButton}" Command="{Binding CopyFileListCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" Margin="5,0" ToolTip="Copy search result file list">Copy</Button>
+                    <Button Style="{StaticResource NormalButton}" Command="{Binding ClearSearchCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" Content="X" ToolTip="Close search result" HorizontalAlignment="Right"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,5">
                     <TextBlock Style="{StaticResource PageInnerTextBlock}" VerticalAlignment="Center" Margin="0 0 5 0">Sort by:</TextBlock>

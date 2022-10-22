@@ -170,43 +170,6 @@
             </TabItem>
             <TabItem Style="{StaticResource PageTabItem}">
                 <TabItem.Header>
-                    <TextBlock Text="Export" Style="{StaticResource PageTabItemText}" />
-                </TabItem.Header>
-
-                <WrapPanel Orientation="Horizontal">
-                    <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="10 5">
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Margin="3" Text="Header:" VerticalAlignment="Center"/>
-                            <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3" Width="200" VerticalAlignment="Center" Text="{Binding ExportFilesHeader}" ToolTip="Copy files to destination directory"/>
-                        </StackPanel>
-
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Margin="3 0" Text="Destination directory:" VerticalAlignment="Center"/>
-                            <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3 0" Width="200" VerticalAlignment="Center" Text="{Binding ExportFilesDestinationDirectory, UpdateSourceTrigger=PropertyChanged}" ToolTip="Copy files to destination directory"/>
-                        </StackPanel>
-                    </StackPanel>
-                    <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="10 5">
-                        <CheckBox Style="{StaticResource PageInnerCheckBox}" Margin="3" IsChecked="{Binding ExportIncludesFiles}">
-                            <TextBlock Style="{StaticResource PageInnerTextBlock}">Search result files</TextBlock>
-                        </CheckBox>
-                        <CheckBox Style="{StaticResource PageInnerCheckBox}" Margin="15,3,3,3" IsChecked="{Binding ExportIncludesM3u}">
-                            <TextBlock Style="{StaticResource PageInnerTextBlock}">M3U playlist</TextBlock>
-                        </CheckBox>
-                        <CheckBox Style="{StaticResource PageInnerCheckBox}" Margin="3" IsChecked="{Binding ExportIncludesHtml}">
-                            <TextBlock Style="{StaticResource PageInnerTextBlock}">HTML with meta-data and search result files</TextBlock>
-                        </CheckBox>
-                        <CheckBox Style="{StaticResource PageInnerCheckBox}" Margin="3" IsChecked="{Binding ExportIncludesFilesWithMetaData}">
-                            <TextBlock Style="{StaticResource PageInnerTextBlock}">Search result files with meta-data</TextBlock>
-                        </CheckBox>
-                        <CheckBox Style="{StaticResource PageInnerCheckBox}" Margin="3" IsChecked="{Binding ExportIncludesJson}">
-                            <TextBlock Style="{StaticResource PageInnerTextBlock}">Search result meta-data (JSON)</TextBlock>
-                        </CheckBox>
-                    </StackPanel>
-                    <Button Margin="10 5" Style="{StaticResource NormalButton}" Command="{Binding ExportFilesCommand}" IsEnabled="{Binding ExportEnabled}" HorizontalAlignment="Left" VerticalAlignment="Center">Export...</Button>
-                </WrapPanel>
-            </TabItem>
-            <TabItem Style="{StaticResource PageTabItem}">
-                <TabItem.Header>
                     <TextBlock Text="Chain" Style="{StaticResource PageTabItemText}" />
                 </TabItem.Header>
                 <StackPanel Orientation="Vertical">

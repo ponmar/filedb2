@@ -209,46 +209,6 @@ public partial class FindViewModel : ObservableObject
     private string? fileListSearch;
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(ExportEnabled))]
-    private string? exportFilesDestinationDirectory;
-
-    [ObservableProperty]
-    private string exportFilesHeader = $"{Utils.ApplicationName} Export";
-
-    [ObservableProperty]
-    private bool exportIncludesFiles = true;
-
-    public bool ExportEnabled => !string.IsNullOrEmpty(ExportFilesDestinationDirectory) && HasNonEmptySearchResult;
-
-    partial void OnExportIncludesFilesChanged(bool value)
-    {
-        if (!value)
-        {
-            ExportIncludesM3u = false;
-        }
-    }
-
-    [ObservableProperty]
-    private bool exportIncludesHtml = true;
-
-    [ObservableProperty]
-    private bool exportIncludesM3u = true;
-
-    partial void OnExportIncludesM3uChanged(bool value)
-    {
-        if (value)
-        {
-            ExportIncludesFiles = true;
-        }
-    }
-
-    [ObservableProperty]
-    private bool exportIncludesFilesWithMetaData = true;
-
-    [ObservableProperty]
-    private bool exportIncludesJson = true;
-
-    [ObservableProperty]
     private string? newFileDescription;
 
     [ObservableProperty]
@@ -527,7 +487,6 @@ public partial class FindViewModel : ObservableObject
         OnPropertyChanged(nameof(HasSearchResult));
         OnPropertyChanged(nameof(HasNonEmptySearchResult));
         OnPropertyChanged(nameof(SearchNumberOfHits));
-        OnPropertyChanged(nameof(ExportEnabled));
     }
 
     private void FireBrowsingEnabledEvents()
@@ -1125,60 +1084,19 @@ public partial class FindViewModel : ObservableObject
     [RelayCommand]
     private void ExportFileList()
     {
-        ClipboardService.SetText(Utils.CreateFileList(SearchResult!.Files));
+        var window = new ExportWindow
+        {
+            Owner = Application.Current.MainWindow
+        };
+        var viewModel = (ExportViewModel)window.DataContext;
+        viewModel.SearchResult = SearchResult;
+        window.ShowDialog();
     }
 
     [RelayCommand]
-    private void ExportFiles()
+    private void CopyFileList()
     {
-        if (string.IsNullOrEmpty(ExportFilesHeader))
-        {
-            Dialogs.ShowErrorDialog("No header specified");
-            return;
-        }
-
-        if (string.IsNullOrEmpty(ExportFilesDestinationDirectory))
-        {
-            Dialogs.ShowErrorDialog("No destination directory specified");
-            return;
-        }
-
-        if (!Directory.Exists(ExportFilesDestinationDirectory))
-        {
-            Dialogs.ShowErrorDialog("Destination directory does not exist");
-            return;
-        }
-
-        if (!IsDirectoryEmpty(ExportFilesDestinationDirectory))
-        {
-            Dialogs.ShowErrorDialog("Destination directory is not empty");
-            return;
-        }
-
-        var selection = new List<bool>() { ExportIncludesFiles, ExportIncludesHtml, ExportIncludesM3u, ExportIncludesFilesWithMetaData, ExportIncludesJson };
-        if (!selection.Any(x => x))
-        {
-            Dialogs.ShowErrorDialog("Nothing to export");
-            return;
-        }
-
-        if (Dialogs.ShowConfirmDialog($"Export selected data for {SearchResult!.Count} files to {ExportFilesDestinationDirectory}?"))
-        {
-            try
-            {
-                new SearchResultExporter().Export(ExportFilesDestinationDirectory, ExportFilesHeader, SearchResult.Files,
-                    ExportIncludesFiles, ExportIncludesHtml, ExportIncludesM3u, ExportIncludesFilesWithMetaData, ExportIncludesJson);
-            }
-            catch (IOException e)
-            {
-                Dialogs.ShowErrorDialog("Export error: " + e.Message);
-            }
-        }
-    }
-
-    private bool IsDirectoryEmpty(string path)
-    {
-        return !Directory.EnumerateFileSystemEntries(path).Any();
+        ClipboardService.SetText(Utils.CreateFileList(SearchResult!.Files));
     }
 
     private void LoadFile(int index)
