@@ -421,15 +421,28 @@ public partial class FindViewModel : ObservableObject
 
     private int currentFileRotation = 0;
 
+    private IEnumerable<PersonModel> currentFilePersonList = new List<PersonModel>();
+    private IEnumerable<LocationModel> currentFileLocationList = new List<LocationModel>();
+    private IEnumerable<TagModel> currentFileTagList = new List<TagModel>();
+
     #endregion
 
     public ObservableCollection<PersonToUpdate> Persons { get; } = new();
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(PersonSelected))]
+    [NotifyPropertyChangedFor(nameof(SelectedPersonCanBeAdded))]
+    [NotifyPropertyChangedFor(nameof(SelectedPersonCanBeRemoved))]
     private PersonToUpdate? selectedPersonToUpdate;
+    
+    public bool SelectedPersonCanBeAdded =>
+        SearchResultIndex != -1 &&
+        SelectedPersonToUpdate != null &&
+        !currentFilePersonList.Any(x => x.Id == SelectedPersonToUpdate.Id);
 
-    public bool PersonSelected => SelectedPersonToUpdate != null;
+    public bool SelectedPersonCanBeRemoved =>
+        SearchResultIndex != -1 &&
+        SelectedPersonToUpdate != null &&
+        currentFilePersonList.Any(x => x.Id == SelectedPersonToUpdate.Id);
 
     [ObservableProperty]
     private PersonToUpdate? selectedPersonSearch;
@@ -449,10 +462,19 @@ public partial class FindViewModel : ObservableObject
     public ObservableCollection<LocationToUpdate> LocationsWithPosition { get; } = new();
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(LocationSelected))]
+    [NotifyPropertyChangedFor(nameof(SelectedLocationCanBeAdded))]
+    [NotifyPropertyChangedFor(nameof(SelectedLocationCanBeRemoved))]
     public LocationToUpdate? selectedLocationToUpdate;
 
-    public bool LocationSelected => SelectedLocationToUpdate != null;
+    public bool SelectedLocationCanBeAdded =>
+        SearchResultIndex != -1 &&
+        SelectedLocationToUpdate != null &&
+        !currentFileLocationList.Any(x => x.Id == SelectedLocationToUpdate.Id);
+
+    public bool SelectedLocationCanBeRemoved =>
+        SearchResultIndex != -1 &&
+        SelectedLocationToUpdate != null &&
+        currentFileLocationList.Any(x => x.Id == SelectedLocationToUpdate.Id);
 
     [ObservableProperty]
     private LocationToUpdate? selectedLocationSearch;
@@ -460,10 +482,19 @@ public partial class FindViewModel : ObservableObject
     public ObservableCollection<TagToUpdate> Tags { get; } = new();
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(TagSelected))]
+    [NotifyPropertyChangedFor(nameof(SelectedTagCanBeAdded))]
+    [NotifyPropertyChangedFor(nameof(SelectedTagCanBeRemoved))]
     private TagToUpdate? selectedTagToUpdate;
 
-    public bool TagSelected => SelectedTagToUpdate != null;
+    public bool SelectedTagCanBeAdded =>
+        SearchResultIndex != -1 &&
+        SelectedTagToUpdate != null &&
+        !currentFileTagList.Any(x => x.Id == SelectedTagToUpdate.Id);
+
+    public bool SelectedTagCanBeRemoved =>
+        SearchResultIndex != -1 &&
+        SelectedTagToUpdate != null &&
+        currentFileTagList.Any(x => x.Id == SelectedTagToUpdate.Id);
 
     [ObservableProperty]
     private TagToUpdate? selectedTagSearch;
@@ -1175,6 +1206,18 @@ public partial class FindViewModel : ObservableObject
 
             var selection = SearchResult.Files[SearchResultIndex];
 
+            currentFilePersonList = model.DbAccess.GetPersonsFromFile(selection.Id);
+            OnPropertyChanged(nameof(SelectedPersonCanBeAdded));
+            OnPropertyChanged(nameof(SelectedPersonCanBeRemoved));
+
+            currentFileLocationList = model.DbAccess.GetLocationsFromFile(selection.Id);
+            OnPropertyChanged(nameof(SelectedLocationCanBeAdded));
+            OnPropertyChanged(nameof(SelectedLocationCanBeRemoved));
+
+            currentFileTagList = model.DbAccess.GetTagsFromFile(selection.Id);
+            OnPropertyChanged(nameof(SelectedTagCanBeAdded));
+            OnPropertyChanged(nameof(SelectedTagCanBeRemoved));
+
             CurrentFileInternalDirectoryPath = Path.GetDirectoryName(selection.Path)!.Replace(@"\", "/");
             CurrentFileInternalPath = selection.Path;
             CurrentFilePath = model.FilesystemAccess.ToAbsolutePath(selection.Path);
@@ -1271,22 +1314,19 @@ public partial class FindViewModel : ObservableObject
 
     private string GetFilePersonsString(FilesModel selection)
     {
-        var persons = model.DbAccess.GetPersonsFromFile(selection.Id);
-        var personStrings = persons.Select(p => $"{p.Firstname} {p.Lastname}{Utils.GetPersonAgeInFileString(selection.Datetime, p.DateOfBirth)}");
+        var personStrings = currentFilePersonList.Select(p => $"{p.Firstname} {p.Lastname}{Utils.GetPersonAgeInFileString(selection.Datetime, p.DateOfBirth)}");
         return string.Join("\n", personStrings);
     }
 
     private string GetFileLocationsString(int fileId)
     {
-        var locations = model.DbAccess.GetLocationsFromFile(fileId);
-        var locationStrings = locations.Select(l => l.Name);
+        var locationStrings = currentFileLocationList.Select(l => l.Name);
         return string.Join("\n", locationStrings);
     }
 
     private string GetFileTagsString(int fileId)
     {
-        var tags = model.DbAccess.GetTagsFromFile(fileId);
-        var tagStrings = tags.Select(t => t.Name);
+        var tagStrings = currentFileTagList.Select(t => t.Name);
         return string.Join("\n", tagStrings);
     }
 

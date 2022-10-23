@@ -37,20 +37,20 @@
 
                     <TextBlock Style="{StaticResource PageInnerTextBlock}" Grid.Row="0" Grid.Column="0" Text="&#x1F642;" VerticalAlignment="Center" Margin="5" ToolTip="Person"/>
                     <ComboBox Style="{StaticResource PageInnerComboBox}" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Persons}" VerticalAlignment="Center" SelectedItem="{Binding SelectedPersonToUpdate}" DisplayMemberPath="Name" ToolTip="Person"/>
-                    <Button Width="25" Grid.Row="0" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding AddFilePersonCommand}" IsEnabled="{Binding PersonSelected}" ToolTip="Add selected person to file">+</Button>
-                    <Button Width="25" Grid.Row="0" Grid.Column="3" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding RemoveFilePersonCommand}" IsEnabled="{Binding PersonSelected}" ToolTip="Remove selected person from file">-</Button>
+                    <Button Width="25" Grid.Row="0" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding AddFilePersonCommand}" IsEnabled="{Binding SelectedPersonCanBeAdded}" ToolTip="Add selected person to file">+</Button>
+                    <Button Width="25" Grid.Row="0" Grid.Column="3" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding RemoveFilePersonCommand}" IsEnabled="{Binding SelectedPersonCanBeRemoved}" ToolTip="Remove selected person from file">-</Button>
                     <Button Grid.Row="0" Grid.Column="4" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding CreatePersonCommand}" ToolTip="Create a new person and add it to current file">New...</Button>
 
                     <TextBlock Style="{StaticResource PageInnerTextBlock}" Grid.Row="1" Grid.Column="0" Text="&#x1F3E0;" VerticalAlignment="Center" Margin="5" ToolTip="Location"/>
                     <ComboBox Style="{StaticResource PageInnerComboBox}" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Locations}" VerticalAlignment="Center" SelectedItem="{Binding SelectedLocationToUpdate}" DisplayMemberPath="Name" ToolTip="Location"/>
-                    <Button Width="25" Grid.Row="1" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding AddFileLocationCommand}" IsEnabled="{Binding LocationSelected}" ToolTip="Add selected location to file">+</Button>
-                    <Button Width="25" Grid.Row="1" Grid.Column="3" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding RemoveFileLocationCommand}" IsEnabled="{Binding LocationSelected}" ToolTip="Remove selected location from file">-</Button>
+                    <Button Width="25" Grid.Row="1" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding AddFileLocationCommand}" IsEnabled="{Binding SelectedLocationCanBeAdded}" ToolTip="Add selected location to file">+</Button>
+                    <Button Width="25" Grid.Row="1" Grid.Column="3" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding RemoveFileLocationCommand}" IsEnabled="{Binding SelectedLocationCanBeRemoved}" ToolTip="Remove selected location from file">-</Button>
                     <Button Grid.Row="1" Grid.Column="4" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding CreateLocationCommand}" ToolTip="Create a new location and add it to current file">New...</Button>
 
                     <TextBlock Style="{StaticResource PageInnerTextBlock}" Grid.Row="2" Grid.Column="0" Text="&#x1F516;" VerticalAlignment="Center" Margin="5" ToolTip="Tag"/>
                     <ComboBox Style="{StaticResource PageInnerComboBox}" Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Tags}" VerticalAlignment="Center" SelectedItem="{Binding SelectedTagToUpdate}" DisplayMemberPath="Name" ToolTip="Tag"/>
-                    <Button Width="25" Grid.Row="2" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding AddFileTagCommand}" IsEnabled="{Binding TagSelected}" ToolTip="Add selected tag to file">+</Button>
-                    <Button Width="25" Grid.Row="2" Grid.Column="3" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding RemoveFileTagCommand}" IsEnabled="{Binding TagSelected}" ToolTip="Remove selected tag from file">-</Button>
+                    <Button Width="25" Grid.Row="2" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding AddFileTagCommand}" IsEnabled="{Binding SelectedTagCanBeAdded}" ToolTip="Add selected tag to file">+</Button>
+                    <Button Width="25" Grid.Row="2" Grid.Column="3" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding RemoveFileTagCommand}" IsEnabled="{Binding SelectedTagCanBeRemoved}" ToolTip="Remove selected tag from file">-</Button>
                     <Button Grid.Row="2" Grid.Column="4" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding CreateTagCommand}" ToolTip="Create a new tag and add it to current file">New...</Button>
                 </Grid>
                 <Grid>
