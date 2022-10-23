@@ -222,10 +222,17 @@ public partial class FindViewModel : ObservableObject
     private string searchFileGpsRadius = "500";
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(PersonAgeRangeValid))]
     private string? searchPersonAgeFrom;
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(PersonAgeRangeValid))]
     private string? searchPersonAgeTo;
+
+    public bool PersonAgeRangeValid =>
+        int.TryParse(searchPersonAgeFrom, out var from) &&
+        int.TryParse(searchPersonAgeTo, out var to) &&
+        from >= 0 && from <= to;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CombineSearchResultPossible))]
@@ -428,10 +435,14 @@ public partial class FindViewModel : ObservableObject
     private PersonToUpdate? selectedPersonSearch;
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(Person1And2Selected))]
     private PersonToUpdate? selectedPerson1Search;
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(Person1And2Selected))]
     private PersonToUpdate? selectedPerson2Search;
+
+    public bool Person1And2Selected => selectedPerson1Search != null && selectedPerson2Search != null;
 
     public ObservableCollection<LocationToUpdate> Locations { get; } = new();
 
