@@ -81,7 +81,7 @@
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
                     
-                    <Button Grid.Column="0" Style="{StaticResource NormalButton}" HorizontalAlignment="Left" Command="{Binding UpdateFileFromMetaDataCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip="Reload timestamp, GPS location and orientation from file Exif data">Reload Exif data...</Button>
+                    <Button Grid.Column="0" Style="{StaticResource NormalButton}" HorizontalAlignment="Left" Command="{Binding UpdateFileFromMetaDataCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip="Reload file date, time, GPS position and orientation from file Exif data or file path">Reload meta-data...</Button>
                     <Button Grid.Column="1" Margin="5,0,0,0" Style="{StaticResource NormalButton}" ToolTip="Rotate 90 degrees clockwise" Command="{Binding RotateFileClockwiseCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" Width="25">&#8635;</Button>
                     <Button Grid.Column="2" Margin="5,0,0,0" Style="{StaticResource NormalButton}" ToolTip="Rotate 90 degrees counter clockwise" Command="{Binding RotateFileCounterClockwiseCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" Width="25">&#8634;</Button>
                     <Button Grid.Column="3" Margin="5,0,0,0" Style="{StaticResource NormalButton}" ToolTip="Reload orientation from Exif data" Command="{Binding UpdateFileOrientationFromMetaDataCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" Width="25">x</Button>
