@@ -1192,7 +1192,7 @@ public partial class FindViewModel : ObservableObject
             }
             catch (NotSupportedException e)
             {
-                CurrentFileLoadError = $"File format not supported:\n{e.Message}";
+                CurrentFileLoadError = $"File format not supported (use the Open button to open file with the default application):\n{e.Message}";
                 model.ImagePresenter!.CloseImage();
             }
         }
