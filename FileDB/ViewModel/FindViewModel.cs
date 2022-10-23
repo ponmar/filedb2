@@ -43,7 +43,7 @@ public enum FileType
     [FileExtension(new string[] { ".mkv", ".avi", ".mpg", ".mov", ".mp4" })]
     Movie,
 
-    [FileExtension(new string[] { ".doc", ".pdf", ".txt" })]
+    [FileExtension(new string[] { ".doc", ".pdf", ".txt", ".md" })]
     Document,
 
     [FileExtension(new string[] { ".mp3", ".wav" })]
