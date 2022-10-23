@@ -395,9 +395,6 @@ public partial class FindViewModel : ObservableObject
     private string currentFileDateTime = string.Empty;
 
     [ObservableProperty]
-    private string currentFileHeader = string.Empty;
-
-    [ObservableProperty]
     private string currentFilePosition = string.Empty;
 
     [ObservableProperty]
@@ -1164,7 +1161,6 @@ public partial class FindViewModel : ObservableObject
             CurrentFilePersons = GetFilePersonsString(selection);
             CurrentFileLocations = GetFileLocationsString(selection.Id);
             CurrentFileTags = GetFileTagsString(selection.Id);
-            CurrentFileHeader = CurrentFileDateTime != string.Empty ? CurrentFileDateTime : selection.Path;
 
             // Note: reading of orientation from Exif is done here to get correct visualization for files added to database before orientation was parsed
             currentFileRotation = DatabaseParsing.OrientationToDegrees(selection.Orientation ?? model.FilesystemAccess.ParseFileMetadata(CurrentFilePath).Orientation);
@@ -1207,7 +1203,6 @@ public partial class FindViewModel : ObservableObject
         CurrentFilePath = string.Empty;
         CurrentFileDescription = string.Empty;
         CurrentFileDateTime = string.Empty;
-        CurrentFileHeader = string.Empty;
         CurrentFilePosition = string.Empty;
         CurrentFilePositionLink = null;
         CurrentFilePersons = string.Empty;

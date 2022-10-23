@@ -19,20 +19,20 @@
     </UserControl.Resources>
 
     <Border Style="{StaticResource MaximizedBorderGroup}" Margin="10">
-        <StackPanel Orientation="Vertical" Margin="10">
-            <TextBlock Style="{StaticResource PageInnerSubHeading}" Margin="0" Text="{Binding CurrentFileHeader}" Visibility="{Binding CurrentFileHeader, Converter={converters:StringNullOrEmptyToVisibilityConverter}}"/>
+        <StackPanel Orientation="Vertical" Margin="10 0 10 0">
+            <TextBlock Style="{StaticResource PageInnerSubHeading}" Margin="0 10 0 10" Text="{Binding CurrentFileDateTime}" Visibility="{Binding CurrentFileDateTime, Converter={converters:StringNullOrEmptyToVisibilityConverter}}"/>
 
-            <TextBlock Style="{StaticResource PageInnerSubHeading}" Margin="0 20 0 0" Text="&#x1F642;" Visibility="{Binding CurrentFilePersons, Converter={converters:StringNullOrEmptyToVisibilityConverter}}" ToolTip="Persons"/>
-            <TextBlock Style="{StaticResource PageInnerSubHeading}" Margin="0" Text="{Binding CurrentFilePersons}" Visibility="{Binding CurrentFilePersons, Converter={converters:StringNullOrEmptyToVisibilityConverter}}"/>
+            <TextBlock Style="{StaticResource PageInnerSubHeading}" Margin="0 10 0 0" Text="&#x1F642;" Visibility="{Binding CurrentFilePersons, Converter={converters:StringNullOrEmptyToVisibilityConverter}}" ToolTip="Persons"/>
+            <TextBlock Style="{StaticResource PageInnerSubHeading}" Margin="0 0 0 10" Text="{Binding CurrentFilePersons}" Visibility="{Binding CurrentFilePersons, Converter={converters:StringNullOrEmptyToVisibilityConverter}}"/>
 
-            <TextBlock Style="{StaticResource PageInnerSubHeading}" Margin="0 20 0 0" Text="&#x1F3E0;" Visibility="{Binding CurrentFileLocations, Converter={converters:StringNullOrEmptyToVisibilityConverter}}" ToolTip="Locations"/>
-            <TextBlock Style="{StaticResource PageInnerSubHeading}" Margin="0" Text="{Binding CurrentFileLocations}" Visibility="{Binding CurrentFileLocations, Converter={converters:StringNullOrEmptyToVisibilityConverter}}"/>
+            <TextBlock Style="{StaticResource PageInnerSubHeading}" Margin="0 10 0 0" Text="&#x1F3E0;" Visibility="{Binding CurrentFileLocations, Converter={converters:StringNullOrEmptyToVisibilityConverter}}" ToolTip="Locations"/>
+            <TextBlock Style="{StaticResource PageInnerSubHeading}" Margin="0 0 0 10" Text="{Binding CurrentFileLocations}" Visibility="{Binding CurrentFileLocations, Converter={converters:StringNullOrEmptyToVisibilityConverter}}"/>
 
-            <TextBlock Style="{StaticResource PageInnerSubHeading}" Margin="0 20 0 0" Text="&#x1F516;" Visibility="{Binding CurrentFileTags, Converter={converters:StringNullOrEmptyToVisibilityConverter}}" ToolTip="Tags"/>
-            <TextBlock Style="{StaticResource PageInnerSubHeading}" Margin="0" Text="{Binding CurrentFileTags}" Visibility="{Binding CurrentFileTags, Converter={converters:StringNullOrEmptyToVisibilityConverter}}"/>
+            <TextBlock Style="{StaticResource PageInnerSubHeading}" Margin="0 10 0 0" Text="&#x1F516;" Visibility="{Binding CurrentFileTags, Converter={converters:StringNullOrEmptyToVisibilityConverter}}" ToolTip="Tags"/>
+            <TextBlock Style="{StaticResource PageInnerSubHeading}" Margin="0 0 0 10" Text="{Binding CurrentFileTags}" Visibility="{Binding CurrentFileTags, Converter={converters:StringNullOrEmptyToVisibilityConverter}}"/>
 
-            <TextBlock Style="{StaticResource PageInnerSubHeading}" Margin="0 20 0 0" Text="&#x1F6F0;" Visibility="{Binding CurrentFilePosition, Converter={converters:StringNullOrEmptyToVisibilityConverter}}" ToolTip="GPS position"/>
-            <TextBlock Style="{StaticResource PageInnerSubHeading}" Margin="0" Visibility="{Binding CurrentFilePosition, Converter={converters:StringNullOrEmptyToVisibilityConverter}}">
+            <TextBlock Style="{StaticResource PageInnerSubHeading}" Margin="0 10 0 0" Text="&#x1F6F0;" Visibility="{Binding CurrentFilePosition, Converter={converters:StringNullOrEmptyToVisibilityConverter}}" ToolTip="GPS position"/>
+            <TextBlock Style="{StaticResource PageInnerSubHeading}" Margin="0 0 0 10" Visibility="{Binding CurrentFilePosition, Converter={converters:StringNullOrEmptyToVisibilityConverter}}">
                 <Hyperlink NavigateUri="{Binding CurrentFilePositionLink}" RequestNavigate="OpenLocationUri">
                     <TextBlock Text="{Binding CurrentFilePosition}" Visibility="{Binding CurrentFilePosition, Converter={converters:StringNullOrEmptyToVisibilityConverter}}"/>
                 </Hyperlink>
