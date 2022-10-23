@@ -1097,6 +1097,19 @@ public partial class FindViewModel : ObservableObject
     }
 
     [RelayCommand]
+    private void FindFilesFromListComplement()
+    {
+        StopSlideshow();
+        if (!string.IsNullOrEmpty(fileListSearch))
+        {
+            var fileIds = Utils.CreateFileIds(fileListSearch);
+            var allFiles = model.DbAccess.GetFiles();
+            var allFilesComplement = allFiles.Where(x => !fileIds.Contains(x.Id));
+            SearchResult = new SearchResult(allFilesComplement);
+        }
+    }
+
+    [RelayCommand]
     private void OpenFileLocation()
     {
         if (!string.IsNullOrEmpty(CurrentFilePath) && File.Exists(CurrentFilePath))
