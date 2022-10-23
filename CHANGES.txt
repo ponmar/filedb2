@@ -1,3 +1,14 @@
+3.4:
+* Add combined search (union, intersection and difference) for two given search results
+* Adding files supports parsing date and time from filenames that uses pattern YYYYMMDD_HHMMSS
+* Add dialog for creating a new database
+* Show search result history in the search result bar
+* Search result export moved from search tab to new window opened from search result bar
+* Add Audio file type to search criteria
+* Search via file type Document includes .md files
+* Do not show filename as header when timestamp not available
+* Fix that file meta-data could be placed on top of file loading error message
+
 3.3:
 * Add search by file type (picture/movie/document)
 * Add GPS position search via selected location and via current file
