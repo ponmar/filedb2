@@ -227,6 +227,29 @@ public partial class FindViewModel : ObservableObject
     [ObservableProperty]
     private string? searchPersonAgeTo;
 
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(CombineSearchResultPossible))]
+    private string combineSearch1 = string.Empty;
+
+    partial void OnCombineSearch1Changed(string value)
+    {
+        CombineSearchResult = string.Empty;
+    }
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(CombineSearchResultPossible))]
+    private string combineSearch2 = string.Empty;
+
+    partial void OnCombineSearch2Changed(string value)
+    {
+        CombineSearchResult = string.Empty;
+    }
+
+    [ObservableProperty]
+    private string combineSearchResult = string.Empty;
+
+    public bool CombineSearchResultPossible => !string.IsNullOrEmpty(combineSearch1) && !string.IsNullOrEmpty(combineSearch2);
+
     #endregion
 
     #region Meta-data change commands and properties
@@ -1762,5 +1785,49 @@ public partial class FindViewModel : ObservableObject
         {
             OnPropertyChanged(nameof(HasUpdateHistory));
         }
+    }
+
+    [RelayCommand]
+    private void CombineSearchIntersection()
+    {
+        var files1 = Utils.CreateFileIds(CombineSearch1);
+        var files2 = Utils.CreateFileIds(CombineSearch2);
+        var result = files1.Intersect(files2);
+        CombineSearchResult = Utils.CreateFileList(result);
+    }
+
+    [RelayCommand]
+    private void CombineSearchUnion()
+    {
+        var files1 = Utils.CreateFileIds(CombineSearch1);
+        var files2 = Utils.CreateFileIds(CombineSearch2);
+        var result = files1.Union(files2);
+        CombineSearchResult = Utils.CreateFileList(result);
+    }
+
+    [RelayCommand]
+    private void CombineSearchDifference()
+    {
+        var files1 = Utils.CreateFileIds(CombineSearch1);
+        var files2 = Utils.CreateFileIds(CombineSearch2);
+        var uniqueFiles1 = files1.Except(files2);
+        var uniqueFiles2 = files2.Except(files1);
+        var result = uniqueFiles1.Union(uniqueFiles2);
+        CombineSearchResult = Utils.CreateFileList(result);
+    }
+
+    [RelayCommand]
+    private void CombineSearchResultCopy()
+    {
+        ClipboardService.SetText(CombineSearchResult);
+    }
+
+    [RelayCommand]
+    private void CombineSearchResultShow()
+    {
+        StopSlideshow();
+        var fileIds = Utils.CreateFileIds(CombineSearchResult);
+        var files = model.DbAccess.SearchFilesFromIds(fileIds);
+        SearchResult = new SearchResult(files);
     }
 }
