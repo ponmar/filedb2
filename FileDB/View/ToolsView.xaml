@@ -62,9 +62,9 @@
                     <StackPanel Orientation="Vertical">
                         <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="This tool can be used to export data to 3rd party applications."/>
                         <StackPanel Orientation="Horizontal">
-                            <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding DatabaseExportCommand}" HorizontalAlignment="Left">Run</Button>
+                            <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding DatabaseExportCommand}" IsEnabled="{Binding DatabaseExportDirectory, Converter={StaticResource StringContentToBoolConverter}}" HorizontalAlignment="Left">Run</Button>
                             <TextBlock Text="Directory:" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center"/>
-                            <TextBox Style="{StaticResource PageTextBox}" Width="300" Text="{Binding DatabaseExportDirectory}"/>
+                            <TextBox Style="{StaticResource PageTextBox}" Width="300" Text="{Binding DatabaseExportDirectory, UpdateSourceTrigger=PropertyChanged}"/>
                         </StackPanel>
                         <TextBlock Style="{StaticResource PageTextBlock}" Text="{Binding DatabaseExportResult}"/>
                     </StackPanel>

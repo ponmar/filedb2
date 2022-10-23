@@ -48,8 +48,8 @@
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="From files collection sub directory:" VerticalAlignment="Center" Margin="10 5 5 5"/>
-                            <TextBox Style="{StaticResource PageTextBox}" Width="250" Margin="5" Text="{Binding SubdirToScan}" VerticalContentAlignment="Center"/>
-                            <Button Margin="5" Style="{StaticResource NormalButton}" Content="Find..." Command="{Binding ScanNewFilesInDirectoryCommand}"/>
+                            <TextBox Style="{StaticResource PageTextBox}" Width="250" Margin="5" Text="{Binding SubdirToScan, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center"/>
+                            <Button Margin="5" Style="{StaticResource NormalButton}" Content="Find..." Command="{Binding ScanNewFilesInDirectoryCommand}" IsEnabled="{Binding SubdirToScan, Converter={StaticResource StringContentToBoolConverter}}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Button Style="{StaticResource NormalButton}" Margin="10" Click="SelectAll_Click" IsEnabled="{Binding NewFiles, Converter={StaticResource EnumerationHasContentConverter}}">Select all</Button>
@@ -66,8 +66,8 @@
                 <Border Style="{StaticResource BorderGroup}" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <StackPanel Orientation="Horizontal" Margin="15">
                         <TextBlock Margin="5" Style="{StaticResource PageInnerTextBlock}" Text="File list:" VerticalAlignment="Center"/>
-                        <TextBox Margin="5" Style="{StaticResource PageInnerTextBox}" Width="200" VerticalAlignment="Center" Text="{Binding RemoveFileList}"></TextBox>
-                        <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding RemoveFileListMethodCommand}" Content="Remove..."  VerticalAlignment="Center"/>
+                        <TextBox Margin="5" Style="{StaticResource PageInnerTextBox}" Width="200" VerticalAlignment="Center" Text="{Binding RemoveFileList, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding RemoveFileListMethodCommand}" Content="Remove..."  VerticalAlignment="Center" IsEnabled="{Binding RemoveFileList, Converter={StaticResource StringContentToBoolConverter}}"/>
                     </StackPanel>
                 </Border>
             </StackPanel>
