@@ -25,11 +25,11 @@ namespace FileDB.ViewModel;
 public enum RotationDirection { Clockwise, CounterClockwise }
 
 [AttributeUsage(AttributeTargets.Field)]
-public class FileExtensionAttribute : Attribute
+public class FileExtensionsAttribute : Attribute
 {
     public string[] FileExtensions { get; }
 
-    public FileExtensionAttribute(string[] fileExtensions)
+    public FileExtensionsAttribute(string[] fileExtensions)
     {
         FileExtensions = fileExtensions;
     }
@@ -37,16 +37,16 @@ public class FileExtensionAttribute : Attribute
 
 public enum FileType
 {
-    [FileExtension(new string[] { ".jpg", ".png", ".bmp", ".gif" })]
+    [FileExtensions(new string[] { ".jpg", ".png", ".bmp", ".gif" })]
     Picture,
 
-    [FileExtension(new string[] { ".mkv", ".avi", ".mpg", ".mov", ".mp4" })]
+    [FileExtensions(new string[] { ".mkv", ".avi", ".mpg", ".mov", ".mp4" })]
     Movie,
 
-    [FileExtension(new string[] { ".doc", ".pdf", ".txt", ".md" })]
+    [FileExtensions(new string[] { ".doc", ".pdf", ".txt", ".md" })]
     Document,
 
-    [FileExtension(new string[] { ".mp3", ".wav" })]
+    [FileExtensions(new string[] { ".mp3", ".wav" })]
     Audio,
 }
 
@@ -846,7 +846,7 @@ public partial class FindViewModel : ObservableObject
             return;
         }
 
-        var fileExtensions = SelectedFileType.GetAttribute<FileExtensionAttribute>().FileExtensions;
+        var fileExtensions = SelectedFileType.GetAttribute<FileExtensionsAttribute>().FileExtensions;
         
         var result = new List<FilesModel>();
         foreach (var extension in fileExtensions)
