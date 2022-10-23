@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.IO;
 
 namespace FileDBInterface.DbAccess
 {
@@ -55,6 +56,12 @@ namespace FileDBInterface.DbAccess
 
         public static string? PathToFilesDatetime(string path)
         {
+            var filename = Path.GetFileNameWithoutExtension(path)!;
+            if (DateTime.TryParseExact(filename, "yyyyMMdd_HHmmss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var dateFromFilename))
+            {
+                return DateTakenToFilesDatetime(dateFromFilename);
+            }
+
             var pathParts = path.Split('/');
             foreach (var pathPart in pathParts)
             {

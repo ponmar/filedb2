@@ -147,7 +147,7 @@ namespace FileDBInterface.FilesystemAccess
                 datetime = DatabaseParsing.PathToFilesDatetime(path);
             }
 
-            return new FileMetadata(path, datetime, position, orientation);
+            return new FileMetadata(datetime, position, orientation);
         }
 
         private bool FileTypeSupportsExif(string path)

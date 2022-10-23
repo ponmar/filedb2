@@ -1,4 +1,4 @@
 ﻿namespace FileDBInterface.FilesystemAccess
 {
-    public record FileMetadata(string AbsolutePath, string? Datetime, string? Position, int? Orientation);
+    public record FileMetadata(string? Datetime, string? Position, int? Orientation);
 }

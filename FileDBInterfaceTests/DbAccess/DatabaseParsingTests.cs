@@ -77,6 +77,12 @@ namespace FileDBInterfaceTests.DbAccess
         }
 
         [TestMethod]
+        public void PathToFilesDatetime_DateAndTimeInFilename_Success()
+        {
+            Assert.AreEqual("1957-03-23T12:23:49", DatabaseParsing.PathToFilesDatetime("subdir/1957-03-23/19570323_122349.mp4"));
+        }
+
+        [TestMethod]
         public void PathToFilesDatetime_InvalidDate_Error()
         {
             Assert.IsNull(DatabaseParsing.PathToFilesDatetime("subdir/19570323/file.jpg"));
