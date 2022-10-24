@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -28,6 +29,7 @@ public class WindowModeDescription
 public static class Utils
 {
     public const string ApplicationName = "FileDB";
+    public const string ApplicationDownloadUrl = "https://drive.google.com/drive/folders/1GyZpdDcMdUOlvvtwtKUuylazoy7XaIcm?usp=sharing";
 
     public static void SetInvariantCulture()
     {
@@ -160,5 +162,18 @@ public static class Utils
         return $"{version.Major}.{version.Minor}";
     }
 
-    public const string ApplicationDownloadUrl = "https://drive.google.com/drive/folders/1GyZpdDcMdUOlvvtwtKUuylazoy7XaIcm?usp=sharing";
+    public static void BackupFile(string filePath, string? destinationFilenamePrefix = null)
+    {
+        if (!File.Exists(filePath))
+        {
+            return;
+        }
+
+        var timestamp = DateTime.Now.ToString("yyyy-MM-dd_HHmmss");
+        destinationFilenamePrefix ??= Path.GetFileNameWithoutExtension(filePath)!;
+        var destinationFilename = destinationFilenamePrefix + "_" + timestamp + Path.GetExtension(filePath);
+        var destinationFilePath = Path.Combine(Path.GetDirectoryName(filePath)!, destinationFilename);
+
+        File.Copy(filePath, destinationFilePath);
+    }
 }

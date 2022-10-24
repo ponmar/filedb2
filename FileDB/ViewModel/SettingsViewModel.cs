@@ -275,6 +275,8 @@ public partial class SettingsViewModel : ObservableObject
             return;
         }
 
+        Utils.BackupFile(appDataConfig.FilePath);
+
         if (appDataConfig.Write(config))
         {
             model.Config = config;
