@@ -1,4 +1,6 @@
-﻿using FileDB.ViewModel;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using FileDB.Model;
+using FileDB.ViewModel;
 using System.Windows;
 
 namespace FileDB.View
@@ -15,17 +17,10 @@ namespace FileDB.View
             InitializeComponent();
             DataContext = new CreateDatabaseViewModel();
 
-            model.CloseModalDialogRequested += Model_CloseModalDialogRequested;
-        }
-
-        private void Model_CloseModalDialogRequested(object? sender, System.EventArgs e)
-        {
-            Close();
-        }
-
-        private void Window_Closed(object sender, System.EventArgs e)
-        {
-            model.CloseModalDialogRequested -= Model_CloseModalDialogRequested;
+            WeakReferenceMessenger.Default.Register<CloseModalDialogRequested>(this, (r, m) =>
+            {
+                Close();
+            });
         }
     }
 }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using FileDB.Model;
 using FileDBInterface.Exceptions;
 using FileDBInterface.Model;
 
@@ -107,8 +109,8 @@ public partial class AddPersonViewModel : ObservableObject
                 AffectedPerson = model.DbAccess.GetPersons().First(x => x.Firstname == person.Firstname && x.Lastname == person.Lastname && x.DateOfBirth == person.DateOfBirth && x.Deceased == person.Deceased && x.Description == person.Description);
             }
 
-            model.RequestCloseModalDialog();
-            model.NotifyPersonsUpdated();
+            WeakReferenceMessenger.Default.Send(new CloseModalDialogRequested());
+            WeakReferenceMessenger.Default.Send(new PersonsUpdated());
         }
         catch (DataValidationException e)
         {

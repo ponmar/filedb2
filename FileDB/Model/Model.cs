@@ -11,6 +11,7 @@ using FileDBInterface.DbAccess.SQLite;
 using FileDB.ViewModel;
 using FileDB.FileBrowsingPlugins;
 using FileDB.Validators;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace FileDB.Model;
 
@@ -44,7 +45,6 @@ public class Model
     }
 
     private DateTime date = DateTime.Now;
-    public event EventHandler? DateChanged;
 
     private void DateCheckerTimer_Tick(object? sender, EventArgs e)
     {
@@ -52,19 +52,17 @@ public class Model
         if (date.Date != now.Date)
         {
             date = now;
-            DateChanged?.Invoke(this, EventArgs.Empty);
+            WeakReferenceMessenger.Default.Send(new DateChanged());
         }
     }
 
     public List<Notification> Notifications { get; } = new();
 
-    public event EventHandler? NotificationsUpdated;
-
     public void AddNotification(Notification notification)
     {
         Notifications.RemoveAll(x => x.Message == notification.Message);
         Notifications.Add(notification);
-        NotificationsUpdated?.Invoke(this, EventArgs.Empty);
+        WeakReferenceMessenger.Default.Send(new NotificationsUpdated());
     }
 
     public void AddNotification(NotificationType type, string message)
@@ -77,11 +75,10 @@ public class Model
         if (Notifications.Count > 0)
         {
             Notifications.Clear();
-            NotificationsUpdated?.Invoke(this, EventArgs.Empty);
+            WeakReferenceMessenger.Default.Send(new NotificationsUpdated());
         }
     }
 
-    public event EventHandler? ConfigLoaded;
     public Config Config
     {
         get => config;
@@ -90,7 +87,7 @@ public class Model
             if (config != value)
             {
                 config = value;
-                ConfigLoaded?.Invoke(this, EventArgs.Empty);
+                WeakReferenceMessenger.Default.Send(new ConfigLoaded());
             }
         }
     }
@@ -136,48 +133,8 @@ public class Model
     }
     private IFilesystemAccess? filesystemAccess;
 
-    public event EventHandler? PersonsUpdated;
-    public event EventHandler? LocationsUpdated;
-    public event EventHandler? TagsUpdated;
-
-    public void NotifyPersonsUpdated()
-    {
-        PersonsUpdated?.Invoke(this, EventArgs.Empty);
-    }
-
-    public void NotifyLocationsUpdated()
-    {
-        LocationsUpdated?.Invoke(this, EventArgs.Empty);
-    }
-
-    public void NotifyTagsUpdated()
-    {
-        TagsUpdated?.Invoke(this, EventArgs.Empty);
-    }
-
-    public event EventHandler<bool>? TemporaryFullscreenRequested;
-
-    public void RequestTemporaryFullscreen(bool fullscreen)
-    {
-        TemporaryFullscreenRequested?.Invoke(this, fullscreen);
-    }
-
-    public event EventHandler<List<FilesModel>>? FilesImported;
-
-    public void NotifyFilesImported(List<FilesModel> files)
-    {
-        FilesImported?.Invoke(this, files);
-    }
-
     public void FileLoaded(FilesModel file)
     {
         browsingPlugins.ForEach(x => x.FileLoaded(file));
-    }
-
-    public event EventHandler? CloseModalDialogRequested;
-
-    public void RequestCloseModalDialog()
-    {
-        CloseModalDialogRequested?.Invoke(this, EventArgs.Empty);
     }
 }

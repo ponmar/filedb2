@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using FileDB.Model;
 using FileDBInterface.Exceptions;
 using FileDBInterface.Model;
 using System.Linq;
@@ -74,8 +76,8 @@ public partial class AddLocationViewModel : ObservableObject
                 AffectedLocation = model.DbAccess.GetLocations().First(x => x.Name == location.Name);
             }
 
-            model.RequestCloseModalDialog();
-            model.NotifyLocationsUpdated();
+            WeakReferenceMessenger.Default.Send(new CloseModalDialogRequested());
+            WeakReferenceMessenger.Default.Send(new LocationsUpdated());
         }
         catch (DataValidationException e)
         {

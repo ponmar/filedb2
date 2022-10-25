@@ -5,6 +5,8 @@ using System.Linq;
 using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using FileDB.Model;
 using FileDB.Sorters;
 using FileDB.View;
 using FileDBInterface.DbAccess;
@@ -29,18 +31,16 @@ public partial class PersonsViewModel : ObservableObject
     public PersonsViewModel()
     {
         ReloadPersons();
-        model.PersonsUpdated += Model_PersonsUpdated;
-        model.ConfigLoaded += Model_ConfigLoaded;
-    }
 
-    private void Model_ConfigLoaded(object? sender, EventArgs e)
-    {
-        ReadWriteMode = !model.Config.ReadOnly;
-    }
+        WeakReferenceMessenger.Default.Register<ConfigLoaded>(this, (r, m) =>
+        {
+            ReadWriteMode = !model.Config.ReadOnly;
+        });
 
-    private void Model_PersonsUpdated(object? sender, EventArgs e)
-    {
-        ReloadPersons();
+        WeakReferenceMessenger.Default.Register<PersonsUpdated>(this, (r, m) =>
+        {
+            ReloadPersons();
+        });
     }
 
     [RelayCommand]
@@ -52,7 +52,7 @@ public partial class PersonsViewModel : ObservableObject
             if (filesWithPerson.Count == 0 || Dialogs.ShowConfirmDialog($"Person is used in {filesWithPerson.Count} files, remove anyway?"))
             {
                 model.DbAccess.DeletePerson(selectedPerson.Id);
-                model.NotifyPersonsUpdated();
+                WeakReferenceMessenger.Default.Send(new PersonsUpdated());
             }
         }
     }

@@ -6,7 +6,9 @@ using System.Linq;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using FileDB.Configuration;
+using FileDB.Model;
 using FileDB.Notifiers;
 
 namespace FileDB.ViewModel;
@@ -15,12 +17,6 @@ public partial class NotificationsViewModel : ObservableObject
 {
     public ObservableCollection<Notification> Notifications { get; } = new();
 
-    [RelayCommand]
-    private void ClearNotifications()
-    {
-        Model.Model.Instance.ClearNotifications();
-    }
-
     private readonly Model.Model model = Model.Model.Instance;
 
     private readonly DispatcherTimer notifierTimer = new();
@@ -28,8 +24,6 @@ public partial class NotificationsViewModel : ObservableObject
     public NotificationsViewModel()
     {
         var model = Model.Model.Instance;
-        model.NotificationsUpdated += Model_NotificationsUpdated;
-        model.ConfigLoaded += Model_ConfigLoaded;
 
         LoadNotifications();
         RunAllNotifiers();
@@ -37,16 +31,21 @@ public partial class NotificationsViewModel : ObservableObject
         notifierTimer.Tick += NotifierTimer_Tick;
         notifierTimer.Interval = TimeSpan.FromMinutes(5);
         notifierTimer.Start();
+
+        WeakReferenceMessenger.Default.Register<ConfigLoaded>(this, (r, m) =>
+        {
+            RunAllNotifiers();
+        });
+
+        WeakReferenceMessenger.Default.Register<NotificationsUpdated>(this, (r, m) =>
+        {
+            LoadNotifications();
+        });
     }
 
     private void NotifierTimer_Tick(object? sender, EventArgs e)
     {
         RunContinousNotifiers();
-    }
-
-    private void Model_ConfigLoaded(object? sender, EventArgs e)
-    {
-        RunAllNotifiers();
     }
 
     private List<INotifier> GetContinousNotifiers()
@@ -115,15 +114,16 @@ public partial class NotificationsViewModel : ObservableObject
         notifiers.ForEach(x => x.Run().ForEach(y => model.AddNotification(y)));
     }
 
-    private void Model_NotificationsUpdated(object? sender, EventArgs e)
-    {
-        LoadNotifications();
-    }
-
     private void LoadNotifications()
     {
         Notifications.Clear();
         Model.Model.Instance.Notifications.ForEach(x => Notifications.Add(x));
         OnPropertyChanged(nameof(Notifications));
+    }
+
+    [RelayCommand]
+    private void ClearNotifications()
+    {
+        Model.Model.Instance.ClearNotifications();
     }
 }

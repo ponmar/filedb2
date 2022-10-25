@@ -1,4 +1,6 @@
 ﻿using System.Windows;
+using CommunityToolkit.Mvvm.Messaging;
+using FileDB.Model;
 using FileDB.ViewModel;
 
 namespace FileDB.View;
@@ -15,16 +17,14 @@ public partial class AddTagWindow : Window
         InitializeComponent();
         DataContext = new AddTagViewModel(tagId);
 
-        model.CloseModalDialogRequested += Model_CloseModalDialogRequested;
+        WeakReferenceMessenger.Default.Register<CloseModalDialogRequested>(this, (r, m) =>
+        {
+            Close();
+        });
     }
 
     private void Model_CloseModalDialogRequested(object? sender, System.EventArgs e)
     {
         Close();
-    }
-
-    private void Window_Closed(object sender, System.EventArgs e)
-    {
-        model.CloseModalDialogRequested -= Model_CloseModalDialogRequested;
     }
 }

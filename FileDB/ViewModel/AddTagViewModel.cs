@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using FileDB.Model;
 using FileDBInterface.Exceptions;
 using FileDBInterface.Model;
 using System.Linq;
@@ -57,8 +59,8 @@ public partial class AddTagViewModel : ObservableObject
                 AffectedTag = model.DbAccess.GetTags().First(x => x.Name == tag.Name);
             }
 
-            model.RequestCloseModalDialog();
-            model.NotifyTagsUpdated();
+            WeakReferenceMessenger.Default.Send(new CloseModalDialogRequested());
+            WeakReferenceMessenger.Default.Send(new TagsUpdated());
         }
         catch (DataValidationException e)
         {

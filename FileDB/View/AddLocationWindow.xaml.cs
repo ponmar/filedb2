@@ -1,4 +1,6 @@
 ﻿using System.Windows;
+using CommunityToolkit.Mvvm.Messaging;
+using FileDB.Model;
 using FileDB.ViewModel;
 
 namespace FileDB.View;
@@ -15,16 +17,9 @@ public partial class AddLocationWindow : Window
         InitializeComponent();
         DataContext = new AddLocationViewModel(locationId);
 
-        model.CloseModalDialogRequested += Model_CloseModalDialogRequested;
-    }
-
-    private void Model_CloseModalDialogRequested(object? sender, System.EventArgs e)
-    {
-        Close();
-    }
-
-    private void Window_Closed(object sender, System.EventArgs e)
-    {
-        model.CloseModalDialogRequested -= Model_CloseModalDialogRequested;
+        WeakReferenceMessenger.Default.Register<CloseModalDialogRequested>(this, (r, m) =>
+        {
+            Close();
+        });
     }
 }

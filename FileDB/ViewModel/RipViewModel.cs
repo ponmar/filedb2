@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
 using FileDB.Comparers;
 using FileDB.Configuration;
+using FileDB.Model;
 using FileDBInterface.DbAccess;
 using FileDBInterface.Model;
 
@@ -54,12 +56,11 @@ public partial class RipViewModel : ObservableObject
     public RipViewModel()
     {
         UpdatePersons();
-        model.PersonsUpdated += Model_PersonsUpdated;
-    }
 
-    private void Model_PersonsUpdated(object? sender, EventArgs e)
-    {
-        UpdatePersons();
+        WeakReferenceMessenger.Default.Register<PersonsUpdated>(this, (r, m) =>
+        {
+            UpdatePersons();
+        });
     }
 
     private void UpdatePersons()

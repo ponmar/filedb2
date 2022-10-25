@@ -4,6 +4,8 @@ using System.Linq;
 using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using FileDB.Model;
 using FileDB.Sorters;
 using FileDB.View;
 
@@ -29,18 +31,16 @@ public partial class LocationsViewModel : ObservableObject
     public LocationsViewModel()
     {
         ReloadLocations();
-        model.LocationsUpdated += Model_LocationsUpdated;
-        model.ConfigLoaded += Model_ConfigLoaded;
-    }
 
-    private void Model_ConfigLoaded(object? sender, System.EventArgs e)
-    {
-        ReadWriteMode = !model.Config.ReadOnly;
-    }
+        WeakReferenceMessenger.Default.Register<LocationsUpdated>(this, (r, m) =>
+        {
+            ReloadLocations();
+        });
 
-    private void Model_LocationsUpdated(object? sender, System.EventArgs e)
-    {
-        ReloadLocations();
+        WeakReferenceMessenger.Default.Register<ConfigLoaded>(this, (r, m) =>
+        {
+            ReadWriteMode = !model.Config.ReadOnly;
+        });
     }
 
     [RelayCommand]
@@ -52,7 +52,7 @@ public partial class LocationsViewModel : ObservableObject
             if (filesWithLocation.Count == 0 || Dialogs.ShowConfirmDialog($"Location is used in {filesWithLocation.Count} files, remove anyway?"))
             {
                 model.DbAccess.DeleteLocation(selectedLocation.Id);
-                model.NotifyLocationsUpdated();
+                WeakReferenceMessenger.Default.Send(new LocationsUpdated());
             }
         }
     }

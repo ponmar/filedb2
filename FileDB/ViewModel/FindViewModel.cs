@@ -19,6 +19,8 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDBInterface.Validators;
 using FileDB.Extensions;
+using CommunityToolkit.Mvvm.Messaging;
+using FileDB.Model;
 
 namespace FileDB.ViewModel;
 
@@ -144,7 +146,7 @@ public partial class FindViewModel : ObservableObject
 
     partial void OnMaximizeChanged(bool value)
     {
-        model.RequestTemporaryFullscreen(maximize);
+        WeakReferenceMessenger.Default.Send(new TemporaryFullscreenRequested(maximize));
     }
 
     public bool ShowUpdateSection => !Maximize && ReadWriteMode;
@@ -520,40 +522,35 @@ public partial class FindViewModel : ObservableObject
         ReloadLocations();
         ReloadTags();
 
-        model.PersonsUpdated += Model_PersonsUpdated;
-        model.LocationsUpdated += Model_LocationsUpdated;
-        model.TagsUpdated += Model_TagsUpdated;
-        model.FilesImported += Model_FilesImported;
-        model.ConfigLoaded += Model_ConfigLoaded;
+        WeakReferenceMessenger.Default.Register<FilesImported>(this, (r, m) =>
+        {
+            ImportedFileList = Utils.CreateFileList(m.Files);
+        });
 
         slideshowTimer.Tick += SlideshowTimer_Tick;
         slideshowTimer.Interval = TimeSpan.FromSeconds(model.Config.SlideshowDelay);
-    }
 
-    private void Model_ConfigLoaded(object? sender, EventArgs e)
-    {
-        ReadWriteMode = !model.Config.ReadOnly;
-        slideshowTimer.Interval = TimeSpan.FromSeconds(model.Config.SlideshowDelay);
-    }
+        WeakReferenceMessenger.Default.Register<PersonsUpdated>(this, (r, m) =>
+        {
+            ReloadPersons();
+        });
 
-    private void Model_FilesImported(object? sender, List<FilesModel> files)
-    {
-        ImportedFileList = Utils.CreateFileList(files);
-    }
+        WeakReferenceMessenger.Default.Register<LocationsUpdated>(this, (r, m) =>
+        {
+            ReloadLocations();
+        });
 
-    private void Model_PersonsUpdated(object? sender, EventArgs e)
-    {
-        ReloadPersons();
-    }
+        WeakReferenceMessenger.Default.Register<TagsUpdated>(this, (r, m) =>
+        {
+            ReloadTags();
+        });
 
-    private void Model_LocationsUpdated(object? sender, EventArgs e)
-    {
-        ReloadLocations();
-    }
+        WeakReferenceMessenger.Default.Register<ConfigLoaded>(this, (r, m) =>
+        {
+            ReadWriteMode = !model.Config.ReadOnly;
+            slideshowTimer.Interval = TimeSpan.FromSeconds(model.Config.SlideshowDelay);
+        });
 
-    private void Model_TagsUpdated(object? sender, EventArgs e)
-    {
-        ReloadTags();
     }
 
     [RelayCommand]

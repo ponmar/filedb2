@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using FileDB.Model;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
@@ -90,7 +92,7 @@ namespace FileDB.ViewModel
         [RelayCommand]
         private void SelectFolder()
         {
-            model.RequestCloseModalDialog();
+            WeakReferenceMessenger.Default.Send(new CloseModalDialogRequested());
 
             if (SelectedFolder != null)
             {

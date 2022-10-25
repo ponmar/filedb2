@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FileDB.View"
         mc:Ignorable="d"
-        Closed="Window_Closed"
         Title="{Binding Title}"
         SizeToContent="WidthAndHeight"
         ResizeMode="NoResize"

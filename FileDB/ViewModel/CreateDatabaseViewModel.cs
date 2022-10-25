@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using FileDB.Model;
 using FileDBInterface.DbAccess;
 using FileDBInterface.Exceptions;
 using System.IO;
@@ -50,7 +52,7 @@ namespace FileDB.ViewModel
                 {
                     DatabaseUtils.CreateDatabase(DatabasePath);
                     CreatedDatabasePath = DatabasePath;
-                    model.RequestCloseModalDialog();
+                    WeakReferenceMessenger.Default.Send(new CloseModalDialogRequested());
                 }
                 catch (DatabaseWrapperException e)
                 {

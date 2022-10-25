@@ -4,6 +4,8 @@ using System.Linq;
 using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using FileDB.Model;
 using FileDB.Sorters;
 using FileDB.View;
 
@@ -26,18 +28,16 @@ public partial class TagsViewModel : ObservableObject
     public TagsViewModel()
     {
         ReloadTags();
-        model.TagsUpdated += Model_TagsUpdated;
-        model.ConfigLoaded += Model_ConfigLoaded;
-    }
 
-    private void Model_ConfigLoaded(object? sender, System.EventArgs e)
-    {
-        ReadWriteMode = !model.Config.ReadOnly;
-    }
+        WeakReferenceMessenger.Default.Register<ConfigLoaded>(this, (r, m) =>
+        {
+            ReadWriteMode = !model.Config.ReadOnly;
+        });
 
-    private void Model_TagsUpdated(object? sender, System.EventArgs e)
-    {
-        ReloadTags();
+        WeakReferenceMessenger.Default.Register<TagsUpdated>(this, (r, m) =>
+        {
+            ReloadTags();
+        });
     }
 
     [RelayCommand]
@@ -49,7 +49,7 @@ public partial class TagsViewModel : ObservableObject
             if (filesWithTag.Count == 0 || Dialogs.ShowConfirmDialog($"Tag is used in {filesWithTag.Count} files, remove anyway?"))
             {
                 model.DbAccess.DeleteTag(selectedTag.Id);
-                model.NotifyTagsUpdated();
+                WeakReferenceMessenger.Default.Send(new TagsUpdated());
             }
         }
     }

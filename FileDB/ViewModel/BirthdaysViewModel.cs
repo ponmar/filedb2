@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
 using FileDB.Configuration;
+using FileDB.Model;
 using FileDBInterface.DbAccess;
 using FileDBInterface.Model;
 
@@ -88,18 +90,15 @@ public partial class BirthdaysViewModel : ObservableObject
     public BirthdaysViewModel()
     {
         UpdatePersons();
-        model.PersonsUpdated += Model_PersonsUpdated;
-        model.DateChanged += Model_DateChanged;
-    }
+        WeakReferenceMessenger.Default.Register<PersonsUpdated>(this, (r, m) =>
+        {
+            UpdatePersons();
+        });
 
-    private void Model_DateChanged(object? sender, EventArgs e)
-    {
-        UpdatePersons();
-    }
-
-    private void Model_PersonsUpdated(object? sender, EventArgs e)
-    {
-        UpdatePersons();
+        WeakReferenceMessenger.Default.Register<DateChanged>(this, (r, m) =>
+        {
+            UpdatePersons();
+        });
     }
 
     private void UpdatePersons()

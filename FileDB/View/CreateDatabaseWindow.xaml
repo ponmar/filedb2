@@ -9,7 +9,6 @@
     xmlns:viewmodel="clr-namespace:FileDB.ViewModel"
     Title="Create Database"
     d:DataContext="{d:DesignInstance Type=viewmodel:CreateDatabaseViewModel}"
-    Closed="Window_Closed"
     FocusManager.FocusedElement="{Binding ElementName=TextBoxWithInitialFocus}"
     ResizeMode="NoResize"
     SizeToContent="WidthAndHeight"

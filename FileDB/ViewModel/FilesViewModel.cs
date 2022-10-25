@@ -7,6 +7,8 @@ using System.Threading;
 using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using FileDB.Model;
 using FileDBInterface.DbAccess;
 using FileDBInterface.Exceptions;
 using FileDBInterface.Model;
@@ -52,12 +54,11 @@ public partial class FilesViewModel : ObservableObject
     public FilesViewModel()
     {
         subdirToScan = model.Config.FilesRootDirectory;
-        model.ConfigLoaded += Model_ConfigLoaded;
-    }
 
-    private void Model_ConfigLoaded(object? sender, EventArgs e)
-    {
-        SubdirToScan = model.Config.FilesRootDirectory;
+        WeakReferenceMessenger.Default.Register<ConfigLoaded>(this, (r, m) =>
+        {
+            SubdirToScan = model.Config.FilesRootDirectory;
+        });
     }
 
     [RelayCommand]
@@ -189,7 +190,7 @@ public partial class FilesViewModel : ObservableObject
                     ImportedFileList = Utils.CreateFileList(importedFiles);
                     ImportResult = importedFiles.Count > 0 ? $"{importedFiles.Count} files added." : string.Empty;
 
-                    model.NotifyFilesImported(importedFiles);
+                    WeakReferenceMessenger.Default.Send(new FilesImported(importedFiles));
 
                     filesToAdd.ForEach(x => NewFiles.Remove(x));
                     OnPropertyChanged(nameof(NewFilesSelected));
