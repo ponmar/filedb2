@@ -61,6 +61,12 @@ public partial class FilesViewModel : ObservableObject
     }
 
     [RelayCommand]
+    private void BrowseSubDirectory()
+    {
+        SubdirToScan = Dialogs.BrowseExistingDirectory(model.Config.FilesRootDirectory, "Select a sub directory") ?? string.Empty;
+    }
+
+    [RelayCommand]
     private void ScanNewFiles()
     {
         ScanNewFiles(model.Config.FilesRootDirectory);

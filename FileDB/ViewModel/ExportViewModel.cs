@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Export;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -57,7 +58,14 @@ namespace FileDB.ViewModel
         }
 
         [RelayCommand]
-        public void Export()
+        private void BrowseDestinationDirectory()
+        {
+            var initialPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            ExportFilesDestinationDirectory = Dialogs.BrowseExistingDirectory(initialPath, "Select your destination directory");
+        }
+
+        [RelayCommand]
+        private void Export()
         {
             if (string.IsNullOrEmpty(ExportFilesHeader))
             {

@@ -301,7 +301,7 @@ public partial class SettingsViewModel : ObservableObject
     [RelayCommand]
     private void BrowseFilesRootDirectory()
     {
-        var result = Dialogs.BrowseExistingDirectory(@"c:\", "Any file within files root directory (*.*)|*.*");
+        var result = Dialogs.BrowseExistingDirectory(@"c:\", "Select your files root directory");
         if (result != null)
         {
             FilesRootDirectory = result;

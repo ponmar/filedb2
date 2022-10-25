@@ -71,28 +71,22 @@ public static class Dialogs
         return dialog.ShowDialog() == true ? dialog.FileName : null;
     }
 
-    public static string? BrowseExistingDirectory(string initialDirectory, string filter)
+    public static string? BrowseExistingDirectory(string initialDirectory, string title)
     {
-        var fileDialog = new Microsoft.Win32.OpenFileDialog()
+        if (!initialDirectory.EndsWith(Path.DirectorySeparatorChar))
         {
-            Filter = filter,
-            InitialDirectory = initialDirectory,
-            ValidateNames = false,
-            CheckFileExists = false,
-        };
-        if (fileDialog.ShowDialog() == true)
-        {
-            var dir = Path.GetDirectoryName(fileDialog.FileName);
-            if (Directory.Exists(dir))
-            {
-                return dir;
-            }
-            else
-            {
-                Dialogs.ShowErrorDialog($"No such directory: {dir}");
-            }
+            initialDirectory += Path.DirectorySeparatorChar;
         }
-        return null;
+
+        using var dialog = new System.Windows.Forms.FolderBrowserDialog
+        {
+            Description = title,
+            UseDescriptionForTitle = true,
+            SelectedPath = initialDirectory,
+            ShowNewFolderButton = true
+        };
+
+        return dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK ? dialog.SelectedPath : null;
     }
 
     public static string? SelectNewFileDialog(string title, string fileExtension, string filter)
