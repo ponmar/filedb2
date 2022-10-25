@@ -54,7 +54,7 @@ public partial class MainViewModel : ObservableObject
             NumNotifications = Model.Model.Instance.Notifications.Count;
         });
 
-        WeakReferenceMessenger.Default.Register<TemporaryFullscreenRequested>(this, (r, m) =>
+        WeakReferenceMessenger.Default.Register<FullscreenBrowsingRequested>(this, (r, m) =>
         {
             WindowState = m.Fullscreen ? WindowState.Maximized : DefaultWindowState;
             WindowStyle = m.Fullscreen ? WindowStyle.None : DefaultWindowStyle;

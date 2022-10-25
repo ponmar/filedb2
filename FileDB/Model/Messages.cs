@@ -11,7 +11,7 @@ namespace FileDB.Model
     public record LocationsUpdated();
     public record TagsUpdated();
 
-    public record TemporaryFullscreenRequested(bool Fullscreen);
+    public record FullscreenBrowsingRequested(bool Fullscreen);
 
     public record FilesImported(List<FilesModel> Files);
 

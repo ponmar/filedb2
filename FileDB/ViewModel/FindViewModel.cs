@@ -146,7 +146,7 @@ public partial class FindViewModel : ObservableObject
 
     partial void OnMaximizeChanged(bool value)
     {
-        WeakReferenceMessenger.Default.Send(new TemporaryFullscreenRequested(maximize));
+        WeakReferenceMessenger.Default.Send(new FullscreenBrowsingRequested(value));
     }
 
     public bool ShowUpdateSection => !Maximize && ReadWriteMode;
