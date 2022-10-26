@@ -1768,7 +1768,7 @@ public partial class FindViewModel : ObservableObject
             var item = UpdateHistoryItems.FirstOrDefault(x => x.FunctionKey == i);
             if (item == null)
             {
-                UpdateHistoryItems.Add(new UpdateHistoryItem(type, itemId, itemName, i));
+                UpdateHistoryItems.Insert(i - 1, new UpdateHistoryItem(type, itemId, itemName, i));
                 OnPropertyChanged(nameof(HasUpdateHistory));
                 return;
             }
