@@ -1,3 +1,13 @@
+3.5:
+* Add search by complement (everything except was was specified)
+* Backup config file before saving settings
+* Enable/disable +/- buttons in file update area depending on selection and current file meta-data
+* Disable search buttons when no search criteria specified
+* Minor layout improvements
+* Add browse directory button for export and import from subdirectory
+* Fix browsing of files root directory in settings (no longer any need for selecting a file within the directory)
+* Fix ordering of new toggle history items
+
 3.4:
 * Add combined search (union, intersection and difference) for two given search results
 * Adding files supports parsing date and time from filenames that uses pattern YYYYMMDD_HHMMSS
