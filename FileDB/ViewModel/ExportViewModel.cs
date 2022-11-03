@@ -98,18 +98,25 @@ namespace FileDB.ViewModel
                 return;
             }
 
-            if (Dialogs.ShowConfirmDialog($"Export selected data for {SearchResult!.Count} files to {ExportFilesDestinationDirectory}?"))
+            if (!Dialogs.ShowConfirmDialog($"Export selected data for {SearchResult!.Count} files to {ExportFilesDestinationDirectory}?"))
             {
+                return;
+            }
+
+            Dialogs.ShowProgressDialog(progress =>
+            {
+                progress.Report("Exporting...");
                 try
                 {
                     new SearchResultExporter().Export(ExportFilesDestinationDirectory, ExportFilesHeader, SearchResult.Files,
-                        ExportIncludesFiles, ExportIncludesHtml, ExportIncludesM3u, ExportIncludesFilesWithMetaData, ExportIncludesJson);
+                    ExportIncludesFiles, ExportIncludesHtml, ExportIncludesM3u, ExportIncludesFilesWithMetaData, ExportIncludesJson);
+                    Dialogs.ShowInfoDialog("Export finished successfully.");
                 }
                 catch (IOException e)
                 {
                     Dialogs.ShowErrorDialog("Export error: " + e.Message);
                 }
-            }
+            });
         }
 
         private static bool IsDirectoryEmpty(string path)
