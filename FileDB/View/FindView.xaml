@@ -94,7 +94,8 @@
                     <Button Margin="0,0,5,0" Width="50" Command="{Binding OpenFileLocationCommand}" Style="{StaticResource NormalButton}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip="Locate file in Explorer" Visibility="{Binding Maximize, Converter={StaticResource NegatedBooleanToVisibilityConverter}}">Locate</Button>
                     <Button Margin="0,0,5,0" Width="50" Command="{Binding OpenFileWithDefaultAppCommand}" Style="{StaticResource NormalButton}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip="Open file with default application" Visibility="{Binding Maximize, Converter={StaticResource NegatedBooleanToVisibilityConverter}}">Open</Button>
                     <Button Margin="0,0,5,0" Width="50" Command="{Binding CopyFileIdCommand}" Style="{StaticResource NormalButton}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip="Copy file id" Visibility="{Binding Maximize, Converter={StaticResource NegatedBooleanToVisibilityConverter}}">Copy</Button>
-                    <ToggleButton Grid.RowSpan="2" Margin="0" Style="{StaticResource NavigationToggleButton}" IsChecked="{Binding Maximize}" Content="&#x1F5B5;" ToolTip="Maximize" IsEnabled="{Binding HasNonEmptySearchResult}"/>
+                    <Button Grid.RowSpan="2" Margin="0,0,5,0" Style="{StaticResource NavigationButton}" Content="&#x1F5B5;+" ToolTip="Open presentation window" IsEnabled="{Binding HasNonEmptySearchResult}" Visibility="{Binding Maximize, Converter={StaticResource NegatedBooleanToVisibilityConverter}}" Command="{Binding OpenPresentationWindowCommand}"/>
+                    <ToggleButton Grid.RowSpan="2" Style="{StaticResource NavigationToggleButton}" IsChecked="{Binding Maximize}" Content="&#x1F5B5;" ToolTip="Maximize" IsEnabled="{Binding HasNonEmptySearchResult}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding Maximize, Converter={StaticResource NegatedBooleanToVisibilityConverter}}">
                     <view:FileCategorizationHistory VerticalAlignment="Top" Margin="0,0,10,0"/>
@@ -104,9 +105,7 @@
             
             <!-- Bottom file info when maximized -->
             <StackPanel Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" HorizontalAlignment="Center" Visibility="{Binding Maximize, Converter={StaticResource BoolToVis}}">
-                <Border Style="{StaticResource MaximizedBorderGroup}" Margin="20 0 20 20" Padding="10" Visibility="{Binding CurrentFileDescription, Converter={converters:StringNullOrEmptyToVisibilityConverter}}">
-                    <TextBlock Style="{StaticResource PageInnerSubHeading}" Text="{Binding CurrentFileDescription}" ToolTip="{Binding CurrentFileDescription}" TextWrapping="Wrap"/>
-                </Border>
+                <view:FileInfoDescription/>
             </StackPanel>
         </Grid>
     </Grid>

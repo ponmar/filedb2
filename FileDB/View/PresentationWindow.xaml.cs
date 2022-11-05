@@ -1,18 +1,18 @@
-﻿using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using CommunityToolkit.Mvvm.Messaging;
+﻿using CommunityToolkit.Mvvm.Messaging;
 using FileDB.Model;
 using FileDB.ViewModel;
+using System.Windows;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace FileDB.View;
 
 /// <summary>
-/// Interaction logic for FindView.xaml
+/// Interaction logic for PresentationWindow.xaml
 /// </summary>
-public partial class FindView : UserControl
+public partial class PresentationWindow : Window
 {
-    public FindView()
+    public PresentationWindow()
     {
         InitializeComponent();
         DataContext = FindViewModel.Instance;

@@ -8,7 +8,6 @@ using FileDBInterface.Exceptions;
 using FileDBInterface.FilesystemAccess;
 using FileDBInterface.Model;
 using FileDBInterface.DbAccess.SQLite;
-using FileDB.ViewModel;
 using FileDB.FileBrowsingPlugins;
 using FileDB.Validators;
 using CommunityToolkit.Mvvm.Messaging;
@@ -19,8 +18,6 @@ public class Model
 {
     public static Model Instance => instance ??= new();
     private static Model? instance;
-
-    public IImagePresenter? ImagePresenter { get; set; } = null;
 
     private readonly List<IBrowsingPlugin> browsingPlugins = new();
 

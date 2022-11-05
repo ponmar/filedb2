@@ -52,12 +52,6 @@ public enum FileType
     Audio,
 }
 
-public interface IImagePresenter
-{
-    void ShowImage(BitmapImage image, double rotateDegrees);
-    void CloseImage();
-}
-
 public record PersonToUpdate(int Id, string Name);
 public record LocationToUpdate(int Id, string Name);
 public record TagToUpdate(int Id, string Name);
@@ -1236,24 +1230,24 @@ public partial class FindViewModel : ObservableObject
             try
             {
                 CurrentFileLoadError = string.Empty;
-                model.ImagePresenter!.ShowImage(new BitmapImage(uri), -currentFileRotation);
+                WeakReferenceMessenger.Default.Send(new ShowImage(new BitmapImage(uri), -currentFileRotation));
 
                 model.FileLoaded(selection);
             }
             catch (WebException e)
             {
                 CurrentFileLoadError = $"Image loading error:\n{e.Message}";
-                model.ImagePresenter!.CloseImage();
+                WeakReferenceMessenger.Default.Send(new CloseImage());
             }
             catch (IOException e)
             {
                 CurrentFileLoadError = $"Image loading error:\n{e.Message}";
-                model.ImagePresenter!.CloseImage();
+                WeakReferenceMessenger.Default.Send(new CloseImage());
             }
             catch (NotSupportedException e)
             {
                 CurrentFileLoadError = $"File format not supported (use the Open button to open file with the default application):\n{e.Message}";
-                model.ImagePresenter!.CloseImage();
+                WeakReferenceMessenger.Default.Send(new CloseImage());
             }
         }
     }
@@ -1278,7 +1272,7 @@ public partial class FindViewModel : ObservableObject
         NewFileDateTime = string.Empty;
 
         CurrentFileLoadError = "No match";
-        model.ImagePresenter!.CloseImage();
+        WeakReferenceMessenger.Default.Send(new CloseImage());
     }
 
     private string GetFileDateTimeString(string? datetimeString)
@@ -1885,5 +1879,16 @@ public partial class FindViewModel : ObservableObject
         var fileIds = Utils.CreateFileIds(CombineSearchResult);
         var files = model.DbAccess.SearchFilesFromIds(fileIds);
         SearchResult = new SearchResult(files);
+    }
+
+    [RelayCommand]
+    private void OpenPresentationWindow()
+    {
+        var window = new PresentationWindow()
+        {
+            Owner = Application.Current.MainWindow,
+            Title = $"{Utils.ApplicationName} {Utils.GetVersionString()} - Presentation"
+        };
+        window.Show();
     }
 }
