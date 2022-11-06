@@ -27,7 +27,7 @@
         </Grid.RowDefinitions>
         
         <Image Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="3" x:Name="CurrentFileImage" Stretch="Uniform" RenderOptions.BitmapScalingMode="Fant"/>
-        <view:FileInfoMaximized Grid.Column="0" Grid.Row="0"/>
-        <view:FileInfoDescription Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" HorizontalAlignment="Center"/>
+        <view:PresentationFileInfo Grid.Column="0" Grid.Row="0"/>
+        <view:PresentationDescription Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" HorizontalAlignment="Center"/>
     </Grid>
 </Window>

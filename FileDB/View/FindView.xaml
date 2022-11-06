@@ -85,7 +85,7 @@
 
             <!-- Left side areas when maximized -->
             <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Margin="10 22 0 0" Visibility="{Binding Maximize, Converter={StaticResource BoolToVis}}">
-                <view:FileInfoMaximized/>
+                <view:PresentationFileInfo/>
             </StackPanel>
 
             <!-- Right side areas -->
@@ -105,7 +105,7 @@
             
             <!-- Bottom file info when maximized -->
             <StackPanel Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" HorizontalAlignment="Center" Visibility="{Binding Maximize, Converter={StaticResource BoolToVis}}">
-                <view:FileInfoDescription/>
+                <view:PresentationDescription/>
             </StackPanel>
         </Grid>
     </Grid>

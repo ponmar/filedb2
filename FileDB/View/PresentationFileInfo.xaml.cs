@@ -5,11 +5,11 @@ using System.Windows.Navigation;
 namespace FileDB.View;
 
 /// <summary>
-/// Interaction logic for FileInfoMaximized.xaml
+/// Interaction logic for PresentationFileInfo.xaml
 /// </summary>
-public partial class FileInfoMaximized : UserControl
+public partial class PresentationFileInfo : UserControl
 {
-    public FileInfoMaximized()
+    public PresentationFileInfo()
     {
         InitializeComponent();
         DataContext = FindViewModel.Instance;
