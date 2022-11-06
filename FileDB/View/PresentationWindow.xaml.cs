@@ -35,4 +35,18 @@ public partial class PresentationWindow : Window
 
         CurrentFileImage.Source = transformBmp;
     }
+
+    private void Window_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+        if (WindowStyle == WindowStyle.None)
+        {
+            WindowStyle = WindowStyle.SingleBorderWindow;
+            WindowState = WindowState.Normal;
+        }
+        else
+        {
+            WindowStyle = WindowStyle.None;
+            WindowState = WindowState.Maximized;
+        }
+    }
 }

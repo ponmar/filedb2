@@ -9,7 +9,7 @@
         xmlns:view="clr-namespace:FileDB.View" d:DataContext="{d:DesignInstance Type=viewmodel:FindViewModel}"
         mc:Ignorable="d"
         Background="Black"
-        WindowStyle="SingleBorderWindow">
+        MouseDoubleClick="Window_MouseDoubleClick">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
     </Window.Resources>
