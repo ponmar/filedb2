@@ -1889,6 +1889,13 @@ public partial class FindViewModel : ObservableObject
             Owner = Application.Current.MainWindow,
             Title = $"{Utils.ApplicationName} {Utils.GetVersionString()} - Presentation"
         };
+
+        if (CurrentFilePath != string.Empty)
+        {
+            var uri = new Uri(CurrentFilePath, UriKind.Absolute);
+            window.ShowImage(new BitmapImage(uri), -currentFileRotation);
+        }
+
         window.Show();
     }
 }

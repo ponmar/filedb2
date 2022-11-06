@@ -17,20 +17,22 @@ public partial class PresentationWindow : Window
         InitializeComponent();
         DataContext = FindViewModel.Instance;
 
-        WeakReferenceMessenger.Default.Register<ShowImage>(this, (r, m) =>
-        {
-            var transformBmp = new TransformedBitmap();
-            transformBmp.BeginInit();
-            transformBmp.Source = m.Image;
-            transformBmp.Transform = new RotateTransform(m.RotateDegrees);
-            transformBmp.EndInit();
-
-            CurrentFileImage.Source = transformBmp;
-        });
+        WeakReferenceMessenger.Default.Register<ShowImage>(this, (r, m) => ShowImage(m.Image, m.RotateDegrees));
 
         WeakReferenceMessenger.Default.Register<CloseImage>(this, (r, m) =>
         {
             CurrentFileImage.Source = null;
         });
+    }
+
+    public void ShowImage(BitmapImage image, double rotateDegrees)
+    {
+        var transformBmp = new TransformedBitmap();
+        transformBmp.BeginInit();
+        transformBmp.Source = image;
+        transformBmp.Transform = new RotateTransform(rotateDegrees);
+        transformBmp.EndInit();
+
+        CurrentFileImage.Source = transformBmp;
     }
 }
