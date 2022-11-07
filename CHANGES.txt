@@ -1,3 +1,8 @@
+3.6:
+* Presentation windows can be opened for showing current file info on other screens
+* Show a progress dialog during search result export and show an info dialog when finished
+* Add a checkbox for selecting if file meta-data shall be parsed when adding new files
+
 3.5:
 * Add search by complement (everything except was was specified)
 * Backup config file before saving settings
