@@ -187,7 +187,7 @@ namespace FileDBInterface.DbAccess.SQLite
             }
         }
 
-        public void InsertFile(string internalPath, string? description, IFilesystemAccess filesystemAccess)
+        public void InsertFile(string internalPath, string? description, IFilesystemAccess filesystemAccess, bool findMetadata)
         {
             if (!FilesModelValidator.ValidateDescription(description))
             {
@@ -200,7 +200,7 @@ namespace FileDBInterface.DbAccess.SQLite
                 throw new DataValidationException($"No such file: {absolutePath}");
             }
 
-            var fileMetadata = filesystemAccess.ParseFileMetadata(absolutePath);
+            var fileMetadata = findMetadata ? filesystemAccess.ParseFileMetadata(absolutePath) : new(null, null, null);
 
             try
             {

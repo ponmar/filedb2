@@ -49,6 +49,9 @@ public partial class FilesViewModel : ObservableObject
     [ObservableProperty]
     private string removeFileList = string.Empty;
 
+    [ObservableProperty]
+    private bool findFileMetadata = true;
+
     private readonly Model.Model model = Model.Model.Instance;
 
     public FilesViewModel()
@@ -158,7 +161,7 @@ public partial class FilesViewModel : ObservableObject
                     progress.Report($"Adding file {counter} / {filesToAdd.Count}...");
                     Thread.Sleep(1000);
 
-                    model.DbAccess.InsertFile(fileToAdd.Path, null, model.FilesystemAccess);
+                    model.DbAccess.InsertFile(fileToAdd.Path, null, model.FilesystemAccess, FindFileMetadata);
 
                     var importedFile = model.DbAccess.GetFileByPath(fileToAdd.Path);
 

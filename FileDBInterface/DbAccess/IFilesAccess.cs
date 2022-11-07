@@ -11,7 +11,7 @@ namespace FileDBInterface.DbAccess
         public int GetFileCount();
         public FilesModel? GetFileById(int id);
         public FilesModel? GetFileByPath(string path);
-        public void InsertFile(string internalPath, string? description, IFilesystemAccess filesystemAccess);
+        public void InsertFile(string internalPath, string? description, IFilesystemAccess filesystemAccess, bool findMetadata);
         public void DeleteFile(int id);
         public void UpdateFileFromMetaData(int id, IFilesystemAccess filesystemAccess);
         public void UpdateFileDescription(int id, string? description);

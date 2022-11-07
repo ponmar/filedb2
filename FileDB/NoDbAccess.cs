@@ -93,7 +93,7 @@ public class NoDbAccess : IDbAccess
         return new List<FilesModel>();
     }
 
-    public void InsertFile(string internalPath, string? description, IFilesystemAccess fileSystemAccess)
+    public void InsertFile(string internalPath, string? description, IFilesystemAccess fileSystemAccess, bool findMetadata)
     {
     }
 
