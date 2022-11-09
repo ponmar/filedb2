@@ -143,6 +143,12 @@ public partial class FindViewModel : ObservableObject
         WeakReferenceMessenger.Default.Send(new FullscreenBrowsingRequested(value));
     }
 
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(OverlayFontSize))]
+    private bool largeTextMode = false;
+
+    public int OverlayFontSize => largeTextMode ? 24 : 14;
+
     public bool ShowUpdateSection => !Maximize && ReadWriteMode;
 
     #endregion

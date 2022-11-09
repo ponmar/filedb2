@@ -78,24 +78,21 @@
             </Border>
             <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource PageInnerTextBlock}" Text="{Binding CurrentFileLoadError}" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding CurrentFileLoadError, Converter={converters:StringNullOrEmptyToVisibilityConverter}}" TextWrapping="Wrap"/>
 
-            <!-- Left side areas when not maximized -->
-            <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Margin="10 22 0 0" Width="235" Visibility="{Binding Maximize, Converter={StaticResource NegatedBooleanToVisibilityConverter}}">
-                <view:FileInfo/>
-            </StackPanel>
+            <!-- Left side area when not maximized -->
+            <view:FileInfo VerticalAlignment="Top" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Margin="10 22 0 0" Visibility="{Binding Maximize, Converter={StaticResource NegatedBooleanToVisibilityConverter}}"/>
 
-            <!-- Left side areas when maximized -->
-            <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Margin="10 22 0 0" Visibility="{Binding Maximize, Converter={StaticResource BoolToVis}}">
-                <view:PresentationFileInfo/>
-            </StackPanel>
+            <!-- Left side area when maximized -->
+            <view:PresentationFileInfo VerticalAlignment="Top" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Margin="10 22 0 0" Visibility="{Binding Maximize, Converter={StaticResource BoolToVis}}"/>
 
             <!-- Right side areas -->
             <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Margin="0 22 10 0">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,10">
-                    <Button Margin="0,0,5,0" Width="50" Command="{Binding OpenFileLocationCommand}" Style="{StaticResource NormalButton}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip="Locate file in Explorer" Visibility="{Binding Maximize, Converter={StaticResource NegatedBooleanToVisibilityConverter}}">Locate</Button>
-                    <Button Margin="0,0,5,0" Width="50" Command="{Binding OpenFileWithDefaultAppCommand}" Style="{StaticResource NormalButton}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip="Open file with default application" Visibility="{Binding Maximize, Converter={StaticResource NegatedBooleanToVisibilityConverter}}">Open</Button>
-                    <Button Margin="0,0,5,0" Width="50" Command="{Binding CopyFileIdCommand}" Style="{StaticResource NormalButton}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip="Copy file id" Visibility="{Binding Maximize, Converter={StaticResource NegatedBooleanToVisibilityConverter}}">Copy</Button>
-                    <Button Grid.RowSpan="2" Margin="0,0,5,0" Style="{StaticResource NavigationButton}" Content="&#x1F5B5;+" ToolTip="Open presentation window" IsEnabled="{Binding HasNonEmptySearchResult}" Visibility="{Binding Maximize, Converter={StaticResource NegatedBooleanToVisibilityConverter}}" Command="{Binding OpenPresentationWindowCommand}"/>
-                    <ToggleButton Grid.RowSpan="2" Style="{StaticResource NavigationToggleButton}" IsChecked="{Binding Maximize}" Content="&#x1F5B5;" ToolTip="Maximize" IsEnabled="{Binding HasNonEmptySearchResult}"/>
+                    <Button Margin="0,0,5,0" Command="{Binding OpenFileLocationCommand}" Style="{StaticResource NormalButton}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip="Locate file in Explorer" Visibility="{Binding Maximize, Converter={StaticResource NegatedBooleanToVisibilityConverter}}">Locate</Button>
+                    <Button Margin="0,0,5,0" Command="{Binding OpenFileWithDefaultAppCommand}" Style="{StaticResource NormalButton}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip="Open file with default application" Visibility="{Binding Maximize, Converter={StaticResource NegatedBooleanToVisibilityConverter}}">Open</Button>
+                    <Button Margin="0,0,5,0" Command="{Binding CopyFileIdCommand}" Style="{StaticResource NormalButton}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip="Copy file id" Visibility="{Binding Maximize, Converter={StaticResource NegatedBooleanToVisibilityConverter}}">Copy</Button>
+                    <ToggleButton Margin="0,0,5,0" Style="{StaticResource NavigationToggleButton}" IsChecked="{Binding LargeTextMode}" Content="L" ToolTip="Toggle large text" IsEnabled="{Binding HasNonEmptySearchResult}"/>
+                    <Button Margin="0,0,5,0" Style="{StaticResource NavigationButton}" Content="&#x1F5B5;+" ToolTip="Open presentation window" IsEnabled="{Binding HasNonEmptySearchResult}" Visibility="{Binding Maximize, Converter={StaticResource NegatedBooleanToVisibilityConverter}}" Command="{Binding OpenPresentationWindowCommand}"/>
+                    <ToggleButton Margin="0" Style="{StaticResource NavigationToggleButton}" IsChecked="{Binding Maximize}" Content="&#x1F5B5;" ToolTip="Maximize" IsEnabled="{Binding HasNonEmptySearchResult}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding Maximize, Converter={StaticResource NegatedBooleanToVisibilityConverter}}">
                     <view:FileCategorizationHistory VerticalAlignment="Top" Margin="0,0,10,0"/>
@@ -103,10 +100,8 @@
                 </StackPanel>
             </StackPanel>
             
-            <!-- Bottom file info when maximized -->
-            <StackPanel Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" HorizontalAlignment="Center" Visibility="{Binding Maximize, Converter={StaticResource BoolToVis}}">
-                <view:PresentationDescription/>
-            </StackPanel>
+            <!-- Subtitle when maximized -->
+            <view:PresentationDescription Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" HorizontalAlignment="Center" Visibility="{Binding Maximize, Converter={StaticResource BoolToVis}}"/>
         </Grid>
     </Grid>
 </UserControl>

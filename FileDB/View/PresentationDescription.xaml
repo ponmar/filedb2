@@ -7,6 +7,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Border Style="{StaticResource MaximizedBorderGroup}" Margin="20 0 20 20" Padding="10" Visibility="{Binding CurrentFileDescription, Converter={converters:StringNullOrEmptyToVisibilityConverter}}">
-        <TextBlock Style="{StaticResource PageInnerSubHeading}" Text="{Binding CurrentFileDescription}" ToolTip="{Binding CurrentFileDescription}" TextWrapping="Wrap"/>
+        <TextBlock Style="{StaticResource PageInnerSubHeading}" FontSize="{Binding OverlayFontSize}" Text="{Binding CurrentFileDescription}" ToolTip="{Binding CurrentFileDescription}" TextWrapping="Wrap"/>
     </Border>
 </UserControl>
