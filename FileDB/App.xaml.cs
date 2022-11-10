@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Windows;
 using FileDB.Configuration;
+using FileDB.Migrators;
 using FileDB.Notifiers;
 using FileDB.Validators;
 using TextCopy;
@@ -34,7 +35,8 @@ namespace FileDB
             }
             else
             {
-                model.Config = appDataConfig.Read() ?? DefaultConfigs.Default;
+                var config = appDataConfig.Read() ?? DefaultConfigs.Default;
+                model.Config = new ConfigMigrator().Migrate(config, DefaultConfigs.Default);
 
                 var validator = new ConfigValidator();
                 var result = validator.Validate(model.Config);

@@ -59,6 +59,12 @@ public class ConfigValidator : AbstractValidator<Config>
             RuleFor(c => c.CastHttpServerInterface)
                 .Must(IsValidIpAddress!).WithMessage("Cast HTTP server interface is not a valid IP address");
         });
+
+        RuleFor(c => c.OverlayTextSize)
+            .InclusiveBetween(8, 100).WithMessage("Invalid overlay text size");
+
+        RuleFor(c => c.OverlayTextSizeLarge)
+            .InclusiveBetween(8, 100).WithMessage("Invalid overlay large text size");
     }
 
     public bool CastingEnabled(Config config)

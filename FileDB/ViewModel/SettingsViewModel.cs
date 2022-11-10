@@ -81,6 +81,12 @@ public partial class SettingsViewModel : ObservableObject
 
     public List<WindowModeDescription> WindowModes => Utils.GetWindowModes();
 
+    [ObservableProperty]
+    int overlayTextSize;
+
+    [ObservableProperty]
+    int overlayTextSizeLarge;
+
     [RelayCommand]
     private void SetDefaultSlideshowDelay()
     {
@@ -195,6 +201,18 @@ public partial class SettingsViewModel : ObservableObject
         WindowMode = DefaultConfigs.Default.WindowMode;
     }
 
+    [RelayCommand]
+    private void SetDefaultOverlayTextSize()
+    {
+        OverlayTextSize = DefaultConfigs.Default.OverlayTextSize;
+    }
+
+    [RelayCommand]
+    private void SetDefaultOverlayTextSizeLarge()
+    {
+        OverlayTextSizeLarge = DefaultConfigs.Default.OverlayTextSizeLarge;
+    }
+
     private readonly Model.Model model = Model.Model.Instance;
 
     public SettingsViewModel()
@@ -226,6 +244,8 @@ public partial class SettingsViewModel : ObservableObject
         CastHttpServerInterface = model.Config.CastHttpServerInterface;
         CastHttpServerPort = model.Config.CastHttpServerPort;
         CacheFiles = model.Config.CacheFiles;
+        OverlayTextSize = model.Config.OverlayTextSize;
+        OverlayTextSizeLarge = model.Config.OverlayTextSizeLarge;
     }
 
     [RelayCommand]
@@ -259,7 +279,9 @@ public partial class SettingsViewModel : ObservableObject
             WindowMode,
             CastHttpServerInterface,
             CastHttpServerPort,
-            CacheFiles);
+            CacheFiles,
+            OverlayTextSize,
+            OverlayTextSizeLarge);
 
         var result = new ConfigValidator().Validate(config);
         if (!result.IsValid)

@@ -28,7 +28,9 @@ public record Config(
     WindowMode WindowMode,
     string? CastHttpServerInterface,
     int CastHttpServerPort,
-    bool CacheFiles);
+    bool CacheFiles,
+    int OverlayTextSize,
+    int OverlayTextSizeLarge);
 
 public static class DefaultConfigs
 {
@@ -56,7 +58,9 @@ public static class DefaultConfigs
             WindowMode: WindowMode.Maximized,
             CastHttpServerInterface: null,
             CastHttpServerPort: -1,
-            CacheFiles: false);
+            CacheFiles: false,
+            OverlayTextSize: 14,
+            OverlayTextSizeLarge: 24);
 
     public static Config CreateDemo() =>
         new("Demo",
@@ -80,5 +84,7 @@ public static class DefaultConfigs
             Default.WindowMode,
             Default.CastHttpServerInterface,
             Default.CastHttpServerPort,
-            Default.CacheFiles);
+            Default.CacheFiles,
+            Default.OverlayTextSize,
+            Default.OverlayTextSizeLarge);
 }

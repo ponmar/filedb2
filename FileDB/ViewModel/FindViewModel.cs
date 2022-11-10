@@ -147,7 +147,7 @@ public partial class FindViewModel : ObservableObject
     [NotifyPropertyChangedFor(nameof(OverlayFontSize))]
     private bool largeTextMode = false;
 
-    public int OverlayFontSize => largeTextMode ? 24 : 14;
+    public int OverlayFontSize => largeTextMode ? model.Config.OverlayTextSizeLarge : model.Config.OverlayTextSize;
 
     public bool ShowUpdateSection => !Maximize && ReadWriteMode;
 
@@ -549,6 +549,8 @@ public partial class FindViewModel : ObservableObject
         {
             ReadWriteMode = !model.Config.ReadOnly;
             slideshowTimer.Interval = TimeSpan.FromSeconds(model.Config.SlideshowDelay);
+
+            OnPropertyChanged(nameof(LargeTextMode));
         });
 
     }
