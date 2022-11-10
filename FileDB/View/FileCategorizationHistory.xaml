@@ -28,14 +28,12 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" SharedSizeGroup="column1"/>
                                     <ColumnDefinition Width="Auto" SharedSizeGroup="column2"/>
-                                    <ColumnDefinition Width="Auto" SharedSizeGroup="column3"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Column="0" Style="{StaticResource PageInnerTextBlock}" Text="{Binding FunctionKeyText}" FontWeight="Bold" VerticalAlignment="Center"/>
-                                <TextBlock Grid.Column="1" Style="{StaticResource PageInnerTextBlock}" Margin="3 0" Text="{Binding Description}" VerticalAlignment="Center"/>
-                                <Button Grid.Column="2" Style="{StaticResource NormalButton}" Width="20" Height="20" Command="{Binding ElementName=HistoryItemsListView, Path=DataContext.RemoveHistoryItemCommand}" CommandParameter="{Binding}" VerticalAlignment="Center">
+                                <Button Grid.Column="0" Margin="3" Style="{StaticResource NormalButton}" Content="{Binding ToggleText}" Command="{Binding ElementName=HistoryItemsListView, Path=DataContext.ToggleFromHistoryItemCommand}" CommandParameter="{Binding}"/>
+                                <Button Grid.Column="1" Style="{StaticResource NormalButton}" Width="20" Height="20" Command="{Binding ElementName=HistoryItemsListView, Path=DataContext.RemoveHistoryItemCommand}" CommandParameter="{Binding}" VerticalAlignment="Center">
                                     <TextBlock Margin="0 -4" HorizontalAlignment="Center" VerticalAlignment="Center">x</TextBlock>
                                 </Button>
                             </Grid>

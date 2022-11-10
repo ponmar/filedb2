@@ -91,8 +91,7 @@ public class UpdateHistoryItem
     public int ItemId { get; }
     public string ItemName { get; }
     public int FunctionKey { get; }
-    public string FunctionKeyText => $"F{FunctionKey}";
-    public string Description => $"Toggle '{ItemName}'";
+    public string ToggleText => $"F{FunctionKey}: Toggle '{ItemName}'";
 
     public UpdateHistoryItem(UpdateHistoryType type, int itemId, string itemName, int functionKey)
     {
@@ -1785,14 +1784,25 @@ public partial class FindViewModel : ObservableObject
             return;
         }
 
-        var fileId = SearchResult!.Files[SearchResultIndex].Id;
-
         var functionKey = int.Parse(parameter);
         var historyItem = UpdateHistoryItems.FirstOrDefault(x => x.FunctionKey == functionKey);
         if (historyItem == null)
         {
             return;
         }
+
+        ToggleFromHistoryItem(historyItem);
+    }
+
+    [RelayCommand]
+    private void ToggleFromHistoryItem(UpdateHistoryItem historyItem)
+    {
+        if (!ReadWriteMode || !HasNonEmptySearchResult)
+        {
+            return;
+        }
+
+        var fileId = SearchResult!.Files[SearchResultIndex].Id;
 
         switch (historyItem.Type)
         {
