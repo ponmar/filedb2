@@ -1,3 +1,7 @@
+3.7:
+* Upgrade to .NET 7
+* Add button for toggling between normal and large text size for file overlay text
+
 3.6:
 * Presentation windows can be opened for showing current file info on other screens
 * Show a progress dialog during search result export and show an info dialog when finished
