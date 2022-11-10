@@ -1,107 +1,237 @@
-﻿<UserControl x:Class="FileDB.View.FindView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:FileDB.View"
-             xmlns:converters="clr-namespace:FileDB.Converters"
-             xmlns:viewmodel="clr-namespace:FileDB.ViewModel"
-             xmlns:view="clr-namespace:FileDB.View"
-             d:DataContext="{d:DesignInstance Type=viewmodel:FindViewModel}"
-             mc:Ignorable="d"
-             d:DesignHeight="800" d:DesignWidth="1000"
-             Focusable="True">
+﻿<UserControl
+    x:Class="FileDB.View.FindView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:FileDB.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:FileDB.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:view="clr-namespace:FileDB.View"
+    xmlns:viewmodel="clr-namespace:FileDB.ViewModel"
+    d:DataContext="{d:DesignInstance Type=viewmodel:FindViewModel}"
+    d:DesignHeight="800"
+    d:DesignWidth="1000"
+    Focusable="True"
+    mc:Ignorable="d">
     <UserControl.InputBindings>
-        <KeyBinding Command="{Binding FunctionKeyCommand}" CommandParameter="1" Key="F1"/>
-        <KeyBinding Command="{Binding FunctionKeyCommand}" CommandParameter="2" Key="F2"/>
-        <KeyBinding Command="{Binding FunctionKeyCommand}" CommandParameter="3" Key="F3"/>
-        <KeyBinding Command="{Binding FunctionKeyCommand}" CommandParameter="4" Key="F4"/>
-        <KeyBinding Command="{Binding FunctionKeyCommand}" CommandParameter="5" Key="F5"/>
-        <KeyBinding Command="{Binding FunctionKeyCommand}" CommandParameter="6" Key="F6"/>
-        <KeyBinding Command="{Binding FunctionKeyCommand}" CommandParameter="7" Key="F7"/>
-        <KeyBinding Command="{Binding FunctionKeyCommand}" CommandParameter="8" Key="F8"/>
-        <KeyBinding Command="{Binding FunctionKeyCommand}" CommandParameter="9" Key="F9"/>
-        <KeyBinding Command="{Binding FunctionKeyCommand}" CommandParameter="10" Key="F10"/>
-        <KeyBinding Command="{Binding FunctionKeyCommand}" CommandParameter="11" Key="F11"/>
-        <KeyBinding Command="{Binding FunctionKeyCommand}" CommandParameter="12" Key="F12"/>
-        <KeyBinding Command="{Binding PrevFileCommand}" Key="Left"/>
-        <KeyBinding Command="{Binding NextFileCommand}" Key="Right"/>
-        <KeyBinding Command="{Binding FirstFileCommand}" Key="Home"/>
-        <KeyBinding Command="{Binding LastFileCommand}" Key="End"/>
-        <KeyBinding Command="{Binding NextDirectoryCommand}" Key="PageDown"/>
-        <KeyBinding Command="{Binding PrevDirectoryCommand}" Key="PageUp"/>
+        <KeyBinding
+            Key="F1"
+            Command="{Binding FunctionKeyCommand}"
+            CommandParameter="1" />
+        <KeyBinding
+            Key="F2"
+            Command="{Binding FunctionKeyCommand}"
+            CommandParameter="2" />
+        <KeyBinding
+            Key="F3"
+            Command="{Binding FunctionKeyCommand}"
+            CommandParameter="3" />
+        <KeyBinding
+            Key="F4"
+            Command="{Binding FunctionKeyCommand}"
+            CommandParameter="4" />
+        <KeyBinding
+            Key="F5"
+            Command="{Binding FunctionKeyCommand}"
+            CommandParameter="5" />
+        <KeyBinding
+            Key="F6"
+            Command="{Binding FunctionKeyCommand}"
+            CommandParameter="6" />
+        <KeyBinding
+            Key="F7"
+            Command="{Binding FunctionKeyCommand}"
+            CommandParameter="7" />
+        <KeyBinding
+            Key="F8"
+            Command="{Binding FunctionKeyCommand}"
+            CommandParameter="8" />
+        <KeyBinding
+            Key="F9"
+            Command="{Binding FunctionKeyCommand}"
+            CommandParameter="9" />
+        <KeyBinding
+            Key="F10"
+            Command="{Binding FunctionKeyCommand}"
+            CommandParameter="10" />
+        <KeyBinding
+            Key="F11"
+            Command="{Binding FunctionKeyCommand}"
+            CommandParameter="11" />
+        <KeyBinding
+            Key="F12"
+            Command="{Binding FunctionKeyCommand}"
+            CommandParameter="12" />
+        <KeyBinding Key="Left" Command="{Binding PrevFileCommand}" />
+        <KeyBinding Key="Right" Command="{Binding NextFileCommand}" />
+        <KeyBinding Key="Home" Command="{Binding FirstFileCommand}" />
+        <KeyBinding Key="End" Command="{Binding LastFileCommand}" />
+        <KeyBinding Key="PageDown" Command="{Binding NextDirectoryCommand}" />
+        <KeyBinding Key="PageUp" Command="{Binding PrevDirectoryCommand}" />
         <!--<KeyBinding Command="{Binding EscKeyCommand}" Key="F" Modifiers="Alt"/>-->
     </UserControl.InputBindings>
 
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
-        <converters:NegatedBooleanToVisibilityConverter x:Key="NegatedBooleanToVisibilityConverter"/>
-        <converters:EnumerationToVisibilityConverter x:Key="EnumerationToVisibilityConverter"/>
-        <converters:EnumerationEmptyToVisibilityConverter x:Key="EnumerationEmptyToVisibilityConverter"/>
-        <converters:StringContentToBoolConverter x:Key="StringContentToBoolConverter"/>
+        <converters:NegatedBooleanToVisibilityConverter x:Key="NegatedBooleanToVisibilityConverter" />
+        <converters:EnumerationToVisibilityConverter x:Key="EnumerationToVisibilityConverter" />
+        <converters:EnumerationEmptyToVisibilityConverter x:Key="EnumerationEmptyToVisibilityConverter" />
+        <converters:StringContentToBoolConverter x:Key="StringContentToBoolConverter" />
     </UserControl.Resources>
 
-    <Grid Margin="0 0 0 0">
+    <Grid Margin="0,0,0,0">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical" Visibility="{Binding Maximize, Converter={StaticResource NegatedBooleanToVisibilityConverter}}">
+        <StackPanel
+            Grid.Row="0"
+            Grid.Column="0"
+            Orientation="Vertical"
+            Visibility="{Binding Maximize, Converter={StaticResource NegatedBooleanToVisibilityConverter}}">
             <TextBlock Style="{StaticResource PageHeading}">Search</TextBlock>
-            <view:SearchCriteria/>
-            <view:FileBrowseControls/>
+            <view:SearchCriteria />
+            <view:FileBrowseControls />
         </StackPanel>
 
         <Grid Grid.Row="1" Grid.Column="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
 
-            <!-- Image or error message -->
-            <Border Style="{StaticResource BorderGroup}" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="2" Margin="0 10 0 0">
+            <!--  Image or error message  -->
+            <Border
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                Margin="0,10,0,0"
+                Style="{StaticResource BorderGroup}">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <Image x:Name="CurrentFileImage" Stretch="Uniform" RenderOptions.BitmapScalingMode="Fant"/>
+                    <Image
+                        x:Name="CurrentFileImage"
+                        RenderOptions.BitmapScalingMode="Fant"
+                        Stretch="Uniform" />
                 </Grid>
             </Border>
-            <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource PageInnerTextBlock}" Text="{Binding CurrentFileLoadError}" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding CurrentFileLoadError, Converter={converters:StringNullOrEmptyToVisibilityConverter}}" TextWrapping="Wrap"/>
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="1"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Style="{StaticResource PageInnerTextBlock}"
+                Text="{Binding CurrentFileLoadError}"
+                TextWrapping="Wrap"
+                Visibility="{Binding CurrentFileLoadError, Converter={converters:StringNullOrEmptyToVisibilityConverter}}" />
 
-            <!-- Left side area when not maximized -->
-            <view:FileInfo VerticalAlignment="Top" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Margin="10 22 0 0" Visibility="{Binding Maximize, Converter={StaticResource NegatedBooleanToVisibilityConverter}}"/>
+            <!--  Left side area when not maximized  -->
+            <view:FileInfo
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                Margin="10,22,0,0"
+                VerticalAlignment="Top"
+                Visibility="{Binding Maximize, Converter={StaticResource NegatedBooleanToVisibilityConverter}}" />
 
-            <!-- Left side area when maximized -->
-            <view:PresentationFileInfo VerticalAlignment="Top" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Margin="10 22 0 0" Visibility="{Binding Maximize, Converter={StaticResource BoolToVis}}"/>
+            <!--  Left side area when maximized  -->
+            <view:PresentationFileInfo
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                Margin="10,22,0,0"
+                VerticalAlignment="Top"
+                Visibility="{Binding Maximize, Converter={StaticResource BoolToVis}}" />
 
-            <!-- Right side areas -->
-            <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Margin="0 22 10 0">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,10">
-                    <Button Margin="0,0,5,0" Command="{Binding OpenFileLocationCommand}" Style="{StaticResource NormalButton}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip="Locate file in Explorer" Visibility="{Binding Maximize, Converter={StaticResource NegatedBooleanToVisibilityConverter}}">Locate</Button>
-                    <Button Margin="0,0,5,0" Command="{Binding OpenFileWithDefaultAppCommand}" Style="{StaticResource NormalButton}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip="Open file with default application" Visibility="{Binding Maximize, Converter={StaticResource NegatedBooleanToVisibilityConverter}}">Open</Button>
-                    <Button Margin="0,0,5,0" Command="{Binding CopyFileIdCommand}" Style="{StaticResource NormalButton}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip="Copy file id" Visibility="{Binding Maximize, Converter={StaticResource NegatedBooleanToVisibilityConverter}}">Copy</Button>
-                    <ToggleButton Margin="0,0,5,0" Style="{StaticResource NavigationToggleButton}" IsChecked="{Binding LargeTextMode}" Content="L" ToolTip="Toggle large text" IsEnabled="{Binding HasNonEmptySearchResult}"/>
-                    <Button Margin="0,0,5,0" Style="{StaticResource NavigationButton}" Content="&#x1F5B5;+" ToolTip="Open presentation window" IsEnabled="{Binding HasNonEmptySearchResult}" Visibility="{Binding Maximize, Converter={StaticResource NegatedBooleanToVisibilityConverter}}" Command="{Binding OpenPresentationWindowCommand}"/>
-                    <ToggleButton Margin="0" Style="{StaticResource NavigationToggleButton}" IsChecked="{Binding Maximize}" Content="&#x1F5B5;" ToolTip="Maximize" IsEnabled="{Binding HasNonEmptySearchResult}"/>
+            <!--  Right side areas  -->
+            <StackPanel
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="2"
+                Margin="0,22,10,0"
+                Orientation="Vertical">
+                <StackPanel
+                    Margin="0,0,0,10"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal">
+                    <Button
+                        Margin="0,0,5,0"
+                        Command="{Binding OpenFileLocationCommand}"
+                        IsEnabled="{Binding HasNonEmptySearchResult}"
+                        Style="{StaticResource NormalButton}"
+                        ToolTip="Locate file in Explorer"
+                        Visibility="{Binding Maximize, Converter={StaticResource NegatedBooleanToVisibilityConverter}}">
+                        Locate
+                    </Button>
+                    <Button
+                        Margin="0,0,5,0"
+                        Command="{Binding OpenFileWithDefaultAppCommand}"
+                        IsEnabled="{Binding HasNonEmptySearchResult}"
+                        Style="{StaticResource NormalButton}"
+                        ToolTip="Open file with default application"
+                        Visibility="{Binding Maximize, Converter={StaticResource NegatedBooleanToVisibilityConverter}}">
+                        Open
+                    </Button>
+                    <Button
+                        Margin="0,0,5,0"
+                        Command="{Binding CopyFileIdCommand}"
+                        IsEnabled="{Binding HasNonEmptySearchResult}"
+                        Style="{StaticResource NormalButton}"
+                        ToolTip="Copy file id"
+                        Visibility="{Binding Maximize, Converter={StaticResource NegatedBooleanToVisibilityConverter}}">
+                        Copy
+                    </Button>
+                    <ToggleButton
+                        Margin="0,0,5,0"
+                        Content="&#x1F5DA;"
+                        IsChecked="{Binding LargeTextMode}"
+                        IsEnabled="{Binding HasNonEmptySearchResult}"
+                        Style="{StaticResource NavigationToggleButton}"
+                        ToolTip="Toggle large text" />
+                    <Button
+                        Margin="0,0,5,0"
+                        Command="{Binding OpenPresentationWindowCommand}"
+                        Content="&#x1F5B5;+"
+                        IsEnabled="{Binding HasNonEmptySearchResult}"
+                        Style="{StaticResource NavigationButton}"
+                        ToolTip="Open presentation window"
+                        Visibility="{Binding Maximize, Converter={StaticResource NegatedBooleanToVisibilityConverter}}" />
+                    <ToggleButton
+                        Margin="0"
+                        Content="&#x1F5B5;"
+                        IsChecked="{Binding Maximize}"
+                        IsEnabled="{Binding HasNonEmptySearchResult}"
+                        Style="{StaticResource NavigationToggleButton}"
+                        ToolTip="Maximize" />
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding Maximize, Converter={StaticResource NegatedBooleanToVisibilityConverter}}">
-                    <view:FileCategorizationHistory VerticalAlignment="Top" Margin="0,0,10,0"/>
-                    <view:FileCategorization VerticalAlignment="Top"/>
+                <StackPanel
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal"
+                    Visibility="{Binding Maximize, Converter={StaticResource NegatedBooleanToVisibilityConverter}}">
+                    <view:FileCategorizationHistory Margin="0,0,10,0" VerticalAlignment="Top" />
+                    <view:FileCategorization VerticalAlignment="Top" />
                 </StackPanel>
             </StackPanel>
-            
-            <!-- Subtitle when maximized -->
-            <view:PresentationDescription Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" HorizontalAlignment="Center" Visibility="{Binding Maximize, Converter={StaticResource BoolToVis}}"/>
+
+            <!--  Subtitle when maximized  -->
+            <view:PresentationDescription
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                HorizontalAlignment="Center"
+                Visibility="{Binding Maximize, Converter={StaticResource BoolToVis}}" />
         </Grid>
     </Grid>
 </UserControl>
