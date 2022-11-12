@@ -1,6 +1,8 @@
 ﻿using FileDBInterface.DbAccess;
+using FileDBInterface.Validators;
 using System.IO;
 using System.Linq;
+using System.Web;
 
 namespace FileDB.Export;
 
@@ -77,7 +79,9 @@ public class SearchResultHtmlExporter : ISearchResultExporter
                 {
                     pictureDescription += ": ";
                 }
-                pictureDescription += $"{file.Description}";
+                var htmlDescription = HttpUtility.HtmlEncode(file.Description);
+                htmlDescription = htmlDescription.Replace(FilesModelValidator.DescriptionLineEnding, "<br>");
+                pictureDescription += htmlDescription;
             }
 
             var pictureText = $@"<h2><span class=""index"">{index} / {data.Files.Count}</span> {pictureDateText}{pictureDescription}</h2>";
@@ -116,8 +120,8 @@ public class SearchResultHtmlExporter : ISearchResultExporter
         }
 
         var html = documentBase
-            .Replace("%HEADER%", data.Header)
-            .Replace("%ABOUT%", data.About)
+            .Replace("%HEADER%", HttpUtility.HtmlEncode(data.Header))
+            .Replace("%ABOUT%", HttpUtility.HtmlEncode(data.About))
             .Replace("%CONTENT%", content)
             .Replace("%APPLICATION_DOWNLOAD_URL%", data.ApplicationDownloadUrl)
             .Replace("%APPLICATION_NAME%", Utils.ApplicationName);
