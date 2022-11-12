@@ -1,5 +1,4 @@
-﻿using System;
-using System.Globalization;
+﻿using FileDBInterface.DbAccess;
 using FileDBInterface.Model;
 using FluentValidation;
 
@@ -29,13 +28,13 @@ namespace FileDBInterface.Validators
             When(x => x.DateOfBirth != null, () =>
             {
                 RuleFor(x => x.DateOfBirth!)
-                    .Must(IsDate).WithMessage("{PropertyName} is not in format YYYY-MM-DD");
+                    .Must(IsPersonDateOfBirth).WithMessage("{PropertyName} is not in format YYYY-MM-DD, YYYY-MM or YYYY");
             });
 
             When(x => x.Deceased != null, () =>
             {
                 RuleFor(x => x.Deceased!)
-                    .Must(IsDate).WithMessage("{PropertyName} is not in format YYYY-MM-DD");
+                    .Must(IsPersonDeceasedDate).WithMessage("{PropertyName} is not in format YYYY-MM-DD, YYYY-MM or YYYY");
             });
 
             When(x => x.ProfileFileId != null, () =>
@@ -45,9 +44,30 @@ namespace FileDBInterface.Validators
             });
         }
 
-        private bool IsDate(string text)
+        private bool IsPersonDateOfBirth(string dateStr)
         {
-            return DateTime.TryParseExact(text, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
+            try
+            {
+                DatabaseParsing.ParsePersonDateOfBirth(dateStr);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private bool IsPersonDeceasedDate(string dateStr)
+        {
+            try
+            {
+                DatabaseParsing.ParsePersonDeceasedDate(dateStr);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

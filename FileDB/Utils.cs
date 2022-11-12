@@ -118,7 +118,7 @@ public static class Utils
             return string.Empty;
         }
 
-        DateTime? personDateOfBirth = personDateOfBirthStr == null ? null : DatabaseParsing.ParsePersonsDateOfBirth(personDateOfBirthStr);
+        DateTime? personDateOfBirth = personDateOfBirthStr == null ? null : DatabaseParsing.ParsePersonDateOfBirth(personDateOfBirthStr);
         if (personDateOfBirth == null)
         {
             return string.Empty;

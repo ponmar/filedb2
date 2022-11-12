@@ -4,12 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FileDB.View"
+        xmlns:viewmodel="clr-namespace:FileDB.ViewModel"
         mc:Ignorable="d"
         Title="{Binding Title}"
         SizeToContent="WidthAndHeight"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterOwner" Style="{StaticResource Window}"
-        FocusManager.FocusedElement="{Binding ElementName=TextBoxWithInitialFocus}">
+        FocusManager.FocusedElement="{Binding ElementName=TextBoxWithInitialFocus}"
+        d:DataContext="{d:DesignInstance Type=viewmodel:AddLocationViewModel}">
     <StackPanel Orientation="Vertical">
         <Border Style="{StaticResource BorderGroup}" Margin="5">
             <Grid Margin="10">

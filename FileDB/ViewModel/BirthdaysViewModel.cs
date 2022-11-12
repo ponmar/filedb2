@@ -27,7 +27,7 @@ public class PersonBirthday
         this.person = person;
         ProfileFileIdPath = profileFileIdPath;
 
-        var dateOfBirth = DatabaseParsing.ParsePersonsDateOfBirth(person.DateOfBirth!);
+        var dateOfBirth = DatabaseParsing.ParsePersonDateOfBirth(person.DateOfBirth!);
         Birthday = dateOfBirth.ToString("d MMMM");
         DaysLeft = DatabaseUtils.GetDaysToNextBirthday(dateOfBirth);
         Age = DatabaseUtils.GetYearsAgo(DateTime.Now, dateOfBirth);

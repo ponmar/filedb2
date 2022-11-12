@@ -24,7 +24,7 @@ public class RestInPeaceNotifier : INotifier
         {
             if (person.Deceased != null)
             {
-                var deceased = DatabaseParsing.ParsePersonsDeceased(person.Deceased);
+                var deceased = DatabaseParsing.ParsePersonDeceasedDate(person.Deceased);
                 if (deceased.Month == today.Month &&
                     deceased.Day == today.Day)
                 {

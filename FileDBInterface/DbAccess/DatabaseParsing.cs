@@ -6,25 +6,41 @@ namespace FileDBInterface.DbAccess
 {
     public class DatabaseParsing
     {
-        public static DateTime ParsePersonsDateOfBirth(string dateOfBirthStr)
+        private static DateTime ParsePersonDate(string dateStr)
         {
-            return DateTime.ParseExact(dateOfBirthStr, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None);
+            if (DateTime.TryParseExact(dateStr, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var result) ||
+                DateTime.TryParseExact(dateStr, "yyyy-MM", CultureInfo.InvariantCulture, DateTimeStyles.None, out result) ||
+                DateTime.TryParseExact(dateStr, "yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out result))
+            {
+                return result;
+            }
+
+            throw new ArgumentException($"Invalid person date string: {dateStr}");
         }
 
+        public static DateTime ParsePersonDateOfBirth(string dateStr)
+        {
+            return ParsePersonDate(dateStr);
+        }
+
+        /*
         public static string ToPersonsDateOfBirth(DateTime dateOfBirth)
         {
             return dateOfBirth.ToString("yyyy-MM-dd");
         }
+        */
 
-        public static DateTime ParsePersonsDeceased(string deceasedStr)
+        public static DateTime ParsePersonDeceasedDate(string dateStr)
         {
-            return DateTime.ParseExact(deceasedStr, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None);
+            return ParsePersonDate(dateStr);
         }
 
+        /*
         public static string ToPersonsDeceased(DateTime deceased)
         {
             return deceased.ToString("yyyy-MM-dd");
         }
+        */
 
         public static DateTime? ParseFilesDatetime(string? datetimeStr)
         {

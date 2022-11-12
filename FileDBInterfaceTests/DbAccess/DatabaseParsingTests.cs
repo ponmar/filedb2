@@ -8,31 +8,45 @@ namespace FileDBInterfaceTests.DbAccess
     public class DatabaseParsingTests
     {
         [TestMethod]
-        public void ParsePersonsDateOfBirth()
+        public void ParsePersonsDateOfBirth_Day()
         {
-            var result = DatabaseParsing.ParsePersonsDateOfBirth("1957-03-23");
+            var result = DatabaseParsing.ParsePersonDateOfBirth("1957-03-23");
             Assert.AreEqual(new DateTime(year: 1957, month: 03, day: 23), result);
         }
 
         [TestMethod]
-        public void ToPersonsDateOfBirth()
+        public void ParsePersonsDateOfBirth_Month()
         {
-            var result = DatabaseParsing.ToPersonsDateOfBirth(new DateTime(year: 1957, month: 03, day: 23));
-            Assert.AreEqual("1957-03-23", result);
+            var result = DatabaseParsing.ParsePersonDateOfBirth("1957-03");
+            Assert.AreEqual(new DateTime(year: 1957, month: 03, day: 1), result);
         }
 
         [TestMethod]
-        public void ParsePersonsDeceased()
+        public void ParsePersonsDateOfBirth_Year()
         {
-            var result = DatabaseParsing.ParsePersonsDeceased("1957-03-23");
+            var result = DatabaseParsing.ParsePersonDateOfBirth("1957");
+            Assert.AreEqual(new DateTime(year: 1957, month: 1, day: 1), result);
+        }
+
+        [TestMethod]
+        public void ParsePersonsDeceasedDate_Day()
+        {
+            var result = DatabaseParsing.ParsePersonDeceasedDate("1957-03-23");
             Assert.AreEqual(new DateTime(year: 1957, month: 03, day: 23), result);
         }
 
         [TestMethod]
-        public void ToPersonsDeceased()
+        public void ParsePersonsDeceasedDate_Month()
         {
-            var result = DatabaseParsing.ToPersonsDeceased(new DateTime(year: 1957, month: 03, day: 23));
-            Assert.AreEqual("1957-03-23", result);
+            var result = DatabaseParsing.ParsePersonDeceasedDate("1957-03");
+            Assert.AreEqual(new DateTime(year: 1957, month: 03, day: 1), result);
+        }
+
+        [TestMethod]
+        public void ParsePersonsDeceasedDate_Year()
+        {
+            var result = DatabaseParsing.ParsePersonDeceasedDate("1957");
+            Assert.AreEqual(new DateTime(year: 1957, month: 1, day: 1), result);
         }
 
         [TestMethod]

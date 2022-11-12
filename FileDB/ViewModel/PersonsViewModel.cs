@@ -99,10 +99,10 @@ public partial class PersonsViewModel : ObservableObject
     {
         if (person.DateOfBirth != null)
         {
-            var dateOfBirth = DatabaseParsing.ParsePersonsDateOfBirth(person.DateOfBirth);
+            var dateOfBirth = DatabaseParsing.ParsePersonDateOfBirth(person.DateOfBirth);
             if (person.Deceased != null)
             {
-                var deceased = DatabaseParsing.ParsePersonsDeceased(person.Deceased);
+                var deceased = DatabaseParsing.ParsePersonDeceasedDate(person.Deceased);
                 return DatabaseUtils.GetYearsAgo(deceased, dateOfBirth);
             }
             else

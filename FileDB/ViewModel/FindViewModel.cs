@@ -1062,7 +1062,7 @@ public partial class FindViewModel : ObservableObject
 
             foreach (var person in personsWithAge)
             {
-                var dateOfBirth = DatabaseParsing.ParsePersonsDateOfBirth(person.DateOfBirth!);
+                var dateOfBirth = DatabaseParsing.ParsePersonDateOfBirth(person.DateOfBirth!);
                 foreach (var file in model.DbAccess.SearchFilesWithPersons(new List<int>() { person.Id }))
                 {
                     var fileDatetime = DatabaseParsing.ParseFilesDatetime(file.Datetime);

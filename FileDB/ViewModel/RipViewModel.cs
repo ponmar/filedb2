@@ -17,8 +17,8 @@ public class DeceasedPerson
     public string Name => $"{person.Firstname} {person.Lastname}";
     public string DateOfBirth => person.DateOfBirth!;
     public string DeceasedStr => person.Deceased!;
-    public DateTime Deceased => DatabaseParsing.ParsePersonsDeceased(person.Deceased!);
-    public int Age => DatabaseUtils.GetYearsAgo(Deceased, DatabaseParsing.ParsePersonsDateOfBirth(person.DateOfBirth!));
+    public DateTime Deceased => DatabaseParsing.ParsePersonDeceasedDate(person.Deceased!);
+    public int Age => DatabaseUtils.GetYearsAgo(Deceased, DatabaseParsing.ParsePersonDateOfBirth(person.DateOfBirth!));
     public string ProfileFileIdPath { get; }
 
     private readonly PersonModel person;

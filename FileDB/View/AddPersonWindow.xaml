@@ -4,12 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FileDB.View"
+        xmlns:viewmodel="clr-namespace:FileDB.ViewModel"
         mc:Ignorable="d"
         Title="{Binding Title}"
         SizeToContent="WidthAndHeight"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterOwner" Style="{StaticResource Window}"
-        FocusManager.FocusedElement="{Binding ElementName=TextBoxWithInitialFocus}">
+        FocusManager.FocusedElement="{Binding ElementName=TextBoxWithInitialFocus}"
+        d:DataContext="{d:DesignInstance Type=viewmodel:AddPersonViewModel}">
     <StackPanel Orientation="Vertical">
         <Border Style="{StaticResource BorderGroup}" Margin="5">
             <Grid Margin="10">
@@ -38,10 +40,10 @@
                 <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource PageTextBox}" Width="150" Text="{Binding Description}"/>
 
                 <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="Date of birth (optional):"/>
-                <TextBox Grid.Row="3" Grid.Column="1" Style="{StaticResource PageTextBox}" Width="150" Text="{Binding DateOfBirth}" ToolTip="YYYY-MM-DD"/>
+                <TextBox Grid.Row="3" Grid.Column="1" Style="{StaticResource PageTextBox}" Width="150" Text="{Binding DateOfBirth}" ToolTip="YYYY-MM-DD, YYYY-MM or YYYY"/>
 
                 <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="Deceased (optional):"/>
-                <TextBox Grid.Row="4" Grid.Column="1" Style="{StaticResource PageTextBox}" Width="150" Text="{Binding Deceased}" ToolTip="YYYY-MM-DD"/>
+                <TextBox Grid.Row="4" Grid.Column="1" Style="{StaticResource PageTextBox}" Width="150" Text="{Binding Deceased}" ToolTip="YYYY-MM-DD, YYYY-MM or YYYY"/>
 
                 <TextBlock Grid.Row="5" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="Profile picture file id (optional):"/>
                 <TextBox Grid.Row="5" Grid.Column="1" Style="{StaticResource PageTextBox}" Width="150" Text="{Binding ProfilePictureFileId}"/>
