@@ -231,6 +231,7 @@ public partial class FilesViewModel : ObservableObject
         if (Dialogs.ShowConfirmDialog($"Remove meta-data for {fileIds.Count} files from the specified file list?"))
         {
             fileIds.ForEach(x => model.DbAccess.DeleteFile(x));
+            Dialogs.ShowInfoDialog($"{fileIds.Count} files removed");
         }
     }
 
