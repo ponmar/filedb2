@@ -32,7 +32,7 @@ create table files(
     Id integer primary key autoincrement not null,
     Path text unique not null, /* Format: path/to/file/filename */
     Description text, /* Format: May contain \n line-endings */
-    Datetime varchar(19), /* Format: YYYY, YYYY-MM-DD or YYYY-MM-DDTHH:MM:SS */
+    Datetime varchar(19), /* Format: YYYY, YYYY-MM, YYYY-MM-DD or YYYY-MM-DDTHH:MM:SS */
     Position text, /* Format: <latitude> <longitude> */
     Orientation integer /* Format: null (no orientation set), 1-8 according to Exif */
 );

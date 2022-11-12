@@ -57,6 +57,13 @@ namespace FileDBInterfaceTests.DbAccess
         }
 
         [TestMethod]
+        public void ParseFilesDatetime_YearAndMonth_Success()
+        {
+            var result = DatabaseParsing.ParseFilesDatetime("2005-08");
+            Assert.AreEqual(new DateTime(year: 2005, month: 08, day: 1), result);
+        }
+
+        [TestMethod]
         public void ParseFilesDatetime_Year_Success()
         {
             var result = DatabaseParsing.ParseFilesDatetime("2005");

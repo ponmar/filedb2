@@ -28,25 +28,20 @@ namespace FileDBInterface.DbAccess
 
         public static DateTime? ParseFilesDatetime(string? datetimeStr)
         {
-            DateTime? result = null;
-
-            if (datetimeStr != null)
+            if (datetimeStr == null)
             {
-                if (DateTime.TryParseExact(datetimeStr, "yyyy-MM-ddTHH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var datetime1))
-                {
-                    result = datetime1;
-                }
-                else if (DateTime.TryParseExact(datetimeStr, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var datetime2))
-                {
-                    result = datetime2;
-                }
-                else if (DateTime.TryParseExact(datetimeStr, "yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out var datetime3))
-                {
-                    result = datetime3;
-                }
+                return null;
             }
 
-            return result;
+            if (DateTime.TryParseExact(datetimeStr, "yyyy-MM-ddTHH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var result) ||
+                DateTime.TryParseExact(datetimeStr, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out result) ||
+                DateTime.TryParseExact(datetimeStr, "yyyy-MM", CultureInfo.InvariantCulture, DateTimeStyles.None, out result) ||
+                DateTime.TryParseExact(datetimeStr, "yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out result))
+            {
+                return result;
+            }
+
+            return null;
         }
 
         public static string DateTakenToFilesDatetime(DateTime dateTaken)
