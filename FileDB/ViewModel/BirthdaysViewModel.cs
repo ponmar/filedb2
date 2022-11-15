@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using FileDB.Configuration;
@@ -11,21 +12,41 @@ using FileDBInterface.Model;
 
 namespace FileDB.ViewModel;
 
-public class PersonBirthday
+[ObservableObject]
+public partial class PersonBirthday
 {
-    public string Name => $"{person.Firstname} {person.Lastname}";
-    public string Birthday { get; }
-    public int DaysLeft { get; }
-    public string DaysLeftStr { get; }
-    public int Age { get; }
-    public string ProfileFileIdPath { get; }
+    [ObservableProperty]
+    private string birthday;
 
-    private readonly PersonModel person;
+    [ObservableProperty]
+    private int daysLeft;
+
+    [ObservableProperty]
+    private string daysLeftStr;
+
+    [ObservableProperty]
+    private int age;
+
+    [ObservableProperty]
+    private string profileFileIdPath;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(Name))]
+    private PersonModel person;
+
+    public string Name => $"{person.Firstname} {person.Lastname}";
 
     public PersonBirthday(PersonModel person, string profileFileIdPath)
     {
         this.person = person;
         ProfileFileIdPath = profileFileIdPath;
+
+        Update(person);
+    }
+
+    public void Update(PersonModel person)
+    {
+        Person = person;
 
         var dateOfBirth = DatabaseParsing.ParsePersonDateOfBirth(person.DateOfBirth!);
         Birthday = dateOfBirth.ToString("d MMMM");
@@ -104,33 +125,38 @@ public partial class BirthdaysViewModel : ObservableObject
     private void UpdatePersons()
     {
         allPersons.Clear();
+        Persons.Clear();
+
         var configDir = new AppDataConfig<Config>(Utils.ApplicationName).ConfigDirectory;
         var cacheDir = Path.Combine(configDir, DefaultConfigs.CacheSubdir);
 
-        foreach (var person in model.DbAccess.GetPersons())
+        foreach (var person in model.DbAccess.GetPersons().Where(x => x.DateOfBirth != null && x.Deceased == null))
         {
-            if (person.DateOfBirth != null && person.Deceased == null)
+            string profileFileIdPath;
+            if (person.ProfileFileId != null)
             {
-                string profileFileIdPath;
-                if (person.ProfileFileId != null)
+                if (model.Config.CacheFiles)
                 {
-                    if (model.Config.CacheFiles)
-                    {
-                        profileFileIdPath = Path.Combine(cacheDir, $"{person.ProfileFileId.Value}");
-                    }
-                    else
-                    {
-                        var profileFile = model.DbAccess.GetFileById(person.ProfileFileId.Value);
-                        profileFileIdPath = model.FilesystemAccess.ToAbsolutePath(profileFile!.Path);
-                    }
+                    profileFileIdPath = Path.Combine(cacheDir, $"{person.ProfileFileId.Value}");
                 }
                 else
                 {
-                    profileFileIdPath = string.Empty;
-                } 
-
-                allPersons.Add(new PersonBirthday(person, profileFileIdPath));
+                    var profileFile = model.DbAccess.GetFileById(person.ProfileFileId.Value);
+                    profileFileIdPath = model.FilesystemAccess.ToAbsolutePath(profileFile!.Path);
+                }
             }
+            else
+            {
+                profileFileIdPath = string.Empty;
+            } 
+
+            allPersons.Add(new PersonBirthday(person, profileFileIdPath));
+        }
+
+        foreach (var person in allPersons)
+        {
+            var observablePerson = Persons.FirstOrDefault(x => x.Person.Id == person.Person.Id);
+            observablePerson?.Update(person.Person);
         }
 
         allPersons.Sort(new PersonsByDaysLeftUntilBirthdaySorter());
@@ -144,9 +170,9 @@ public partial class BirthdaysViewModel : ObservableObject
         {
             if (person.MatchesTextFilter(FilterText))
             {
-                if (!Persons.Contains(person))
+                if (!Persons.Any(x => x.Person.Id == person.Person.Id))
                 {
-                    // TODO: sorting is not correct after adding at end here
+                    // TODO: sorting is not correct after adding at end here. Insert at correct index?
                     Persons.Add(person);
                 }
             }
