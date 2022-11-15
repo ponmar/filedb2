@@ -67,7 +67,7 @@ public partial class FilesViewModel : ObservableObject
     [RelayCommand]
     private void BrowseSubDirectory()
     {
-        SubdirToScan = Dialogs.BrowseExistingDirectory(model.Config.FilesRootDirectory, "Select a sub directory") ?? string.Empty;
+        SubdirToScan = Dialogs.Default.BrowseExistingDirectory(model.Config.FilesRootDirectory, "Select a sub directory") ?? string.Empty;
     }
 
     [RelayCommand]
@@ -81,17 +81,17 @@ public partial class FilesViewModel : ObservableObject
     {
         if (string.IsNullOrEmpty(SubdirToScan))
         {
-            Dialogs.ShowErrorDialog("No directory specified");
+            Dialogs.Default.ShowErrorDialog("No directory specified");
             return;
         }
         if (!Directory.Exists(SubdirToScan))
         {
-            Dialogs.ShowErrorDialog("Specified directory does no exist");
+            Dialogs.Default.ShowErrorDialog("Specified directory does no exist");
             return;
         }
         if (!SubdirToScan.StartsWith(model.Config.FilesRootDirectory))
         {
-            Dialogs.ShowErrorDialog($"Specified directory is not within the configured files root directory: {model.Config.FilesRootDirectory}");
+            Dialogs.Default.ShowErrorDialog($"Specified directory is not within the configured files root directory: {model.Config.FilesRootDirectory}");
             return;
         }
         ScanNewFiles(SubdirToScan);
@@ -99,7 +99,7 @@ public partial class FilesViewModel : ObservableObject
 
     public void ScanNewFiles(string pathToScan)
     {
-        if (!Dialogs.ShowConfirmDialog($"Find all files, not yet imported, from '{pathToScan}'?"))
+        if (!Dialogs.Default.ShowConfirmDialog($"Find all files, not yet imported, from '{pathToScan}'?"))
         {
             return;
         }
@@ -112,7 +112,7 @@ public partial class FilesViewModel : ObservableObject
         var blacklistedFilePathPatterns = model.Config.BlacklistedFilePathPatterns.Split(";");
         var whitelistedFilePathPatterns = model.Config.WhitelistedFilePathPatterns.Split(";");
 
-        Dialogs.ShowProgressDialog(progress =>
+        Dialogs.Default.ShowProgressDialog(progress =>
         {
             progress.Report("Scanning...");
 
@@ -132,7 +132,7 @@ public partial class FilesViewModel : ObservableObject
 
                 if (NewFiles.Count == 0)
                 {
-                    Dialogs.ShowInfoDialog($"No new files found. Add your files to '{model.Config.FilesRootDirectory}'.");
+                    Dialogs.Default.ShowInfoDialog($"No new files found. Add your files to '{model.Config.FilesRootDirectory}'.");
                 }
             }));
         });
@@ -142,12 +142,12 @@ public partial class FilesViewModel : ObservableObject
     private void ImportNewFiles()
     {
         var filesToAdd = NewFiles.Where(x => x.IsSelected).ToList();
-        if (!Dialogs.ShowConfirmDialog($"Add meta-data from {filesToAdd.Count} files?"))
+        if (!Dialogs.Default.ShowConfirmDialog($"Add meta-data from {filesToAdd.Count} files?"))
         {
             return;
         }
 
-        Dialogs.ShowProgressDialog(progress =>
+        Dialogs.Default.ShowProgressDialog(progress =>
         {
             var locations = model.DbAccess.GetLocations();
 
@@ -203,7 +203,7 @@ public partial class FilesViewModel : ObservableObject
             {
                 Application.Current.Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    Dialogs.ShowErrorDialog(e.Message);
+                    Dialogs.Default.ShowErrorDialog(e.Message);
 
                     filesToAdd.ForEach(x => NewFiles.Remove(x));
                     OnPropertyChanged(nameof(NewFilesSelected));
@@ -224,14 +224,14 @@ public partial class FilesViewModel : ObservableObject
         var fileIds = Utils.CreateFileIds(RemoveFileList);
         if (fileIds.Count == 0)
         {
-            Dialogs.ShowErrorDialog("No file ids specified");
+            Dialogs.Default.ShowErrorDialog("No file ids specified");
             return;
         }
 
-        if (Dialogs.ShowConfirmDialog($"Remove meta-data for {fileIds.Count} files from the specified file list?"))
+        if (Dialogs.Default.ShowConfirmDialog($"Remove meta-data for {fileIds.Count} files from the specified file list?"))
         {
             fileIds.ForEach(x => model.DbAccess.DeleteFile(x));
-            Dialogs.ShowInfoDialog($"{fileIds.Count} files removed");
+            Dialogs.Default.ShowInfoDialog($"{fileIds.Count} files removed");
         }
     }
 

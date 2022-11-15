@@ -61,7 +61,7 @@ namespace FileDB.ViewModel
         private void BrowseDestinationDirectory()
         {
             var initialPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            ExportFilesDestinationDirectory = Dialogs.BrowseExistingDirectory(initialPath, "Select your destination directory");
+            ExportFilesDestinationDirectory = Dialogs.Default.BrowseExistingDirectory(initialPath, "Select your destination directory");
         }
 
         [RelayCommand]
@@ -69,52 +69,52 @@ namespace FileDB.ViewModel
         {
             if (string.IsNullOrEmpty(ExportFilesHeader))
             {
-                Dialogs.ShowErrorDialog("No header specified");
+                Dialogs.Default.ShowErrorDialog("No header specified");
                 return;
             }
 
             if (string.IsNullOrEmpty(ExportFilesDestinationDirectory))
             {
-                Dialogs.ShowErrorDialog("No destination directory specified");
+                Dialogs.Default.ShowErrorDialog("No destination directory specified");
                 return;
             }
 
             if (!Directory.Exists(ExportFilesDestinationDirectory))
             {
-                Dialogs.ShowErrorDialog("Destination directory does not exist");
+                Dialogs.Default.ShowErrorDialog("Destination directory does not exist");
                 return;
             }
 
             if (!IsDirectoryEmpty(ExportFilesDestinationDirectory))
             {
-                Dialogs.ShowErrorDialog("Destination directory is not empty");
+                Dialogs.Default.ShowErrorDialog("Destination directory is not empty");
                 return;
             }
 
             var selection = new List<bool>() { ExportIncludesFiles, ExportIncludesHtml, ExportIncludesM3u, ExportIncludesFilesWithMetaData, ExportIncludesJson };
             if (!selection.Any(x => x))
             {
-                Dialogs.ShowErrorDialog("Nothing to export");
+                Dialogs.Default.ShowErrorDialog("Nothing to export");
                 return;
             }
 
-            if (!Dialogs.ShowConfirmDialog($"Export selected data for {SearchResult!.Count} files to {ExportFilesDestinationDirectory}?"))
+            if (!Dialogs.Default.ShowConfirmDialog($"Export selected data for {SearchResult!.Count} files to {ExportFilesDestinationDirectory}?"))
             {
                 return;
             }
 
-            Dialogs.ShowProgressDialog(progress =>
+            Dialogs.Default.ShowProgressDialog(progress =>
             {
                 progress.Report("Exporting...");
                 try
                 {
                     new SearchResultExporter().Export(ExportFilesDestinationDirectory, ExportFilesHeader, SearchResult.Files,
                     ExportIncludesFiles, ExportIncludesHtml, ExportIncludesM3u, ExportIncludesFilesWithMetaData, ExportIncludesJson);
-                    Dialogs.ShowInfoDialog("Export finished successfully.");
+                    Dialogs.Default.ShowInfoDialog("Export finished successfully.");
                 }
                 catch (IOException e)
                 {
-                    Dialogs.ShowErrorDialog("Export error: " + e.Message);
+                    Dialogs.Default.ShowErrorDialog("Export error: " + e.Message);
                 }
             });
         }

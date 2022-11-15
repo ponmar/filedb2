@@ -51,7 +51,7 @@ public partial class AddTagViewModel : ObservableObject
             {
                 if (model.DbAccess.GetTags().Any(x => x.Name == tag.Name))
                 {
-                    Dialogs.ShowErrorDialog($"Tag '{tag.Name}' already added");
+                    Dialogs.Default.ShowErrorDialog($"Tag '{tag.Name}' already added");
                     return;
                 }
 
@@ -64,7 +64,7 @@ public partial class AddTagViewModel : ObservableObject
         }
         catch (DataValidationException e)
         {
-            Dialogs.ShowErrorDialog(e.Message);
+            Dialogs.Default.ShowErrorDialog(e.Message);
         }
     }
 }

@@ -66,7 +66,7 @@ public partial class ToolsViewModel : ObservableObject
         }
         catch (IOException e)
         {
-            Dialogs.ShowErrorDialog(e.Message);
+            Dialogs.Default.ShowErrorDialog(e.Message);
         }
     }
 

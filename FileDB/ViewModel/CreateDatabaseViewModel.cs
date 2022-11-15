@@ -24,7 +24,7 @@ namespace FileDB.ViewModel
         [RelayCommand]
         private void Select()
         {
-            var result = Dialogs.SelectNewFileDialog("Select new database filename", "db", "db files (*.db)|*.db");
+            var result = Dialogs.Default.SelectNewFileDialog("Select new database filename", "db", "db files (*.db)|*.db");
             if (result != null)
             {
                 DatabasePath = result;
@@ -36,17 +36,17 @@ namespace FileDB.ViewModel
         {
             if (string.IsNullOrEmpty(DatabasePath))
             {
-                Dialogs.ShowErrorDialog("No database filename specified");
+                Dialogs.Default.ShowErrorDialog("No database filename specified");
                 return;
             }
 
             if (File.Exists(DatabasePath))
             {
-                Dialogs.ShowErrorDialog($"Database {DatabasePath} already exists");
+                Dialogs.Default.ShowErrorDialog($"Database {DatabasePath} already exists");
                 return;
             }
 
-            if (Dialogs.ShowConfirmDialog($"Create database {DatabasePath}?"))
+            if (Dialogs.Default.ShowConfirmDialog($"Create database {DatabasePath}?"))
             {
                 try
                 {
@@ -56,7 +56,7 @@ namespace FileDB.ViewModel
                 }
                 catch (DatabaseWrapperException e)
                 {
-                    Dialogs.ShowErrorDialog(e.Message);
+                    Dialogs.Default.ShowErrorDialog(e.Message);
                 }
             }
         }

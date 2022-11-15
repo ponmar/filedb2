@@ -286,13 +286,13 @@ public partial class SettingsViewModel : ObservableObject
         var result = new ConfigValidator().Validate(config);
         if (!result.IsValid)
         {
-            Dialogs.ShowErrorDialog(result);
+            Dialogs.Default.ShowErrorDialog(result);
             return;
         }
 
         var appDataConfig = new AppDataConfig<Config>(Utils.ApplicationName);
 
-        if (!Dialogs.ShowConfirmDialog($"Write your configuration to {appDataConfig.FilePath}?"))
+        if (!Dialogs.Default.ShowConfirmDialog($"Write your configuration to {appDataConfig.FilePath}?"))
         {
             return;
         }
@@ -306,14 +306,14 @@ public partial class SettingsViewModel : ObservableObject
         }
         else
         {
-            Dialogs.ShowErrorDialog("Unable to save configuration");
+            Dialogs.Default.ShowErrorDialog("Unable to save configuration");
         }
     }
 
     [RelayCommand]
     private void BrowseDatabase()
     {
-        var result = Dialogs.BrowseExistingFileDialog(@"c:\", $"{Utils.ApplicationName} database files (*.db)|*.db");
+        var result = Dialogs.Default.BrowseExistingFileDialog(@"c:\", $"{Utils.ApplicationName} database files (*.db)|*.db");
         if (result != null)
         {
             Database = result;
@@ -323,7 +323,7 @@ public partial class SettingsViewModel : ObservableObject
     [RelayCommand]
     private void BrowseFilesRootDirectory()
     {
-        var result = Dialogs.BrowseExistingDirectory(@"c:\", "Select your files root directory");
+        var result = Dialogs.Default.BrowseExistingDirectory(@"c:\", "Select your files root directory");
         if (result != null)
         {
             FilesRootDirectory = result;
@@ -333,16 +333,10 @@ public partial class SettingsViewModel : ObservableObject
     [RelayCommand]
     public void CreateDatabase()
     {
-        var window = new CreateDatabaseWindow
+        var createdDatabasePath = Dialogs.Default.ShowCreateDatabaseDialog();
+        if (createdDatabasePath != null)
         {
-            Owner = Application.Current.MainWindow
-        };
-        window.ShowDialog();
-
-        var viewModel = (CreateDatabaseViewModel)window.DataContext;
-        if (!string.IsNullOrEmpty(viewModel.CreatedDatabasePath))
-        {
-            Database = viewModel.CreatedDatabasePath;
+            Database = createdDatabasePath;
         }
     }
 }

@@ -46,10 +46,10 @@ public partial class PersonsViewModel : ObservableObject
     [RelayCommand]
     private void RemovePerson()
     {
-        if (Dialogs.ShowConfirmDialog($"Remove {selectedPerson!.Firstname} {selectedPerson.Lastname}?"))
+        if (Dialogs.Default.ShowConfirmDialog($"Remove {selectedPerson!.Firstname} {selectedPerson.Lastname}?"))
         {
             var filesWithPerson = model.DbAccess.SearchFilesWithPersons(new List<int>() { selectedPerson.Id }).ToList();
-            if (filesWithPerson.Count == 0 || Dialogs.ShowConfirmDialog($"Person is used in {filesWithPerson.Count} files, remove anyway?"))
+            if (filesWithPerson.Count == 0 || Dialogs.Default.ShowConfirmDialog($"Person is used in {filesWithPerson.Count} files, remove anyway?"))
             {
                 model.DbAccess.DeletePerson(selectedPerson.Id);
                 WeakReferenceMessenger.Default.Send(new PersonsUpdated());
@@ -60,21 +60,13 @@ public partial class PersonsViewModel : ObservableObject
     [RelayCommand]
     private void EditPerson()
     {
-        var window = new AddPersonWindow(selectedPerson!.Id)
-        {
-            Owner = Application.Current.MainWindow
-        };
-        window.ShowDialog();
+        Dialogs.Default.ShowAddPersonDialog(selectedPerson!.Id);
     }
 
     [RelayCommand]
     private void AddPerson()
     {
-        var window = new AddPersonWindow
-        {
-            Owner = Application.Current.MainWindow
-        };
-        window.ShowDialog();
+        Dialogs.Default.ShowAddPersonDialog();
     }
 
     [RelayCommand]

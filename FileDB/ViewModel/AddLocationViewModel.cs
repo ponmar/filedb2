@@ -68,7 +68,7 @@ public partial class AddLocationViewModel : ObservableObject
             {
                 if (model.DbAccess.GetLocations().Any(x => x.Name == location.Name))
                 {
-                    Dialogs.ShowErrorDialog($"Location '{location.Name}' already added");
+                    Dialogs.Default.ShowErrorDialog($"Location '{location.Name}' already added");
                     return;
                 }
 
@@ -81,7 +81,7 @@ public partial class AddLocationViewModel : ObservableObject
         }
         catch (DataValidationException e)
         {
-            Dialogs.ShowErrorDialog(e.Message);
+            Dialogs.Default.ShowErrorDialog(e.Message);
         }
     }
 }

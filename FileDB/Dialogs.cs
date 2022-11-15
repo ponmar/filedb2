@@ -1,4 +1,7 @@
-﻿using FileDB.View;
+﻿using FileDB.Model;
+using FileDB.View;
+using FileDB.ViewModel;
+using FileDBInterface.Model;
 using FluentValidation.Results;
 using System;
 using System.Collections.Generic;
@@ -9,39 +12,61 @@ using System.Windows;
 
 namespace FileDB;
 
-public static class Dialogs
+public interface IDialogs
 {
-    public static void ShowInfoDialog(string message)
+    void ShowInfoDialog(string message);
+    void ShowWarningDialog(string message);
+    void ShowErrorDialog(string message);
+    void ShowErrorDialog(IEnumerable<string> messages);
+    void ShowErrorDialog(ValidationResult validationResult);
+    bool ShowConfirmDialog(string question);
+    void ShowProgressDialog(Action<IProgress<string>> work);
+    string? BrowseExistingFileDialog(string initialDirectory, string filter);
+    string? BrowseExistingDirectory(string initialDirectory, string title);
+    string? SelectNewFileDialog(string title, string fileExtension, string filter);
+    PersonModel? ShowAddPersonDialog(int? personId = null);
+    LocationModel? ShowAddLocationDialog(int? locationId = null);
+    TagModel? ShowAddTagDialog(int? tagId = null);
+    string? ShowBrowseDirectoriesDialog();
+    void ShowExportDialog(SearchResult searchResult);
+    string? ShowCreateDatabaseDialog();
+}
+
+public class Dialogs : IDialogs
+{
+    public static IDialogs Default = new Dialogs();
+
+    public void ShowInfoDialog(string message)
     {
         MessageBox.Show(message, Utils.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.No);
     }
 
-    public static void ShowWarningDialog(string message)
+    public void ShowWarningDialog(string message)
     {
         MessageBox.Show(message, Utils.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.No);
     }
 
-    public static void ShowErrorDialog(string message)
+    public void ShowErrorDialog(string message)
     {
         MessageBox.Show(message, Utils.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.No);
     }
 
-    public static void ShowErrorDialog(IEnumerable<string> messages)
+    public void ShowErrorDialog(IEnumerable<string> messages)
     {
         ShowErrorDialog(string.Join("\n", messages));
     }
 
-    public static void ShowErrorDialog(ValidationResult validationResult)
+    public void ShowErrorDialog(ValidationResult validationResult)
     {
         ShowErrorDialog(validationResult.Errors.Select(x => x.ErrorMessage));
     }
 
-    public static bool ShowConfirmDialog(string question)
+    public bool ShowConfirmDialog(string question)
     {
         return MessageBox.Show(question, Utils.ApplicationName, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes;
     }
 
-    public static void ShowProgressDialog(Action<IProgress<string>> work)
+    public void ShowProgressDialog(Action<IProgress<string>> work)
     {
         var splash = new SplashWindow
         {
@@ -60,7 +85,7 @@ public static class Dialogs
         splash.ShowDialog();
     }
 
-    public static string? BrowseExistingFileDialog(string initialDirectory, string filter)
+    public string? BrowseExistingFileDialog(string initialDirectory, string filter)
     {
         var dialog = new Microsoft.Win32.OpenFileDialog()
         {
@@ -71,7 +96,7 @@ public static class Dialogs
         return dialog.ShowDialog() == true ? dialog.FileName : null;
     }
 
-    public static string? BrowseExistingDirectory(string initialDirectory, string title)
+    public string? BrowseExistingDirectory(string initialDirectory, string title)
     {
         if (!initialDirectory.EndsWith(Path.DirectorySeparatorChar))
         {
@@ -89,7 +114,7 @@ public static class Dialogs
         return dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK ? dialog.SelectedPath : null;
     }
 
-    public static string? SelectNewFileDialog(string title, string fileExtension, string filter)
+    public string? SelectNewFileDialog(string title, string fileExtension, string filter)
     {
         var dialog = new System.Windows.Forms.OpenFileDialog()
         {
@@ -114,5 +139,73 @@ public static class Dialogs
         }
 
         return null;
+    }
+
+    public PersonModel? ShowAddPersonDialog(int? personId = null)
+    {
+        var window = new AddPersonWindow(personId)
+        {
+            Owner = Application.Current.MainWindow
+        };
+        window.ShowDialog();
+
+        return ((AddPersonViewModel)window.DataContext).AffectedPerson;
+    }
+
+    public LocationModel? ShowAddLocationDialog(int ?locationId = null)
+    {
+        var window = new AddLocationWindow(locationId)
+        {
+            Owner = Application.Current.MainWindow
+        };
+        window.ShowDialog();
+
+        return ((AddLocationViewModel)window.DataContext).AffectedLocation;
+    }
+
+    public TagModel? ShowAddTagDialog(int? tagId = null)
+    {
+        var window = new AddTagWindow(tagId)
+        {
+            Owner = Application.Current.MainWindow
+        };
+        window.ShowDialog();
+
+        return ((AddTagViewModel)window.DataContext).AffectedTag;
+    }
+
+    public string? ShowBrowseDirectoriesDialog()
+    {
+        var window = new BrowseDirectoriesWindow
+        {
+            Owner = Application.Current.MainWindow
+        };
+        window.ShowDialog();
+
+        var windowVm = (BrowseDirectoriesViewModel)window.DataContext;
+        return windowVm.SelectedDirectoryPath;
+    }
+
+    public void ShowExportDialog(SearchResult searchResult)
+    {
+        var window = new ExportWindow
+        {
+            Owner = Application.Current.MainWindow
+        };
+        var viewModel = (ExportViewModel)window.DataContext;
+        viewModel.SearchResult = searchResult;
+        window.ShowDialog();
+    }
+
+    public string? ShowCreateDatabaseDialog()
+    {
+        var window = new CreateDatabaseWindow
+        {
+            Owner = Application.Current.MainWindow
+        };
+        window.ShowDialog();
+
+        var viewModel = (CreateDatabaseViewModel)window.DataContext;
+        return string.IsNullOrEmpty(viewModel.CreatedDatabasePath) ? null : viewModel.CreatedDatabasePath;
     }
 }
