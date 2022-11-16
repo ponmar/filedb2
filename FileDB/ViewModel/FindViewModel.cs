@@ -194,7 +194,7 @@ public partial class FindViewModel : ObservableObject
             else
             {
                 SearchFileGpsPosition = string.Empty;
-                Dialogs.Default.ShowInfoDialog("This location has no GPS position set.");
+                Dialogs.Instance.ShowInfoDialog("This location has no GPS position set.");
             }
         }        
     }
@@ -797,7 +797,7 @@ public partial class FindViewModel : ObservableObject
         StopSlideshow();
         if (SearchResultIndex == -1)
         {
-            Dialogs.Default.ShowErrorDialog("No file opened");
+            Dialogs.Instance.ShowErrorDialog("No file opened");
             return;
         }
 
@@ -829,7 +829,7 @@ public partial class FindViewModel : ObservableObject
     {
         StopSlideshow();
 
-        var selectedDir = Dialogs.Default.ShowBrowseDirectoriesDialog();
+        var selectedDir = Dialogs.Instance.ShowBrowseDirectoriesDialog();
         if (selectedDir != null)
         {
             SearchResult = new SearchResult(model.DbAccess.SearchFilesByPath(selectedDir));
@@ -900,25 +900,25 @@ public partial class FindViewModel : ObservableObject
 
         if (string.IsNullOrEmpty(SearchFileGpsPosition))
         {
-            Dialogs.Default.ShowErrorDialog("No position specified");
+            Dialogs.Instance.ShowErrorDialog("No position specified");
             return;
         }
 
         if (string.IsNullOrEmpty(SearchFileGpsRadius))
         {
-            Dialogs.Default.ShowErrorDialog("No radius specified");
+            Dialogs.Instance.ShowErrorDialog("No radius specified");
             return;
         }
         if (!double.TryParse(SearchFileGpsRadius, out var radius) || radius < 1)
         {
-            Dialogs.Default.ShowErrorDialog("Invalid radius");
+            Dialogs.Instance.ShowErrorDialog("Invalid radius");
             return;
         }
 
         var gpsPos = DatabaseParsing.ParseFilesPosition(SearchFileGpsPosition);
         if (gpsPos == null)
         {
-            Dialogs.Default.ShowErrorDialog("Invalid GPS position");
+            Dialogs.Instance.ShowErrorDialog("Invalid GPS position");
             return;
         }
 
@@ -1035,7 +1035,7 @@ public partial class FindViewModel : ObservableObject
         {
             if (!int.TryParse(SearchPersonAgeFrom, out var ageFrom))
             {
-                Dialogs.Default.ShowErrorDialog("Invalid age format");
+                Dialogs.Instance.ShowErrorDialog("Invalid age format");
                 return;
             }
 
@@ -1046,7 +1046,7 @@ public partial class FindViewModel : ObservableObject
             }
             else if (!int.TryParse(SearchPersonAgeTo, out ageTo))
             {
-                Dialogs.Default.ShowErrorDialog("Invalid age format");
+                Dialogs.Instance.ShowErrorDialog("Invalid age format");
                 return;
             }
 
@@ -1173,7 +1173,7 @@ public partial class FindViewModel : ObservableObject
     [RelayCommand]
     private void ExportFileList()
     {
-        Dialogs.Default.ShowExportDialog(SearchResult!);
+        Dialogs.Instance.ShowExportDialog(SearchResult!);
     }
 
     [RelayCommand]
@@ -1320,13 +1320,13 @@ public partial class FindViewModel : ObservableObject
     {
         if (SearchResultIndex == -1)
         {
-            Dialogs.Default.ShowErrorDialog("No file selected");
+            Dialogs.Instance.ShowErrorDialog("No file selected");
             return;
         }
 
         if (SelectedPersonToUpdate == null)
         {
-            Dialogs.Default.ShowErrorDialog("No person selected");
+            Dialogs.Instance.ShowErrorDialog("No person selected");
             return;
         }
 
@@ -1350,13 +1350,13 @@ public partial class FindViewModel : ObservableObject
     {
         if (SearchResultIndex == -1)
         {
-            Dialogs.Default.ShowErrorDialog("No file selected");
+            Dialogs.Instance.ShowErrorDialog("No file selected");
             return;
         }
 
         if (SelectedPersonToUpdate == null)
         {
-            Dialogs.Default.ShowErrorDialog("No person selected");
+            Dialogs.Instance.ShowErrorDialog("No person selected");
             return;
         }
 
@@ -1372,13 +1372,13 @@ public partial class FindViewModel : ObservableObject
     {
         if (SearchResultIndex == -1)
         {
-            Dialogs.Default.ShowErrorDialog("No file selected");
+            Dialogs.Instance.ShowErrorDialog("No file selected");
             return;
         }
 
         if (SelectedLocationToUpdate == null)
         {
-            Dialogs.Default.ShowErrorDialog("No location selected");
+            Dialogs.Instance.ShowErrorDialog("No location selected");
             return;
         }
 
@@ -1402,13 +1402,13 @@ public partial class FindViewModel : ObservableObject
     {
         if (SearchResultIndex == -1)
         {
-            Dialogs.Default.ShowErrorDialog("No file selected");
+            Dialogs.Instance.ShowErrorDialog("No file selected");
             return;
         }
 
         if (SelectedLocationToUpdate == null)
         {
-            Dialogs.Default.ShowErrorDialog("No location selected");
+            Dialogs.Instance.ShowErrorDialog("No location selected");
             return;
         }
 
@@ -1424,13 +1424,13 @@ public partial class FindViewModel : ObservableObject
     {
         if (SearchResultIndex == -1)
         {
-            Dialogs.Default.ShowErrorDialog("No file selected");
+            Dialogs.Instance.ShowErrorDialog("No file selected");
             return;
         }
 
         if (SelectedTagToUpdate == null)
         {
-            Dialogs.Default.ShowErrorDialog("No tag selected");
+            Dialogs.Instance.ShowErrorDialog("No tag selected");
             return;
         }
 
@@ -1454,13 +1454,13 @@ public partial class FindViewModel : ObservableObject
     {
         if (SearchResultIndex == -1)
         {
-            Dialogs.Default.ShowErrorDialog("No file selected");
+            Dialogs.Instance.ShowErrorDialog("No file selected");
             return;
         }
 
         if (SelectedTagToUpdate == null)
         {
-            Dialogs.Default.ShowErrorDialog("No tag selected");
+            Dialogs.Instance.ShowErrorDialog("No tag selected");
             return;
         }
 
@@ -1490,7 +1490,7 @@ public partial class FindViewModel : ObservableObject
             }
             catch (DataValidationException e)
             {
-                Dialogs.Default.ShowErrorDialog(e.Message);
+                Dialogs.Instance.ShowErrorDialog(e.Message);
             }
         }
     }
@@ -1515,7 +1515,7 @@ public partial class FindViewModel : ObservableObject
             }
             catch (DataValidationException e)
             {
-                Dialogs.Default.ShowErrorDialog(e.Message);
+                Dialogs.Instance.ShowErrorDialog(e.Message);
             }
         }
     }
@@ -1525,13 +1525,13 @@ public partial class FindViewModel : ObservableObject
     {
         if (SearchResultIndex == -1)
         {
-            Dialogs.Default.ShowErrorDialog("No file selected");
+            Dialogs.Instance.ShowErrorDialog("No file selected");
             return;
         }
 
         if (prevEditedFileId == null)
         {
-            Dialogs.Default.ShowErrorDialog("Meta-data not edited previously");
+            Dialogs.Instance.ShowErrorDialog("Meta-data not edited previously");
             return;
         }
 
@@ -1570,7 +1570,7 @@ public partial class FindViewModel : ObservableObject
         }
         catch (DataValidationException e)
         {
-            Dialogs.Default.ShowErrorDialog(e.Message);
+            Dialogs.Instance.ShowErrorDialog(e.Message);
         }
     }
 
@@ -1622,7 +1622,7 @@ public partial class FindViewModel : ObservableObject
     {
         if (SearchResultIndex != -1)
         {
-            if (Dialogs.Default.ShowConfirmDialog("Reload orientation from file meta-data?"))
+            if (Dialogs.Instance.ShowConfirmDialog("Reload orientation from file meta-data?"))
             {
                 var selection = SearchResult!.Files[SearchResultIndex];
                 var fileMetadata = model.FilesystemAccess.ParseFileMetadata(model.FilesystemAccess.ToAbsolutePath(selection.Path));
@@ -1638,7 +1638,7 @@ public partial class FindViewModel : ObservableObject
     {
         if (SearchResultIndex != -1)
         {
-            if (Dialogs.Default.ShowConfirmDialog("Reload date and GPS position from file meta-data?"))
+            if (Dialogs.Instance.ShowConfirmDialog("Reload date and GPS position from file meta-data?"))
             {
                 var selection = SearchResult!.Files[SearchResultIndex];
                 model.DbAccess.UpdateFileFromMetaData(selection.Id, model.FilesystemAccess);
@@ -1655,7 +1655,7 @@ public partial class FindViewModel : ObservableObject
     [RelayCommand]
     private void CreatePerson()
     {
-        var newPerson = Dialogs.Default.ShowAddPersonDialog();
+        var newPerson = Dialogs.Instance.ShowAddPersonDialog();
         if (newPerson != null)
         {
             AddFilePersonToCurrentFile(new PersonToUpdate(newPerson.Id, $"{newPerson.Firstname} {newPerson.Lastname}"));
@@ -1665,7 +1665,7 @@ public partial class FindViewModel : ObservableObject
     [RelayCommand]
     private void CreateLocation()
     {
-        var newLocation = Dialogs.Default.ShowAddLocationDialog();
+        var newLocation = Dialogs.Instance.ShowAddLocationDialog();
         if (newLocation != null)
         {
             AddFileLocationToCurrentFile(new LocationToUpdate(newLocation.Id, newLocation.Name));
@@ -1675,7 +1675,7 @@ public partial class FindViewModel : ObservableObject
     [RelayCommand]
     private void CreateTag()
     {
-        var newTag = Dialogs.Default.ShowAddTagDialog();
+        var newTag = Dialogs.Instance.ShowAddTagDialog();
         if (newTag != null)
         {
             AddFileTagToCurrentFile(new TagToUpdate(newTag.Id, newTag.Name));

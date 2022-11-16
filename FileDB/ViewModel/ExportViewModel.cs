@@ -61,7 +61,7 @@ namespace FileDB.ViewModel
         private void BrowseDestinationDirectory()
         {
             var initialPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            ExportFilesDestinationDirectory = Dialogs.Default.BrowseExistingDirectory(initialPath, "Select your destination directory");
+            ExportFilesDestinationDirectory = Dialogs.Instance.BrowseExistingDirectory(initialPath, "Select your destination directory");
         }
 
         [RelayCommand]
@@ -69,52 +69,52 @@ namespace FileDB.ViewModel
         {
             if (string.IsNullOrEmpty(ExportFilesHeader))
             {
-                Dialogs.Default.ShowErrorDialog("No header specified");
+                Dialogs.Instance.ShowErrorDialog("No header specified");
                 return;
             }
 
             if (string.IsNullOrEmpty(ExportFilesDestinationDirectory))
             {
-                Dialogs.Default.ShowErrorDialog("No destination directory specified");
+                Dialogs.Instance.ShowErrorDialog("No destination directory specified");
                 return;
             }
 
             if (!Directory.Exists(ExportFilesDestinationDirectory))
             {
-                Dialogs.Default.ShowErrorDialog("Destination directory does not exist");
+                Dialogs.Instance.ShowErrorDialog("Destination directory does not exist");
                 return;
             }
 
             if (!IsDirectoryEmpty(ExportFilesDestinationDirectory))
             {
-                Dialogs.Default.ShowErrorDialog("Destination directory is not empty");
+                Dialogs.Instance.ShowErrorDialog("Destination directory is not empty");
                 return;
             }
 
             var selection = new List<bool>() { ExportIncludesFiles, ExportIncludesHtml, ExportIncludesM3u, ExportIncludesFilesWithMetaData, ExportIncludesJson };
             if (!selection.Any(x => x))
             {
-                Dialogs.Default.ShowErrorDialog("Nothing to export");
+                Dialogs.Instance.ShowErrorDialog("Nothing to export");
                 return;
             }
 
-            if (!Dialogs.Default.ShowConfirmDialog($"Export selected data for {SearchResult!.Count} files to {ExportFilesDestinationDirectory}?"))
+            if (!Dialogs.Instance.ShowConfirmDialog($"Export selected data for {SearchResult!.Count} files to {ExportFilesDestinationDirectory}?"))
             {
                 return;
             }
 
-            Dialogs.Default.ShowProgressDialog(progress =>
+            Dialogs.Instance.ShowProgressDialog(progress =>
             {
                 progress.Report("Exporting...");
                 try
                 {
                     new SearchResultExporter().Export(ExportFilesDestinationDirectory, ExportFilesHeader, SearchResult.Files,
                     ExportIncludesFiles, ExportIncludesHtml, ExportIncludesM3u, ExportIncludesFilesWithMetaData, ExportIncludesJson);
-                    Dialogs.Default.ShowInfoDialog("Export finished successfully.");
+                    Dialogs.Instance.ShowInfoDialog("Export finished successfully.");
                 }
                 catch (IOException e)
                 {
-                    Dialogs.Default.ShowErrorDialog("Export error: " + e.Message);
+                    Dialogs.Instance.ShowErrorDialog("Export error: " + e.Message);
                 }
             });
         }

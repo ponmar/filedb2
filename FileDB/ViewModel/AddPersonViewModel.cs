@@ -71,7 +71,7 @@ public partial class AddPersonViewModel : ObservableObject
         {
             if (!int.TryParse(profilePictureFileId, out var value))
             {
-                Dialogs.Default.ShowErrorDialog("Given profile picture file id format not valid");
+                Dialogs.Instance.ShowErrorDialog("Given profile picture file id format not valid");
                 return;
             }
 
@@ -114,7 +114,7 @@ public partial class AddPersonViewModel : ObservableObject
         }
         catch (DataValidationException e)
         {
-            Dialogs.Default.ShowErrorDialog(e.Message);
+            Dialogs.Instance.ShowErrorDialog(e.Message);
         }
     }
 }

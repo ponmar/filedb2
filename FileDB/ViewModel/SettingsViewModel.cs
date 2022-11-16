@@ -286,13 +286,13 @@ public partial class SettingsViewModel : ObservableObject
         var result = new ConfigValidator().Validate(config);
         if (!result.IsValid)
         {
-            Dialogs.Default.ShowErrorDialog(result);
+            Dialogs.Instance.ShowErrorDialog(result);
             return;
         }
 
         var appDataConfig = new AppDataConfig<Config>(Utils.ApplicationName);
 
-        if (!Dialogs.Default.ShowConfirmDialog($"Write your configuration to {appDataConfig.FilePath}?"))
+        if (!Dialogs.Instance.ShowConfirmDialog($"Write your configuration to {appDataConfig.FilePath}?"))
         {
             return;
         }
@@ -306,14 +306,14 @@ public partial class SettingsViewModel : ObservableObject
         }
         else
         {
-            Dialogs.Default.ShowErrorDialog("Unable to save configuration");
+            Dialogs.Instance.ShowErrorDialog("Unable to save configuration");
         }
     }
 
     [RelayCommand]
     private void BrowseDatabase()
     {
-        var result = Dialogs.Default.BrowseExistingFileDialog(@"c:\", $"{Utils.ApplicationName} database files (*.db)|*.db");
+        var result = Dialogs.Instance.BrowseExistingFileDialog(@"c:\", $"{Utils.ApplicationName} database files (*.db)|*.db");
         if (result != null)
         {
             Database = result;
@@ -323,7 +323,7 @@ public partial class SettingsViewModel : ObservableObject
     [RelayCommand]
     private void BrowseFilesRootDirectory()
     {
-        var result = Dialogs.Default.BrowseExistingDirectory(@"c:\", "Select your files root directory");
+        var result = Dialogs.Instance.BrowseExistingDirectory(@"c:\", "Select your files root directory");
         if (result != null)
         {
             FilesRootDirectory = result;
@@ -333,7 +333,7 @@ public partial class SettingsViewModel : ObservableObject
     [RelayCommand]
     public void CreateDatabase()
     {
-        var createdDatabasePath = Dialogs.Default.ShowCreateDatabaseDialog();
+        var createdDatabasePath = Dialogs.Instance.ShowCreateDatabaseDialog();
         if (createdDatabasePath != null)
         {
             Database = createdDatabasePath;

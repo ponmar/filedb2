@@ -46,10 +46,10 @@ public partial class LocationsViewModel : ObservableObject
     [RelayCommand]
     private void RemoveLocation()
     {
-        if (Dialogs.Default.ShowConfirmDialog($"Remove {selectedLocation!.Name}?"))
+        if (Dialogs.Instance.ShowConfirmDialog($"Remove {selectedLocation!.Name}?"))
         {
             var filesWithLocation = model.DbAccess.SearchFilesWithLocations(new List<int>() { selectedLocation.Id }).ToList();
-            if (filesWithLocation.Count == 0 || Dialogs.Default.ShowConfirmDialog($"Location is used in {filesWithLocation.Count} files, remove anyway?"))
+            if (filesWithLocation.Count == 0 || Dialogs.Instance.ShowConfirmDialog($"Location is used in {filesWithLocation.Count} files, remove anyway?"))
             {
                 model.DbAccess.DeleteLocation(selectedLocation.Id);
                 WeakReferenceMessenger.Default.Send(new LocationsUpdated());
@@ -60,13 +60,13 @@ public partial class LocationsViewModel : ObservableObject
     [RelayCommand]
     private void EditLocation()
     {
-        Dialogs.Default.ShowAddLocationDialog(selectedLocation!.Id);
+        Dialogs.Instance.ShowAddLocationDialog(selectedLocation!.Id);
     }
 
     [RelayCommand]
     private void AddLocation()
     {
-        Dialogs.Default.ShowAddLocationDialog();
+        Dialogs.Instance.ShowAddLocationDialog();
     }
 
     [RelayCommand]
