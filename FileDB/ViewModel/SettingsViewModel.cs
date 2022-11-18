@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Configuration;
 using FileDB.Sorters;
 using FileDB.Validators;
-using FileDB.View;
 
 namespace FileDB.ViewModel;
 
@@ -71,12 +69,6 @@ public partial class SettingsViewModel : ObservableObject
     private WindowMode windowMode;
 
     [ObservableProperty]
-    private string? castHttpServerInterface;
-
-    [ObservableProperty]
-    private int castHttpServerPort;
-
-    [ObservableProperty]
     private bool cacheFiles;
 
     public List<WindowModeDescription> WindowModes => Utils.GetWindowModes();
@@ -109,18 +101,6 @@ public partial class SettingsViewModel : ObservableObject
     private void SetDefaultDefaultSortMethod()
     {
         DefaultSortMethod = DefaultConfigs.Default.DefaultSortMethod;
-    }
-
-    [RelayCommand]
-    private void SetDefaultCastHttpServerInterface()
-    {
-        CastHttpServerInterface = DefaultConfigs.Default.CastHttpServerInterface;
-    }
-
-    [RelayCommand]
-    private void SetDefaultCastHttpServerPort()
-    {
-        CastHttpServerPort = DefaultConfigs.Default.CastHttpServerPort;
     }
 
     [RelayCommand]
@@ -241,8 +221,6 @@ public partial class SettingsViewModel : ObservableObject
         LocationLink = model.Config.LocationLink;
         FileToLocationMaxDistance = model.Config.FileToLocationMaxDistance;
         WindowMode = model.Config.WindowMode;
-        CastHttpServerInterface = model.Config.CastHttpServerInterface;
-        CastHttpServerPort = model.Config.CastHttpServerPort;
         CacheFiles = model.Config.CacheFiles;
         OverlayTextSize = model.Config.OverlayTextSize;
         OverlayTextSizeLarge = model.Config.OverlayTextSizeLarge;
@@ -277,8 +255,6 @@ public partial class SettingsViewModel : ObservableObject
             MissingFilesRootDirNotification,
             LocationLink,
             WindowMode,
-            CastHttpServerInterface,
-            CastHttpServerPort,
             CacheFiles,
             OverlayTextSize,
             OverlayTextSizeLarge);

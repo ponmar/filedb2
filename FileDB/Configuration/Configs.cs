@@ -26,8 +26,6 @@ public record Config(
     bool MissingFilesRootDirNotification,
     string LocationLink,
     WindowMode WindowMode,
-    string? CastHttpServerInterface,
-    int CastHttpServerPort,
     bool CacheFiles,
     int OverlayTextSize,
     int OverlayTextSizeLarge);
@@ -56,8 +54,6 @@ public static class DefaultConfigs
             MissingFilesRootDirNotification: true,
             LocationLink: "https://www.google.com/maps?q=loc:LAT,LON",
             WindowMode: WindowMode.Maximized,
-            CastHttpServerInterface: null,
-            CastHttpServerPort: -1,
             CacheFiles: false,
             OverlayTextSize: 14,
             OverlayTextSizeLarge: 24);
@@ -82,8 +78,6 @@ public static class DefaultConfigs
             Default.MissingFilesRootDirNotification,
             Default.LocationLink,
             Default.WindowMode,
-            Default.CastHttpServerInterface,
-            Default.CastHttpServerPort,
             Default.CacheFiles,
             Default.OverlayTextSize,
             Default.OverlayTextSizeLarge);

@@ -33,12 +33,6 @@ public class Model
 
     public void StartFileBrowsingPlugins()
     {
-        var configValidator = new ConfigValidator();
-        if (configValidator.CastingEnabled(Config))
-        {
-            FileCaster.StartServer(Config.CastHttpServerPort);
-            browsingPlugins.Add(new Cast(Config.CastHttpServerInterface!, Config.CastHttpServerPort));
-        }
     }
 
     private DateTime date = DateTime.Now;

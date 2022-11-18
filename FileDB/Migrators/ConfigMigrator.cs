@@ -26,8 +26,6 @@ public class ConfigMigrator : IMigrator<Config>
             config.MissingFilesRootDirNotification,
             config.LocationLink,
             config.WindowMode,
-            config.CastHttpServerInterface,
-            config.CastHttpServerPort,
             config.CacheFiles,
             config.OverlayTextSize != 0 ? config.OverlayTextSize : defaultValues.OverlayTextSize,
             config.OverlayTextSizeLarge != 0 ? config.OverlayTextSizeLarge : defaultValues.OverlayTextSizeLarge);

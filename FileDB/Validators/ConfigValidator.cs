@@ -48,29 +48,11 @@ public class ConfigValidator : AbstractValidator<Config>
                 .Must(x => x.Contains("LON")).WithMessage("LON not included in url");
         });
 
-        When(c => c.CastHttpServerPort > 0, () =>
-        {
-            RuleFor(c => c.CastHttpServerPort)
-                .InclusiveBetween(1, 65535);
-        });
-
-        When(c => !string.IsNullOrEmpty(c.CastHttpServerInterface), () =>
-        {
-            RuleFor(c => c.CastHttpServerInterface)
-                .Must(IsValidIpAddress!).WithMessage("Cast HTTP server interface is not a valid IP address");
-        });
-
         RuleFor(c => c.OverlayTextSize)
             .InclusiveBetween(8, 100).WithMessage("Invalid overlay text size");
 
         RuleFor(c => c.OverlayTextSizeLarge)
             .InclusiveBetween(8, 100).WithMessage("Invalid overlay large text size");
-    }
-
-    public bool CastingEnabled(Config config)
-    {
-        return config.CastHttpServerPort > 0 &&
-            !string.IsNullOrEmpty(config.CastHttpServerInterface) && IsValidIpAddress(config.CastHttpServerInterface);
     }
 
     private bool IsValidUrl(string url)
