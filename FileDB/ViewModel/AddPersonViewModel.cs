@@ -84,8 +84,6 @@ public partial class AddPersonViewModel : ObservableObject
 
         try
         {
-            Sex SexEnum = Enum.Parse<Sex>(SexSelection);
-
             var person = new PersonModel()
             {
                 Id = personId ?? default,
@@ -95,7 +93,7 @@ public partial class AddPersonViewModel : ObservableObject
                 Deceased = newDeceased,
                 Description = newDescription,
                 ProfileFileId = newProfileFileId,
-                Sex = SexEnum
+                Sex = Enum.Parse<Sex>(SexSelection),
             };
 
             if (personId.HasValue)
@@ -105,6 +103,13 @@ public partial class AddPersonViewModel : ObservableObject
             }
             else
             {
+                var anyPersonsWithThatName = model.DbAccess.GetPersons().Any(x => x.Firstname == person.Firstname && x.Lastname == person.Lastname);
+                if (anyPersonsWithThatName &&
+                    !Dialogs.Instance.ShowConfirmDialog($"There is already a person with that name. Add anyway?"))
+                {
+                    return;
+                }
+
                 model.DbAccess.InsertPerson(person);
                 AffectedPerson = model.DbAccess.GetPersons().First(x => x.Firstname == person.Firstname && x.Lastname == person.Lastname && x.DateOfBirth == person.DateOfBirth && x.Deceased == person.Deceased && x.Description == person.Description);
             }
