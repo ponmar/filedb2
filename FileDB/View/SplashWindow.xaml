@@ -12,7 +12,8 @@
         WindowStartupLocation="CenterOwner"
         MinHeight="150"
         MinWidth="400"
-        Style="{StaticResource Window}">
+        AllowsTransparency="True"
+        Background="Transparent">
     <Grid>
         <Border Style="{StaticResource BorderGroup}">
             <TextBlock x:Name="Text" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource PageSubHeading}"/>
