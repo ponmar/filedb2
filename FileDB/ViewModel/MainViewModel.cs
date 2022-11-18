@@ -1,8 +1,11 @@
-﻿using System.Windows;
+﻿using System;
+using System.Linq;
+using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using FileDB.Configuration;
 using FileDB.Model;
+using FileDB.Notifiers;
 
 namespace FileDB.ViewModel;
 
@@ -10,6 +13,9 @@ public partial class MainViewModel : ObservableObject
 {
     [ObservableProperty]
     private int numNotifications = 0;
+
+    [ObservableProperty]
+    private NotificationType highlightedNotificationType;
 
     public string Title
     {
@@ -46,12 +52,13 @@ public partial class MainViewModel : ObservableObject
 
     public MainViewModel()
     {
-        var model = Model.Model.Instance;
-
         NumNotifications = model.Notifications.Count;
+        HighlightedNotificationType = NotificationsToType();
+
         WeakReferenceMessenger.Default.Register<NotificationsUpdated>(this, (r, m) =>
         {
-            NumNotifications = Model.Model.Instance.Notifications.Count;
+            NumNotifications = model.Notifications.Count;
+            HighlightedNotificationType = NotificationsToType();
         });
 
         WeakReferenceMessenger.Default.Register<FullscreenBrowsingRequested>(this, (r, m) =>
@@ -63,6 +70,12 @@ public partial class MainViewModel : ObservableObject
         WeakReferenceMessenger.Default.Register<ConfigLoaded>(this, (r, m) =>
         {
             ReadWriteMode = !model.Config.ReadOnly;
+            OnPropertyChanged(nameof(Title));
         });
+    }
+
+    private NotificationType NotificationsToType()
+    {
+        return model.Notifications.Count > 0 ? model.Notifications.Max(x => x.Type) : Enum.GetValues<NotificationType>().First();
     }
 }

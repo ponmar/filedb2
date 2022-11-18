@@ -13,6 +13,7 @@
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
         <converters:NegatedBoolConverter x:Key="NegatedBoolConverter"/>
         <converters:GreaterThanZeroToVisibilityConverter x:Key="GreaterThanZeroToVisibilityConverter"/>
+        <converters:NotificationTypeToColorConverter x:Key="NotificationTypeToColorConverter" />
     </Window.Resources>
 
     <Grid>
@@ -91,7 +92,7 @@
                 <TabItem.Header>
                     <Grid>
                         <TextBlock Text="&#x1F514;" ToolTip="Notifications" Style="{StaticResource PageIcon}"/>
-                        <Border Style="{StaticResource NotificationBadgeBg}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Padding="6 1 6 1" Visibility="{Binding NumNotifications, Converter={StaticResource GreaterThanZeroToVisibilityConverter}}">
+                        <Border Style="{StaticResource NotificationBadgeBg}" Background="{Binding HighlightedNotificationType, Converter={StaticResource NotificationTypeToColorConverter}}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Padding="6 1 6 1" Visibility="{Binding NumNotifications, Converter={StaticResource GreaterThanZeroToVisibilityConverter}}">
                             <TextBlock Text="{Binding NumNotifications}" Style="{StaticResource NotificationBadge}" />
                         </Border>
                     </Grid>

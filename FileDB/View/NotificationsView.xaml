@@ -37,7 +37,7 @@
             <StackPanel Orientation="Vertical" Style="{StaticResource PageStackPanel}">
                 <Border Style="{StaticResource BorderGroup}" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <StackPanel Style="{StaticResource PageStackPanel}">
-                        <Button Style="{StaticResource NormalButton}" Content="Clear" Command="{Binding ClearNotificationsCommand}" HorizontalAlignment="Left" IsEnabled="{Binding Notifications, Converter={StaticResource EnumerationHasContentConverter}}" />
+                        <Button Style="{StaticResource NormalButton}" Content="Dismiss all" Command="{Binding ClearNotificationsCommand}" HorizontalAlignment="Left" IsEnabled="{Binding Notifications, Converter={StaticResource EnumerationHasContentConverter}}" />
                         <TextBlock Style="{StaticResource PageTextBlock}" Text="No notifications available." Visibility="{Binding Notifications, Converter={StaticResource EnumerationEmptyToVisibilityConverter}}" HorizontalAlignment="Left"/>
                         <ListView Visibility="{Binding Notifications, Converter={StaticResource EnumerationToVisibilityConverter}}" Background="Transparent" BorderThickness="0" Margin="0 10" ItemsSource="{Binding Notifications}" ItemTemplate="{StaticResource NotificationsTemplate}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.IsSharedSizeScope="True">
                             <ListView.ItemContainerStyle>

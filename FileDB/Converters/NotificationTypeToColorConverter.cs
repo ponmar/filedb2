@@ -12,7 +12,7 @@ public class NotificationTypeToColorConverter : IValueConverter
         return (NotificationType)value switch
         {
             NotificationType.Info => new SolidColorBrush(Color.FromRgb(255, 255, 255)),
-            NotificationType.Warning => new SolidColorBrush(Color.FromRgb(255, 165, 0)),
+            NotificationType.Warning => new SolidColorBrush(Color.FromRgb(255, 127, 0)),
             NotificationType.Error => new SolidColorBrush(Color.FromRgb(255, 0, 0)),
             _ => throw new NotSupportedException(),
         };

@@ -23,15 +23,6 @@ public partial class NotificationsViewModel : ObservableObject
 
     public NotificationsViewModel()
     {
-        var model = Model.Model.Instance;
-
-        LoadNotifications();
-        RunAllNotifiers();
-
-        notifierTimer.Tick += NotifierTimer_Tick;
-        notifierTimer.Interval = TimeSpan.FromMinutes(5);
-        notifierTimer.Start();
-
         WeakReferenceMessenger.Default.Register<ConfigLoaded>(this, (r, m) =>
         {
             RunAllNotifiers();
@@ -41,6 +32,18 @@ public partial class NotificationsViewModel : ObservableObject
         {
             LoadNotifications();
         });
+
+        WeakReferenceMessenger.Default.Register<PersonsUpdated>(this, (r, m) =>
+        {
+            RunContinousNotifiers();
+        });
+
+        LoadNotifications();
+        RunAllNotifiers();
+
+        notifierTimer.Tick += NotifierTimer_Tick;
+        notifierTimer.Interval = TimeSpan.FromMinutes(5);
+        notifierTimer.Start();
     }
 
     private void NotifierTimer_Tick(object? sender, EventArgs e)
@@ -117,13 +120,13 @@ public partial class NotificationsViewModel : ObservableObject
     private void LoadNotifications()
     {
         Notifications.Clear();
-        Model.Model.Instance.Notifications.ForEach(x => Notifications.Add(x));
+        model.Notifications.ForEach(x => Notifications.Add(x));
         OnPropertyChanged(nameof(Notifications));
     }
 
     [RelayCommand]
     private void ClearNotifications()
     {
-        Model.Model.Instance.ClearNotifications();
+        model.ClearNotifications();
     }
 }
