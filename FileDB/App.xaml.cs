@@ -4,6 +4,9 @@ using FileDB.Configuration;
 using FileDB.Migrators;
 using FileDB.Notifiers;
 using FileDB.Validators;
+using FileDBInterface.DbAccess.SQLite;
+using FileDBInterface.Exceptions;
+using FileDBInterface.FilesystemAccess;
 using TextCopy;
 
 namespace FileDB

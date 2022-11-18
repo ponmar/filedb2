@@ -1,5 +1,4 @@
-﻿using FileDB.Model;
-using FileDB.View;
+﻿using FileDB.View;
 using FileDB.ViewModel;
 using FileDBInterface.Model;
 using FluentValidation.Results;

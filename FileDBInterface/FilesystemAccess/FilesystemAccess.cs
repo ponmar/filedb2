@@ -14,19 +14,30 @@ namespace FileDBInterface.FilesystemAccess
     {
         private static readonly ILog log = LogManager.GetLogger(nameof(FilesystemAccess));
 
-        private readonly string filesRootDirectory;
+        public string FilesRootDirectory
+        {
+            get => filesRootDirectory;
+            set
+            {
+                if (filesRootDirectory != value)
+                {
+                    filesRootDirectory = value;
+                    if (System.IO.Directory.Exists(filesRootDirectory))
+                    {
+                        log.Info($"Using files root directory: {filesRootDirectory}");
+                    }
+                    else
+                    {
+                        log.Warn($"Files root directory does not exist: {filesRootDirectory}");
+                    }
+                }
+            }
+        }
+        private string filesRootDirectory;
 
         public FilesystemAccess(string filesRootDirectory)
         {
-            this.filesRootDirectory = filesRootDirectory;
-            if (System.IO.Directory.Exists(filesRootDirectory))
-            {
-                log.Info($"Using files root directory: {filesRootDirectory}");
-            }
-            else
-            {
-                log.Warn($"Files root directory does not exist: {filesRootDirectory}");
-            }
+            FilesRootDirectory = filesRootDirectory;
         }
 
         public IEnumerable<string> ListNewFilesystemFiles(string path, IEnumerable<string> blacklistedFilePathPatterns, IEnumerable<string> whitelistedFilePathPatterns, bool includeHiddenDirectories, IFilesAccess filesDbAccess)

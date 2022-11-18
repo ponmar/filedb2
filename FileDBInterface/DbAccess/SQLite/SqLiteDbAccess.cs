@@ -19,19 +19,29 @@ namespace FileDBInterface.DbAccess.SQLite
     {
         private static readonly ILog log = LogManager.GetLogger(nameof(SqLiteDbAccess));
 
-        private readonly string database;
+        public string Database
+        {
+            get => database;
+            set
+            {
+                if (database != value)
+                {
+                    database = value;
+                    if (!File.Exists(database))
+                    {
+                        throw new DatabaseWrapperException($"Database does not exist: {database}");
+                    }
+                }
+            }
+        }
+        private string database;
 
         public SqLiteDbAccess(string database)
         {
             var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
             XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
 
-            this.database = database;
-
-            if (!File.Exists(database))
-            {
-                throw new DatabaseWrapperException($"Database does not exist: {database}");
-            }
+            Database = database;
         }
 
         #region Files

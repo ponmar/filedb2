@@ -8,6 +8,8 @@ namespace FileDB;
 
 public class NoDbAccess : IDbAccess
 {
+    public string Database { get; set; } = string.Empty;
+
     public IEnumerable<FilesModel> GetFiles()
     {
         return new List<FilesModel>();

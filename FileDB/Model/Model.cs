@@ -4,13 +4,13 @@ using System.Windows.Threading;
 using FileDB.Configuration;
 using FileDB.Notifiers;
 using FileDBInterface.DbAccess;
-using FileDBInterface.Exceptions;
 using FileDBInterface.FilesystemAccess;
 using FileDBInterface.Model;
-using FileDBInterface.DbAccess.SQLite;
 using FileDB.FileBrowsingPlugins;
 using FileDB.Validators;
 using CommunityToolkit.Mvvm.Messaging;
+using FileDBInterface.DbAccess.SQLite;
+using FileDBInterface.Exceptions;
 
 namespace FileDB.Model;
 
@@ -84,51 +84,41 @@ public class Model
             if (config != value)
             {
                 config = value;
+
+                if (DbAccess == null)
+                {
+                    try
+                    {
+                        DbAccess = new SqLiteDbAccess(config.Database);
+                    }
+                    catch (DatabaseWrapperException)
+                    {
+                        DbAccess = new NoDbAccess();
+                    }
+                }
+                else
+                {
+                    DbAccess.Database = config.Database;
+                }
+
+                if (FilesystemAccess == null)
+                {
+                    FilesystemAccess = new FilesystemAccess(config.FilesRootDirectory);
+                }
+                else
+                {
+                    FilesystemAccess.FilesRootDirectory = config.FilesRootDirectory;
+                }
+
                 WeakReferenceMessenger.Default.Send(new ConfigLoaded());
             }
         }
     }
     private Config config;
 
-    public IDbAccess DbAccess
-    {
-        get
-        {
-            if (dbAccess == null)
-            {
-                ReloadHandles();
-            }
-            return dbAccess!;
-        }
-    }
-    private IDbAccess? dbAccess;
+    public IDbAccess DbAccess { get; set; }
 
-    public void ReloadHandles()
-    {
-        try
-        {
-            dbAccess = new SqLiteDbAccess(Config.Database);
-        }
-        catch (DatabaseWrapperException)
-        {
-            dbAccess = new NoDbAccess();
-        }
-
-        filesystemAccess = new FilesystemAccess(Config.FilesRootDirectory);
-    }
-
-    public IFilesystemAccess FilesystemAccess
-    {
-        get
-        {
-            if (filesystemAccess == null)
-            {
-                ReloadHandles();
-            }
-            return filesystemAccess!;
-        }
-    }
-    private IFilesystemAccess? filesystemAccess;
+    public IFilesystemAccess FilesystemAccess { get; set; }
 
     public void FileLoaded(FilesModel file)
     {
