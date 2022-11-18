@@ -224,6 +224,11 @@
         <Setter Property="Foreground" Value="{StaticResource FgColor2}"/>
     </Style>
 
+    <Style x:Key="NotificationIconTextBlock" TargetType="TextBlock">
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="FontSize" Value="28"/>
+    </Style>
+
     <Style x:Key="PageTextBlock" TargetType="TextBlock" BasedOn="{StaticResource PageInnerTextBlock}">
         <Setter Property="Margin" Value="10"/>
     </Style>

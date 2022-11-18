@@ -25,7 +25,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Column="0" Text="{Binding Type, Converter={StaticResource NotificationTypeToStringConverter}}" Style="{StaticResource PageTextBlock}" Foreground="{Binding Type, Converter={StaticResource NotificationTypeToColorConverter}}" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="{Binding Type}"/>
+                <TextBlock Grid.Column="0" Text="{Binding Type, Converter={StaticResource NotificationTypeToStringConverter}}" Style="{StaticResource NotificationIconTextBlock}" Foreground="{Binding Type, Converter={StaticResource NotificationTypeToColorConverter}}" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="{Binding Type}"/>
                 <TextBlock Grid.Column="1" Text="{Binding Message}" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center"/>
             </Grid>
         </DataTemplate>

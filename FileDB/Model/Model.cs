@@ -85,8 +85,9 @@ public class Model
                     {
                         DbAccess = new SqLiteDbAccess(config.Database);
                     }
-                    catch (DatabaseWrapperException)
+                    catch (Exception e)
                     {
+                        AddNotification(new Notification(NotificationType.Error, e.Message, DateTime.Now));
                         DbAccess = new NoDbAccess();
                     }
                 }
