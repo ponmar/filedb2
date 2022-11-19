@@ -2,6 +2,7 @@
 using FakeItEasy;
 using FileDB.Configuration;
 using FileDB.Model;
+using FileDB.Notifiers;
 using FileDB.ViewModel;
 using FileDBInterface.DbAccess;
 using FileDBInterface.FilesystemAccess;
@@ -17,6 +18,7 @@ public class BirthdaysViewModelTests
 {
     private IDbAccess fakeDbAccess;
     private IFilesystemAccess fakeFilsystemAccess;
+    private INotifierFactory fakeNotifierFactory;
 
     private Model model;
 
@@ -27,10 +29,9 @@ public class BirthdaysViewModelTests
 
         fakeDbAccess = A.Fake<IDbAccess>();
         fakeFilsystemAccess = A.Fake<IFilesystemAccess>();
+        fakeNotifierFactory = A.Fake<INotifierFactory>();
 
-        model.Config = DefaultConfigs.Default;
-        model.DbAccess = fakeDbAccess;
-        model.FilesystemAccess = fakeFilsystemAccess;
+        model.InitConfig(DefaultConfigs.Default, fakeDbAccess, fakeFilsystemAccess, fakeNotifierFactory);
     }
 
     [TestMethod]

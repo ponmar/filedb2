@@ -277,7 +277,7 @@ public partial class SettingsViewModel : ObservableObject
 
         if (appDataConfig.Write(config))
         {
-            model.Config = config;
+            model.UpdateConfig(config);
         }
         else
         {

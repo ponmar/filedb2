@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using FileDB.Configuration;
 using FileDB.Model;
 using FileDB.Notifiers;
 
@@ -46,69 +43,26 @@ public partial class NotificationsViewModel : ObservableObject
         notifierTimer.Start();
     }
 
+    public void Close()
+    {
+        notifierTimer.Stop();
+    }
+
     private void NotifierTimer_Tick(object? sender, EventArgs e)
     {
         RunContinousNotifiers();
     }
 
-    private List<INotifier> GetContinousNotifiers()
-    {
-        var notifiers = new List<INotifier>();
-        var persons = model.DbAccess.GetPersons();
-
-        if (model.Config.BirthdayReminder)
-        {
-            notifiers.Add(new BirthdayNotifier(persons, BirthdayNotificationFor.Alive));
-        }
-
-        if (model.Config.BirthdayReminderForDeceased)
-        {
-            notifiers.Add(new BirthdayNotifier(persons, BirthdayNotificationFor.Deceased));
-        }
-
-        if (model.Config.RipReminder)
-        {
-            notifiers.Add(new RestInPeaceNotifier(persons));
-        }
-
-        return notifiers;
-    }
-
-    private List<INotifier> GetStartupNotifiers()
-    {
-        var notifiers = new List<INotifier>();
-
-        if (model.Config.BackupReminder)
-        {
-            notifiers.Add(new BackupNotifier(new DatabaseBackup().ListAvailableBackupFiles(), 30));
-        }
-
-        if (model.Config.MissingFilesRootDirNotification)
-        {
-            notifiers.Add(new MissingFilesRootDirNotifier(model.Config.FilesRootDirectory));
-        }
-
-        if (model.Config.CacheFiles)
-        {
-            var configDir = new AppDataConfig<Config>(Utils.ApplicationName).ConfigDirectory;
-            var cacheDir = Path.Combine(configDir, DefaultConfigs.CacheSubdir);
-            var cacheFileIds = model.DbAccess.GetPersons().Where(x => x.ProfileFileId != null).Select(x => x.ProfileFileId!.Value);
-            notifiers.Add(new CacheNotifier(cacheDir, cacheFileIds));
-        }
-
-        return notifiers;
-    }
-
     private void RunContinousNotifiers()
     {
-        var notifiers = GetContinousNotifiers();
+        var notifiers = model.NotifierFactory.GetContinousNotifiers();
         RunNotifiers(notifiers);
     }
 
     private void RunAllNotifiers()
     {
-        var notifiers = GetContinousNotifiers();
-        notifiers.AddRange(GetStartupNotifiers());
+        var notifiers = model.NotifierFactory.GetContinousNotifiers();
+        notifiers.AddRange(model.NotifierFactory.GetStartupNotifiers());
         RunNotifiers(notifiers);
     }
 

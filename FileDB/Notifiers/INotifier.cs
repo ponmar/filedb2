@@ -7,7 +7,7 @@ public enum NotificationType { Info, Warning, Error };
 
 public record Notification(NotificationType Type, string Message, DateTime DateTime);
 
-interface INotifier
+public interface INotifier
 {
     List<Notification> Run();
 }

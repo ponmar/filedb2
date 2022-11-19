@@ -7,10 +7,8 @@ using FileDBInterface.DbAccess;
 using FileDBInterface.FilesystemAccess;
 using FileDBInterface.Model;
 using FileDB.FileBrowsingPlugins;
-using FileDB.Validators;
 using CommunityToolkit.Mvvm.Messaging;
 using FileDBInterface.DbAccess.SQLite;
-using FileDBInterface.Exceptions;
 
 namespace FileDB.Model;
 
@@ -70,50 +68,62 @@ public class Model
         }
     }
 
-    public Config Config
+    public Config Config { get; private set; }
+
+    public void InitConfig(Config config, IDbAccess dbAccess, IFilesystemAccess filesystemAccess, INotifierFactory notifierFactory)
     {
-        get => config;
-        set
+        Config = config;
+        DbAccess = dbAccess;
+        FilesystemAccess = filesystemAccess;
+        NotifierFactory = notifierFactory;
+
+        /*
+        if (DbAccess == null)
         {
-            if (config != value)
+            try
             {
-                config = value;
-
-                if (DbAccess == null)
-                {
-                    try
-                    {
-                        DbAccess = new SqLiteDbAccess(config.Database);
-                    }
-                    catch (Exception e)
-                    {
-                        AddNotification(new Notification(NotificationType.Error, e.Message, DateTime.Now));
-                        DbAccess = new NoDbAccess();
-                    }
-                }
-                else
-                {
-                    DbAccess.Database = config.Database;
-                }
-
-                if (FilesystemAccess == null)
-                {
-                    FilesystemAccess = new FilesystemAccess(config.FilesRootDirectory);
-                }
-                else
-                {
-                    FilesystemAccess.FilesRootDirectory = config.FilesRootDirectory;
-                }
-
-                WeakReferenceMessenger.Default.Send(new ConfigLoaded());
+                DbAccess = new SqLiteDbAccess(config.Database);
+            }
+            catch (Exception e)
+            {
+                AddNotification(new Notification(NotificationType.Error, e.Message, DateTime.Now));
+                DbAccess = new NoDbAccess();
             }
         }
+        else
+        {
+            DbAccess.Database = config.Database;
+        }
+
+        if (FilesystemAccess == null)
+        {
+            FilesystemAccess = new FilesystemAccess(config.FilesRootDirectory);
+        }
+        else
+        {
+            FilesystemAccess.FilesRootDirectory = config.FilesRootDirectory;
+        }
+
+        NotifierFactory = new NotifierFactory();
+        */
+
+        WeakReferenceMessenger.Default.Send(new ConfigLoaded());
     }
-    private Config config;
 
-    public IDbAccess DbAccess { get; set; }
+    public void UpdateConfig(Config config)
+    {
+        Config = config;
+        DbAccess.Database = config.Database;
+        FilesystemAccess.FilesRootDirectory = config.FilesRootDirectory;
 
-    public IFilesystemAccess FilesystemAccess { get; set; }
+        WeakReferenceMessenger.Default.Send(new ConfigLoaded());
+    }
+
+    public IDbAccess DbAccess { get; private set; }
+
+    public IFilesystemAccess FilesystemAccess { get; private set; }
+
+    public INotifierFactory NotifierFactory { get; private set; }
 
     public void FileLoaded(FilesModel file)
     {

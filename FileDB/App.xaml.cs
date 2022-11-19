@@ -1,13 +1,16 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows;
+using System.Windows.Documents;
 using FileDB.Configuration;
 using FileDB.Migrators;
 using FileDB.Notifiers;
 using FileDB.Validators;
 using FileDBInterface.DbAccess.SQLite;
-using FileDBInterface.Exceptions;
+using FileDBInterface.DbAccess;
 using FileDBInterface.FilesystemAccess;
 using TextCopy;
+using System.Collections.Generic;
 
 namespace FileDB
 {
@@ -16,41 +19,61 @@ namespace FileDB
     /// </summary>
     public partial class App : Application
     {
-        private void Application_Startup(object sender, StartupEventArgs e)
+        private void Application_Startup(object sender, StartupEventArgs startupEventArgs)
         {
             Utils.SetInvariantCulture();
 
-            bool demoModeEnabled = e.Args.Any(x => x == "--demo");
+            bool demoModeEnabled = startupEventArgs.Args.Any(x => x == "--demo");
 
             var appDataConfig = new AppDataConfig<Config>(Utils.ApplicationName);
 
             var model = Model.Model.Instance;
+            Config config;
+
+            var notifications = new List<Notification>();
 
             if (demoModeEnabled)
             {
-                model.Config = DefaultConfigs.CreateDemo();
-                model.AddNotification(NotificationType.Info, "Demo configuration enabled. Have fun!");
+                config = DefaultConfigs.CreateDemo();
+                notifications.Add(new(NotificationType.Info, "Demo configuration enabled. Have fun!", DateTime.Now));
             }
             else if (!appDataConfig.FileExists())
             {
-                model.AddNotification(NotificationType.Warning, $"No local {Utils.ApplicationName} configuration file exists. Loading demo configuration.");
-                model.Config = DefaultConfigs.CreateDemo();
+                notifications.Add(new(NotificationType.Warning, $"No local {Utils.ApplicationName} configuration file exists. Loading demo configuration.", DateTime.Now));
+                config = DefaultConfigs.CreateDemo();
             }
             else
             {
-                var config = appDataConfig.Read() ?? DefaultConfigs.Default;
-                model.Config = new ConfigMigrator().Migrate(config, DefaultConfigs.Default);
+                config = appDataConfig.Read() ?? DefaultConfigs.Default;
+                config = new ConfigMigrator().Migrate(config, DefaultConfigs.Default);
 
                 var validator = new ConfigValidator();
                 var result = validator.Validate(model.Config);
                 if (!result.IsValid)
                 {
-                    model.AddNotification(NotificationType.Error, "Configuration not valid");
+                    notifications.Add(new(NotificationType.Error, "Configuration not valid", DateTime.Now));
                     Dialogs.Instance.ShowErrorDialog(result);
                 }
-
-                model.StartFileBrowsingPlugins();
             }
+
+            IDbAccess dbAccess;
+            try
+            {
+                dbAccess = new SqLiteDbAccess(config.Database);
+            }
+            catch (Exception e)
+            {
+                notifications.Add(new Notification(NotificationType.Error, e.Message, DateTime.Now));
+                dbAccess = new NoDbAccess();
+            }
+
+            var filesystemAccess = new FilesystemAccess(config.FilesRootDirectory);
+            var notifierFactory = new NotifierFactory();
+
+            model.InitConfig(config, dbAccess, filesystemAccess, notifierFactory);
+
+            notifications.ForEach(model.AddNotification);
+            model.StartFileBrowsingPlugins();
         }
 
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
