@@ -48,7 +48,7 @@ namespace FileDB
                 config = new ConfigMigrator().Migrate(config, DefaultConfigs.Default);
 
                 var validator = new ConfigValidator();
-                var result = validator.Validate(model.Config);
+                var result = validator.Validate(config);
                 if (!result.IsValid)
                 {
                     notifications.Add(new(NotificationType.Error, "Configuration not valid", DateTime.Now));
