@@ -3,34 +3,33 @@ using FileDB.Sorters;
 using FileDBInterface.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace FileDBTests.Sorters
+namespace FileDBTests.Sorters;
+
+[TestClass]
+public class PersonModelByNameSorterTests
 {
-    [TestClass]
-    public class PersonModelByNameSorterTests
+    private PersonModelByNameSorter sorter;
+
+    [TestInitialize]
+    public void Initialize()
     {
-        private PersonModelByNameSorter sorter;
+        sorter = new();
+    }
 
-        [TestInitialize]
-        public void Initialize()
+    [TestMethod]
+    public void Compare()
+    {
+        var items = new List<PersonModel>()
         {
-            sorter = new();
-        }
+            new PersonModel() { Id = 0, Firstname = "A", Lastname = "A" },
+            new PersonModel() { Id = 2, Firstname = "C", Lastname = "C" },
+            new PersonModel() { Id = 1, Firstname = "A", Lastname = "B" },
+        };
 
-        [TestMethod]
-        public void Compare()
-        {
-            var items = new List<PersonModel>()
-            {
-                new PersonModel() { Id = 0, Firstname = "A", Lastname = "A" },
-                new PersonModel() { Id = 2, Firstname = "C", Lastname = "C" },
-                new PersonModel() { Id = 1, Firstname = "A", Lastname = "B" },
-            };
+        items.Sort(sorter);
 
-            items.Sort(sorter);
-
-            Assert.AreEqual(0, items[0].Id);
-            Assert.AreEqual(1, items[1].Id);
-            Assert.AreEqual(2, items[2].Id);
-        }
+        Assert.AreEqual(0, items[0].Id);
+        Assert.AreEqual(1, items[1].Id);
+        Assert.AreEqual(2, items[2].Id);
     }
 }

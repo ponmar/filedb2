@@ -2,28 +2,27 @@
 using FileDB.Migrators;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace FileDBTests.Migrators
+namespace FileDBTests.Migrators;
+
+[TestClass]
+public class ConfigMigratorTests
 {
-    [TestClass]
-    public class ConfigMigratorTests
+    private ConfigMigrator migrator;
+
+    [TestInitialize]
+    public void Initialize()
     {
-        private ConfigMigrator migrator;
+        migrator = new();
+    }
 
-        [TestInitialize]
-        public void Initialize()
-        {
-            migrator = new();
-        }
+    [TestMethod]
+    public void Migrate()
+    {
+        var configWithDefaultValues = new Config(default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default);
 
-        [TestMethod]
-        public void Migrate()
-        {
-            var configWithDefaultValues = new Config(default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default);
+        var migratedConfig = migrator.Migrate(configWithDefaultValues, DefaultConfigs.Default);
 
-            var migratedConfig = migrator.Migrate(configWithDefaultValues, DefaultConfigs.Default);
-
-            Assert.AreEqual(14, migratedConfig.OverlayTextSize);
-            Assert.AreEqual(24, migratedConfig.OverlayTextSizeLarge);
-        }
+        Assert.AreEqual(14, migratedConfig.OverlayTextSize);
+        Assert.AreEqual(24, migratedConfig.OverlayTextSizeLarge);
     }
 }

@@ -2,16 +2,15 @@
 using FileDB.Converters;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace FileDBTests.Converters
+namespace FileDBTests.Converters;
+
+[TestClass]
+public class IntToStringConverterTests
 {
-    [TestClass]
-    public class IntToStringConverterTests
+    [TestMethod]
+    public void Convert()
     {
-        [TestMethod]
-        public void Convert()
-        {
-            var converter = new IntToStringConverter();
-            Assert.AreEqual("1337", converter.Convert(1337, typeof(int), null, CultureInfo.InvariantCulture));
-        }
+        var converter = new IntToStringConverter();
+        Assert.AreEqual("1337", converter.Convert(1337, typeof(int), null, CultureInfo.InvariantCulture));
     }
 }

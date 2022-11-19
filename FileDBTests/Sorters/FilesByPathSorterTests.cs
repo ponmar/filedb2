@@ -3,34 +3,33 @@ using FileDB.Sorters;
 using FileDBInterface.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace FileDBTests.Sorters
+namespace FileDBTests.Sorters;
+
+[TestClass]
+public class FilesByPathSorterTests
 {
-    [TestClass]
-    public class FilesByPathSorterTests
+    private FilesModelByPathSorter sorter;
+
+    [TestInitialize]
+    public void Initialize()
     {
-        private FilesModelByPathSorter sorter;
+        sorter = new();
+    }
 
-        [TestInitialize]
-        public void Initialize()
+    [TestMethod]
+    public void Compare()
+    {
+        var items = new List<FilesModel>()
         {
-            sorter = new();
-        }
+            new FilesModel() { Id = 0, Path = "aaa" },
+            new FilesModel() { Id = 2, Path = "ccc" },
+            new FilesModel() { Id = 1, Path = "bbb" },
+        };
 
-        [TestMethod]
-        public void Compare()
-        {
-            var items = new List<FilesModel>()
-            {
-                new FilesModel() { Id = 0, Path = "aaa" },
-                new FilesModel() { Id = 2, Path = "ccc" },
-                new FilesModel() { Id = 1, Path = "bbb" },
-            };
+        items.Sort(sorter);
 
-            items.Sort(sorter);
-
-            Assert.AreEqual(0, items[0].Id);
-            Assert.AreEqual(1, items[1].Id);
-            Assert.AreEqual(2, items[2].Id);
-        }
+        Assert.AreEqual(0, items[0].Id);
+        Assert.AreEqual(1, items[1].Id);
+        Assert.AreEqual(2, items[2].Id);
     }
 }
