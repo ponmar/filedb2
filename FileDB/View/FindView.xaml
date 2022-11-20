@@ -8,6 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:view="clr-namespace:FileDB.View"
     xmlns:viewmodel="clr-namespace:FileDB.ViewModel"
+    xmlns:wpf="clr-namespace:LibVLCSharp.WPF;assembly=LibVLCSharp.WPF"
     d:DataContext="{d:DesignInstance Type=viewmodel:FindViewModel}"
     d:DesignHeight="800"
     d:DesignWidth="1000"
@@ -125,6 +126,7 @@
                         x:Name="CurrentFileImage"
                         RenderOptions.BitmapScalingMode="Fant"
                         Stretch="Uniform" />
+                    <wpf:VideoView x:Name="CurrentFileVideo" Loaded="VideoView_Loaded"/>
                 </Grid>
             </Border>
             <TextBlock

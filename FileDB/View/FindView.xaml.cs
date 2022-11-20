@@ -1,9 +1,11 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using CommunityToolkit.Mvvm.Messaging;
 using FileDB.Model;
 using FileDB.ViewModel;
+using LibVLCSharp.Shared;
 
 namespace FileDB.View;
 
@@ -12,6 +14,9 @@ namespace FileDB.View;
 /// </summary>
 public partial class FindView : UserControl
 {
+    private LibVLC libVLC;
+    private LibVLCSharp.Shared.MediaPlayer mediaPlayer;
+
     public FindView()
     {
         InitializeComponent();
@@ -28,9 +33,25 @@ public partial class FindView : UserControl
             CurrentFileImage.Source = transformBmp;
         });
 
-        WeakReferenceMessenger.Default.Register<CloseImage>(this, (r, m) =>
+        WeakReferenceMessenger.Default.Register<ShowVideo>(this, (r, m) =>
+        {
+            CurrentFileVideo.MediaPlayer = mediaPlayer;
+            mediaPlayer.Play(new Media(libVLC, new Uri(m.Path)));
+        });
+
+        WeakReferenceMessenger.Default.Register<CloseFile>(this, (r, m) =>
         {
             CurrentFileImage.Source = null;
+
+            // TODO: what more is required to hide the media player? Set visibility via viewmodel binding?
+            mediaPlayer?.Stop();
+            CurrentFileVideo.MediaPlayer = null;
         });
+    }
+
+    private void VideoView_Loaded(object sender, System.Windows.RoutedEventArgs e)
+    {
+        libVLC = new();
+        mediaPlayer = new(libVLC);
     }
 }

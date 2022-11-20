@@ -1224,24 +1224,25 @@ public partial class FindViewModel : ObservableObject
             try
             {
                 CurrentFileLoadError = string.Empty;
-                WeakReferenceMessenger.Default.Send(new ShowImage(new BitmapImage(uri), -currentFileRotation));
+                //WeakReferenceMessenger.Default.Send(new ShowImage(new BitmapImage(uri), -currentFileRotation));
+                WeakReferenceMessenger.Default.Send(new ShowVideo(CurrentFilePath));
 
                 model.FileLoaded(selection);
             }
             catch (WebException e)
             {
                 CurrentFileLoadError = $"Image loading error:\n{e.Message}";
-                WeakReferenceMessenger.Default.Send(new CloseImage());
+                WeakReferenceMessenger.Default.Send(new CloseFile());
             }
             catch (IOException e)
             {
                 CurrentFileLoadError = $"Image loading error:\n{e.Message}";
-                WeakReferenceMessenger.Default.Send(new CloseImage());
+                WeakReferenceMessenger.Default.Send(new CloseFile());
             }
             catch (NotSupportedException e)
             {
                 CurrentFileLoadError = $"File format not supported (use the Open button to open file with the default application):\n{e.Message}";
-                WeakReferenceMessenger.Default.Send(new CloseImage());
+                WeakReferenceMessenger.Default.Send(new CloseFile());
             }
         }
     }
@@ -1266,7 +1267,7 @@ public partial class FindViewModel : ObservableObject
         NewFileDateTime = string.Empty;
 
         CurrentFileLoadError = "No match";
-        WeakReferenceMessenger.Default.Send(new CloseImage());
+        WeakReferenceMessenger.Default.Send(new CloseFile());
     }
 
     private string GetFileDateTimeString(string? datetimeString)

@@ -19,7 +19,7 @@ public partial class PresentationWindow : Window
 
         WeakReferenceMessenger.Default.Register<ShowImage>(this, (r, m) => ShowImage(m.Image, m.RotateDegrees));
 
-        WeakReferenceMessenger.Default.Register<CloseImage>(this, (r, m) =>
+        WeakReferenceMessenger.Default.Register<CloseFile>(this, (r, m) =>
         {
             CurrentFileImage.Source = null;
         });
