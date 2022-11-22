@@ -33,7 +33,7 @@
                         <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="Cleanup your files collection (see guideline below)"/>
 
                         <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="3."/>
-                        <TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="Import meta-data from the files collection (see import tab)"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="Add file meta-data from the files collection"/>
 
                         <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="4."/>
                         <TextBlock Grid.Row="3" Grid.Column="1" Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="Tag persons, locations and tags"/>

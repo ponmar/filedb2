@@ -39,7 +39,7 @@ FileDB gives you the possibility to export the internal database and file search
 ### Prerequisites ###
 
 * A collection of files. Note that it is recommended to have a backup procedure for your file collection before running FileDB (although FileDB itself does not modify your files). A demo configuration and file collection is included for demo purposes.
-* .NET6 desktop runtime
+* .NET7 desktop runtime
 
 ### Downloads ###
 
@@ -66,10 +66,9 @@ The app is based on .NET MAUI. It has been tested on Android and Windows.
 1. Clone GIT repository
 2. Checkout wanted branch
 3. Open FileDB.sln in Visual Studio 2022
-4. Disable FileDBApp project if not wanted (it requires .NET MAUI)
-5. Build solution
-6. Set FileDB project as startup project
-7. Start project. Note that a command line argument can be used to enable demo mode to avoid affecting the real database during development.
+4. Build solution
+5. Set FileDB project as startup project
+6. Start project. Note that a command line argument can be used to enable demo mode to avoid affecting the real database during development.
 
 ### Contribute ###
 
