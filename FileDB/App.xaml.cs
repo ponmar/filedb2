@@ -73,7 +73,6 @@ namespace FileDB
             model.InitConfig(config, dbAccess, filesystemAccess, notifierFactory);
 
             notifications.ForEach(model.AddNotification);
-            model.StartFileBrowsingPlugins();
         }
 
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)

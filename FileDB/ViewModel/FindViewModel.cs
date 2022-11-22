@@ -1225,8 +1225,6 @@ public partial class FindViewModel : ObservableObject
             {
                 CurrentFileLoadError = string.Empty;
                 WeakReferenceMessenger.Default.Send(new ShowImage(new BitmapImage(uri), -currentFileRotation));
-
-                model.FileLoaded(selection);
             }
             catch (WebException e)
             {
