@@ -12,6 +12,7 @@ using log4net.Config;
 using FileDBInterface.Exceptions;
 using FileDBInterface.Validators;
 using FileDBInterface.FilesystemAccess;
+using System.Diagnostics.CodeAnalysis;
 
 namespace FileDBInterface.DbAccess.SQLite
 {
@@ -36,6 +37,7 @@ namespace FileDBInterface.DbAccess.SQLite
         }
         private string database;
 
+        [SetsRequiredMembers]
         public SqLiteDbAccess(string database)
         {
             var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
@@ -215,7 +217,7 @@ namespace FileDBInterface.DbAccess.SQLite
             try
             {
                 using var connection = DatabaseUtils.CreateConnection(database);
-                var files = new FilesModel() { Path = internalPath, Description = description, Datetime = fileMetadata.Datetime, Position = fileMetadata.Position, Orientation = fileMetadata.Orientation };
+                var files = new FilesModel() { Id = default, Path = internalPath, Description = description, Datetime = fileMetadata.Datetime, Position = fileMetadata.Position, Orientation = fileMetadata.Orientation };
                 var sql = "insert into [files] (Path, Description, Datetime, Position, Orientation) values (@Path, @Description, @Datetime, @Position, @Orientation)";
                 connection.Execute(sql, files);
             }

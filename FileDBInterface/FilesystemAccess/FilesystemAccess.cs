@@ -14,7 +14,7 @@ namespace FileDBInterface.FilesystemAccess
     {
         private static readonly ILog log = LogManager.GetLogger(nameof(FilesystemAccess));
 
-        public string FilesRootDirectory
+        public required string FilesRootDirectory
         {
             get => filesRootDirectory;
             set
@@ -34,11 +34,6 @@ namespace FileDBInterface.FilesystemAccess
             }
         }
         private string filesRootDirectory;
-
-        public FilesystemAccess(string filesRootDirectory)
-        {
-            FilesRootDirectory = filesRootDirectory;
-        }
 
         public IEnumerable<string> ListNewFilesystemFiles(string path, IEnumerable<string> blacklistedFilePathPatterns, IEnumerable<string> whitelistedFilePathPatterns, bool includeHiddenDirectories, IFilesAccess filesDbAccess)
         {

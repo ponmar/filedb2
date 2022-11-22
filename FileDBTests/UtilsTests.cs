@@ -20,9 +20,9 @@ public class UtilsTests
     {
         var files = new List<FilesModel>()
         {
-            new FilesModel() { Id = 1 },
-            new FilesModel() { Id = 2 },
-            new FilesModel() { Id = 3 },
+            new FilesModel() { Id = 1, Path = "path" },
+            new FilesModel() { Id = 2, Path = "path" },
+            new FilesModel() { Id = 3, Path = "path" },
         };
         Assert.AreEqual("1;2;3", Utils.CreateFileList(files));
     }

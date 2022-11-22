@@ -21,11 +21,11 @@ public class FilesByDateSorterTests
     {
         var items = new List<FilesModel>()
         {
-            new FilesModel() { Id = 3, Datetime = null, Path = "a" },
-            new FilesModel() { Id = 1, Datetime = "2000-10-20" },
-            new FilesModel() { Id = 0, Datetime = "1999-10-20" },
-            new FilesModel() { Id = 2, Datetime = "2000-10-21" },
-            new FilesModel() { Id = 4, Datetime = null, Path = "b" },
+            new FilesModel() { Id = 3, Path = "a", Datetime = null },
+            new FilesModel() { Id = 1, Path = "path", Datetime = "2000-10-20" },
+            new FilesModel() { Id = 0, Path = "path", Datetime = "1999-10-20" },
+            new FilesModel() { Id = 2, Path = "path", Datetime = "2000-10-21" },
+            new FilesModel() { Id = 4, Path = "b", Datetime = null },
         };
 
         items.Sort(sorter);

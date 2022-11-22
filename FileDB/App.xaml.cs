@@ -67,7 +67,7 @@ namespace FileDB
                 dbAccess = new NoDbAccess();
             }
 
-            var filesystemAccess = new FilesystemAccess(config.FilesRootDirectory);
+            var filesystemAccess = new FilesystemAccess() { FilesRootDirectory = config.FilesRootDirectory };
             var notifierFactory = new NotifierFactory();
 
             model.InitConfig(config, dbAccess, filesystemAccess, notifierFactory);

@@ -11,8 +11,8 @@ public class FilesModelIdComparerTests
     public void Equals_DifferentInstancesSameId_AreEqual()
     {
         var comparer = new FilesModelIdComparer();
-        var model1 = new FilesModel() { Id = 1 };
-        var model2 = new FilesModel() { Id = 1 };
+        var model1 = new FilesModel() { Id = 1, Path = "path" };
+        var model2 = new FilesModel() { Id = 1, Path = "path" };
         Assert.IsTrue(comparer.Equals(model1, model2));
     }
 
@@ -20,7 +20,7 @@ public class FilesModelIdComparerTests
     public void Equals_SameInstances_AreEqual()
     {
         var comparer = new FilesModelIdComparer();
-        var model1 = new FilesModel() { Id = 1 };
+        var model1 = new FilesModel() { Id = 1, Path = "path" };
         Assert.IsTrue(comparer.Equals(model1, model1));
     }
 
@@ -28,8 +28,8 @@ public class FilesModelIdComparerTests
     public void Equals_DifferentIds_AreNotEqual()
     {
         var comparer = new FilesModelIdComparer();
-        var model1 = new FilesModel() { Id = 1 };
-        var model2 = new FilesModel() { Id = 2 };
+        var model1 = new FilesModel() { Id = 1, Path = "path1" };
+        var model2 = new FilesModel() { Id = 2, Path = "path2" };
         Assert.IsFalse(comparer.Equals(model1, model2));
     }
 }
