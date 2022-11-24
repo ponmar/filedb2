@@ -4,11 +4,11 @@ using System.Windows.Controls;
 namespace FileDB.View;
 
 /// <summary>
-/// Interaction logic for FileBrowseControls.xaml
+/// Interaction logic for SearchCriteriaView.xaml
 /// </summary>
-public partial class FileBrowseControls : UserControl
+public partial class SearchCriteriaView : UserControl
 {
-    public FileBrowseControls()
+    public SearchCriteriaView()
     {
         InitializeComponent();
         DataContext = FindViewModel.Instance;

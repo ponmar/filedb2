@@ -328,7 +328,6 @@ public partial class FindViewModel : ObservableObject
                 }
 
                 FireSearchResultUpdatedEvents();
-                FireBrowsingEnabledEvents();
             }
         }
     }
@@ -573,6 +572,7 @@ public partial class FindViewModel : ObservableObject
         OnPropertyChanged(nameof(HasSearchResult));
         OnPropertyChanged(nameof(HasNonEmptySearchResult));
         OnPropertyChanged(nameof(SearchNumberOfHits));
+        FireBrowsingEnabledEvents();
     }
 
     private void FireBrowsingEnabledEvents()
@@ -1167,6 +1167,25 @@ public partial class FindViewModel : ObservableObject
         {
             var selection = SearchResult!.Files[SearchResultIndex];
             ClipboardService.SetText(Utils.CreateFileList(new List<FilesModel>() { selection }));
+        }
+    }
+
+    [RelayCommand]
+    private void RemoveFileFromCurrentSearchResult()
+    {
+        if (SearchResultIndex != -1)
+        {
+            SearchResult!.Files.RemoveAt(SearchResultIndex);
+            if (SearchResult.Files.Count > 0)
+            {
+                FireSearchResultUpdatedEvents();
+                var newIndex = SearchResultIndex == 0 ? 0 : SearchResultIndex - 1;
+                LoadFile(newIndex);
+            }
+            else
+            {
+                SearchResult = null;
+            }
         }
     }
 

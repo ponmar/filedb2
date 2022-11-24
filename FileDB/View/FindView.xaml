@@ -94,8 +94,8 @@
             Orientation="Vertical"
             Visibility="{Binding Maximize, Converter={StaticResource NegatedBooleanToVisibilityConverter}}">
             <TextBlock Style="{StaticResource PageHeading}">Search</TextBlock>
-            <view:SearchCriteria />
-            <view:FileBrowseControls />
+            <view:SearchCriteriaView />
+            <view:SearchResultView />
         </StackPanel>
 
         <Grid Grid.Row="1" Grid.Column="0">
@@ -193,6 +193,12 @@
                         Visibility="{Binding Maximize, Converter={StaticResource NegatedBooleanToVisibilityConverter}}">
                         Copy
                     </Button>
+                    <Button
+                        Margin="0,0,5,0"
+                        Command="{Binding RemoveFileFromCurrentSearchResultCommand}"
+                        IsEnabled="{Binding HasNonEmptySearchResult}"
+                        Style="{StaticResource NormalButton}"
+                        Content="X" ToolTip="Remove file from search result"/>
                     <ToggleButton
                         Margin="0,0,5,0"
                         Content="&#x1F5DA;"
