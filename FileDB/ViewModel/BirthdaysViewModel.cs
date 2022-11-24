@@ -51,7 +51,7 @@ public partial class PersonBirthday
         var dateOfBirth = DatabaseParsing.ParsePersonDateOfBirth(person.DateOfBirth!);
         Birthday = dateOfBirth.ToString("d MMMM");
         DaysLeft = DatabaseUtils.GetDaysToNextBirthday(dateOfBirth);
-        Age = DatabaseUtils.GetYearsAgo(DateTime.Now, dateOfBirth);
+        Age = DatabaseUtils.GetAgeInYears(DateTime.Now, dateOfBirth);
 
         if (DaysLeft == 0)
         {

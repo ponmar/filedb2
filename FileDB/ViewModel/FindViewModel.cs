@@ -1061,7 +1061,7 @@ public partial class FindViewModel : ObservableObject
                     var fileDatetime = DatabaseParsing.ParseFilesDatetime(file.Datetime);
                     if (fileDatetime != null)
                     {
-                        int personAgeInFile = DatabaseUtils.GetYearsAgo(fileDatetime.Value, dateOfBirth);
+                        int personAgeInFile = DatabaseUtils.GetAgeInYears(fileDatetime.Value, dateOfBirth);
                         if (personAgeInFile >= ageFrom && personAgeInFile <= ageTo)
                         {
                             result.Add(file);
@@ -1298,7 +1298,7 @@ public partial class FindViewModel : ObservableObject
         var resultString = datetimeString!.Contains('T') ? datetime.Value.ToString("yyyy-MM-dd HH:mm") : datetimeString;
 
         var now = DateTime.Now;
-        int yearsAgo = DatabaseUtils.GetYearsAgo(now, datetime.Value);
+        int yearsAgo = DatabaseUtils.GetAgeInYears(now, datetime.Value);
         if (yearsAgo == 0 && now.Year == datetime.Value.Year)
         {
             resultString = $"{resultString} (this year)";

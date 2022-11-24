@@ -31,7 +31,7 @@ public partial class DeceasedPerson
     public string DateOfBirth => person.DateOfBirth!;
     public string DeceasedStr => person.Deceased!;
     public DateTime Deceased => DatabaseParsing.ParsePersonDeceasedDate(person.Deceased!);
-    public int Age => DatabaseUtils.GetYearsAgo(Deceased, DatabaseParsing.ParsePersonDateOfBirth(person.DateOfBirth!));
+    public int Age => DatabaseUtils.GetAgeInYears(Deceased, DatabaseParsing.ParsePersonDateOfBirth(person.DateOfBirth!));
 
     public DeceasedPerson(PersonModel person, string profileFileIdPath)
     {
