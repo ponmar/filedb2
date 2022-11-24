@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Windows;
-using System.Windows.Documents;
 using FileDB.Configuration;
 using FileDB.Migrators;
 using FileDB.Notifiers;

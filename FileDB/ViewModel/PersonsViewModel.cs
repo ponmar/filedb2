@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using FileDB.Model;
 using FileDB.Sorters;
-using FileDB.View;
 using FileDBInterface.DbAccess;
 using FileDBInterface.Model;
 
