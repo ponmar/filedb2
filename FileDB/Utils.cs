@@ -124,7 +124,7 @@ public static class Utils
             return string.Empty;
         }
 
-        var age = DatabaseUtils.GetYearsAgo(fileDatetime.Value, personDateOfBirth.Value);
+        var age = DatabaseUtils.GetAgeInYears(fileDatetime.Value, personDateOfBirth.Value);
         return $" ({age})";
     }
 

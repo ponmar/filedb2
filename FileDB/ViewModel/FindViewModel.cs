@@ -1347,18 +1347,45 @@ public partial class FindViewModel : ObservableObject
             return;
         }
 
-        AddFilePersonToCurrentFile(SelectedPersonToUpdate);
+        AddFilePersonToCurrentFile(SelectedPersonToUpdate.Id);
     }
 
-    private void AddFilePersonToCurrentFile(PersonToUpdate person)
+    private void AddFilePersonToCurrentFile(int personId)
     {
-        var fileId = SearchResult!.Files[SearchResultIndex].Id;
-        if (!model.DbAccess.GetPersonsFromFile(fileId).Any(p => p.Id == person.Id))
+        var selection = SearchResult!.Files[SearchResultIndex];
+        var person = model.DbAccess.GetPersonById(personId);
+
+        if (selection.Datetime != null)
         {
-            model.DbAccess.InsertFilePerson(fileId, person.Id);
+            var fileDatetime = DatabaseParsing.ParseFilesDatetime(selection.Datetime);
+            
+            if (person.DateOfBirth != null)
+            {
+                var dateOfBirth = DatabaseParsing.ParsePersonDateOfBirth(person.DateOfBirth);
+                if (fileDatetime < dateOfBirth &&
+                    !Dialogs.Instance.ShowConfirmDialog("Person was not born at the time for this file. Add anyway?"))
+                {
+                    return;
+                }
+            }
+
+            if (person.Deceased != null)
+            {
+                var deceased = DatabaseParsing.ParsePersonDeceasedDate(person.Deceased);
+                if (fileDatetime > deceased &&
+                    !Dialogs.Instance.ShowConfirmDialog("Person was deceased at the time for this file. Add anyway?"))
+                {
+                    return;
+                }
+            }
+        }
+
+        if (!model.DbAccess.GetPersonsFromFile(selection.Id).Any(p => p.Id == personId))
+        {
+            model.DbAccess.InsertFilePerson(selection.Id, personId);
             LoadFile(SearchResultIndex);
-            AddUpdateHistoryItem(UpdateHistoryType.TogglePerson, person.Id, person.Name);
-            prevEditedFileId = fileId;
+            AddUpdateHistoryItem(UpdateHistoryType.TogglePerson, personId, $"{person.Firstname} {person.Lastname}");
+            prevEditedFileId = selection.Id;
         }
     }
 
@@ -1675,7 +1702,7 @@ public partial class FindViewModel : ObservableObject
         var newPerson = Dialogs.Instance.ShowAddPersonDialog();
         if (newPerson != null)
         {
-            AddFilePersonToCurrentFile(new PersonToUpdate(newPerson.Id, $"{newPerson.Firstname} {newPerson.Lastname}"));
+            AddFilePersonToCurrentFile(newPerson.Id);
         }
     }
 
@@ -1803,7 +1830,7 @@ public partial class FindViewModel : ObservableObject
                 }
                 else
                 {
-                    model.DbAccess.InsertFilePerson(fileId, personId);
+                    AddFilePersonToCurrentFile(personId);
                 }
                 break;
 
