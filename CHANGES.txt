@@ -1,3 +1,13 @@
+3.9:
+* Add button for removing current file from the search result
+* Color coded notification badge to match their severity
+* Show a confirm dialog if trying to create a person that already exists
+* Show a confirm dialog when adding a not born yet or deceased person to file
+* Fix age being shown as -1 in some cases when comparing timestamps with different precision
+* Fix transparency for progress window rounded corner
+* Fix notifications visibility
+* Remove cast related settings and implementation
+
 3.8:
 * Add support for file timstamp format YYYY-MM, which is a part of calendar dates in ISO 8601
 * Add support for person date of birth and deceased date formats YYYY-MM and YYYY
