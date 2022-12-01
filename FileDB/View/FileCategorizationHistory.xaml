@@ -32,7 +32,7 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
-                                <Button Grid.Column="0" Margin="3" Style="{StaticResource NormalButton}" Content="{Binding ToggleText}" Command="{Binding ElementName=HistoryItemsListView, Path=DataContext.ToggleFromHistoryItemCommand}" CommandParameter="{Binding}"/>
+                                <Button Grid.Column="0" Margin="3" HorizontalAlignment="Left" Style="{StaticResource NormalButton}" Content="{Binding ToggleText}" Command="{Binding ElementName=HistoryItemsListView, Path=DataContext.ToggleFromHistoryItemCommand}" CommandParameter="{Binding}"/>
                                 <Button Grid.Column="1" Style="{StaticResource NormalButton}" Width="20" Height="20" Command="{Binding ElementName=HistoryItemsListView, Path=DataContext.RemoveHistoryItemCommand}" CommandParameter="{Binding}" VerticalAlignment="Center">
                                     <TextBlock Margin="0 -4" HorizontalAlignment="Center" VerticalAlignment="Center">x</TextBlock>
                                 </Button>
