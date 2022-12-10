@@ -28,7 +28,8 @@ public record Config(
     WindowMode WindowMode,
     bool CacheFiles,
     int OverlayTextSize,
-    int OverlayTextSizeLarge);
+    int OverlayTextSizeLarge,
+    int ShortItemNameMaxLength);
 
 public static class DefaultConfigs
 {
@@ -56,7 +57,8 @@ public static class DefaultConfigs
             WindowMode: WindowMode.Maximized,
             CacheFiles: false,
             OverlayTextSize: 14,
-            OverlayTextSizeLarge: 24);
+            OverlayTextSizeLarge: 24,
+            ShortItemNameMaxLength: 15);
 
     public static Config CreateDemo() =>
         new("Demo",
@@ -80,5 +82,6 @@ public static class DefaultConfigs
             Default.WindowMode,
             Default.CacheFiles,
             Default.OverlayTextSize,
-            Default.OverlayTextSizeLarge);
+            Default.OverlayTextSizeLarge,
+            Default.ShortItemNameMaxLength);
 }

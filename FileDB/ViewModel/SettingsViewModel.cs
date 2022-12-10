@@ -79,6 +79,9 @@ public partial class SettingsViewModel : ObservableObject
     [ObservableProperty]
     int overlayTextSizeLarge;
 
+    [ObservableProperty]
+    int shortItemNameMaxLength;
+
     [RelayCommand]
     private void SetDefaultSlideshowDelay()
     {
@@ -193,6 +196,12 @@ public partial class SettingsViewModel : ObservableObject
         OverlayTextSizeLarge = DefaultConfigs.Default.OverlayTextSizeLarge;
     }
 
+    [RelayCommand]
+    private void SetDefaultShortItemNameMaxLength()
+    {
+        ShortItemNameMaxLength = DefaultConfigs.Default.ShortItemNameMaxLength;
+    }
+
     private readonly Model.Model model = Model.Model.Instance;
 
     public SettingsViewModel()
@@ -224,6 +233,7 @@ public partial class SettingsViewModel : ObservableObject
         CacheFiles = model.Config.CacheFiles;
         OverlayTextSize = model.Config.OverlayTextSize;
         OverlayTextSizeLarge = model.Config.OverlayTextSizeLarge;
+        ShortItemNameMaxLength = model.Config.ShortItemNameMaxLength;
     }
 
     [RelayCommand]
@@ -257,7 +267,8 @@ public partial class SettingsViewModel : ObservableObject
             WindowMode,
             CacheFiles,
             OverlayTextSize,
-            OverlayTextSizeLarge);
+            OverlayTextSizeLarge,
+            ShortItemNameMaxLength);
 
         var result = new ConfigValidator().Validate(config);
         if (!result.IsValid)

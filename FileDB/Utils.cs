@@ -176,4 +176,9 @@ public static class Utils
 
         File.Copy(filePath, destinationFilePath);
     }
+
+    public static string CreateShortText(string text, int maxLength)
+    {
+        return text.Length <= maxLength ? text : text[..maxLength] + "...";
+    }
 }

@@ -53,6 +53,9 @@ public class ConfigValidator : AbstractValidator<Config>
 
         RuleFor(c => c.OverlayTextSizeLarge)
             .InclusiveBetween(8, 100).WithMessage("Invalid overlay large text size");
+
+        RuleFor(c => c.ShortItemNameMaxLength)
+            .InclusiveBetween(10, 100).WithMessage("Invalid short item name max length");
     }
 
     private bool IsValidUrl(string url)

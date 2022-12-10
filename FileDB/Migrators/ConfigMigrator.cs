@@ -28,6 +28,7 @@ public class ConfigMigrator : IMigrator<Config>
             config.WindowMode,
             config.CacheFiles,
             config.OverlayTextSize != 0 ? config.OverlayTextSize : defaultValues.OverlayTextSize,
-            config.OverlayTextSizeLarge != 0 ? config.OverlayTextSizeLarge : defaultValues.OverlayTextSizeLarge);
+            config.OverlayTextSizeLarge != 0 ? config.OverlayTextSizeLarge : defaultValues.OverlayTextSizeLarge,
+            config.ShortItemNameMaxLength != 0 ? config.ShortItemNameMaxLength : defaultValues.ShortItemNameMaxLength);
     }
 }

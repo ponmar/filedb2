@@ -74,4 +74,11 @@ public class UtilsTests
         var result = Utils.CreatePositionUri("10.5 11.2", "https://example.com/LAT_LON");
         Assert.AreEqual(new Uri("https://example.com/10.5_11.2"), result);
     }
+
+    [TestMethod]
+    public void CreateShortText()
+    {
+        Assert.AreEqual("short", Utils.CreateShortText("short", 10));
+        Assert.AreEqual("l...", Utils.CreateShortText("long", 1));
+    }
 }

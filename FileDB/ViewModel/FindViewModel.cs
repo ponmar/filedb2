@@ -52,9 +52,9 @@ public enum FileType
     Audio,
 }
 
-public record PersonToUpdate(int Id, string Name);
-public record LocationToUpdate(int Id, string Name);
-public record TagToUpdate(int Id, string Name);
+public record PersonToUpdate(int Id, string Name, string ShortName);
+public record LocationToUpdate(int Id, string Name, string ShortName);
+public record TagToUpdate(int Id, string Name, string ShortName);
 
 public class SearchResult
 {
@@ -87,19 +87,12 @@ public enum UpdateHistoryType
 
 public class UpdateHistoryItem
 {
-    public UpdateHistoryType Type { get; }
-    public int ItemId { get; }
-    public string ItemName { get; }
-    public int FunctionKey { get; }
-    public string ToggleText => $"F{FunctionKey}: Toggle '{ItemName}'";
-
-    public UpdateHistoryItem(UpdateHistoryType type, int itemId, string itemName, int functionKey)
-    {
-        Type = type;
-        ItemId = itemId;
-        ItemName = itemName;
-        FunctionKey = functionKey;
-    }
+    public required UpdateHistoryType Type { get; init; }
+    public required int ItemId { get; init; }
+    public required string ShortItemName { get; init; }
+    public required string ItemName { get; init; }
+    public required int FunctionKey { get; init; }
+    public string ToggleText => $"F{FunctionKey}: Toggle '{ShortItemName}'";
 }
 
 public partial class FindViewModel : ObservableObject
@@ -1712,7 +1705,7 @@ public partial class FindViewModel : ObservableObject
         var newLocation = Dialogs.Instance.ShowAddLocationDialog();
         if (newLocation != null)
         {
-            AddFileLocationToCurrentFile(new LocationToUpdate(newLocation.Id, newLocation.Name));
+            AddFileLocationToCurrentFile(new LocationToUpdate(newLocation.Id, newLocation.Name, Utils.CreateShortText(newLocation.Name, model.Config.ShortItemNameMaxLength)));
         }
     }
 
@@ -1722,7 +1715,7 @@ public partial class FindViewModel : ObservableObject
         var newTag = Dialogs.Instance.ShowAddTagDialog();
         if (newTag != null)
         {
-            AddFileTagToCurrentFile(new TagToUpdate(newTag.Id, newTag.Name));
+            AddFileTagToCurrentFile(new TagToUpdate(newTag.Id, newTag.Name, Utils.CreateShortText(newTag.Name, model.Config.ShortItemNameMaxLength)));
         }
     }
 
@@ -1731,7 +1724,7 @@ public partial class FindViewModel : ObservableObject
         Persons.Clear();
         var persons = model.DbAccess.GetPersons().ToList();
         persons.Sort(new PersonModelByNameSorter());
-        foreach (var person in persons.Select(p => new PersonToUpdate(p.Id, $"{p.Firstname} {p.Lastname}")))
+        foreach (var person in persons.Select(p => new PersonToUpdate(p.Id, $"{p.Firstname} {p.Lastname}", Utils.CreateShortText($"{p.Firstname} {p.Lastname}", model.Config.ShortItemNameMaxLength))))
         {
             Persons.Add(person);
         }
@@ -1747,7 +1740,7 @@ public partial class FindViewModel : ObservableObject
         
         foreach (var location in locations)
         {
-            var locationToUpdate = new LocationToUpdate(location.Id, location.Name);
+            var locationToUpdate = new LocationToUpdate(location.Id, location.Name, Utils.CreateShortText(location.Name, model.Config.ShortItemNameMaxLength));
             Locations.Add(locationToUpdate);
             if (location.Position != null)
             {
@@ -1761,7 +1754,7 @@ public partial class FindViewModel : ObservableObject
         Tags.Clear();
         var tags = model.DbAccess.GetTags().ToList();
         tags.Sort(new TagModelByNameSorter());
-        foreach (var tag in tags.Select(t => new TagToUpdate(t.Id, t.Name)))
+        foreach (var tag in tags.Select(t => new TagToUpdate(t.Id, t.Name, Utils.CreateShortText(t.Name, model.Config.ShortItemNameMaxLength))))
         {
             Tags.Add(tag);
         }
@@ -1780,12 +1773,20 @@ public partial class FindViewModel : ObservableObject
             return;
         }
 
-        for (int i=1; i<=12; i++)
+        for (int i = 1; i <= 12; i++)
         {
             var item = UpdateHistoryItems.FirstOrDefault(x => x.FunctionKey == i);
             if (item == null)
             {
-                UpdateHistoryItems.Insert(i - 1, new UpdateHistoryItem(type, itemId, itemName, i));
+                UpdateHistoryItems.Insert(i - 1, new UpdateHistoryItem()
+                {
+                    Type = type,
+                    ItemId = itemId,
+                    ItemName = itemName,
+                    FunctionKey = i,
+                    ShortItemName = Utils.CreateShortText(itemName, model.Config.ShortItemNameMaxLength),
+                });
+
                 OnPropertyChanged(nameof(HasUpdateHistory));
                 return;
             }
