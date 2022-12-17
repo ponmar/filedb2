@@ -18,7 +18,7 @@ public class ConfigMigratorTests
     [TestMethod]
     public void Migrate()
     {
-        var configWithDefaultValues = new Config(default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default);
+        var configWithDefaultValues = new Config(default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default);
 
         var migratedConfig = migrator.Migrate(configWithDefaultValues, DefaultConfigs.Default);
 

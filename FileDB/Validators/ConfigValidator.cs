@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -56,6 +57,17 @@ public class ConfigValidator : AbstractValidator<Config>
 
         RuleFor(c => c.ShortItemNameMaxLength)
             .InclusiveBetween(10, 100).WithMessage("Invalid short item name max length");
+
+        When(c => c.CultureOverride != null, () =>
+        {
+            RuleFor(c => c.CultureOverride)
+               .Must(IsCulture!).WithMessage("Invalid culture override");
+        });
+    }
+
+    private bool IsCulture(string cultureName)
+    {
+        return CultureInfo.GetCultures(CultureTypes.SpecificCultures).Any(x => x.Name == cultureName);
     }
 
     private bool IsValidUrl(string url)
