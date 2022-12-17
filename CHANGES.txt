@@ -1,3 +1,8 @@
+3.10:
+* Add ShortItemNameMaxLength setting and show shortened item names during file categorization
+* Fix culture specific sorting problems by introducing a culture override setting
+* Left-align buttons inte the update history
+
 3.9:
 * Add button for removing current file from the search result
 * Color coded notification badge to match their severity
