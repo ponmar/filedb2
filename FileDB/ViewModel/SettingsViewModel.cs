@@ -1,4 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Globalization;
+using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Configuration;
@@ -70,6 +73,12 @@ public partial class SettingsViewModel : ObservableObject
 
     [ObservableProperty]
     private bool cacheFiles;
+
+    [ObservableProperty]
+    private ObservableCollection<CultureInfo> cultures = new();
+
+    [ObservableProperty]
+    private CultureInfo? selectedCulture;
 
     public List<WindowModeDescription> WindowModes => Utils.GetWindowModes();
 
@@ -202,10 +211,21 @@ public partial class SettingsViewModel : ObservableObject
         ShortItemNameMaxLength = DefaultConfigs.Default.ShortItemNameMaxLength;
     }
 
+    [RelayCommand]
+    private void SetDefaultCultureOverride()
+    {
+        SelectedCulture = Cultures.FirstOrDefault(x => x.Name == DefaultConfigs.Default.CultureOverride);
+    }
+
     private readonly Model.Model model = Model.Model.Instance;
 
     public SettingsViewModel()
     {
+        foreach (var culture in CultureInfo.GetCultures(CultureTypes.SpecificCultures))
+        {
+            cultures.Add(culture);
+        }
+
         UpdateFromConfiguration();
     }
 
@@ -234,6 +254,7 @@ public partial class SettingsViewModel : ObservableObject
         OverlayTextSize = model.Config.OverlayTextSize;
         OverlayTextSizeLarge = model.Config.OverlayTextSizeLarge;
         ShortItemNameMaxLength = model.Config.ShortItemNameMaxLength;
+        SelectedCulture = Cultures.FirstOrDefault(x => x.Name == model.Config.CultureOverride);
     }
 
     [RelayCommand]
@@ -268,7 +289,8 @@ public partial class SettingsViewModel : ObservableObject
             CacheFiles,
             OverlayTextSize,
             OverlayTextSizeLarge,
-            ShortItemNameMaxLength);
+            ShortItemNameMaxLength,
+            SelectedCulture?.Name);
 
         var result = new ConfigValidator().Validate(config);
         if (!result.IsValid)

@@ -10,6 +10,7 @@ using FileDBInterface.DbAccess;
 using FileDBInterface.FilesystemAccess;
 using TextCopy;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace FileDB
 {
@@ -53,6 +54,11 @@ namespace FileDB
                     notifications.Add(new(NotificationType.Error, "Configuration not valid", DateTime.Now));
                     Dialogs.Instance.ShowErrorDialog(result);
                 }
+            }
+
+            if (config.CultureOverride != null)
+            {
+                CultureInfo.CurrentCulture = new CultureInfo(config.CultureOverride, false);
             }
 
             IDbAccess dbAccess;

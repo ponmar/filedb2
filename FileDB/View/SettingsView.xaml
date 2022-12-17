@@ -37,6 +37,7 @@
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
 
                         <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextBlock}">Configuration name:</TextBlock>
@@ -55,15 +56,19 @@
                         <ComboBox Grid.Row="3" Grid.Column="1" Style="{StaticResource PageComboBox}" ItemsSource="{Binding WindowModes}" DisplayMemberPath="Name" SelectedValuePath="Mode" SelectedValue="{Binding WindowMode}"/>
                         <Button Grid.Row="3" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultWindowModeCommand}" ToolTip="Reset to default">Default</Button>
 
-                        <CheckBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource PageCheckBox}" IsChecked="{Binding Path=ReadOnly, Mode=TwoWay}">
+                        <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource PageTextBlock}">Culture override:</TextBlock>
+                        <ComboBox Grid.Row="4" Grid.Column="1" Style="{StaticResource PageComboBox}" ItemsSource="{Binding Cultures}" DisplayMemberPath="DisplayName" SelectedValue="{Binding SelectedCulture}"/>
+                        <Button Grid.Row="4" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultCultureOverrideCommand}" ToolTip="Reset to default">Default</Button>
+
+                        <CheckBox Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource PageCheckBox}" IsChecked="{Binding Path=ReadOnly, Mode=TwoWay}">
                             <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="Read-only mode"/>
                         </CheckBox>
-                        <Button Grid.Row="4" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultReadOnlyCommand}" ToolTip="Reset to default">Default</Button>
+                        <Button Grid.Row="5" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultReadOnlyCommand}" ToolTip="Reset to default">Default</Button>
 
-                        <CheckBox Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource PageCheckBox}" IsChecked="{Binding Path=CacheFiles, Mode=TwoWay}">
+                        <CheckBox Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource PageCheckBox}" IsChecked="{Binding Path=CacheFiles, Mode=TwoWay}">
                             <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="Cache files"/>
                         </CheckBox>                            
-                        <Button Grid.Row="5" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultCacheFilesCommand}" ToolTip="Reset to default">Default</Button>
+                        <Button Grid.Row="6" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultCacheFilesCommand}" ToolTip="Reset to default">Default</Button>
                     </Grid>
                 </Border>
 

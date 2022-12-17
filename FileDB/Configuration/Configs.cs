@@ -29,7 +29,8 @@ public record Config(
     bool CacheFiles,
     int OverlayTextSize,
     int OverlayTextSizeLarge,
-    int ShortItemNameMaxLength);
+    int ShortItemNameMaxLength,
+    string? CultureOverride);
 
 public static class DefaultConfigs
 {
@@ -58,7 +59,8 @@ public static class DefaultConfigs
             CacheFiles: false,
             OverlayTextSize: 14,
             OverlayTextSizeLarge: 24,
-            ShortItemNameMaxLength: 15);
+            ShortItemNameMaxLength: 15,
+            CultureOverride: null);
 
     public static Config CreateDemo() =>
         new("Demo",
@@ -83,5 +85,6 @@ public static class DefaultConfigs
             Default.CacheFiles,
             Default.OverlayTextSize,
             Default.OverlayTextSizeLarge,
-            Default.ShortItemNameMaxLength);
+            Default.ShortItemNameMaxLength,
+            Default.CultureOverride);
 }
