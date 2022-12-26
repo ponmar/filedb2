@@ -23,24 +23,10 @@ namespace FileDBInterface.DbAccess
             return ParsePersonDate(dateStr);
         }
 
-        /*
-        public static string ToPersonsDateOfBirth(DateTime dateOfBirth)
-        {
-            return dateOfBirth.ToString("yyyy-MM-dd");
-        }
-        */
-
         public static DateTime ParsePersonDeceasedDate(string dateStr)
         {
             return ParsePersonDate(dateStr);
         }
-
-        /*
-        public static string ToPersonsDeceased(DateTime deceased)
-        {
-            return deceased.ToString("yyyy-MM-dd");
-        }
-        */
 
         public static DateTime? ParseFilesDatetime(string? datetimeStr)
         {
