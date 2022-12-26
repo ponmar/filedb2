@@ -1,14 +1,13 @@
 ﻿using FileDBApp.View;
 
-namespace FileDBApp
-{
-    public partial class AppShell : Shell
-    {
-        public AppShell()
-        {
-            InitializeComponent();
+namespace FileDBApp;
 
-            Routing.RegisterRoute(nameof(PersonDetailsPage), typeof(PersonDetailsPage));
-        }
+public partial class AppShell : Shell
+{
+    public AppShell()
+    {
+        InitializeComponent();
+
+        Routing.RegisterRoute(nameof(PersonDetailsPage), typeof(PersonDetailsPage));
     }
 }

@@ -7,79 +7,78 @@ using FileDBApp.View;
 using FileDBInterface.Model;
 using System.Collections.ObjectModel;
 
-namespace FileDBApp.ViewModel
+namespace FileDBApp.ViewModel;
+
+public class DeceasedPerson
 {
-    public class DeceasedPerson
+    public string Header => $"{Name} {Age}";
+
+    public int Age { get; }
+
+    public string Name => $"{PersonModel.Firstname} {PersonModel.Lastname}";
+
+    public string Details => $"{PersonModel.DateOfBirth} - {PersonModel.Deceased}";
+
+    public DateTime Deceased { get; }
+
+    public PersonModel PersonModel { get; }
+
+    public DeceasedPerson(PersonModel personModel)
     {
-        public string Header => $"{Name} {Age}";
+        PersonModel = personModel;
 
-        public int Age { get; }
+        var dateOfBirth = Utils.ParsePersonsDateOfBirth(PersonModel.DateOfBirth);
+        Deceased = Utils.ParsePersonsDeceased(PersonModel.Deceased);
+        Age = Utils.GetYearsAgo(Deceased, dateOfBirth);
+    }
+}
 
-        public string Name => $"{PersonModel.Firstname} {PersonModel.Lastname}";
+public partial class RipViewModel : ObservableObject
+{
+    public ObservableCollection<DeceasedPerson> Persons { get; } = new();
 
-        public string Details => $"{PersonModel.DateOfBirth} - {PersonModel.Deceased}";
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(IsNotBusy))]
+    bool isBusy;
 
-        public DateTime Deceased { get; }
+    public bool IsNotBusy => !isBusy;
 
-        public PersonModel PersonModel { get; }
+    private readonly PersonService personService;
 
-        public DeceasedPerson(PersonModel personModel)
-        {
-            PersonModel = personModel;
-
-            var dateOfBirth = Utils.ParsePersonsDateOfBirth(PersonModel.DateOfBirth);
-            Deceased = Utils.ParsePersonsDeceased(PersonModel.Deceased);
-            Age = Utils.GetYearsAgo(Deceased, dateOfBirth);
-        }
+    public RipViewModel(PersonService personService)
+    {
+        this.personService = personService;
+        _ = UpdatePersonsAsync();
     }
 
-    public partial class RipViewModel : ObservableObject
+    [RelayCommand]
+    private async Task GoToPersonDetailsAsync(PersonModel personModel)
     {
-        public ObservableCollection<DeceasedPerson> Persons { get; } = new();
-
-        [ObservableProperty]
-        [NotifyPropertyChangedFor(nameof(IsNotBusy))]
-        bool isBusy;
-
-        public bool IsNotBusy => !isBusy;
-
-        private readonly PersonService personService;
-
-        public RipViewModel(PersonService personService)
+        if (personModel is null)
         {
-            this.personService = personService;
-            _ = UpdatePersonsAsync();
+            return;
         }
 
-        [RelayCommand]
-        private async Task GoToPersonDetailsAsync(PersonModel personModel)
-        {
-            if (personModel is null)
+        await Shell.Current.GoToAsync(nameof(PersonDetailsPage), true,
+            new Dictionary<string, object>
             {
-                return;
-            }
+                { "PersonModel", personModel },
+            });
+    }
 
-            await Shell.Current.GoToAsync(nameof(PersonDetailsPage), true,
-                new Dictionary<string, object>
-                {
-                    { "PersonModel", personModel },
-                });
-        }
+    [RelayCommand]
+    private async Task UpdatePersonsAsync()
+    {
+        IsBusy = true;
+        var persons = await personService.GetPersons();
 
-        [RelayCommand]
-        private async Task UpdatePersonsAsync()
-        {
-            IsBusy = true;
-            var persons = await personService.GetPersons();
+        var personsVms = persons.Where(x => x.DateOfBirth != null && x.Deceased != null).Select(x => new DeceasedPerson(x)).ToList();
+        personsVms.Sort(new PersonsByDeceasedSorter());
+        personsVms.Reverse();
 
-            var personsVms = persons.Where(x => x.DateOfBirth != null && x.Deceased != null).Select(x => new DeceasedPerson(x)).ToList();
-            personsVms.Sort(new PersonsByDeceasedSorter());
-            personsVms.Reverse();
-
-            Persons.Clear();
-            personsVms.ForEach(x => Persons.Add(x));
-            
-            IsBusy = false;
-        }
+        Persons.Clear();
+        personsVms.ForEach(x => Persons.Add(x));
+        
+        IsBusy = false;
     }
 }

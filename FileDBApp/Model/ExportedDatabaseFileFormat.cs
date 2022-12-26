@@ -1,9 +1,8 @@
 ﻿using FileDBInterface.Model;
 
-namespace FileDBApp.Model
+namespace FileDBApp.Model;
+
+public class ExportedDatabaseFileFormat
 {
-    public class ExportedDatabaseFileFormat
-    {
-        public List<PersonModel> Persons { get; set; }
-    }
+    public List<PersonModel> Persons { get; set; }
 }

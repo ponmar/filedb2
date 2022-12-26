@@ -1,49 +1,48 @@
 ﻿using System.Globalization;
 
-namespace FileDBApp.Model
+namespace FileDBApp.Model;
+
+public static class Utils
 {
-    public static class Utils
+    public static DateTime ParsePersonsDateOfBirth(string dateOfBirthStr)
     {
-        public static DateTime ParsePersonsDateOfBirth(string dateOfBirthStr)
+        return DateTime.ParseExact(dateOfBirthStr, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None);
+    }
+
+    public static DateTime ParsePersonsDeceased(string deceasedStr)
+    {
+        return DateTime.ParseExact(deceasedStr, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None);
+    }
+
+    public static int GetDaysToNextBirthday(DateTime birthday)
+    {
+        var today = DateTime.Today;
+        var next = birthday.AddYears(today.Year - birthday.Year);
+
+        if (next < today)
         {
-            return DateTime.ParseExact(dateOfBirthStr, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None);
+            next = next.AddYears(1);
         }
 
-        public static DateTime ParsePersonsDeceased(string deceasedStr)
-        {
-            return DateTime.ParseExact(deceasedStr, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None);
-        }
+        return (next - today).Days;
+    }
 
-        public static int GetDaysToNextBirthday(DateTime birthday)
-        {
-            var today = DateTime.Today;
-            var next = birthday.AddYears(today.Year - birthday.Year);
+    public static int GetYearsAgo(DateTime now, DateTime dateTime)
+    {
+        int yearsAgo = now.Year - dateTime.Year;
 
-            if (next < today)
+        try
+        {
+            if (new DateTime(dateTime.Year, now.Month, now.Day) < dateTime)
             {
-                next = next.AddYears(1);
+                yearsAgo--;
             }
-
-            return (next - today).Days;
         }
-
-        public static int GetYearsAgo(DateTime now, DateTime dateTime)
+        catch (ArgumentOutOfRangeException)
         {
-            int yearsAgo = now.Year - dateTime.Year;
-
-            try
-            {
-                if (new DateTime(dateTime.Year, now.Month, now.Day) < dateTime)
-                {
-                    yearsAgo--;
-                }
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-                // Current date did not exist the year that person was born
-            }
-
-            return yearsAgo;
+            // Current date did not exist the year that person was born
         }
+
+        return yearsAgo;
     }
 }

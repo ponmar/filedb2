@@ -1,28 +1,26 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using FileDBApp.Model;
 using FileDBInterface.Model;
 
-namespace FileDBApp.ViewModel
+namespace FileDBApp.ViewModel;
+
+[QueryProperty("PersonModel", "PersonModel")]
+public partial class PersonDetailsViewModel : ObservableObject
 {
-    [QueryProperty("PersonModel", "PersonModel")]
-    public partial class PersonDetailsViewModel : ObservableObject
+    public PersonModel PersonModel
     {
-        public PersonModel PersonModel
+        get => personModel;
+        set
         {
-            get => personModel;
-            set
-            {
-                personModel = value;
-                Title = $"{personModel.Firstname} {personModel.Lastname}";
-                Description = personModel.Description ?? "No description available";
-            }
+            personModel = value;
+            Title = $"{personModel.Firstname} {personModel.Lastname}";
+            Description = personModel.Description ?? "No description available";
         }
-        private PersonModel personModel;
-
-        [ObservableProperty]
-        string title;
-
-        [ObservableProperty]
-        string description;
     }
+    private PersonModel personModel;
+
+    [ObservableProperty]
+    string title;
+
+    [ObservableProperty]
+    string description;
 }

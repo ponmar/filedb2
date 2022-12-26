@@ -2,30 +2,29 @@
 using FileDBInterface.Model;
 using Newtonsoft.Json;
 
-namespace FileDBApp.Services
+namespace FileDBApp.Services;
+
+public class PersonService
 {
-    public class PersonService
+    public static string DataFilePath => Path.Combine(FileSystem.Current.AppDataDirectory, "Data.json");
+
+    private List<PersonModel> persons = null;
+
+    public async Task<List<PersonModel>> GetPersons()
     {
-        public static string DataFilePath => Path.Combine(FileSystem.Current.AppDataDirectory, "Data.json");
-
-        private List<PersonModel> persons = null;
-
-        public async Task<List<PersonModel>> GetPersons()
+        if (persons == null)
         {
-            if (persons == null)
+            try
             {
-                try
-                {
-                    var json = await File.ReadAllTextAsync(DataFilePath);
-                    persons = JsonConvert.DeserializeObject<ExportedDatabaseFileFormat>(json).Persons;
-                }
-                catch
-                {
-                    persons = new();
-                }
+                var json = await File.ReadAllTextAsync(DataFilePath);
+                persons = JsonConvert.DeserializeObject<ExportedDatabaseFileFormat>(json).Persons;
             }
-
-            return persons;
+            catch
+            {
+                persons = new();
+            }
         }
+
+        return persons;
     }
 }

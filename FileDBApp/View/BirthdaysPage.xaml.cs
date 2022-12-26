@@ -1,13 +1,12 @@
 ﻿using FileDBApp.ViewModel;
 
-namespace FileDBApp.View
+namespace FileDBApp.View;
+
+public partial class BirthdaysPage : ContentPage
 {
-    public partial class BirthdaysPage : ContentPage
+    public BirthdaysPage(BirthdaysViewModel viewModel)
     {
-        public BirthdaysPage(BirthdaysViewModel viewModel)
-        {
-            InitializeComponent();
-            BindingContext = viewModel;
-        }
+        InitializeComponent();
+        BindingContext = viewModel;
     }
 }
