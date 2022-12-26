@@ -4,6 +4,7 @@ using FileDBApp.Comparers;
 using FileDBApp.Model;
 using FileDBApp.Services;
 using FileDBApp.View;
+using FileDBInterface.DbAccess;
 using FileDBInterface.Model;
 using System.Collections.ObjectModel;
 
@@ -27,9 +28,9 @@ public class DeceasedPerson
     {
         PersonModel = personModel;
 
-        var dateOfBirth = Utils.ParsePersonsDateOfBirth(PersonModel.DateOfBirth);
-        Deceased = Utils.ParsePersonsDeceased(PersonModel.Deceased);
-        Age = Utils.GetYearsAgo(Deceased, dateOfBirth);
+        var dateOfBirth = DatabaseParsing.ParsePersonDateOfBirth(PersonModel.DateOfBirth);
+        Deceased = DatabaseParsing.ParsePersonDeceasedDate(PersonModel.Deceased);
+        Age = DatabaseUtils.GetYearsAgo(Deceased, dateOfBirth);
     }
 }
 

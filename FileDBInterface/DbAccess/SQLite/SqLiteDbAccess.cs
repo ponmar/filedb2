@@ -50,20 +50,20 @@ namespace FileDBInterface.DbAccess.SQLite
 
         public IEnumerable<FilesModel> GetFiles()
         {
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             return connection.Query<FilesModel>("select * from [files]");
         }
 
         public int GetFileCount()
         {
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             return connection.ExecuteScalar<int>("select count(*) from [files]");
         }
 
         public IEnumerable<FilesModel> SearchFilesFromIds(IEnumerable<int> fileIds)
         {
             // TODO: dapper can not handle too many fileIds? Need to split into several queries?
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             var sql = "select * from [files] where Id in @ids";
             return connection.Query<FilesModel>(sql, new { ids = fileIds });
         }
@@ -71,7 +71,7 @@ namespace FileDBInterface.DbAccess.SQLite
         public IEnumerable<FilesModel> SearchFiles(string criteria)
         {
             // Note: 'like' is case insensitive
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             var sql = "select * from [files] where (Path like @criteria or Description like @criteria)";
             return connection.Query<FilesModel>(sql, new { criteria = $"%{criteria}%" });
         }
@@ -85,7 +85,7 @@ namespace FileDBInterface.DbAccess.SQLite
         public IEnumerable<FilesModel> SearchFilesByPath(string criteria)
         {
             // Note: 'like' is case insensitive
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             var sql = "select * from [files] where Path like @criteria";
             return connection.Query<FilesModel>(sql, new { criteria = criteria + "%" });
         }
@@ -93,21 +93,21 @@ namespace FileDBInterface.DbAccess.SQLite
         public IEnumerable<FilesModel> SearchFilesByExtension(string extension)
         {
             // Note: 'like' is case insensitive
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             var sql = "select * from [files] where Path like @criteria";
             return connection.Query<FilesModel>(sql, new { criteria = "%" + extension });
         }
 
         public IEnumerable<FilesModel> SearchFilesRandom(int numFiles)
         {
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             var sql = $"select * from [files] order by random() limit {numFiles}";
             return connection.Query<FilesModel>(sql);
         }
 
         public IEnumerable<LocationModel> SearchLocationsNearGpsPosition(double latitude, double longitude, double radius)
         {
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             var sql = "select * from [locations] where Position is not null";
 
             foreach (var locationWithPosition in connection.Query<LocationModel>(sql))
@@ -125,7 +125,7 @@ namespace FileDBInterface.DbAccess.SQLite
 
         public IEnumerable<FilesModel> SearchFilesNearGpsPosition(double latitude, double longitude, double radius)
         {
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             var sql = "select * from [files] where Position is not null";
 
             foreach (var fileWithPosition in connection.Query<FilesModel>(sql))
@@ -143,19 +143,19 @@ namespace FileDBInterface.DbAccess.SQLite
 
         public FilesModel GetFileById(int id)
         {
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             return connection.QueryFirst<FilesModel>("select * from [files] where Id = @id", new { id });
         }
 
         public FilesModel? GetFileByPath(string path)
         {
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             return connection.QueryFirstOrDefault<FilesModel>("select * from [files] where Path = @path", new { path });
         }
 
         public IEnumerable<FilesModel> SearchFilesByDate(DateTime start, DateTime end)
         {
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             foreach (var fileWithDate in connection.Query<FilesModel>($"select * from [files] where Datetime is not null"))
             {
                 if (DateTime.TryParse(fileWithDate.Datetime, out var fileDatetime) &&
@@ -168,25 +168,25 @@ namespace FileDBInterface.DbAccess.SQLite
 
         public IEnumerable<FilesModel> SearchFilesWithPersons(IEnumerable<int> personIds)
         {
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             return connection.Query<FilesModel>($"select * from [files] inner join filepersons on files.Id = filepersons.FileId where filepersons.PersonId in ({string.Join(',', personIds)})");
         }
 
         public IEnumerable<FilesModel> SearchFilesWithLocations(IEnumerable<int> locationIds)
         {
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             return connection.Query<FilesModel>($"select * from [files] inner join filelocations on files.Id = filelocations.FileId where filelocations.LocationId in ({string.Join(',', locationIds)})");
         }
 
         public IEnumerable<FilesModel> SearchFilesWithTags(IEnumerable<int> tagIds)
         {
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             return connection.Query<FilesModel>($"select * from [files] inner join filetags on files.Id = filetags.FileId where filetags.TagId in ({string.Join(',', tagIds)})");
         }
 
         public IEnumerable<FilesModel> SearchFilesWithMissingData()
         {
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             var files = connection.Query<FilesModel>($"select * from [files] where Description is null");
             foreach (var file in files)
             {
@@ -216,7 +216,7 @@ namespace FileDBInterface.DbAccess.SQLite
 
             try
             {
-                using var connection = DatabaseUtils.CreateConnection(database);
+                using var connection = DatabaseSetup.CreateConnection(database);
                 var files = new FilesModel() { Id = default, Path = internalPath, Description = description, Datetime = fileMetadata.Datetime, Position = fileMetadata.Position, Orientation = fileMetadata.Orientation };
                 var sql = "insert into [files] (Path, Description, Datetime, Position, Orientation) values (@Path, @Description, @Datetime, @Position, @Orientation)";
                 connection.Execute(sql, files);
@@ -234,7 +234,7 @@ namespace FileDBInterface.DbAccess.SQLite
 
             try
             {
-                using var connection = DatabaseUtils.CreateConnection(database);
+                using var connection = DatabaseSetup.CreateConnection(database);
                 var sql = "update [files] set Datetime = @datetime, Position = @position, Orientation = @orientation where Id = @id";
                 connection.Execute(sql, new { datetime = fileMetadata.Datetime, position = fileMetadata.Position, orientation = fileMetadata.Orientation, id });
             }
@@ -253,7 +253,7 @@ namespace FileDBInterface.DbAccess.SQLite
 
             try
             {
-                using var connection = DatabaseUtils.CreateConnection(database);
+                using var connection = DatabaseSetup.CreateConnection(database);
                 var sql = "update [files] set Description = @description where Id = @id";
                 connection.Execute(sql, new { description, id });
             }
@@ -272,7 +272,7 @@ namespace FileDBInterface.DbAccess.SQLite
 
             try
             {
-                using var connection = DatabaseUtils.CreateConnection(database);
+                using var connection = DatabaseSetup.CreateConnection(database);
                 var sql = "update [files] set Datetime = @datetime where Id = @id";
                 connection.Execute(sql, new { datetime, id });
             }
@@ -291,7 +291,7 @@ namespace FileDBInterface.DbAccess.SQLite
 
             try
             {
-                using var connection = DatabaseUtils.CreateConnection(database);
+                using var connection = DatabaseSetup.CreateConnection(database);
                 var sql = "update [files] set Orientation = @orientation where Id = @id";
                 connection.Execute(sql, new { orientation, id });
             }
@@ -303,49 +303,49 @@ namespace FileDBInterface.DbAccess.SQLite
 
         public void DeleteFile(int id)
         {
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             var sql = "delete from [files] where Id = @id";
             connection.Execute(sql, new { id });
         }
 
         public void InsertFilePerson(int fileId, int personId)
         {
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             var sql = "insert into [filepersons] (FileId, PersonId) values (@fileId, @personId)";
             connection.Execute(sql, new { fileId, personId });
         }
 
         public void DeleteFilePerson(int fileId, int personId)
         {
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             var sql = "delete from [filepersons] where FileId = @fileId and PersonId = @personId";
             connection.Execute(sql, new { fileId, personId });
         }
 
         public void InsertFileLocation(int fileId, int locationId)
         {
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             var sql = "insert into [filelocations] (Fileid, LocationId) values (@fileId, @locationId)";
             connection.Execute(sql, new { fileId, locationId });
         }
 
         public void DeleteFileLocation(int fileId, int locationId)
         {
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             var sql = "delete from [filelocations] where FileId = @fileId and LocationId = @locationId";
             connection.Execute(sql, new { fileId, locationId });
         }
 
         public void InsertFileTag(int fileId, int tagId)
         {
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             var sql = "insert into [filetags] (FileId, TagId) values (@fileId, @tagId)";
             connection.Execute(sql, new { fileId, tagId });
         }
 
         public void DeleteFileTag(int fileId, int tagId)
         {
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             var sql = "delete from [filetags] where FileId = @fileId and TagId = @tagId";
             connection.Execute(sql, new { fileId, tagId });
         }
@@ -356,44 +356,44 @@ namespace FileDBInterface.DbAccess.SQLite
 
         public IEnumerable<PersonModel> GetPersons()
         {
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             return connection.Query<PersonModel>("select * from [persons]");
         }
 
         private bool FileHasPersons(int fileId)
         {
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             return connection.ExecuteScalar<bool>("select count(1) from [filepersons] where FileId=@fileId", new { fileId });
         }
 
         public IEnumerable<PersonModel> GetPersonsFromFile(int fileId)
         {
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             return connection.Query<PersonModel>("select * from [persons] where Id in (select PersonId from [filepersons] where FileId = @fileid)", new { fileid = fileId });
         }
 
         public int GetPersonCount()
         {
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             return connection.ExecuteScalar<int>("select count(*) from [persons]");
         }
 
         public IEnumerable<PersonModel> SearchPersonsBySex(Sex sex)
         {
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             var sql = "select * from [persons] where Sex = @sex";
             return connection.Query<PersonModel>(sql, new { sex });
         }
 
         public PersonModel GetPersonById(int id)
         {
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             return connection.QueryFirst<PersonModel>("select * from [persons] where Id = @ID", new { id });
         }
 
         public bool HasPersonId(int id)
         {
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             return connection.ExecuteScalar<bool>("select count(1) from [persons] where Id=@id", new { id });
         }
 
@@ -408,7 +408,7 @@ namespace FileDBInterface.DbAccess.SQLite
 
             try
             {
-                using var connection = DatabaseUtils.CreateConnection(database);
+                using var connection = DatabaseSetup.CreateConnection(database);
                 var sql = "insert into [persons] (Firstname, Lastname, Description, DateOfBirth, Deceased, ProfileFileId, Sex) values (@Firstname, @Lastname, @Description, @DateOfBirth, @Deceased, @ProfileFileId, @Sex)";
                 connection.Execute(sql, person);
             }
@@ -429,7 +429,7 @@ namespace FileDBInterface.DbAccess.SQLite
 
             try
             {
-                using var connection = DatabaseUtils.CreateConnection(database);
+                using var connection = DatabaseSetup.CreateConnection(database);
                 var sql = "update [persons] set Firstname = @Firstname, Lastname = @Lastname, Description = @Description, DateOfBirth = @DateOfBirth, Deceased = @Deceased, ProfileFileId = @ProfileFileId, Sex = @Sex where Id = @Id";
                 connection.Execute(sql, person);
             }
@@ -441,7 +441,7 @@ namespace FileDBInterface.DbAccess.SQLite
 
         public void DeletePerson(int id)
         {
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             var sql = "delete from [persons] where Id = @id";
             connection.Execute(sql, new { id });
         }
@@ -452,37 +452,37 @@ namespace FileDBInterface.DbAccess.SQLite
 
         public IEnumerable<LocationModel> GetLocations()
         {
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             return connection.Query<LocationModel>("select * from [locations]");
         }
 
         private bool FileHasLocation(int fileId)
         {
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             return connection.ExecuteScalar<bool>("select count(1) from [filelocations] where FileId=@fileId", new { fileId });
         }
 
         public IEnumerable<LocationModel> GetLocationsFromFile(int fileId)
         {
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             return connection.Query<LocationModel>("select * from [locations] where Id in (select LocationId from [filelocations] where FileId = @fileId)", new { fileid = fileId });
         }
 
         public int GetLocationCount()
         {
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             return connection.ExecuteScalar<int>("select count(*) from [locations]");
         }
 
         public LocationModel GetLocationById(int id)
         {
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             return connection.QueryFirst<LocationModel>("select * from [locations] where Id = @id", new { id });
         }
 
         public bool HasLocationId(int id)
         {
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             return connection.ExecuteScalar<bool>("select count(1) from [locations] where Id=@id", new { id });
         }
 
@@ -497,7 +497,7 @@ namespace FileDBInterface.DbAccess.SQLite
 
             try
             {
-                using var connection = DatabaseUtils.CreateConnection(database);
+                using var connection = DatabaseSetup.CreateConnection(database);
                 var sql = "insert into [locations] (Name, Description, Position) values (@Name, @Description, @Position)";
                 connection.Execute(sql, location);
             }
@@ -519,7 +519,7 @@ namespace FileDBInterface.DbAccess.SQLite
 
             try
             {
-                using var connection = DatabaseUtils.CreateConnection(database);
+                using var connection = DatabaseSetup.CreateConnection(database);
                 var sql = "update [locations] set Name = @Name, Description = @Description, Position = @Position where Id = @Id";
                 connection.Execute(sql, location);
             }
@@ -531,7 +531,7 @@ namespace FileDBInterface.DbAccess.SQLite
 
         public void DeleteLocation(int id)
         {
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             var sql = "delete from [locations] where Id = @id";
             connection.Execute(sql, new { id });
         }
@@ -542,37 +542,37 @@ namespace FileDBInterface.DbAccess.SQLite
 
         public IEnumerable<TagModel> GetTags()
         {
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             return connection.Query<TagModel>("select * from [tags]");
         }
 
         private bool FileHasTags(int fileId)
         {
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             return connection.ExecuteScalar<bool>("select count(1) from [filetags] where FileId=@fileId", new { fileId });
         }
 
         public IEnumerable<TagModel> GetTagsFromFile(int fileId)
         {
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             return connection.Query<TagModel>("select * from [tags] where Id in (select TagId from [filetags] where FileId = @fileid)", new { fileid = fileId });
         }
 
         public int GetTagCount()
         {
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             return connection.ExecuteScalar<int>("select count(*) from [tags]");
         }
 
         public TagModel GetTagById(int id)
         {
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             return connection.QueryFirst<TagModel>("select * from [tags] where Id = @id", new { id });
         }
 
         public bool HasTagId(int id)
         {
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             return connection.ExecuteScalar<bool>("select count(1) from [tags] where Id=@id", new { id });
         }
 
@@ -587,7 +587,7 @@ namespace FileDBInterface.DbAccess.SQLite
 
             try
             {
-                using var connection = DatabaseUtils.CreateConnection(database);
+                using var connection = DatabaseSetup.CreateConnection(database);
                 var sql = "insert into [tags] (Name) values (@Name)";
                 connection.Execute(sql, tag);
             }
@@ -608,7 +608,7 @@ namespace FileDBInterface.DbAccess.SQLite
 
             try
             {
-                using var connection = DatabaseUtils.CreateConnection(database);
+                using var connection = DatabaseSetup.CreateConnection(database);
                 var sql = "update [tags] set Name = @Name where Id = @Id";
                 connection.Execute(sql, tag);
             }
@@ -620,7 +620,7 @@ namespace FileDBInterface.DbAccess.SQLite
 
         public void DeleteTag(int id)
         {
-            using var connection = DatabaseUtils.CreateConnection(database);
+            using var connection = DatabaseSetup.CreateConnection(database);
             var sql = "delete from [tags] where Id = @id";
             connection.Execute(sql, new { id });
         }

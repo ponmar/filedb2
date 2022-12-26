@@ -50,7 +50,7 @@ namespace FileDB.ViewModel
             {
                 try
                 {
-                    DatabaseUtils.CreateDatabase(DatabasePath);
+                    DatabaseSetup.CreateDatabase(DatabasePath);
                     CreatedDatabasePath = DatabasePath;
                     WeakReferenceMessenger.Default.Send(new CloseModalDialogRequested());
                 }

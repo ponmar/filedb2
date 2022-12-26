@@ -4,6 +4,7 @@ using FileDBApp.Comparers;
 using FileDBApp.Model;
 using FileDBApp.Services;
 using FileDBApp.View;
+using FileDBInterface.DbAccess;
 using FileDBInterface.Model;
 using System.Collections.ObjectModel;
 
@@ -42,10 +43,10 @@ public class Person
     {
         PersonModel = personModel;
 
-        var dateOfBirth = Utils.ParsePersonsDateOfBirth(personModel.DateOfBirth);
+        var dateOfBirth = DatabaseParsing.ParsePersonDateOfBirth(personModel.DateOfBirth);
         Birthday = dateOfBirth.ToString("d MMMM");
-        DaysLeft = Utils.GetDaysToNextBirthday(dateOfBirth);
-        Age = Utils.GetYearsAgo(DateTime.Now, dateOfBirth);
+        DaysLeft = DatabaseUtils.GetDaysToNextBirthday(dateOfBirth);
+        Age = DatabaseUtils.GetYearsAgo(DateTime.Now, dateOfBirth);
     }
 }
 
