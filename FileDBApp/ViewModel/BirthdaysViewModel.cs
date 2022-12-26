@@ -53,7 +53,7 @@ namespace FileDBApp.ViewModel
         public ObservableCollection<Person> Persons { get; } = new();
 
         [ObservableProperty]
-        [AlsoNotifyChangeFor(nameof(IsNotBusy))]
+        [NotifyPropertyChangedFor(nameof(IsNotBusy))]
         bool isBusy;
 
         public bool IsNotBusy => !isBusy;
@@ -69,7 +69,7 @@ namespace FileDBApp.ViewModel
             _ = UpdatePersonsAsync();
         }
 
-        [ICommand]
+        [RelayCommand]
         private async Task GoToPersonDetailsAsync(PersonModel personModel)
         {
             if (personModel is null)
@@ -84,7 +84,7 @@ namespace FileDBApp.ViewModel
                 });
         }
 
-        [ICommand]
+        [RelayCommand]
         private async Task UpdatePersonsAsync()
         {
             IsBusy = true;

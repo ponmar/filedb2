@@ -9,7 +9,7 @@ namespace FileDBApp.ViewModel
 {
     public partial class SettingsViewModel : ObservableObject
     {
-        [ICommand]
+        [RelayCommand]
         private async Task ImportAsync()
         {
             var customFileType = new FilePickerFileType(
@@ -44,7 +44,7 @@ namespace FileDBApp.ViewModel
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private async Task ClearAsync()
         {
             try
