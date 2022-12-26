@@ -4,6 +4,7 @@ using FileDBApp.Comparers;
 using FileDBApp.Model;
 using FileDBApp.Services;
 using FileDBApp.View;
+using FileDBInterface.Model;
 using System.Collections.ObjectModel;
 
 namespace FileDBApp.ViewModel

@@ -1,4 +1,5 @@
 ﻿using FileDBApp.Model;
+using FileDBInterface.Model;
 using Newtonsoft.Json;
 
 namespace FileDBApp.Services

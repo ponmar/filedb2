@@ -1,4 +1,6 @@
-﻿namespace FileDBApp.Model
+﻿using FileDBInterface.Model;
+
+namespace FileDBApp.Model
 {
     public class ExportedDatabaseFileFormat
     {
