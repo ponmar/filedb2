@@ -40,23 +40,23 @@
                             <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
 
-                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextBlock}">Configuration name:</TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center">Configuration name:</TextBlock>
                         <TextBox Grid.Row="0" Grid.Column="1" Width="250" Style="{StaticResource PageTextBox}" Text="{Binding ConfigName}"></TextBox>
 
-                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageTextBlock}">Database:</TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center">Database:</TextBlock>
                         <TextBox Grid.Row="1" Grid.Column="1" Width="250" Style="{StaticResource PageTextBox}" Text="{Binding Database}"></TextBox>
                         <Button Grid.Row="1" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding BrowseDatabaseCommand}">Browse...</Button>
                         <Button Grid.Row="1" Grid.Column="3" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding CreateDatabaseCommand}">Create...</Button>
 
-                        <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource PageTextBlock}">Files root directory:</TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center">Files root directory:</TextBlock>
                         <TextBox Grid.Row="2" Grid.Column="1" Width="250" Style="{StaticResource PageTextBox}" Text="{Binding FilesRootDirectory}"></TextBox>
                         <Button Grid.Row="2" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding BrowseFilesRootDirectoryCommand}">Browse...</Button>
 
-                        <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource PageTextBlock}">Window mode:</TextBlock>
+                        <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center">Window mode:</TextBlock>
                         <ComboBox Grid.Row="3" Grid.Column="1" Style="{StaticResource PageComboBox}" ItemsSource="{Binding WindowModes}" DisplayMemberPath="Name" SelectedValuePath="Mode" SelectedValue="{Binding WindowMode}"/>
                         <Button Grid.Row="3" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultWindowModeCommand}" ToolTip="Reset to default">Default</Button>
 
-                        <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource PageTextBlock}">Culture override:</TextBlock>
+                        <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center">Culture override:</TextBlock>
                         <ComboBox Grid.Row="4" Grid.Column="1" Style="{StaticResource PageComboBox}" ItemsSource="{Binding Cultures}" DisplayMemberPath="DisplayName" SelectedValue="{Binding SelectedCulture}"/>
                         <Button Grid.Row="4" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultCultureOverrideCommand}" ToolTip="Reset to default">Default</Button>
 
@@ -92,31 +92,31 @@
                             <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
 
-                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextBlock}">Slideshow delay (seconds):</TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center">Slideshow delay (seconds):</TextBlock>
                         <TextBox Grid.Row="0" Grid.Column="1" Width="250" Style="{StaticResource PageTextBox}" Text="{Binding SlideshowDelay, Converter={StaticResource IntToStringConverter}}"></TextBox>
                         <Button Grid.Row="0" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultSlideshowDelayCommand}" ToolTip="Reset to default">Default</Button>
 
-                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageTextBlock}">Search history size:</TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center">Search history size:</TextBlock>
                         <TextBox Grid.Row="1" Grid.Column="1" Width="250" Style="{StaticResource PageTextBox}" Text="{Binding SearchHistorySize, Converter={StaticResource IntToStringConverter}}"></TextBox>
                         <Button Grid.Row="1" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultSearchHistorySizeCommand}" ToolTip="Reset to default">Default</Button>
 
-                        <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource PageTextBlock}">Location link:</TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center">Location link:</TextBlock>
                         <TextBox Grid.Row="2" Grid.Column="1" Width="250" Style="{StaticResource PageTextBox}" Text="{Binding LocationLink}" ToolTip="LAT and LON is replaced with actual GPS position data when generating links. Set empty to disable feature."></TextBox>
                         <Button Grid.Row="2" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultLocationLinkCommand}" ToolTip="Reset to default">Default</Button>
 
-                        <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource PageTextBlock}">Overlay text size:</TextBlock>
+                        <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center">Overlay text size:</TextBlock>
                         <TextBox Grid.Row="3" Grid.Column="1" Width="250" Style="{StaticResource PageTextBox}" Text="{Binding OverlayTextSize}" ToolTip="Range: 8 - 50"></TextBox>
                         <Button Grid.Row="3" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultOverlayTextSizeCommand}" ToolTip="Reset to default">Default</Button>
 
-                        <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource PageTextBlock}">Overlay text size for large mode:</TextBlock>
+                        <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center">Overlay text size for large mode:</TextBlock>
                         <TextBox Grid.Row="4" Grid.Column="1" Width="250" Style="{StaticResource PageTextBox}" Text="{Binding OverlayTextSizeLarge}" ToolTip="Range: 8 - 50"></TextBox>
                         <Button Grid.Row="4" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultOverlayTextSizeLargeCommand}" ToolTip="Reset to default">Default</Button>
 
-                        <TextBlock Grid.Row="5" Grid.Column="0" Style="{StaticResource PageTextBlock}">Short item name max length:</TextBlock>
+                        <TextBlock Grid.Row="5" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center">Short item name max length:</TextBlock>
                         <TextBox Grid.Row="5" Grid.Column="1" Width="250" Style="{StaticResource PageTextBox}" Text="{Binding ShortItemNameMaxLength}" ToolTip="Range: 10 - 100"></TextBox>
                         <Button Grid.Row="5" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultShortItemNameMaxLengthCommand}" ToolTip="Reset to default">Default</Button>
 
-                        <TextBlock Grid.Row="6" Grid.Column="0" Style="{StaticResource PageTextBlock}">Default sort method:</TextBlock>
+                        <TextBlock Grid.Row="6" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center">Default sort method:</TextBlock>
                         <ComboBox Grid.Row="6" Grid.Column="1" Style="{StaticResource PageComboBox}" ItemsSource="{Binding SortMethods}" DisplayMemberPath="Name" SelectedValuePath="Method" SelectedValue="{Binding DefaultSortMethod}"/>
                         <Button Grid.Row="6" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultDefaultSortMethodCommand}" ToolTip="Reset to default">Default</Button>
 
@@ -154,15 +154,15 @@
                             <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
 
-                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextBlock}">Blacklisted file path patterns:</TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center">Blacklisted file path patterns:</TextBlock>
                         <TextBox Width="250" Grid.Row="0" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding BlacklistedFilePathPatterns}" ToolTip="Format: pattern1;pattern2;pattern3"></TextBox>
                         <Button Grid.Row="0" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultBlacklistedFilePathPatternsCommand}" ToolTip="Reset to default">Default</Button>
 
-                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageTextBlock}">Whitelisted file path patterns:</TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center">Whitelisted file path patterns:</TextBlock>
                         <TextBox Width="250" Grid.Row="1" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding WhitelistedFilePathPatterns}" ToolTip="Format: pattern1;pattern2;pattern3"></TextBox>
                         <Button Grid.Row="1" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultWhitelistedFilePathPatternsCommand}" ToolTip="Reset to default">Default</Button>
 
-                        <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource PageTextBlock}">Location max distance at import (meters):</TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center">Location max distance at import (meters):</TextBlock>
                         <TextBox Width="250" Grid.Row="2" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding FileToLocationMaxDistance, Converter={StaticResource IntToStringConverter}}"></TextBox>
                         <Button Grid.Row="2" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultFileToLocationMaxDistanceCommand}" ToolTip="Reset to default">Default</Button>
 
