@@ -9,9 +9,14 @@
     <Import_RootNamespace>FileDBShared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Model\DatabaseParsing.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\FilesModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\LocationModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\PersonModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\TagModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Validators\FilesModelValidator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Validators\LocationModelValidator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Validators\PersonModelValidator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Validators\TagModelValidator.cs" />
   </ItemGroup>
 </Project>

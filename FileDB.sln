@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repo", "Repo", "{85037002-F
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "FileDBShared", "FileDBShared\FileDBShared.shproj", "{A6221077-005A-4E47-9A82-D5B8359CC1C6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileDBSharedTests", "FileDBSharedTests\FileDBSharedTests.csproj", "{F8779775-0828-4579-80CC-313C3DCBC6C9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{9CDA4B29-FC75-49C3-9561-7241ABABE275}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CDA4B29-FC75-49C3-9561-7241ABABE275}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9CDA4B29-FC75-49C3-9561-7241ABABE275}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8779775-0828-4579-80CC-313C3DCBC6C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8779775-0828-4579-80CC-313C3DCBC6C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8779775-0828-4579-80CC-313C3DCBC6C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8779775-0828-4579-80CC-313C3DCBC6C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,5 +59,6 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		FileDBShared\FileDBShared.projitems*{5dc42461-67f8-450c-bbdd-e85ac2fd5c30}*SharedItemsImports = 5
 		FileDBShared\FileDBShared.projitems*{a6221077-005a-4e47-9a82-d5b8359cc1c6}*SharedItemsImports = 13
+		FileDBShared\FileDBShared.projitems*{f8779775-0828-4579-80cc-313c3dcbc6c9}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal

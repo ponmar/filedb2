@@ -17,10 +17,10 @@ using FileDBInterface.DbAccess;
 using FileDB.Configuration;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using FileDBInterface.Validators;
 using FileDB.Extensions;
 using CommunityToolkit.Mvvm.Messaging;
 using FileDB.Model;
+using FileDBShared.Validators;
 
 namespace FileDB.ViewModel;
 

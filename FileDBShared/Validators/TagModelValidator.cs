@@ -1,7 +1,7 @@
 ﻿using FileDBShared.Model;
 using FluentValidation;
 
-namespace FileDBInterface.Validators;
+namespace FileDBShared.Validators;
 
 public class TagModelValidator : AbstractValidator<TagModel>
 {

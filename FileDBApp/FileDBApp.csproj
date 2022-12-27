@@ -52,12 +52,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Include="..\FileDBInterface\DbAccess\DatabaseParsing.cs" Link="Model\DatabaseParsing.cs" />
 	  <Compile Include="..\FileDBInterface\DbAccess\DatabaseUtils.cs" Link="Model\DatabaseUtils.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
+	  <PackageReference Include="FluentValidation" Version="11.4.0" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
 	</ItemGroup>
 

@@ -1,8 +1,7 @@
-﻿using FileDBInterface.DbAccess;
-using FileDBShared.Model;
+﻿using FileDBShared.Model;
 using FluentValidation;
 
-namespace FileDBInterface.Validators;
+namespace FileDBShared.Validators;
 
 public class PersonModelValidator : AbstractValidator<PersonModel>
 {

@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.IO;
 
-namespace FileDBInterface.DbAccess;
+namespace FileDBShared.Model;
 
 public class DatabaseParsing
 {

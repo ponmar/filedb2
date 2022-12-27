@@ -8,7 +8,7 @@ using CommunityToolkit.Mvvm.Input;
 using FileDB.Configuration;
 using FileDB.Export;
 using FileDBShared.Model;
-using FileDBInterface.Validators;
+using FileDBShared.Validators;
 using TextCopy;
 
 namespace FileDB.ViewModel;
