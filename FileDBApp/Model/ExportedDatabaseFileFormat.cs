@@ -1,4 +1,4 @@
-﻿using FileDBInterface.Model;
+﻿using FileDBShared.Model;
 
 namespace FileDBApp.Model;
 

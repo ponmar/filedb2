@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using FileDBInterface.DbAccess;
-using FileDBInterface.Model;
+using FileDBShared.Model;
 using log4net;
 using MetadataExtractor;
 using MetadataExtractor.Formats.Exif;

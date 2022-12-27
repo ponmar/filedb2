@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using FileDBInterface.DbAccess;
 using FileDBInterface.FilesystemAccess;
-using FileDBInterface.Model;
+using FileDBShared.Model;
 
 namespace FileDB;
 

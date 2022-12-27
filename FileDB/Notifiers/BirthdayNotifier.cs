@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FileDBInterface.DbAccess;
-using FileDBInterface.Model;
+using FileDBShared.Model;
 
 namespace FileDB.Notifiers;
 

@@ -1,5 +1,5 @@
 ﻿using FileDBInterface.DbAccess;
-using FileDBInterface.Model;
+using FileDBShared.Model;
 using FluentValidation;
 
 namespace FileDBInterface.Validators

@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using FileDBInterface.Model;
+using FileDBShared.Model;
 
 namespace FileDBApp.ViewModel;
 

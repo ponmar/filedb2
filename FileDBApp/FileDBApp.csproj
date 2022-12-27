@@ -54,7 +54,6 @@
 	<ItemGroup>
 	  <Compile Include="..\FileDBInterface\DbAccess\DatabaseParsing.cs" Link="Model\DatabaseParsing.cs" />
 	  <Compile Include="..\FileDBInterface\DbAccess\DatabaseUtils.cs" Link="Model\DatabaseUtils.cs" />
-	  <Compile Include="..\FileDBInterface\Model\PersonModel.cs" Link="Model\PersonModel.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -88,4 +87,6 @@
 	<PropertyGroup>
 	  <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.19041.0</TargetFrameworks>
 	</PropertyGroup>
+
+	<Import Project="..\FileDBShared\FileDBShared.projitems" Label="Shared" />
 </Project>

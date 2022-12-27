@@ -10,7 +10,7 @@ using FileDB.Configuration;
 using FileDB.Extensions;
 using FileDB.Sorters;
 using FileDBInterface.DbAccess;
-using FileDBInterface.Model;
+using FileDBShared.Model;
 
 namespace FileDB;
 

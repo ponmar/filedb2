@@ -4,7 +4,7 @@ using System.Data;
 using System.Data.SQLite;
 using System.Linq;
 using Dapper;
-using FileDBInterface.Model;
+using FileDBShared.Model;
 using System.IO;
 using log4net;
 using System.Reflection;

@@ -8,7 +8,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using FileDB.Model;
 using FileDB.Sorters;
 using FileDBInterface.DbAccess;
-using FileDBInterface.Model;
+using FileDBShared.Model;
 
 namespace FileDB.ViewModel;
 

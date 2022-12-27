@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using FileDB;
-using FileDBInterface.Model;
+using FileDBShared.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FileDBTests;

@@ -8,7 +8,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using FileDB.Configuration;
 using FileDB.Model;
 using FileDBInterface.DbAccess;
-using FileDBInterface.Model;
+using FileDBShared.Model;
 
 namespace FileDB.ViewModel;
 

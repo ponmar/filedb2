@@ -1,4 +1,4 @@
-﻿using FileDBInterface.Model;
+﻿using FileDBShared.Model;
 using System.Collections.Generic;
 using System.Windows.Media.Imaging;
 

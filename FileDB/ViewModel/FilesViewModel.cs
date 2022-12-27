@@ -11,7 +11,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using FileDB.Model;
 using FileDBInterface.DbAccess;
 using FileDBInterface.Exceptions;
-using FileDBInterface.Model;
+using FileDBShared.Model;
 using TextCopy;
 
 namespace FileDB.ViewModel;

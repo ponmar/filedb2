@@ -9,7 +9,7 @@ using FileDB.Comparers;
 using FileDB.Configuration;
 using FileDB.Model;
 using FileDBInterface.DbAccess;
-using FileDBInterface.Model;
+using FileDBShared.Model;
 
 namespace FileDB.ViewModel;
 

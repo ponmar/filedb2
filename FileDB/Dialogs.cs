@@ -1,6 +1,6 @@
 ﻿using FileDB.View;
 using FileDB.ViewModel;
-using FileDBInterface.Model;
+using FileDBShared.Model;
 using FluentValidation.Results;
 using System;
 using System.Collections.Generic;

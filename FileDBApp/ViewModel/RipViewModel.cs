@@ -1,11 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDBApp.Comparers;
-using FileDBApp.Model;
 using FileDBApp.Services;
 using FileDBApp.View;
 using FileDBInterface.DbAccess;
-using FileDBInterface.Model;
+using FileDBShared.Model;
 using System.Collections.ObjectModel;
 
 namespace FileDBApp.ViewModel;

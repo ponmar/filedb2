@@ -6,7 +6,7 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using FileDB.Model;
 using FileDBInterface.Exceptions;
-using FileDBInterface.Model;
+using FileDBShared.Model;
 
 namespace FileDB.ViewModel;
 

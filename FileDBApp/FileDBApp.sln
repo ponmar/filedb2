@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileDBApp", "FileDBApp.csproj", "{D2DBB9CA-2DF9-4992-81D9-8D2F9A5DE5C3}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "FileDBShared", "..\FileDBShared\FileDBShared.shproj", "{A6221077-005A-4E47-9A82-D5B8359CC1C6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,5 +25,9 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\FileDBShared\FileDBShared.projitems*{a6221077-005a-4e47-9a82-d5b8359cc1c6}*SharedItemsImports = 13
+		..\FileDBShared\FileDBShared.projitems*{d2dbb9ca-2df9-4992-81d9-8d2f9a5de5c3}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal

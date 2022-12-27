@@ -1,4 +1,4 @@
-﻿using FileDBInterface.Model;
+﻿using FileDBShared.Model;
 using FileDBInterface.Validators;
 using FluentValidation.TestHelper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

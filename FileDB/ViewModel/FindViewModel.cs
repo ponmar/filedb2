@@ -11,7 +11,7 @@ using FileDB.Comparers;
 using FileDB.View;
 using FileDB.Sorters;
 using FileDBInterface.Exceptions;
-using FileDBInterface.Model;
+using FileDBShared.Model;
 using TextCopy;
 using FileDBInterface.DbAccess;
 using FileDB.Configuration;

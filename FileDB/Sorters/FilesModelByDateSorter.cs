@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using FileDBInterface.DbAccess;
-using FileDBInterface.Model;
+using FileDBShared.Model;
 
 namespace FileDB.Sorters;
 

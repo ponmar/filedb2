@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using FileDB.Model;
 using FileDBInterface.Exceptions;
-using FileDBInterface.Model;
+using FileDBShared.Model;
 using System.Linq;
 
 namespace FileDB.ViewModel;

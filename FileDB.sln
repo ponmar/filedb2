@@ -19,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repo", "Repo", "{85037002-F
 		release.bat = release.bat
 	EndProjectSection
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "FileDBShared", "FileDBShared\FileDBShared.shproj", "{A6221077-005A-4E47-9A82-D5B8359CC1C6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,5 +49,9 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {08E00FB7-E14F-46E8-95BF-67CC9B9F40CA}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		FileDBShared\FileDBShared.projitems*{5dc42461-67f8-450c-bbdd-e85ac2fd5c30}*SharedItemsImports = 5
+		FileDBShared\FileDBShared.projitems*{a6221077-005a-4e47-9a82-d5b8359cc1c6}*SharedItemsImports = 13
 	EndGlobalSection
 EndGlobal

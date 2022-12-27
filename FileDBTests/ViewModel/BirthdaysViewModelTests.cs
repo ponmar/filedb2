@@ -6,7 +6,7 @@ using FileDB.Notifiers;
 using FileDB.ViewModel;
 using FileDBInterface.DbAccess;
 using FileDBInterface.FilesystemAccess;
-using FileDBInterface.Model;
+using FileDBShared.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;

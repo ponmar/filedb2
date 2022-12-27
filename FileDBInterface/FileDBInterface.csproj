@@ -19,4 +19,6 @@
     </None>
   </ItemGroup>
 
+  <Import Project="..\FileDBShared\FileDBShared.projitems" Label="Shared" />
+
 </Project>
