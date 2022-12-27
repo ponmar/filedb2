@@ -2,154 +2,153 @@
 using System.Globalization;
 using System.IO;
 
-namespace FileDBInterface.DbAccess
+namespace FileDBInterface.DbAccess;
+
+public class DatabaseParsing
 {
-    public class DatabaseParsing
+    private static DateTime ParsePersonDate(string dateStr)
     {
-        private static DateTime ParsePersonDate(string dateStr)
+        if (DateTime.TryParseExact(dateStr, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var result) ||
+            DateTime.TryParseExact(dateStr, "yyyy-MM", CultureInfo.InvariantCulture, DateTimeStyles.None, out result) ||
+            DateTime.TryParseExact(dateStr, "yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out result))
         {
-            if (DateTime.TryParseExact(dateStr, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var result) ||
-                DateTime.TryParseExact(dateStr, "yyyy-MM", CultureInfo.InvariantCulture, DateTimeStyles.None, out result) ||
-                DateTime.TryParseExact(dateStr, "yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out result))
-            {
-                return result;
-            }
-
-            throw new ArgumentException($"Invalid person date string: {dateStr}");
+            return result;
         }
 
-        public static DateTime ParsePersonDateOfBirth(string dateStr)
+        throw new ArgumentException($"Invalid person date string: {dateStr}");
+    }
+
+    public static DateTime ParsePersonDateOfBirth(string dateStr)
+    {
+        return ParsePersonDate(dateStr);
+    }
+
+    public static DateTime ParsePersonDeceasedDate(string dateStr)
+    {
+        return ParsePersonDate(dateStr);
+    }
+
+    public static DateTime? ParseFilesDatetime(string? datetimeStr)
+    {
+        if (datetimeStr == null)
         {
-            return ParsePersonDate(dateStr);
-        }
-
-        public static DateTime ParsePersonDeceasedDate(string dateStr)
-        {
-            return ParsePersonDate(dateStr);
-        }
-
-        public static DateTime? ParseFilesDatetime(string? datetimeStr)
-        {
-            if (datetimeStr == null)
-            {
-                return null;
-            }
-
-            if (DateTime.TryParseExact(datetimeStr, "yyyy-MM-ddTHH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var result) ||
-                DateTime.TryParseExact(datetimeStr, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out result) ||
-                DateTime.TryParseExact(datetimeStr, "yyyy-MM", CultureInfo.InvariantCulture, DateTimeStyles.None, out result) ||
-                DateTime.TryParseExact(datetimeStr, "yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out result))
-            {
-                return result;
-            }
-
             return null;
         }
 
-        public static string DateTakenToFilesDatetime(DateTime dateTaken)
+        if (DateTime.TryParseExact(datetimeStr, "yyyy-MM-ddTHH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var result) ||
+            DateTime.TryParseExact(datetimeStr, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out result) ||
+            DateTime.TryParseExact(datetimeStr, "yyyy-MM", CultureInfo.InvariantCulture, DateTimeStyles.None, out result) ||
+            DateTime.TryParseExact(datetimeStr, "yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out result))
         {
-            return dateTaken.ToString("yyyy-MM-ddTHH:mm:ss");
+            return result;
         }
 
-        public static string? PathToFilesDatetime(string path)
-        {
-            var filename = Path.GetFileNameWithoutExtension(path)!;
-            if (DateTime.TryParseExact(filename, "yyyyMMdd_HHmmss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var dateFromFilename))
-            {
-                return DateTakenToFilesDatetime(dateFromFilename);
-            }
+        return null;
+    }
 
-            var pathParts = path.Split('/');
-            foreach (var pathPart in pathParts)
+    public static string DateTakenToFilesDatetime(DateTime dateTaken)
+    {
+        return dateTaken.ToString("yyyy-MM-ddTHH:mm:ss");
+    }
+
+    public static string? PathToFilesDatetime(string path)
+    {
+        var filename = Path.GetFileNameWithoutExtension(path)!;
+        if (DateTime.TryParseExact(filename, "yyyyMMdd_HHmmss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var dateFromFilename))
+        {
+            return DateTakenToFilesDatetime(dateFromFilename);
+        }
+
+        var pathParts = path.Split('/');
+        foreach (var pathPart in pathParts)
+        {
+            var words = pathPart.Split(" ");
+            if (words.Length > 0)
             {
-                var words = pathPart.Split(" ");
-                if (words.Length > 0)
+                var firstWord = words[0];
+                if (DateTime.TryParseExact(firstWord, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var _))
                 {
-                    var firstWord = words[0];
-                    if (DateTime.TryParseExact(firstWord, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var _))
-                    {
-                        return firstWord;
-                    }
+                    return firstWord;
                 }
             }
-            return null;
         }
+        return null;
+    }
 
-        public static (double lat, double lon)? ParseFilesPosition(string? positionString)
+    public static (double lat, double lon)? ParseFilesPosition(string? positionString)
+    {
+        if (positionString != null)
         {
-            if (positionString != null)
+            var parts = positionString.Split(" ");
+            if (parts.Length == 2 &&
+                double.TryParse(parts[0], NumberStyles.Float, CultureInfo.InvariantCulture, out var latitude) &&
+                double.TryParse(parts[1], NumberStyles.Float, CultureInfo.InvariantCulture, out var longitude) &&
+                latitude >= -90.0 && latitude <= 90.0 &&
+                longitude >= -180.0 && longitude <= 180.0)
             {
-                var parts = positionString.Split(" ");
-                if (parts.Length == 2 &&
-                    double.TryParse(parts[0], NumberStyles.Float, CultureInfo.InvariantCulture, out var latitude) &&
-                    double.TryParse(parts[1], NumberStyles.Float, CultureInfo.InvariantCulture, out var longitude) &&
-                    latitude >= -90.0 && latitude <= 90.0 &&
-                    longitude >= -180.0 && longitude <= 180.0)
-                {
-                    return (latitude, longitude);
-                }
+                return (latitude, longitude);
             }
-            return null;
         }
+        return null;
+    }
 
-        public static (double lat, double lon)? ParseFilesPositionFromUrl(string? url)
+    public static (double lat, double lon)? ParseFilesPositionFromUrl(string? url)
+    {
+        if (!string.IsNullOrEmpty(url))
         {
-            if (!string.IsNullOrEmpty(url))
-            {
-                var searchCriteria = "@";
-                var latLonStartIndex = url.IndexOf(searchCriteria);
+            var searchCriteria = "@";
+            var latLonStartIndex = url.IndexOf(searchCriteria);
 
+            if (latLonStartIndex == -1)
+            {
+                searchCriteria = "/maps?q=loc:";
+                latLonStartIndex = url.IndexOf(searchCriteria);
                 if (latLonStartIndex == -1)
                 {
-                    searchCriteria = "/maps?q=loc:";
-                    latLonStartIndex = url.IndexOf(searchCriteria);
-                    if (latLonStartIndex == -1)
-                    {
-                        return null;
-                    }
-                }
-
-                latLonStartIndex += searchCriteria.Length;
-
-                var latLonToEnd = url.Substring(latLonStartIndex);
-                var parts = latLonToEnd.Split(",");
-                if (parts.Length >= 2 &&
-                    double.TryParse(parts[0], NumberStyles.Float, CultureInfo.InvariantCulture, out var latitude) &&
-                    double.TryParse(parts[1], NumberStyles.Float, CultureInfo.InvariantCulture, out var longitude))
-                {
-                    return (latitude, longitude);
+                    return null;
                 }
             }
-            return null;
-        }
 
-        public static string ToFilesPosition(double lat, double lon)
-        {
-            return $"{lat.ToString(CultureInfo.InvariantCulture)} {lon.ToString(CultureInfo.InvariantCulture)}";
-        }
+            latLonStartIndex += searchCriteria.Length;
 
-        public static int OrientationToDegrees(int? orientation)
-        {
-            return orientation switch
+            var latLonToEnd = url.Substring(latLonStartIndex);
+            var parts = latLonToEnd.Split(",");
+            if (parts.Length >= 2 &&
+                double.TryParse(parts[0], NumberStyles.Float, CultureInfo.InvariantCulture, out var latitude) &&
+                double.TryParse(parts[1], NumberStyles.Float, CultureInfo.InvariantCulture, out var longitude))
             {
-                1 => 0,
-                8 => 90,
-                3 => 180,
-                6 => 270,
-                _ => 0,
-            };
+                return (latitude, longitude);
+            }
         }
+        return null;
+    }
 
-        public static int DegreesToOrientation(int degrees)
+    public static string ToFilesPosition(double lat, double lon)
+    {
+        return $"{lat.ToString(CultureInfo.InvariantCulture)} {lon.ToString(CultureInfo.InvariantCulture)}";
+    }
+
+    public static int OrientationToDegrees(int? orientation)
+    {
+        return orientation switch
         {
-            return degrees switch
-            {
-                0 => 1,
-                90 => 8,
-                180 => 3,
-                270 => 6,
-                _ => 0,
-            };
-        }
+            1 => 0,
+            8 => 90,
+            3 => 180,
+            6 => 270,
+            _ => 0,
+        };
+    }
+
+    public static int DegreesToOrientation(int degrees)
+    {
+        return degrees switch
+        {
+            0 => 1,
+            90 => 8,
+            180 => 3,
+            270 => 6,
+            _ => 0,
+        };
     }
 }

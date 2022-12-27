@@ -1,4 +1,3 @@
-﻿namespace FileDBInterface.FilesystemAccess
-{
-    public record FileMetadata(string? Datetime, string? Position, int? Orientation);
-}
+﻿namespace FileDBInterface.FilesystemAccess;
+
+public record FileMetadata(string? Datetime, string? Position, int? Orientation);

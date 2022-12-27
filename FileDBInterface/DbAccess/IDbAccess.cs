@@ -1,7 +1,6 @@
-﻿namespace FileDBInterface.DbAccess
+﻿namespace FileDBInterface.DbAccess;
+
+public interface IDbAccess : IPersonAccess, ILocationAccess, ITagAccess, IFilesAccess
 {
-    public interface IDbAccess : IPersonAccess, ILocationAccess, ITagAccess, IFilesAccess
-    {
-        string Database { get; set; }
-    }
+    string Database { get; set; }
 }
