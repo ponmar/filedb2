@@ -21,7 +21,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repo", "Repo", "{85037002-F
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "FileDBShared", "FileDBShared\FileDBShared.shproj", "{A6221077-005A-4E47-9A82-D5B8359CC1C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileDBSharedTests", "FileDBSharedTests\FileDBSharedTests.csproj", "{F8779775-0828-4579-80CC-313C3DCBC6C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileDBSharedTests", "FileDBSharedTests\FileDBSharedTests.csproj", "{F8779775-0828-4579-80CC-313C3DCBC6C9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{5137B3DC-331D-42AB-963B-070292CE70A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,6 +54,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1D49EFF7-00AC-4171-8D20-A0975BC044E6} = {5137B3DC-331D-42AB-963B-070292CE70A8}
+		{9CDA4B29-FC75-49C3-9561-7241ABABE275} = {5137B3DC-331D-42AB-963B-070292CE70A8}
+		{F8779775-0828-4579-80CC-313C3DCBC6C9} = {5137B3DC-331D-42AB-963B-070292CE70A8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {08E00FB7-E14F-46E8-95BF-67CC9B9F40CA}

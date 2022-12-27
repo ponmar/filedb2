@@ -19,4 +19,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Validators\PersonModelValidator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Validators\TagModelValidator.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)FileFormats\" />
+  </ItemGroup>
 </Project>
