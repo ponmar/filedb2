@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace FileDB.Export;
+namespace FileDBShared.FileFormats;
 
 public record ExportedFile(
     int Id,
@@ -16,7 +16,7 @@ public record ExportedFile(
     List<int> LocationIds,
     List<int> TagIds);
 
-public record SearchResultFileFormat(
+public record SearchResultExport(
     string Header,
     string About,
     string FileList,
@@ -26,7 +26,7 @@ public record SearchResultFileFormat(
     List<TagModel> Tags,
     string ApplicationDownloadUrl);
 
-public record ExportedDatabaseFileFormat(
+public record DatabaseExport(
     string FileDBVersion,
     DateTime ExportDateTime,
     List<PersonModel> Persons,

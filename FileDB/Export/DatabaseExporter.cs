@@ -1,4 +1,5 @@
-﻿using FileDBShared.Model;
+﻿using FileDBShared.FileFormats;
+using FileDBShared.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,7 +17,7 @@ public class DatabaseExporter
 
     public void Export(List<PersonModel> persons, List<LocationModel> locations, List<TagModel> tags, List<FilesModel> files)
     {
-        var fileContent = new ExportedDatabaseFileFormat(Utils.GetVersionString(), DateTime.Now, persons, locations, tags, files);
+        var fileContent = new DatabaseExport(Utils.GetVersionString(), DateTime.Now, persons, locations, tags, files);
 
         // TODO: where to check that directory is empty?
         var filename = Path.Combine(destinationDirectory, "DatabaseExport.json");

@@ -1,4 +1,5 @@
-﻿using FileDBShared.Model;
+﻿using FileDBShared.FileFormats;
+using FileDBShared.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -42,7 +43,7 @@ public class SearchResultExporter
         }
     }
 
-    private SearchResultFileFormat GetExportedData(List<FilesModel> files, string header, string filesSubdir)
+    private SearchResultExport GetExportedData(List<FilesModel> files, string header, string filesSubdir)
     {
         var model = Model.Model.Instance;
 
@@ -98,7 +99,7 @@ public class SearchResultExporter
             index++;
         }
 
-        return new SearchResultFileFormat(
+        return new SearchResultExport(
             header,
             $"Exported with {Utils.ApplicationName} version {Utils.GetVersionString()} at {DateTime.Now:yyyy-MM-dd HH:mm}",
             Utils.CreateFileList(files.Select(x => x.Id)),

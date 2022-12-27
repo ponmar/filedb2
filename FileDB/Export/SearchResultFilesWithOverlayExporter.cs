@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using FileDBShared.Validators;
+using FileDBShared.FileFormats;
 
 namespace FileDB.Export;
 
@@ -28,7 +29,7 @@ public class SearchResultFilesWithOverlayExporter : ISearchResultExporter
         this.descriptionPlacement = descriptionPlacement;
     }
 
-    public void Export(SearchResultFileFormat data, string path)
+    public void Export(SearchResultExport data, string path)
     {
         if (!Directory.Exists(path))
         {
@@ -82,7 +83,7 @@ public class SearchResultFilesWithOverlayExporter : ISearchResultExporter
         }
     }
 
-    private List<TextLine> CreateTextLines(SearchResultFileFormat data, ExportedFile file)
+    private List<TextLine> CreateTextLines(SearchResultExport data, ExportedFile file)
     {
         var textLines = new List<TextLine>();
 

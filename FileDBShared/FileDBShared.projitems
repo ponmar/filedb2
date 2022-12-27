@@ -9,6 +9,7 @@
     <Import_RootNamespace>FileDBShared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)FileFormats\Export.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\DatabaseParsing.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\FilesModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\LocationModel.cs" />
@@ -18,8 +19,5 @@
     <Compile Include="$(MSBuildThisFileDirectory)Validators\LocationModelValidator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Validators\PersonModelValidator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Validators\TagModelValidator.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)FileFormats\" />
   </ItemGroup>
 </Project>

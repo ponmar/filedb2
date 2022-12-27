@@ -1,4 +1,5 @@
-﻿using FileDBShared.Model;
+﻿using FileDBShared.FileFormats;
+using FileDBShared.Model;
 using FileDBShared.Validators;
 using System.IO;
 using System.Linq;
@@ -8,7 +9,7 @@ namespace FileDB.Export;
 
 public class SearchResultHtmlExporter : ISearchResultExporter
 {
-    public void Export(SearchResultFileFormat data, string destinationDirPath)
+    public void Export(SearchResultExport data, string destinationDirPath)
     {
         if (!Directory.Exists(destinationDirPath))
         {

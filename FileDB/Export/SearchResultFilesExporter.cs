@@ -1,10 +1,11 @@
-﻿using System.IO;
+﻿using FileDBShared.FileFormats;
+using System.IO;
 
 namespace FileDB.Export;
 
 public class SearchResultFilesExporter : ISearchResultExporter
 {
-    public void Export(SearchResultFileFormat data, string path)
+    public void Export(SearchResultExport data, string path)
     {
         var model = Model.Model.Instance;
         foreach (var file in data.Files)

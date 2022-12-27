@@ -1,10 +1,11 @@
-﻿using System.IO;
+﻿using FileDBShared.FileFormats;
+using System.IO;
 
 namespace FileDB.Export;
 
 public class SearchResultM3uExporter : ISearchResultExporter
 {
-    public void Export(SearchResultFileFormat data, string filename)
+    public void Export(SearchResultExport data, string filename)
     {
         var m3uLinebreak = "\r\n";
         int duration = 10; // Note: VLC ignore the duration information when showing images in a playlist

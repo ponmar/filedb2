@@ -1,6 +1,8 @@
-﻿namespace FileDB.Export;
+﻿using FileDBShared.FileFormats;
+
+namespace FileDB.Export;
 
 public interface ISearchResultExporter
 {
-    void Export(SearchResultFileFormat data, string path);
+    void Export(SearchResultExport data, string path);
 }
