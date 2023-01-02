@@ -1,0 +1,71 @@
+﻿<Window x:Class="MediaFilesHelper.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MediaFilesHelper"
+        xmlns:viewmodel="clr-namespace:MediaFilesHelper.ViewModel"
+        d:DataContext="{d:DesignInstance Type=viewmodel:MainViewModel}"
+        mc:Ignorable="d"
+        Title="MediaFilesHelper"
+        SizeToContent="WidthAndHeight"
+        ResizeMode="NoResize">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <GroupBox Header="1. Download Media Files" Grid.Row="0" Margin="5">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                
+                <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="3 6">Source:</TextBlock>
+                <ComboBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="3 6" ItemsSource="{Binding Devices}" SelectedItem="{Binding SelectedDevice}"/>
+                <Button Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Margin="3 6" Content="Refresh" Command="{Binding RefreshDevicesCommand}"/>
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Destination:" Margin="3 6"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding TempDir}" ToolTip="{Binding TempDir}" Margin="3 6"/>
+                <Button Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" Margin="3 6" Content="Browse..." Command="{Binding BrowseDestinationDirectoryCommand}"/>
+
+                <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Margin="3" Content="Download files..." Command="{Binding DownloadFilesFromDeviceCommand}" IsEnabled="{Binding DeviceIsSelected}"/>
+                    
+                <TextBlock Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3"  Margin="3" Text="{Binding DownloadResult}"/>
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Header="2. File Cleanup" Grid.Row="1" Margin="5">
+            <StackPanel Orientation="Vertical" Margin="3">
+                <Button Margin="3" Content="Show files" Command="{Binding ShowDownloadedMediaFilesCommand}"/>
+            </StackPanel>
+        </GroupBox>
+
+        <GroupBox Header="3. Group Files by Date" Grid.Row="2" Margin="5">
+            <StackPanel Orientation="Vertical" Margin="3">
+                <Button Margin="3" Content="Run..." Command="{Binding GroupImagesCommand}"/>
+            </StackPanel>
+        </GroupBox>
+
+        <GroupBox Header="3. Name Groups and Move Files to your Collection" Grid.Row="3" Margin="5">
+            <StackPanel Orientation="Vertical" Margin="3">
+                <Button VerticalAlignment="Center" Margin="3" Content="Show files" Command="{Binding ShowDownloadedMediaFilesCommand}"/>
+            </StackPanel>
+        </GroupBox>
+    </Grid>
+</Window>
