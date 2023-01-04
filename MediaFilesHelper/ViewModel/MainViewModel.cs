@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using MediaDevices;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
@@ -46,14 +47,15 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     private void RefreshDevices()
     {
-        SelectedDevice = null;
         DownloadResult = DefaultDownloadResult;
 
         devices.Clear();
         foreach (var device in MediaDevice.GetDevices())
         {
-            devices.Add(device.FriendlyName);
+            devices.Add(device.FriendlyName ?? device.Description);
         }
+
+        SelectedDevice = devices.FirstOrDefault();
     }
 
     [RelayCommand]
@@ -78,6 +80,11 @@ public partial class MainViewModel : ObservableObject
             return;
         }
 
+        if (!Dialogs.ShowConfirmDialog(Title, $"Download files from selected device?"))
+        {
+            return;
+        }
+
         if (!Directory.Exists(tempDir))
         {
             Directory.CreateDirectory(tempDir);
@@ -86,34 +93,58 @@ public partial class MainViewModel : ObservableObject
         using var device = MediaDevice.GetDevices().First(d => d.FriendlyName == selectedDevice || d.Description == selectedDevice);
         device.Connect();
 
-        // TODO: need to check "Internal shared storage" to support all devices?
-        var devicePhotoDir = device.GetDirectoryInfo(@"\Internal storage\DCIM\Camera");
-        var files = devicePhotoDir.EnumerateFiles("*.*", SearchOption.TopDirectoryOnly);
-
-        if (!Dialogs.ShowConfirmDialog(Title, $"Download {files.Count()} from selected device?"))
+        var deviceDirectories = new List<string>()
         {
+            @"\Internal storage\DCIM\Camera",
+            @"\Internal shared storage\DCIM\Camera",
+        }.Where(device.DirectoryExists).ToList();
+
+        if (deviceDirectories.Count == 0)
+        {
+            Dialogs.ShowErrorDialog(Title, "No directories with media files available on device");
+            device.Disconnect();
             return;
         }
 
         var numDownloadedFiles = 0;
-        var numSkippedFiles = 0;
+        var numAlreadyDownloadedFiles = 0;
+        var numNameCollisions = 0;
 
-        foreach (var file in files)
+        foreach (var directory in deviceDirectories)
         {
-            var destinationFilePath = Path.Combine(tempDir, file.Name);
-            if (File.Exists(destinationFilePath))
-            {
-                numSkippedFiles++;
-                continue;
-            }
+            var directoryInfo = device.GetDirectoryInfo(directory);
+            var files = directoryInfo.EnumerateFiles("*.*", SearchOption.TopDirectoryOnly);
 
-            using var fs = new FileStream(destinationFilePath, FileMode.Create, FileAccess.Write);
-            device.DownloadFile(file.FullName, fs);
-            numDownloadedFiles++;
+            foreach (var file in files)
+            {
+                var destinationFilePath = Path.Combine(tempDir, file.Name);
+                if (File.Exists(destinationFilePath))
+                {
+                    if ((long)file.Length == new System.IO.FileInfo(destinationFilePath).Length)
+                    {
+                        numAlreadyDownloadedFiles++;
+                    }
+                    else
+                    {
+                        numNameCollisions++;
+                    }
+                    continue;
+                }
+
+                using var fs = new FileStream(destinationFilePath, FileMode.Create, FileAccess.Write);
+                device.DownloadFile(file.FullName, fs);
+                numDownloadedFiles++;
+            }
         }
+
         device.Disconnect();
 
-        DownloadResult = $"{numDownloadedFiles} files downloaded ({numSkippedFiles} skipped)";
+        var result = $"{numDownloadedFiles} files downloaded.\n{numAlreadyDownloadedFiles} already downloaded.";
+        if (numNameCollisions > 0)
+        {
+            result += $"\n{numNameCollisions} name collisions (same file already available but with another size)";
+        }
+        DownloadResult = result;
     }
 
     [RelayCommand]

@@ -21,7 +21,7 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <GroupBox Header="1. Download Media Files" Grid.Row="0" Margin="5">
+        <GroupBox Header="1. Download Media Files from Device" Grid.Row="0" Margin="5">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
