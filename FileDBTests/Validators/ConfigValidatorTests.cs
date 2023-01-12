@@ -1,5 +1,4 @@
-﻿using FileDB.Configuration;
-using FileDB.Validators;
+﻿using FileDB.Validators;
 using FluentValidation.TestHelper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -19,7 +18,7 @@ public class ConfigValidatorTests
     [TestMethod]
     public void Validate_NameEmpty_Error()
     {
-        var config = new Config(Name: "", default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default);
+        var config = new ConfigBuilder() { Name = "" }.Build();
         var result = validator.TestValidate(config);
         result.ShouldHaveValidationErrorFor(x => x.Name);
     }
@@ -27,7 +26,7 @@ public class ConfigValidatorTests
     [TestMethod]
     public void Validate_DatabaseEmpty_Error()
     {
-        var config = new Config(default, Database: "", default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default);
+        var config = new ConfigBuilder() { Database = "" }.Build();
         var result = validator.TestValidate(config);
         result.ShouldHaveValidationErrorFor(x => x.Database);
     }
@@ -35,7 +34,7 @@ public class ConfigValidatorTests
     [TestMethod]
     public void Validate_FilesRootDirectoryEmpty_Error()
     {
-        var config = new Config(default, default, FilesRootDirectory: "", default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default);
+        var config = new ConfigBuilder() { FilesRootDirectory = "" }.Build();
         var result = validator.TestValidate(config);
         result.ShouldHaveValidationErrorFor(x => x.FilesRootDirectory);
     }
@@ -43,7 +42,7 @@ public class ConfigValidatorTests
     [TestMethod]
     public void Validate_FileToLocationMaxDistanceNegative_Error()
     {
-        var config = new Config(default, default, default, FileToLocationMaxDistance: -1, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default);
+        var config = new ConfigBuilder() { FileToLocationMaxDistance = -1 }.Build();
         var result = validator.TestValidate(config);
         result.ShouldHaveValidationErrorFor(x => x.FileToLocationMaxDistance);
     }
@@ -51,7 +50,7 @@ public class ConfigValidatorTests
     [TestMethod]
     public void Validate_BlacklistedFilePathPatternsEmpty_Error()
     {
-        var config = new Config(default, default, default, default, BlacklistedFilePathPatterns: "", default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default);
+        var config = new ConfigBuilder() { BlacklistedFilePathPatterns = "" }.Build();
         var result = validator.TestValidate(config);
         result.ShouldHaveValidationErrorFor(x => x.BlacklistedFilePathPatterns);
     }
@@ -59,7 +58,7 @@ public class ConfigValidatorTests
     [TestMethod]
     public void Validate_WhitelistedFilePathPatternsEmpty_Error()
     {
-        var config = new Config(default, default, default, default, default, WhitelistedFilePathPatterns: "", default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default);
+        var config = new ConfigBuilder() { WhitelistedFilePathPatterns = "" }.Build();
         var result = validator.TestValidate(config);
         result.ShouldHaveValidationErrorFor(x => x.WhitelistedFilePathPatterns);
     }
@@ -67,7 +66,7 @@ public class ConfigValidatorTests
     [TestMethod]
     public void Validate_SlideShowDelayTooSmall_Error()
     {
-        var config = new Config(default, default, default, default, default, default, default, SlideshowDelay: 0, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default);
+        var config = new ConfigBuilder() { SlideshowDelay = 0 }.Build();
         var result = validator.TestValidate(config);
         result.ShouldHaveValidationErrorFor(x => x.SlideshowDelay);
     }
@@ -75,7 +74,7 @@ public class ConfigValidatorTests
     [TestMethod]
     public void Validate_SearchHistorySizeTooSmall_Error()
     {
-        var config = new Config(default, default, default, default, default, default, default, default, SearchHistorySize: -1, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default);
+        var config = new ConfigBuilder() { SearchHistorySize = -1 }.Build();
         var result = validator.TestValidate(config);
         result.ShouldHaveValidationErrorFor(x => x.SearchHistorySize);
     }
@@ -83,7 +82,7 @@ public class ConfigValidatorTests
     [TestMethod]
     public void Validate_SearchHistorySizeTooBig_Error()
     {
-        var config = new Config(default, default, default, default, default, default, default, default, SearchHistorySize: 11, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default);
+        var config = new ConfigBuilder() { SearchHistorySize = 11 }.Build();
         var result = validator.TestValidate(config);
         result.ShouldHaveValidationErrorFor(x => x.SearchHistorySize);
     }
@@ -91,7 +90,7 @@ public class ConfigValidatorTests
     [TestMethod]
     public void Validate_LocationLinkWithoutLatitude_Error()
     {
-        var config = new Config(default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, LocationLink: "http://localhost/LON/", default, default, default, default, default, default);
+        var config = new ConfigBuilder() { LocationLink = "http://localhost/LON/" }.Build();
         var result = validator.TestValidate(config);
         result.ShouldHaveValidationErrorFor(x => x.LocationLink);
     }
@@ -99,7 +98,7 @@ public class ConfigValidatorTests
     [TestMethod]
     public void Validate_LocationLinkWithoutLongitude_Error()
     {
-        var config = new Config(default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, LocationLink: "http://localhost/LAT/", default, default, default, default, default, default);
+        var config = new ConfigBuilder() { LocationLink = "http://localhost/LAT/" }.Build();
         var result = validator.TestValidate(config);
         result.ShouldHaveValidationErrorFor(x => x.LocationLink);
     }
@@ -107,8 +106,7 @@ public class ConfigValidatorTests
     [TestMethod]
     public void Validate_OverlayTextSizeTooSmall_Error()
     {
-        var overlayTextSize = 5;
-        var config = new Config(default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, LocationLink: "http://localhost/LAT/", default, default, overlayTextSize, default, default, default);
+        var config = new ConfigBuilder() { OverlayTextSize = 5 }.Build();
         var result = validator.TestValidate(config);
         result.ShouldHaveValidationErrorFor(x => x.OverlayTextSize);
     }
@@ -116,8 +114,7 @@ public class ConfigValidatorTests
     [TestMethod]
     public void Validate_OverlayTextSizeTooBig_Error()
     {
-        var overlayTextSize = 101;
-        var config = new Config(default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, LocationLink: "http://localhost/LAT/", default, default, overlayTextSize, default, default, default);
+        var config = new ConfigBuilder() { OverlayTextSize = 101 }.Build();
         var result = validator.TestValidate(config);
         result.ShouldHaveValidationErrorFor(x => x.OverlayTextSize);
     }
@@ -125,8 +122,7 @@ public class ConfigValidatorTests
     [TestMethod]
     public void Validate_OverlayTextSizeLargeTooSmall_Error()
     {
-        var overlayTextSizeLarge = 5;
-        var config = new Config(default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, LocationLink: "http://localhost/LAT/", default, default, default, overlayTextSizeLarge, default, default);
+        var config = new ConfigBuilder() { OverlayTextSizeLarge = 5 }.Build();
         var result = validator.TestValidate(config);
         result.ShouldHaveValidationErrorFor(x => x.OverlayTextSizeLarge);
     }
@@ -134,8 +130,7 @@ public class ConfigValidatorTests
     [TestMethod]
     public void Validate_OverlayTextSizeLargeTooBig_Error()
     {
-        var overlayTextSizeLarge = 101;
-        var config = new Config(default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, LocationLink: "http://localhost/LAT/", default, default, default, overlayTextSizeLarge, default, default);
+        var config = new ConfigBuilder() { OverlayTextSizeLarge = 101 }.Build();
         var result = validator.TestValidate(config);
         result.ShouldHaveValidationErrorFor(x => x.OverlayTextSizeLarge);
     }
@@ -143,8 +138,7 @@ public class ConfigValidatorTests
     [TestMethod]
     public void Validate_ShortItemNameMaxLengthTooSmall_Error()
     {
-        var shortItemNameMaxLength = 9;
-        var config = new Config(default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, LocationLink: "http://localhost/LAT/", default, default, default, default, shortItemNameMaxLength, default);
+        var config = new ConfigBuilder() { ShortItemNameMaxLength = 9 }.Build();
         var result = validator.TestValidate(config);
         result.ShouldHaveValidationErrorFor(x => x.ShortItemNameMaxLength);
     }
@@ -152,8 +146,7 @@ public class ConfigValidatorTests
     [TestMethod]
     public void Validate_ShortItemNameMaxLengthTooBig_Error()
     {
-        var shortItemNameMaxLength = 101;
-        var config = new Config(default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, LocationLink: "http://localhost/LAT/", default, default, default, default, shortItemNameMaxLength, default);
+        var config = new ConfigBuilder() { ShortItemNameMaxLength = 101 }.Build();
         var result = validator.TestValidate(config);
         result.ShouldHaveValidationErrorFor(x => x.ShortItemNameMaxLength);
     }
@@ -161,8 +154,7 @@ public class ConfigValidatorTests
     [TestMethod]
     public void Validate_CultureOverrideValid_Success()
     {
-        var cultureName = "sv-SE";
-        var config = new Config(default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, LocationLink: "http://localhost/LAT/", default, default, default, default, default, cultureName);
+        var config = new ConfigBuilder() { CultureOverride = "sv-SE" }.Build();
         var result = validator.TestValidate(config);
         result.ShouldNotHaveValidationErrorFor(x => x.CultureOverride);
     }
@@ -170,8 +162,7 @@ public class ConfigValidatorTests
     [TestMethod]
     public void Validate_CultureOverrideNull_Success()
     {
-        string cultureName = null;
-        var config = new Config(default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, LocationLink: "http://localhost/LAT/", default, default, default, default, default, cultureName);
+        var config = new ConfigBuilder() { CultureOverride = null }.Build();
         var result = validator.TestValidate(config);
         result.ShouldNotHaveValidationErrorFor(x => x.CultureOverride);
     }
@@ -179,8 +170,7 @@ public class ConfigValidatorTests
     [TestMethod]
     public void Validate_CultureOverrideInvalid_Error()
     {
-        var cultureName = "invalid-culture";
-        var config = new Config(default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, LocationLink: "http://localhost/LAT/", default, default, default, default, default, cultureName);
+        var config = new ConfigBuilder() { CultureOverride = "invalid-culture" }.Build();
         var result = validator.TestValidate(config);
         result.ShouldHaveValidationErrorFor(x => x.CultureOverride);
     }
