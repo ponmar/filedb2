@@ -139,7 +139,7 @@ public partial class FindViewModel : ObservableObject
     [NotifyPropertyChangedFor(nameof(OverlayFontSize))]
     private bool largeTextMode = false;
 
-    public int OverlayFontSize => largeTextMode ? model.Config.OverlayTextSizeLarge : model.Config.OverlayTextSize;
+    public int OverlayFontSize => LargeTextMode ? model.Config.OverlayTextSizeLarge : model.Config.OverlayTextSize;
 
     public bool ShowUpdateSection => !Maximize && ReadWriteMode;
 
@@ -224,8 +224,8 @@ public partial class FindViewModel : ObservableObject
     private string? searchPersonAgeTo;
 
     public bool PersonAgeRangeValid =>
-        int.TryParse(searchPersonAgeFrom, out var from) &&
-        int.TryParse(searchPersonAgeTo, out var to) &&
+        int.TryParse(SearchPersonAgeFrom, out var from) &&
+        int.TryParse(SearchPersonAgeTo, out var to) &&
         from >= 0 && from <= to;
 
     [ObservableProperty]
@@ -249,7 +249,7 @@ public partial class FindViewModel : ObservableObject
     [ObservableProperty]
     private string combineSearchResult = string.Empty;
 
-    public bool CombineSearchResultPossible => !string.IsNullOrEmpty(combineSearch1) && !string.IsNullOrEmpty(combineSearch2);
+    public bool CombineSearchResultPossible => !string.IsNullOrEmpty(CombineSearch1) && !string.IsNullOrEmpty(CombineSearch2);
 
     #endregion
 
@@ -295,7 +295,7 @@ public partial class FindViewModel : ObservableObject
             {
                 searchResult = value;
 
-                var updateViaHistorySelection = searchResult == searchResultHistorySelection;
+                var updateViaHistorySelection = searchResult == SearchResultHistorySelection;
                 SearchResultHistorySelection = null;
 
                 if (searchResult != null)
@@ -365,7 +365,7 @@ public partial class FindViewModel : ObservableObject
     [NotifyPropertyChangedFor(nameof(SearchResultItemNumber))]
     private int searchResultIndex = -1;
 
-    public int SearchResultItemNumber => searchResultIndex + 1;
+    public int SearchResultItemNumber => SearchResultIndex + 1;
 
     public int SearchNumberOfHits => SearchResult != null ? SearchResult.Count : 0;
 
@@ -448,7 +448,7 @@ public partial class FindViewModel : ObservableObject
     [NotifyPropertyChangedFor(nameof(Person1And2Selected))]
     private PersonToUpdate? selectedPerson2Search;
 
-    public bool Person1And2Selected => selectedPerson1Search != null && selectedPerson2Search != null;
+    public bool Person1And2Selected => SelectedPerson1Search != null && SelectedPerson2Search != null;
 
     public ObservableCollection<LocationToUpdate> Locations { get; } = new();
 
@@ -703,7 +703,7 @@ public partial class FindViewModel : ObservableObject
         StopSlideshow();
         if (HasNonEmptySearchResult)
         {
-            var selectedFile = SearchResult!.Files[searchResultIndex];
+            var selectedFile = SearchResult!.Files[SearchResultIndex];
             if (desc)
             {
                 SearchResult.Files.Sort((x, y) => comparer.Compare(y, x));
@@ -883,7 +883,7 @@ public partial class FindViewModel : ObservableObject
     [RelayCommand]
     private void SearchFilePositionFromCurrentFile()
     {
-        SearchFileGpsPosition = currentFilePosition;
+        SearchFileGpsPosition = CurrentFilePosition;
     }
 
     [RelayCommand]
@@ -1115,9 +1115,9 @@ public partial class FindViewModel : ObservableObject
     private void FindFilesFromList()
     {
         StopSlideshow();
-        if (!string.IsNullOrEmpty(fileListSearch))
+        if (!string.IsNullOrEmpty(FileListSearch))
         {
-            var fileIds = Utils.CreateFileIds(fileListSearch);
+            var fileIds = Utils.CreateFileIds(FileListSearch);
             SearchResult = new SearchResult(model.DbAccess.SearchFilesFromIds(fileIds));
         }
     }
@@ -1126,9 +1126,9 @@ public partial class FindViewModel : ObservableObject
     private void FindFilesFromListComplement()
     {
         StopSlideshow();
-        if (!string.IsNullOrEmpty(fileListSearch))
+        if (!string.IsNullOrEmpty(FileListSearch))
         {
-            var fileIds = Utils.CreateFileIds(fileListSearch);
+            var fileIds = Utils.CreateFileIds(FileListSearch);
             var allFiles = model.DbAccess.GetFiles();
             var allFilesComplement = allFiles.Where(x => !fileIds.Contains(x.Id));
             SearchResult = new SearchResult(allFilesComplement);

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,7 +9,7 @@ namespace FileDB.ViewModel;
 
 public record LicenseFileFormatDto(string PackageName, string PackageVersion, string PackageUrl, string LicenseType);
 
-public class AboutViewModel
+public class AboutViewModel : ObservableObject
 {
     private const string ChangesFilePath = "CHANGES.txt";
     private readonly string LicensesJsonFilePath = Path.Combine(AppContext.BaseDirectory, "Resources", "licenses.json");

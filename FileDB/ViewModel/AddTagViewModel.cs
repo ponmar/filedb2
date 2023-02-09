@@ -10,7 +10,7 @@ namespace FileDB.ViewModel;
 
 public partial class AddTagViewModel : ObservableObject
 {
-    private int? tagId;
+    private readonly int? tagId;
 
     [ObservableProperty]
     private string title;
@@ -40,7 +40,7 @@ public partial class AddTagViewModel : ObservableObject
     {
         try
         {
-            var tag = new TagModel() { Id = tagId ?? default, Name = name };
+            var tag = new TagModel() { Id = tagId ?? default, Name = Name };
 
             if (tagId.HasValue)
             {

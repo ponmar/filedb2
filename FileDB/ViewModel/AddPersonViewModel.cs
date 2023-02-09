@@ -12,7 +12,7 @@ namespace FileDB.ViewModel;
 
 public partial class AddPersonViewModel : ObservableObject
 {
-    private int? personId;
+    private readonly int? personId;
 
     [ObservableProperty]
     private string title;
@@ -67,9 +67,9 @@ public partial class AddPersonViewModel : ObservableObject
     private void Save()
     {
         int? newProfileFileId = null;
-        if (!string.IsNullOrEmpty(profilePictureFileId))
+        if (!string.IsNullOrEmpty(ProfilePictureFileId))
         {
-            if (!int.TryParse(profilePictureFileId, out var value))
+            if (!int.TryParse(ProfilePictureFileId, out var value))
             {
                 Dialogs.Instance.ShowErrorDialog("Given profile picture file id format not valid");
                 return;
@@ -78,17 +78,17 @@ public partial class AddPersonViewModel : ObservableObject
             newProfileFileId = value;
         }
 
-        var newDescription = string.IsNullOrEmpty(description) ? null : description;
-        var newDateOfBirth = string.IsNullOrEmpty(dateOfBirth) ? null : dateOfBirth;
-        var newDeceased = string.IsNullOrEmpty(deceased) ? null : deceased;
+        var newDescription = string.IsNullOrEmpty(Description) ? null : Description;
+        var newDateOfBirth = string.IsNullOrEmpty(DateOfBirth) ? null : DateOfBirth;
+        var newDeceased = string.IsNullOrEmpty(Deceased) ? null : Deceased;
 
         try
         {
             var person = new PersonModel()
             {
                 Id = personId ?? default,
-                Firstname = firstname,
-                Lastname = lastname,
+                Firstname = Firstname,
+                Lastname = Lastname,
                 DateOfBirth = newDateOfBirth,
                 Deceased = newDeceased,
                 Description = newDescription,

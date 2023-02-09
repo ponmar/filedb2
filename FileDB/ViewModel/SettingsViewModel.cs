@@ -270,7 +270,7 @@ public partial class SettingsViewModel : ObservableObject
             ConfigName,
             Database,
             FilesRootDirectory,
-            fileToLocationMaxDistance,
+            FileToLocationMaxDistance,
             BlacklistedFilePathPatterns,
             WhitelistedFilePathPatterns,
             IncludeHiddenDirectories,

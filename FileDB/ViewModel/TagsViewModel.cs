@@ -41,12 +41,12 @@ public partial class TagsViewModel : ObservableObject
     [RelayCommand]
     private void RemoveTag()
     {
-        if (Dialogs.Instance.ShowConfirmDialog($"Remove {selectedTag!.Name}?"))
+        if (Dialogs.Instance.ShowConfirmDialog($"Remove {SelectedTag!.Name}?"))
         {
-            var filesWithTag = model.DbAccess.SearchFilesWithTags(new List<int>() { selectedTag.Id }).ToList();
+            var filesWithTag = model.DbAccess.SearchFilesWithTags(new List<int>() { SelectedTag.Id }).ToList();
             if (filesWithTag.Count == 0 || Dialogs.Instance.ShowConfirmDialog($"Tag is used in {filesWithTag.Count} files, remove anyway?"))
             {
-                model.DbAccess.DeleteTag(selectedTag.Id);
+                model.DbAccess.DeleteTag(SelectedTag.Id);
                 WeakReferenceMessenger.Default.Send(new TagsUpdated());
             }
         }
@@ -55,7 +55,7 @@ public partial class TagsViewModel : ObservableObject
     [RelayCommand]
     private void EditTag()
     {
-        Dialogs.Instance.ShowAddTagDialog(selectedTag!.Id);
+        Dialogs.Instance.ShowAddTagDialog(SelectedTag!.Id);
     }
 
     [RelayCommand]

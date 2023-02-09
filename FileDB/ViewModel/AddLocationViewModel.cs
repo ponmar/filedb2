@@ -10,7 +10,7 @@ namespace FileDB.ViewModel;
 
 public partial class AddLocationViewModel : ObservableObject
 {
-    private int? locationId;
+    private readonly int? locationId;
 
     [ObservableProperty]
     private string title;
@@ -48,13 +48,13 @@ public partial class AddLocationViewModel : ObservableObject
     {
         try
         {
-            string? newDescription = string.IsNullOrEmpty(description) ? null : description;
-            string? newPosition = string.IsNullOrEmpty(position) ? null : position;
+            string? newDescription = string.IsNullOrEmpty(Description) ? null : Description;
+            string? newPosition = string.IsNullOrEmpty(Position) ? null : Position;
 
             var location = new LocationModel()
             {
                 Id = locationId ?? default,
-                Name = name,
+                Name = Name,
                 Description = newDescription,
                 Position = newPosition
             };

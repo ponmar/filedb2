@@ -13,8 +13,7 @@ using FileDBShared.Model;
 
 namespace FileDB.ViewModel;
 
-[ObservableObject]
-public partial class DeceasedPerson
+public partial class DeceasedPerson : ObservableObject
 {
     [ObservableProperty]
     private string profileFileIdPath;
@@ -27,23 +26,23 @@ public partial class DeceasedPerson
     [NotifyPropertyChangedFor(nameof(Age))]
     private PersonModel person;
 
-    public string Name => $"{person.Firstname} {person.Lastname}";
-    public string DateOfBirth => person.DateOfBirth!;
-    public string DeceasedStr => person.Deceased!;
-    public DateTime Deceased => DatabaseParsing.ParsePersonDeceasedDate(person.Deceased!);
-    public int Age => DatabaseUtils.GetAgeInYears(Deceased, DatabaseParsing.ParsePersonDateOfBirth(person.DateOfBirth!));
+    public string Name => $"{Person.Firstname} {Person.Lastname}";
+    public string DateOfBirth => Person.DateOfBirth!;
+    public string DeceasedStr => Person.Deceased!;
+    public DateTime Deceased => DatabaseParsing.ParsePersonDeceasedDate(Person.Deceased!);
+    public int Age => DatabaseUtils.GetAgeInYears(Deceased, DatabaseParsing.ParsePersonDateOfBirth(Person.DateOfBirth!));
 
     public DeceasedPerson(PersonModel person, string profileFileIdPath)
     {
-        ProfileFileIdPath = profileFileIdPath;
-        Person = person;
+        this.profileFileIdPath = profileFileIdPath;
+        this.person = person;
     }
 
     public bool MatchesTextFilter(string textFilter)
     {
         return string.IsNullOrEmpty(textFilter) || 
             Name.Contains(textFilter, StringComparison.OrdinalIgnoreCase) ||
-            (!string.IsNullOrEmpty(person.Description) && person.Description.Contains(textFilter, StringComparison.OrdinalIgnoreCase));
+            (!string.IsNullOrEmpty(Person.Description) && Person.Description.Contains(textFilter, StringComparison.OrdinalIgnoreCase));
     }
 }
 

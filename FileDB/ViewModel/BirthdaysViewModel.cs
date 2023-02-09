@@ -12,17 +12,16 @@ using FileDBShared.Model;
 
 namespace FileDB.ViewModel;
 
-[ObservableObject]
-public partial class PersonBirthday
+public partial class PersonBirthday : ObservableObject
 {
     [ObservableProperty]
-    private string birthday;
+    private string birthday = string.Empty;
 
     [ObservableProperty]
     private int daysLeft;
 
     [ObservableProperty]
-    private string daysLeftStr;
+    private string daysLeftStr = string.Empty;
 
     [ObservableProperty]
     private int age;
@@ -34,12 +33,12 @@ public partial class PersonBirthday
     [NotifyPropertyChangedFor(nameof(Name))]
     private PersonModel person;
 
-    public string Name => $"{person.Firstname} {person.Lastname}";
+    public string Name => $"{Person.Firstname} {Person.Lastname}";
 
     public PersonBirthday(PersonModel person, string profileFileIdPath)
     {
         this.person = person;
-        ProfileFileIdPath = profileFileIdPath;
+        this.profileFileIdPath = profileFileIdPath;
 
         Update(person);
     }
@@ -75,7 +74,7 @@ public partial class PersonBirthday
     {
         return string.IsNullOrEmpty(textFilter) ||
             Name.Contains(textFilter, StringComparison.OrdinalIgnoreCase) ||
-            (!string.IsNullOrEmpty(person.Description) && person.Description.Contains(textFilter, StringComparison.OrdinalIgnoreCase));
+            (!string.IsNullOrEmpty(Person.Description) && Person.Description.Contains(textFilter, StringComparison.OrdinalIgnoreCase));
     }
 }
 

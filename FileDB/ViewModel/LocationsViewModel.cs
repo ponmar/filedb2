@@ -22,7 +22,7 @@ public partial class LocationsViewModel : ObservableObject
     [NotifyPropertyChangedFor(nameof(SelectedLocationHasPosition))]
     private Location? selectedLocation;
 
-    public bool SelectedLocationHasPosition => selectedLocation != null && !string.IsNullOrEmpty(selectedLocation.Position);
+    public bool SelectedLocationHasPosition => SelectedLocation != null && !string.IsNullOrEmpty(SelectedLocation.Position);
 
     private readonly Model.Model model = Model.Model.Instance;
 
@@ -44,12 +44,12 @@ public partial class LocationsViewModel : ObservableObject
     [RelayCommand]
     private void RemoveLocation()
     {
-        if (Dialogs.Instance.ShowConfirmDialog($"Remove {selectedLocation!.Name}?"))
+        if (Dialogs.Instance.ShowConfirmDialog($"Remove {SelectedLocation!.Name}?"))
         {
-            var filesWithLocation = model.DbAccess.SearchFilesWithLocations(new List<int>() { selectedLocation.Id }).ToList();
+            var filesWithLocation = model.DbAccess.SearchFilesWithLocations(new List<int>() { SelectedLocation.Id }).ToList();
             if (filesWithLocation.Count == 0 || Dialogs.Instance.ShowConfirmDialog($"Location is used in {filesWithLocation.Count} files, remove anyway?"))
             {
-                model.DbAccess.DeleteLocation(selectedLocation.Id);
+                model.DbAccess.DeleteLocation(SelectedLocation.Id);
                 WeakReferenceMessenger.Default.Send(new LocationsUpdated());
             }
         }
@@ -58,7 +58,7 @@ public partial class LocationsViewModel : ObservableObject
     [RelayCommand]
     private void EditLocation()
     {
-        Dialogs.Instance.ShowAddLocationDialog(selectedLocation!.Id);
+        Dialogs.Instance.ShowAddLocationDialog(SelectedLocation!.Id);
     }
 
     [RelayCommand]
@@ -70,7 +70,7 @@ public partial class LocationsViewModel : ObservableObject
     [RelayCommand]
     private void ShowLocationOnMap()
     {
-        var link = Utils.CreatePositionLink(selectedLocation!.Position, model.Config.LocationLink);
+        var link = Utils.CreatePositionLink(SelectedLocation!.Position, model.Config.LocationLink);
         if (link != null)
         {
             Utils.OpenUriInBrowser(link);

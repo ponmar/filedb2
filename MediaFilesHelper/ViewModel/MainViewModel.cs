@@ -31,7 +31,7 @@ public partial class MainViewModel : ObservableObject
         DownloadResult = DefaultDownloadResult;
     }
 
-    public bool DeviceIsSelected => selectedDevice != null;
+    public bool DeviceIsSelected => SelectedDevice != null;
 
     [ObservableProperty]
     private string? tempDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "MediaFilesHelper");
@@ -49,19 +49,19 @@ public partial class MainViewModel : ObservableObject
     {
         DownloadResult = DefaultDownloadResult;
 
-        devices.Clear();
+        Devices.Clear();
         foreach (var device in MediaDevice.GetDevices())
         {
-            devices.Add(device.FriendlyName ?? device.Description);
+            Devices.Add(device.FriendlyName ?? device.Description);
         }
 
-        SelectedDevice = devices.FirstOrDefault();
+        SelectedDevice = Devices.FirstOrDefault();
     }
 
     [RelayCommand]
     private void BrowseDestinationDirectory()
     {
-        var selectedDir = Dialogs.BrowseExistingDirectory(tempDir, "Browse destination directory");
+        var selectedDir = Dialogs.BrowseExistingDirectory(TempDir, "Browse destination directory");
         if (selectedDir != null)
         {
             TempDir = selectedDir;
@@ -71,11 +71,11 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     private void DownloadFilesFromDevice()
     {
-        if (selectedDevice == null)
+        if (SelectedDevice == null)
         {
             return;
         }
-        if (string.IsNullOrEmpty(tempDir))
+        if (string.IsNullOrEmpty(TempDir))
         {
             return;
         }
@@ -85,12 +85,12 @@ public partial class MainViewModel : ObservableObject
             return;
         }
 
-        if (!Directory.Exists(tempDir))
+        if (!Directory.Exists(TempDir))
         {
-            Directory.CreateDirectory(tempDir);
+            Directory.CreateDirectory(TempDir);
         }
 
-        using var device = MediaDevice.GetDevices().First(d => d.FriendlyName == selectedDevice || d.Description == selectedDevice);
+        using var device = MediaDevice.GetDevices().First(d => d.FriendlyName == SelectedDevice || d.Description == SelectedDevice);
         device.Connect();
 
         var deviceDirectories = new List<string>()
@@ -117,7 +117,7 @@ public partial class MainViewModel : ObservableObject
 
             foreach (var file in files)
             {
-                var destinationFilePath = Path.Combine(tempDir, file.Name);
+                var destinationFilePath = Path.Combine(TempDir, file.Name);
                 if (File.Exists(destinationFilePath))
                 {
                     if ((long)file.Length == new System.IO.FileInfo(destinationFilePath).Length)
