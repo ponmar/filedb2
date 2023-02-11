@@ -77,6 +77,7 @@
         <converters:EnumerationToVisibilityConverter x:Key="EnumerationToVisibilityConverter" />
         <converters:EnumerationEmptyToVisibilityConverter x:Key="EnumerationEmptyToVisibilityConverter" />
         <converters:StringContentToBoolConverter x:Key="StringContentToBoolConverter" />
+        <converters:FileInternalPathToFileTypeIconConverter x:Key="FileInternalPathToFileTypeIconConverter" />
     </UserControl.Resources>
 
     <Grid Margin="0,0,0,0">
@@ -109,7 +110,7 @@
                 <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
 
-            <!--  Image or error message  -->
+            <!--  File type icon, image or error message  -->
             <Border
                 Grid.Row="0"
                 Grid.RowSpan="2"
@@ -127,15 +128,21 @@
                         Stretch="Uniform" />
                 </Grid>
             </Border>
-            <TextBlock
-                Grid.Row="0"
+            <StackPanel Grid.Row="0"
                 Grid.Column="1"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Style="{StaticResource PageInnerTextBlock}"
-                Text="{Binding CurrentFileLoadError}"
-                TextWrapping="Wrap"
-                Visibility="{Binding CurrentFileLoadError, Converter={converters:StringNullOrEmptyToVisibilityConverter}}" />
+                VerticalAlignment="Center" Orientation="Vertical"
+                Visibility="{Binding CurrentFileLoadError, Converter={converters:StringNullOrEmptyToVisibilityConverter}}">
+
+                <TextBlock
+                    Style="{StaticResource PageTextBlock}"
+                    Text="{Binding CurrentFileInternalPath, Converter={StaticResource FileInternalPathToFileTypeIconConverter}}"
+                    FontSize="64" />
+                <TextBlock
+                    Style="{StaticResource PageTextBlock}"
+                    Text="{Binding CurrentFileLoadError}"
+                    TextWrapping="Wrap" />
+            </StackPanel>
 
             <!--  Left side area when not maximized  -->
             <view:FileInfo

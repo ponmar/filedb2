@@ -412,6 +412,8 @@ public partial class FindViewModel : ObservableObject
     [ObservableProperty]
     private string currentFileLoadError = string.Empty;
 
+    private BitmapImage? currentFileImage = null;
+
     private int currentFileRotation = 0;
 
     private IEnumerable<PersonModel> currentFilePersonList = new List<PersonModel>();
@@ -1236,20 +1238,24 @@ public partial class FindViewModel : ObservableObject
             try
             {
                 CurrentFileLoadError = string.Empty;
-                WeakReferenceMessenger.Default.Send(new ShowImage(new BitmapImage(uri), -currentFileRotation));
+                currentFileImage = new BitmapImage(uri);
+                WeakReferenceMessenger.Default.Send(new ShowImage(currentFileImage, -currentFileRotation));
             }
             catch (WebException e)
             {
+                currentFileImage = null;
                 CurrentFileLoadError = $"Image loading error:\n{e.Message}";
                 WeakReferenceMessenger.Default.Send(new CloseImage());
             }
             catch (IOException e)
             {
+                currentFileImage = null;
                 CurrentFileLoadError = $"Image loading error:\n{e.Message}";
                 WeakReferenceMessenger.Default.Send(new CloseImage());
             }
             catch (NotSupportedException e)
             {
+                currentFileImage = null;
                 CurrentFileLoadError = $"File format not supported (use the Open button to open file with the default application):\n{e.Message}";
                 WeakReferenceMessenger.Default.Send(new CloseImage());
             }
@@ -1276,6 +1282,8 @@ public partial class FindViewModel : ObservableObject
         NewFileDateTime = string.Empty;
 
         CurrentFileLoadError = "No match";
+        currentFileImage = null;
+
         WeakReferenceMessenger.Default.Send(new CloseImage());
     }
 
@@ -1925,10 +1933,9 @@ public partial class FindViewModel : ObservableObject
             Title = $"{Utils.ApplicationName} {Utils.GetVersionString()} - Presentation"
         };
 
-        if (CurrentFilePath != string.Empty)
+        if (CurrentFilePath != string.Empty && currentFileImage != null)
         {
-            var uri = new Uri(CurrentFilePath, UriKind.Absolute);
-            window.ShowImage(new BitmapImage(uri), -currentFileRotation);
+            window.ShowImage(currentFileImage, -currentFileRotation);
         }
 
         window.Show();
