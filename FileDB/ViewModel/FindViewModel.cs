@@ -37,21 +37,6 @@ public class FileExtensionsAttribute : Attribute
     }
 }
 
-public enum FileType
-{
-    [FileExtensions(new string[] { ".jpg", ".png", ".bmp", ".gif" })]
-    Picture,
-
-    [FileExtensions(new string[] { ".mkv", ".avi", ".mpg", ".mov", ".mp4" })]
-    Movie,
-
-    [FileExtensions(new string[] { ".doc", ".pdf", ".txt", ".md" })]
-    Document,
-
-    [FileExtensions(new string[] { ".mp3", ".wav" })]
-    Audio,
-}
-
 public record PersonToUpdate(int Id, string Name, string ShortName);
 public record LocationToUpdate(int Id, string Name, string ShortName);
 public record TagToUpdate(int Id, string Name, string ShortName);
@@ -1228,11 +1213,20 @@ public partial class FindViewModel : ObservableObject
             CurrentFileLocations = GetFileLocationsString(selection.Id);
             CurrentFileTags = GetFileTagsString(selection.Id);
 
-            // Note: reading of orientation from Exif is done here to get correct visualization for files added to database before orientation was parsed
-            currentFileRotation = DatabaseParsing.OrientationToDegrees(selection.Orientation ?? model.FilesystemAccess.ParseFileMetadata(CurrentFilePath).Orientation);
-
             NewFileDescription = CurrentFileDescription;
             NewFileDateTime = selection.Datetime;
+
+            var fileType = FileTypeUtils.GetFileType(selection.Path);
+            if (fileType != FileType.Picture)
+            {
+                CurrentFileLoadError = "File type not supported.";
+                currentFileImage = null;
+                WeakReferenceMessenger.Default.Send(new CloseImage());
+                return;
+            }
+
+            // Note: reading of orientation from Exif is done here to get correct visualization for files added to database before orientation was parsed
+            currentFileRotation = DatabaseParsing.OrientationToDegrees(selection.Orientation ?? model.FilesystemAccess.ParseFileMetadata(CurrentFilePath).Orientation);
 
             var uri = new Uri(CurrentFilePath, UriKind.Absolute);
             try
@@ -1243,20 +1237,20 @@ public partial class FindViewModel : ObservableObject
             }
             catch (WebException e)
             {
-                currentFileImage = null;
                 CurrentFileLoadError = $"Image loading error:\n{e.Message}";
+                currentFileImage = null;
                 WeakReferenceMessenger.Default.Send(new CloseImage());
             }
             catch (IOException e)
             {
-                currentFileImage = null;
                 CurrentFileLoadError = $"Image loading error:\n{e.Message}";
+                currentFileImage = null;
                 WeakReferenceMessenger.Default.Send(new CloseImage());
             }
             catch (NotSupportedException e)
             {
+                CurrentFileLoadError = $"File format not supported:\n{e.Message}";
                 currentFileImage = null;
-                CurrentFileLoadError = $"File format not supported (use the Open button to open file with the default application):\n{e.Message}";
                 WeakReferenceMessenger.Default.Send(new CloseImage());
             }
         }
