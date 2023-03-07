@@ -44,10 +44,12 @@ public partial class AddPersonViewModel : ObservableObject
     public PersonModel? AffectedPerson { get; private set; }
 
     private readonly IDbAccess dbAccess;
+    private readonly IDialogs dialogs;
 
-    public AddPersonViewModel(IDbAccess dbAccess, int? personId = null)
+    public AddPersonViewModel(IDbAccess dbAccess, IDialogs dialogs, int? personId = null)
     {
         this.dbAccess = dbAccess;
+        this.dialogs = dialogs;
         this.personId = personId;
 
         title = personId.HasValue ? "Edit Person" : "Add Person";
@@ -73,7 +75,7 @@ public partial class AddPersonViewModel : ObservableObject
         {
             if (!int.TryParse(ProfilePictureFileId, out var value))
             {
-                Dialogs.Instance.ShowErrorDialog("Given profile picture file id format not valid");
+                dialogs.ShowErrorDialog("Given profile picture file id format not valid");
                 return;
             }
 
@@ -107,7 +109,7 @@ public partial class AddPersonViewModel : ObservableObject
             {
                 var anyPersonsWithThatName = dbAccess.GetPersons().Any(x => x.Firstname == person.Firstname && x.Lastname == person.Lastname);
                 if (anyPersonsWithThatName &&
-                    !Dialogs.Instance.ShowConfirmDialog($"There is already a person with that name. Add anyway?"))
+                    !dialogs.ShowConfirmDialog($"There is already a person with that name. Add anyway?"))
                 {
                     return;
                 }
@@ -121,7 +123,7 @@ public partial class AddPersonViewModel : ObservableObject
         }
         catch (DataValidationException e)
         {
-            Dialogs.Instance.ShowErrorDialog(e.Message);
+            dialogs.ShowErrorDialog(e.Message);
         }
     }
 }

@@ -13,7 +13,8 @@ public partial class AddPersonWindow : Window
     public AddPersonWindow(int? personId = null)
     {
         InitializeComponent();
-        DataContext = new AddPersonViewModel(Model.Model.Instance.DbAccess, personId);
+        var model = Model.Model.Instance;
+        DataContext = new AddPersonViewModel(model.DbAccess, model.Dialogs, personId);
 
         WeakReferenceMessenger.Default.Register<CloseModalDialogRequested>(this, (r, m) =>
         {

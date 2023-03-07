@@ -26,11 +26,14 @@ public partial class PersonsViewModel : ObservableObject
     private Person? selectedPerson;
 
     private readonly IDbAccess dbAccess;
+    private readonly IDialogs dialogs;
 
-    public PersonsViewModel(Config config, IDbAccess dbAccess)
+    public PersonsViewModel(Config config, IDbAccess dbAccess, IDialogs dialogs)
     {
-        readWriteMode = !config.ReadOnly;
         this.dbAccess = dbAccess;
+        this.dialogs = dialogs;
+
+        readWriteMode = !config.ReadOnly;
 
         ReloadPersons();
 
@@ -48,10 +51,10 @@ public partial class PersonsViewModel : ObservableObject
     [RelayCommand]
     private void RemovePerson()
     {
-        if (Dialogs.Instance.ShowConfirmDialog($"Remove {SelectedPerson!.Firstname} {SelectedPerson.Lastname}?"))
+        if (dialogs.ShowConfirmDialog($"Remove {SelectedPerson!.Firstname} {SelectedPerson.Lastname}?"))
         {
             var filesWithPerson = dbAccess.SearchFilesWithPersons(new List<int>() { SelectedPerson.Id }).ToList();
-            if (filesWithPerson.Count == 0 || Dialogs.Instance.ShowConfirmDialog($"Person is used in {filesWithPerson.Count} files, remove anyway?"))
+            if (filesWithPerson.Count == 0 || dialogs.ShowConfirmDialog($"Person is used in {filesWithPerson.Count} files, remove anyway?"))
             {
                 dbAccess.DeletePerson(SelectedPerson.Id);
                 WeakReferenceMessenger.Default.Send(new PersonsUpdated());
@@ -62,13 +65,13 @@ public partial class PersonsViewModel : ObservableObject
     [RelayCommand]
     private void EditPerson()
     {
-        Dialogs.Instance.ShowAddPersonDialog(SelectedPerson!.Id);
+        dialogs.ShowAddPersonDialog(SelectedPerson!.Id);
     }
 
     [RelayCommand]
     private void AddPerson()
     {
-        Dialogs.Instance.ShowAddPersonDialog();
+        dialogs.ShowAddPersonDialog();
     }
 
     [RelayCommand]

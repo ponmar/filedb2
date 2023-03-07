@@ -13,7 +13,8 @@ public partial class AddLocationWindow : Window
     public AddLocationWindow(int? locationId = null)
     {
         InitializeComponent();
-        DataContext = new AddLocationViewModel(Model.Model.Instance.DbAccess, locationId);
+        var model = Model.Model.Instance;
+        DataContext = new AddLocationViewModel(model.DbAccess, model.Dialogs, locationId);
 
         WeakReferenceMessenger.Default.Register<CloseModalDialogRequested>(this, (r, m) =>
         {

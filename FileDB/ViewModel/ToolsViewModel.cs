@@ -56,12 +56,14 @@ public partial class ToolsViewModel : ObservableObject
     private Config config;
     private readonly IDbAccess dbAccess;
     private readonly IFilesystemAccess filesystemAccess;
+    private readonly IDialogs dialogs;
 
-    public ToolsViewModel(Config config, IDbAccess dbAccess, IFilesystemAccess filesystemAccess)
+    public ToolsViewModel(Config config, IDbAccess dbAccess, IFilesystemAccess filesystemAccess, IDialogs dialogs)
     {
         this.config = config;
         this.dbAccess = dbAccess;
         this.filesystemAccess = filesystemAccess;
+        this.dialogs = dialogs;
         ScanBackupFiles();
 
         WeakReferenceMessenger.Default.Register<ConfigLoaded>(this, (r, m) =>
@@ -80,7 +82,7 @@ public partial class ToolsViewModel : ObservableObject
         }
         catch (IOException e)
         {
-            Dialogs.Instance.ShowErrorDialog(e.Message);
+            dialogs.ShowErrorDialog(e.Message);
         }
     }
 

@@ -52,7 +52,7 @@ namespace FileDB
                 if (!result.IsValid)
                 {
                     notifications.Add(new(NotificationType.Error, "Configuration not valid", DateTime.Now));
-                    Dialogs.Instance.ShowErrorDialog(result);
+                    model.Dialogs.ShowErrorDialog(result);
                 }
             }
 
@@ -87,7 +87,7 @@ namespace FileDB
                 ClipboardService.SetText(e.Exception.StackTrace);
             }
             var message = $"Unhandled exception: {e.Exception.GetType().Name} ({e.Exception.Message}). Stacktrace has been copied to clipboard.";
-            Dialogs.Instance.ShowErrorDialog(message);
+            Model.Model.Instance.Dialogs.ShowErrorDialog(message);
         }
     }
 }

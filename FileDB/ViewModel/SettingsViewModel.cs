@@ -220,11 +220,13 @@ public partial class SettingsViewModel : ObservableObject
 
     private Config config;
     private readonly IConfigSaver configSaver;
+    private readonly IDialogs dialogs;
 
-    public SettingsViewModel(Config config, IConfigSaver configSaver)
+    public SettingsViewModel(Config config, IConfigSaver configSaver, IDialogs dialogs)
     {
         this.config = config;
         this.configSaver = configSaver;
+        this.dialogs = dialogs;
 
         foreach (var culture in CultureInfo.GetCultures(CultureTypes.SpecificCultures))
         {
@@ -300,13 +302,13 @@ public partial class SettingsViewModel : ObservableObject
         var result = new ConfigValidator().Validate(configToSave);
         if (!result.IsValid)
         {
-            Dialogs.Instance.ShowErrorDialog(result);
+            dialogs.ShowErrorDialog(result);
             return;
         }
 
         var appDataConfig = new AppDataConfig<Config>(Utils.ApplicationName);
 
-        if (!Dialogs.Instance.ShowConfirmDialog($"Write your configuration to {appDataConfig.FilePath}?"))
+        if (!dialogs.ShowConfirmDialog($"Write your configuration to {appDataConfig.FilePath}?"))
         {
             return;
         }
@@ -319,14 +321,14 @@ public partial class SettingsViewModel : ObservableObject
         }
         else
         {
-            Dialogs.Instance.ShowErrorDialog("Unable to save configuration");
+            dialogs.ShowErrorDialog("Unable to save configuration");
         }
     }
 
     [RelayCommand]
     private void BrowseDatabase()
     {
-        var result = Dialogs.Instance.BrowseExistingFileDialog(@"c:\", $"{Utils.ApplicationName} database files (*.db)|*.db");
+        var result = dialogs.BrowseExistingFileDialog(@"c:\", $"{Utils.ApplicationName} database files (*.db)|*.db");
         if (result != null)
         {
             Database = result;
@@ -336,7 +338,7 @@ public partial class SettingsViewModel : ObservableObject
     [RelayCommand]
     private void BrowseFilesRootDirectory()
     {
-        var result = Dialogs.Instance.BrowseExistingDirectory(@"c:\", "Select your files root directory");
+        var result = dialogs.BrowseExistingDirectory(@"c:\", "Select your files root directory");
         if (result != null)
         {
             FilesRootDirectory = result;
@@ -346,7 +348,7 @@ public partial class SettingsViewModel : ObservableObject
     [RelayCommand]
     public void CreateDatabase()
     {
-        var createdDatabasePath = Dialogs.Instance.ShowCreateDatabaseDialog();
+        var createdDatabasePath = dialogs.ShowCreateDatabaseDialog();
         if (createdDatabasePath != null)
         {
             Database = createdDatabasePath;

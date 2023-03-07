@@ -26,12 +26,14 @@ public partial class AddLocationViewModel : ObservableObject
     private string? position = string.Empty;
 
     private readonly IDbAccess dbAccess;
+    private readonly IDialogs dialogs;
 
     public LocationModel? AffectedLocation { get; private set; }
 
-    public AddLocationViewModel(IDbAccess dbAccess, int? locationId = null)
+    public AddLocationViewModel(IDbAccess dbAccess, IDialogs dialogs, int? locationId = null)
     {
         this.dbAccess = dbAccess;
+        this.dialogs = dialogs;
         this.locationId = locationId;
 
         title = locationId.HasValue ? "Edit Location" : "Add Location";
@@ -70,7 +72,7 @@ public partial class AddLocationViewModel : ObservableObject
             {
                 if (dbAccess.GetLocations().Any(x => x.Name == location.Name))
                 {
-                    Dialogs.Instance.ShowErrorDialog($"Location '{location.Name}' already added");
+                    dialogs.ShowErrorDialog($"Location '{location.Name}' already added");
                     return;
                 }
 
@@ -83,7 +85,7 @@ public partial class AddLocationViewModel : ObservableObject
         }
         catch (DataValidationException e)
         {
-            Dialogs.Instance.ShowErrorDialog(e.Message);
+            dialogs.ShowErrorDialog(e.Message);
         }
     }
 }

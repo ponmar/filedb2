@@ -10,12 +10,11 @@ namespace FileDB.View
     /// </summary>
     public partial class CreateDatabaseWindow : Window
     {
-        private readonly Model.Model model = Model.Model.Instance;
-
         public CreateDatabaseWindow()
         {
             InitializeComponent();
-            DataContext = new CreateDatabaseViewModel();
+            var model = Model.Model.Instance;
+            DataContext = new CreateDatabaseViewModel(model.Dialogs);
 
             WeakReferenceMessenger.Default.Register<CloseModalDialogRequested>(this, (r, m) =>
             {

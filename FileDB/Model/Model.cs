@@ -29,6 +29,7 @@ public class Model : INotificationHandling, IConfigSaver
     public IDbAccess DbAccess { get; private set; }
     public IFilesystemAccess FilesystemAccess { get; private set; }
     public INotifierFactory NotifierFactory { get; private set; }
+    public IDialogs Dialogs { get; } = new Dialogs();
 
     private DateTime date = DateTime.Now;
 

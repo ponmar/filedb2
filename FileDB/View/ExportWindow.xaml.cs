@@ -15,7 +15,8 @@ namespace FileDB.View
         public ExportWindow()
         {
             InitializeComponent();
-            DataContext = new ExportViewModel();
+            var model = Model.Model.Instance;
+            DataContext = new ExportViewModel(model.Dialogs);
 
             WeakReferenceMessenger.Default.Register<CloseModalDialogRequested>(this, (r, m) =>
             {

@@ -13,7 +13,7 @@ namespace FileDB.View
         {
             InitializeComponent();
             var model = Model.Model.Instance;
-            DataContext = new PersonsViewModel(model.Config, model.DbAccess);
+            DataContext = new PersonsViewModel(model.Config, model.DbAccess, model.Dialogs);
         }
 
         private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)

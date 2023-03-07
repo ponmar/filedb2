@@ -33,7 +33,7 @@ public interface IDialogs
 
 public class Dialogs : IDialogs
 {
-    public static IDialogs Instance { get; set; } = new Dialogs();
+    //public static IDialogs Instance { get; set; } = new Dialogs();
 
     public void ShowInfoDialog(string message)
     {

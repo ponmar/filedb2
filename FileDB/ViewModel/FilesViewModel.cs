@@ -57,12 +57,14 @@ public partial class FilesViewModel : ObservableObject
     private Config config;
     private readonly IDbAccess dbAccess;
     private readonly IFilesystemAccess filesystemAccess;
+    private readonly IDialogs dialogs;
 
-    public FilesViewModel(Config config, IDbAccess dbAccess, IFilesystemAccess filesystemAccess)
+    public FilesViewModel(Config config, IDbAccess dbAccess, IFilesystemAccess filesystemAccess, IDialogs dialogs)
     {
         this.config = config;
         this.dbAccess = dbAccess;
         this.filesystemAccess = filesystemAccess;
+        this.dialogs = dialogs;
 
         subdirToScan = config.FilesRootDirectory;
 
@@ -76,7 +78,7 @@ public partial class FilesViewModel : ObservableObject
     [RelayCommand]
     private void BrowseSubDirectory()
     {
-        SubdirToScan = Dialogs.Instance.BrowseExistingDirectory(config.FilesRootDirectory, "Select a sub directory") ?? string.Empty;
+        SubdirToScan = dialogs.BrowseExistingDirectory(config.FilesRootDirectory, "Select a sub directory") ?? string.Empty;
     }
 
     [RelayCommand]
@@ -90,17 +92,17 @@ public partial class FilesViewModel : ObservableObject
     {
         if (string.IsNullOrEmpty(SubdirToScan))
         {
-            Dialogs.Instance.ShowErrorDialog("No directory specified");
+            dialogs.ShowErrorDialog("No directory specified");
             return;
         }
         if (!Directory.Exists(SubdirToScan))
         {
-            Dialogs.Instance.ShowErrorDialog("Specified directory does no exist");
+            dialogs.ShowErrorDialog("Specified directory does no exist");
             return;
         }
         if (!SubdirToScan.StartsWith(config.FilesRootDirectory))
         {
-            Dialogs.Instance.ShowErrorDialog($"Specified directory is not within the configured files root directory: {config.FilesRootDirectory}");
+            dialogs.ShowErrorDialog($"Specified directory is not within the configured files root directory: {config.FilesRootDirectory}");
             return;
         }
         ScanNewFiles(SubdirToScan);
@@ -108,7 +110,7 @@ public partial class FilesViewModel : ObservableObject
 
     public void ScanNewFiles(string pathToScan)
     {
-        if (!Dialogs.Instance.ShowConfirmDialog($"Find all files, not yet imported, from '{pathToScan}'?"))
+        if (!dialogs.ShowConfirmDialog($"Find all files, not yet imported, from '{pathToScan}'?"))
         {
             return;
         }
@@ -121,7 +123,7 @@ public partial class FilesViewModel : ObservableObject
         var blacklistedFilePathPatterns = config.BlacklistedFilePathPatterns.Split(";");
         var whitelistedFilePathPatterns = config.WhitelistedFilePathPatterns.Split(";");
 
-        Dialogs.Instance.ShowProgressDialog(progress =>
+        dialogs.ShowProgressDialog(progress =>
         {
             progress.Report("Scanning...");
 
@@ -141,7 +143,7 @@ public partial class FilesViewModel : ObservableObject
 
                 if (NewFiles.Count == 0)
                 {
-                    Dialogs.Instance.ShowInfoDialog($"No new files found. Add your files to '{config.FilesRootDirectory}'.");
+                    dialogs.ShowInfoDialog($"No new files found. Add your files to '{config.FilesRootDirectory}'.");
                 }
             }));
         });
@@ -151,12 +153,12 @@ public partial class FilesViewModel : ObservableObject
     private void ImportNewFiles()
     {
         var filesToAdd = NewFiles.Where(x => x.IsSelected).ToList();
-        if (!Dialogs.Instance.ShowConfirmDialog($"Add meta-data from {filesToAdd.Count} files?"))
+        if (!dialogs.ShowConfirmDialog($"Add meta-data from {filesToAdd.Count} files?"))
         {
             return;
         }
 
-        Dialogs.Instance.ShowProgressDialog(progress =>
+        dialogs.ShowProgressDialog(progress =>
         {
             var locations = dbAccess.GetLocations();
 
@@ -212,7 +214,7 @@ public partial class FilesViewModel : ObservableObject
             {
                 Application.Current.Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    Dialogs.Instance.ShowErrorDialog(e.Message);
+                    dialogs.ShowErrorDialog(e.Message);
 
                     filesToAdd.ForEach(x => NewFiles.Remove(x));
                     OnPropertyChanged(nameof(NewFilesSelected));
@@ -233,14 +235,14 @@ public partial class FilesViewModel : ObservableObject
         var fileIds = Utils.CreateFileIds(RemoveFileList);
         if (fileIds.Count == 0)
         {
-            Dialogs.Instance.ShowErrorDialog("No file ids specified");
+            dialogs.ShowErrorDialog("No file ids specified");
             return;
         }
 
-        if (Dialogs.Instance.ShowConfirmDialog($"Remove meta-data for {fileIds.Count} files from the specified file list?"))
+        if (dialogs.ShowConfirmDialog($"Remove meta-data for {fileIds.Count} files from the specified file list?"))
         {
             fileIds.ForEach(x => dbAccess.DeleteFile(x));
-            Dialogs.Instance.ShowInfoDialog($"{fileIds.Count} files removed");
+            dialogs.ShowInfoDialog($"{fileIds.Count} files removed");
         }
     }
 

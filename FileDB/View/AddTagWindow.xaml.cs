@@ -13,7 +13,8 @@ public partial class AddTagWindow : Window
     public AddTagWindow(int? tagId = null)
     {
         InitializeComponent();
-        DataContext = new AddTagViewModel(Model.Model.Instance.DbAccess, tagId);
+        var model = Model.Model.Instance;
+        DataContext = new AddTagViewModel(model.DbAccess, model.Dialogs, tagId);
 
         WeakReferenceMessenger.Default.Register<CloseModalDialogRequested>(this, (r, m) =>
         {

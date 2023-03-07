@@ -52,16 +52,18 @@ namespace FileDB.ViewModel
         [ObservableProperty]
         private bool exportIncludesJson = true;
 
+        private readonly IDialogs dialogs;
 
-        public ExportViewModel()
+        public ExportViewModel(IDialogs dialogs)
         {
+            this.dialogs = dialogs;
         }
 
         [RelayCommand]
         private void BrowseDestinationDirectory()
         {
             var initialPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            ExportFilesDestinationDirectory = Dialogs.Instance.BrowseExistingDirectory(initialPath, "Select your destination directory");
+            ExportFilesDestinationDirectory = dialogs.BrowseExistingDirectory(initialPath, "Select your destination directory");
         }
 
         [RelayCommand]
@@ -69,52 +71,52 @@ namespace FileDB.ViewModel
         {
             if (string.IsNullOrEmpty(ExportFilesHeader))
             {
-                Dialogs.Instance.ShowErrorDialog("No header specified");
+                dialogs.ShowErrorDialog("No header specified");
                 return;
             }
 
             if (string.IsNullOrEmpty(ExportFilesDestinationDirectory))
             {
-                Dialogs.Instance.ShowErrorDialog("No destination directory specified");
+                dialogs.ShowErrorDialog("No destination directory specified");
                 return;
             }
 
             if (!Directory.Exists(ExportFilesDestinationDirectory))
             {
-                Dialogs.Instance.ShowErrorDialog("Destination directory does not exist");
+                dialogs.ShowErrorDialog("Destination directory does not exist");
                 return;
             }
 
             if (!IsDirectoryEmpty(ExportFilesDestinationDirectory))
             {
-                Dialogs.Instance.ShowErrorDialog("Destination directory is not empty");
+                dialogs.ShowErrorDialog("Destination directory is not empty");
                 return;
             }
 
             var selection = new List<bool>() { ExportIncludesFiles, ExportIncludesHtml, ExportIncludesM3u, ExportIncludesFilesWithMetaData, ExportIncludesJson };
             if (!selection.Any(x => x))
             {
-                Dialogs.Instance.ShowErrorDialog("Nothing to export");
+                dialogs.ShowErrorDialog("Nothing to export");
                 return;
             }
 
-            if (!Dialogs.Instance.ShowConfirmDialog($"Export selected data for {SearchResult!.Count} files to {ExportFilesDestinationDirectory}?"))
+            if (!dialogs.ShowConfirmDialog($"Export selected data for {SearchResult!.Count} files to {ExportFilesDestinationDirectory}?"))
             {
                 return;
             }
 
-            Dialogs.Instance.ShowProgressDialog(progress =>
+            dialogs.ShowProgressDialog(progress =>
             {
                 progress.Report("Exporting...");
                 try
                 {
                     new SearchResultExporter().Export(ExportFilesDestinationDirectory, ExportFilesHeader, SearchResult.Files,
                     ExportIncludesFiles, ExportIncludesHtml, ExportIncludesM3u, ExportIncludesFilesWithMetaData, ExportIncludesJson);
-                    Dialogs.Instance.ShowInfoDialog("Export finished successfully.");
+                    dialogs.ShowInfoDialog("Export finished successfully.");
                 }
                 catch (IOException e)
                 {
-                    Dialogs.Instance.ShowErrorDialog("Export error: " + e.Message);
+                    dialogs.ShowErrorDialog("Export error: " + e.Message);
                 }
             });
         }

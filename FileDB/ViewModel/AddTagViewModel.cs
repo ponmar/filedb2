@@ -21,11 +21,13 @@ public partial class AddTagViewModel : ObservableObject
 
     public TagModel? AffectedTag { get; private set; }
 
-    private IDbAccess dbAccess;
+    private readonly IDbAccess dbAccess;
+    private readonly IDialogs dialogs;
 
-    public AddTagViewModel(IDbAccess dbAccess, int? tagId = null)
+    public AddTagViewModel(IDbAccess dbAccess, IDialogs dialogs, int? tagId = null)
     {
         this.dbAccess = dbAccess;
+        this.dialogs = dialogs;
         this.tagId = tagId;
 
         title = tagId.HasValue ? "Edit Tag" : "Add Tag";
@@ -53,7 +55,7 @@ public partial class AddTagViewModel : ObservableObject
             {
                 if (dbAccess.GetTags().Any(x => x.Name == tag.Name))
                 {
-                    Dialogs.Instance.ShowErrorDialog($"Tag '{tag.Name}' already added");
+                    dialogs.ShowErrorDialog($"Tag '{tag.Name}' already added");
                     return;
                 }
 
@@ -66,7 +68,7 @@ public partial class AddTagViewModel : ObservableObject
         }
         catch (DataValidationException e)
         {
-            Dialogs.Instance.ShowErrorDialog(e.Message);
+            dialogs.ShowErrorDialog(e.Message);
         }
     }
 }

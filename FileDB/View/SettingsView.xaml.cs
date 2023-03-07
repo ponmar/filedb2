@@ -12,7 +12,7 @@ namespace FileDB.View
         {
             InitializeComponent();
             var model = Model.Model.Instance;
-            DataContext = new SettingsViewModel(model.Config, model);
+            DataContext = new SettingsViewModel(model.Config, model, model.Dialogs);
         }
     }
 }

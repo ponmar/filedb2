@@ -12,6 +12,6 @@ public partial class ToolsView : UserControl
     {
         InitializeComponent();
         var model = Model.Model.Instance;
-        DataContext = new ToolsViewModel(model.Config, model.DbAccess, model.FilesystemAccess);
+        DataContext = new ToolsViewModel(model.Config, model.DbAccess, model.FilesystemAccess, model.Dialogs);
     }
 }

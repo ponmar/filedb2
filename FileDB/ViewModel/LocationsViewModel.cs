@@ -28,11 +28,13 @@ public partial class LocationsViewModel : ObservableObject
 
     private Config config;
     private readonly IDbAccess dbAccess;
+    private readonly IDialogs dialogs;
 
-    public LocationsViewModel(Config config, IDbAccess dbAccess)
+    public LocationsViewModel(Config config, IDbAccess dbAccess, IDialogs dialogs)
     {
         this.config = config;
         this.dbAccess = dbAccess;
+        this.dialogs = dialogs;
 
         readWriteMode = !config.ReadOnly;
 
@@ -53,10 +55,10 @@ public partial class LocationsViewModel : ObservableObject
     [RelayCommand]
     private void RemoveLocation()
     {
-        if (Dialogs.Instance.ShowConfirmDialog($"Remove {SelectedLocation!.Name}?"))
+        if (dialogs.ShowConfirmDialog($"Remove {SelectedLocation!.Name}?"))
         {
             var filesWithLocation = dbAccess.SearchFilesWithLocations(new List<int>() { SelectedLocation.Id }).ToList();
-            if (filesWithLocation.Count == 0 || Dialogs.Instance.ShowConfirmDialog($"Location is used in {filesWithLocation.Count} files, remove anyway?"))
+            if (filesWithLocation.Count == 0 || dialogs.ShowConfirmDialog($"Location is used in {filesWithLocation.Count} files, remove anyway?"))
             {
                 dbAccess.DeleteLocation(SelectedLocation.Id);
                 WeakReferenceMessenger.Default.Send(new LocationsUpdated());
@@ -67,13 +69,13 @@ public partial class LocationsViewModel : ObservableObject
     [RelayCommand]
     private void EditLocation()
     {
-        Dialogs.Instance.ShowAddLocationDialog(SelectedLocation!.Id);
+        dialogs.ShowAddLocationDialog(SelectedLocation!.Id);
     }
 
     [RelayCommand]
     private void AddLocation()
     {
-        Dialogs.Instance.ShowAddLocationDialog();
+        dialogs.ShowAddLocationDialog();
     }
 
     [RelayCommand]
