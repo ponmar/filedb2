@@ -33,8 +33,6 @@ public interface IDialogs
 
 public class Dialogs : IDialogs
 {
-    //public static IDialogs Instance { get; set; } = new Dialogs();
-
     public void ShowInfoDialog(string message)
     {
         MessageBox.Show(message, Utils.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.No);
