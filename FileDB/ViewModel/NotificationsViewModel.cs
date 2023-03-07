@@ -5,8 +5,10 @@ using System.Windows.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using FileDB.Configuration;
 using FileDB.Model;
 using FileDB.Notifiers;
+using FileDBInterface.DbAccess;
 
 namespace FileDB.ViewModel;
 
@@ -14,14 +16,23 @@ public partial class NotificationsViewModel : ObservableObject
 {
     public ObservableCollection<Notification> Notifications { get; } = new();
 
-    private readonly Model.Model model = Model.Model.Instance;
-
     private readonly DispatcherTimer notifierTimer = new();
 
-    public NotificationsViewModel()
+    private Config config;
+    private readonly IDbAccess dbAccess;
+    private readonly INotifierFactory notifierFactory;
+    private readonly INotificationHandling notificationHandling;
+
+    public NotificationsViewModel(Config config, IDbAccess dbAccess, INotifierFactory notifierFactory, INotificationHandling notificationHandling)
     {
+        this.config = config;
+        this.dbAccess = dbAccess;
+        this.notifierFactory = notifierFactory;
+        this.notificationHandling = notificationHandling;
+
         WeakReferenceMessenger.Default.Register<ConfigLoaded>(this, (r, m) =>
         {
+            this.config = m.Config;
             RunAllNotifiers();
         });
 
@@ -55,32 +66,32 @@ public partial class NotificationsViewModel : ObservableObject
 
     private void RunContinousNotifiers()
     {
-        var notifiers = model.NotifierFactory.GetContinousNotifiers();
+        var notifiers = notifierFactory.GetContinousNotifiers(config, dbAccess);
         RunNotifiers(notifiers);
     }
 
     private void RunAllNotifiers()
     {
-        var notifiers = model.NotifierFactory.GetContinousNotifiers();
-        notifiers.AddRange(model.NotifierFactory.GetStartupNotifiers());
+        var notifiers = notifierFactory.GetContinousNotifiers(config, dbAccess);
+        notifiers.AddRange(notifierFactory.GetStartupNotifiers(config, dbAccess));
         RunNotifiers(notifiers);
     }
 
     private void RunNotifiers(List<INotifier> notifiers)
     {
-        notifiers.ForEach(x => x.Run().ForEach(y => model.AddNotification(y)));
+        notifiers.ForEach(x => x.Run().ForEach(y => notificationHandling.AddNotification(y)));
     }
 
     private void LoadNotifications()
     {
         Notifications.Clear();
-        model.Notifications.ForEach(x => Notifications.Add(x));
+        notificationHandling.Notifications.ForEach(x => Notifications.Add(x));
         OnPropertyChanged(nameof(Notifications));
     }
 
     [RelayCommand]
     private void ClearNotifications()
     {
-        model.ClearNotifications();
+        notificationHandling.ClearNotifications();
     }
 }

@@ -10,12 +10,10 @@ namespace FileDB.View;
 /// </summary>
 public partial class AddLocationWindow : Window
 {
-    private readonly Model.Model model = Model.Model.Instance;
-
     public AddLocationWindow(int? locationId = null)
     {
         InitializeComponent();
-        DataContext = new AddLocationViewModel(locationId);
+        DataContext = new AddLocationViewModel(Model.Model.Instance.DbAccess, locationId);
 
         WeakReferenceMessenger.Default.Register<CloseModalDialogRequested>(this, (r, m) =>
         {

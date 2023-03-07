@@ -12,7 +12,8 @@ public partial class TagsView : UserControl
     public TagsView()
     {
         InitializeComponent();
-        DataContext = new TagsViewModel();
+        var model = Model.Model.Instance;
+        DataContext = new TagsViewModel(model.Config, model.DbAccess);
     }
 
     private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)

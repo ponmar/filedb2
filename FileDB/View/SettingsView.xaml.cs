@@ -11,7 +11,8 @@ namespace FileDB.View
         public SettingsView()
         {
             InitializeComponent();
-            DataContext = new SettingsViewModel();
+            var model = Model.Model.Instance;
+            DataContext = new SettingsViewModel(model.Config, model);
         }
     }
 }

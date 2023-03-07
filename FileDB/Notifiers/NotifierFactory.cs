@@ -1,4 +1,5 @@
 ﻿using FileDB.Configuration;
+using FileDBInterface.DbAccess;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,30 +8,28 @@ namespace FileDB.Notifiers;
 
 public interface INotifierFactory
 {
-    List<INotifier> GetContinousNotifiers();
-    List<INotifier> GetStartupNotifiers();
+    List<INotifier> GetContinousNotifiers(Config config, IDbAccess dbAccess);
+    List<INotifier> GetStartupNotifiers(Config config, IDbAccess dbAccess);
 }
 
 public class NotifierFactory : INotifierFactory
 {
-    private readonly Model.Model model = Model.Model.Instance;
-
-    public List<INotifier> GetContinousNotifiers()
+    public List<INotifier> GetContinousNotifiers(Config config, IDbAccess dbAccess)
     {
         var notifiers = new List<INotifier>();
-        var persons = model.DbAccess.GetPersons();
+        var persons = dbAccess.GetPersons();
 
-        if (model.Config.BirthdayReminder)
+        if (config.BirthdayReminder)
         {
             notifiers.Add(new BirthdayNotifier(persons, BirthdayNotificationFor.Alive));
         }
 
-        if (model.Config.BirthdayReminderForDeceased)
+        if (config.BirthdayReminderForDeceased)
         {
             notifiers.Add(new BirthdayNotifier(persons, BirthdayNotificationFor.Deceased));
         }
 
-        if (model.Config.RipReminder)
+        if (config.RipReminder)
         {
             notifiers.Add(new RestInPeaceNotifier(persons));
         }
@@ -38,25 +37,25 @@ public class NotifierFactory : INotifierFactory
         return notifiers;
     }
 
-    public List<INotifier> GetStartupNotifiers()
+    public List<INotifier> GetStartupNotifiers(Config config, IDbAccess dbAccess)
     {
         var notifiers = new List<INotifier>();
 
-        if (model.Config.BackupReminder)
+        if (config.BackupReminder)
         {
             notifiers.Add(new BackupNotifier(new DatabaseBackup().ListAvailableBackupFiles(), 30));
         }
 
-        if (model.Config.MissingFilesRootDirNotification)
+        if (config.MissingFilesRootDirNotification)
         {
-            notifiers.Add(new MissingFilesRootDirNotifier(model.Config.FilesRootDirectory));
+            notifiers.Add(new MissingFilesRootDirNotifier(config.FilesRootDirectory));
         }
 
-        if (model.Config.CacheFiles)
+        if (config.CacheFiles)
         {
             var configDir = new AppDataConfig<Config>(Utils.ApplicationName).ConfigDirectory;
             var cacheDir = Path.Combine(configDir, DefaultConfigs.CacheSubdir);
-            var cacheFileIds = model.DbAccess.GetPersons().Where(x => x.ProfileFileId != null).Select(x => x.ProfileFileId!.Value);
+            var cacheFileIds = dbAccess.GetPersons().Where(x => x.ProfileFileId != null).Select(x => x.ProfileFileId!.Value);
             notifiers.Add(new CacheNotifier(cacheDir, cacheFileIds));
         }
 

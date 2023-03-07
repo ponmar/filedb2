@@ -12,7 +12,8 @@ public partial class BirthdaysView : UserControl
     public BirthdaysView()
     {
         InitializeComponent();
-        DataContext = new BirthdaysViewModel();
+        var model = Model.Model.Instance;
+        DataContext = new BirthdaysViewModel(model.Config, model.DbAccess, model.FilesystemAccess);
     }
 
     private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)

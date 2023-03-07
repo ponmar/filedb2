@@ -9,6 +9,7 @@ using FileDB.Comparers;
 using FileDB.Configuration;
 using FileDB.Model;
 using FileDBInterface.DbAccess;
+using FileDBInterface.FilesystemAccess;
 using FileDBShared.Model;
 
 namespace FileDB.ViewModel;
@@ -60,11 +61,23 @@ public partial class RipViewModel : ObservableObject
 
     public ObservableCollection<DeceasedPerson> Persons { get; set; } = new();
 
-    private readonly Model.Model model = Model.Model.Instance;
+    private Config config;
+    private readonly IDbAccess dbAccess;
+    private readonly IFilesystemAccess filesystemAccess;
 
-    public RipViewModel()
+    public RipViewModel(Config config, IDbAccess dbAccess, IFilesystemAccess filesystemAccess)
     {
+        this.config = config;
+        this.dbAccess = dbAccess;
+        this.filesystemAccess = filesystemAccess;
+
         UpdatePersons();
+
+        WeakReferenceMessenger.Default.Register<ConfigLoaded>(this, (r, m) =>
+        {
+            this.config = m.Config;
+            UpdatePersons();
+        });
 
         WeakReferenceMessenger.Default.Register<PersonsUpdated>(this, (r, m) =>
         {
@@ -80,19 +93,19 @@ public partial class RipViewModel : ObservableObject
         var configDir = new AppDataConfig<Config>(Utils.ApplicationName).ConfigDirectory;
         var cacheDir = Path.Combine(configDir, DefaultConfigs.CacheSubdir);
 
-        foreach (var person in model.DbAccess.GetPersons().Where(x => x.DateOfBirth != null && x.Deceased != null))
+        foreach (var person in dbAccess.GetPersons().Where(x => x.DateOfBirth != null && x.Deceased != null))
         {
             string profileFileIdPath;
             if (person.ProfileFileId != null)
             {
-                if (model.Config.CacheFiles)
+                if (config.CacheFiles)
                 {
                     profileFileIdPath = Path.Combine(cacheDir, $"{person.ProfileFileId.Value}");
                 }
                 else
                 {
-                    var profileFile = model.DbAccess.GetFileById(person.ProfileFileId.Value);
-                    profileFileIdPath = model.FilesystemAccess.ToAbsolutePath(profileFile!.Path);
+                    var profileFile = dbAccess.GetFileById(person.ProfileFileId.Value);
+                    profileFileIdPath = filesystemAccess.ToAbsolutePath(profileFile!.Path);
                 }
             }
             else

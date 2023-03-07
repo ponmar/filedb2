@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using FileDB.Model;
+using FileDBInterface.DbAccess;
 using FileDBInterface.Exceptions;
 using FileDBShared.Model;
 
@@ -40,19 +41,20 @@ public partial class AddPersonViewModel : ObservableObject
 
     public List<string> SexValues { get; } = Enum.GetNames(typeof(Sex)).ToList();
 
-    private readonly Model.Model model = Model.Model.Instance;
-
     public PersonModel? AffectedPerson { get; private set; }
 
-    public AddPersonViewModel(int? personId = null)
+    private readonly IDbAccess dbAccess;
+
+    public AddPersonViewModel(IDbAccess dbAccess, int? personId = null)
     {
+        this.dbAccess = dbAccess;
         this.personId = personId;
 
         title = personId.HasValue ? "Edit Person" : "Add Person";
 
         if (personId.HasValue)
         {
-            var personModel = model.DbAccess.GetPersonById(personId.Value);
+            var personModel = dbAccess.GetPersonById(personId.Value);
             Firstname = personModel.Firstname;
             Lastname = personModel.Lastname;
             Description = personModel.Description;
@@ -98,20 +100,20 @@ public partial class AddPersonViewModel : ObservableObject
 
             if (personId.HasValue)
             {
-                model.DbAccess.UpdatePerson(person);
-                AffectedPerson = model.DbAccess.GetPersonById(person.Id);
+                dbAccess.UpdatePerson(person);
+                AffectedPerson = dbAccess.GetPersonById(person.Id);
             }
             else
             {
-                var anyPersonsWithThatName = model.DbAccess.GetPersons().Any(x => x.Firstname == person.Firstname && x.Lastname == person.Lastname);
+                var anyPersonsWithThatName = dbAccess.GetPersons().Any(x => x.Firstname == person.Firstname && x.Lastname == person.Lastname);
                 if (anyPersonsWithThatName &&
                     !Dialogs.Instance.ShowConfirmDialog($"There is already a person with that name. Add anyway?"))
                 {
                     return;
                 }
 
-                model.DbAccess.InsertPerson(person);
-                AffectedPerson = model.DbAccess.GetPersons().First(x => x.Firstname == person.Firstname && x.Lastname == person.Lastname && x.DateOfBirth == person.DateOfBirth && x.Deceased == person.Deceased && x.Description == person.Description);
+                dbAccess.InsertPerson(person);
+                AffectedPerson = dbAccess.GetPersons().First(x => x.Firstname == person.Firstname && x.Lastname == person.Lastname && x.DateOfBirth == person.DateOfBirth && x.Deceased == person.Deceased && x.Description == person.Description);
             }
 
             WeakReferenceMessenger.Default.Send(new CloseModalDialogRequested());

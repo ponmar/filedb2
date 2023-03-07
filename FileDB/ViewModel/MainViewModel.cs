@@ -22,9 +22,9 @@ public partial class MainViewModel : ObservableObject
         get
         {
             var title = $"{Utils.ApplicationName} {Utils.GetVersionString()}";
-            if (!string.IsNullOrEmpty(model.Config.Name))
+            if (!string.IsNullOrEmpty(config.Name))
             {
-                title += $" [{model.Config.Name}]";
+                title += $" [{config.Name}]";
             }
             if (!ReadWriteMode)
             {
@@ -48,16 +48,20 @@ public partial class MainViewModel : ObservableObject
     [NotifyPropertyChangedFor(nameof(Title))]
     public bool readWriteMode = !Model.Model.Instance.Config.ReadOnly;
 
-    private readonly Model.Model model = Model.Model.Instance;
+    private Config config;
+    private readonly INotificationHandling notificationHandling;
 
-    public MainViewModel()
+    public MainViewModel(Config config, INotificationHandling notificationHandling)
     {
-        NumNotifications = model.Notifications.Count;
+        this.config = config;
+        this.notificationHandling = notificationHandling;
+
+        NumNotifications = notificationHandling.Notifications.Count;
         HighlightedNotificationType = NotificationsToType();
 
         WeakReferenceMessenger.Default.Register<NotificationsUpdated>(this, (r, m) =>
         {
-            NumNotifications = model.Notifications.Count;
+            NumNotifications = notificationHandling.Notifications.Count;
             HighlightedNotificationType = NotificationsToType();
         });
 
@@ -69,13 +73,14 @@ public partial class MainViewModel : ObservableObject
 
         WeakReferenceMessenger.Default.Register<ConfigLoaded>(this, (r, m) =>
         {
-            ReadWriteMode = !model.Config.ReadOnly;
+            this.config = m.Config;
+            ReadWriteMode = !this.config.ReadOnly;
             OnPropertyChanged(nameof(Title));
         });
     }
 
     private NotificationType NotificationsToType()
     {
-        return model.Notifications.Count > 0 ? model.Notifications.Max(x => x.Type) : Enum.GetValues<NotificationType>().First();
+        return notificationHandling.Notifications.Count > 0 ? notificationHandling.Notifications.Max(x => x.Type) : Enum.GetValues<NotificationType>().First();
     }
 }

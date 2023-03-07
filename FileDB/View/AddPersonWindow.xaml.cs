@@ -10,12 +10,10 @@ namespace FileDB.View;
 /// </summary>
 public partial class AddPersonWindow : Window
 {
-    private readonly Model.Model model = Model.Model.Instance;
-
     public AddPersonWindow(int? personId = null)
     {
         InitializeComponent();
-        DataContext = new AddPersonViewModel(personId);
+        DataContext = new AddPersonViewModel(Model.Model.Instance.DbAccess, personId);
 
         WeakReferenceMessenger.Default.Register<CloseModalDialogRequested>(this, (r, m) =>
         {

@@ -10,12 +10,10 @@ namespace FileDB.View
     /// </summary>
     public partial class BrowseDirectoriesWindow : Window
     {
-        private readonly Model.Model model = Model.Model.Instance;
-
         public BrowseDirectoriesWindow()
         {
             InitializeComponent();
-            DataContext = new BrowseDirectoriesViewModel();
+            DataContext = new BrowseDirectoriesViewModel(Model.Model.Instance.DbAccess);
 
             WeakReferenceMessenger.Default.Register<CloseModalDialogRequested>(this, (r, m) =>
             {

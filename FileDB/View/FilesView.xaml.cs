@@ -11,7 +11,8 @@ public partial class FilesView : UserControl
     public FilesView()
     {
         InitializeComponent();
-        DataContext = new FilesViewModel();
+        var model = Model.Model.Instance;
+        DataContext = new FilesViewModel(model.Config, model.DbAccess, model.FilesystemAccess);
     }
 
     private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)

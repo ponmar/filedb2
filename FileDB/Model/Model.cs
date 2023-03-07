@@ -9,7 +9,19 @@ using CommunityToolkit.Mvvm.Messaging;
 
 namespace FileDB.Model;
 
-public class Model
+public interface INotificationHandling
+{
+    List<Notification> Notifications { get; }
+    void AddNotification(Notification notification);
+    void ClearNotifications();
+}
+
+public interface IConfigSaver
+{
+    void UpdateConfig(Config config);
+}
+
+public class Model : INotificationHandling, IConfigSaver
 {
     public static Model Instance => instance ??= new();
     private static Model? instance;
@@ -72,7 +84,7 @@ public class Model
         FilesystemAccess = filesystemAccess;
         NotifierFactory = notifierFactory;
 
-        WeakReferenceMessenger.Default.Send(new ConfigLoaded());
+        WeakReferenceMessenger.Default.Send(new ConfigLoaded(config));
     }
 
     public void UpdateConfig(Config config)
@@ -81,6 +93,6 @@ public class Model
         DbAccess.Database = config.Database;
         FilesystemAccess.FilesRootDirectory = config.FilesRootDirectory;
 
-        WeakReferenceMessenger.Default.Send(new ConfigLoaded());
+        WeakReferenceMessenger.Default.Send(new ConfigLoaded(config));
     }
 }

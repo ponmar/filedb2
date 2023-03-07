@@ -12,7 +12,8 @@ public partial class LocationsView : UserControl
     public LocationsView()
     {
         InitializeComponent();
-        DataContext = new LocationsViewModel();
+        var model = Model.Model.Instance;
+        DataContext = new LocationsViewModel(model.Config, model.DbAccess);
     }
 
     private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)

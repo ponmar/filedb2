@@ -5,6 +5,7 @@ using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Configuration;
+using FileDB.Model;
 using FileDB.Sorters;
 using FileDB.Validators;
 
@@ -217,10 +218,14 @@ public partial class SettingsViewModel : ObservableObject
         SelectedCulture = Cultures.FirstOrDefault(x => x.Name == DefaultConfigs.Default.CultureOverride);
     }
 
-    private readonly Model.Model model = Model.Model.Instance;
+    private Config config;
+    private readonly IConfigSaver configSaver;
 
-    public SettingsViewModel()
+    public SettingsViewModel(Config config, IConfigSaver configSaver)
     {
+        this.config = config;
+        this.configSaver = configSaver;
+
         foreach (var culture in CultureInfo.GetCultures(CultureTypes.SpecificCultures))
         {
             cultures.Add(culture);
@@ -231,30 +236,30 @@ public partial class SettingsViewModel : ObservableObject
 
     private void UpdateFromConfiguration()
     {
-        ConfigName = model.Config.Name;
-        Database = model.Config.Database;
-        FilesRootDirectory = model.Config.FilesRootDirectory;
-        SlideshowDelay = model.Config.SlideshowDelay;
-        SearchHistorySize = model.Config.SearchHistorySize;
-        DefaultSortMethod = model.Config.DefaultSortMethod;
-        KeepSelectionAfterSort = model.Config.KeepSelectionAfterSort;
-        IncludeHiddenDirectories = model.Config.IncludeHiddenDirectories;
-        BlacklistedFilePathPatterns = model.Config.BlacklistedFilePathPatterns;
-        WhitelistedFilePathPatterns = model.Config.WhitelistedFilePathPatterns;
-        ReadOnly = model.Config.ReadOnly;
-        BackupReminder = model.Config.BackupReminder;
-        BirthdayReminder = model.Config.BirthdayReminder;
-        BirthdayReminderForDeceased = model.Config.BirthdayReminderForDeceased;
-        RipReminder = model.Config.RipReminder;
-        MissingFilesRootDirNotification = model.Config.MissingFilesRootDirNotification;
-        LocationLink = model.Config.LocationLink;
-        FileToLocationMaxDistance = model.Config.FileToLocationMaxDistance;
-        WindowMode = model.Config.WindowMode;
-        CacheFiles = model.Config.CacheFiles;
-        OverlayTextSize = model.Config.OverlayTextSize;
-        OverlayTextSizeLarge = model.Config.OverlayTextSizeLarge;
-        ShortItemNameMaxLength = model.Config.ShortItemNameMaxLength;
-        SelectedCulture = Cultures.FirstOrDefault(x => x.Name == model.Config.CultureOverride);
+        ConfigName = config.Name;
+        Database = config.Database;
+        FilesRootDirectory = config.FilesRootDirectory;
+        SlideshowDelay = config.SlideshowDelay;
+        SearchHistorySize = config.SearchHistorySize;
+        DefaultSortMethod = config.DefaultSortMethod;
+        KeepSelectionAfterSort = config.KeepSelectionAfterSort;
+        IncludeHiddenDirectories = config.IncludeHiddenDirectories;
+        BlacklistedFilePathPatterns = config.BlacklistedFilePathPatterns;
+        WhitelistedFilePathPatterns = config.WhitelistedFilePathPatterns;
+        ReadOnly = config.ReadOnly;
+        BackupReminder = config.BackupReminder;
+        BirthdayReminder = config.BirthdayReminder;
+        BirthdayReminderForDeceased = config.BirthdayReminderForDeceased;
+        RipReminder = config.RipReminder;
+        MissingFilesRootDirNotification = config.MissingFilesRootDirNotification;
+        LocationLink = config.LocationLink;
+        FileToLocationMaxDistance = config.FileToLocationMaxDistance;
+        WindowMode = config.WindowMode;
+        CacheFiles = config.CacheFiles;
+        OverlayTextSize = config.OverlayTextSize;
+        OverlayTextSizeLarge = config.OverlayTextSizeLarge;
+        ShortItemNameMaxLength = config.ShortItemNameMaxLength;
+        SelectedCulture = Cultures.FirstOrDefault(x => x.Name == config.CultureOverride);
     }
 
     [RelayCommand]
@@ -266,7 +271,7 @@ public partial class SettingsViewModel : ObservableObject
     [RelayCommand]
     private void SaveConfiguration()
     {
-        var config = new Config(
+        var configToSave = new Config(
             ConfigName,
             Database,
             FilesRootDirectory,
@@ -292,7 +297,7 @@ public partial class SettingsViewModel : ObservableObject
             ShortItemNameMaxLength,
             SelectedCulture?.Name);
 
-        var result = new ConfigValidator().Validate(config);
+        var result = new ConfigValidator().Validate(configToSave);
         if (!result.IsValid)
         {
             Dialogs.Instance.ShowErrorDialog(result);
@@ -308,9 +313,9 @@ public partial class SettingsViewModel : ObservableObject
 
         Utils.BackupFile(appDataConfig.FilePath);
 
-        if (appDataConfig.Write(config))
+        if (appDataConfig.Write(configToSave))
         {
-            model.UpdateConfig(config);
+            configSaver.UpdateConfig(configToSave);
         }
         else
         {

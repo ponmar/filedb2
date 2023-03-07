@@ -1,8 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using FakeItEasy;
-using FileDB.Configuration;
 using FileDB.Model;
-using FileDB.Notifiers;
 using FileDB.ViewModel;
 using FileDBInterface.DbAccess;
 using FileDBInterface.FilesystemAccess;
@@ -18,26 +16,19 @@ public class BirthdaysViewModelTests
 {
     private IDbAccess fakeDbAccess;
     private IFilesystemAccess fakeFilsystemAccess;
-    private INotifierFactory fakeNotifierFactory;
-
-    private Model model;
 
     [TestInitialize]
     public void Initialize()
     {
-        model = Model.Instance;
-
         fakeDbAccess = A.Fake<IDbAccess>();
         fakeFilsystemAccess = A.Fake<IFilesystemAccess>();
-        fakeNotifierFactory = A.Fake<INotifierFactory>();
-
-        model.InitConfig(DefaultConfigs.Default, fakeDbAccess, fakeFilsystemAccess, fakeNotifierFactory);
     }
 
     [TestMethod]
     public void Constructor_NoPersons()
     {
-        var viewModel = new BirthdaysViewModel();
+        var config = new ConfigBuilder().Build();
+        var viewModel = new BirthdaysViewModel(config, fakeDbAccess, fakeFilsystemAccess);
 
         Assert.AreEqual(0, viewModel.Persons.Count);
         Assert.AreEqual("", viewModel.FilterText);
@@ -48,7 +39,8 @@ public class BirthdaysViewModelTests
     {
         A.CallTo(() => fakeDbAccess.GetPersons()).Returns(SomePersons());
 
-        var viewModel = new BirthdaysViewModel();
+        var config = new ConfigBuilder().Build();
+        var viewModel = new BirthdaysViewModel(config, fakeDbAccess, fakeFilsystemAccess);
 
         Assert.AreEqual(2, viewModel.Persons.Count);
     }
@@ -56,7 +48,8 @@ public class BirthdaysViewModelTests
     [TestMethod]
     public void PersonsUpdated()
     {
-        var viewModel = new BirthdaysViewModel();
+        var config = new ConfigBuilder().Build();
+        var viewModel = new BirthdaysViewModel(config, fakeDbAccess, fakeFilsystemAccess);
         Assert.AreEqual(0, viewModel.Persons.Count);
 
         A.CallTo(() => fakeDbAccess.GetPersons()).Returns(SomePersons());
@@ -68,7 +61,8 @@ public class BirthdaysViewModelTests
     [TestMethod]
     public void DateChanged()
     {
-        var viewModel = new BirthdaysViewModel();
+        var config = new ConfigBuilder().Build();
+        var viewModel = new BirthdaysViewModel(config, fakeDbAccess, fakeFilsystemAccess);
         Assert.AreEqual(0, viewModel.Persons.Count);
 
         A.CallTo(() => fakeDbAccess.GetPersons()).Returns(SomePersons());
@@ -82,7 +76,8 @@ public class BirthdaysViewModelTests
     {
         A.CallTo(() => fakeDbAccess.GetPersons()).Returns(SomePersons());
 
-        var viewModel = new BirthdaysViewModel();
+        var config = new ConfigBuilder().Build();
+        var viewModel = new BirthdaysViewModel(config, fakeDbAccess, fakeFilsystemAccess);
         
         viewModel.FilterText = "Al";
         Assert.AreEqual(1, viewModel.Persons.Count);

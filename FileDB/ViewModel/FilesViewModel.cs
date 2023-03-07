@@ -8,9 +8,11 @@ using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using FileDB.Configuration;
 using FileDB.Model;
 using FileDBInterface.DbAccess;
 using FileDBInterface.Exceptions;
+using FileDBInterface.FilesystemAccess;
 using FileDBShared.Model;
 using TextCopy;
 
@@ -52,28 +54,35 @@ public partial class FilesViewModel : ObservableObject
     [ObservableProperty]
     private bool findFileMetadata = true;
 
-    private readonly Model.Model model = Model.Model.Instance;
+    private Config config;
+    private readonly IDbAccess dbAccess;
+    private readonly IFilesystemAccess filesystemAccess;
 
-    public FilesViewModel()
+    public FilesViewModel(Config config, IDbAccess dbAccess, IFilesystemAccess filesystemAccess)
     {
-        subdirToScan = model.Config.FilesRootDirectory;
+        this.config = config;
+        this.dbAccess = dbAccess;
+        this.filesystemAccess = filesystemAccess;
+
+        subdirToScan = config.FilesRootDirectory;
 
         WeakReferenceMessenger.Default.Register<ConfigLoaded>(this, (r, m) =>
         {
-            SubdirToScan = model.Config.FilesRootDirectory;
+            this.config = m.Config;
+            SubdirToScan = this.config.FilesRootDirectory;
         });
     }
 
     [RelayCommand]
     private void BrowseSubDirectory()
     {
-        SubdirToScan = Dialogs.Instance.BrowseExistingDirectory(model.Config.FilesRootDirectory, "Select a sub directory") ?? string.Empty;
+        SubdirToScan = Dialogs.Instance.BrowseExistingDirectory(config.FilesRootDirectory, "Select a sub directory") ?? string.Empty;
     }
 
     [RelayCommand]
     private void ScanNewFiles()
     {
-        ScanNewFiles(model.Config.FilesRootDirectory);
+        ScanNewFiles(config.FilesRootDirectory);
     }
 
     [RelayCommand]
@@ -89,9 +98,9 @@ public partial class FilesViewModel : ObservableObject
             Dialogs.Instance.ShowErrorDialog("Specified directory does no exist");
             return;
         }
-        if (!SubdirToScan.StartsWith(model.Config.FilesRootDirectory))
+        if (!SubdirToScan.StartsWith(config.FilesRootDirectory))
         {
-            Dialogs.Instance.ShowErrorDialog($"Specified directory is not within the configured files root directory: {model.Config.FilesRootDirectory}");
+            Dialogs.Instance.ShowErrorDialog($"Specified directory is not within the configured files root directory: {config.FilesRootDirectory}");
             return;
         }
         ScanNewFiles(SubdirToScan);
@@ -109,14 +118,14 @@ public partial class FilesViewModel : ObservableObject
         ImportedFileList = string.Empty;
         OnPropertyChanged(nameof(NewFilesSelected));
 
-        var blacklistedFilePathPatterns = model.Config.BlacklistedFilePathPatterns.Split(";");
-        var whitelistedFilePathPatterns = model.Config.WhitelistedFilePathPatterns.Split(";");
+        var blacklistedFilePathPatterns = config.BlacklistedFilePathPatterns.Split(";");
+        var whitelistedFilePathPatterns = config.WhitelistedFilePathPatterns.Split(";");
 
         Dialogs.Instance.ShowProgressDialog(progress =>
         {
             progress.Report("Scanning...");
 
-            foreach (var internalFilePath in model.FilesystemAccess.ListNewFilesystemFiles(pathToScan, blacklistedFilePathPatterns, whitelistedFilePathPatterns, model.Config.IncludeHiddenDirectories, model.DbAccess))
+            foreach (var internalFilePath in filesystemAccess.ListNewFilesystemFiles(pathToScan, blacklistedFilePathPatterns, whitelistedFilePathPatterns, config.IncludeHiddenDirectories, dbAccess))
             {
                 Application.Current.Dispatcher.BeginInvoke(new Action(() =>
                 {
@@ -132,7 +141,7 @@ public partial class FilesViewModel : ObservableObject
 
                 if (NewFiles.Count == 0)
                 {
-                    Dialogs.Instance.ShowInfoDialog($"No new files found. Add your files to '{model.Config.FilesRootDirectory}'.");
+                    Dialogs.Instance.ShowInfoDialog($"No new files found. Add your files to '{config.FilesRootDirectory}'.");
                 }
             }));
         });
@@ -149,7 +158,7 @@ public partial class FilesViewModel : ObservableObject
 
         Dialogs.Instance.ShowProgressDialog(progress =>
         {
-            var locations = model.DbAccess.GetLocations();
+            var locations = dbAccess.GetLocations();
 
             try
             {
@@ -161,15 +170,15 @@ public partial class FilesViewModel : ObservableObject
                     progress.Report($"Adding file {counter} / {filesToAdd.Count}...");
                     Thread.Sleep(1000);
 
-                    model.DbAccess.InsertFile(fileToAdd.Path, null, model.FilesystemAccess, FindFileMetadata);
+                    dbAccess.InsertFile(fileToAdd.Path, null, filesystemAccess, FindFileMetadata);
 
-                    var importedFile = model.DbAccess.GetFileByPath(fileToAdd.Path);
+                    var importedFile = dbAccess.GetFileByPath(fileToAdd.Path);
 
                     if (importedFile != null)
                     {
                         importedFiles.Add(importedFile);
 
-                        if (importedFile.Position != null && model.Config.FileToLocationMaxDistance > 0.5)
+                        if (importedFile.Position != null && config.FileToLocationMaxDistance > 0.5)
                         {
                             var importedFilePos = DatabaseParsing.ParseFilesPosition(importedFile.Position)!.Value;
 
@@ -177,9 +186,9 @@ public partial class FilesViewModel : ObservableObject
                             {
                                 var locationPos = DatabaseParsing.ParseFilesPosition(locationWithPosition.Position)!.Value;
                                 var distance = DatabaseUtils.CalculateDistance(importedFilePos.lat, importedFilePos.lon, locationPos.lat, locationPos.lon);
-                                if (distance < model.Config.FileToLocationMaxDistance)
+                                if (distance < config.FileToLocationMaxDistance)
                                 {
-                                    model.DbAccess.InsertFileLocation(importedFile.Id, locationWithPosition.Id);
+                                    dbAccess.InsertFileLocation(importedFile.Id, locationWithPosition.Id);
                                 }
                             }
                         }
@@ -230,14 +239,14 @@ public partial class FilesViewModel : ObservableObject
 
         if (Dialogs.Instance.ShowConfirmDialog($"Remove meta-data for {fileIds.Count} files from the specified file list?"))
         {
-            fileIds.ForEach(x => model.DbAccess.DeleteFile(x));
+            fileIds.ForEach(x => dbAccess.DeleteFile(x));
             Dialogs.Instance.ShowInfoDialog($"{fileIds.Count} files removed");
         }
     }
 
     private string GetDateModified(string internalPath)
     {
-        var path = model.FilesystemAccess.ToAbsolutePath(internalPath);
+        var path = filesystemAccess.ToAbsolutePath(internalPath);
         var dateModified = File.GetLastWriteTime(path);
         return dateModified.ToString("yyyy-MM-dd HH:mm");
     }

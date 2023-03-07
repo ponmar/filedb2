@@ -4,8 +4,10 @@ using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using FileDB.Configuration;
 using FileDB.Model;
 using FileDB.Sorters;
+using FileDBInterface.DbAccess;
 
 namespace FileDB.ViewModel;
 
@@ -14,22 +16,28 @@ public record Tag(int Id, string Name);
 public partial class TagsViewModel : ObservableObject
 {
     [ObservableProperty]
-    private bool readWriteMode = !Model.Model.Instance.Config.ReadOnly;
+    private bool readWriteMode;
 
     public ObservableCollection<Tag> Tags { get; } = new();
 
     [ObservableProperty]
     private Tag? selectedTag;
 
-    private readonly Model.Model model = Model.Model.Instance;
+    private Config config;
+    private readonly IDbAccess dbAccess;
 
-    public TagsViewModel()
+    public TagsViewModel(Config config, IDbAccess dbAccess)
     {
+        this.config = config;
+        this.dbAccess = dbAccess;
+        ReadWriteMode = !config.ReadOnly;
+
         ReloadTags();
 
         WeakReferenceMessenger.Default.Register<ConfigLoaded>(this, (r, m) =>
         {
-            ReadWriteMode = !model.Config.ReadOnly;
+            this.config = m.Config;
+            ReadWriteMode = !this.config.ReadOnly;
         });
 
         WeakReferenceMessenger.Default.Register<TagsUpdated>(this, (r, m) =>
@@ -43,10 +51,10 @@ public partial class TagsViewModel : ObservableObject
     {
         if (Dialogs.Instance.ShowConfirmDialog($"Remove {SelectedTag!.Name}?"))
         {
-            var filesWithTag = model.DbAccess.SearchFilesWithTags(new List<int>() { SelectedTag.Id }).ToList();
+            var filesWithTag = dbAccess.SearchFilesWithTags(new List<int>() { SelectedTag.Id }).ToList();
             if (filesWithTag.Count == 0 || Dialogs.Instance.ShowConfirmDialog($"Tag is used in {filesWithTag.Count} files, remove anyway?"))
             {
-                model.DbAccess.DeleteTag(SelectedTag.Id);
+                dbAccess.DeleteTag(SelectedTag.Id);
                 WeakReferenceMessenger.Default.Send(new TagsUpdated());
             }
         }
@@ -74,7 +82,7 @@ public partial class TagsViewModel : ObservableObject
     {
         Tags.Clear();
 
-        var tags = model.DbAccess.GetTags().ToList();
+        var tags = dbAccess.GetTags().ToList();
         tags.Sort(new TagModelByNameSorter());
         foreach (var tag in tags.Select(tm => new Tag(tm.Id, tm.Name)))
         {

@@ -5,6 +5,7 @@ using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using FileDB.Configuration;
 using FileDB.Model;
 using FileDB.Sorters;
 using FileDBInterface.DbAccess;
@@ -17,22 +18,25 @@ public record Person(int Id, string Firstname, string Lastname, string? Descript
 public partial class PersonsViewModel : ObservableObject
 {
     [ObservableProperty]
-    private bool readWriteMode = !Model.Model.Instance.Config.ReadOnly;
+    private bool readWriteMode;
 
     public ObservableCollection<Person> Persons { get; } = new();
 
     [ObservableProperty]
     private Person? selectedPerson;
 
-    private readonly Model.Model model = Model.Model.Instance;
+    private readonly IDbAccess dbAccess;
 
-    public PersonsViewModel()
+    public PersonsViewModel(Config config, IDbAccess dbAccess)
     {
+        readWriteMode = !config.ReadOnly;
+        this.dbAccess = dbAccess;
+
         ReloadPersons();
 
         WeakReferenceMessenger.Default.Register<ConfigLoaded>(this, (r, m) =>
         {
-            ReadWriteMode = !model.Config.ReadOnly;
+            ReadWriteMode = !m.Config.ReadOnly;
         });
 
         WeakReferenceMessenger.Default.Register<PersonsUpdated>(this, (r, m) =>
@@ -46,10 +50,10 @@ public partial class PersonsViewModel : ObservableObject
     {
         if (Dialogs.Instance.ShowConfirmDialog($"Remove {SelectedPerson!.Firstname} {SelectedPerson.Lastname}?"))
         {
-            var filesWithPerson = model.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPerson.Id }).ToList();
+            var filesWithPerson = dbAccess.SearchFilesWithPersons(new List<int>() { SelectedPerson.Id }).ToList();
             if (filesWithPerson.Count == 0 || Dialogs.Instance.ShowConfirmDialog($"Person is used in {filesWithPerson.Count} files, remove anyway?"))
             {
-                model.DbAccess.DeletePerson(SelectedPerson.Id);
+                dbAccess.DeletePerson(SelectedPerson.Id);
                 WeakReferenceMessenger.Default.Send(new PersonsUpdated());
             }
         }
@@ -76,7 +80,7 @@ public partial class PersonsViewModel : ObservableObject
     private void ReloadPersons()
     {
         Persons.Clear();
-        var persons = model.DbAccess.GetPersons().ToList();
+        var persons = dbAccess.GetPersons().ToList();
         persons.Sort(new PersonModelByNameSorter());
         var personVms = persons.Select(pm => new Person(pm.Id, pm.Firstname, pm.Lastname, pm.Description, pm.DateOfBirth, pm.Deceased, GetPersonAge(pm), pm.ProfileFileId, pm.Sex));
         foreach (var personVm in personVms)

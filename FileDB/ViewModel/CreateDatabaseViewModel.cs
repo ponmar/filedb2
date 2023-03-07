@@ -15,8 +15,6 @@ namespace FileDB.ViewModel
 
         public string CreatedDatabasePath = string.Empty;
 
-        private readonly Model.Model model = Model.Model.Instance;
-
         public CreateDatabaseViewModel()
         {
         }

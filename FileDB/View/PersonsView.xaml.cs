@@ -12,7 +12,8 @@ namespace FileDB.View
         public PersonsView()
         {
             InitializeComponent();
-            DataContext = new PersonsViewModel();
+            var model = Model.Model.Instance;
+            DataContext = new PersonsViewModel(model.Config, model.DbAccess);
         }
 
         private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)

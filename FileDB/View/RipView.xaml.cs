@@ -12,7 +12,8 @@ public partial class RipView : UserControl
     public RipView()
     {
         InitializeComponent();
-        DataContext = new RipViewModel();
+        var model = Model.Model.Instance;
+        DataContext = new RipViewModel(model.Config, model.DbAccess, model.FilesystemAccess);
     }
 
     private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)

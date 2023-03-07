@@ -21,6 +21,7 @@ using FileDB.Extensions;
 using CommunityToolkit.Mvvm.Messaging;
 using FileDB.Model;
 using FileDBShared.Validators;
+using FileDBInterface.FilesystemAccess;
 
 namespace FileDB.ViewModel;
 
@@ -99,7 +100,7 @@ public partial class FindViewModel : ObservableObject
 
     partial void OnSelectedSortMethodChanged(SortMethod value)
     {
-        SortSearchResult(model.Config.KeepSelectionAfterSort);
+        SortSearchResult(config.KeepSelectionAfterSort);
     }
 
     [ObservableProperty]
@@ -124,7 +125,7 @@ public partial class FindViewModel : ObservableObject
     [NotifyPropertyChangedFor(nameof(OverlayFontSize))]
     private bool largeTextMode = false;
 
-    public int OverlayFontSize => LargeTextMode ? model.Config.OverlayTextSizeLarge : model.Config.OverlayTextSize;
+    public int OverlayFontSize => LargeTextMode ? config.OverlayTextSizeLarge : config.OverlayTextSize;
 
     public bool ShowUpdateSection => !Maximize && ReadWriteMode;
 
@@ -164,7 +165,7 @@ public partial class FindViewModel : ObservableObject
     {
         if (value != null)
         {
-            var location = model.DbAccess.GetLocationById(value.Id);
+            var location = dbAccess.GetLocationById(value.Id);
             if (location.Position != null)
             {
                 SearchFileGpsPosition = location.Position;
@@ -335,7 +336,7 @@ public partial class FindViewModel : ObservableObject
 
     private void AddSearchResultToHistory()
     {
-        if (SearchResultHistory.Count == model.Config.SearchHistorySize)
+        if (SearchResultHistory.Count == config.SearchHistorySize)
         {
             SearchResultHistory.RemoveAt(0);
         }
@@ -485,16 +486,22 @@ public partial class FindViewModel : ObservableObject
 
     private readonly DispatcherTimer slideshowTimer = new();
 
-    private readonly Model.Model model = Model.Model.Instance;
-
-    public static FindViewModel Instance => instance ??= new();
+    public static FindViewModel Instance => instance ??= new(Model.Model.Instance.Config, Model.Model.Instance.DbAccess, Model.Model.Instance.FilesystemAccess);
     private static FindViewModel? instance;
 
     private int? prevEditedFileId = null;
 
-    private FindViewModel()
+    private Config config;
+    private readonly IDbAccess dbAccess;
+    private readonly IFilesystemAccess filesystemAccess;
+
+    private FindViewModel(Config config, IDbAccess dbAccess, IFilesystemAccess filesystemAccess)
     {
-        TotalNumberOfFiles = model.DbAccess.GetFileCount();
+        this.config = config;
+        this.dbAccess = dbAccess;
+        this.filesystemAccess = filesystemAccess;
+
+        TotalNumberOfFiles = dbAccess.GetFileCount();
 
         ReloadPersons();
         ReloadLocations();
@@ -506,7 +513,7 @@ public partial class FindViewModel : ObservableObject
         });
 
         slideshowTimer.Tick += SlideshowTimer_Tick;
-        slideshowTimer.Interval = TimeSpan.FromSeconds(model.Config.SlideshowDelay);
+        slideshowTimer.Interval = TimeSpan.FromSeconds(config.SlideshowDelay);
 
         WeakReferenceMessenger.Default.Register<PersonsUpdated>(this, (r, m) =>
         {
@@ -525,8 +532,9 @@ public partial class FindViewModel : ObservableObject
 
         WeakReferenceMessenger.Default.Register<ConfigLoaded>(this, (r, m) =>
         {
-            ReadWriteMode = !model.Config.ReadOnly;
-            slideshowTimer.Interval = TimeSpan.FromSeconds(model.Config.SlideshowDelay);
+            this.config = m.Config;
+            ReadWriteMode = !this.config.ReadOnly;
+            slideshowTimer.Interval = TimeSpan.FromSeconds(this.config.SlideshowDelay);
 
             OnPropertyChanged(nameof(LargeTextMode));
         });
@@ -767,7 +775,7 @@ public partial class FindViewModel : ObservableObject
 
         if (int.TryParse(NumRandomFiles, out var value))
         {
-            SearchResult = new SearchResult(model.DbAccess.SearchFilesRandom(value));
+            SearchResult = new SearchResult(dbAccess.SearchFilesRandom(value));
         }
     }
 
@@ -783,14 +791,14 @@ public partial class FindViewModel : ObservableObject
 
         var path = SearchResult!.Files[SearchResultIndex].Path;
         var dir = Path.GetDirectoryName(path)!.Replace('\\', '/');
-        SearchResult = new SearchResult(model.DbAccess.SearchFilesByPath(dir));
+        SearchResult = new SearchResult(dbAccess.SearchFilesByPath(dir));
     }
 
     [RelayCommand]
     private void FindAllFiles()
     {
         StopSlideshow();
-        SearchResult = new SearchResult(model.DbAccess.GetFiles());
+        SearchResult = new SearchResult(dbAccess.GetFiles());
     }
 
     [RelayCommand]
@@ -800,7 +808,7 @@ public partial class FindViewModel : ObservableObject
         if (!string.IsNullOrEmpty(ImportedFileList))
         {
             var fileIds = Utils.CreateFileIds(ImportedFileList);
-            SearchResult = new SearchResult(model.DbAccess.SearchFilesFromIds(fileIds));
+            SearchResult = new SearchResult(dbAccess.SearchFilesFromIds(fileIds));
         }
     }
 
@@ -812,7 +820,7 @@ public partial class FindViewModel : ObservableObject
         var selectedDir = Dialogs.Instance.ShowBrowseDirectoriesDialog();
         if (selectedDir != null)
         {
-            SearchResult = new SearchResult(model.DbAccess.SearchFilesByPath(selectedDir));
+            SearchResult = new SearchResult(dbAccess.SearchFilesByPath(selectedDir));
         }
     }
 
@@ -822,7 +830,7 @@ public partial class FindViewModel : ObservableObject
         StopSlideshow();
         if (!string.IsNullOrEmpty(SearchPattern))
         {
-            SearchResult = new SearchResult(model.DbAccess.SearchFiles(SearchPattern));
+            SearchResult = new SearchResult(dbAccess.SearchFiles(SearchPattern));
         }
         else
         {
@@ -836,7 +844,7 @@ public partial class FindViewModel : ObservableObject
         StopSlideshow();
         if (SearchBySexSelection != null)
         {
-            SearchResult = new SearchResult(model.DbAccess.SearchFilesBySex(SearchBySexSelection.Value));
+            SearchResult = new SearchResult(dbAccess.SearchFilesBySex(SearchBySexSelection.Value));
         }
     }
 
@@ -844,7 +852,7 @@ public partial class FindViewModel : ObservableObject
     private void FindFilesByDate()
     {
         StopSlideshow();
-        SearchResult = new SearchResult(model.DbAccess.SearchFilesByDate(SearchStartDate.Date, SearchEndDate.Date));
+        SearchResult = new SearchResult(dbAccess.SearchFilesByDate(SearchStartDate.Date, SearchEndDate.Date));
     }
 
     [RelayCommand]
@@ -861,7 +869,7 @@ public partial class FindViewModel : ObservableObject
         var result = new List<FilesModel>();
         foreach (var extension in fileExtensions)
         {
-            result.AddRange(model.DbAccess.SearchFilesByExtension(extension));
+            result.AddRange(dbAccess.SearchFilesByExtension(extension));
         }
 
         SearchResult = new SearchResult(result);
@@ -902,11 +910,11 @@ public partial class FindViewModel : ObservableObject
             return;
         }
 
-        var nearFiles = model.DbAccess.SearchFilesNearGpsPosition(gpsPos.Value.lat, gpsPos.Value.lon, radius).ToList();
+        var nearFiles = dbAccess.SearchFilesNearGpsPosition(gpsPos.Value.lat, gpsPos.Value.lon, radius).ToList();
 
         // TODO: checkbox for selecting if this should be included?
-        var nearLocations = model.DbAccess.SearchLocationsNearGpsPosition(gpsPos.Value.lat, gpsPos.Value.lon, radius);
-        nearFiles.AddRange(model.DbAccess.SearchFilesWithLocations(nearLocations.Select(x => x.Id)));
+        var nearLocations = dbAccess.SearchLocationsNearGpsPosition(gpsPos.Value.lat, gpsPos.Value.lon, radius);
+        nearFiles.AddRange(dbAccess.SearchFilesWithLocations(nearLocations.Select(x => x.Id)));
 
         SearchResult = new SearchResult(nearFiles);
     }
@@ -917,7 +925,7 @@ public partial class FindViewModel : ObservableObject
         StopSlideshow();
         if (SelectedPersonSearch != null)
         {
-            SearchResult = new SearchResult(model.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPersonSearch.Id }));
+            SearchResult = new SearchResult(dbAccess.SearchFilesWithPersons(new List<int>() { SelectedPersonSearch.Id }));
         }
     }
 
@@ -927,8 +935,8 @@ public partial class FindViewModel : ObservableObject
         StopSlideshow();
         if (SelectedPersonSearch != null)
         {
-            var files = model.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPersonSearch.Id });
-            var result = files.Where(x => model.DbAccess.GetPersonsFromFile(x.Id).Count() == 1);
+            var files = dbAccess.SearchFilesWithPersons(new List<int>() { SelectedPersonSearch.Id });
+            var result = files.Where(x => dbAccess.GetPersonsFromFile(x.Id).Count() == 1);
             SearchResult = new SearchResult(result);
         }
     }
@@ -939,8 +947,8 @@ public partial class FindViewModel : ObservableObject
         StopSlideshow();
         if (SelectedPersonSearch != null)
         {
-            var files = model.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPersonSearch.Id });
-            var result = files.Where(x => model.DbAccess.GetPersonsFromFile(x.Id).Count() > 1);
+            var files = dbAccess.SearchFilesWithPersons(new List<int>() { SelectedPersonSearch.Id });
+            var result = files.Where(x => dbAccess.GetPersonsFromFile(x.Id).Count() > 1);
             SearchResult = new SearchResult(result);
         }
     }
@@ -951,7 +959,7 @@ public partial class FindViewModel : ObservableObject
         StopSlideshow();
         if (SelectedPerson1Search != null && SelectedPerson2Search != null)
         {
-            SearchResult = new SearchResult(model.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPerson1Search.Id, SelectedPerson2Search.Id }));
+            SearchResult = new SearchResult(dbAccess.SearchFilesWithPersons(new List<int>() { SelectedPerson1Search.Id, SelectedPerson2Search.Id }));
         }
     }
 
@@ -961,10 +969,10 @@ public partial class FindViewModel : ObservableObject
         StopSlideshow();
         if (SelectedPerson1Search != null && SelectedPerson2Search != null)
         {
-            var files = model.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPerson1Search.Id });
+            var files = dbAccess.SearchFilesWithPersons(new List<int>() { SelectedPerson1Search.Id });
             var result = files.Where(x =>
             {
-                var filePersons = model.DbAccess.GetPersonsFromFile(x.Id).ToList();
+                var filePersons = dbAccess.GetPersonsFromFile(x.Id).ToList();
                 return filePersons.Count() == 2 && filePersons.Any(y => y.Id == SelectedPerson2Search.Id);
             });
             SearchResult = new SearchResult(result);
@@ -977,10 +985,10 @@ public partial class FindViewModel : ObservableObject
         StopSlideshow();
         if (SelectedPerson1Search != null && SelectedPerson2Search != null)
         {
-            var files = model.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPerson1Search.Id });
+            var files = dbAccess.SearchFilesWithPersons(new List<int>() { SelectedPerson1Search.Id });
             var result = files.Where(x =>
             {
-                var filePersons = model.DbAccess.GetPersonsFromFile(x.Id).ToList();
+                var filePersons = dbAccess.GetPersonsFromFile(x.Id).ToList();
                 return filePersons.Count() > 2 && filePersons.Any(y => y.Id == SelectedPerson2Search.Id);
             });
             SearchResult = new SearchResult(result);
@@ -993,7 +1001,7 @@ public partial class FindViewModel : ObservableObject
         StopSlideshow();
         if (SelectedLocationSearch != null)
         {
-            SearchResult = new SearchResult(model.DbAccess.SearchFilesWithLocations(new List<int>() { SelectedLocationSearch.Id }));
+            SearchResult = new SearchResult(dbAccess.SearchFilesWithLocations(new List<int>() { SelectedLocationSearch.Id }));
         }
     }
 
@@ -1003,7 +1011,7 @@ public partial class FindViewModel : ObservableObject
         StopSlideshow();
         if (SelectedTagSearch != null)
         {
-            SearchResult = new SearchResult(model.DbAccess.SearchFilesWithTags(new List<int>() { SelectedTagSearch.Id }));
+            SearchResult = new SearchResult(dbAccess.SearchFilesWithTags(new List<int>() { SelectedTagSearch.Id }));
         }
     }
 
@@ -1031,12 +1039,12 @@ public partial class FindViewModel : ObservableObject
             }
 
             var result = new List<FilesModel>();
-            var personsWithAge = model.DbAccess.GetPersons().Where(p => p.DateOfBirth != null);
+            var personsWithAge = dbAccess.GetPersons().Where(p => p.DateOfBirth != null);
 
             foreach (var person in personsWithAge)
             {
                 var dateOfBirth = DatabaseParsing.ParsePersonDateOfBirth(person.DateOfBirth!);
-                foreach (var file in model.DbAccess.SearchFilesWithPersons(new List<int>() { person.Id }))
+                foreach (var file in dbAccess.SearchFilesWithPersons(new List<int>() { person.Id }))
                 {
                     var fileDatetime = DatabaseParsing.ParseFilesDatetime(file.Datetime);
                     if (fileDatetime != null)
@@ -1095,7 +1103,7 @@ public partial class FindViewModel : ObservableObject
     private void FindFilesFromMissingCategorization()
     {
         StopSlideshow();
-        SearchResult = new SearchResult(model.DbAccess.SearchFilesWithMissingData());
+        SearchResult = new SearchResult(dbAccess.SearchFilesWithMissingData());
     }
 
     [RelayCommand]
@@ -1105,7 +1113,7 @@ public partial class FindViewModel : ObservableObject
         if (!string.IsNullOrEmpty(FileListSearch))
         {
             var fileIds = Utils.CreateFileIds(FileListSearch);
-            SearchResult = new SearchResult(model.DbAccess.SearchFilesFromIds(fileIds));
+            SearchResult = new SearchResult(dbAccess.SearchFilesFromIds(fileIds));
         }
     }
 
@@ -1116,7 +1124,7 @@ public partial class FindViewModel : ObservableObject
         if (!string.IsNullOrEmpty(FileListSearch))
         {
             var fileIds = Utils.CreateFileIds(FileListSearch);
-            var allFiles = model.DbAccess.GetFiles();
+            var allFiles = dbAccess.GetFiles();
             var allFilesComplement = allFiles.Where(x => !fileIds.Contains(x.Id));
             SearchResult = new SearchResult(allFilesComplement);
         }
@@ -1190,25 +1198,25 @@ public partial class FindViewModel : ObservableObject
 
             var selection = SearchResult.Files[SearchResultIndex];
 
-            currentFilePersonList = model.DbAccess.GetPersonsFromFile(selection.Id);
+            currentFilePersonList = dbAccess.GetPersonsFromFile(selection.Id);
             OnPropertyChanged(nameof(SelectedPersonCanBeAdded));
             OnPropertyChanged(nameof(SelectedPersonCanBeRemoved));
 
-            currentFileLocationList = model.DbAccess.GetLocationsFromFile(selection.Id);
+            currentFileLocationList = dbAccess.GetLocationsFromFile(selection.Id);
             OnPropertyChanged(nameof(SelectedLocationCanBeAdded));
             OnPropertyChanged(nameof(SelectedLocationCanBeRemoved));
 
-            currentFileTagList = model.DbAccess.GetTagsFromFile(selection.Id);
+            currentFileTagList = dbAccess.GetTagsFromFile(selection.Id);
             OnPropertyChanged(nameof(SelectedTagCanBeAdded));
             OnPropertyChanged(nameof(SelectedTagCanBeRemoved));
 
             CurrentFileInternalDirectoryPath = Path.GetDirectoryName(selection.Path)!.Replace(@"\", "/");
             CurrentFileInternalPath = selection.Path;
-            CurrentFilePath = model.FilesystemAccess.ToAbsolutePath(selection.Path);
+            CurrentFilePath = filesystemAccess.ToAbsolutePath(selection.Path);
             CurrentFileDescription = selection.Description ?? string.Empty;
             CurrentFileDateTime = GetFileDateTimeString(selection.Datetime);
             CurrentFilePosition = selection.Position != null ? Utils.CreateShortFilePositionString(selection.Position) : string.Empty;
-            CurrentFilePositionLink = selection.Position != null ? Utils.CreatePositionUri(selection.Position, model.Config.LocationLink) : null;
+            CurrentFilePositionLink = selection.Position != null ? Utils.CreatePositionUri(selection.Position, config.LocationLink) : null;
             CurrentFilePersons = GetFilePersonsString(selection);
             CurrentFileLocations = GetFileLocationsString(selection.Id);
             CurrentFileTags = GetFileTagsString(selection.Id);
@@ -1226,7 +1234,7 @@ public partial class FindViewModel : ObservableObject
             }
 
             // Note: reading of orientation from Exif is done here to get correct visualization for files added to database before orientation was parsed
-            currentFileRotation = DatabaseParsing.OrientationToDegrees(selection.Orientation ?? model.FilesystemAccess.ParseFileMetadata(CurrentFilePath).Orientation);
+            currentFileRotation = DatabaseParsing.OrientationToDegrees(selection.Orientation ?? filesystemAccess.ParseFileMetadata(CurrentFilePath).Orientation);
 
             var uri = new Uri(CurrentFilePath, UriKind.Absolute);
             try
@@ -1348,7 +1356,7 @@ public partial class FindViewModel : ObservableObject
     private void AddFilePersonToCurrentFile(int personId)
     {
         var selection = SearchResult!.Files[SearchResultIndex];
-        var person = model.DbAccess.GetPersonById(personId);
+        var person = dbAccess.GetPersonById(personId);
 
         if (selection.Datetime != null)
         {
@@ -1375,9 +1383,9 @@ public partial class FindViewModel : ObservableObject
             }
         }
 
-        if (!model.DbAccess.GetPersonsFromFile(selection.Id).Any(p => p.Id == personId))
+        if (!dbAccess.GetPersonsFromFile(selection.Id).Any(p => p.Id == personId))
         {
-            model.DbAccess.InsertFilePerson(selection.Id, personId);
+            dbAccess.InsertFilePerson(selection.Id, personId);
             LoadFile(SearchResultIndex);
             AddUpdateHistoryItem(UpdateHistoryType.TogglePerson, personId, $"{person.Firstname} {person.Lastname}");
             prevEditedFileId = selection.Id;
@@ -1400,7 +1408,7 @@ public partial class FindViewModel : ObservableObject
         }
 
         var fileId = SearchResult!.Files[SearchResultIndex].Id;
-        model.DbAccess.DeleteFilePerson(fileId, SelectedPersonToUpdate.Id);
+        dbAccess.DeleteFilePerson(fileId, SelectedPersonToUpdate.Id);
         LoadFile(SearchResultIndex);
         AddUpdateHistoryItem(UpdateHistoryType.TogglePerson, SelectedPersonToUpdate.Id, SelectedPersonToUpdate.Name);
         prevEditedFileId = fileId;
@@ -1427,9 +1435,9 @@ public partial class FindViewModel : ObservableObject
     private void AddFileLocationToCurrentFile(LocationToUpdate location)
     {
         var fileId = SearchResult!.Files[SearchResultIndex].Id;
-        if (!model.DbAccess.GetLocationsFromFile(fileId).Any(l => l.Id == location.Id))
+        if (!dbAccess.GetLocationsFromFile(fileId).Any(l => l.Id == location.Id))
         {
-            model.DbAccess.InsertFileLocation(fileId, location.Id);
+            dbAccess.InsertFileLocation(fileId, location.Id);
             LoadFile(SearchResultIndex);
             AddUpdateHistoryItem(UpdateHistoryType.ToggleLocation, location.Id, location.Name);
             prevEditedFileId = fileId;
@@ -1452,7 +1460,7 @@ public partial class FindViewModel : ObservableObject
         }
 
         var fileId = SearchResult!.Files[SearchResultIndex].Id;
-        model.DbAccess.DeleteFileLocation(fileId, SelectedLocationToUpdate.Id);
+        dbAccess.DeleteFileLocation(fileId, SelectedLocationToUpdate.Id);
         LoadFile(SearchResultIndex);
         AddUpdateHistoryItem(UpdateHistoryType.ToggleLocation, SelectedLocationToUpdate.Id, SelectedLocationToUpdate.Name);
         prevEditedFileId = fileId;
@@ -1479,9 +1487,9 @@ public partial class FindViewModel : ObservableObject
     private void AddFileTagToCurrentFile(TagToUpdate tag)
     {
         var fileId = SearchResult!.Files[SearchResultIndex].Id;
-        if (!model.DbAccess.GetTagsFromFile(fileId).Any(t => t.Id == tag.Id))
+        if (!dbAccess.GetTagsFromFile(fileId).Any(t => t.Id == tag.Id))
         {
-            model.DbAccess.InsertFileTag(fileId, tag.Id);
+            dbAccess.InsertFileTag(fileId, tag.Id);
             LoadFile(SearchResultIndex);
             AddUpdateHistoryItem(UpdateHistoryType.ToggleTag, tag.Id, tag.Name);
             prevEditedFileId = fileId;
@@ -1504,7 +1512,7 @@ public partial class FindViewModel : ObservableObject
         }
 
         var fileId = SearchResult!.Files[SearchResultIndex].Id;
-        model.DbAccess.DeleteFileTag(fileId, SelectedTagToUpdate.Id);
+        dbAccess.DeleteFileTag(fileId, SelectedTagToUpdate.Id);
         LoadFile(SearchResultIndex);
         AddUpdateHistoryItem(UpdateHistoryType.ToggleTag, SelectedTagToUpdate.Id, SelectedTagToUpdate.Name);
         prevEditedFileId = fileId;
@@ -1522,7 +1530,7 @@ public partial class FindViewModel : ObservableObject
 
             try
             {
-                model.DbAccess.UpdateFileDescription(fileId, description);
+                dbAccess.UpdateFileDescription(fileId, description);
                 selection.Description = description;
                 LoadFile(SearchResultIndex);
                 prevEditedFileId = fileId;
@@ -1547,7 +1555,7 @@ public partial class FindViewModel : ObservableObject
 
             try
             {
-                model.DbAccess.UpdateFileDatetime(fileId, dateTime);
+                dbAccess.UpdateFileDatetime(fileId, dateTime);
                 selection.Datetime = dateTime;
                 LoadFile(SearchResultIndex);
                 prevEditedFileId = fileId;
@@ -1579,30 +1587,30 @@ public partial class FindViewModel : ObservableObject
 
         try
         {
-            var prevEditedFile = model.DbAccess.GetFileById(prevEditedFileId.Value)!;
+            var prevEditedFile = dbAccess.GetFileById(prevEditedFileId.Value)!;
             
-            var prevPersons = model.DbAccess.GetPersonsFromFile(prevEditedFileId.Value);
-            var prevLocations = model.DbAccess.GetLocationsFromFile(prevEditedFileId.Value);
-            var prevTags = model.DbAccess.GetTagsFromFile(prevEditedFileId.Value);
+            var prevPersons = dbAccess.GetPersonsFromFile(prevEditedFileId.Value);
+            var prevLocations = dbAccess.GetLocationsFromFile(prevEditedFileId.Value);
+            var prevTags = dbAccess.GetTagsFromFile(prevEditedFileId.Value);
 
-            var persons = model.DbAccess.GetPersonsFromFile(fileId);
-            var locations = model.DbAccess.GetLocationsFromFile(fileId);
-            var tags = model.DbAccess.GetTagsFromFile(fileId);
+            var persons = dbAccess.GetPersonsFromFile(fileId);
+            var locations = dbAccess.GetLocationsFromFile(fileId);
+            var tags = dbAccess.GetTagsFromFile(fileId);
 
             foreach (var person in prevPersons.Where(x => !persons.Select(x => x.Id).Contains(x.Id)))
             {
-                model.DbAccess.InsertFilePerson(fileId, person.Id);
+                dbAccess.InsertFilePerson(fileId, person.Id);
             }
             foreach (var location in prevLocations.Where(x => !locations.Select(x => x.Id).Contains(x.Id)))
             {
-                model.DbAccess.InsertFileLocation(fileId, location.Id);
+                dbAccess.InsertFileLocation(fileId, location.Id);
             }
             foreach (var tag in prevTags.Where(x => !tags.Select(x => x.Id).Contains(x.Id)))
             {
-                model.DbAccess.InsertFileTag(fileId, tag.Id);
+                dbAccess.InsertFileTag(fileId, tag.Id);
             }
             
-            model.DbAccess.UpdateFileDescription(fileId, prevEditedFile.Description);
+            dbAccess.UpdateFileDescription(fileId, prevEditedFile.Description);
             selection.Description = prevEditedFile.Description;
 
             LoadFile(SearchResultIndex);
@@ -1649,7 +1657,7 @@ public partial class FindViewModel : ObservableObject
 
             var selection = SearchResult!.Files[SearchResultIndex];
             var newOrientation = DatabaseParsing.DegreesToOrientation(cameraNewDegrees);
-            model.DbAccess.UpdateFileOrientation(selection.Id, newOrientation);
+            dbAccess.UpdateFileOrientation(selection.Id, newOrientation);
             selection.Orientation = newOrientation;
 
             LoadFile(SearchResultIndex);
@@ -1664,8 +1672,8 @@ public partial class FindViewModel : ObservableObject
             if (Dialogs.Instance.ShowConfirmDialog("Reload orientation from file meta-data?"))
             {
                 var selection = SearchResult!.Files[SearchResultIndex];
-                var fileMetadata = model.FilesystemAccess.ParseFileMetadata(model.FilesystemAccess.ToAbsolutePath(selection.Path));
-                model.DbAccess.UpdateFileOrientation(selection.Id, fileMetadata.Orientation);
+                var fileMetadata = filesystemAccess.ParseFileMetadata(filesystemAccess.ToAbsolutePath(selection.Path));
+                dbAccess.UpdateFileOrientation(selection.Id, fileMetadata.Orientation);
                 selection.Orientation = fileMetadata.Orientation;
                 LoadFile(SearchResultIndex);
             }
@@ -1680,9 +1688,9 @@ public partial class FindViewModel : ObservableObject
             if (Dialogs.Instance.ShowConfirmDialog("Reload date and GPS position from file meta-data?"))
             {
                 var selection = SearchResult!.Files[SearchResultIndex];
-                model.DbAccess.UpdateFileFromMetaData(selection.Id, model.FilesystemAccess);
+                dbAccess.UpdateFileFromMetaData(selection.Id, filesystemAccess);
 
-                var updatedFile = model.DbAccess.GetFileById(selection.Id)!;
+                var updatedFile = dbAccess.GetFileById(selection.Id)!;
                 selection.Datetime = updatedFile.Datetime;
                 selection.Position = updatedFile.Position;
                 selection.Orientation = updatedFile.Orientation;
@@ -1707,7 +1715,7 @@ public partial class FindViewModel : ObservableObject
         var newLocation = Dialogs.Instance.ShowAddLocationDialog();
         if (newLocation != null)
         {
-            AddFileLocationToCurrentFile(new LocationToUpdate(newLocation.Id, newLocation.Name, Utils.CreateShortText(newLocation.Name, model.Config.ShortItemNameMaxLength)));
+            AddFileLocationToCurrentFile(new LocationToUpdate(newLocation.Id, newLocation.Name, Utils.CreateShortText(newLocation.Name, config.ShortItemNameMaxLength)));
         }
     }
 
@@ -1717,16 +1725,16 @@ public partial class FindViewModel : ObservableObject
         var newTag = Dialogs.Instance.ShowAddTagDialog();
         if (newTag != null)
         {
-            AddFileTagToCurrentFile(new TagToUpdate(newTag.Id, newTag.Name, Utils.CreateShortText(newTag.Name, model.Config.ShortItemNameMaxLength)));
+            AddFileTagToCurrentFile(new TagToUpdate(newTag.Id, newTag.Name, Utils.CreateShortText(newTag.Name, config.ShortItemNameMaxLength)));
         }
     }
 
     private void ReloadPersons()
     {
         Persons.Clear();
-        var persons = model.DbAccess.GetPersons().ToList();
+        var persons = dbAccess.GetPersons().ToList();
         persons.Sort(new PersonModelByNameSorter());
-        foreach (var person in persons.Select(p => new PersonToUpdate(p.Id, $"{p.Firstname} {p.Lastname}", Utils.CreateShortText($"{p.Firstname} {p.Lastname}", model.Config.ShortItemNameMaxLength))))
+        foreach (var person in persons.Select(p => new PersonToUpdate(p.Id, $"{p.Firstname} {p.Lastname}", Utils.CreateShortText($"{p.Firstname} {p.Lastname}", config.ShortItemNameMaxLength))))
         {
             Persons.Add(person);
         }
@@ -1737,12 +1745,12 @@ public partial class FindViewModel : ObservableObject
         Locations.Clear();
         LocationsWithPosition.Clear();
         
-        var locations = model.DbAccess.GetLocations().ToList();
+        var locations = dbAccess.GetLocations().ToList();
         locations.Sort(new LocationModelByNameSorter());
         
         foreach (var location in locations)
         {
-            var locationToUpdate = new LocationToUpdate(location.Id, location.Name, Utils.CreateShortText(location.Name, model.Config.ShortItemNameMaxLength));
+            var locationToUpdate = new LocationToUpdate(location.Id, location.Name, Utils.CreateShortText(location.Name, config.ShortItemNameMaxLength));
             Locations.Add(locationToUpdate);
             if (location.Position != null)
             {
@@ -1754,9 +1762,9 @@ public partial class FindViewModel : ObservableObject
     private void ReloadTags()
     {
         Tags.Clear();
-        var tags = model.DbAccess.GetTags().ToList();
+        var tags = dbAccess.GetTags().ToList();
         tags.Sort(new TagModelByNameSorter());
-        foreach (var tag in tags.Select(t => new TagToUpdate(t.Id, t.Name, Utils.CreateShortText(t.Name, model.Config.ShortItemNameMaxLength))))
+        foreach (var tag in tags.Select(t => new TagToUpdate(t.Id, t.Name, Utils.CreateShortText(t.Name, config.ShortItemNameMaxLength))))
         {
             Tags.Add(tag);
         }
@@ -1786,7 +1794,7 @@ public partial class FindViewModel : ObservableObject
                     ItemId = itemId,
                     ItemName = itemName,
                     FunctionKey = i,
-                    ShortItemName = Utils.CreateShortText(itemName, model.Config.ShortItemNameMaxLength),
+                    ShortItemName = Utils.CreateShortText(itemName, config.ShortItemNameMaxLength),
                 });
 
                 OnPropertyChanged(nameof(HasUpdateHistory));
@@ -1827,9 +1835,9 @@ public partial class FindViewModel : ObservableObject
         {
             case UpdateHistoryType.TogglePerson:
                 var personId = historyItem.ItemId;
-                if (model.DbAccess.GetPersonsFromFile(fileId).Any(x => x.Id == personId))
+                if (dbAccess.GetPersonsFromFile(fileId).Any(x => x.Id == personId))
                 {
-                    model.DbAccess.DeleteFilePerson(fileId, personId);
+                    dbAccess.DeleteFilePerson(fileId, personId);
                 }
                 else
                 {
@@ -1839,25 +1847,25 @@ public partial class FindViewModel : ObservableObject
 
             case UpdateHistoryType.ToggleLocation:
                 var locationId = historyItem.ItemId;
-                if (model.DbAccess.GetLocationsFromFile(fileId).Any(x => x.Id == locationId))
+                if (dbAccess.GetLocationsFromFile(fileId).Any(x => x.Id == locationId))
                 {
-                    model.DbAccess.DeleteFileLocation(fileId, locationId);
+                    dbAccess.DeleteFileLocation(fileId, locationId);
                 }
                 else
                 {
-                    model.DbAccess.InsertFileLocation(fileId, locationId);
+                    dbAccess.InsertFileLocation(fileId, locationId);
                 }
                 break;
 
             case UpdateHistoryType.ToggleTag:
                 var tagId = historyItem.ItemId;
-                if (model.DbAccess.GetTagsFromFile(fileId).Any(x => x.Id == tagId))
+                if (dbAccess.GetTagsFromFile(fileId).Any(x => x.Id == tagId))
                 {
-                    model.DbAccess.DeleteFileTag(fileId, tagId);
+                    dbAccess.DeleteFileTag(fileId, tagId);
                 }
                 else
                 {
-                    model.DbAccess.InsertFileTag(fileId, tagId);
+                    dbAccess.InsertFileTag(fileId, tagId);
                 }
                 break;
         }
@@ -1914,7 +1922,7 @@ public partial class FindViewModel : ObservableObject
     {
         StopSlideshow();
         var fileIds = Utils.CreateFileIds(CombineSearchResult);
-        var files = model.DbAccess.SearchFilesFromIds(fileIds);
+        var files = dbAccess.SearchFilesFromIds(fileIds);
         SearchResult = new SearchResult(files);
     }
 

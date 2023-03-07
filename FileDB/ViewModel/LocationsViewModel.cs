@@ -4,8 +4,10 @@ using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using FileDB.Configuration;
 using FileDB.Model;
 using FileDB.Sorters;
+using FileDBInterface.DbAccess;
 
 namespace FileDB.ViewModel;
 
@@ -14,7 +16,7 @@ public record Location(int Id, string Name, string? Description, string? Positio
 public partial class LocationsViewModel : ObservableObject
 {
     [ObservableProperty]
-    private bool readWriteMode = !Model.Model.Instance.Config.ReadOnly;
+    private bool readWriteMode;
 
     public ObservableCollection<Location> Locations { get; } = new();
 
@@ -24,10 +26,16 @@ public partial class LocationsViewModel : ObservableObject
 
     public bool SelectedLocationHasPosition => SelectedLocation != null && !string.IsNullOrEmpty(SelectedLocation.Position);
 
-    private readonly Model.Model model = Model.Model.Instance;
+    private Config config;
+    private readonly IDbAccess dbAccess;
 
-    public LocationsViewModel()
+    public LocationsViewModel(Config config, IDbAccess dbAccess)
     {
+        this.config = config;
+        this.dbAccess = dbAccess;
+
+        readWriteMode = !config.ReadOnly;
+
         ReloadLocations();
 
         WeakReferenceMessenger.Default.Register<LocationsUpdated>(this, (r, m) =>
@@ -37,7 +45,8 @@ public partial class LocationsViewModel : ObservableObject
 
         WeakReferenceMessenger.Default.Register<ConfigLoaded>(this, (r, m) =>
         {
-            ReadWriteMode = !model.Config.ReadOnly;
+            this.config = m.Config;
+            ReadWriteMode = !this.config.ReadOnly;
         });
     }
 
@@ -46,10 +55,10 @@ public partial class LocationsViewModel : ObservableObject
     {
         if (Dialogs.Instance.ShowConfirmDialog($"Remove {SelectedLocation!.Name}?"))
         {
-            var filesWithLocation = model.DbAccess.SearchFilesWithLocations(new List<int>() { SelectedLocation.Id }).ToList();
+            var filesWithLocation = dbAccess.SearchFilesWithLocations(new List<int>() { SelectedLocation.Id }).ToList();
             if (filesWithLocation.Count == 0 || Dialogs.Instance.ShowConfirmDialog($"Location is used in {filesWithLocation.Count} files, remove anyway?"))
             {
-                model.DbAccess.DeleteLocation(SelectedLocation.Id);
+                dbAccess.DeleteLocation(SelectedLocation.Id);
                 WeakReferenceMessenger.Default.Send(new LocationsUpdated());
             }
         }
@@ -70,7 +79,7 @@ public partial class LocationsViewModel : ObservableObject
     [RelayCommand]
     private void ShowLocationOnMap()
     {
-        var link = Utils.CreatePositionLink(SelectedLocation!.Position, model.Config.LocationLink);
+        var link = Utils.CreatePositionLink(SelectedLocation!.Position, config.LocationLink);
         if (link != null)
         {
             Utils.OpenUriInBrowser(link);
@@ -87,7 +96,7 @@ public partial class LocationsViewModel : ObservableObject
     {
         Locations.Clear();
 
-        var locations = model.DbAccess.GetLocations().ToList();
+        var locations = dbAccess.GetLocations().ToList();
         locations.Sort(new LocationModelByNameSorter());
         foreach (var location in locations.Select(lm => new Location(lm.Id, lm.Name, lm.Description, lm.Position)))
         {

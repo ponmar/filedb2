@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using FileDB.Model;
+using FileDBInterface.DbAccess;
 using FileDBInterface.Exceptions;
 using FileDBShared.Model;
 using System.Linq;
@@ -24,19 +25,20 @@ public partial class AddLocationViewModel : ObservableObject
     [ObservableProperty]
     private string? position = string.Empty;
 
-    private readonly Model.Model model = Model.Model.Instance;
+    private readonly IDbAccess dbAccess;
 
     public LocationModel? AffectedLocation { get; private set; }
 
-    public AddLocationViewModel(int? locationId = null)
+    public AddLocationViewModel(IDbAccess dbAccess, int? locationId = null)
     {
+        this.dbAccess = dbAccess;
         this.locationId = locationId;
 
         title = locationId.HasValue ? "Edit Location" : "Add Location";
 
         if (locationId.HasValue)
         {
-            var locationModel = model.DbAccess.GetLocationById(locationId.Value);
+            var locationModel = dbAccess.GetLocationById(locationId.Value);
             Name = locationModel.Name;
             Description = locationModel.Description ?? string.Empty;
             Position = locationModel.Position ?? string.Empty;
@@ -61,19 +63,19 @@ public partial class AddLocationViewModel : ObservableObject
 
             if (locationId.HasValue)
             {
-                model.DbAccess.UpdateLocation(location);
-                AffectedLocation = model.DbAccess.GetLocationById(location.Id);
+                dbAccess.UpdateLocation(location);
+                AffectedLocation = dbAccess.GetLocationById(location.Id);
             }
             else
             {
-                if (model.DbAccess.GetLocations().Any(x => x.Name == location.Name))
+                if (dbAccess.GetLocations().Any(x => x.Name == location.Name))
                 {
                     Dialogs.Instance.ShowErrorDialog($"Location '{location.Name}' already added");
                     return;
                 }
 
-                model.DbAccess.InsertLocation(location);
-                AffectedLocation = model.DbAccess.GetLocations().First(x => x.Name == location.Name);
+                dbAccess.InsertLocation(location);
+                AffectedLocation = dbAccess.GetLocations().First(x => x.Name == location.Name);
             }
 
             WeakReferenceMessenger.Default.Send(new CloseModalDialogRequested());

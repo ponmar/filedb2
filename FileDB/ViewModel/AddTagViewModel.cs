@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using FileDB.Model;
+using FileDBInterface.DbAccess;
 using FileDBInterface.Exceptions;
 using FileDBShared.Model;
 using System.Linq;
@@ -18,19 +19,20 @@ public partial class AddTagViewModel : ObservableObject
     [ObservableProperty]
     private string name = string.Empty;
 
-    private readonly Model.Model model = Model.Model.Instance;
-
     public TagModel? AffectedTag { get; private set; }
 
-    public AddTagViewModel(int? tagId = null)
+    private IDbAccess dbAccess;
+
+    public AddTagViewModel(IDbAccess dbAccess, int? tagId = null)
     {
+        this.dbAccess = dbAccess;
         this.tagId = tagId;
 
         title = tagId.HasValue ? "Edit Tag" : "Add Tag";
 
         if (tagId.HasValue)
         {
-            var tagModel = model.DbAccess.GetTagById(tagId.Value);
+            var tagModel = dbAccess.GetTagById(tagId.Value);
             Name = tagModel.Name;
         }
     }
@@ -44,19 +46,19 @@ public partial class AddTagViewModel : ObservableObject
 
             if (tagId.HasValue)
             {
-                model.DbAccess.UpdateTag(tag);
-                AffectedTag = model.DbAccess.GetTagById(tag.Id);
+                dbAccess.UpdateTag(tag);
+                AffectedTag = dbAccess.GetTagById(tag.Id);
             }
             else
             {
-                if (model.DbAccess.GetTags().Any(x => x.Name == tag.Name))
+                if (dbAccess.GetTags().Any(x => x.Name == tag.Name))
                 {
                     Dialogs.Instance.ShowErrorDialog($"Tag '{tag.Name}' already added");
                     return;
                 }
 
-                model.DbAccess.InsertTag(tag);
-                AffectedTag = model.DbAccess.GetTags().First(x => x.Name == tag.Name);
+                dbAccess.InsertTag(tag);
+                AffectedTag = dbAccess.GetTags().First(x => x.Name == tag.Name);
             }
 
             WeakReferenceMessenger.Default.Send(new CloseModalDialogRequested());

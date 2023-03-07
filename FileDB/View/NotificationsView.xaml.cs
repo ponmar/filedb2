@@ -11,6 +11,7 @@ public partial class NotificationsView : UserControl
     public NotificationsView()
     {
         InitializeComponent();
-        DataContext = new NotificationsViewModel();
+        var model = Model.Model.Instance;
+        DataContext = new NotificationsViewModel(model.Config, model.DbAccess, model.NotifierFactory, model);
     }
 }

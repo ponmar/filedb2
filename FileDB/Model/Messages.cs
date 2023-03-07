@@ -1,10 +1,11 @@
-﻿using FileDBShared.Model;
+﻿using FileDB.Configuration;
+using FileDBShared.Model;
 using System.Collections.Generic;
 using System.Windows.Media.Imaging;
 
 namespace FileDB.Model;
 
-public record ConfigLoaded;
+public record ConfigLoaded(Config Config);
 public record NotificationsUpdated;
 public record DateChanged;
 

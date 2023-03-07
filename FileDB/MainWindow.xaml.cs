@@ -11,7 +11,8 @@ namespace FileDB
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainViewModel();
+            var model = Model.Model.Instance;
+            DataContext = new MainViewModel(model.Config, model);
         }
 
         private void TabItem_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)

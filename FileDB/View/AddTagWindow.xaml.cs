@@ -10,12 +10,10 @@ namespace FileDB.View;
 /// </summary>
 public partial class AddTagWindow : Window
 {
-    private readonly Model.Model model = Model.Model.Instance;
-
     public AddTagWindow(int? tagId = null)
     {
         InitializeComponent();
-        DataContext = new AddTagViewModel(tagId);
+        DataContext = new AddTagViewModel(Model.Model.Instance.DbAccess, tagId);
 
         WeakReferenceMessenger.Default.Register<CloseModalDialogRequested>(this, (r, m) =>
         {

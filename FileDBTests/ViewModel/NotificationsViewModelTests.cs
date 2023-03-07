@@ -1,10 +1,10 @@
-﻿using FakeItEasy;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using FakeItEasy;
 using FileDB.Configuration;
 using FileDB.Model;
 using FileDB.Notifiers;
 using FileDB.ViewModel;
 using FileDBInterface.DbAccess;
-using FileDBInterface.FilesystemAccess;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -15,38 +15,33 @@ namespace FileDBTests.ViewModel;
 public class NotificationsViewModelTests
 {
     private IDbAccess fakeDbAccess;
-    private IFilesystemAccess fakeFilsystemAccess;
     private INotifierFactory fakeNotifierFactory;
+    private INotificationHandling fakeNotificationHandling;
 
-    private Model model;
     private NotificationsViewModel viewModel;
 
     [TestInitialize]
     public void Initialize()
     {
-        model = Model.Instance;
-
         fakeDbAccess = A.Fake<IDbAccess>();
-        fakeFilsystemAccess = A.Fake<IFilesystemAccess>();
         fakeNotifierFactory = A.Fake<INotifierFactory>();
+        fakeNotificationHandling = A.Fake<INotificationHandling>();
 
-        model.InitConfig(DefaultConfigs.Default, fakeDbAccess, fakeFilsystemAccess, fakeNotifierFactory);
-
-        A.CallTo(() => model.NotifierFactory.GetContinousNotifiers()).Returns(new List<INotifier>());
-        A.CallTo(() => model.NotifierFactory.GetStartupNotifiers()).Returns(new List<INotifier>());
+        A.CallTo(() => fakeNotifierFactory.GetContinousNotifiers(A<Config>._, A<IDbAccess>._)).Returns(new List<INotifier>());
+        A.CallTo(() => fakeNotifierFactory.GetStartupNotifiers(A<Config>._, A<IDbAccess>._)).Returns(new List<INotifier>());
     }
 
     [TestCleanup]
     public void Cleanup()
     {
         viewModel.Close();
-        model.ClearNotifications();
     }
 
     [TestMethod]
     public void Constructor_NoNotifications()
     {
-        viewModel = new NotificationsViewModel();
+        var config = new ConfigBuilder().Build();
+        viewModel = new NotificationsViewModel(config, fakeDbAccess, fakeNotifierFactory, fakeNotificationHandling);
 
         Assert.AreEqual(0, viewModel.Notifications.Count);
     }
@@ -55,9 +50,10 @@ public class NotificationsViewModelTests
     public void Constructor_SomeNotifications()
     {
         var initialNotifications = SomeNotifications();
-        initialNotifications.ForEach(model.AddNotification);
-
-        viewModel = new NotificationsViewModel();
+        A.CallTo(() => fakeNotificationHandling.Notifications).Returns(initialNotifications);
+        
+        var config = new ConfigBuilder().Build();
+        viewModel = new NotificationsViewModel(config, fakeDbAccess, fakeNotifierFactory, fakeNotificationHandling);
 
         Assert.AreEqual(initialNotifications.Count, viewModel.Notifications.Count);
     }
@@ -65,15 +61,16 @@ public class NotificationsViewModelTests
     [TestMethod]
     public void NotificationsUpdated()
     {
-        var initialNotifications = SomeNotifications();
-        initialNotifications.ForEach(model.AddNotification);
+        var notifications = SomeNotifications();
+        A.CallTo(() => fakeNotificationHandling.Notifications).Returns(notifications);
 
-        viewModel = new NotificationsViewModel();
+        var config = new ConfigBuilder().Build();
+        viewModel = new NotificationsViewModel(config, fakeDbAccess, fakeNotifierFactory, fakeNotificationHandling);
         
-        var newNotifications = SomeNotifications();
-        newNotifications.ForEach(model.AddNotification);
+        notifications.AddRange(SomeNotifications());
+        WeakReferenceMessenger.Default.Send(new NotificationsUpdated());
 
-        Assert.AreEqual(initialNotifications.Count + newNotifications.Count, viewModel.Notifications.Count);
+        Assert.AreEqual(notifications.Count, viewModel.Notifications.Count);
     }
 
     private static List<Notification> SomeNotifications()
