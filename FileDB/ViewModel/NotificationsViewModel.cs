@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
 using FileDB.Configuration;
 using FileDB.Model;
 using FileDB.Notifiers;

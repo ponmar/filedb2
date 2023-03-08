@@ -18,7 +18,6 @@ using FileDB.Configuration;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Extensions;
-using CommunityToolkit.Mvvm.Messaging;
 using FileDB.Model;
 using FileDBShared.Validators;
 using FileDBInterface.FilesystemAccess;

@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
 using FileDB.Configuration;
 using FileDB.Export;
 using FileDB.Model;

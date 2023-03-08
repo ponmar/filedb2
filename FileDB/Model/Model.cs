@@ -5,7 +5,6 @@ using FileDB.Configuration;
 using FileDB.Notifiers;
 using FileDBInterface.DbAccess;
 using FileDBInterface.FilesystemAccess;
-using CommunityToolkit.Mvvm.Messaging;
 
 namespace FileDB.Model;
 

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
 using FileDB.Model;
 using FileDBInterface.DbAccess;
 using FileDBInterface.Exceptions;

@@ -1,5 +1,4 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
-using FileDB.Model;
+﻿using FileDB.Model;
 using FileDB.ViewModel;
 using System.Windows;
 using System.Windows.Media;
