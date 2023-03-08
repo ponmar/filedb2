@@ -51,7 +51,7 @@ public class Model : INotificationHandling, IConfigSaver
         if (date.Date != now.Date)
         {
             date = now;
-            WeakReferenceMessenger.Default.Send(new DateChanged());
+            Events.Send<DateChanged>();
         }
     }
 
@@ -59,7 +59,7 @@ public class Model : INotificationHandling, IConfigSaver
     {
         Notifications.RemoveAll(x => x.Message == notification.Message);
         Notifications.Add(notification);
-        WeakReferenceMessenger.Default.Send(new NotificationsUpdated());
+        Events.Send<NotificationsUpdated>();
     }
 
     public void AddNotification(NotificationType type, string message)
@@ -72,7 +72,7 @@ public class Model : INotificationHandling, IConfigSaver
         if (Notifications.Count > 0)
         {
             Notifications.Clear();
-            WeakReferenceMessenger.Default.Send(new NotificationsUpdated());
+            Events.Send<NotificationsUpdated>();
         }
     }
 
@@ -84,8 +84,7 @@ public class Model : INotificationHandling, IConfigSaver
         DbAccess = dbAccess;
         FilesystemAccess = filesystemAccess;
         NotifierFactory = notifierFactory;
-
-        WeakReferenceMessenger.Default.Send(new ConfigLoaded(config));
+        Events.Send(new ConfigLoaded(config));
     }
 
     public void UpdateConfig(Config config)
@@ -93,7 +92,6 @@ public class Model : INotificationHandling, IConfigSaver
         Config = config;
         DbAccess.Database = config.Database;
         FilesystemAccess.FilesRootDirectory = config.FilesRootDirectory;
-
-        WeakReferenceMessenger.Default.Send(new ConfigLoaded(config));
+        Events.Send(new ConfigLoaded(config));
     }
 }

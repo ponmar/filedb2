@@ -68,9 +68,9 @@ public partial class FilesViewModel : ObservableObject
 
         subdirToScan = config.FilesRootDirectory;
 
-        WeakReferenceMessenger.Default.Register<ConfigLoaded>(this, (r, m) =>
+        this.RegisterForEvent<ConfigLoaded>((x) =>
         {
-            this.config = m.Config;
+            this.config = x.Config;
             SubdirToScan = this.config.FilesRootDirectory;
         });
     }
@@ -204,7 +204,7 @@ public partial class FilesViewModel : ObservableObject
                     ImportedFileList = Utils.CreateFileList(importedFiles);
                     ImportResult = importedFiles.Count > 0 ? $"{importedFiles.Count} files added." : string.Empty;
 
-                    WeakReferenceMessenger.Default.Send(new FilesImported(importedFiles));
+                    Events.Send(new FilesImported(importedFiles));
 
                     filesToAdd.ForEach(x => NewFiles.Remove(x));
                     OnPropertyChanged(nameof(NewFilesSelected));

@@ -80,8 +80,8 @@ public partial class AddLocationViewModel : ObservableObject
                 AffectedLocation = dbAccess.GetLocations().First(x => x.Name == location.Name);
             }
 
-            WeakReferenceMessenger.Default.Send(new CloseModalDialogRequested());
-            WeakReferenceMessenger.Default.Send(new LocationsUpdated());
+            Events.Send<CloseModalDialogRequested>();
+            Events.Send<LocationsUpdated>();
         }
         catch (DataValidationException e)
         {

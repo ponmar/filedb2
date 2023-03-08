@@ -73,13 +73,13 @@ public partial class RipViewModel : ObservableObject
 
         UpdatePersons();
 
-        WeakReferenceMessenger.Default.Register<ConfigLoaded>(this, (r, m) =>
+        this.RegisterForEvent<ConfigLoaded>((x) =>
         {
-            this.config = m.Config;
+            this.config = x.Config;
             UpdatePersons();
         });
 
-        WeakReferenceMessenger.Default.Register<PersonsUpdated>(this, (r, m) =>
+        this.RegisterForEvent<PersonsUpdated>((x) =>
         {
             UpdatePersons();
         });

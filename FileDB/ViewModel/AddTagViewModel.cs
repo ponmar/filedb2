@@ -63,8 +63,8 @@ public partial class AddTagViewModel : ObservableObject
                 AffectedTag = dbAccess.GetTags().First(x => x.Name == tag.Name);
             }
 
-            WeakReferenceMessenger.Default.Send(new CloseModalDialogRequested());
-            WeakReferenceMessenger.Default.Send(new TagsUpdated());
+            Events.Send<CloseModalDialogRequested>();
+            Events.Send<TagsUpdated>();
         }
         catch (DataValidationException e)
         {

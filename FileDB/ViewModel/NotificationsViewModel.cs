@@ -30,18 +30,18 @@ public partial class NotificationsViewModel : ObservableObject
         this.notifierFactory = notifierFactory;
         this.notificationHandling = notificationHandling;
 
-        WeakReferenceMessenger.Default.Register<ConfigLoaded>(this, (r, m) =>
+        this.RegisterForEvent<ConfigLoaded>((x) =>
         {
-            this.config = m.Config;
+            this.config = x.Config;
             RunAllNotifiers();
         });
 
-        WeakReferenceMessenger.Default.Register<NotificationsUpdated>(this, (r, m) =>
+        this.RegisterForEvent<NotificationsUpdated>((x) =>
         {
             LoadNotifications();
         });
 
-        WeakReferenceMessenger.Default.Register<PersonsUpdated>(this, (r, m) =>
+        this.RegisterForEvent<PersonsUpdated>((x) =>
         {
             RunContinousNotifiers();
         });

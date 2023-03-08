@@ -15,10 +15,7 @@ namespace FileDB.View
             InitializeComponent();
             DataContext = new BrowseDirectoriesViewModel(Model.Model.Instance.DbAccess);
 
-            WeakReferenceMessenger.Default.Register<CloseModalDialogRequested>(this, (r, m) =>
-            {
-                Close();
-            });
+            this.RegisterForEvent<CloseModalDialogRequested>((x) => Close());
         }
     }
 }

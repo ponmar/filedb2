@@ -40,14 +40,11 @@ public partial class LocationsViewModel : ObservableObject
 
         ReloadLocations();
 
-        WeakReferenceMessenger.Default.Register<LocationsUpdated>(this, (r, m) =>
-        {
-            ReloadLocations();
-        });
+        this.RegisterForEvent<LocationsUpdated>((x) => ReloadLocations());
 
-        WeakReferenceMessenger.Default.Register<ConfigLoaded>(this, (r, m) =>
+        this.RegisterForEvent<ConfigLoaded>((x) =>
         {
-            this.config = m.Config;
+            this.config = x.Config;
             ReadWriteMode = !this.config.ReadOnly;
         });
     }
@@ -61,7 +58,7 @@ public partial class LocationsViewModel : ObservableObject
             if (filesWithLocation.Count == 0 || dialogs.ShowConfirmDialog($"Location is used in {filesWithLocation.Count} files, remove anyway?"))
             {
                 dbAccess.DeleteLocation(SelectedLocation.Id);
-                WeakReferenceMessenger.Default.Send(new LocationsUpdated());
+                Events.Send<LocationsUpdated>();
             }
         }
     }

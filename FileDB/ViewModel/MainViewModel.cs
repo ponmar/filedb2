@@ -59,21 +59,21 @@ public partial class MainViewModel : ObservableObject
         NumNotifications = notificationHandling.Notifications.Count;
         HighlightedNotificationType = NotificationsToType();
 
-        WeakReferenceMessenger.Default.Register<NotificationsUpdated>(this, (r, m) =>
+        this.RegisterForEvent<NotificationsUpdated>((x) =>
         {
             NumNotifications = notificationHandling.Notifications.Count;
             HighlightedNotificationType = NotificationsToType();
         });
 
-        WeakReferenceMessenger.Default.Register<FullscreenBrowsingRequested>(this, (r, m) =>
+        this.RegisterForEvent<FullscreenBrowsingRequested>((x) =>
         {
-            WindowState = m.Fullscreen ? WindowState.Maximized : DefaultWindowState;
-            WindowStyle = m.Fullscreen ? WindowStyle.None : DefaultWindowStyle;
+            WindowState = x.Fullscreen ? WindowState.Maximized : DefaultWindowState;
+            WindowStyle = x.Fullscreen ? WindowStyle.None : DefaultWindowStyle;
         });
 
-        WeakReferenceMessenger.Default.Register<ConfigLoaded>(this, (r, m) =>
+        this.RegisterForEvent<ConfigLoaded>((x) =>
         {
-            this.config = m.Config;
+            this.config = x.Config;
             ReadWriteMode = !this.config.ReadOnly;
             OnPropertyChanged(nameof(Title));
         });

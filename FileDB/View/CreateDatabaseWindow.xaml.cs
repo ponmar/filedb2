@@ -16,10 +16,7 @@ namespace FileDB.View
             var model = Model.Model.Instance;
             DataContext = new CreateDatabaseViewModel(model.Dialogs);
 
-            WeakReferenceMessenger.Default.Register<CloseModalDialogRequested>(this, (r, m) =>
-            {
-                Close();
-            });
+            this.RegisterForEvent<CloseModalDialogRequested>((x) => Close());
         }
     }
 }

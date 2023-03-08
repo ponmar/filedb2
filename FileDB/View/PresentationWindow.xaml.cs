@@ -17,9 +17,9 @@ public partial class PresentationWindow : Window
         InitializeComponent();
         DataContext = FindViewModel.Instance;
 
-        WeakReferenceMessenger.Default.Register<ShowImage>(this, (r, m) => ShowImage(m.Image, m.RotateDegrees));
+        this.RegisterForEvent<ShowImage>((x) => ShowImage(x.Image, x.RotateDegrees));
 
-        WeakReferenceMessenger.Default.Register<CloseImage>(this, (r, m) =>
+        this.RegisterForEvent<CloseImage>((x) =>
         {
             CurrentFileImage.Source = null;
         });

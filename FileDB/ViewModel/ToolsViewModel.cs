@@ -66,9 +66,9 @@ public partial class ToolsViewModel : ObservableObject
         this.dialogs = dialogs;
         ScanBackupFiles();
 
-        WeakReferenceMessenger.Default.Register<ConfigLoaded>(this, (r, m) =>
+        this.RegisterForEvent<ConfigLoaded>((x) =>
         {
-            this.config = m.Config;
+            this.config = x.Config;
         });
     }
 

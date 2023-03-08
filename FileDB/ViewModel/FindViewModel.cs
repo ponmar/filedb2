@@ -118,7 +118,7 @@ public partial class FindViewModel : ObservableObject
 
     partial void OnMaximizeChanged(bool value)
     {
-        WeakReferenceMessenger.Default.Send(new FullscreenBrowsingRequested(value));
+        Events.Send(new FullscreenBrowsingRequested(value));
     }
 
     [ObservableProperty]
@@ -509,38 +509,26 @@ public partial class FindViewModel : ObservableObject
         ReloadLocations();
         ReloadTags();
 
-        WeakReferenceMessenger.Default.Register<FilesImported>(this, (r, m) =>
+        this.RegisterForEvent<FilesImported>((x) =>
         {
-            ImportedFileList = Utils.CreateFileList(m.Files);
+            ImportedFileList = Utils.CreateFileList(x.Files);
         });
-
+        
         slideshowTimer.Tick += SlideshowTimer_Tick;
         slideshowTimer.Interval = TimeSpan.FromSeconds(config.SlideshowDelay);
 
-        WeakReferenceMessenger.Default.Register<PersonsUpdated>(this, (r, m) =>
-        {
-            ReloadPersons();
-        });
+        this.RegisterForEvent<PersonsUpdated>((x) => ReloadPersons());
+        this.RegisterForEvent<LocationsUpdated>((x) => ReloadLocations());
+        this.RegisterForEvent<TagsUpdated>((x) => ReloadTags());
 
-        WeakReferenceMessenger.Default.Register<LocationsUpdated>(this, (r, m) =>
+        this.RegisterForEvent<ConfigLoaded>((x) =>
         {
-            ReloadLocations();
-        });
-
-        WeakReferenceMessenger.Default.Register<TagsUpdated>(this, (r, m) =>
-        {
-            ReloadTags();
-        });
-
-        WeakReferenceMessenger.Default.Register<ConfigLoaded>(this, (r, m) =>
-        {
-            this.config = m.Config;
+            this.config = x.Config;
             ReadWriteMode = !this.config.ReadOnly;
             slideshowTimer.Interval = TimeSpan.FromSeconds(this.config.SlideshowDelay);
 
             OnPropertyChanged(nameof(LargeTextMode));
         });
-
     }
 
     [RelayCommand]
@@ -1231,7 +1219,7 @@ public partial class FindViewModel : ObservableObject
             {
                 CurrentFileLoadError = "File type not supported.";
                 currentFileImage = null;
-                WeakReferenceMessenger.Default.Send(new CloseImage());
+                Events.Send<CloseImage>();
                 return;
             }
 
@@ -1243,25 +1231,25 @@ public partial class FindViewModel : ObservableObject
             {
                 CurrentFileLoadError = string.Empty;
                 currentFileImage = new BitmapImage(uri);
-                WeakReferenceMessenger.Default.Send(new ShowImage(currentFileImage, -currentFileRotation));
+                Events.Send(new ShowImage(currentFileImage, -currentFileRotation));
             }
             catch (WebException e)
             {
                 CurrentFileLoadError = $"Image loading error:\n{e.Message}";
                 currentFileImage = null;
-                WeakReferenceMessenger.Default.Send(new CloseImage());
+                Events.Send<CloseImage>();
             }
             catch (IOException e)
             {
                 CurrentFileLoadError = $"Image loading error:\n{e.Message}";
                 currentFileImage = null;
-                WeakReferenceMessenger.Default.Send(new CloseImage());
+                Events.Send<CloseImage>();
             }
             catch (NotSupportedException e)
             {
                 CurrentFileLoadError = $"File format not supported:\n{e.Message}";
                 currentFileImage = null;
-                WeakReferenceMessenger.Default.Send(new CloseImage());
+                Events.Send<CloseImage>();
             }
         }
     }
@@ -1288,7 +1276,7 @@ public partial class FindViewModel : ObservableObject
         CurrentFileLoadError = "No match";
         currentFileImage = null;
 
-        WeakReferenceMessenger.Default.Send(new CloseImage());
+        Events.Send<CloseImage>();
     }
 
     private string GetFileDateTimeString(string? datetimeString)

@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using FakeItEasy;
+using FileDB;
 using FileDB.Configuration;
 using FileDB.Model;
 using FileDB.Notifiers;
@@ -68,7 +69,7 @@ public class NotificationsViewModelTests
         viewModel = new NotificationsViewModel(config, fakeDbAccess, fakeNotifierFactory, fakeNotificationHandling);
         
         notifications.AddRange(SomeNotifications());
-        WeakReferenceMessenger.Default.Send(new NotificationsUpdated());
+        Events.Send<NotificationsUpdated>();
 
         Assert.AreEqual(notifications.Count, viewModel.Notifications.Count);
     }

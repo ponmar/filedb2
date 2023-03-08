@@ -93,7 +93,7 @@ namespace FileDB.ViewModel
         [RelayCommand]
         private void SelectFolder()
         {
-            WeakReferenceMessenger.Default.Send(new CloseModalDialogRequested());
+            Events.Send<CloseModalDialogRequested>();
 
             if (SelectedFolder != null)
             {

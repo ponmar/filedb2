@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using FakeItEasy;
+using FileDB;
 using FileDB.Model;
 using FileDB.ViewModel;
 using FileDBInterface.DbAccess;
@@ -53,7 +54,7 @@ public class BirthdaysViewModelTests
         Assert.AreEqual(0, viewModel.Persons.Count);
 
         A.CallTo(() => fakeDbAccess.GetPersons()).Returns(SomePersons());
-        WeakReferenceMessenger.Default.Send(new PersonsUpdated());
+        Events.Send<PersonsUpdated>();
 
         Assert.AreEqual(2, viewModel.Persons.Count);
     }
@@ -66,7 +67,7 @@ public class BirthdaysViewModelTests
         Assert.AreEqual(0, viewModel.Persons.Count);
 
         A.CallTo(() => fakeDbAccess.GetPersons()).Returns(SomePersons());
-        WeakReferenceMessenger.Default.Send(new DateChanged());
+        Events.Send<DateChanged>();
 
         Assert.AreEqual(2, viewModel.Persons.Count);
     }

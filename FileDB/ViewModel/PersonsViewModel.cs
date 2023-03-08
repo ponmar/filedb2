@@ -37,12 +37,12 @@ public partial class PersonsViewModel : ObservableObject
 
         ReloadPersons();
 
-        WeakReferenceMessenger.Default.Register<ConfigLoaded>(this, (r, m) =>
+        this.RegisterForEvent<ConfigLoaded>((x) =>
         {
-            ReadWriteMode = !m.Config.ReadOnly;
+            ReadWriteMode = !x.Config.ReadOnly;
         });
 
-        WeakReferenceMessenger.Default.Register<PersonsUpdated>(this, (r, m) =>
+        this.RegisterForEvent<PersonsUpdated>((x) =>
         {
             ReloadPersons();
         });
@@ -57,7 +57,7 @@ public partial class PersonsViewModel : ObservableObject
             if (filesWithPerson.Count == 0 || dialogs.ShowConfirmDialog($"Person is used in {filesWithPerson.Count} files, remove anyway?"))
             {
                 dbAccess.DeletePerson(SelectedPerson.Id);
-                WeakReferenceMessenger.Default.Send(new PersonsUpdated());
+                Events.Send<PersonsUpdated>();
             }
         }
     }

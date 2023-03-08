@@ -36,13 +36,13 @@ public partial class TagsViewModel : ObservableObject
 
         ReloadTags();
 
-        WeakReferenceMessenger.Default.Register<ConfigLoaded>(this, (r, m) =>
+        this.RegisterForEvent<ConfigLoaded>((x) =>
         {
-            this.config = m.Config;
+            this.config = x.Config;
             ReadWriteMode = !this.config.ReadOnly;
         });
 
-        WeakReferenceMessenger.Default.Register<TagsUpdated>(this, (r, m) =>
+        this.RegisterForEvent<TagsUpdated>((x) =>
         {
             ReloadTags();
         });
@@ -57,7 +57,7 @@ public partial class TagsViewModel : ObservableObject
             if (filesWithTag.Count == 0 || dialogs.ShowConfirmDialog($"Tag is used in {filesWithTag.Count} files, remove anyway?"))
             {
                 dbAccess.DeleteTag(SelectedTag.Id);
-                WeakReferenceMessenger.Default.Send(new TagsUpdated());
+                Events.Send<TagsUpdated>();
             }
         }
     }

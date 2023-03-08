@@ -16,10 +16,7 @@ public partial class AddTagWindow : Window
         var model = Model.Model.Instance;
         DataContext = new AddTagViewModel(model.DbAccess, model.Dialogs, tagId);
 
-        WeakReferenceMessenger.Default.Register<CloseModalDialogRequested>(this, (r, m) =>
-        {
-            Close();
-        });
+        this.RegisterForEvent<CloseModalDialogRequested>((x) => Close());
     }
 
     private void Model_CloseModalDialogRequested(object? sender, System.EventArgs e)
