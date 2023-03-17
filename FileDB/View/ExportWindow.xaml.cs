@@ -15,7 +15,7 @@ namespace FileDB.View
         {
             InitializeComponent();
             var model = Model.Model.Instance;
-            DataContext = new ExportViewModel(model.Dialogs);
+            DataContext = new ExportViewModel(ServiceLocator.Resolve<IDialogs>());
 
             this.RegisterForEvent<CloseModalDialogRequested>((x) => Close());
         }

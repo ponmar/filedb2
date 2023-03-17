@@ -13,7 +13,7 @@ public partial class TagsView : UserControl
     {
         InitializeComponent();
         var model = Model.Model.Instance;
-        DataContext = new TagsViewModel(model.Config, model.DbAccess, model.Dialogs);
+        DataContext = new TagsViewModel(model.Config, model.DbAccess, ServiceLocator.Resolve<IDialogs>());
     }
 
     private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)

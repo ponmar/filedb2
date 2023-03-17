@@ -21,6 +21,8 @@ namespace FileDB
     {
         private void Application_Startup(object sender, StartupEventArgs startupEventArgs)
         {
+            Bootstrapper.Bootstrap();
+
             Utils.SetInvariantCulture();
 
             bool demoModeEnabled = startupEventArgs.Args.Any(x => x == "--demo");
@@ -52,7 +54,8 @@ namespace FileDB
                 if (!result.IsValid)
                 {
                     notifications.Add(new(NotificationType.Error, "Configuration not valid", DateTime.Now));
-                    model.Dialogs.ShowErrorDialog(result);
+                    var dialogs = ServiceLocator.Resolve<IDialogs>();
+                    dialogs.ShowErrorDialog(result);
                 }
             }
 
@@ -87,7 +90,8 @@ namespace FileDB
                 ClipboardService.SetText(e.Exception.StackTrace);
             }
             var message = $"Unhandled exception: {e.Exception.GetType().Name} ({e.Exception.Message}). Stacktrace has been copied to clipboard.";
-            Model.Model.Instance.Dialogs.ShowErrorDialog(message);
+            var dialogs = ServiceLocator.Resolve<IDialogs>();
+            dialogs.ShowErrorDialog(message);
         }
     }
 }

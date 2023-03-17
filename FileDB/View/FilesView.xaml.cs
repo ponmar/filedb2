@@ -12,7 +12,7 @@ public partial class FilesView : UserControl
     {
         InitializeComponent();
         var model = Model.Model.Instance;
-        DataContext = new FilesViewModel(model.Config, model.DbAccess, model.FilesystemAccess, model.Dialogs);
+        DataContext = new FilesViewModel(model.Config, model.DbAccess, model.FilesystemAccess, ServiceLocator.Resolve<IDialogs>());
     }
 
     private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)

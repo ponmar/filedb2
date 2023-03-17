@@ -485,7 +485,7 @@ public partial class FindViewModel : ObservableObject
 
     private readonly DispatcherTimer slideshowTimer = new();
 
-    public static FindViewModel Instance => instance ??= new(Model.Model.Instance.Config, Model.Model.Instance.DbAccess, Model.Model.Instance.FilesystemAccess, Model.Model.Instance.Dialogs);
+    public static FindViewModel Instance => instance ??= new(Model.Model.Instance.Config, Model.Model.Instance.DbAccess, Model.Model.Instance.FilesystemAccess, ServiceLocator.Resolve<IDialogs>());
     private static FindViewModel? instance;
 
     private int? prevEditedFileId = null;

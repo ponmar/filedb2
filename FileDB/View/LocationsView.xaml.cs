@@ -13,7 +13,7 @@ public partial class LocationsView : UserControl
     {
         InitializeComponent();
         var model = Model.Model.Instance;
-        DataContext = new LocationsViewModel(model.Config, model.DbAccess, model.Dialogs);
+        DataContext = new LocationsViewModel(model.Config, model.DbAccess, ServiceLocator.Resolve<IDialogs>());
     }
 
     private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
