@@ -11,6 +11,7 @@ using FileDBInterface.FilesystemAccess;
 using TextCopy;
 using System.Collections.Generic;
 using System.Globalization;
+using FileDB.Model;
 
 namespace FileDB
 {
@@ -29,7 +30,7 @@ namespace FileDB
 
             var appDataConfig = new AppDataConfig<Config>(Utils.ApplicationName);
 
-            var model = Model.Model.Instance;
+            var configUpdater = ServiceLocator.Resolve<IConfigUpdater>();
             Config config;
 
             var notifications = new List<Notification>();
@@ -78,9 +79,10 @@ namespace FileDB
             var filesystemAccess = new FilesystemAccess() { FilesRootDirectory = config.FilesRootDirectory };
             var notifierFactory = new NotifierFactory();
 
-            model.InitConfig(config, dbAccess, filesystemAccess, notifierFactory);
+            configUpdater.InitConfig(config, dbAccess, filesystemAccess, notifierFactory);
 
-            notifications.ForEach(model.AddNotification);
+            var notificationsHandling = ServiceLocator.Resolve<INotificationHandling>();
+            notifications.ForEach(notificationsHandling.AddNotification);
         }
 
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)

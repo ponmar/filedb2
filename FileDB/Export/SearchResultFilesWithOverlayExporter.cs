@@ -6,6 +6,7 @@ using System.Linq;
 using System;
 using FileDBShared.Validators;
 using FileDBShared.FileFormats;
+using FileDB.Model;
 
 namespace FileDB.Export;
 
@@ -22,10 +23,12 @@ public class SearchResultFilesWithOverlayExporter : ISearchResultExporter
     private const int BackgroundPadding = 20;
     private readonly SolidBrush textBgBrush = new(Color.FromArgb(229, 37, 37, 38));
 
+    private readonly IFilesystemAccessRepository filesystemAccessRepository;
     private readonly DescriptionPlacement descriptionPlacement;
 
-    public SearchResultFilesWithOverlayExporter(DescriptionPlacement descriptionPlacement)
+    public SearchResultFilesWithOverlayExporter(IFilesystemAccessRepository filesystemAccessRepository, DescriptionPlacement descriptionPlacement)
     {
+        this.filesystemAccessRepository = filesystemAccessRepository;
         this.descriptionPlacement = descriptionPlacement;
     }
 
@@ -153,7 +156,7 @@ public class SearchResultFilesWithOverlayExporter : ISearchResultExporter
     {
         try
         {
-            var sourceFilePath = Model.Model.Instance.FilesystemAccess.ToAbsolutePath(file.OriginalPath);
+            var sourceFilePath = filesystemAccessRepository.FilesystemAccess.ToAbsolutePath(file.OriginalPath);
             return new Bitmap(sourceFilePath);
         }
         catch

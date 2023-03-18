@@ -11,6 +11,6 @@ public partial class SearchResultView : UserControl
     public SearchResultView()
     {
         InitializeComponent();
-        DataContext = FindViewModel.Instance;
+        DataContext = ServiceLocator.Resolve<FindViewModel>();
     }
 }

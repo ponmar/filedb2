@@ -12,8 +12,10 @@ public partial class AddPersonWindow : Window
     public AddPersonWindow(int? personId = null)
     {
         InitializeComponent();
-        var model = Model.Model.Instance;
-        DataContext = new AddPersonViewModel(model.DbAccess, ServiceLocator.Resolve<IDialogs>(), personId);
+        DataContext = new AddPersonViewModel(
+            ServiceLocator.Resolve<IDbAccessRepository>(),
+            ServiceLocator.Resolve<IDialogs>(),
+            personId);
 
         this.RegisterForEvent<CloseModalDialogRequested>((x) => Close());
     }

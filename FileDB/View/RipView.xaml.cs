@@ -1,5 +1,6 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Input;
+using FileDB.Model;
 using FileDB.ViewModel;
 
 namespace FileDB.View;
@@ -12,8 +13,7 @@ public partial class RipView : UserControl
     public RipView()
     {
         InitializeComponent();
-        var model = Model.Model.Instance;
-        DataContext = new RipViewModel(model.Config, model.DbAccess, model.FilesystemAccess);
+        DataContext = ServiceLocator.Resolve<RipViewModel>();
     }
 
     private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)

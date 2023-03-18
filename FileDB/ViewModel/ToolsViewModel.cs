@@ -8,8 +8,6 @@ using CommunityToolkit.Mvvm.Input;
 using FileDB.Configuration;
 using FileDB.Export;
 using FileDB.Model;
-using FileDBInterface.DbAccess;
-using FileDBInterface.FilesystemAccess;
 using FileDBShared.Model;
 using FileDBShared.Validators;
 using TextCopy;
@@ -52,23 +50,18 @@ public partial class ToolsViewModel : ObservableObject
     [ObservableProperty]
     private string databaseExportResult = "Not executed.";
 
-    private Config config;
-    private readonly IDbAccess dbAccess;
-    private readonly IFilesystemAccess filesystemAccess;
+    private readonly IConfigRepository configRepository;
+    private readonly IDbAccessRepository dbAccessRepository;
+    private readonly IFilesystemAccessRepository filesystemAccessRepository;
     private readonly IDialogs dialogs;
 
-    public ToolsViewModel(Config config, IDbAccess dbAccess, IFilesystemAccess filesystemAccess, IDialogs dialogs)
+    public ToolsViewModel(IConfigRepository configRepository, IDbAccessRepository dbAccessRepository, IFilesystemAccessRepository filesystemAccessRepository, IDialogs dialogs)
     {
-        this.config = config;
-        this.dbAccess = dbAccess;
-        this.filesystemAccess = filesystemAccess;
+        this.configRepository = configRepository;
+        this.dbAccessRepository = dbAccessRepository;
+        this.filesystemAccessRepository = filesystemAccessRepository;
         this.dialogs = dialogs;
         ScanBackupFiles();
-
-        this.RegisterForEvent<ConfigLoaded>((x) =>
-        {
-            this.config = x.Config;
-        });
     }
 
     [RelayCommand]
@@ -76,7 +69,7 @@ public partial class ToolsViewModel : ObservableObject
     {
         try
         {
-            new DatabaseBackup().CreateBackup();
+            new DatabaseBackup(configRepository).CreateBackup();
             ScanBackupFiles();
         }
         catch (IOException e)
@@ -88,7 +81,7 @@ public partial class ToolsViewModel : ObservableObject
     [RelayCommand]
     private void OpenDatabaseBackupDirectory()
     {
-        Utils.OpenDirectoryInExplorer(new DatabaseBackup().BackupDirectory);
+        Utils.OpenDirectoryInExplorer(new DatabaseBackup(configRepository).BackupDirectory);
     }
 
     [RelayCommand]
@@ -111,12 +104,12 @@ public partial class ToolsViewModel : ObservableObject
             }
         }
 
-        var profileFileIds = dbAccess.GetPersons().Where(x => x.ProfileFileId != null).Select(x => x.ProfileFileId!.Value);
+        var profileFileIds = dbAccessRepository.DbAccess.GetPersons().Where(x => x.ProfileFileId != null).Select(x => x.ProfileFileId!.Value);
         var numCachedFiles = 0;
         foreach (var profileFileId in profileFileIds)
         {
-            var file = dbAccess.GetFileById(profileFileId)!;
-            var sourcePath = filesystemAccess.ToAbsolutePath(file.Path);
+            var file = dbAccessRepository.DbAccess.GetFileById(profileFileId)!;
+            var sourcePath = filesystemAccessRepository.FilesystemAccess.ToAbsolutePath(file.Path);
             var destinationPath = Path.Combine(cacheDir, $"{profileFileId}");
             try
             {
@@ -149,7 +142,7 @@ public partial class ToolsViewModel : ObservableObject
     {
         BackupFiles.Clear();
 
-        var backupHandler = new DatabaseBackup();
+        var backupHandler = new DatabaseBackup(configRepository);
 
         if (Directory.Exists(backupHandler.BackupDirectory))
         {
@@ -171,9 +164,9 @@ public partial class ToolsViewModel : ObservableObject
     [RelayCommand]
     private void FindImportedNoLongerApplicableFiles()
     {
-        var blacklistedFilePathPatterns = config.BlacklistedFilePathPatterns.Split(";");
-        var whitelistedFilePathPatterns = config.WhitelistedFilePathPatterns.Split(";");
-        var notApplicableFiles = dbAccess.GetFiles().Where(x => !filesystemAccess.PathIsApplicable(x.Path, blacklistedFilePathPatterns, whitelistedFilePathPatterns, config.IncludeHiddenDirectories)).ToList();
+        var blacklistedFilePathPatterns = configRepository.Config.BlacklistedFilePathPatterns.Split(";");
+        var whitelistedFilePathPatterns = configRepository.Config.WhitelistedFilePathPatterns.Split(";");
+        var notApplicableFiles = dbAccessRepository.DbAccess.GetFiles().Where(x => !filesystemAccessRepository.FilesystemAccess.PathIsApplicable(x.Path, blacklistedFilePathPatterns, whitelistedFilePathPatterns, configRepository.Config.IncludeHiddenDirectories)).ToList();
         ImportedNoLongerApplicableFileList = Utils.CreateFileList(notApplicableFiles);
         FindImportedNoLongerApplicableFilesResult = $"Found {notApplicableFiles.Count} files that now should be filtered.";
     }
@@ -191,7 +184,7 @@ public partial class ToolsViewModel : ObservableObject
 
         var filesValidator = new FilesModelValidator();
         List<FilesModel> invalidFiles = new();
-        foreach (var file in dbAccess.GetFiles())
+        foreach (var file in dbAccessRepository.DbAccess.GetFiles())
         {
             var result = filesValidator.Validate(file);
             if (!result.IsValid)
@@ -206,7 +199,7 @@ public partial class ToolsViewModel : ObservableObject
         InvalidFileList = Utils.CreateFileList(invalidFiles);
 
         var personValidator = new PersonModelValidator();
-        foreach (var person in dbAccess.GetPersons())
+        foreach (var person in dbAccessRepository.DbAccess.GetPersons())
         {
             var result = personValidator.Validate(person);
             if (!result.IsValid)
@@ -219,7 +212,7 @@ public partial class ToolsViewModel : ObservableObject
         }
 
         var locationValidator = new LocationModelValidator();
-        foreach (var location in dbAccess.GetLocations())
+        foreach (var location in dbAccessRepository.DbAccess.GetLocations())
         {
             var result = locationValidator.Validate(location);
             if (!result.IsValid)
@@ -232,7 +225,7 @@ public partial class ToolsViewModel : ObservableObject
         }
 
         var tagValidator = new TagModelValidator();
-        foreach (var tag in dbAccess.GetTags())
+        foreach (var tag in dbAccessRepository.DbAccess.GetTags())
         {
             var result = tagValidator.Validate(tag);
             if (!result.IsValid)
@@ -261,7 +254,7 @@ public partial class ToolsViewModel : ObservableObject
         FileFinderResult = "Running, please wait...";
 
         List<FilesModel> missingFiles = new();
-        foreach (var file in filesystemAccess.GetFilesMissingInFilesystem(dbAccess.GetFiles()))
+        foreach (var file in filesystemAccessRepository.FilesystemAccess.GetFilesMissingInFilesystem(dbAccessRepository.DbAccess.GetFiles()))
         {
             missingFiles.Add(file);
         }
@@ -295,10 +288,10 @@ public partial class ToolsViewModel : ObservableObject
         try
         {
             var exporter = new DatabaseExporter(DatabaseExportDirectory);
-            var persons = dbAccess.GetPersons().ToList();
-            var locations = dbAccess.GetLocations().ToList();
-            var tags = dbAccess.GetTags().ToList();
-            var files = dbAccess.GetFiles().ToList();
+            var persons = dbAccessRepository.DbAccess.GetPersons().ToList();
+            var locations = dbAccessRepository.DbAccess.GetLocations().ToList();
+            var tags = dbAccessRepository.DbAccess.GetTags().ToList();
+            var files = dbAccessRepository.DbAccess.GetFiles().ToList();
             exporter.Export(persons, locations, tags, files);
             DatabaseExportResult = $"Exported {persons.Count} persons, {locations.Count} locations, {tags.Count} tags and {files.Count} files.";
         }

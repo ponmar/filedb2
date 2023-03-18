@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using FileDB.Model;
 using FileDB.ViewModel;
 
 namespace FileDB.View;
@@ -11,8 +12,7 @@ public partial class FilesView : UserControl
     public FilesView()
     {
         InitializeComponent();
-        var model = Model.Model.Instance;
-        DataContext = new FilesViewModel(model.Config, model.DbAccess, model.FilesystemAccess, ServiceLocator.Resolve<IDialogs>());
+        DataContext = ServiceLocator.Resolve<FilesViewModel>();
     }
 
     private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)

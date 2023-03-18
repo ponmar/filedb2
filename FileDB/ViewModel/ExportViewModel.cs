@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Export;
+using FileDB.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -53,10 +54,14 @@ namespace FileDB.ViewModel
         private bool exportIncludesJson = true;
 
         private readonly IDialogs dialogs;
+        private readonly IDbAccessRepository dbAccessRepository;
+        private readonly IFilesystemAccessRepository filesystemAccessRepository;
 
-        public ExportViewModel(IDialogs dialogs)
+        public ExportViewModel(IDialogs dialogs, IDbAccessRepository dbAccessRepository, IFilesystemAccessRepository filesystemAccessRepository)
         {
             this.dialogs = dialogs;
+            this.dbAccessRepository = dbAccessRepository;
+            this.filesystemAccessRepository = filesystemAccessRepository;
         }
 
         [RelayCommand]
@@ -110,7 +115,7 @@ namespace FileDB.ViewModel
                 progress.Report("Exporting...");
                 try
                 {
-                    new SearchResultExporter().Export(ExportFilesDestinationDirectory, ExportFilesHeader, SearchResult.Files,
+                    new SearchResultExporter(dbAccessRepository, filesystemAccessRepository).Export(ExportFilesDestinationDirectory, ExportFilesHeader, SearchResult.Files,
                     ExportIncludesFiles, ExportIncludesHtml, ExportIncludesM3u, ExportIncludesFilesWithMetaData, ExportIncludesJson);
                     dialogs.ShowInfoDialog("Export finished successfully.");
                 }

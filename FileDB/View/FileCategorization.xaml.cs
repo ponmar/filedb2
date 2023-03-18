@@ -11,6 +11,6 @@ public partial class FileCategorization : UserControl
     public FileCategorization()
     {
         InitializeComponent();
-        DataContext = FindViewModel.Instance;
+        DataContext = ServiceLocator.Resolve<FindViewModel>();
     }
 }

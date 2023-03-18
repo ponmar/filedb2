@@ -12,7 +12,6 @@ namespace FileDB.View
         public CreateDatabaseWindow()
         {
             InitializeComponent();
-            var model = Model.Model.Instance;
             DataContext = new CreateDatabaseViewModel(ServiceLocator.Resolve<IDialogs>());
 
             this.RegisterForEvent<CloseModalDialogRequested>((x) => Close());

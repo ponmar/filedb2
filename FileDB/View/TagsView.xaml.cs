@@ -1,5 +1,6 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Input;
+using FileDB.Model;
 using FileDB.ViewModel;
 
 namespace FileDB.View;
@@ -12,8 +13,7 @@ public partial class TagsView : UserControl
     public TagsView()
     {
         InitializeComponent();
-        var model = Model.Model.Instance;
-        DataContext = new TagsViewModel(model.Config, model.DbAccess, ServiceLocator.Resolve<IDialogs>());
+        DataContext = ServiceLocator.Resolve<TagsViewModel>();
     }
 
     private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)

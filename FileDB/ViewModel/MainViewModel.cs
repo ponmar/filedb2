@@ -21,9 +21,9 @@ public partial class MainViewModel : ObservableObject
         get
         {
             var title = $"{Utils.ApplicationName} {Utils.GetVersionString()}";
-            if (!string.IsNullOrEmpty(config.Name))
+            if (!string.IsNullOrEmpty(configRepository.Config.Name))
             {
-                title += $" [{config.Name}]";
+                title += $" [{configRepository.Config.Name}]";
             }
             if (!ReadWriteMode)
             {
@@ -34,26 +34,34 @@ public partial class MainViewModel : ObservableObject
     }
 
     [ObservableProperty]
-    private WindowState windowState = DefaultWindowState;
+    private WindowState windowState;
 
-    private static WindowState DefaultWindowState => Model.Model.Instance.Config.WindowMode == WindowMode.Normal ? WindowState.Normal : WindowState.Maximized;
+    private readonly WindowState defaultWindowState;
 
     [ObservableProperty]
-    private WindowStyle windowStyle = DefaultWindowStyle;
+    private WindowStyle windowStyle;
 
-    private static WindowStyle DefaultWindowStyle => Model.Model.Instance.Config.WindowMode == WindowMode.Fullscreen ? WindowStyle.None : WindowStyle.ThreeDBorderWindow;
+    private readonly WindowStyle defaultWindowStyle;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(Title))]
-    public bool readWriteMode = !Model.Model.Instance.Config.ReadOnly;
+    private bool readWriteMode;
 
-    private Config config;
+    private IConfigRepository configRepository;
     private readonly INotificationHandling notificationHandling;
 
-    public MainViewModel(Config config, INotificationHandling notificationHandling)
+    public MainViewModel(IConfigRepository configRepository, INotificationHandling notificationHandling)
     {
-        this.config = config;
+        this.configRepository = configRepository;
         this.notificationHandling = notificationHandling;
+
+        defaultWindowState = configRepository.Config.WindowMode == WindowMode.Normal ? WindowState.Normal : WindowState.Maximized;
+        defaultWindowStyle = configRepository.Config.WindowMode == WindowMode.Fullscreen ? WindowStyle.None : WindowStyle.ThreeDBorderWindow;
+
+        windowState = defaultWindowState;
+        windowStyle = defaultWindowStyle;
+
+        readWriteMode = !configRepository.Config.ReadOnly;
 
         NumNotifications = notificationHandling.Notifications.Count;
         HighlightedNotificationType = NotificationsToType();
@@ -66,14 +74,13 @@ public partial class MainViewModel : ObservableObject
 
         this.RegisterForEvent<FullscreenBrowsingRequested>((x) =>
         {
-            WindowState = x.Fullscreen ? WindowState.Maximized : DefaultWindowState;
-            WindowStyle = x.Fullscreen ? WindowStyle.None : DefaultWindowStyle;
+            WindowState = x.Fullscreen ? WindowState.Maximized : defaultWindowState;
+            WindowStyle = x.Fullscreen ? WindowStyle.None : defaultWindowStyle;
         });
 
         this.RegisterForEvent<ConfigLoaded>((x) =>
         {
-            this.config = x.Config;
-            ReadWriteMode = !this.config.ReadOnly;
+            ReadWriteMode = !configRepository.Config.ReadOnly;
             OnPropertyChanged(nameof(Title));
         });
     }

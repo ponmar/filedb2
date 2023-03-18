@@ -1,4 +1,5 @@
-﻿using FileDBShared.FileFormats;
+﻿using FileDB.Model;
+using FileDBShared.FileFormats;
 using FileDBShared.Model;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,15 @@ namespace FileDB.Export;
 
 public class SearchResultExporter
 {
+    private readonly IDbAccessRepository dbAccessRepository;
+    private readonly IFilesystemAccessRepository filesystemAccessRepository;
+
+    public SearchResultExporter(IDbAccessRepository dbAccessRepository, IFilesystemAccessRepository filesystemAccessRepository)
+    {
+        this.dbAccessRepository = dbAccessRepository;
+        this.filesystemAccessRepository = filesystemAccessRepository;
+    }
+
     public void Export(string destinationDirectory, string header, List<FilesModel> files, bool exportIncludesFiles, bool exportIncludesHtml, bool exportIncludesM3u, bool exportIncludesFilesWithMetaData, bool exportIncludesJson)
     {
         var data = GetExportedData(files, header, "UnmodifiedFiles");
@@ -21,7 +31,9 @@ public class SearchResultExporter
         if (exportIncludesFilesWithMetaData)
         {
             var filesWithDataDirPath = Path.Combine(destinationDirectory, "FilesWithData");
-            new SearchResultFilesWithOverlayExporter(DescriptionPlacement.Subtitle).Export(data, filesWithDataDirPath);
+            new SearchResultFilesWithOverlayExporter(
+                filesystemAccessRepository,
+                DescriptionPlacement.Subtitle).Export(data, filesWithDataDirPath);
         }
 
         if (exportIncludesJson)
@@ -45,8 +57,6 @@ public class SearchResultExporter
 
     private SearchResultExport GetExportedData(List<FilesModel> files, string header, string filesSubdir)
     {
-        var model = Model.Model.Instance;
-
         var exportedFiles = new List<ExportedFile>();
         var persons = new List<PersonModel>();
         var locations = new List<LocationModel>();
@@ -55,7 +65,7 @@ public class SearchResultExporter
         int index = 1;
         foreach (var file in files)
         {
-            var filePersons = model.DbAccess.GetPersonsFromFile(file.Id);
+            var filePersons = dbAccessRepository.DbAccess.GetPersonsFromFile(file.Id);
             foreach (var person in filePersons)
             {
                 if (!persons.Any(x => x.Id == person.Id))
@@ -64,7 +74,7 @@ public class SearchResultExporter
                 }
             }
 
-            var fileLocations = model.DbAccess.GetLocationsFromFile(file.Id);
+            var fileLocations = dbAccessRepository.DbAccess.GetLocationsFromFile(file.Id);
             foreach (var location in fileLocations)
             {
                 if (!locations.Any(x => x.Id == location.Id))
@@ -73,7 +83,7 @@ public class SearchResultExporter
                 }
             }
 
-            var fileTags = model.DbAccess.GetTagsFromFile(file.Id);
+            var fileTags = dbAccessRepository.DbAccess.GetTagsFromFile(file.Id);
             foreach (var tag in fileTags)
             {
                 if (!tags.Any(x => x.Id == tag.Id))

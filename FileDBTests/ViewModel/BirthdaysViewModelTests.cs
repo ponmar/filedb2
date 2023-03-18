@@ -14,21 +14,32 @@ namespace FileDBTests.ViewModel;
 [TestClass]
 public class BirthdaysViewModelTests
 {
+    private IConfigRepository fakeConfigRepo;
     private IDbAccess fakeDbAccess;
+    private IDbAccessRepository fakeDbAccessRepo;
     private IFilesystemAccess fakeFilsystemAccess;
+    private IFilesystemAccessRepository fakeFilsystemAccessRepo;
 
     [TestInitialize]
     public void Initialize()
     {
+        fakeConfigRepo = A.Fake<IConfigRepository>();
         fakeDbAccess = A.Fake<IDbAccess>();
+        fakeDbAccessRepo = A.Fake<IDbAccessRepository>();
         fakeFilsystemAccess = A.Fake<IFilesystemAccess>();
+        fakeFilsystemAccessRepo = A.Fake<IFilesystemAccessRepository>();
+
+        A.CallTo(() => fakeDbAccessRepo.DbAccess).Returns(fakeDbAccess);
+        A.CallTo(() => fakeFilsystemAccessRepo.FilesystemAccess).Returns(fakeFilsystemAccess);
     }
 
     [TestMethod]
     public void Constructor_NoPersons()
     {
         var config = new ConfigBuilder().Build();
-        var viewModel = new BirthdaysViewModel(config, fakeDbAccess, fakeFilsystemAccess);
+        A.CallTo(() => fakeConfigRepo.Config).Returns(config);
+
+        var viewModel = new BirthdaysViewModel(fakeConfigRepo, fakeDbAccessRepo, fakeFilsystemAccessRepo);
 
         Assert.AreEqual(0, viewModel.Persons.Count);
         Assert.AreEqual("", viewModel.FilterText);
@@ -40,7 +51,9 @@ public class BirthdaysViewModelTests
         A.CallTo(() => fakeDbAccess.GetPersons()).Returns(SomePersons());
 
         var config = new ConfigBuilder().Build();
-        var viewModel = new BirthdaysViewModel(config, fakeDbAccess, fakeFilsystemAccess);
+        A.CallTo(() => fakeConfigRepo.Config).Returns(config);
+
+        var viewModel = new BirthdaysViewModel(fakeConfigRepo, fakeDbAccessRepo, fakeFilsystemAccessRepo);
 
         Assert.AreEqual(2, viewModel.Persons.Count);
     }
@@ -49,7 +62,9 @@ public class BirthdaysViewModelTests
     public void PersonsUpdated()
     {
         var config = new ConfigBuilder().Build();
-        var viewModel = new BirthdaysViewModel(config, fakeDbAccess, fakeFilsystemAccess);
+        A.CallTo(() => fakeConfigRepo.Config).Returns(config);
+
+        var viewModel = new BirthdaysViewModel(fakeConfigRepo, fakeDbAccessRepo, fakeFilsystemAccessRepo);
         Assert.AreEqual(0, viewModel.Persons.Count);
 
         A.CallTo(() => fakeDbAccess.GetPersons()).Returns(SomePersons());
@@ -62,7 +77,9 @@ public class BirthdaysViewModelTests
     public void DateChanged()
     {
         var config = new ConfigBuilder().Build();
-        var viewModel = new BirthdaysViewModel(config, fakeDbAccess, fakeFilsystemAccess);
+        A.CallTo(() => fakeConfigRepo.Config).Returns(config);
+
+        var viewModel = new BirthdaysViewModel(fakeConfigRepo, fakeDbAccessRepo, fakeFilsystemAccessRepo);
         Assert.AreEqual(0, viewModel.Persons.Count);
 
         A.CallTo(() => fakeDbAccess.GetPersons()).Returns(SomePersons());
@@ -75,9 +92,10 @@ public class BirthdaysViewModelTests
     public void FilterText()
     {
         A.CallTo(() => fakeDbAccess.GetPersons()).Returns(SomePersons());
-
         var config = new ConfigBuilder().Build();
-        var viewModel = new BirthdaysViewModel(config, fakeDbAccess, fakeFilsystemAccess);
+        A.CallTo(() => fakeConfigRepo.Config).Returns(config);
+
+        var viewModel = new BirthdaysViewModel(fakeConfigRepo, fakeDbAccessRepo, fakeFilsystemAccessRepo);
         
         viewModel.FilterText = "Al";
         Assert.AreEqual(1, viewModel.Persons.Count);

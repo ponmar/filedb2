@@ -9,13 +9,13 @@ namespace FileDB.View
     /// </summary>
     public partial class ExportWindow : Window
     {
-        private readonly Model.Model model = Model.Model.Instance;
-
         public ExportWindow()
         {
             InitializeComponent();
-            var model = Model.Model.Instance;
-            DataContext = new ExportViewModel(ServiceLocator.Resolve<IDialogs>());
+            DataContext = new ExportViewModel(
+                ServiceLocator.Resolve<IDialogs>(),
+                ServiceLocator.Resolve<IDbAccessRepository>(),
+                ServiceLocator.Resolve<IFilesystemAccessRepository>());
 
             this.RegisterForEvent<CloseModalDialogRequested>((x) => Close());
         }

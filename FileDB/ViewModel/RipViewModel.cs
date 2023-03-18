@@ -8,7 +8,6 @@ using FileDB.Comparers;
 using FileDB.Configuration;
 using FileDB.Model;
 using FileDBInterface.DbAccess;
-using FileDBInterface.FilesystemAccess;
 using FileDBShared.Model;
 
 namespace FileDB.ViewModel;
@@ -60,21 +59,20 @@ public partial class RipViewModel : ObservableObject
 
     public ObservableCollection<DeceasedPerson> Persons { get; set; } = new();
 
-    private Config config;
-    private readonly IDbAccess dbAccess;
-    private readonly IFilesystemAccess filesystemAccess;
+    private readonly IConfigRepository configRepository;
+    private readonly IDbAccessRepository dbAccessRepository;
+    private readonly IFilesystemAccessRepository filesystemAccessRepository;
 
-    public RipViewModel(Config config, IDbAccess dbAccess, IFilesystemAccess filesystemAccess)
+    public RipViewModel(IConfigRepository configRepository, IDbAccessRepository dbAccessRepository, IFilesystemAccessRepository filesystemAccessRepository)
     {
-        this.config = config;
-        this.dbAccess = dbAccess;
-        this.filesystemAccess = filesystemAccess;
+        this.configRepository = configRepository;
+        this.dbAccessRepository = dbAccessRepository;
+        this.filesystemAccessRepository = filesystemAccessRepository;
 
         UpdatePersons();
 
         this.RegisterForEvent<ConfigLoaded>((x) =>
         {
-            this.config = x.Config;
             UpdatePersons();
         });
 
@@ -92,19 +90,19 @@ public partial class RipViewModel : ObservableObject
         var configDir = new AppDataConfig<Config>(Utils.ApplicationName).ConfigDirectory;
         var cacheDir = Path.Combine(configDir, DefaultConfigs.CacheSubdir);
 
-        foreach (var person in dbAccess.GetPersons().Where(x => x.DateOfBirth != null && x.Deceased != null))
+        foreach (var person in dbAccessRepository.DbAccess.GetPersons().Where(x => x.DateOfBirth != null && x.Deceased != null))
         {
             string profileFileIdPath;
             if (person.ProfileFileId != null)
             {
-                if (config.CacheFiles)
+                if (configRepository.Config.CacheFiles)
                 {
                     profileFileIdPath = Path.Combine(cacheDir, $"{person.ProfileFileId.Value}");
                 }
                 else
                 {
-                    var profileFile = dbAccess.GetFileById(person.ProfileFileId.Value);
-                    profileFileIdPath = filesystemAccess.ToAbsolutePath(profileFile!.Path);
+                    var profileFile = dbAccessRepository.DbAccess.GetFileById(person.ProfileFileId.Value);
+                    profileFileIdPath = filesystemAccessRepository.FilesystemAccess.ToAbsolutePath(profileFile!.Path);
                 }
             }
             else

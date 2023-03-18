@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Model;
-using FileDBInterface.DbAccess;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -41,11 +40,11 @@ namespace FileDB.ViewModel
 
         public string? SelectedDirectoryPath { get; private set; }
 
-        private readonly IDbAccess dbAccess;
+        private readonly IDbAccessRepository dbAccessRepository;
 
-        public BrowseDirectoriesViewModel(IDbAccess dbAccess)
+        public BrowseDirectoriesViewModel(IDbAccessRepository dbAccessRepository)
         {
-            this.dbAccess = dbAccess;
+            this.dbAccessRepository = dbAccessRepository;
             ReloadFolders();
         }
 
@@ -56,7 +55,7 @@ namespace FileDB.ViewModel
             Folders.Clear();
             Folders.Add(root);
 
-            foreach (var file in dbAccess.GetFiles())
+            foreach (var file in dbAccessRepository.DbAccess.GetFiles())
             {
                 var directoryEndIndex = file.Path.LastIndexOf("/");
                 if (directoryEndIndex == -1)

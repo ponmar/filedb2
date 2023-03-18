@@ -1,4 +1,5 @@
 ﻿using FileDB.Configuration;
+using FileDB.Model;
 using FileDBInterface.DbAccess;
 using System.Collections.Generic;
 using System.IO;
@@ -43,7 +44,7 @@ public class NotifierFactory : INotifierFactory
 
         if (config.BackupReminder)
         {
-            notifiers.Add(new BackupNotifier(new DatabaseBackup().ListAvailableBackupFiles(), 30));
+            notifiers.Add(new BackupNotifier(new DatabaseBackup(ServiceLocator.Resolve<IConfigRepository>()).ListAvailableBackupFiles(), 30));
         }
 
         if (config.MissingFilesRootDirNotification)

@@ -1,4 +1,5 @@
-﻿using FileDBShared.FileFormats;
+﻿using FileDB.Model;
+using FileDBShared.FileFormats;
 using FileDBShared.Model;
 using FileDBShared.Validators;
 using System.IO;
@@ -58,11 +59,13 @@ public class SearchResultHtmlExporter : ISearchResultExporter
 </div>
 ";
 
+        var fileSyustemAccess = ServiceLocator.Resolve<IFilesystemAccessRepository>();
+
         string content = string.Empty;
         int index = 1;
         foreach (var file in data.Files)
         {
-            var sourceFilePath = Model.Model.Instance.FilesystemAccess.ToAbsolutePath(file.OriginalPath);
+            var sourceFilePath = fileSyustemAccess.FilesystemAccess.ToAbsolutePath(file.OriginalPath);
             var destinationFilename = Path.GetFileName(file.ExportedPath);
             var destFilePath = Path.Combine(destinationDirPath, destinationFilename);
             File.Copy(sourceFilePath, destFilePath);

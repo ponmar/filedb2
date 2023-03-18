@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Model;
-using FileDBInterface.DbAccess;
 using FileDBInterface.Exceptions;
 using FileDBShared.Model;
 using System.Linq;
@@ -20,12 +19,12 @@ public partial class AddTagViewModel : ObservableObject
 
     public TagModel? AffectedTag { get; private set; }
 
-    private readonly IDbAccess dbAccess;
+    private readonly IDbAccessRepository dbAccessRepository;
     private readonly IDialogs dialogs;
 
-    public AddTagViewModel(IDbAccess dbAccess, IDialogs dialogs, int? tagId = null)
+    public AddTagViewModel(IDbAccessRepository dbAccessRepository, IDialogs dialogs, int? tagId = null)
     {
-        this.dbAccess = dbAccess;
+        this.dbAccessRepository = dbAccessRepository;
         this.dialogs = dialogs;
         this.tagId = tagId;
 
@@ -33,7 +32,7 @@ public partial class AddTagViewModel : ObservableObject
 
         if (tagId.HasValue)
         {
-            var tagModel = dbAccess.GetTagById(tagId.Value);
+            var tagModel = dbAccessRepository.DbAccess.GetTagById(tagId.Value);
             Name = tagModel.Name;
         }
     }
@@ -47,19 +46,19 @@ public partial class AddTagViewModel : ObservableObject
 
             if (tagId.HasValue)
             {
-                dbAccess.UpdateTag(tag);
-                AffectedTag = dbAccess.GetTagById(tag.Id);
+                dbAccessRepository.DbAccess.UpdateTag(tag);
+                AffectedTag = dbAccessRepository.DbAccess.GetTagById(tag.Id);
             }
             else
             {
-                if (dbAccess.GetTags().Any(x => x.Name == tag.Name))
+                if (dbAccessRepository.DbAccess.GetTags().Any(x => x.Name == tag.Name))
                 {
                     dialogs.ShowErrorDialog($"Tag '{tag.Name}' already added");
                     return;
                 }
 
-                dbAccess.InsertTag(tag);
-                AffectedTag = dbAccess.GetTags().First(x => x.Name == tag.Name);
+                dbAccessRepository.DbAccess.InsertTag(tag);
+                AffectedTag = dbAccessRepository.DbAccess.GetTags().First(x => x.Name == tag.Name);
             }
 
             Events.Send<CloseModalDialogRequested>();

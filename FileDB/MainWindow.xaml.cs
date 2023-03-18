@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using FileDB.Model;
 using FileDB.ViewModel;
 
 namespace FileDB
@@ -11,8 +12,8 @@ namespace FileDB
         public MainWindow()
         {
             InitializeComponent();
-            var model = Model.Model.Instance;
-            DataContext = new MainViewModel(model.Config, model);
+            var configRepository = ServiceLocator.Resolve<IConfigRepository>();
+            DataContext = new MainViewModel(configRepository, ServiceLocator.Resolve<INotificationHandling>());
         }
 
         private void TabItem_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)

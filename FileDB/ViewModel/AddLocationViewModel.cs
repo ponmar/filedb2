@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Model;
-using FileDBInterface.DbAccess;
 using FileDBInterface.Exceptions;
 using FileDBShared.Model;
 using System.Linq;
@@ -24,14 +23,14 @@ public partial class AddLocationViewModel : ObservableObject
     [ObservableProperty]
     private string? position = string.Empty;
 
-    private readonly IDbAccess dbAccess;
+    private readonly IDbAccessRepository dbAccessRepository;
     private readonly IDialogs dialogs;
 
     public LocationModel? AffectedLocation { get; private set; }
 
-    public AddLocationViewModel(IDbAccess dbAccess, IDialogs dialogs, int? locationId = null)
+    public AddLocationViewModel(IDbAccessRepository dbAccessRepository, IDialogs dialogs, int? locationId = null)
     {
-        this.dbAccess = dbAccess;
+        this.dbAccessRepository = dbAccessRepository;
         this.dialogs = dialogs;
         this.locationId = locationId;
 
@@ -39,7 +38,7 @@ public partial class AddLocationViewModel : ObservableObject
 
         if (locationId.HasValue)
         {
-            var locationModel = dbAccess.GetLocationById(locationId.Value);
+            var locationModel = dbAccessRepository.DbAccess.GetLocationById(locationId.Value);
             Name = locationModel.Name;
             Description = locationModel.Description ?? string.Empty;
             Position = locationModel.Position ?? string.Empty;
@@ -64,19 +63,19 @@ public partial class AddLocationViewModel : ObservableObject
 
             if (locationId.HasValue)
             {
-                dbAccess.UpdateLocation(location);
-                AffectedLocation = dbAccess.GetLocationById(location.Id);
+                dbAccessRepository.DbAccess.UpdateLocation(location);
+                AffectedLocation = dbAccessRepository.DbAccess.GetLocationById(location.Id);
             }
             else
             {
-                if (dbAccess.GetLocations().Any(x => x.Name == location.Name))
+                if (dbAccessRepository.DbAccess.GetLocations().Any(x => x.Name == location.Name))
                 {
                     dialogs.ShowErrorDialog($"Location '{location.Name}' already added");
                     return;
                 }
 
-                dbAccess.InsertLocation(location);
-                AffectedLocation = dbAccess.GetLocations().First(x => x.Name == location.Name);
+                dbAccessRepository.DbAccess.InsertLocation(location);
+                AffectedLocation = dbAccessRepository.DbAccess.GetLocations().First(x => x.Name == location.Name);
             }
 
             Events.Send<CloseModalDialogRequested>();

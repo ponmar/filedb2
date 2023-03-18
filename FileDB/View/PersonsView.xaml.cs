@@ -1,5 +1,6 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Input;
+using FileDB.Model;
 using FileDB.ViewModel;
 
 namespace FileDB.View
@@ -12,8 +13,7 @@ namespace FileDB.View
         public PersonsView()
         {
             InitializeComponent();
-            var model = Model.Model.Instance;
-            DataContext = new PersonsViewModel(model.Config, model.DbAccess, ServiceLocator.Resolve<IDialogs>());
+            DataContext = ServiceLocator.Resolve<PersonsViewModel>();
         }
 
         private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)

@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using FileDB.Model;
 using FileDB.ViewModel;
 
 namespace FileDB.View;
@@ -11,7 +12,6 @@ public partial class ToolsView : UserControl
     public ToolsView()
     {
         InitializeComponent();
-        var model = Model.Model.Instance;
-        DataContext = new ToolsViewModel(model.Config, model.DbAccess, model.FilesystemAccess, ServiceLocator.Resolve<IDialogs>());
+        DataContext = ServiceLocator.Resolve<ToolsViewModel>();
     }
 }

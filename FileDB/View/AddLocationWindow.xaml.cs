@@ -12,8 +12,7 @@ public partial class AddLocationWindow : Window
     public AddLocationWindow(int? locationId = null)
     {
         InitializeComponent();
-        var model = Model.Model.Instance;
-        DataContext = new AddLocationViewModel(model.DbAccess, ServiceLocator.Resolve<IDialogs>(), locationId);
+        DataContext = new AddLocationViewModel(ServiceLocator.Resolve<IDbAccessRepository>(), ServiceLocator.Resolve<IDialogs>(), locationId);
 
         this.RegisterForEvent<CloseModalDialogRequested>((x) => Close());
     }

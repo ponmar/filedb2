@@ -4,10 +4,8 @@ using System.Collections.ObjectModel;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using FileDB.Configuration;
 using FileDB.Model;
 using FileDB.Notifiers;
-using FileDBInterface.DbAccess;
 
 namespace FileDB.ViewModel;
 
@@ -17,21 +15,20 @@ public partial class NotificationsViewModel : ObservableObject
 
     private readonly DispatcherTimer notifierTimer = new();
 
-    private Config config;
-    private readonly IDbAccess dbAccess;
+    private readonly IConfigRepository configRepository;
+    private readonly IDbAccessRepository dbAccessRepository;
     private readonly INotifierFactory notifierFactory;
     private readonly INotificationHandling notificationHandling;
 
-    public NotificationsViewModel(Config config, IDbAccess dbAccess, INotifierFactory notifierFactory, INotificationHandling notificationHandling)
+    public NotificationsViewModel(IConfigRepository configRepository, IDbAccessRepository dbAccessRepository, INotifierFactory notifierFactory, INotificationHandling notificationHandling)
     {
-        this.config = config;
-        this.dbAccess = dbAccess;
+        this.configRepository = configRepository;
+        this.dbAccessRepository = dbAccessRepository;
         this.notifierFactory = notifierFactory;
         this.notificationHandling = notificationHandling;
 
         this.RegisterForEvent<ConfigLoaded>((x) =>
         {
-            this.config = x.Config;
             RunAllNotifiers();
         });
 
@@ -65,14 +62,14 @@ public partial class NotificationsViewModel : ObservableObject
 
     private void RunContinousNotifiers()
     {
-        var notifiers = notifierFactory.GetContinousNotifiers(config, dbAccess);
+        var notifiers = notifierFactory.GetContinousNotifiers(configRepository.Config, dbAccessRepository.DbAccess);
         RunNotifiers(notifiers);
     }
 
     private void RunAllNotifiers()
     {
-        var notifiers = notifierFactory.GetContinousNotifiers(config, dbAccess);
-        notifiers.AddRange(notifierFactory.GetStartupNotifiers(config, dbAccess));
+        var notifiers = notifierFactory.GetContinousNotifiers(configRepository.Config, dbAccessRepository.DbAccess);
+        notifiers.AddRange(notifierFactory.GetStartupNotifiers(configRepository.Config, dbAccessRepository.DbAccess));
         RunNotifiers(notifiers);
     }
 

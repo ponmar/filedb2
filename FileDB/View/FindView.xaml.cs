@@ -14,7 +14,7 @@ public partial class FindView : UserControl
     public FindView()
     {
         InitializeComponent();
-        DataContext = FindViewModel.Instance;
+        DataContext = ServiceLocator.Resolve<FindViewModel>();
 
         this.RegisterForEvent<ShowImage>((x) =>
         {

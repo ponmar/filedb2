@@ -218,14 +218,14 @@ public partial class SettingsViewModel : ObservableObject
         SelectedCulture = Cultures.FirstOrDefault(x => x.Name == DefaultConfigs.Default.CultureOverride);
     }
 
-    private Config config;
-    private readonly IConfigSaver configSaver;
+    private readonly IConfigRepository configRepository;
+    private readonly IConfigUpdater configUpdater;
     private readonly IDialogs dialogs;
 
-    public SettingsViewModel(Config config, IConfigSaver configSaver, IDialogs dialogs)
+    public SettingsViewModel(IConfigRepository configRepository, IConfigUpdater configUpdater, IDialogs dialogs)
     {
-        this.config = config;
-        this.configSaver = configSaver;
+        this.configRepository = configRepository;
+        this.configUpdater = configUpdater;
         this.dialogs = dialogs;
 
         foreach (var culture in CultureInfo.GetCultures(CultureTypes.SpecificCultures))
@@ -238,6 +238,8 @@ public partial class SettingsViewModel : ObservableObject
 
     private void UpdateFromConfiguration()
     {
+        var config = configRepository.Config;
+
         ConfigName = config.Name;
         Database = config.Database;
         FilesRootDirectory = config.FilesRootDirectory;
@@ -317,7 +319,7 @@ public partial class SettingsViewModel : ObservableObject
 
         if (appDataConfig.Write(configToSave))
         {
-            configSaver.UpdateConfig(configToSave);
+            configUpdater.UpdateConfig(configToSave);
         }
         else
         {

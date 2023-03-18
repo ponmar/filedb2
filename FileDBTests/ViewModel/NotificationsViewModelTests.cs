@@ -14,6 +14,9 @@ namespace FileDBTests.ViewModel;
 [TestClass]
 public class NotificationsViewModelTests
 {
+    private Config config;
+    private IConfigRepository fakeConfigRepo;
+    private IDbAccessRepository fakeDbAccessRepo;
     private IDbAccess fakeDbAccess;
     private INotifierFactory fakeNotifierFactory;
     private INotificationHandling fakeNotificationHandling;
@@ -23,10 +26,16 @@ public class NotificationsViewModelTests
     [TestInitialize]
     public void Initialize()
     {
+        config = new ConfigBuilder().Build();
+
+        fakeConfigRepo = A.Fake<IConfigRepository>();
+        fakeDbAccessRepo = A.Fake<IDbAccessRepository>();
         fakeDbAccess = A.Fake<IDbAccess>();
         fakeNotifierFactory = A.Fake<INotifierFactory>();
         fakeNotificationHandling = A.Fake<INotificationHandling>();
 
+        A.CallTo(() => fakeConfigRepo.Config).Returns(config);
+        A.CallTo(() => fakeDbAccessRepo.DbAccess).Returns(fakeDbAccess);
         A.CallTo(() => fakeNotifierFactory.GetContinousNotifiers(A<Config>._, A<IDbAccess>._)).Returns(new List<INotifier>());
         A.CallTo(() => fakeNotifierFactory.GetStartupNotifiers(A<Config>._, A<IDbAccess>._)).Returns(new List<INotifier>());
     }
@@ -40,8 +49,7 @@ public class NotificationsViewModelTests
     [TestMethod]
     public void Constructor_NoNotifications()
     {
-        var config = new ConfigBuilder().Build();
-        viewModel = new NotificationsViewModel(config, fakeDbAccess, fakeNotifierFactory, fakeNotificationHandling);
+        viewModel = new NotificationsViewModel(fakeConfigRepo, fakeDbAccessRepo, fakeNotifierFactory, fakeNotificationHandling);
 
         Assert.AreEqual(0, viewModel.Notifications.Count);
     }
@@ -52,8 +60,7 @@ public class NotificationsViewModelTests
         var initialNotifications = SomeNotifications();
         A.CallTo(() => fakeNotificationHandling.Notifications).Returns(initialNotifications);
         
-        var config = new ConfigBuilder().Build();
-        viewModel = new NotificationsViewModel(config, fakeDbAccess, fakeNotifierFactory, fakeNotificationHandling);
+        viewModel = new NotificationsViewModel(fakeConfigRepo, fakeDbAccessRepo, fakeNotifierFactory, fakeNotificationHandling);
 
         Assert.AreEqual(initialNotifications.Count, viewModel.Notifications.Count);
     }
@@ -64,8 +71,7 @@ public class NotificationsViewModelTests
         var notifications = SomeNotifications();
         A.CallTo(() => fakeNotificationHandling.Notifications).Returns(notifications);
 
-        var config = new ConfigBuilder().Build();
-        viewModel = new NotificationsViewModel(config, fakeDbAccess, fakeNotifierFactory, fakeNotificationHandling);
+        viewModel = new NotificationsViewModel(fakeConfigRepo, fakeDbAccessRepo, fakeNotifierFactory, fakeNotificationHandling);
         
         notifications.AddRange(SomeNotifications());
         Events.Send<NotificationsUpdated>();

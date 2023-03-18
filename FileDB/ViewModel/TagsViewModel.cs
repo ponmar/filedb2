@@ -3,10 +3,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using FileDB.Configuration;
 using FileDB.Model;
 using FileDB.Sorters;
-using FileDBInterface.DbAccess;
 
 namespace FileDB.ViewModel;
 
@@ -22,23 +20,22 @@ public partial class TagsViewModel : ObservableObject
     [ObservableProperty]
     private Tag? selectedTag;
 
-    private Config config;
-    private readonly IDbAccess dbAccess;
+    private readonly IConfigRepository configRepository;
+    private readonly IDbAccessRepository dbAccessRepository;
     private readonly IDialogs dialogs;
 
-    public TagsViewModel(Config config, IDbAccess dbAccess, IDialogs dialogs)
+    public TagsViewModel(IConfigRepository configRepository, IDbAccessRepository dbAccessRepository, IDialogs dialogs)
     {
-        this.config = config;
-        this.dbAccess = dbAccess;
+        this.configRepository = configRepository;
+        this.dbAccessRepository = dbAccessRepository;
         this.dialogs = dialogs;
-        ReadWriteMode = !config.ReadOnly;
+        ReadWriteMode = !configRepository.Config.ReadOnly;
 
         ReloadTags();
 
         this.RegisterForEvent<ConfigLoaded>((x) =>
         {
-            this.config = x.Config;
-            ReadWriteMode = !this.config.ReadOnly;
+            ReadWriteMode = !this.configRepository.Config.ReadOnly;
         });
 
         this.RegisterForEvent<TagsUpdated>((x) =>
@@ -52,10 +49,10 @@ public partial class TagsViewModel : ObservableObject
     {
         if (dialogs.ShowConfirmDialog($"Remove {SelectedTag!.Name}?"))
         {
-            var filesWithTag = dbAccess.SearchFilesWithTags(new List<int>() { SelectedTag.Id }).ToList();
+            var filesWithTag = dbAccessRepository.DbAccess.SearchFilesWithTags(new List<int>() { SelectedTag.Id }).ToList();
             if (filesWithTag.Count == 0 || dialogs.ShowConfirmDialog($"Tag is used in {filesWithTag.Count} files, remove anyway?"))
             {
-                dbAccess.DeleteTag(SelectedTag.Id);
+                dbAccessRepository.DbAccess.DeleteTag(SelectedTag.Id);
                 Events.Send<TagsUpdated>();
             }
         }
@@ -83,7 +80,7 @@ public partial class TagsViewModel : ObservableObject
     {
         Tags.Clear();
 
-        var tags = dbAccess.GetTags().ToList();
+        var tags = dbAccessRepository.DbAccess.GetTags().ToList();
         tags.Sort(new TagModelByNameSorter());
         foreach (var tag in tags.Select(tm => new Tag(tm.Id, tm.Name)))
         {

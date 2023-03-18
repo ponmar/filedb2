@@ -12,7 +12,7 @@ public partial class AboutView : UserControl
     public AboutView()
     {
         InitializeComponent();
-        DataContext = new AboutViewModel();
+        DataContext = ServiceLocator.Resolve<AboutViewModel>();
     }
 
     private void OpenUri(object sender, RequestNavigateEventArgs e)

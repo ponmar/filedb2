@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using FileDB.Configuration;
 using FileDB.Model;
 using FileDB.Sorters;
 using FileDBInterface.DbAccess;
@@ -24,21 +23,23 @@ public partial class PersonsViewModel : ObservableObject
     [ObservableProperty]
     private Person? selectedPerson;
 
-    private readonly IDbAccess dbAccess;
+    private readonly IConfigRepository configRepository;
+    private readonly IDbAccessRepository dbAccessRepository;
     private readonly IDialogs dialogs;
 
-    public PersonsViewModel(Config config, IDbAccess dbAccess, IDialogs dialogs)
+    public PersonsViewModel(IConfigRepository configRepository, IDbAccessRepository dbAccessRepository, IDialogs dialogs)
     {
-        this.dbAccess = dbAccess;
+        this.configRepository = configRepository;
+        this.dbAccessRepository = dbAccessRepository;
         this.dialogs = dialogs;
 
-        readWriteMode = !config.ReadOnly;
+        readWriteMode = !configRepository.Config.ReadOnly;
 
         ReloadPersons();
 
         this.RegisterForEvent<ConfigLoaded>((x) =>
         {
-            ReadWriteMode = !x.Config.ReadOnly;
+            ReadWriteMode = !this.configRepository.Config.ReadOnly;
         });
 
         this.RegisterForEvent<PersonsUpdated>((x) =>
@@ -52,10 +53,10 @@ public partial class PersonsViewModel : ObservableObject
     {
         if (dialogs.ShowConfirmDialog($"Remove {SelectedPerson!.Firstname} {SelectedPerson.Lastname}?"))
         {
-            var filesWithPerson = dbAccess.SearchFilesWithPersons(new List<int>() { SelectedPerson.Id }).ToList();
+            var filesWithPerson = dbAccessRepository.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPerson.Id }).ToList();
             if (filesWithPerson.Count == 0 || dialogs.ShowConfirmDialog($"Person is used in {filesWithPerson.Count} files, remove anyway?"))
             {
-                dbAccess.DeletePerson(SelectedPerson.Id);
+                dbAccessRepository.DbAccess.DeletePerson(SelectedPerson.Id);
                 Events.Send<PersonsUpdated>();
             }
         }
@@ -82,7 +83,7 @@ public partial class PersonsViewModel : ObservableObject
     private void ReloadPersons()
     {
         Persons.Clear();
-        var persons = dbAccess.GetPersons().ToList();
+        var persons = dbAccessRepository.DbAccess.GetPersons().ToList();
         persons.Sort(new PersonModelByNameSorter());
         var personVms = persons.Select(pm => new Person(pm.Id, pm.Firstname, pm.Lastname, pm.Description, pm.DateOfBirth, pm.Deceased, GetPersonAge(pm), pm.ProfileFileId, pm.Sex));
         foreach (var personVm in personVms)

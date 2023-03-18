@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using FileDB.Model;
 using FileDB.ViewModel;
 
 namespace FileDB.View
@@ -11,8 +12,7 @@ namespace FileDB.View
         public SettingsView()
         {
             InitializeComponent();
-            var model = Model.Model.Instance;
-            DataContext = new SettingsViewModel(model.Config, model, ServiceLocator.Resolve<IDialogs>());
+            DataContext = ServiceLocator.Resolve<SettingsViewModel>();
         }
     }
 }

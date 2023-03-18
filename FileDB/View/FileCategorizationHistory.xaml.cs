@@ -11,7 +11,7 @@ namespace FileDB.View
         public FileCategorizationHistory()
         {
             InitializeComponent();
-            DataContext = FindViewModel.Instance;
+            DataContext = ServiceLocator.Resolve<FindViewModel>();
         }
     }
 }

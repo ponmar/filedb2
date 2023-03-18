@@ -12,7 +12,7 @@ public partial class PresentationFileInfo : UserControl
     public PresentationFileInfo()
     {
         InitializeComponent();
-        DataContext = FindViewModel.Instance;
+        DataContext = ServiceLocator.Resolve<FindViewModel>();
     }
 
     private void OpenLocationUri(object sender, RequestNavigateEventArgs e)

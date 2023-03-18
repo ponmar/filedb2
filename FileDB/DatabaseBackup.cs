@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FileDB.Model;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -19,11 +20,20 @@ public class BackupFile
     }
 }
 
+// TODO: be able to fake filesystem
 public class DatabaseBackup
 {
-    public string BackupDirectory => Path.GetDirectoryName(Model.Model.Instance.Config.Database)!;
+    public string BackupDirectory { get; }
 
     private const string BackupFileTimestampFormat = "yyyy-MM-ddTHHmmss";
+
+    private IConfigRepository configRepository;
+
+    public DatabaseBackup(IConfigRepository configRepository)
+    {
+        this.configRepository = configRepository;
+        BackupDirectory = Path.GetDirectoryName(configRepository.Config.Database)!;
+    }
 
     public List<BackupFile> ListAvailableBackupFiles()
     {
@@ -51,7 +61,7 @@ public class DatabaseBackup
 
     public void CreateBackup()
     {
-        var db = Model.Model.Instance.Config.Database;
+        var db = configRepository.Config.Database;
         if (!File.Exists(db))
         {
             throw new IOException($"Database to backup does not exist: {db}");

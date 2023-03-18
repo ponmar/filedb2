@@ -1,5 +1,6 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Input;
+using FileDB.Model;
 using FileDB.ViewModel;
 
 namespace FileDB.View;
@@ -12,8 +13,7 @@ public partial class LocationsView : UserControl
     public LocationsView()
     {
         InitializeComponent();
-        var model = Model.Model.Instance;
-        DataContext = new LocationsViewModel(model.Config, model.DbAccess, ServiceLocator.Resolve<IDialogs>());
+        DataContext = ServiceLocator.Resolve<LocationsViewModel>();
     }
 
     private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)

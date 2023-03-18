@@ -15,16 +15,29 @@ public interface INotificationHandling
     void ClearNotifications();
 }
 
-public interface IConfigSaver
+public interface IDbAccessRepository
 {
+    IDbAccess DbAccess { get; }
+}
+
+public interface IFilesystemAccessRepository
+{
+    IFilesystemAccess FilesystemAccess { get; }
+}
+
+public interface IConfigRepository
+{
+    Config Config { get; }
+}
+
+public interface IConfigUpdater
+{
+    void InitConfig(Config config, IDbAccess dbAccess, IFilesystemAccess filesystemAccess, INotifierFactory notifierFactory);
     void UpdateConfig(Config config);
 }
 
-public class Model : INotificationHandling, IConfigSaver
+public class Model : INotificationHandling, IConfigRepository, IConfigUpdater, IDbAccessRepository, IFilesystemAccessRepository
 {
-    public static Model Instance => instance ??= new();
-    private static Model? instance;
-
     public IDbAccess DbAccess { get; private set; }
     public IFilesystemAccess FilesystemAccess { get; private set; }
     public INotifierFactory NotifierFactory { get; private set; }
@@ -33,7 +46,7 @@ public class Model : INotificationHandling, IConfigSaver
 
     public List<Notification> Notifications { get; } = new();
 
-    private Model()
+    public Model()
     {
         var dateCheckerTimer = new DispatcherTimer
         {
