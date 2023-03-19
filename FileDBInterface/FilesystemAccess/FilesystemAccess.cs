@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Abstractions;
 using System.Linq;
 using FileDBInterface.DbAccess;
 using FileDBShared.Model;
@@ -14,6 +15,13 @@ public class FilesystemAccess : IFilesystemAccess
 {
     private static readonly ILog log = LogManager.GetLogger(nameof(FilesystemAccess));
 
+    private readonly IFileSystem fileSystem;
+
+    public FilesystemAccess(IFileSystem fileSystem)
+    {
+        this.fileSystem = fileSystem;
+    }
+
     public required string FilesRootDirectory
     {
         get => filesRootDirectory;
@@ -22,7 +30,7 @@ public class FilesystemAccess : IFilesystemAccess
             if (filesRootDirectory != value)
             {
                 filesRootDirectory = value;
-                if (System.IO.Directory.Exists(filesRootDirectory))
+                if (fileSystem.Directory.Exists(filesRootDirectory))
                 {
                     log.Info($"Using files root directory: {filesRootDirectory}");
                 }
@@ -42,7 +50,7 @@ public class FilesystemAccess : IFilesystemAccess
             yield break;
         }
 
-        foreach (var filename in System.IO.Directory.GetFiles(path, "*.*", SearchOption.AllDirectories))
+        foreach (var filename in fileSystem.Directory.GetFiles(path, "*.*", SearchOption.AllDirectories))
         {
             var internalPath = ToInternalFilesPath(filename);
             if (PathIsApplicable(internalPath, blacklistedFilePathPatterns, whitelistedFilePathPatterns, includeHiddenDirectories) &&
@@ -87,7 +95,7 @@ public class FilesystemAccess : IFilesystemAccess
 
     public IEnumerable<string> ListAllFilesystemDirectories()
     {
-        var dirs = System.IO.Directory.GetDirectories(filesRootDirectory, "*.*", SearchOption.AllDirectories);
+        var dirs = fileSystem.Directory.GetDirectories(filesRootDirectory, "*.*", SearchOption.AllDirectories);
         return dirs.Select(p => ToInternalFilesPath(p));
     }
 
@@ -95,7 +103,7 @@ public class FilesystemAccess : IFilesystemAccess
     {
         foreach (var file in allFiles)
         {
-            if (!File.Exists(ToAbsolutePath(file.Path)))
+            if (!fileSystem.File.Exists(ToAbsolutePath(file.Path)))
             {
                 yield return file;
             }
@@ -174,6 +182,7 @@ public class FilesystemAccess : IFilesystemAccess
 
         try
         {
+            // TODO: read from stream from this.fileSystem
             var directories = ImageMetadataReader.ReadMetadata(path);
 
             var subIfdDirectory = directories.OfType<ExifSubIfdDirectory>().FirstOrDefault();

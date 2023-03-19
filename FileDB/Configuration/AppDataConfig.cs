@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.IO.Abstractions;
 using Newtonsoft.Json;
 
 namespace FileDB.Configuration;
@@ -11,8 +12,11 @@ public class AppDataConfig<T>
     public string ConfigDirectory { get; }
     public string FilePath { get;  }
 
-    public AppDataConfig(string appName)
+    private readonly IFileSystem fileSystem;
+
+    public AppDataConfig(string appName, IFileSystem fileSystem)
     {
+        this.fileSystem = fileSystem;
         AppName = appName;
         Filename = typeof(T).Name + ".json";
 
@@ -28,8 +32,8 @@ public class AppDataConfig<T>
         try
         {
             var directory = Path.GetDirectoryName(FilePath);
-            Directory.CreateDirectory(directory!);
-            File.WriteAllText(FilePath, jsonString);
+            fileSystem.Directory.CreateDirectory(directory!);
+            fileSystem.File.WriteAllText(FilePath, jsonString);
             return true;
         }
         catch (IOException)
@@ -44,7 +48,7 @@ public class AppDataConfig<T>
         {
             try
             {
-                var jsonString = File.ReadAllText(FilePath);
+                var jsonString = fileSystem.File.ReadAllText(FilePath);
                 return JsonConvert.DeserializeObject<T>(jsonString);
             }
             catch (JsonException)
@@ -60,6 +64,6 @@ public class AppDataConfig<T>
 
     public bool FileExists()
     {
-        return File.Exists(FilePath);
+        return fileSystem.File.Exists(FilePath);
     }
 }

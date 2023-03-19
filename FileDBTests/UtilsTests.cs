@@ -9,6 +9,12 @@ namespace FileDBTests;
 [TestClass]
 public class UtilsTests
 {
+    [TestInitialize]
+    public void Init()
+    {
+        Bootstrapper.Reset();
+    }
+
     [TestMethod]
     public void CreateFileList_NoFiles_EmptyString()
     {

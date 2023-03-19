@@ -3,6 +3,7 @@ using FileDBShared.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Abstractions;
 using System.Linq;
 
 namespace MediaFilesHelper;
@@ -38,7 +39,7 @@ public class MediaFileGrouper
         var filenames = Directory.GetFiles(directory, "*.*");
         var result = new List<FileInfo>();
 
-        var filesystemAccess = new FilesystemAccess() { FilesRootDirectory = "not used" };
+        var filesystemAccess = new FilesystemAccess(new FileSystem()) { FilesRootDirectory = "not used" };
 
         foreach (var filename in filenames)
         {

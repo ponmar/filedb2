@@ -3,6 +3,7 @@ using FileDB.Model;
 using FileDBInterface.DbAccess;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Abstractions;
 using System.Linq;
 
 namespace FileDB.Notifiers;
@@ -44,7 +45,7 @@ public class NotifierFactory : INotifierFactory
 
         if (config.BackupReminder)
         {
-            notifiers.Add(new BackupNotifier(new DatabaseBackup(ServiceLocator.Resolve<IConfigRepository>()).ListAvailableBackupFiles(), 30));
+            notifiers.Add(new BackupNotifier(new DatabaseBackup(ServiceLocator.Resolve<IConfigRepository>(), ServiceLocator.Resolve<IFileSystem>()).ListAvailableBackupFiles(), 30));
         }
 
         if (config.MissingFilesRootDirNotification)
@@ -54,7 +55,7 @@ public class NotifierFactory : INotifierFactory
 
         if (config.CacheFiles)
         {
-            var configDir = new AppDataConfig<Config>(Utils.ApplicationName).ConfigDirectory;
+            var configDir = new AppDataConfig<Config>(Utils.ApplicationName, ServiceLocator.Resolve<IFileSystem>()).ConfigDirectory;
             var cacheDir = Path.Combine(configDir, DefaultConfigs.CacheSubdir);
             var cacheFileIds = dbAccess.GetPersons().Where(x => x.ProfileFileId != null).Select(x => x.ProfileFileId!.Value);
             notifiers.Add(new CacheNotifier(cacheDir, cacheFileIds));

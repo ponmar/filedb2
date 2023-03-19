@@ -1,4 +1,5 @@
-﻿using FileDB.Comparers;
+﻿using FileDB;
+using FileDB.Comparers;
 using FileDBShared.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -7,6 +8,12 @@ namespace FileDBTests.Comparers;
 [TestClass]
 public class FilesModelIdComparerTests
 {
+    [TestInitialize]
+    public void Init()
+    {
+        Bootstrapper.Reset();
+    }
+
     [TestMethod]
     public void Equals_DifferentInstancesSameId_AreEqual()
     {

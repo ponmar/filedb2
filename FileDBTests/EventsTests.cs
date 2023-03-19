@@ -14,6 +14,8 @@ public class EventsTests
     [TestInitialize]
     public void Init()
     {
+        Bootstrapper.Reset();
+
         recorder.Reset();
         recorder.Record<Event>();
     }

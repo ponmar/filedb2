@@ -12,6 +12,7 @@ using TextCopy;
 using System.Collections.Generic;
 using System.Globalization;
 using FileDB.Model;
+using System.IO.Abstractions;
 
 namespace FileDB
 {
@@ -28,7 +29,7 @@ namespace FileDB
 
             bool demoModeEnabled = startupEventArgs.Args.Any(x => x == "--demo");
 
-            var appDataConfig = new AppDataConfig<Config>(Utils.ApplicationName);
+            var appDataConfig = new AppDataConfig<Config>(Utils.ApplicationName, ServiceLocator.Resolve<IFileSystem>());
 
             var configUpdater = ServiceLocator.Resolve<IConfigUpdater>();
             Config config;
@@ -76,7 +77,8 @@ namespace FileDB
                 dbAccess = new NoDbAccess();
             }
 
-            var filesystemAccess = new FilesystemAccess() { FilesRootDirectory = config.FilesRootDirectory };
+            var fileSystem = ServiceLocator.Resolve<IFileSystem>();
+            var filesystemAccess = new FilesystemAccess(fileSystem) { FilesRootDirectory = config.FilesRootDirectory };
             var notifierFactory = new NotifierFactory();
 
             configUpdater.InitConfig(config, dbAccess, filesystemAccess, notifierFactory);

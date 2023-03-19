@@ -23,6 +23,8 @@ public class BirthdaysViewModelTests
     [TestInitialize]
     public void Initialize()
     {
+        Bootstrapper.Reset();
+
         fakeConfigRepo = A.Fake<IConfigRepository>();
         fakeDbAccess = A.Fake<IDbAccess>();
         fakeDbAccessRepo = A.Fake<IDbAccessRepository>();

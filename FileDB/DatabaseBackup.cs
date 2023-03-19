@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Abstractions;
 
 namespace FileDB;
 
@@ -20,18 +21,19 @@ public class BackupFile
     }
 }
 
-// TODO: be able to fake filesystem
 public class DatabaseBackup
 {
     public string BackupDirectory { get; }
 
     private const string BackupFileTimestampFormat = "yyyy-MM-ddTHHmmss";
 
-    private IConfigRepository configRepository;
+    private readonly IConfigRepository configRepository;
+    private readonly IFileSystem fileSystem;
 
-    public DatabaseBackup(IConfigRepository configRepository)
+    public DatabaseBackup(IConfigRepository configRepository, IFileSystem fileSystem)
     {
         this.configRepository = configRepository;
+        this.fileSystem = fileSystem;
         BackupDirectory = Path.GetDirectoryName(configRepository.Config.Database)!;
     }
 
@@ -39,7 +41,7 @@ public class DatabaseBackup
     {
         var backupFiles = new List<BackupFile>();
 
-        foreach (var filePath in Directory.GetFiles(BackupDirectory, "backup_*.db"))
+        foreach (var filePath in fileSystem.Directory.GetFiles(BackupDirectory, "backup_*.db"))
         {
             var filenameParts = filePath.Split("_");
             if (filenameParts.Length >= 2)
@@ -62,7 +64,7 @@ public class DatabaseBackup
     public void CreateBackup()
     {
         var db = configRepository.Config.Database;
-        if (!File.Exists(db))
+        if (!fileSystem.File.Exists(db))
         {
             throw new IOException($"Database to backup does not exist: {db}");
         }
@@ -72,11 +74,11 @@ public class DatabaseBackup
         var backupFilename = $"backup_{timestamp}.db";
         var backupFilePath = Path.Combine(directoryPath!, backupFilename);
 
-        if (File.Exists(backupFilePath))
+        if (fileSystem.File.Exists(backupFilePath))
         {
             throw new IOException($"Backup file already exists: {backupFilePath}");
         }
 
-        File.Copy(db, backupFilePath);
+        fileSystem.File.Copy(db, backupFilePath);
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Windows;
+using FileDB;
 using FileDB.Converters;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -11,6 +12,12 @@ namespace FileDBTests.Converters;
 [TestClass]
 public class EnumerationToVisibilityConverterTests
 {
+    [TestInitialize]
+    public void Init()
+    {
+        Bootstrapper.Reset();
+    }
+
     [TestMethod]
     public void Convert_Null_Collapsed()
     {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.IO.Abstractions;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FileDB.Configuration;
@@ -131,7 +132,7 @@ public partial class BirthdaysViewModel : ObservableObject
         allPersons.Clear();
         Persons.Clear();
 
-        var configDir = new AppDataConfig<Config>(Utils.ApplicationName).ConfigDirectory;
+        var configDir = new AppDataConfig<Config>(Utils.ApplicationName, ServiceLocator.Resolve<IFileSystem>()).ConfigDirectory;
         var cacheDir = Path.Combine(configDir, DefaultConfigs.CacheSubdir);
 
         foreach (var person in dbAccessRepository.DbAccess.GetPersons().Where(x => x.DateOfBirth != null && x.Deceased == null))

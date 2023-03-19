@@ -3,15 +3,17 @@ using Castle.Windsor;
 using FileDB.Model;
 using FileDB.Notifiers;
 using FileDB.ViewModel;
+using System.IO.Abstractions;
 
 namespace FileDB;
 
 public static class Bootstrapper
 {
-    public static WindsorContainer Container { get; } = new WindsorContainer();
+    public static WindsorContainer Container { get; private set; } = new WindsorContainer();
 
     public static void Bootstrap()
     {
+        Container.Register(Component.For<IFileSystem>().ImplementedBy<FileSystem>());
         Container.Register(Component.For<IDialogs>().ImplementedBy<Dialogs>());
         Container.Register(Component.For<INotifierFactory>().ImplementedBy<NotifierFactory>());
         
@@ -34,11 +36,12 @@ public static class Bootstrapper
         Container.Register(Component.For<SettingsViewModel>().ImplementedBy<SettingsViewModel>());
         Container.Register(Component.For<TagsViewModel>().ImplementedBy<TagsViewModel>());
         Container.Register(Component.For<ToolsViewModel>().ImplementedBy<ToolsViewModel>());
-        
-
-
-
-
         Container.Register(Component.For<FindViewModel>().ImplementedBy<FindViewModel>());
+    }
+
+    public static void Reset()
+    {
+        Container = new WindsorContainer();
+        Bootstrap();
     }
 }

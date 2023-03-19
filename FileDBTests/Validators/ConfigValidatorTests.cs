@@ -1,4 +1,5 @@
-﻿using FileDB.Validators;
+﻿using FileDB;
+using FileDB.Validators;
 using FluentValidation.TestHelper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -12,6 +13,8 @@ public class ConfigValidatorTests
     [TestInitialize]
     public void Initialize()
     {
+        Bootstrapper.Reset();
+
         validator = new();
     }
 

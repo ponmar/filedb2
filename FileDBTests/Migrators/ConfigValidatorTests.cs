@@ -1,4 +1,5 @@
-﻿using FileDB.Configuration;
+﻿using FileDB;
+using FileDB.Configuration;
 using FileDB.Migrators;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -12,6 +13,8 @@ public class ConfigMigratorTests
     [TestInitialize]
     public void Initialize()
     {
+        Bootstrapper.Reset();
+
         migrator = new();
     }
 

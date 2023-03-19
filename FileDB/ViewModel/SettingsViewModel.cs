@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.IO.Abstractions;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -308,7 +309,7 @@ public partial class SettingsViewModel : ObservableObject
             return;
         }
 
-        var appDataConfig = new AppDataConfig<Config>(Utils.ApplicationName);
+        var appDataConfig = new AppDataConfig<Config>(Utils.ApplicationName, ServiceLocator.Resolve<IFileSystem>());
 
         if (!dialogs.ShowConfirmDialog($"Write your configuration to {appDataConfig.FilePath}?"))
         {

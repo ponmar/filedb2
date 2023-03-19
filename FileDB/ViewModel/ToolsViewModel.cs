@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.IO.Abstractions;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -54,13 +55,15 @@ public partial class ToolsViewModel : ObservableObject
     private readonly IDbAccessRepository dbAccessRepository;
     private readonly IFilesystemAccessRepository filesystemAccessRepository;
     private readonly IDialogs dialogs;
+    private readonly IFileSystem fileSystem;
 
-    public ToolsViewModel(IConfigRepository configRepository, IDbAccessRepository dbAccessRepository, IFilesystemAccessRepository filesystemAccessRepository, IDialogs dialogs)
+    public ToolsViewModel(IConfigRepository configRepository, IDbAccessRepository dbAccessRepository, IFilesystemAccessRepository filesystemAccessRepository, IDialogs dialogs, IFileSystem fileSystem)
     {
         this.configRepository = configRepository;
         this.dbAccessRepository = dbAccessRepository;
         this.filesystemAccessRepository = filesystemAccessRepository;
         this.dialogs = dialogs;
+        this.fileSystem = fileSystem;
         ScanBackupFiles();
     }
 
@@ -69,7 +72,7 @@ public partial class ToolsViewModel : ObservableObject
     {
         try
         {
-            new DatabaseBackup(configRepository).CreateBackup();
+            new DatabaseBackup(configRepository, fileSystem).CreateBackup();
             ScanBackupFiles();
         }
         catch (IOException e)
@@ -81,7 +84,7 @@ public partial class ToolsViewModel : ObservableObject
     [RelayCommand]
     private void OpenDatabaseBackupDirectory()
     {
-        Utils.OpenDirectoryInExplorer(new DatabaseBackup(configRepository).BackupDirectory);
+        Utils.OpenDirectoryInExplorer(new DatabaseBackup(configRepository, fileSystem).BackupDirectory);
     }
 
     [RelayCommand]
@@ -89,7 +92,7 @@ public partial class ToolsViewModel : ObservableObject
     {
         CacheResult = "Running...";
 
-        var configDir = new AppDataConfig<Config>(Utils.ApplicationName).ConfigDirectory;
+        var configDir = new AppDataConfig<Config>(Utils.ApplicationName, ServiceLocator.Resolve<IFileSystem>()).ConfigDirectory;
         var cacheDir = Path.Combine(configDir, DefaultConfigs.CacheSubdir);
         if (!Directory.Exists(cacheDir))
         {
@@ -132,7 +135,7 @@ public partial class ToolsViewModel : ObservableObject
     [RelayCommand]
     private void OpenCacheDirectory()
     {
-        var configDir = new AppDataConfig<Config>(Utils.ApplicationName).ConfigDirectory;
+        var configDir = new AppDataConfig<Config>(Utils.ApplicationName, ServiceLocator.Resolve<IFileSystem>()).ConfigDirectory;
         var cacheDir = Path.Combine(configDir, DefaultConfigs.CacheSubdir);
         var dirToOpen = Directory.Exists(cacheDir) ? cacheDir : configDir;
         Utils.OpenDirectoryInExplorer(dirToOpen);
@@ -142,7 +145,7 @@ public partial class ToolsViewModel : ObservableObject
     {
         BackupFiles.Clear();
 
-        var backupHandler = new DatabaseBackup(configRepository);
+        var backupHandler = new DatabaseBackup(configRepository, fileSystem);
 
         if (Directory.Exists(backupHandler.BackupDirectory))
         {

@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using FileDB;
 using FileDB.Converters;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -7,6 +8,12 @@ namespace FileDBTests.Converters;
 [TestClass]
 public class NegatedBoolConverterTests
 {
+    [TestInitialize]
+    public void Init()
+    {
+        Bootstrapper.Reset();
+    }
+
     [TestMethod]
     public void Convert()
     {

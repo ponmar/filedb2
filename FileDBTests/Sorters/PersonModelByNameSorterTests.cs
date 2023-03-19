@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using FileDB;
 using FileDB.Sorters;
 using FileDBShared.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -13,6 +14,8 @@ public class PersonModelByNameSorterTests
     [TestInitialize]
     public void Initialize()
     {
+        Bootstrapper.Reset();
+
         sorter = new();
     }
 

@@ -26,6 +26,8 @@ public class NotificationsViewModelTests
     [TestInitialize]
     public void Initialize()
     {
+        Bootstrapper.Reset();
+
         config = new ConfigBuilder().Build();
 
         fakeConfigRepo = A.Fake<IConfigRepository>();

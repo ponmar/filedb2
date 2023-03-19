@@ -1,6 +1,7 @@
 ﻿using FileDB.Model;
 using FileDBShared.FileFormats;
 using System.IO;
+using System.IO.Abstractions;
 
 namespace FileDB.Export;
 
@@ -8,18 +9,20 @@ public class SearchResultFilesExporter : ISearchResultExporter
 {
     public void Export(SearchResultExport data, string path)
     {
-        var fileSyustemAccess = ServiceLocator.Resolve<IFilesystemAccessRepository>();
+        var fileSystemAccess = ServiceLocator.Resolve<IFilesystemAccessRepository>();
+        var fileSystem = ServiceLocator.Resolve<IFileSystem>();
+
         foreach (var file in data.Files)
         {
-            var sourceFilePath = fileSyustemAccess.FilesystemAccess.ToAbsolutePath(file.OriginalPath);
+            var sourceFilePath = fileSystemAccess.FilesystemAccess.ToAbsolutePath(file.OriginalPath);
             var destFilePath = Path.Combine(path, file.ExportedPath);
             var destDir = Path.GetDirectoryName(destFilePath)!;
-            if (!Directory.Exists(destDir))
+            if (!fileSystem.Directory.Exists(destDir))
             {
-                Directory.CreateDirectory(destDir);
+                fileSystem.Directory.CreateDirectory(destDir);
             }
 
-            File.Copy(sourceFilePath, destFilePath);
+            fileSystem.File.Copy(sourceFilePath, destFilePath);
         }
     }
 }
