@@ -41,6 +41,10 @@ public static class Bootstrapper
         Container.Register(Component.For<AddLocationViewModel>().ImplementedBy<AddLocationViewModel>().LifestyleTransient());
         Container.Register(Component.For<AddPersonViewModel>().ImplementedBy<AddPersonViewModel>().LifestyleTransient());
         Container.Register(Component.For<AddTagViewModel>().ImplementedBy<AddTagViewModel>().LifestyleTransient());
+
+        Container.Register(Component.For<BrowseDirectoriesViewModel>().ImplementedBy<BrowseDirectoriesViewModel>().LifestyleTransient());
+        Container.Register(Component.For<CreateDatabaseViewModel>().ImplementedBy<CreateDatabaseViewModel>().LifestyleTransient());
+        Container.Register(Component.For<ExportViewModel>().ImplementedBy<ExportViewModel>().LifestyleTransient());
     }
 
     public static void Reset()

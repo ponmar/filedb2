@@ -12,10 +12,7 @@ namespace FileDB.View
         public ExportWindow()
         {
             InitializeComponent();
-            DataContext = new ExportViewModel(
-                ServiceLocator.Resolve<IDialogs>(),
-                ServiceLocator.Resolve<IDbAccessRepository>(),
-                ServiceLocator.Resolve<IFilesystemAccessRepository>());
+            DataContext = ServiceLocator.Resolve<ExportViewModel>();
 
             this.RegisterForEvent<CloseModalDialogRequested>((x) => Close());
         }

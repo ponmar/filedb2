@@ -12,7 +12,7 @@ namespace FileDB.View
         public BrowseDirectoriesWindow()
         {
             InitializeComponent();
-            DataContext = new BrowseDirectoriesViewModel(ServiceLocator.Resolve<IDbAccessRepository>());
+            DataContext = ServiceLocator.Resolve<BrowseDirectoriesViewModel>();
 
             this.RegisterForEvent<CloseModalDialogRequested>((x) => Close());
         }
