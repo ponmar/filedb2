@@ -37,6 +37,10 @@ public static class Bootstrapper
         Container.Register(Component.For<TagsViewModel>().ImplementedBy<TagsViewModel>());
         Container.Register(Component.For<ToolsViewModel>().ImplementedBy<ToolsViewModel>());
         Container.Register(Component.For<FindViewModel>().ImplementedBy<FindViewModel>());
+
+        Container.Register(Component.For<AddLocationViewModel>().ImplementedBy<AddLocationViewModel>().LifestyleTransient());
+        Container.Register(Component.For<AddPersonViewModel>().ImplementedBy<AddPersonViewModel>().LifestyleTransient());
+        Container.Register(Component.For<AddTagViewModel>().ImplementedBy<AddTagViewModel>().LifestyleTransient());
     }
 
     public static void Reset()

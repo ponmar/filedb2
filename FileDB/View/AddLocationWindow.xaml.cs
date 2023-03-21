@@ -12,7 +12,7 @@ public partial class AddLocationWindow : Window
     public AddLocationWindow(int? locationId = null)
     {
         InitializeComponent();
-        DataContext = new AddLocationViewModel(ServiceLocator.Resolve<IDbAccessRepository>(), ServiceLocator.Resolve<IDialogs>(), locationId);
+        DataContext = ServiceLocator.Resolve<AddLocationViewModel>("locationId", locationId);
 
         this.RegisterForEvent<CloseModalDialogRequested>((x) => Close());
     }

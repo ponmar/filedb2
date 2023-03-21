@@ -12,10 +12,7 @@ public partial class AddTagWindow : Window
     public AddTagWindow(int? tagId = null)
     {
         InitializeComponent();
-        DataContext = new AddTagViewModel(
-            ServiceLocator.Resolve<IDbAccessRepository>(),
-            ServiceLocator.Resolve<IDialogs>(),
-            tagId);
+        DataContext = ServiceLocator.Resolve<AddTagViewModel>("tagId", tagId);
 
         this.RegisterForEvent<CloseModalDialogRequested>((x) => Close());
     }
