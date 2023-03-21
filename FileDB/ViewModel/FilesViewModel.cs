@@ -65,7 +65,7 @@ public partial class FilesViewModel : ObservableObject
 
         subdirToScan = configRepository.Config.FilesRootDirectory;
 
-        this.RegisterForEvent<ConfigLoaded>((x) =>
+        this.RegisterForEvent<ConfigUpdated>((x) =>
         {
             SubdirToScan = configRepository.Config.FilesRootDirectory;
         });

@@ -33,7 +33,7 @@ public partial class TagsViewModel : ObservableObject
 
         ReloadTags();
 
-        this.RegisterForEvent<ConfigLoaded>((x) =>
+        this.RegisterForEvent<ConfigUpdated>((x) =>
         {
             ReadWriteMode = !this.configRepository.Config.ReadOnly;
         });

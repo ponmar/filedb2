@@ -37,7 +37,7 @@ public partial class PersonsViewModel : ObservableObject
 
         ReloadPersons();
 
-        this.RegisterForEvent<ConfigLoaded>((x) =>
+        this.RegisterForEvent<ConfigUpdated>((x) =>
         {
             ReadWriteMode = !this.configRepository.Config.ReadOnly;
         });

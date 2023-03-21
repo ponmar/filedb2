@@ -72,7 +72,7 @@ public partial class RipViewModel : ObservableObject
 
         UpdatePersons();
 
-        this.RegisterForEvent<ConfigLoaded>((x) =>
+        this.RegisterForEvent<ConfigUpdated>((x) =>
         {
             UpdatePersons();
         });

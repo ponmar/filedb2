@@ -117,7 +117,7 @@ public partial class BirthdaysViewModel : ObservableObject
 
         UpdatePersons();
 
-        this.RegisterForEvent<ConfigLoaded>((x) =>
+        this.RegisterForEvent<ConfigUpdated>((x) =>
         {
             UpdatePersons();
         });

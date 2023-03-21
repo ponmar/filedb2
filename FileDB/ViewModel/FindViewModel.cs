@@ -519,7 +519,7 @@ public partial class FindViewModel : ObservableObject
         this.RegisterForEvent<LocationsUpdated>((x) => ReloadLocations());
         this.RegisterForEvent<TagsUpdated>((x) => ReloadTags());
 
-        this.RegisterForEvent<ConfigLoaded>((x) =>
+        this.RegisterForEvent<ConfigUpdated>((x) =>
         {
             ReadWriteMode = !configRepository.Config.ReadOnly;
             slideshowTimer.Interval = TimeSpan.FromSeconds(configRepository.Config.SlideshowDelay);

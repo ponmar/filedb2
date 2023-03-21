@@ -39,7 +39,7 @@ public partial class LocationsViewModel : ObservableObject
 
         this.RegisterForEvent<LocationsUpdated>((x) => ReloadLocations());
 
-        this.RegisterForEvent<ConfigLoaded>((x) =>
+        this.RegisterForEvent<ConfigUpdated>((x) =>
         {
             ReadWriteMode = !configRepository.Config.ReadOnly;
         });

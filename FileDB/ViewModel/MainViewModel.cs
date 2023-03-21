@@ -78,7 +78,7 @@ public partial class MainViewModel : ObservableObject
             WindowStyle = x.Fullscreen ? WindowStyle.None : defaultWindowStyle;
         });
 
-        this.RegisterForEvent<ConfigLoaded>((x) =>
+        this.RegisterForEvent<ConfigUpdated>((x) =>
         {
             ReadWriteMode = !configRepository.Config.ReadOnly;
             OnPropertyChanged(nameof(Title));

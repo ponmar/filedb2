@@ -95,7 +95,7 @@ public class Model : INotificationHandling, IConfigRepository, IConfigUpdater, I
         DbAccess = dbAccess;
         FilesystemAccess = filesystemAccess;
         NotifierFactory = notifierFactory;
-        Events.Send(new ConfigLoaded(config));
+        Events.Send<ConfigUpdated>();
     }
 
     public void UpdateConfig(Config config)
@@ -103,6 +103,6 @@ public class Model : INotificationHandling, IConfigRepository, IConfigUpdater, I
         Config = config;
         DbAccess.Database = config.Database;
         FilesystemAccess.FilesRootDirectory = config.FilesRootDirectory;
-        Events.Send(new ConfigLoaded(config));
+        Events.Send<ConfigUpdated>();
     }
 }

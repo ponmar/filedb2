@@ -27,7 +27,7 @@ public partial class NotificationsViewModel : ObservableObject
         this.notifierFactory = notifierFactory;
         this.notificationHandling = notificationHandling;
 
-        this.RegisterForEvent<ConfigLoaded>((x) =>
+        this.RegisterForEvent<ConfigUpdated>((x) =>
         {
             RunAllNotifiers();
         });
