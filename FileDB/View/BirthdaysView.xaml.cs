@@ -1,6 +1,5 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Input;
-using FileDB.Model;
 using FileDB.ViewModel;
 
 namespace FileDB.View;

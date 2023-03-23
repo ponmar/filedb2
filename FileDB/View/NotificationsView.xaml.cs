@@ -1,6 +1,4 @@
 ﻿using System.Windows.Controls;
-using FileDB.Model;
-using FileDB.Notifiers;
 using FileDB.ViewModel;
 
 namespace FileDB.View;

@@ -14,10 +14,8 @@ using TextCopy;
 using FileDBInterface.DbAccess;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using FileDB.Extensions;
 using FileDB.Model;
 using FileDBShared.Validators;
-using System.DirectoryServices;
 
 namespace FileDB.ViewModel;
 
@@ -37,28 +35,6 @@ public class FileExtensionsAttribute : Attribute
 public record PersonToUpdate(int Id, string Name, string ShortName);
 public record LocationToUpdate(int Id, string Name, string ShortName);
 public record TagToUpdate(int Id, string Name, string ShortName);
-
-public class SearchResult
-{
-    public string Name => $"{Count} files";
-
-    public string From => DateTime.ToString("HH:mm:ss");
-
-    public DateTime DateTime { get; } = DateTime.Now;
-
-    public int Count => Files.Count;
-
-    public List<FilesModel> Files { get; }
-
-    public SearchResult(IEnumerable<FilesModel> files) : this(files.ToList())
-    {
-    }
-
-    public SearchResult(List<FilesModel> files)
-    {
-        Files = files;
-    }
-}
 
 public enum UpdateHistoryType
 {
@@ -96,118 +72,7 @@ public partial class FindViewModel : ObservableObject
 
     public bool ShowUpdateSection => !Maximize && ReadWriteMode;
 
-    #region Search commands and properties
-
-    [ObservableProperty]
-    private string numRandomFiles = "10";
-
-    [ObservableProperty]
-    private string importedFileList = string.Empty;
-
-    [ObservableProperty]
-    private string? searchPattern;
-
-    [ObservableProperty]
-    private DateTime searchStartDate = DateTime.Now;
-
-    [ObservableProperty]
-    private DateTime searchEndDate = DateTime.Now;
-
-    public static IEnumerable<Sex> PersonSexValues => Enum.GetValues<Sex>().OrderBy(x => x.ToString());
-
-    [ObservableProperty]
-    private Sex? searchBySexSelection;
-
-    public static IEnumerable<FileType> FileTypes => Enum.GetValues<FileType>().OrderBy(x => x.ToString());
-
-    [ObservableProperty]
-    private FileType? selectedFileType = null;
-
-    [ObservableProperty]
-    private LocationToUpdate? selectedLocationForPositionSearch;
-
-    partial void OnSelectedLocationForPositionSearchChanged(LocationToUpdate? value)
-    {
-        if (value != null)
-        {
-            var location = dbAccessRepository.DbAccess.GetLocationById(value.Id);
-            if (location.Position != null)
-            {
-                SearchFileGpsPosition = location.Position;
-            }
-            else
-            {
-                SearchFileGpsPosition = string.Empty;
-                dialogs.ShowInfoDialog("This location has no GPS position set.");
-            }
-        }        
-    }
-
-    [ObservableProperty]
-    private string? searchFileGpsPosition;
-
-    [ObservableProperty]
-    private string? searchFileGpsPositionUrl;
-
-    partial void OnSearchFileGpsPositionUrlChanged(string? value)
-    {
-        if (!string.IsNullOrEmpty(value))
-        {
-            var gpsPos = DatabaseParsing.ParseFilesPositionFromUrl(SearchFileGpsPositionUrl);
-            if (gpsPos != null)
-            {
-                SearchFileGpsPosition = $"{gpsPos.Value.lat} {gpsPos.Value.lon}";
-                return;
-            }
-        }
-        SearchFileGpsPosition = string.Empty;
-    }
-
-    [ObservableProperty]
-    private string searchFileGpsRadius = "500";
-
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(PersonAgeRangeValid))]
-    private string? searchPersonAgeFrom;
-
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(PersonAgeRangeValid))]
-    private string? searchPersonAgeTo;
-
-    public bool PersonAgeRangeValid =>
-        int.TryParse(SearchPersonAgeFrom, out var from) &&
-        int.TryParse(SearchPersonAgeTo, out var to) &&
-        from >= 0 && from <= to;
-
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(CombineSearchResultPossible))]
-    private string combineSearch1 = string.Empty;
-
-    partial void OnCombineSearch1Changed(string value)
-    {
-        CombineSearchResult = string.Empty;
-    }
-
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(CombineSearchResultPossible))]
-    private string combineSearch2 = string.Empty;
-
-    partial void OnCombineSearch2Changed(string value)
-    {
-        CombineSearchResult = string.Empty;
-    }
-
-    [ObservableProperty]
-    private string combineSearchResult = string.Empty;
-
-    public bool CombineSearchResultPossible => !string.IsNullOrEmpty(CombineSearch1) && !string.IsNullOrEmpty(CombineSearch2);
-
-    #endregion
-
     #region Meta-data change commands and properties
-
-    [ObservableProperty]
-    private string? fileListSearch;
 
     [ObservableProperty]
     private string? newFileDescription;
@@ -289,19 +154,6 @@ public partial class FindViewModel : ObservableObject
         SelectedPersonToUpdate != null &&
         currentFilePersonList.Any(x => x.Id == SelectedPersonToUpdate.Id);
 
-    [ObservableProperty]
-    private PersonToUpdate? selectedPersonSearch;
-
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(Person1And2Selected))]
-    private PersonToUpdate? selectedPerson1Search;
-
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(Person1And2Selected))]
-    private PersonToUpdate? selectedPerson2Search;
-
-    public bool Person1And2Selected => SelectedPerson1Search != null && SelectedPerson2Search != null;
-
     public ObservableCollection<LocationToUpdate> Locations { get; } = new();
 
     public ObservableCollection<LocationToUpdate> LocationsWithPosition { get; } = new();
@@ -321,9 +173,6 @@ public partial class FindViewModel : ObservableObject
         SelectedLocationToUpdate != null &&
         currentFileLocationList.Any(x => x.Id == SelectedLocationToUpdate.Id);
 
-    [ObservableProperty]
-    private LocationToUpdate? selectedLocationSearch;
-
     public ObservableCollection<TagToUpdate> Tags { get; } = new();
 
     [ObservableProperty]
@@ -340,9 +189,6 @@ public partial class FindViewModel : ObservableObject
         SelectedFile != null &&
         SelectedTagToUpdate != null &&
         currentFileTagList.Any(x => x.Id == SelectedTagToUpdate.Id);
-
-    [ObservableProperty]
-    private TagToUpdate? selectedTagSearch;
 
     public ObservableCollection<UpdateHistoryItem> UpdateHistoryItems { get; } = new();
 
@@ -368,11 +214,6 @@ public partial class FindViewModel : ObservableObject
         ReloadLocations();
         ReloadTags();
 
-        this.RegisterForEvent<FilesImported>((x) =>
-        {
-            ImportedFileList = Utils.CreateFileList(x.Files);
-        });
-
         this.RegisterForEvent<PersonsUpdated>((x) => ReloadPersons());
         this.RegisterForEvent<LocationsUpdated>((x) => ReloadLocations());
         this.RegisterForEvent<TagsUpdated>((x) => ReloadTags());
@@ -392,365 +233,6 @@ public partial class FindViewModel : ObservableObject
         {
             ResetFile();
         });
-    }
-
-    [RelayCommand]
-    private void FindRandomFiles()
-    {
-        if (int.TryParse(NumRandomFiles, out var value))
-        {
-            var searchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesRandom(value));
-            Events.Send(new NewSearchResult(searchResult));
-        }
-    }
-
-    [RelayCommand]
-    private void FindCurrentDirectoryFiles()
-    {
-        if (SelectedFile == null)
-        {
-            dialogs.ShowErrorDialog("No file opened");
-            return;
-        }
-
-        var path = SelectedFile.Path;
-        var dir = Path.GetDirectoryName(path)!.Replace('\\', '/');
-        var searchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesByPath(dir));
-        Events.Send(new NewSearchResult(searchResult));
-    }
-
-    [RelayCommand]
-    private void FindAllFiles()
-    {
-        var searchResult = new SearchResult(dbAccessRepository.DbAccess.GetFiles());
-        Events.Send(new NewSearchResult(searchResult));
-    }
-
-    [RelayCommand]
-    private void FindImportedFiles()
-    {
-        if (!string.IsNullOrEmpty(ImportedFileList))
-        {
-            var fileIds = Utils.CreateFileIds(ImportedFileList);
-            var searchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesFromIds(fileIds));
-            Events.Send(new NewSearchResult(searchResult));
-        }
-    }
-
-    [RelayCommand]
-    private void FindBrowsedFiles()
-    {
-        var selectedDir = dialogs.ShowBrowseDirectoriesDialog();
-        if (selectedDir != null)
-        {
-            var searchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesByPath(selectedDir));
-            Events.Send(new NewSearchResult(searchResult));
-        }
-    }
-
-    [RelayCommand]
-    private void FindFilesByText()
-    {
-        if (!string.IsNullOrEmpty(SearchPattern))
-        {
-            var searchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFiles(SearchPattern));
-            Events.Send(new NewSearchResult(searchResult));
-        }
-    }
-
-    [RelayCommand]
-    private void FindFilesBySex()
-    {
-        if (SearchBySexSelection != null)
-        {
-            var searchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesBySex(SearchBySexSelection.Value));
-            Events.Send(new NewSearchResult(searchResult));
-        }
-    }
-
-    [RelayCommand]
-    private void FindFilesByDate()
-    {
-        var searchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesByDate(SearchStartDate.Date, SearchEndDate.Date));
-        Events.Send(new NewSearchResult(searchResult));
-    }
-
-    [RelayCommand]
-    private void FindFilesByType()
-    {
-        if (SelectedFileType == null)
-        {
-            return;
-        }
-
-        var fileExtensions = SelectedFileType.GetAttribute<FileExtensionsAttribute>().FileExtensions;
-        
-        var result = new List<FilesModel>();
-        foreach (var extension in fileExtensions)
-        {
-            result.AddRange(dbAccessRepository.DbAccess.SearchFilesByExtension(extension));
-        }
-
-        var searchResult = new SearchResult(result);
-        Events.Send(new NewSearchResult(searchResult));
-    }
-
-    [RelayCommand]
-    private void SearchFilePositionFromCurrentFile()
-    {
-        SearchFileGpsPosition = CurrentFilePosition;
-    }
-
-    [RelayCommand]
-    private void FindFilesByGpsPosition()
-    {
-        if (string.IsNullOrEmpty(SearchFileGpsPosition))
-        {
-            dialogs.ShowErrorDialog("No position specified");
-            return;
-        }
-
-        if (string.IsNullOrEmpty(SearchFileGpsRadius))
-        {
-            dialogs.ShowErrorDialog("No radius specified");
-            return;
-        }
-        if (!double.TryParse(SearchFileGpsRadius, out var radius) || radius < 1)
-        {
-            dialogs.ShowErrorDialog("Invalid radius");
-            return;
-        }
-
-        var gpsPos = DatabaseParsing.ParseFilesPosition(SearchFileGpsPosition);
-        if (gpsPos == null)
-        {
-            dialogs.ShowErrorDialog("Invalid GPS position");
-            return;
-        }
-
-        var nearFiles = dbAccessRepository.DbAccess.SearchFilesNearGpsPosition(gpsPos.Value.lat, gpsPos.Value.lon, radius).ToList();
-
-        // TODO: checkbox for selecting if this should be included?
-        var nearLocations = dbAccessRepository.DbAccess.SearchLocationsNearGpsPosition(gpsPos.Value.lat, gpsPos.Value.lon, radius);
-        nearFiles.AddRange(dbAccessRepository.DbAccess.SearchFilesWithLocations(nearLocations.Select(x => x.Id)));
-
-        var searchResult = new SearchResult(nearFiles);
-        Events.Send(new NewSearchResult(searchResult));
-    }
-
-    [RelayCommand]
-    private void FindFilesWithPerson()
-    {
-        if (SelectedPersonSearch != null)
-        {
-            var searchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPersonSearch.Id }));
-            Events.Send(new NewSearchResult(searchResult));
-        }
-    }
-
-    [RelayCommand]
-    private void FindFilesWithPersonUnique()
-    {
-        if (SelectedPersonSearch != null)
-        {
-            var files = dbAccessRepository.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPersonSearch.Id });
-            var result = files.Where(x => dbAccessRepository.DbAccess.GetPersonsFromFile(x.Id).Count() == 1);
-            var searchResult = new SearchResult(result);
-            Events.Send(new NewSearchResult(searchResult));
-        }
-    }
-
-    [RelayCommand]
-    private void FindFilesWithPersonGroup()
-    {
-        if (SelectedPersonSearch != null)
-        {
-            var files = dbAccessRepository.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPersonSearch.Id });
-            var result = files.Where(x => dbAccessRepository.DbAccess.GetPersonsFromFile(x.Id).Count() > 1);
-            var searchResult = new SearchResult(result);
-            Events.Send(new NewSearchResult(searchResult));
-        }
-    }
-
-    [RelayCommand]
-    private void FindFilesWithPersons()
-    {
-        if (SelectedPerson1Search != null && SelectedPerson2Search != null)
-        {
-            var searchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPerson1Search.Id, SelectedPerson2Search.Id }));
-            Events.Send(new NewSearchResult(searchResult));
-        }
-    }
-
-    [RelayCommand]
-    private void FindFilesWithPersonsUnique()
-    {
-        if (SelectedPerson1Search != null && SelectedPerson2Search != null)
-        {
-            var files = dbAccessRepository.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPerson1Search.Id });
-            var result = files.Where(x =>
-            {
-                var filePersons = dbAccessRepository.DbAccess.GetPersonsFromFile(x.Id).ToList();
-                return filePersons.Count() == 2 && filePersons.Any(y => y.Id == SelectedPerson2Search.Id);
-            });
-            var searchResult = new SearchResult(result);
-            Events.Send(new NewSearchResult(searchResult));
-        }
-    }
-
-    [RelayCommand]
-    private void FindFilesWithPersonsGroup()
-    {
-        if (SelectedPerson1Search != null && SelectedPerson2Search != null)
-        {
-            var files = dbAccessRepository.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPerson1Search.Id });
-            var result = files.Where(x =>
-            {
-                var filePersons = dbAccessRepository.DbAccess.GetPersonsFromFile(x.Id).ToList();
-                return filePersons.Count() > 2 && filePersons.Any(y => y.Id == SelectedPerson2Search.Id);
-            });
-            var searchResult = new SearchResult(result);
-            Events.Send(new NewSearchResult(searchResult));
-        }
-    }
-
-    [RelayCommand]
-    private void FindFilesWithLocation()
-    {
-        if (SelectedLocationSearch != null)
-        {
-            var searchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesWithLocations(new List<int>() { SelectedLocationSearch.Id }));
-            Events.Send(new NewSearchResult(searchResult));
-        }
-    }
-
-    [RelayCommand]
-    private void FindFilesWithTag()
-    {
-        if (SelectedTagSearch != null)
-        {
-            var searchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesWithTags(new List<int>() { SelectedTagSearch.Id }));
-            Events.Send(new NewSearchResult(searchResult));
-        }
-    }
-
-    [RelayCommand]
-    private void FindFilesByPersonAge()
-    {
-        if (!string.IsNullOrEmpty(SearchPersonAgeFrom))
-        {
-            if (!int.TryParse(SearchPersonAgeFrom, out var ageFrom))
-            {
-                dialogs.ShowErrorDialog("Invalid age format");
-                return;
-            }
-
-            int ageTo;
-            if (string.IsNullOrEmpty(SearchPersonAgeTo))
-            {
-                ageTo = ageFrom;
-            }
-            else if (!int.TryParse(SearchPersonAgeTo, out ageTo))
-            {
-                dialogs.ShowErrorDialog("Invalid age format");
-                return;
-            }
-
-            var result = new List<FilesModel>();
-            var personsWithAge = dbAccessRepository.DbAccess.GetPersons().Where(p => p.DateOfBirth != null);
-
-            foreach (var person in personsWithAge)
-            {
-                var dateOfBirth = DatabaseParsing.ParsePersonDateOfBirth(person.DateOfBirth!);
-                foreach (var file in dbAccessRepository.DbAccess.SearchFilesWithPersons(new List<int>() { person.Id }))
-                {
-                    var fileDatetime = DatabaseParsing.ParseFilesDatetime(file.Datetime);
-                    if (fileDatetime != null)
-                    {
-                        int personAgeInFile = DatabaseUtils.GetAgeInYears(fileDatetime.Value, dateOfBirth);
-                        if (personAgeInFile >= ageFrom && personAgeInFile <= ageTo)
-                        {
-                            result.Add(file);
-                        }
-                    }
-                }
-            }
-
-            var searchResult = new SearchResult(result);
-            Events.Send(new NewSearchResult(searchResult));
-        }
-    }
-
-    [RelayCommand]
-    private void FindFilesFromUnion()
-    {
-        /*
-        if (SearchResultHistory.Count >= 2)
-        {
-            var files1 = SearchResultHistory[SearchResultHistory.Count - 1].Files;
-            var files2 = SearchResultHistory[SearchResultHistory.Count - 2].Files;
-            SearchResult = new SearchResult(files1.Union(files2, new FilesModelIdComparer()));
-        }
-        */
-    }
-
-    [RelayCommand]
-    private void FindFilesFromIntersection()
-    {
-        /*
-        if (SearchResultHistory.Count >= 2)
-        {
-            var files1 = SearchResultHistory[SearchResultHistory.Count - 1].Files;
-            var files2 = SearchResultHistory[SearchResultHistory.Count - 2].Files;
-            SearchResult = new SearchResult(files1.Intersect(files2, new FilesModelIdComparer()));
-        }
-        */
-    }
-
-    [RelayCommand]
-    private void FindFilesFromDifference()
-    {
-        /*
-        if (SearchResultHistory.Count >= 2)
-        {
-            var files1 = SearchResultHistory[SearchResultHistory.Count - 1].Files;
-            var files2 = SearchResultHistory[SearchResultHistory.Count - 2].Files;
-            var uniqueFiles1 = files1.Except(files2, new FilesModelIdComparer());
-            var uniqueFiles2 = files2.Except(files1, new FilesModelIdComparer());
-            SearchResult = new SearchResult(uniqueFiles1.Union(uniqueFiles2, new FilesModelIdComparer()));
-        }
-        */
-    }
-
-    [RelayCommand]
-    private void FindFilesFromMissingCategorization()
-    {
-        var searchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesWithMissingData());
-        Events.Send(new NewSearchResult(searchResult));
-    }
-
-    [RelayCommand]
-    private void FindFilesFromList()
-    {
-        if (!string.IsNullOrEmpty(FileListSearch))
-        {
-            var fileIds = Utils.CreateFileIds(FileListSearch);
-            var searchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesFromIds(fileIds));
-            Events.Send(new NewSearchResult(searchResult));
-        }
-    }
-
-    [RelayCommand]
-    private void FindFilesFromListComplement()
-    {
-        if (!string.IsNullOrEmpty(FileListSearch))
-        {
-            var fileIds = Utils.CreateFileIds(FileListSearch);
-            var allFiles = dbAccessRepository.DbAccess.GetFiles();
-            var allFilesComplement = allFiles.Where(x => !fileIds.Contains(x.Id));
-            var searchResult = new SearchResult(allFilesComplement);
-            Events.Send(new NewSearchResult(searchResult));
-        }
     }
 
     [RelayCommand]
@@ -1466,50 +948,6 @@ public partial class FindViewModel : ObservableObject
         {
             OnPropertyChanged(nameof(HasUpdateHistory));
         }
-    }
-
-    [RelayCommand]
-    private void CombineSearchIntersection()
-    {
-        var files1 = Utils.CreateFileIds(CombineSearch1);
-        var files2 = Utils.CreateFileIds(CombineSearch2);
-        var result = files1.Intersect(files2);
-        CombineSearchResult = Utils.CreateFileList(result);
-    }
-
-    [RelayCommand]
-    private void CombineSearchUnion()
-    {
-        var files1 = Utils.CreateFileIds(CombineSearch1);
-        var files2 = Utils.CreateFileIds(CombineSearch2);
-        var result = files1.Union(files2);
-        CombineSearchResult = Utils.CreateFileList(result);
-    }
-
-    [RelayCommand]
-    private void CombineSearchDifference()
-    {
-        var files1 = Utils.CreateFileIds(CombineSearch1);
-        var files2 = Utils.CreateFileIds(CombineSearch2);
-        var uniqueFiles1 = files1.Except(files2);
-        var uniqueFiles2 = files2.Except(files1);
-        var result = uniqueFiles1.Union(uniqueFiles2);
-        CombineSearchResult = Utils.CreateFileList(result);
-    }
-
-    [RelayCommand]
-    private void CombineSearchResultCopy()
-    {
-        ClipboardService.SetText(CombineSearchResult);
-    }
-
-    [RelayCommand]
-    private void CombineSearchResultShow()
-    {
-        var fileIds = Utils.CreateFileIds(CombineSearchResult);
-        var files = dbAccessRepository.DbAccess.SearchFilesFromIds(fileIds);
-        var searchResult = new SearchResult(files);
-        Events.Send(new NewSearchResult(searchResult));
     }
 
     [RelayCommand]

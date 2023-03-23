@@ -11,6 +11,6 @@ public partial class SearchCriteriaView : UserControl
     public SearchCriteriaView()
     {
         InitializeComponent();
-        DataContext = ServiceLocator.Resolve<FindViewModel>();
+        DataContext = ServiceLocator.Resolve<SearchCriteriaViewModel>();
     }
 }

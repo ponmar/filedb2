@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FileDB.View"
-             xmlns:viewmodel="clr-namespace:FileDB.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:FindViewModel}"
+             xmlns:viewmodel="clr-namespace:FileDB.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:SearchCriteriaViewModel}"
              xmlns:converters="clr-namespace:FileDB.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="1200">
@@ -138,7 +138,7 @@
                         
                         <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource PageInnerTextBlock}" Margin="3" Text="Latitude longitude:" VerticalAlignment="Center"/>
                         <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource PageInnerTextBox}" Margin="3" VerticalAlignment="Center" Text="{Binding SearchFileGpsPosition, UpdateSourceTrigger=PropertyChanged}" ToolTip="Format: LAT LON"/>
-                        <Button Grid.Row="2" Grid.Column="2" Style="{StaticResource NormalButton}" Margin="3" VerticalAlignment="Center" Command="{Binding SearchFilePositionFromCurrentFileCommand}" IsEnabled="{Binding CurrentFilePosition, Converter={StaticResource StringContentToBoolConverter}}">From current file</Button>
+                        <Button Grid.Row="2" Grid.Column="2" Style="{StaticResource NormalButton}" Margin="3" VerticalAlignment="Center" Command="{Binding SearchFilePositionFromCurrentFileCommand}" IsEnabled="{Binding CurrentFileHasPosition}">From current file</Button>
                     </Grid>
 
                     <StackPanel Orientation="Horizontal" Margin="10 5">

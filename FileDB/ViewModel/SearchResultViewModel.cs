@@ -10,8 +10,31 @@ using TextCopy;
 using FileDB.Configuration;
 using FileDB.Sorters;
 using FileDBShared.Model;
+using System.Linq;
 
 namespace FileDB.ViewModel;
+
+public class SearchResult
+{
+    public string Name => $"{Count} files";
+
+    public string From => DateTime.ToString("HH:mm:ss");
+
+    public DateTime DateTime { get; } = DateTime.Now;
+
+    public int Count => Files.Count;
+
+    public List<FilesModel> Files { get; }
+
+    public SearchResult(IEnumerable<FilesModel> files) : this(files.ToList())
+    {
+    }
+
+    public SearchResult(List<FilesModel> files)
+    {
+        Files = files;
+    }
+}
 
 public partial class SearchResultViewModel : ObservableObject
 {
