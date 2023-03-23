@@ -41,6 +41,7 @@ public partial class SearchResultViewModel : ObservableObject
     private readonly IConfigRepository configRepository;
     private readonly IDbAccessRepository dbAccessRepository;
     private readonly IDialogs dialogs;
+    private readonly ISearchResultRepository searchResultRepository;
 
     private readonly Random random = new();
     private readonly DispatcherTimer slideshowTimer = new();
@@ -136,11 +137,12 @@ public partial class SearchResultViewModel : ObservableObject
 
     public bool HasNonEmptySearchResult => SearchResult != null && SearchResult.Count > 0;
 
-    public SearchResultViewModel(IConfigRepository configRepository, IDbAccessRepository dbAccessRepository, IDialogs dialogs)
+    public SearchResultViewModel(IConfigRepository configRepository, IDbAccessRepository dbAccessRepository, IDialogs dialogs, ISearchResultRepository searchResultRepository)
     {
         this.configRepository = configRepository;
         this.dbAccessRepository = dbAccessRepository;
         this.dialogs = dialogs;
+        this.searchResultRepository = searchResultRepository;
 
         slideshowTimer.Tick += SlideshowTimer_Tick;
         slideshowTimer.Interval = TimeSpan.FromSeconds(configRepository.Config.SlideshowDelay);
@@ -156,7 +158,7 @@ public partial class SearchResultViewModel : ObservableObject
         this.RegisterForEvent<NewSearchResult>((x) =>
         {
             StopSlideshow();
-            SearchResult = x.SearchResult;
+            SearchResult = new SearchResult(this.searchResultRepository.Files);
         });
 
         this.RegisterForEvent<RemoveFileFromSearchResult>((x) =>

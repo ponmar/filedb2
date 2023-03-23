@@ -38,7 +38,12 @@ public static class Bootstrapper
         Container.Register(Component.For<ToolsViewModel>().ImplementedBy<ToolsViewModel>());
         Container.Register(Component.For<FindViewModel>().ImplementedBy<FindViewModel>());
         Container.Register(Component.For<SearchResultViewModel>().ImplementedBy<SearchResultViewModel>());
-        Container.Register(Component.For<SearchCriteriaViewModel>().ImplementedBy<SearchCriteriaViewModel>());        
+        
+        Container.Register(
+            Component.For(
+                typeof(SearchCriteriaViewModel),
+                typeof(ISearchResultRepository))
+                    .ImplementedBy<SearchCriteriaViewModel>());        
 
         Container.Register(Component.For<AddLocationViewModel>().ImplementedBy<AddLocationViewModel>().LifestyleTransient());
         Container.Register(Component.For<AddPersonViewModel>().ImplementedBy<AddPersonViewModel>().LifestyleTransient());

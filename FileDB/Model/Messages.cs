@@ -15,7 +15,7 @@ public record TagsUpdated;
 
 public record FullscreenBrowsingRequested(bool Fullscreen);
 
-public record NewSearchResult(SearchResult SearchResult);
+public record NewSearchResult();
 public record SelectSearchResultFile(FilesModel File);
 public record CloseSearchResultFile();
 public record RemoveFileFromSearchResult(FilesModel File);

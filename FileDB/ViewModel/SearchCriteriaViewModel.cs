@@ -14,8 +14,15 @@ using FileDB.Sorters;
 
 namespace FileDB.ViewModel;
 
-public partial class SearchCriteriaViewModel : ObservableObject
+public interface ISearchResultRepository
 {
+    IEnumerable<FilesModel> Files { get; }
+}
+
+public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRepository
+{
+    public IEnumerable<FilesModel> Files { get; private set; } = Enumerable.Empty<FilesModel>();
+
     [ObservableProperty]
     private string numRandomFiles = "10";
 
@@ -170,6 +177,10 @@ public partial class SearchCriteriaViewModel : ObservableObject
         ReloadLocations();
         ReloadTags();
 
+        this.RegisterForEvent<PersonsUpdated>((x) => ReloadPersons());
+        this.RegisterForEvent<LocationsUpdated>((x) => ReloadLocations());
+        this.RegisterForEvent<TagsUpdated>((x) => ReloadTags());
+
         this.RegisterForEvent<FilesImported>((x) =>
         {
             ImportedFileList = Utils.CreateFileList(x.Files);
@@ -232,8 +243,8 @@ public partial class SearchCriteriaViewModel : ObservableObject
     {
         if (int.TryParse(NumRandomFiles, out var value))
         {
-            var searchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesRandom(value));
-            Events.Send(new NewSearchResult(searchResult));
+            Files = dbAccessRepository.DbAccess.SearchFilesRandom(value);
+            Events.Send<NewSearchResult>();
         }
     }
 
@@ -248,15 +259,15 @@ public partial class SearchCriteriaViewModel : ObservableObject
 
         var path = SelectedFile.Path;
         var dir = Path.GetDirectoryName(path)!.Replace('\\', '/');
-        var searchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesByPath(dir));
-        Events.Send(new NewSearchResult(searchResult));
+        Files = dbAccessRepository.DbAccess.SearchFilesByPath(dir);
+        Events.Send<NewSearchResult>();
     }
 
     [RelayCommand]
     private void FindAllFiles()
     {
-        var searchResult = new SearchResult(dbAccessRepository.DbAccess.GetFiles());
-        Events.Send(new NewSearchResult(searchResult));
+        Files = dbAccessRepository.DbAccess.GetFiles();
+        Events.Send<NewSearchResult>();
     }
 
     [RelayCommand]
@@ -265,8 +276,8 @@ public partial class SearchCriteriaViewModel : ObservableObject
         if (!string.IsNullOrEmpty(ImportedFileList))
         {
             var fileIds = Utils.CreateFileIds(ImportedFileList);
-            var searchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesFromIds(fileIds));
-            Events.Send(new NewSearchResult(searchResult));
+            Files = dbAccessRepository.DbAccess.SearchFilesFromIds(fileIds);
+            Events.Send<NewSearchResult>();
         }
     }
 
@@ -276,8 +287,8 @@ public partial class SearchCriteriaViewModel : ObservableObject
         var selectedDir = dialogs.ShowBrowseDirectoriesDialog();
         if (selectedDir != null)
         {
-            var searchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesByPath(selectedDir));
-            Events.Send(new NewSearchResult(searchResult));
+            Files = dbAccessRepository.DbAccess.SearchFilesByPath(selectedDir);
+            Events.Send<NewSearchResult>();
         }
     }
 
@@ -286,8 +297,8 @@ public partial class SearchCriteriaViewModel : ObservableObject
     {
         if (!string.IsNullOrEmpty(SearchPattern))
         {
-            var searchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFiles(SearchPattern));
-            Events.Send(new NewSearchResult(searchResult));
+            Files = dbAccessRepository.DbAccess.SearchFiles(SearchPattern);
+            Events.Send<NewSearchResult>();
         }
     }
 
@@ -296,16 +307,16 @@ public partial class SearchCriteriaViewModel : ObservableObject
     {
         if (SearchBySexSelection != null)
         {
-            var searchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesBySex(SearchBySexSelection.Value));
-            Events.Send(new NewSearchResult(searchResult));
+            Files = dbAccessRepository.DbAccess.SearchFilesBySex(SearchBySexSelection.Value);
+            Events.Send<NewSearchResult>();
         }
     }
 
     [RelayCommand]
     private void FindFilesByDate()
     {
-        var searchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesByDate(SearchStartDate.Date, SearchEndDate.Date));
-        Events.Send(new NewSearchResult(searchResult));
+        Files = dbAccessRepository.DbAccess.SearchFilesByDate(SearchStartDate.Date, SearchEndDate.Date);
+        Events.Send<NewSearchResult>();
     }
 
     [RelayCommand]
@@ -324,8 +335,8 @@ public partial class SearchCriteriaViewModel : ObservableObject
             result.AddRange(dbAccessRepository.DbAccess.SearchFilesByExtension(extension));
         }
 
-        var searchResult = new SearchResult(result);
-        Events.Send(new NewSearchResult(searchResult));
+        Files = result;
+        Events.Send<NewSearchResult>();
     }
 
     [RelayCommand]
@@ -367,8 +378,8 @@ public partial class SearchCriteriaViewModel : ObservableObject
         var nearLocations = dbAccessRepository.DbAccess.SearchLocationsNearGpsPosition(gpsPos.Value.lat, gpsPos.Value.lon, radius);
         nearFiles.AddRange(dbAccessRepository.DbAccess.SearchFilesWithLocations(nearLocations.Select(x => x.Id)));
 
-        var searchResult = new SearchResult(nearFiles);
-        Events.Send(new NewSearchResult(searchResult));
+        Files = nearFiles;
+        Events.Send<NewSearchResult>();
     }
 
     [RelayCommand]
@@ -376,8 +387,8 @@ public partial class SearchCriteriaViewModel : ObservableObject
     {
         if (SelectedPersonSearch != null)
         {
-            var searchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPersonSearch.Id }));
-            Events.Send(new NewSearchResult(searchResult));
+            Files = dbAccessRepository.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPersonSearch.Id });
+            Events.Send<NewSearchResult>();
         }
     }
 
@@ -387,9 +398,8 @@ public partial class SearchCriteriaViewModel : ObservableObject
         if (SelectedPersonSearch != null)
         {
             var files = dbAccessRepository.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPersonSearch.Id });
-            var result = files.Where(x => dbAccessRepository.DbAccess.GetPersonsFromFile(x.Id).Count() == 1);
-            var searchResult = new SearchResult(result);
-            Events.Send(new NewSearchResult(searchResult));
+            Files = files.Where(x => dbAccessRepository.DbAccess.GetPersonsFromFile(x.Id).Count() == 1);
+            Events.Send<NewSearchResult>();
         }
     }
 
@@ -399,9 +409,8 @@ public partial class SearchCriteriaViewModel : ObservableObject
         if (SelectedPersonSearch != null)
         {
             var files = dbAccessRepository.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPersonSearch.Id });
-            var result = files.Where(x => dbAccessRepository.DbAccess.GetPersonsFromFile(x.Id).Count() > 1);
-            var searchResult = new SearchResult(result);
-            Events.Send(new NewSearchResult(searchResult));
+            Files = files.Where(x => dbAccessRepository.DbAccess.GetPersonsFromFile(x.Id).Count() > 1);
+            Events.Send<NewSearchResult>();
         }
     }
 
@@ -410,8 +419,8 @@ public partial class SearchCriteriaViewModel : ObservableObject
     {
         if (SelectedPerson1Search != null && SelectedPerson2Search != null)
         {
-            var searchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPerson1Search.Id, SelectedPerson2Search.Id }));
-            Events.Send(new NewSearchResult(searchResult));
+            Files = dbAccessRepository.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPerson1Search.Id, SelectedPerson2Search.Id });
+            Events.Send<NewSearchResult>();
         }
     }
 
@@ -421,13 +430,12 @@ public partial class SearchCriteriaViewModel : ObservableObject
         if (SelectedPerson1Search != null && SelectedPerson2Search != null)
         {
             var files = dbAccessRepository.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPerson1Search.Id });
-            var result = files.Where(x =>
+            Files = files.Where(x =>
             {
                 var filePersons = dbAccessRepository.DbAccess.GetPersonsFromFile(x.Id).ToList();
                 return filePersons.Count() == 2 && filePersons.Any(y => y.Id == SelectedPerson2Search.Id);
             });
-            var searchResult = new SearchResult(result);
-            Events.Send(new NewSearchResult(searchResult));
+            Events.Send<NewSearchResult>();
         }
     }
 
@@ -437,13 +445,12 @@ public partial class SearchCriteriaViewModel : ObservableObject
         if (SelectedPerson1Search != null && SelectedPerson2Search != null)
         {
             var files = dbAccessRepository.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPerson1Search.Id });
-            var result = files.Where(x =>
+            Files = files.Where(x =>
             {
                 var filePersons = dbAccessRepository.DbAccess.GetPersonsFromFile(x.Id).ToList();
                 return filePersons.Count() > 2 && filePersons.Any(y => y.Id == SelectedPerson2Search.Id);
             });
-            var searchResult = new SearchResult(result);
-            Events.Send(new NewSearchResult(searchResult));
+            Events.Send<NewSearchResult>();
         }
     }
 
@@ -452,8 +459,8 @@ public partial class SearchCriteriaViewModel : ObservableObject
     {
         if (SelectedLocationSearch != null)
         {
-            var searchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesWithLocations(new List<int>() { SelectedLocationSearch.Id }));
-            Events.Send(new NewSearchResult(searchResult));
+            Files = dbAccessRepository.DbAccess.SearchFilesWithLocations(new List<int>() { SelectedLocationSearch.Id });
+            Events.Send<NewSearchResult>();
         }
     }
 
@@ -462,8 +469,8 @@ public partial class SearchCriteriaViewModel : ObservableObject
     {
         if (SelectedTagSearch != null)
         {
-            var searchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesWithTags(new List<int>() { SelectedTagSearch.Id }));
-            Events.Send(new NewSearchResult(searchResult));
+            Files = dbAccessRepository.DbAccess.SearchFilesWithTags(new List<int>() { SelectedTagSearch.Id });
+            Events.Send<NewSearchResult>();
         }
     }
 
@@ -509,57 +516,16 @@ public partial class SearchCriteriaViewModel : ObservableObject
                 }
             }
 
-            var searchResult = new SearchResult(result);
-            Events.Send(new NewSearchResult(searchResult));
+            Files = result;
+            Events.Send<NewSearchResult>();
         }
-    }
-
-    [RelayCommand]
-    private void FindFilesFromUnion()
-    {
-        /*
-        if (SearchResultHistory.Count >= 2)
-        {
-            var files1 = SearchResultHistory[SearchResultHistory.Count - 1].Files;
-            var files2 = SearchResultHistory[SearchResultHistory.Count - 2].Files;
-            SearchResult = new SearchResult(files1.Union(files2, new FilesModelIdComparer()));
-        }
-        */
-    }
-
-    [RelayCommand]
-    private void FindFilesFromIntersection()
-    {
-        /*
-        if (SearchResultHistory.Count >= 2)
-        {
-            var files1 = SearchResultHistory[SearchResultHistory.Count - 1].Files;
-            var files2 = SearchResultHistory[SearchResultHistory.Count - 2].Files;
-            SearchResult = new SearchResult(files1.Intersect(files2, new FilesModelIdComparer()));
-        }
-        */
-    }
-
-    [RelayCommand]
-    private void FindFilesFromDifference()
-    {
-        /*
-        if (SearchResultHistory.Count >= 2)
-        {
-            var files1 = SearchResultHistory[SearchResultHistory.Count - 1].Files;
-            var files2 = SearchResultHistory[SearchResultHistory.Count - 2].Files;
-            var uniqueFiles1 = files1.Except(files2, new FilesModelIdComparer());
-            var uniqueFiles2 = files2.Except(files1, new FilesModelIdComparer());
-            SearchResult = new SearchResult(uniqueFiles1.Union(uniqueFiles2, new FilesModelIdComparer()));
-        }
-        */
     }
 
     [RelayCommand]
     private void FindFilesFromMissingCategorization()
     {
-        var searchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesWithMissingData());
-        Events.Send(new NewSearchResult(searchResult));
+        Files = dbAccessRepository.DbAccess.SearchFilesWithMissingData();
+        Events.Send<NewSearchResult>();
     }
 
     [RelayCommand]
@@ -568,8 +534,8 @@ public partial class SearchCriteriaViewModel : ObservableObject
         if (!string.IsNullOrEmpty(FileListSearch))
         {
             var fileIds = Utils.CreateFileIds(FileListSearch);
-            var searchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesFromIds(fileIds));
-            Events.Send(new NewSearchResult(searchResult));
+            Files = dbAccessRepository.DbAccess.SearchFilesFromIds(fileIds);
+            Events.Send<NewSearchResult>();
         }
     }
 
@@ -581,8 +547,8 @@ public partial class SearchCriteriaViewModel : ObservableObject
             var fileIds = Utils.CreateFileIds(FileListSearch);
             var allFiles = dbAccessRepository.DbAccess.GetFiles();
             var allFilesComplement = allFiles.Where(x => !fileIds.Contains(x.Id));
-            var searchResult = new SearchResult(allFilesComplement);
-            Events.Send(new NewSearchResult(searchResult));
+            Files = allFilesComplement;
+            Events.Send<NewSearchResult>();
         }
     }
 
@@ -625,8 +591,7 @@ public partial class SearchCriteriaViewModel : ObservableObject
     private void CombineSearchResultShow()
     {
         var fileIds = Utils.CreateFileIds(CombineSearchResult);
-        var files = dbAccessRepository.DbAccess.SearchFilesFromIds(fileIds);
-        var searchResult = new SearchResult(files);
-        Events.Send(new NewSearchResult(searchResult));
+        Files = dbAccessRepository.DbAccess.SearchFilesFromIds(fileIds);
+        Events.Send<NewSearchResult>();
     }
 }
