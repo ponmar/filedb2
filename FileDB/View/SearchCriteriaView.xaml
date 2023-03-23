@@ -30,7 +30,7 @@
                     <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding FindImportedFilesCommand}" IsEnabled="{Binding ImportedFileList, Converter={StaticResource StringContentToBoolConverter}}" VerticalAlignment="Center" ToolTip="Search for newly added files meta-data">New files</Button>
                     <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding FindFilesFromMissingCategorizationCommand}" HorizontalAlignment="Left">All without meta-data</Button>
                     <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding FindAllFilesCommand}" VerticalAlignment="Center" ToolTip="Search all files">All files</Button>
-                    <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding FindCurrentDirectoryFilesCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip="Search all files within current file directory (recursive)" HorizontalAlignment="Left">All from current directory</Button>
+                    <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding FindCurrentDirectoryFilesCommand}" IsEnabled="{Binding FileSelected}" ToolTip="Search all files within current file directory (recursive)" HorizontalAlignment="Left">All from current directory</Button>
 
                     <StackPanel Orientation="Horizontal" Margin="10 5">
                         <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="Text:" VerticalAlignment="Center" ToolTip="Search criteria for text (matches file path/description)"/>

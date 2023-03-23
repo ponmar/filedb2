@@ -62,13 +62,6 @@
             Key="F12"
             Command="{Binding FunctionKeyCommand}"
             CommandParameter="12" />
-        <KeyBinding Key="Left" Command="{Binding PrevFileCommand}" />
-        <KeyBinding Key="Right" Command="{Binding NextFileCommand}" />
-        <KeyBinding Key="Home" Command="{Binding FirstFileCommand}" />
-        <KeyBinding Key="End" Command="{Binding LastFileCommand}" />
-        <KeyBinding Key="PageDown" Command="{Binding NextDirectoryCommand}" />
-        <KeyBinding Key="PageUp" Command="{Binding PrevDirectoryCommand}" />
-        <!--<KeyBinding Command="{Binding EscKeyCommand}" Key="F" Modifiers="Alt"/>-->
     </UserControl.InputBindings>
 
     <UserControl.Resources>
@@ -176,7 +169,7 @@
                     <Button
                         Margin="0,0,5,0"
                         Command="{Binding OpenFileLocationCommand}"
-                        IsEnabled="{Binding HasNonEmptySearchResult}"
+                        IsEnabled="{Binding FileSelected}"
                         Style="{StaticResource NormalButton}"
                         ToolTip="Locate file in Explorer"
                         Visibility="{Binding Maximize, Converter={StaticResource NegatedBooleanToVisibilityConverter}}">
@@ -185,7 +178,7 @@
                     <Button
                         Margin="0,0,5,0"
                         Command="{Binding OpenFileWithDefaultAppCommand}"
-                        IsEnabled="{Binding HasNonEmptySearchResult}"
+                        IsEnabled="{Binding FileSelected}"
                         Style="{StaticResource NormalButton}"
                         ToolTip="Open file with default application"
                         Visibility="{Binding Maximize, Converter={StaticResource NegatedBooleanToVisibilityConverter}}">
@@ -194,7 +187,7 @@
                     <Button
                         Margin="0,0,5,0"
                         Command="{Binding CopyFileIdCommand}"
-                        IsEnabled="{Binding HasNonEmptySearchResult}"
+                        IsEnabled="{Binding FileSelected}"
                         Style="{StaticResource NormalButton}"
                         ToolTip="Copy file id"
                         Visibility="{Binding Maximize, Converter={StaticResource NegatedBooleanToVisibilityConverter}}">
@@ -203,21 +196,21 @@
                     <Button
                         Margin="0,0,5,0"
                         Command="{Binding RemoveFileFromCurrentSearchResultCommand}"
-                        IsEnabled="{Binding HasNonEmptySearchResult}"
+                        IsEnabled="{Binding FileSelected}"
                         Style="{StaticResource NormalButton}"
                         Content="X" ToolTip="Remove file from search result"/>
                     <ToggleButton
                         Margin="0,0,5,0"
                         Content="&#x1F5DA;"
                         IsChecked="{Binding LargeTextMode}"
-                        IsEnabled="{Binding HasNonEmptySearchResult}"
+                        IsEnabled="{Binding FileSelected}"
                         Style="{StaticResource NavigationToggleButton}"
                         ToolTip="Toggle large text" />
                     <Button
                         Margin="0,0,5,0"
                         Command="{Binding OpenPresentationWindowCommand}"
                         Content="&#x1F5B5;+"
-                        IsEnabled="{Binding HasNonEmptySearchResult}"
+                        IsEnabled="{Binding FileSelected}"
                         Style="{StaticResource NavigationButton}"
                         ToolTip="Open presentation window"
                         Visibility="{Binding Maximize, Converter={StaticResource NegatedBooleanToVisibilityConverter}}" />
@@ -225,7 +218,7 @@
                         Margin="0"
                         Content="&#x1F5B5;"
                         IsChecked="{Binding Maximize}"
-                        IsEnabled="{Binding HasNonEmptySearchResult}"
+                        IsEnabled="{Binding FileSelected}"
                         Style="{StaticResource NavigationToggleButton}"
                         ToolTip="Maximize" />
                 </StackPanel>

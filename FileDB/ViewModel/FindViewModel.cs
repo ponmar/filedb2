@@ -6,20 +6,18 @@ using System.Linq;
 using System.Net;
 using System.Windows;
 using System.Windows.Media.Imaging;
-using System.Windows.Threading;
-using FileDB.Comparers;
 using FileDB.View;
 using FileDB.Sorters;
 using FileDBInterface.Exceptions;
 using FileDBShared.Model;
 using TextCopy;
 using FileDBInterface.DbAccess;
-using FileDB.Configuration;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Extensions;
 using FileDB.Model;
 using FileDBShared.Validators;
+using System.DirectoryServices;
 
 namespace FileDB.ViewModel;
 
@@ -81,35 +79,6 @@ public class UpdateHistoryItem
 
 public partial class FindViewModel : ObservableObject
 {
-    private readonly Random random = new();
-
-    #region Browsing and sorting commands
-
-    [RelayCommand]
-    private void ClearSearch()
-    {
-        SearchResult = null;
-    }
-
-    public List<SortMethodDescription> SortMethods { get; } = Utils.GetSortMethods();
-
-    [ObservableProperty]
-    private SortMethod selectedSortMethod;
-
-    partial void OnSelectedSortMethodChanged(SortMethod value)
-    {
-        SortSearchResult(configRepository.Config.KeepSelectionAfterSort);
-    }
-
-    [ObservableProperty]
-    private bool slideshowActive = false;
-
-    [ObservableProperty]
-    private bool randomActive = false;
-
-    [ObservableProperty]
-    private bool repeatActive = false;
-
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(ShowUpdateSection))]
     private bool maximize = false;
@@ -126,8 +95,6 @@ public partial class FindViewModel : ObservableObject
     public int OverlayFontSize => LargeTextMode ? configRepository.Config.OverlayTextSizeLarge : configRepository.Config.OverlayTextSize;
 
     public bool ShowUpdateSection => !Maximize && ReadWriteMode;
-
-    #endregion
 
     #region Search commands and properties
 
@@ -254,114 +221,13 @@ public partial class FindViewModel : ObservableObject
 
     #endregion
 
-    #region Search result
-
-    public ObservableCollection<SearchResult> SearchResultHistory { get; } = new();
-
-    [ObservableProperty]
-    private SearchResult? searchResultHistorySelection;
-
-    partial void OnSearchResultHistorySelectionChanged(SearchResult? value)
-    {
-        if (value != null)
-        {
-            StopSlideshow();
-            SearchResult = value;
-        }
-    }
-
-    private SearchResult? SearchResult
-    {
-        get => searchResult;
-        set
-        {
-            if (!EqualityComparer<SearchResult>.Default.Equals(searchResult, value))
-            {
-                searchResult = value;
-
-                var updateViaHistorySelection = searchResult == SearchResultHistorySelection;
-                SearchResultHistorySelection = null;
-
-                if (searchResult != null)
-                {
-                    if (searchResult.Count > 0)
-                    {
-                        LoadFile(0);
-                        SortSearchResult(false);
-                        if (!updateViaHistorySelection)
-                        {
-                            // Searching via history should not add more items to history
-                            AddSearchResultToHistory();
-                        }
-                    }
-                    else
-                    {
-                        ResetFile();
-                    }
-                }
-                else
-                {
-                    ResetFile();
-                }
-
-                FireSearchResultUpdatedEvents();
-            }
-        }
-    }
-    private SearchResult? searchResult = null;
-
-    private void SortSearchResult(bool preserveSelection)
-    {
-        switch (SelectedSortMethod)
-        {
-            case SortMethod.Date:
-                SortFilesByDate(preserveSelection);
-                break;
-
-            case SortMethod.DateDesc:
-                SortFilesByDateDesc(preserveSelection);
-                break;
-
-            case SortMethod.Path:
-                SortFilesByPath(preserveSelection);
-                break;
-
-            case SortMethod.PathDesc:
-                SortFilesByPathDesc(preserveSelection);
-                break;
-        }
-    }
-
-    private void AddSearchResultToHistory()
-    {
-        if (SearchResultHistory.Count == configRepository.Config.SearchHistorySize)
-        {
-            SearchResultHistory.RemoveAt(0);
-        }
-
-        SearchResultHistory.Add(searchResult!);
-
-        OnPropertyChanged(nameof(FindFilesFromHistoryEnabled));
-        OnPropertyChanged(nameof(SearchResultHistory));
-    }
-
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(SearchResultItemNumber))]
-    private int searchResultIndex = -1;
-
-    public int SearchResultItemNumber => SearchResultIndex + 1;
-
-    public int SearchNumberOfHits => SearchResult != null ? SearchResult.Count : 0;
-
-    public int TotalNumberOfFiles { get; }
-
-    public bool HasSearchResult => SearchResult != null;
-
-    public bool HasNonEmptySearchResult => SearchResult != null && SearchResult.Count > 0;
-
-    #endregion
-
     #region Current file properties
+
+    public bool FileSelected => SelectedFile != null;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(FileSelected))]
+    private FilesModel? selectedFile;
 
     [ObservableProperty]
     private string currentFileInternalPath = string.Empty;
@@ -414,12 +280,12 @@ public partial class FindViewModel : ObservableObject
     private PersonToUpdate? selectedPersonToUpdate;
     
     public bool SelectedPersonCanBeAdded =>
-        SearchResultIndex != -1 &&
+        SelectedFile != null &&
         SelectedPersonToUpdate != null &&
         !currentFilePersonList.Any(x => x.Id == SelectedPersonToUpdate.Id);
 
     public bool SelectedPersonCanBeRemoved =>
-        SearchResultIndex != -1 &&
+        SelectedFile != null &&
         SelectedPersonToUpdate != null &&
         currentFilePersonList.Any(x => x.Id == SelectedPersonToUpdate.Id);
 
@@ -446,12 +312,12 @@ public partial class FindViewModel : ObservableObject
     public LocationToUpdate? selectedLocationToUpdate;
 
     public bool SelectedLocationCanBeAdded =>
-        SearchResultIndex != -1 &&
+        SelectedFile != null &&
         SelectedLocationToUpdate != null &&
         !currentFileLocationList.Any(x => x.Id == SelectedLocationToUpdate.Id);
 
     public bool SelectedLocationCanBeRemoved =>
-        SearchResultIndex != -1 &&
+        SelectedFile != null &&
         SelectedLocationToUpdate != null &&
         currentFileLocationList.Any(x => x.Id == SelectedLocationToUpdate.Id);
 
@@ -466,12 +332,12 @@ public partial class FindViewModel : ObservableObject
     private TagToUpdate? selectedTagToUpdate;
 
     public bool SelectedTagCanBeAdded =>
-        SearchResultIndex != -1 &&
+        SelectedFile != null &&
         SelectedTagToUpdate != null &&
         !currentFileTagList.Any(x => x.Id == SelectedTagToUpdate.Id);
 
     public bool SelectedTagCanBeRemoved =>
-        SearchResultIndex != -1 &&
+        SelectedFile != null &&
         SelectedTagToUpdate != null &&
         currentFileTagList.Any(x => x.Id == SelectedTagToUpdate.Id);
 
@@ -481,8 +347,6 @@ public partial class FindViewModel : ObservableObject
     public ObservableCollection<UpdateHistoryItem> UpdateHistoryItems { get; } = new();
 
     public bool HasUpdateHistory => UpdateHistoryItems.Count > 0;
-
-    private readonly DispatcherTimer slideshowTimer = new();
 
     private int? prevEditedFileId = null;
 
@@ -499,9 +363,6 @@ public partial class FindViewModel : ObservableObject
         this.dialogs = dialogs;
 
         ReadWriteMode = !configRepository.Config.ReadOnly;
-        SelectedSortMethod = configRepository.Config.DefaultSortMethod;
-
-        TotalNumberOfFiles = dbAccessRepository.DbAccess.GetFileCount();
 
         ReloadPersons();
         ReloadLocations();
@@ -511,9 +372,6 @@ public partial class FindViewModel : ObservableObject
         {
             ImportedFileList = Utils.CreateFileList(x.Files);
         });
-        
-        slideshowTimer.Tick += SlideshowTimer_Tick;
-        slideshowTimer.Interval = TimeSpan.FromSeconds(configRepository.Config.SlideshowDelay);
 
         this.RegisterForEvent<PersonsUpdated>((x) => ReloadPersons());
         this.RegisterForEvent<LocationsUpdated>((x) => ReloadLocations());
@@ -522,330 +380,104 @@ public partial class FindViewModel : ObservableObject
         this.RegisterForEvent<ConfigUpdated>((x) =>
         {
             ReadWriteMode = !configRepository.Config.ReadOnly;
-            slideshowTimer.Interval = TimeSpan.FromSeconds(configRepository.Config.SlideshowDelay);
-
             OnPropertyChanged(nameof(LargeTextMode));
         });
-    }
 
-    [RelayCommand]
-    private void PrevFile()
-    {
-        StopSlideshow();
-        SelectPrevFile();
-    }
-
-    public bool PrevFileAvailable => SearchResultIndex > 0;
-    public bool NextFileAvailable => searchResult != null && SearchResultIndex < searchResult.Count - 1;
-    public bool FirstFileAvailable => searchResult != null && SearchResultIndex > 0;
-    public bool LastFileAvailable => searchResult != null && SearchResultIndex < searchResult.Count - 1;
-    public bool PrevDirectoryAvailable => HasNonEmptySearchResult;
-    public bool NextDirectoryAvailable => HasNonEmptySearchResult;
-
-    private void FireSearchResultUpdatedEvents()
-    {
-        OnPropertyChanged(nameof(HasSearchResult));
-        OnPropertyChanged(nameof(HasNonEmptySearchResult));
-        OnPropertyChanged(nameof(SearchNumberOfHits));
-        FireBrowsingEnabledEvents();
-    }
-
-    private void FireBrowsingEnabledEvents()
-    {
-        OnPropertyChanged(nameof(PrevFileAvailable));
-        OnPropertyChanged(nameof(NextFileAvailable));
-        OnPropertyChanged(nameof(FirstFileAvailable));
-        OnPropertyChanged(nameof(LastFileAvailable));
-        OnPropertyChanged(nameof(PrevDirectoryAvailable));
-        OnPropertyChanged(nameof(NextDirectoryAvailable));
-    }
-
-    [RelayCommand]
-    public void NextFile()
-    {
-        StopSlideshow();
-        SelectNextFile();
-    }
-
-    private void SelectPrevFile()
-    {
-        LoadFile(SearchResultIndex - 1);
-        FireBrowsingEnabledEvents();
-    }
-
-    private void SelectNextFile()
-    {
-        LoadFile(SearchResultIndex + 1);
-        FireBrowsingEnabledEvents();
-    }
-
-    private void SelectNextRandomFile()
-    {
-        LoadFile(random.Next(SearchResult!.Count));
-        FireBrowsingEnabledEvents();
-    }
-
-    [RelayCommand]
-    private void PrevDirectory()
-    {
-        if (!PrevDirectoryAvailable)
+        this.RegisterForEvent<SelectSearchResultFile>((x) =>
         {
-            return;
-        }
+            LoadFile(x.File);
+        });
 
-        StopSlideshow();
-
-        if (SearchResultIndex < 1)
-            return;
-
-        var currentDirectory = Path.GetDirectoryName(SearchResult!.Files[SearchResultIndex].Path);
-
-        for (int i = SearchResultIndex - 1; i >= 0; i--)
+        this.RegisterForEvent<CloseSearchResultFile>((x) =>
         {
-            var directory = Path.GetDirectoryName(SearchResult.Files[i].Path);
-            if (directory != currentDirectory)
-            {
-                LoadFile(i);
-                return;
-            }
-        }
-
-        FireBrowsingEnabledEvents();
-    }
-
-    [RelayCommand]
-    private void NextDirectory()
-    {
-        if (!NextDirectoryAvailable)
-        {
-            return;
-        }
-
-        StopSlideshow();
-
-        if (SearchResultIndex == -1 || SearchResultIndex == SearchResult!.Count - 1)
-            return;
-
-        var currentDirectory = Path.GetDirectoryName(SearchResult.Files[SearchResultIndex].Path);
-
-        for (int i = SearchResultIndex + 1; i < SearchResult.Count; i++)
-        {
-            var directory = Path.GetDirectoryName(SearchResult.Files[i].Path);
-            if (directory != currentDirectory)
-            {
-                LoadFile(i);
-                return;
-            }
-        }
-
-        FireBrowsingEnabledEvents();
-    }
-
-    [RelayCommand]
-    private void FirstFile()
-    {
-        StopSlideshow();
-        LoadFile(0);
-        FireBrowsingEnabledEvents();
-    }
-
-    [RelayCommand]
-    private void LastFile()
-    {
-        StopSlideshow();
-        if (searchResult != null)
-        {
-            LoadFile(SearchResult!.Count - 1);
-        }
-        FireBrowsingEnabledEvents();
-    }
-
-    public void SortFilesByDate(bool preserveSelection)
-    {
-        SortFiles(new FilesModelByDateSorter(), false, preserveSelection);
-    }
-
-    public void SortFilesByDateDesc(bool preserveSelection)
-    {
-        SortFiles(new FilesModelByDateSorter(), true, preserveSelection);
-    }
-
-    public void SortFilesByPath(bool preserveSelection)
-    {
-        SortFiles(new FilesModelByPathSorter(), false, preserveSelection);
-    }
-
-    public void SortFilesByPathDesc(bool preserveSelection)
-    {
-        SortFiles(new FilesModelByPathSorter(), true, preserveSelection);
-    }
-
-    private void SortFiles(IComparer<FilesModel> comparer, bool desc, bool preserveSelection)
-    {
-        StopSlideshow();
-        if (HasNonEmptySearchResult)
-        {
-            var selectedFile = SearchResult!.Files[SearchResultIndex];
-            if (desc)
-            {
-                SearchResult.Files.Sort((x, y) => comparer.Compare(y, x));
-            }
-            else
-            {
-                SearchResult.Files.Sort(comparer);
-            }
-            LoadFile(preserveSelection ? SearchResult.Files.IndexOf(selectedFile) : 0);
-        }
-    }
-
-    [RelayCommand]
-    private void ToggleSlideshow()
-    {
-        if (SlideshowActive)
-        {
-            StartSlideshow();
-        }
-        else
-        {
-            StopSlideshow();
-        }
-    }
-
-    private void StartSlideshow()
-    {
-        if (SearchResult != null && SearchResult.Count > 1)
-        {
-            slideshowTimer.Start();
-        }
-    }
-
-    private void StopSlideshow()
-    {
-        slideshowTimer.Stop();
-        SlideshowActive = false;
-    }
-
-    private void SlideshowTimer_Tick(object? sender, EventArgs e)
-    {
-        if (RandomActive)
-        {
-            SelectNextRandomFile();
-        }
-        else
-        {
-            if (RepeatActive)
-            {
-                if (SearchResultIndex == SearchResult!.Count - 1)
-                {
-                    LoadFile(0);
-                }
-                else
-                {
-                    SelectNextFile();
-                }
-            }
-            else
-            {
-                SelectNextFile();
-                if (SearchResultIndex == SearchResult!.Count - 1)
-                {
-                    StopSlideshow();
-                }
-            }
-        }
+            ResetFile();
+        });
     }
 
     [RelayCommand]
     private void FindRandomFiles()
     {
-        StopSlideshow();
-
         if (int.TryParse(NumRandomFiles, out var value))
         {
-            SearchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesRandom(value));
+            var searchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesRandom(value));
+            Events.Send(new NewSearchResult(searchResult));
         }
     }
 
     [RelayCommand]
     private void FindCurrentDirectoryFiles()
     {
-        StopSlideshow();
-        if (SearchResultIndex == -1)
+        if (SelectedFile == null)
         {
             dialogs.ShowErrorDialog("No file opened");
             return;
         }
 
-        var path = SearchResult!.Files[SearchResultIndex].Path;
+        var path = SelectedFile.Path;
         var dir = Path.GetDirectoryName(path)!.Replace('\\', '/');
-        SearchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesByPath(dir));
+        var searchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesByPath(dir));
+        Events.Send(new NewSearchResult(searchResult));
     }
 
     [RelayCommand]
     private void FindAllFiles()
     {
-        StopSlideshow();
-        SearchResult = new SearchResult(dbAccessRepository.DbAccess.GetFiles());
+        var searchResult = new SearchResult(dbAccessRepository.DbAccess.GetFiles());
+        Events.Send(new NewSearchResult(searchResult));
     }
 
     [RelayCommand]
     private void FindImportedFiles()
     {
-        StopSlideshow();
         if (!string.IsNullOrEmpty(ImportedFileList))
         {
             var fileIds = Utils.CreateFileIds(ImportedFileList);
-            SearchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesFromIds(fileIds));
+            var searchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesFromIds(fileIds));
+            Events.Send(new NewSearchResult(searchResult));
         }
     }
 
     [RelayCommand]
     private void FindBrowsedFiles()
     {
-        StopSlideshow();
-
         var selectedDir = dialogs.ShowBrowseDirectoriesDialog();
         if (selectedDir != null)
         {
-            SearchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesByPath(selectedDir));
+            var searchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesByPath(selectedDir));
+            Events.Send(new NewSearchResult(searchResult));
         }
     }
 
     [RelayCommand]
     private void FindFilesByText()
     {
-        StopSlideshow();
         if (!string.IsNullOrEmpty(SearchPattern))
         {
-            SearchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFiles(SearchPattern));
-        }
-        else
-        {
-            SearchResult = null;
+            var searchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFiles(SearchPattern));
+            Events.Send(new NewSearchResult(searchResult));
         }
     }
 
     [RelayCommand]
     private void FindFilesBySex()
     {
-        StopSlideshow();
         if (SearchBySexSelection != null)
         {
-            SearchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesBySex(SearchBySexSelection.Value));
+            var searchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesBySex(SearchBySexSelection.Value));
+            Events.Send(new NewSearchResult(searchResult));
         }
     }
 
     [RelayCommand]
     private void FindFilesByDate()
     {
-        StopSlideshow();
-        SearchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesByDate(SearchStartDate.Date, SearchEndDate.Date));
+        var searchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesByDate(SearchStartDate.Date, SearchEndDate.Date));
+        Events.Send(new NewSearchResult(searchResult));
     }
 
     [RelayCommand]
     private void FindFilesByType()
     {
-        StopSlideshow();
         if (SelectedFileType == null)
         {
             return;
@@ -859,7 +491,8 @@ public partial class FindViewModel : ObservableObject
             result.AddRange(dbAccessRepository.DbAccess.SearchFilesByExtension(extension));
         }
 
-        SearchResult = new SearchResult(result);
+        var searchResult = new SearchResult(result);
+        Events.Send(new NewSearchResult(searchResult));
     }
 
     [RelayCommand]
@@ -871,8 +504,6 @@ public partial class FindViewModel : ObservableObject
     [RelayCommand]
     private void FindFilesByGpsPosition()
     {
-        StopSlideshow();
-
         if (string.IsNullOrEmpty(SearchFileGpsPosition))
         {
             dialogs.ShowErrorDialog("No position specified");
@@ -903,57 +534,57 @@ public partial class FindViewModel : ObservableObject
         var nearLocations = dbAccessRepository.DbAccess.SearchLocationsNearGpsPosition(gpsPos.Value.lat, gpsPos.Value.lon, radius);
         nearFiles.AddRange(dbAccessRepository.DbAccess.SearchFilesWithLocations(nearLocations.Select(x => x.Id)));
 
-        SearchResult = new SearchResult(nearFiles);
+        var searchResult = new SearchResult(nearFiles);
+        Events.Send(new NewSearchResult(searchResult));
     }
 
     [RelayCommand]
     private void FindFilesWithPerson()
     {
-        StopSlideshow();
         if (SelectedPersonSearch != null)
         {
-            SearchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPersonSearch.Id }));
+            var searchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPersonSearch.Id }));
+            Events.Send(new NewSearchResult(searchResult));
         }
     }
 
     [RelayCommand]
     private void FindFilesWithPersonUnique()
     {
-        StopSlideshow();
         if (SelectedPersonSearch != null)
         {
             var files = dbAccessRepository.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPersonSearch.Id });
             var result = files.Where(x => dbAccessRepository.DbAccess.GetPersonsFromFile(x.Id).Count() == 1);
-            SearchResult = new SearchResult(result);
+            var searchResult = new SearchResult(result);
+            Events.Send(new NewSearchResult(searchResult));
         }
     }
 
     [RelayCommand]
     private void FindFilesWithPersonGroup()
     {
-        StopSlideshow();
         if (SelectedPersonSearch != null)
         {
             var files = dbAccessRepository.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPersonSearch.Id });
             var result = files.Where(x => dbAccessRepository.DbAccess.GetPersonsFromFile(x.Id).Count() > 1);
-            SearchResult = new SearchResult(result);
+            var searchResult = new SearchResult(result);
+            Events.Send(new NewSearchResult(searchResult));
         }
     }
 
     [RelayCommand]
     private void FindFilesWithPersons()
     {
-        StopSlideshow();
         if (SelectedPerson1Search != null && SelectedPerson2Search != null)
         {
-            SearchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPerson1Search.Id, SelectedPerson2Search.Id }));
+            var searchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPerson1Search.Id, SelectedPerson2Search.Id }));
+            Events.Send(new NewSearchResult(searchResult));
         }
     }
 
     [RelayCommand]
     private void FindFilesWithPersonsUnique()
     {
-        StopSlideshow();
         if (SelectedPerson1Search != null && SelectedPerson2Search != null)
         {
             var files = dbAccessRepository.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPerson1Search.Id });
@@ -962,14 +593,14 @@ public partial class FindViewModel : ObservableObject
                 var filePersons = dbAccessRepository.DbAccess.GetPersonsFromFile(x.Id).ToList();
                 return filePersons.Count() == 2 && filePersons.Any(y => y.Id == SelectedPerson2Search.Id);
             });
-            SearchResult = new SearchResult(result);
+            var searchResult = new SearchResult(result);
+            Events.Send(new NewSearchResult(searchResult));
         }
     }
 
     [RelayCommand]
     private void FindFilesWithPersonsGroup()
     {
-        StopSlideshow();
         if (SelectedPerson1Search != null && SelectedPerson2Search != null)
         {
             var files = dbAccessRepository.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPerson1Search.Id });
@@ -978,34 +609,34 @@ public partial class FindViewModel : ObservableObject
                 var filePersons = dbAccessRepository.DbAccess.GetPersonsFromFile(x.Id).ToList();
                 return filePersons.Count() > 2 && filePersons.Any(y => y.Id == SelectedPerson2Search.Id);
             });
-            SearchResult = new SearchResult(result);
+            var searchResult = new SearchResult(result);
+            Events.Send(new NewSearchResult(searchResult));
         }
     }
 
     [RelayCommand]
     private void FindFilesWithLocation()
     {
-        StopSlideshow();
         if (SelectedLocationSearch != null)
         {
-            SearchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesWithLocations(new List<int>() { SelectedLocationSearch.Id }));
+            var searchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesWithLocations(new List<int>() { SelectedLocationSearch.Id }));
+            Events.Send(new NewSearchResult(searchResult));
         }
     }
 
     [RelayCommand]
     private void FindFilesWithTag()
     {
-        StopSlideshow();
         if (SelectedTagSearch != null)
         {
-            SearchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesWithTags(new List<int>() { SelectedTagSearch.Id }));
+            var searchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesWithTags(new List<int>() { SelectedTagSearch.Id }));
+            Events.Send(new NewSearchResult(searchResult));
         }
     }
 
     [RelayCommand]
     private void FindFilesByPersonAge()
     {
-        StopSlideshow();
         if (!string.IsNullOrEmpty(SearchPersonAgeFrom))
         {
             if (!int.TryParse(SearchPersonAgeFrom, out var ageFrom))
@@ -1045,37 +676,41 @@ public partial class FindViewModel : ObservableObject
                 }
             }
 
-            SearchResult = new SearchResult(result);
+            var searchResult = new SearchResult(result);
+            Events.Send(new NewSearchResult(searchResult));
         }
     }
-
-    public bool FindFilesFromHistoryEnabled => SearchResultHistory.Count >= 2;
 
     [RelayCommand]
     private void FindFilesFromUnion()
     {
+        /*
         if (SearchResultHistory.Count >= 2)
         {
             var files1 = SearchResultHistory[SearchResultHistory.Count - 1].Files;
             var files2 = SearchResultHistory[SearchResultHistory.Count - 2].Files;
             SearchResult = new SearchResult(files1.Union(files2, new FilesModelIdComparer()));
         }
+        */
     }
 
     [RelayCommand]
     private void FindFilesFromIntersection()
     {
+        /*
         if (SearchResultHistory.Count >= 2)
         {
             var files1 = SearchResultHistory[SearchResultHistory.Count - 1].Files;
             var files2 = SearchResultHistory[SearchResultHistory.Count - 2].Files;
             SearchResult = new SearchResult(files1.Intersect(files2, new FilesModelIdComparer()));
         }
+        */
     }
 
     [RelayCommand]
     private void FindFilesFromDifference()
     {
+        /*
         if (SearchResultHistory.Count >= 2)
         {
             var files1 = SearchResultHistory[SearchResultHistory.Count - 1].Files;
@@ -1084,36 +719,37 @@ public partial class FindViewModel : ObservableObject
             var uniqueFiles2 = files2.Except(files1, new FilesModelIdComparer());
             SearchResult = new SearchResult(uniqueFiles1.Union(uniqueFiles2, new FilesModelIdComparer()));
         }
+        */
     }
 
     [RelayCommand]
     private void FindFilesFromMissingCategorization()
     {
-        StopSlideshow();
-        SearchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesWithMissingData());
+        var searchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesWithMissingData());
+        Events.Send(new NewSearchResult(searchResult));
     }
 
     [RelayCommand]
     private void FindFilesFromList()
     {
-        StopSlideshow();
         if (!string.IsNullOrEmpty(FileListSearch))
         {
             var fileIds = Utils.CreateFileIds(FileListSearch);
-            SearchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesFromIds(fileIds));
+            var searchResult = new SearchResult(dbAccessRepository.DbAccess.SearchFilesFromIds(fileIds));
+            Events.Send(new NewSearchResult(searchResult));
         }
     }
 
     [RelayCommand]
     private void FindFilesFromListComplement()
     {
-        StopSlideshow();
         if (!string.IsNullOrEmpty(FileListSearch))
         {
             var fileIds = Utils.CreateFileIds(FileListSearch);
             var allFiles = dbAccessRepository.DbAccess.GetFiles();
             var allFilesComplement = allFiles.Where(x => !fileIds.Contains(x.Id));
-            SearchResult = new SearchResult(allFilesComplement);
+            var searchResult = new SearchResult(allFilesComplement);
+            Events.Send(new NewSearchResult(searchResult));
         }
     }
 
@@ -1138,122 +774,93 @@ public partial class FindViewModel : ObservableObject
     [RelayCommand]
     private void CopyFileId()
     {
-        if (SearchResultIndex != -1)
+        if (SelectedFile != null)
         {
-            var selection = SearchResult!.Files[SearchResultIndex];
-            ClipboardService.SetText(Utils.CreateFileList(new List<FilesModel>() { selection }));
+            ClipboardService.SetText(Utils.CreateFileList(new List<FilesModel>() { SelectedFile }));
         }
     }
 
     [RelayCommand]
     private void RemoveFileFromCurrentSearchResult()
     {
-        if (SearchResultIndex != -1)
+        if (SelectedFile != null)
         {
-            SearchResult!.Files.RemoveAt(SearchResultIndex);
-            if (SearchResult.Files.Count > 0)
-            {
-                FireSearchResultUpdatedEvents();
-                var newIndex = SearchResultIndex == 0 ? 0 : SearchResultIndex - 1;
-                LoadFile(newIndex);
-            }
-            else
-            {
-                SearchResult = null;
-            }
+            Events.Send(new RemoveFileFromSearchResult(SelectedFile));
         }
     }
 
-    [RelayCommand]
-    private void ExportFileList()
+    private void LoadFile(FilesModel selection)
     {
-        dialogs.ShowExportDialog(SearchResult!);
-    }
+        SelectedFile = selection;
 
-    [RelayCommand]
-    private void CopyFileList()
-    {
-        ClipboardService.SetText(Utils.CreateFileList(SearchResult!.Files));
-    }
+        currentFilePersonList = dbAccessRepository.DbAccess.GetPersonsFromFile(selection.Id);
+        OnPropertyChanged(nameof(SelectedPersonCanBeAdded));
+        OnPropertyChanged(nameof(SelectedPersonCanBeRemoved));
 
-    private void LoadFile(int index)
-    {
-        if (SearchResult != null &&
-            index >= 0 && index < SearchResult.Count)
+        currentFileLocationList = dbAccessRepository.DbAccess.GetLocationsFromFile(selection.Id);
+        OnPropertyChanged(nameof(SelectedLocationCanBeAdded));
+        OnPropertyChanged(nameof(SelectedLocationCanBeRemoved));
+
+        currentFileTagList = dbAccessRepository.DbAccess.GetTagsFromFile(selection.Id);
+        OnPropertyChanged(nameof(SelectedTagCanBeAdded));
+        OnPropertyChanged(nameof(SelectedTagCanBeRemoved));
+
+        CurrentFileInternalDirectoryPath = Path.GetDirectoryName(selection.Path)!.Replace(@"\", "/");
+        CurrentFileInternalPath = selection.Path;
+        CurrentFilePath = filesystemAccessRepository.FilesystemAccess.ToAbsolutePath(selection.Path);
+        CurrentFileDescription = selection.Description ?? string.Empty;
+        CurrentFileDateTime = GetFileDateTimeString(selection.Datetime);
+        CurrentFilePosition = selection.Position != null ? Utils.CreateShortFilePositionString(selection.Position) : string.Empty;
+        CurrentFilePositionLink = selection.Position != null ? Utils.CreatePositionUri(selection.Position, configRepository.Config.LocationLink) : null;
+        CurrentFilePersons = GetFilePersonsString(selection);
+        CurrentFileLocations = GetFileLocationsString(selection.Id);
+        CurrentFileTags = GetFileTagsString(selection.Id);
+
+        NewFileDescription = CurrentFileDescription;
+        NewFileDateTime = selection.Datetime;
+
+        var fileType = FileTypeUtils.GetFileType(selection.Path);
+        if (fileType != FileType.Picture)
         {
-            SearchResultIndex = index;
+            CurrentFileLoadError = "File type not supported.";
+            currentFileImage = null;
+            Events.Send<CloseImage>();
+            return;
+        }
 
-            var selection = SearchResult.Files[SearchResultIndex];
+        // Note: reading of orientation from Exif is done here to get correct visualization for files added to database before orientation was parsed
+        currentFileRotation = DatabaseParsing.OrientationToDegrees(selection.Orientation ?? filesystemAccessRepository.FilesystemAccess.ParseFileMetadata(CurrentFilePath).Orientation);
 
-            currentFilePersonList = dbAccessRepository.DbAccess.GetPersonsFromFile(selection.Id);
-            OnPropertyChanged(nameof(SelectedPersonCanBeAdded));
-            OnPropertyChanged(nameof(SelectedPersonCanBeRemoved));
-
-            currentFileLocationList = dbAccessRepository.DbAccess.GetLocationsFromFile(selection.Id);
-            OnPropertyChanged(nameof(SelectedLocationCanBeAdded));
-            OnPropertyChanged(nameof(SelectedLocationCanBeRemoved));
-
-            currentFileTagList = dbAccessRepository.DbAccess.GetTagsFromFile(selection.Id);
-            OnPropertyChanged(nameof(SelectedTagCanBeAdded));
-            OnPropertyChanged(nameof(SelectedTagCanBeRemoved));
-
-            CurrentFileInternalDirectoryPath = Path.GetDirectoryName(selection.Path)!.Replace(@"\", "/");
-            CurrentFileInternalPath = selection.Path;
-            CurrentFilePath = filesystemAccessRepository.FilesystemAccess.ToAbsolutePath(selection.Path);
-            CurrentFileDescription = selection.Description ?? string.Empty;
-            CurrentFileDateTime = GetFileDateTimeString(selection.Datetime);
-            CurrentFilePosition = selection.Position != null ? Utils.CreateShortFilePositionString(selection.Position) : string.Empty;
-            CurrentFilePositionLink = selection.Position != null ? Utils.CreatePositionUri(selection.Position, configRepository.Config.LocationLink) : null;
-            CurrentFilePersons = GetFilePersonsString(selection);
-            CurrentFileLocations = GetFileLocationsString(selection.Id);
-            CurrentFileTags = GetFileTagsString(selection.Id);
-
-            NewFileDescription = CurrentFileDescription;
-            NewFileDateTime = selection.Datetime;
-
-            var fileType = FileTypeUtils.GetFileType(selection.Path);
-            if (fileType != FileType.Picture)
-            {
-                CurrentFileLoadError = "File type not supported.";
-                currentFileImage = null;
-                Events.Send<CloseImage>();
-                return;
-            }
-
-            // Note: reading of orientation from Exif is done here to get correct visualization for files added to database before orientation was parsed
-            currentFileRotation = DatabaseParsing.OrientationToDegrees(selection.Orientation ?? filesystemAccessRepository.FilesystemAccess.ParseFileMetadata(CurrentFilePath).Orientation);
-
-            var uri = new Uri(CurrentFilePath, UriKind.Absolute);
-            try
-            {
-                CurrentFileLoadError = string.Empty;
-                currentFileImage = new BitmapImage(uri);
-                Events.Send(new ShowImage(currentFileImage, -currentFileRotation));
-            }
-            catch (WebException e)
-            {
-                CurrentFileLoadError = $"Image loading error:\n{e.Message}";
-                currentFileImage = null;
-                Events.Send<CloseImage>();
-            }
-            catch (IOException e)
-            {
-                CurrentFileLoadError = $"Image loading error:\n{e.Message}";
-                currentFileImage = null;
-                Events.Send<CloseImage>();
-            }
-            catch (NotSupportedException e)
-            {
-                CurrentFileLoadError = $"File format not supported:\n{e.Message}";
-                currentFileImage = null;
-                Events.Send<CloseImage>();
-            }
+        var uri = new Uri(CurrentFilePath, UriKind.Absolute);
+        try
+        {
+            CurrentFileLoadError = string.Empty;
+            currentFileImage = new BitmapImage(uri);
+            Events.Send(new ShowImage(currentFileImage, -currentFileRotation));
+        }
+        catch (WebException e)
+        {
+            CurrentFileLoadError = $"Image loading error:\n{e.Message}";
+            currentFileImage = null;
+            Events.Send<CloseImage>();
+        }
+        catch (IOException e)
+        {
+            CurrentFileLoadError = $"Image loading error:\n{e.Message}";
+            currentFileImage = null;
+            Events.Send<CloseImage>();
+        }
+        catch (NotSupportedException e)
+        {
+            CurrentFileLoadError = $"File format not supported:\n{e.Message}";
+            currentFileImage = null;
+            Events.Send<CloseImage>();
         }
     }
 
     private void ResetFile()
     {
-        SearchResultIndex = -1;
+        SelectedFile = null;
 
         CurrentFileInternalPath = string.Empty;
         CurrentFileInternalDirectoryPath = string.Empty;
@@ -1325,7 +932,7 @@ public partial class FindViewModel : ObservableObject
     [RelayCommand]
     private void AddFilePerson()
     {
-        if (SearchResultIndex == -1)
+        if (SelectedFile == null)
         {
             dialogs.ShowErrorDialog("No file selected");
             return;
@@ -1342,12 +949,11 @@ public partial class FindViewModel : ObservableObject
 
     private void AddFilePersonToCurrentFile(int personId)
     {
-        var selection = SearchResult!.Files[SearchResultIndex];
         var person = dbAccessRepository.DbAccess.GetPersonById(personId);
 
-        if (selection.Datetime != null)
+        if (SelectedFile!.Datetime != null)
         {
-            var fileDatetime = DatabaseParsing.ParseFilesDatetime(selection.Datetime);
+            var fileDatetime = DatabaseParsing.ParseFilesDatetime(SelectedFile.Datetime);
             
             if (person.DateOfBirth != null)
             {
@@ -1370,19 +976,19 @@ public partial class FindViewModel : ObservableObject
             }
         }
 
-        if (!dbAccessRepository.DbAccess.GetPersonsFromFile(selection.Id).Any(p => p.Id == personId))
+        if (!dbAccessRepository.DbAccess.GetPersonsFromFile(SelectedFile.Id).Any(p => p.Id == personId))
         {
-            dbAccessRepository.DbAccess.InsertFilePerson(selection.Id, personId);
-            LoadFile(SearchResultIndex);
+            dbAccessRepository.DbAccess.InsertFilePerson(SelectedFile.Id, personId);
+            LoadFile(SelectedFile);
             AddUpdateHistoryItem(UpdateHistoryType.TogglePerson, personId, $"{person.Firstname} {person.Lastname}");
-            prevEditedFileId = selection.Id;
+            prevEditedFileId = SelectedFile.Id;
         }
     }
 
     [RelayCommand]
     private void RemoveFilePerson()
     {
-        if (SearchResultIndex == -1)
+        if (SelectedFile == null)
         {
             dialogs.ShowErrorDialog("No file selected");
             return;
@@ -1394,17 +1000,16 @@ public partial class FindViewModel : ObservableObject
             return;
         }
 
-        var fileId = SearchResult!.Files[SearchResultIndex].Id;
-        dbAccessRepository.DbAccess.DeleteFilePerson(fileId, SelectedPersonToUpdate.Id);
-        LoadFile(SearchResultIndex);
+        dbAccessRepository.DbAccess.DeleteFilePerson(SelectedFile.Id, SelectedPersonToUpdate.Id);
+        LoadFile(SelectedFile);
         AddUpdateHistoryItem(UpdateHistoryType.TogglePerson, SelectedPersonToUpdate.Id, SelectedPersonToUpdate.Name);
-        prevEditedFileId = fileId;
+        prevEditedFileId = SelectedFile.Id;
     }
 
     [RelayCommand]
     private void AddFileLocation()
     {
-        if (SearchResultIndex == -1)
+        if (SelectedFile == null)
         {
             dialogs.ShowErrorDialog("No file selected");
             return;
@@ -1421,11 +1026,11 @@ public partial class FindViewModel : ObservableObject
 
     private void AddFileLocationToCurrentFile(LocationToUpdate location)
     {
-        var fileId = SearchResult!.Files[SearchResultIndex].Id;
+        var fileId = SelectedFile.Id;
         if (!dbAccessRepository.DbAccess.GetLocationsFromFile(fileId).Any(l => l.Id == location.Id))
         {
             dbAccessRepository.DbAccess.InsertFileLocation(fileId, location.Id);
-            LoadFile(SearchResultIndex);
+            LoadFile(SelectedFile);
             AddUpdateHistoryItem(UpdateHistoryType.ToggleLocation, location.Id, location.Name);
             prevEditedFileId = fileId;
         }
@@ -1434,7 +1039,7 @@ public partial class FindViewModel : ObservableObject
     [RelayCommand]
     private void RemoveFileLocation()
     {
-        if (SearchResultIndex == -1)
+        if (SelectedFile == null)
         {
             dialogs.ShowErrorDialog("No file selected");
             return;
@@ -1446,9 +1051,9 @@ public partial class FindViewModel : ObservableObject
             return;
         }
 
-        var fileId = SearchResult!.Files[SearchResultIndex].Id;
+        var fileId = SelectedFile.Id;
         dbAccessRepository.DbAccess.DeleteFileLocation(fileId, SelectedLocationToUpdate.Id);
-        LoadFile(SearchResultIndex);
+        LoadFile(SelectedFile);
         AddUpdateHistoryItem(UpdateHistoryType.ToggleLocation, SelectedLocationToUpdate.Id, SelectedLocationToUpdate.Name);
         prevEditedFileId = fileId;
     }
@@ -1456,7 +1061,7 @@ public partial class FindViewModel : ObservableObject
     [RelayCommand]
     private void AddFileTag()
     {
-        if (SearchResultIndex == -1)
+        if (SelectedFile == null)
         {
             dialogs.ShowErrorDialog("No file selected");
             return;
@@ -1473,11 +1078,11 @@ public partial class FindViewModel : ObservableObject
 
     private void AddFileTagToCurrentFile(TagToUpdate tag)
     {
-        var fileId = SearchResult!.Files[SearchResultIndex].Id;
+        var fileId = SelectedFile.Id;
         if (!dbAccessRepository.DbAccess.GetTagsFromFile(fileId).Any(t => t.Id == tag.Id))
         {
             dbAccessRepository.DbAccess.InsertFileTag(fileId, tag.Id);
-            LoadFile(SearchResultIndex);
+            LoadFile(SelectedFile);
             AddUpdateHistoryItem(UpdateHistoryType.ToggleTag, tag.Id, tag.Name);
             prevEditedFileId = fileId;
         }
@@ -1486,7 +1091,7 @@ public partial class FindViewModel : ObservableObject
     [RelayCommand]
     private void RemoveFileTag()
     {
-        if (SearchResultIndex == -1)
+        if (SelectedFile == null)
         {
             dialogs.ShowErrorDialog("No file selected");
             return;
@@ -1498,9 +1103,9 @@ public partial class FindViewModel : ObservableObject
             return;
         }
 
-        var fileId = SearchResult!.Files[SearchResultIndex].Id;
+        var fileId = SelectedFile.Id;
         dbAccessRepository.DbAccess.DeleteFileTag(fileId, SelectedTagToUpdate.Id);
-        LoadFile(SearchResultIndex);
+        LoadFile(SelectedFile);
         AddUpdateHistoryItem(UpdateHistoryType.ToggleTag, SelectedTagToUpdate.Id, SelectedTagToUpdate.Name);
         prevEditedFileId = fileId;
     }
@@ -1508,18 +1113,17 @@ public partial class FindViewModel : ObservableObject
     [RelayCommand]
     private void SetFileDescription()
     {
-        if (SearchResultIndex != -1)
+        if (SelectedFile != null)
         {
-            var selection = SearchResult!.Files[SearchResultIndex];
-            var fileId = selection.Id;
+            var fileId = SelectedFile.Id;
             NewFileDescription = NewFileDescription?.Trim().ReplaceLineEndings(FilesModelValidator.DescriptionLineEnding);
             var description = string.IsNullOrEmpty(NewFileDescription) ? null : NewFileDescription;
 
             try
             {
                 dbAccessRepository.DbAccess.UpdateFileDescription(fileId, description);
-                selection.Description = description;
-                LoadFile(SearchResultIndex);
+                SelectedFile.Description = description;
+                LoadFile(SelectedFile);
                 prevEditedFileId = fileId;
             }
             catch (DataValidationException e)
@@ -1532,10 +1136,9 @@ public partial class FindViewModel : ObservableObject
     [RelayCommand]
     private void SetFileDateTime()
     {
-        if (SearchResultIndex != -1)
+        if (SelectedFile != null)
         {
-            var selection = SearchResult!.Files[SearchResultIndex];
-            var fileId = selection.Id;
+            var fileId = SelectedFile.Id;
             NewFileDateTime = NewFileDateTime?.Trim();
 
             var dateTime = string.IsNullOrEmpty(NewFileDateTime) ? null : NewFileDateTime;
@@ -1543,8 +1146,8 @@ public partial class FindViewModel : ObservableObject
             try
             {
                 dbAccessRepository.DbAccess.UpdateFileDatetime(fileId, dateTime);
-                selection.Datetime = dateTime;
-                LoadFile(SearchResultIndex);
+                SelectedFile.Datetime = dateTime;
+                LoadFile(SelectedFile);
                 prevEditedFileId = fileId;
             }
             catch (DataValidationException e)
@@ -1557,7 +1160,7 @@ public partial class FindViewModel : ObservableObject
     [RelayCommand]
     private void ReApplyFileMetaData()
     {
-        if (SearchResultIndex == -1)
+        if (SelectedFile == null)
         {
             dialogs.ShowErrorDialog("No file selected");
             return;
@@ -1569,8 +1172,7 @@ public partial class FindViewModel : ObservableObject
             return;
         }
 
-        var selection = SearchResult!.Files[SearchResultIndex];
-        var fileId = selection.Id;
+        var fileId = SelectedFile.Id;
 
         try
         {
@@ -1598,9 +1200,9 @@ public partial class FindViewModel : ObservableObject
             }
             
             dbAccessRepository.DbAccess.UpdateFileDescription(fileId, prevEditedFile.Description);
-            selection.Description = prevEditedFile.Description;
+            SelectedFile.Description = prevEditedFile.Description;
 
-            LoadFile(SearchResultIndex);
+            LoadFile(SelectedFile);
         }
         catch (DataValidationException e)
         {
@@ -1622,7 +1224,7 @@ public partial class FindViewModel : ObservableObject
 
     private void RotateFile(RotationDirection imageRotationDirection)
     {
-        if (SearchResultIndex != -1)
+        if (SelectedFile != null)
         {
             int cameraNewDegrees = currentFileRotation;
             if (imageRotationDirection == RotationDirection.CounterClockwise)
@@ -1642,27 +1244,25 @@ public partial class FindViewModel : ObservableObject
                 }
             }
 
-            var selection = SearchResult!.Files[SearchResultIndex];
             var newOrientation = DatabaseParsing.DegreesToOrientation(cameraNewDegrees);
-            dbAccessRepository.DbAccess.UpdateFileOrientation(selection.Id, newOrientation);
-            selection.Orientation = newOrientation;
+            dbAccessRepository.DbAccess.UpdateFileOrientation(SelectedFile.Id, newOrientation);
+            SelectedFile.Orientation = newOrientation;
 
-            LoadFile(SearchResultIndex);
+            LoadFile(SelectedFile);
         }
     }
 
     [RelayCommand]
     private void UpdateFileOrientationFromMetaData()
     {
-        if (SearchResultIndex != -1)
+        if (SelectedFile != null)
         {
             if (dialogs.ShowConfirmDialog("Reload orientation from file meta-data?"))
             {
-                var selection = SearchResult!.Files[SearchResultIndex];
-                var fileMetadata = filesystemAccessRepository.FilesystemAccess.ParseFileMetadata(filesystemAccessRepository.FilesystemAccess.ToAbsolutePath(selection.Path));
-                dbAccessRepository.DbAccess.UpdateFileOrientation(selection.Id, fileMetadata.Orientation);
-                selection.Orientation = fileMetadata.Orientation;
-                LoadFile(SearchResultIndex);
+                var fileMetadata = filesystemAccessRepository.FilesystemAccess.ParseFileMetadata(filesystemAccessRepository.FilesystemAccess.ToAbsolutePath(SelectedFile.Path));
+                dbAccessRepository.DbAccess.UpdateFileOrientation(SelectedFile.Id, fileMetadata.Orientation);
+                SelectedFile.Orientation = fileMetadata.Orientation;
+                LoadFile(SelectedFile);
             }
         }
     }
@@ -1670,18 +1270,17 @@ public partial class FindViewModel : ObservableObject
     [RelayCommand]
     private void UpdateFileFromMetaData()
     {
-        if (SearchResultIndex != -1)
+        if (SelectedFile != null)
         {
             if (dialogs.ShowConfirmDialog("Reload date and GPS position from file meta-data?"))
             {
-                var selection = SearchResult!.Files[SearchResultIndex];
-                dbAccessRepository.DbAccess.UpdateFileFromMetaData(selection.Id, filesystemAccessRepository.FilesystemAccess);
+                dbAccessRepository.DbAccess.UpdateFileFromMetaData(SelectedFile.Id, filesystemAccessRepository.FilesystemAccess);
 
-                var updatedFile = dbAccessRepository.DbAccess.GetFileById(selection.Id)!;
-                selection.Datetime = updatedFile.Datetime;
-                selection.Position = updatedFile.Position;
-                selection.Orientation = updatedFile.Orientation;
-                LoadFile(SearchResultIndex);
+                var updatedFile = dbAccessRepository.DbAccess.GetFileById(SelectedFile.Id)!;
+                SelectedFile.Datetime = updatedFile.Datetime;
+                SelectedFile.Position = updatedFile.Position;
+                SelectedFile.Orientation = updatedFile.Orientation;
+                LoadFile(SelectedFile);
             }
         }
     }
@@ -1793,7 +1392,7 @@ public partial class FindViewModel : ObservableObject
     [RelayCommand]
     private void FunctionKey(string parameter)
     {
-        if (!ReadWriteMode || !HasNonEmptySearchResult)
+        if (!ReadWriteMode || SelectedFile == null)
         {
             return;
         }
@@ -1811,12 +1410,12 @@ public partial class FindViewModel : ObservableObject
     [RelayCommand]
     private void ToggleFromHistoryItem(UpdateHistoryItem historyItem)
     {
-        if (!ReadWriteMode || !HasNonEmptySearchResult)
+        if (!ReadWriteMode || SelectedFile == null)
         {
             return;
         }
 
-        var fileId = SearchResult!.Files[SearchResultIndex].Id;
+        var fileId = SelectedFile.Id;
 
         switch (historyItem.Type)
         {
@@ -1857,7 +1456,7 @@ public partial class FindViewModel : ObservableObject
                 break;
         }
 
-        LoadFile(SearchResultIndex);
+        LoadFile(SelectedFile);
     }
 
     [RelayCommand]
@@ -1907,10 +1506,10 @@ public partial class FindViewModel : ObservableObject
     [RelayCommand]
     private void CombineSearchResultShow()
     {
-        StopSlideshow();
         var fileIds = Utils.CreateFileIds(CombineSearchResult);
         var files = dbAccessRepository.DbAccess.SearchFilesFromIds(fileIds);
-        SearchResult = new SearchResult(files);
+        var searchResult = new SearchResult(files);
+        Events.Send(new NewSearchResult(searchResult));
     }
 
     [RelayCommand]

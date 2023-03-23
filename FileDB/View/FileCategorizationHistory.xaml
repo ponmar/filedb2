@@ -16,7 +16,7 @@
         <Expander Style="{StaticResource Expander}" Header="Update History" Margin="5" IsExpanded="False">
             <StackPanel>
                 <TextBlock Style="{StaticResource PageTextBlock}" Visibility="{Binding HasUpdateHistory, Converter={StaticResource NegatedBooleanToVisibilityConverter}}">No changes.</TextBlock>
-                <ListView ItemsSource="{Binding UpdateHistoryItems}" Visibility="{Binding HasNonEmptySearchResult, Converter={StaticResource BoolToVis}}" Background="Transparent" BorderThickness="0" Grid.IsSharedSizeScope="True" x:Name="HistoryItemsListView">
+                <ListView ItemsSource="{Binding UpdateHistoryItems}" Visibility="{Binding FileSelected, Converter={StaticResource BoolToVis}}" Background="Transparent" BorderThickness="0" Grid.IsSharedSizeScope="True" x:Name="HistoryItemsListView">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="Focusable" Value="false"/>

@@ -5,10 +5,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FileDB.View"
              xmlns:viewmodel="clr-namespace:FileDB.ViewModel"
-             d:DataContext="{d:DesignInstance Type=viewmodel:FindViewModel}"
+             d:DataContext="{d:DesignInstance Type=viewmodel:SearchResultViewModel}"
              xmlns:converters="clr-namespace:FileDB.Converters" 
              mc:Ignorable="d" 
              d:DesignHeight="130" d:DesignWidth="1000">
+    <UserControl.InputBindings>
+        <KeyBinding Key="Left" Command="{Binding PrevFileCommand}" />
+        <KeyBinding Key="Right" Command="{Binding NextFileCommand}" />
+        <KeyBinding Key="Home" Command="{Binding FirstFileCommand}" />
+        <KeyBinding Key="End" Command="{Binding LastFileCommand}" />
+        <KeyBinding Key="PageDown" Command="{Binding NextDirectoryCommand}" />
+        <KeyBinding Key="PageUp" Command="{Binding PrevDirectoryCommand}" />
+    </UserControl.InputBindings>
+
     <UserControl.Resources>
         <converters:EnumerationHasContentConverter x:Key="EnumerationHasContentConverter"/>
     </UserControl.Resources>

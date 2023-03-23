@@ -1,4 +1,5 @@
-﻿using FileDBShared.Model;
+﻿using FileDB.ViewModel;
+using FileDBShared.Model;
 using System.Collections.Generic;
 using System.Windows.Media.Imaging;
 
@@ -13,6 +14,11 @@ public record LocationsUpdated;
 public record TagsUpdated;
 
 public record FullscreenBrowsingRequested(bool Fullscreen);
+
+public record NewSearchResult(SearchResult SearchResult);
+public record SelectSearchResultFile(FilesModel File);
+public record CloseSearchResultFile();
+public record RemoveFileFromSearchResult(FilesModel File);
 
 public record ShowImage(BitmapImage Image, double RotateDegrees);
 public record CloseImage;
