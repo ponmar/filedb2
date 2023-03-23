@@ -16,24 +16,11 @@ namespace FileDB.ViewModel;
 
 public class SearchResult
 {
+    public required List<FilesModel> Files { get; init; }
+
     public string Name => $"{Count} files";
 
-    public string From => DateTime.ToString("HH:mm:ss");
-
-    public DateTime DateTime { get; } = DateTime.Now;
-
     public int Count => Files.Count;
-
-    public List<FilesModel> Files { get; }
-
-    public SearchResult(IEnumerable<FilesModel> files) : this(files.ToList())
-    {
-    }
-
-    public SearchResult(List<FilesModel> files)
-    {
-        Files = files;
-    }
 }
 
 public partial class SearchResultViewModel : ObservableObject
@@ -158,7 +145,7 @@ public partial class SearchResultViewModel : ObservableObject
         this.RegisterForEvent<NewSearchResult>((x) =>
         {
             StopSlideshow();
-            SearchResult = new SearchResult(this.searchResultRepository.Files);
+            SearchResult = new SearchResult() { Files = this.searchResultRepository.Files.ToList() };
         });
 
         this.RegisterForEvent<RemoveFileFromSearchResult>((x) =>
