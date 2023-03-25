@@ -5,7 +5,6 @@ using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Model;
-using FileDB.Sorters;
 using FileDBInterface.DbAccess;
 using FileDBShared.Model;
 
@@ -26,12 +25,14 @@ public partial class PersonsViewModel : ObservableObject
     private readonly IConfigRepository configRepository;
     private readonly IDbAccessRepository dbAccessRepository;
     private readonly IDialogs dialogs;
+    private readonly IPersonsRepository personsRepository;
 
-    public PersonsViewModel(IConfigRepository configRepository, IDbAccessRepository dbAccessRepository, IDialogs dialogs)
+    public PersonsViewModel(IConfigRepository configRepository, IDbAccessRepository dbAccessRepository, IDialogs dialogs, IPersonsRepository personsRepository)
     {
         this.configRepository = configRepository;
         this.dbAccessRepository = dbAccessRepository;
         this.dialogs = dialogs;
+        this.personsRepository = personsRepository;
 
         readWriteMode = !configRepository.Config.ReadOnly;
 
@@ -57,7 +58,7 @@ public partial class PersonsViewModel : ObservableObject
             if (filesWithPerson.Count == 0 || dialogs.ShowConfirmDialog($"Person is used in {filesWithPerson.Count} files, remove anyway?"))
             {
                 dbAccessRepository.DbAccess.DeletePerson(SelectedPerson.Id);
-                Events.Send<PersonsUpdated>();
+                Events.Send<PersonEdited>();
             }
         }
     }
@@ -83,9 +84,7 @@ public partial class PersonsViewModel : ObservableObject
     private void ReloadPersons()
     {
         Persons.Clear();
-        var persons = dbAccessRepository.DbAccess.GetPersons().ToList();
-        persons.Sort(new PersonModelByNameSorter());
-        var personVms = persons.Select(pm => new Person(pm.Id, pm.Firstname, pm.Lastname, pm.Description, pm.DateOfBirth, pm.Deceased, GetPersonAge(pm), pm.ProfileFileId, pm.Sex));
+        var personVms = personsRepository.Persons.Select(pm => new Person(pm.Id, pm.Firstname, pm.Lastname, pm.Description, pm.DateOfBirth, pm.Deceased, GetPersonAge(pm), pm.ProfileFileId, pm.Sex));
         foreach (var personVm in personVms)
         {
             Persons.Add(personVm);

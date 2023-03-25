@@ -4,7 +4,6 @@ using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Model;
-using FileDB.Sorters;
 
 namespace FileDB.ViewModel;
 
@@ -23,12 +22,15 @@ public partial class TagsViewModel : ObservableObject
     private readonly IConfigRepository configRepository;
     private readonly IDbAccessRepository dbAccessRepository;
     private readonly IDialogs dialogs;
+    private readonly ITagsRepository tagsRepository;
 
-    public TagsViewModel(IConfigRepository configRepository, IDbAccessRepository dbAccessRepository, IDialogs dialogs)
+    public TagsViewModel(IConfigRepository configRepository, IDbAccessRepository dbAccessRepository, IDialogs dialogs, ITagsRepository tagsRepository)
     {
         this.configRepository = configRepository;
         this.dbAccessRepository = dbAccessRepository;
         this.dialogs = dialogs;
+        this.tagsRepository = tagsRepository;
+
         ReadWriteMode = !configRepository.Config.ReadOnly;
 
         ReloadTags();
@@ -53,7 +55,7 @@ public partial class TagsViewModel : ObservableObject
             if (filesWithTag.Count == 0 || dialogs.ShowConfirmDialog($"Tag is used in {filesWithTag.Count} files, remove anyway?"))
             {
                 dbAccessRepository.DbAccess.DeleteTag(SelectedTag.Id);
-                Events.Send<TagsUpdated>();
+                Events.Send<TagEdited>();
             }
         }
     }
@@ -79,10 +81,7 @@ public partial class TagsViewModel : ObservableObject
     private void ReloadTags()
     {
         Tags.Clear();
-
-        var tags = dbAccessRepository.DbAccess.GetTags().ToList();
-        tags.Sort(new TagModelByNameSorter());
-        foreach (var tag in tags.Select(tm => new Tag(tm.Id, tm.Name)))
+        foreach (var tag in tagsRepository.Tags.Select(tm => new Tag(tm.Id, tm.Name)))
         {
             Tags.Add(tag);
         }

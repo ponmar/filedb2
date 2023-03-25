@@ -106,14 +106,16 @@ public partial class BirthdaysViewModel : ObservableObject
     public ObservableCollection<PersonBirthday> Persons { get; } = new();
 
     private readonly IConfigRepository configRepository;
+    private readonly IPersonsRepository personsRepository;
     private readonly IDbAccessRepository dbAccessRepository;
     private readonly IFilesystemAccessRepository filesystemAccessRepository;
 
-    public BirthdaysViewModel(IConfigRepository configRepository, IDbAccessRepository dbAccessRepository, IFilesystemAccessRepository filesystemAccessRepository)
+    public BirthdaysViewModel(IConfigRepository configRepository, IPersonsRepository personsRepository, IFilesystemAccessRepository filesystemAccessRepository, IDbAccessRepository dbAccessRepository)
     {
         this.configRepository = configRepository;
-        this.dbAccessRepository = dbAccessRepository;
+        this.personsRepository = personsRepository;
         this.filesystemAccessRepository = filesystemAccessRepository;
+        this.dbAccessRepository = dbAccessRepository;
 
         UpdatePersons();
 
@@ -135,7 +137,7 @@ public partial class BirthdaysViewModel : ObservableObject
         var configDir = new AppDataConfig<Config>(Utils.ApplicationName, ServiceLocator.Resolve<IFileSystem>()).ConfigDirectory;
         var cacheDir = Path.Combine(configDir, DefaultConfigs.CacheSubdir);
 
-        foreach (var person in dbAccessRepository.DbAccess.GetPersons().Where(x => x.DateOfBirth != null && x.Deceased == null))
+        foreach (var person in personsRepository.Persons.Where(x => x.DateOfBirth != null && x.Deceased == null))
         {
             string profileFileIdPath;
             if (person.ProfileFileId != null)

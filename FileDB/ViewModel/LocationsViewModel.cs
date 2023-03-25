@@ -4,7 +4,6 @@ using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Model;
-using FileDB.Sorters;
 
 namespace FileDB.ViewModel;
 
@@ -26,12 +25,14 @@ public partial class LocationsViewModel : ObservableObject
     private readonly IConfigRepository configRepository;
     private readonly IDbAccessRepository dbAccessRepository;
     private readonly IDialogs dialogs;
+    private readonly ILocationsRepository locationsRepository;
 
-    public LocationsViewModel(IConfigRepository configRepository, IDbAccessRepository dbAccessRepository, IDialogs dialogs)
+    public LocationsViewModel(IConfigRepository configRepository, IDbAccessRepository dbAccessRepository, IDialogs dialogs, ILocationsRepository locationsRepository)
     {
         this.configRepository = configRepository;
         this.dbAccessRepository = dbAccessRepository;
         this.dialogs = dialogs;
+        this.locationsRepository = locationsRepository;
 
         readWriteMode = !configRepository.Config.ReadOnly;
 
@@ -54,7 +55,7 @@ public partial class LocationsViewModel : ObservableObject
             if (filesWithLocation.Count == 0 || dialogs.ShowConfirmDialog($"Location is used in {filesWithLocation.Count} files, remove anyway?"))
             {
                 dbAccessRepository.DbAccess.DeleteLocation(SelectedLocation.Id);
-                Events.Send<LocationsUpdated>();
+                Events.Send<LocationEdited>();
             }
         }
     }
@@ -90,10 +91,7 @@ public partial class LocationsViewModel : ObservableObject
     private void ReloadLocations()
     {
         Locations.Clear();
-
-        var locations = dbAccessRepository.DbAccess.GetLocations().ToList();
-        locations.Sort(new LocationModelByNameSorter());
-        foreach (var location in locations.Select(lm => new Location(lm.Id, lm.Name, lm.Description, lm.Position)))
+        foreach (var location in locationsRepository.Locations.Select(lm => new Location(lm.Id, lm.Name, lm.Description, lm.Position)))
         {
             Locations.Add(location);
         }

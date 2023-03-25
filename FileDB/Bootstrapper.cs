@@ -26,6 +26,13 @@ public static class Bootstrapper
                 typeof(IConfigUpdater))
                     .ImplementedBy<Model.Model>());
 
+        Container.Register(
+            Component.For(
+                typeof(IPersonsRepository),
+                typeof(ILocationsRepository),
+                typeof(ITagsRepository))
+                    .ImplementedBy<DatabaseCache>());
+
         Container.Register(Component.For<AboutViewModel>().ImplementedBy<AboutViewModel>());
         Container.Register(Component.For<BirthdaysViewModel>().ImplementedBy<BirthdaysViewModel>());
         Container.Register(Component.For<FilesViewModel>().ImplementedBy<FilesViewModel>());
@@ -38,7 +45,8 @@ public static class Bootstrapper
         Container.Register(Component.For<ToolsViewModel>().ImplementedBy<ToolsViewModel>());
         Container.Register(Component.For<FindViewModel>().ImplementedBy<FindViewModel>());
         Container.Register(Component.For<SearchResultViewModel>().ImplementedBy<SearchResultViewModel>());
-        
+        Container.Register(Component.For<FileCategorizationViewModel>().ImplementedBy<FileCategorizationViewModel>());
+
         Container.Register(
             Component.For(
                 typeof(SearchCriteriaViewModel),

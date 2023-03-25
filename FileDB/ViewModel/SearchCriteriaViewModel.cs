@@ -10,7 +10,6 @@ using System.IO;
 using FileDBInterface.DbAccess;
 using FileDB.Extensions;
 using System.Collections.ObjectModel;
-using FileDB.Sorters;
 
 namespace FileDB.ViewModel;
 
@@ -166,12 +165,18 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
     private readonly IConfigRepository configRepository;
     private readonly IDialogs dialogs;
     private readonly IDbAccessRepository dbAccessRepository;
+    private readonly IPersonsRepository personsRepository;
+    private readonly ILocationsRepository locationsRepository;
+    private readonly ITagsRepository tagsRepository;
 
-    public SearchCriteriaViewModel(IConfigRepository configRepository, IDialogs dialogs, IDbAccessRepository dbAccessRepository)
+    public SearchCriteriaViewModel(IConfigRepository configRepository, IDialogs dialogs, IDbAccessRepository dbAccessRepository, IPersonsRepository personsRepository, ILocationsRepository locationsRepository, ITagsRepository tagsRepository)
     {
         this.configRepository = configRepository;
         this.dialogs = dialogs;
         this.dbAccessRepository = dbAccessRepository;
+        this.personsRepository = personsRepository;
+        this.locationsRepository = locationsRepository;
+        this.tagsRepository = tagsRepository;
 
         ReloadPersons();
         ReloadLocations();
@@ -200,9 +205,7 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
     private void ReloadPersons()
     {
         Persons.Clear();
-        var persons = dbAccessRepository.DbAccess.GetPersons().ToList();
-        persons.Sort(new PersonModelByNameSorter());
-        foreach (var person in persons.Select(p => new PersonToUpdate(p.Id, $"{p.Firstname} {p.Lastname}", Utils.CreateShortText($"{p.Firstname} {p.Lastname}", configRepository.Config.ShortItemNameMaxLength))))
+        foreach (var person in personsRepository.Persons.Select(p => new PersonToUpdate(p.Id, $"{p.Firstname} {p.Lastname}", Utils.CreateShortText($"{p.Firstname} {p.Lastname}", configRepository.Config.ShortItemNameMaxLength))))
         {
             Persons.Add(person);
         }
@@ -213,10 +216,7 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
         Locations.Clear();
         LocationsWithPosition.Clear();
 
-        var locations = dbAccessRepository.DbAccess.GetLocations().ToList();
-        locations.Sort(new LocationModelByNameSorter());
-
-        foreach (var location in locations)
+        foreach (var location in locationsRepository.Locations)
         {
             var locationToUpdate = new LocationToUpdate(location.Id, location.Name, Utils.CreateShortText(location.Name, configRepository.Config.ShortItemNameMaxLength));
             Locations.Add(locationToUpdate);
@@ -230,9 +230,7 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
     private void ReloadTags()
     {
         Tags.Clear();
-        var tags = dbAccessRepository.DbAccess.GetTags().ToList();
-        tags.Sort(new TagModelByNameSorter());
-        foreach (var tag in tags.Select(t => new TagToUpdate(t.Id, t.Name, Utils.CreateShortText(t.Name, configRepository.Config.ShortItemNameMaxLength))))
+        foreach (var tag in tagsRepository.Tags.Select(t => new TagToUpdate(t.Id, t.Name, Utils.CreateShortText(t.Name, configRepository.Config.ShortItemNameMaxLength))))
         {
             Tags.Add(tag);
         }

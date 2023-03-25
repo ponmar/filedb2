@@ -29,6 +29,7 @@ public partial class SearchResultViewModel : ObservableObject
     private readonly IDbAccessRepository dbAccessRepository;
     private readonly IDialogs dialogs;
     private readonly ISearchResultRepository searchResultRepository;
+    private readonly IFilesystemAccessRepository filesystemAccessRepository;
 
     private readonly Random random = new();
     private readonly DispatcherTimer slideshowTimer = new();
@@ -124,12 +125,13 @@ public partial class SearchResultViewModel : ObservableObject
 
     public bool HasNonEmptySearchResult => SearchResult != null && SearchResult.Count > 0;
 
-    public SearchResultViewModel(IConfigRepository configRepository, IDbAccessRepository dbAccessRepository, IDialogs dialogs, ISearchResultRepository searchResultRepository)
+    public SearchResultViewModel(IConfigRepository configRepository, IDbAccessRepository dbAccessRepository, IDialogs dialogs, ISearchResultRepository searchResultRepository, IFilesystemAccessRepository filesystemAccessRepository)
     {
         this.configRepository = configRepository;
         this.dbAccessRepository = dbAccessRepository;
         this.dialogs = dialogs;
         this.searchResultRepository = searchResultRepository;
+        this.filesystemAccessRepository = filesystemAccessRepository;
 
         slideshowTimer.Tick += SlideshowTimer_Tick;
         slideshowTimer.Interval = TimeSpan.FromSeconds(configRepository.Config.SlideshowDelay);
@@ -172,6 +174,12 @@ public partial class SearchResultViewModel : ObservableObject
             {
                 SearchResult = null;
             }
+        });
+
+        this.RegisterForEvent<FileEdited>((x) =>
+        {
+            // Reload current file that another viewmodel edited
+            LoadFile(SearchResultIndex);
         });
     }
 
@@ -359,6 +367,15 @@ public partial class SearchResultViewModel : ObservableObject
             SearchResultIndex = index;
             OnPropertyChanged(nameof(CurrentFileInternalPath));
             var selection = SearchResult.Files[SearchResultIndex];
+
+            // TODO: make this a bool setting?
+            // Note: reading of orientation from Exif is done here to get correct visualization for files added to database before orientation was parsed
+            if (selection.Orientation == null)
+            {
+                var fileAbsolutePath = filesystemAccessRepository.FilesystemAccess.ToAbsolutePath(selection.Path);
+                selection.Orientation = filesystemAccessRepository.FilesystemAccess.ParseFileMetadata(fileAbsolutePath).Orientation;
+            }
+
             Events.Send(new SelectSearchResultFile(selection));
         }
     }

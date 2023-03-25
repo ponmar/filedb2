@@ -1,5 +1,4 @@
-﻿using FileDB.ViewModel;
-using FileDBShared.Model;
+﻿using FileDBShared.Model;
 using System.Collections.Generic;
 using System.Windows.Media.Imaging;
 
@@ -8,6 +7,11 @@ namespace FileDB.Model;
 public record ConfigUpdated();
 public record NotificationsUpdated;
 public record DateChanged;
+
+public record PersonEdited;
+public record LocationEdited;
+public record TagEdited;
+public record FileEdited;
 
 public record PersonsUpdated;
 public record LocationsUpdated;
