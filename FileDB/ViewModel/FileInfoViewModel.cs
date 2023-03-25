@@ -49,7 +49,7 @@ public class UpdateHistoryItem
     public string ToggleText => $"F{FunctionKey}: Toggle '{ShortItemName}'";
 }
 
-public partial class FindViewModel : ObservableObject
+public partial class FileInfoViewModel : ObservableObject
 {
     [ObservableProperty]
     private bool maximize = false;
@@ -115,7 +115,7 @@ public partial class FindViewModel : ObservableObject
     private readonly IDbAccessRepository dbAccessRepository;
     private readonly IFilesystemAccessRepository filesystemAccessRepository;
 
-    public FindViewModel(IConfigRepository configRepository, IDbAccessRepository dbAccessRepository, IFilesystemAccessRepository filesystemAccessRepository)
+    public FileInfoViewModel(IConfigRepository configRepository, IDbAccessRepository dbAccessRepository, IFilesystemAccessRepository filesystemAccessRepository)
     {
         this.configRepository = configRepository;
         this.dbAccessRepository = dbAccessRepository;

@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:FileDB.View"
              xmlns:viewmodel="clr-namespace:FileDB.ViewModel"
              xmlns:converters="clr-namespace:FileDB.Converters"
-             d:DataContext="{d:DesignInstance Type=viewmodel:FindViewModel}"
+             d:DataContext="{d:DesignInstance Type=viewmodel:FileInfoViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 

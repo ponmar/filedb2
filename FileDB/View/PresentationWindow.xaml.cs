@@ -14,7 +14,7 @@ public partial class PresentationWindow : Window
     public PresentationWindow()
     {
         InitializeComponent();
-        DataContext = ServiceLocator.Resolve<FindViewModel>();
+        DataContext = ServiceLocator.Resolve<FileInfoViewModel>();
 
         this.RegisterForEvent<ShowImage>((x) => ShowImage(x.Image, x.RotateDegrees));
 

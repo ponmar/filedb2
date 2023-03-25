@@ -43,7 +43,7 @@ public static class Bootstrapper
         Container.Register(Component.For<SettingsViewModel>().ImplementedBy<SettingsViewModel>());
         Container.Register(Component.For<TagsViewModel>().ImplementedBy<TagsViewModel>());
         Container.Register(Component.For<ToolsViewModel>().ImplementedBy<ToolsViewModel>());
-        Container.Register(Component.For<FindViewModel>().ImplementedBy<FindViewModel>());
+        Container.Register(Component.For<FileInfoViewModel>().ImplementedBy<FileInfoViewModel>());
         Container.Register(Component.For<SearchResultViewModel>().ImplementedBy<SearchResultViewModel>());
         Container.Register(Component.For<FileCategorizationViewModel>().ImplementedBy<FileCategorizationViewModel>());
 
