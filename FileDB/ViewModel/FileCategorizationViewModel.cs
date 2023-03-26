@@ -130,7 +130,11 @@ public partial class FileCategorizationViewModel : ObservableObject
         {
             CloseFile();
         });
-        this.dialogs = dialogs;
+
+        this.RegisterForEvent<CategorizationFunctionKeyPressed>((x) =>
+        {
+            FunctionKey(x.FunctionKey);
+        });
     }
 
     private void ReloadPersons()
@@ -611,15 +615,13 @@ public partial class FileCategorizationViewModel : ObservableObject
         }
     }
 
-    [RelayCommand]
-    private void FunctionKey(string parameter)
+    private void FunctionKey(int functionKey)
     {
         if (!ReadWriteMode || SelectedFile == null)
         {
             return;
         }
 
-        var functionKey = int.Parse(parameter);
         var historyItem = UpdateHistoryItems.FirstOrDefault(x => x.FunctionKey == functionKey);
         if (historyItem == null)
         {

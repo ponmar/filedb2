@@ -314,4 +314,11 @@ public partial class FileInfoViewModel : ObservableObject
 
         window.Show();
     }
+
+    [RelayCommand]
+    private void FunctionKey(string parameter)
+    {
+        var functionKey = int.Parse(parameter);
+        Events.Send(new CategorizationFunctionKeyPressed(functionKey));
+    }
 }

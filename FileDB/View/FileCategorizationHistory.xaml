@@ -12,58 +12,6 @@
         <converters:NegatedBooleanToVisibilityConverter x:Key="NegatedBooleanToVisibilityConverter" />
     </UserControl.Resources>
 
-
-    <UserControl.InputBindings>
-        <KeyBinding
-            Key="F1"
-            Command="{Binding FunctionKeyCommand}"
-            CommandParameter="1" />
-        <KeyBinding
-            Key="F2"
-            Command="{Binding FunctionKeyCommand}"
-            CommandParameter="2" />
-        <KeyBinding
-            Key="F3"
-            Command="{Binding FunctionKeyCommand}"
-            CommandParameter="3" />
-        <KeyBinding
-            Key="F4"
-            Command="{Binding FunctionKeyCommand}"
-            CommandParameter="4" />
-        <KeyBinding
-            Key="F5"
-            Command="{Binding FunctionKeyCommand}"
-            CommandParameter="5" />
-        <KeyBinding
-            Key="F6"
-            Command="{Binding FunctionKeyCommand}"
-            CommandParameter="6" />
-        <KeyBinding
-            Key="F7"
-            Command="{Binding FunctionKeyCommand}"
-            CommandParameter="7" />
-        <KeyBinding
-            Key="F8"
-            Command="{Binding FunctionKeyCommand}"
-            CommandParameter="8" />
-        <KeyBinding
-            Key="F9"
-            Command="{Binding FunctionKeyCommand}"
-            CommandParameter="9" />
-        <KeyBinding
-            Key="F10"
-            Command="{Binding FunctionKeyCommand}"
-            CommandParameter="10" />
-        <KeyBinding
-            Key="F11"
-            Command="{Binding FunctionKeyCommand}"
-            CommandParameter="11" />
-        <KeyBinding
-            Key="F12"
-            Command="{Binding FunctionKeyCommand}"
-            CommandParameter="12" />
-    </UserControl.InputBindings>
-
     <Border Style="{StaticResource BorderGroup}" Visibility="{Binding ReadWriteMode, Converter={StaticResource BoolToVis}}">
         <Expander Style="{StaticResource Expander}" Header="Update History" Margin="5" IsExpanded="False">
             <StackPanel>

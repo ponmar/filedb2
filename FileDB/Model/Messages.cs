@@ -16,6 +16,7 @@ public record FileEdited;
 public record PersonsUpdated;
 public record LocationsUpdated;
 public record TagsUpdated;
+public record CategorizationFunctionKeyPressed(int FunctionKey);
 
 public record FullscreenBrowsingRequested(bool Fullscreen);
 
