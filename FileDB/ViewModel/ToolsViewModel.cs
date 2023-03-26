@@ -17,22 +17,27 @@ namespace FileDB.ViewModel;
 
 public partial class ToolsViewModel : ObservableObject
 {
-    [ObservableProperty]
-    private string backupResult = string.Empty;
+    private const string ToolNotExecutedText = "Not executed.";
 
     [ObservableProperty]
-    private string cacheResult = "Not executed.";
+    private string backupResult = ToolNotExecutedText;
+
+    [ObservableProperty]
+    private string backupListHeader = string.Empty;
+
+    [ObservableProperty]
+    private string cacheResult = ToolNotExecutedText;
 
     public ObservableCollection<BackupFile> BackupFiles { get; } = new();
 
     [ObservableProperty]
-    private string findImportedNoLongerApplicableFilesResult = "Not executed.";
+    private string findImportedNoLongerApplicableFilesResult = ToolNotExecutedText;
 
     [ObservableProperty]
     private string importedNoLongerApplicableFileList = string.Empty;
 
     [ObservableProperty]
-    private string databaseValidationResult = "Not executed.";
+    private string databaseValidationResult = ToolNotExecutedText;
 
     public ObservableCollection<string> DabaseValidationErrors { get; } = new();
 
@@ -40,7 +45,7 @@ public partial class ToolsViewModel : ObservableObject
     private string invalidFileList = string.Empty;
 
     [ObservableProperty]
-    private string fileFinderResult = "Not executed.";
+    private string fileFinderResult = ToolNotExecutedText;
 
     [ObservableProperty]
     private string missingFilesList = string.Empty;
@@ -49,7 +54,7 @@ public partial class ToolsViewModel : ObservableObject
     private string databaseExportDirectory = string.Empty;
 
     [ObservableProperty]
-    private string databaseExportResult = "Not executed.";
+    private string databaseExportResult = ToolNotExecutedText;
 
     private readonly IConfigRepository configRepository;
     private readonly IDbAccessRepository dbAccessRepository;
@@ -73,10 +78,12 @@ public partial class ToolsViewModel : ObservableObject
         try
         {
             new DatabaseBackup(configRepository, fileSystem).CreateBackup();
+            BackupResult = "Backup created.";
             ScanBackupFiles();
         }
         catch (IOException e)
         {
+            BackupResult = e.Message;
             dialogs.ShowErrorDialog(e.Message);
         }
     }
@@ -154,14 +161,12 @@ public partial class ToolsViewModel : ObservableObject
                 BackupFiles.Add(backupFile);
             }
 
-            BackupResult = BackupFiles.Count > 0 ? $"{BackupFiles.Count} database backup files found:" : $"No database backup files found!";
+            BackupListHeader = BackupFiles.Count > 0 ? $"Database backup files:" : $"No database backup files found!";
         }
         else
         {
-            BackupResult = "Directory for configured database does not exist.";
+            BackupListHeader = "Directory for configured database does not exist.";
         }
-
-        OnPropertyChanged(nameof(BackupResult));
     }
 
     [RelayCommand]
