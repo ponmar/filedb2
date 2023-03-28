@@ -16,6 +16,8 @@ namespace FileDB.ViewModel;
 public interface ISearchResultRepository
 {
     IEnumerable<FilesModel> Files { get; }
+
+    FilesModel? SelectedFile { get; }
 }
 
 public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRepository

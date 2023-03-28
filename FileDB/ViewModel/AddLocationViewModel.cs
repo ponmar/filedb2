@@ -79,7 +79,7 @@ public partial class AddLocationViewModel : ObservableObject
             }
 
             Events.Send<CloseModalDialogRequested>();
-            Events.Send<LocationsUpdated>();
+            Events.Send<LocationEdited>();
         }
         catch (DataValidationException e)
         {

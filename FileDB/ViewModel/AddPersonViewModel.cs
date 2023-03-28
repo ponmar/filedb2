@@ -41,13 +41,17 @@ public partial class AddPersonViewModel : ObservableObject
 
     public PersonModel? AffectedPerson { get; private set; }
 
+    public bool CanSetProfilePicture => searchResultRepository.SelectedFile != null;
+
     private readonly IDbAccessRepository dbAccessRepository;
     private readonly IDialogs dialogs;
+    private readonly ISearchResultRepository searchResultRepository;
 
-    public AddPersonViewModel(IDbAccessRepository dbAccessRepository, IDialogs dialogs, int? personId = null)
+    public AddPersonViewModel(IDbAccessRepository dbAccessRepository, IDialogs dialogs, ISearchResultRepository searchResultRepository, int? personId = null)
     {
         this.dbAccessRepository = dbAccessRepository;
         this.dialogs = dialogs;
+        this.searchResultRepository = searchResultRepository;
         this.personId = personId;
 
         title = personId.HasValue ? "Edit Person" : "Add Person";
@@ -117,11 +121,22 @@ public partial class AddPersonViewModel : ObservableObject
             }
 
             Events.Send<CloseModalDialogRequested>();
-            Events.Send<PersonsUpdated>();
+            Events.Send<PersonEdited>();
         }
         catch (DataValidationException e)
         {
             dialogs.ShowErrorDialog(e.Message);
         }
+    }
+
+    [RelayCommand]
+    private void SetProfilePictureFromSearchResult()
+    {
+        if (searchResultRepository.SelectedFile == null)
+        {
+            return;
+        }
+
+        ProfilePictureFileId = searchResultRepository.SelectedFile.Id.ToString();
     }
 }

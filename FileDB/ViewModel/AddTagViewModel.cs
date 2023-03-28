@@ -62,7 +62,7 @@ public partial class AddTagViewModel : ObservableObject
             }
 
             Events.Send<CloseModalDialogRequested>();
-            Events.Send<TagsUpdated>();
+            Events.Send<TagEdited>();
         }
         catch (DataValidationException e)
         {
