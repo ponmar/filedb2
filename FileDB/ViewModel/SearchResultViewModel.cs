@@ -182,12 +182,12 @@ public partial class SearchResultViewModel : ObservableObject
             LoadFile(SearchResultIndex);
         });
 
-        this.RegisterForEvent<PrevFile>((x) => PrevFile());
-        this.RegisterForEvent<NextFile>((x) => NextFile());
-        this.RegisterForEvent<FirstFile>((x) => FirstFile());
-        this.RegisterForEvent<LastFile>((x) => LastFile());
-        this.RegisterForEvent<NextDirectory>((x) => NextDirectory());
-        this.RegisterForEvent<PrevDirectory>((x) => PrevDirectory());
+        this.RegisterForEvent<SelectPrevFile>((x) => PrevFile());
+        this.RegisterForEvent<SelectNextFile>((x) => NextFile());
+        this.RegisterForEvent<SelectFirstFile>((x) => FirstFile());
+        this.RegisterForEvent<SelectLastFile>((x) => LastFile());
+        this.RegisterForEvent<SelectFileInNextDirectory>((x) => NextDirectory());
+        this.RegisterForEvent<SelectFileInPrevDirectory>((x) => PrevDirectory());
     }
 
     [RelayCommand]
@@ -222,6 +222,7 @@ public partial class SearchResultViewModel : ObservableObject
         FireBrowsingEnabledEvents();
     }
 
+    [RelayCommand]
     private void PrevDirectory()
     {
         if (!PrevDirectoryAvailable)
@@ -249,6 +250,7 @@ public partial class SearchResultViewModel : ObservableObject
         FireBrowsingEnabledEvents();
     }
 
+    [RelayCommand]
     private void NextDirectory()
     {
         if (!NextDirectoryAvailable)
@@ -276,6 +278,7 @@ public partial class SearchResultViewModel : ObservableObject
         FireBrowsingEnabledEvents();
     }
 
+    [RelayCommand]
     private void FirstFile()
     {
         StopSlideshow();
@@ -283,6 +286,7 @@ public partial class SearchResultViewModel : ObservableObject
         FireBrowsingEnabledEvents();
     }
 
+    [RelayCommand]
     private void LastFile()
     {
         StopSlideshow();
@@ -409,26 +413,6 @@ public partial class SearchResultViewModel : ObservableObject
         OnPropertyChanged(nameof(CurrentFileInternalPath));
     }
 
-    public void SortFilesByDate(bool preserveSelection)
-    {
-        SortFiles(new FilesModelByDateSorter(), false, preserveSelection);
-    }
-
-    public void SortFilesByDateDesc(bool preserveSelection)
-    {
-        SortFiles(new FilesModelByDateSorter(), true, preserveSelection);
-    }
-
-    public void SortFilesByPath(bool preserveSelection)
-    {
-        SortFiles(new FilesModelByPathSorter(), false, preserveSelection);
-    }
-
-    public void SortFilesByPathDesc(bool preserveSelection)
-    {
-        SortFiles(new FilesModelByPathSorter(), true, preserveSelection);
-    }
-
     private void SortFiles(IComparer<FilesModel> comparer, bool desc, bool preserveSelection)
     {
         StopSlideshow();
@@ -452,19 +436,19 @@ public partial class SearchResultViewModel : ObservableObject
         switch (SelectedSortMethod)
         {
             case SortMethod.Date:
-                SortFilesByDate(preserveSelection);
+                SortFiles(new FilesModelByDateSorter(), false, preserveSelection);
                 break;
 
             case SortMethod.DateDesc:
-                SortFilesByDateDesc(preserveSelection);
+                SortFiles(new FilesModelByDateSorter(), true, preserveSelection);
                 break;
 
             case SortMethod.Path:
-                SortFilesByPath(preserveSelection);
+                SortFiles(new FilesModelByPathSorter(), false, preserveSelection);
                 break;
 
             case SortMethod.PathDesc:
-                SortFilesByPathDesc(preserveSelection);
+                SortFiles(new FilesModelByPathSorter(), true, preserveSelection);
                 break;
         }
     }

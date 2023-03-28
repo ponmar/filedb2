@@ -323,20 +323,20 @@ public partial class FileInfoViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void PrevFile() => Events.Send<PrevFile>();
+    private void PrevFile() => Events.Send<SelectPrevFile>();
 
     [RelayCommand]
-    private void NextFile() => Events.Send<NextFile>();
+    private void NextFile() => Events.Send<SelectNextFile>();
 
     [RelayCommand]
-    private void FirstFile() => Events.Send<FirstFile>();
+    private void FirstFile() => Events.Send<SelectFirstFile>();
 
     [RelayCommand]
-    private void LastFile() => Events.Send<LastFile>();
+    private void LastFile() => Events.Send<SelectLastFile>();
 
     [RelayCommand]
-    private void NextDirectory() => Events.Send<NextDirectory>();
+    private void NextDirectory() => Events.Send<SelectFileInNextDirectory>();
 
     [RelayCommand]
-    private void PrevDirectory() => Events.Send<PrevDirectory>();
+    private void PrevDirectory() => Events.Send<SelectFileInPrevDirectory>();
 }

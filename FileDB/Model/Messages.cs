@@ -26,12 +26,12 @@ public record SelectSearchResultFile(FilesModel File);
 public record CloseSearchResultFile();
 public record RemoveFileFromSearchResult(FilesModel File);
 
-public record PrevFile;
-public record NextFile;
-public record FirstFile;
-public record LastFile;
-public record NextDirectory;
-public record PrevDirectory;
+public record SelectPrevFile;
+public record SelectNextFile;
+public record SelectFirstFile;
+public record SelectLastFile;
+public record SelectFileInNextDirectory;
+public record SelectFileInPrevDirectory;
 
 public record ShowImage(BitmapImage Image, double RotateDegrees);
 public record CloseImage;
