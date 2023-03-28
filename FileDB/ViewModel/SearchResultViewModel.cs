@@ -181,6 +181,13 @@ public partial class SearchResultViewModel : ObservableObject
             // Reload current file that another viewmodel edited
             LoadFile(SearchResultIndex);
         });
+
+        this.RegisterForEvent<PrevFile>((x) => PrevFile());
+        this.RegisterForEvent<NextFile>((x) => NextFile());
+        this.RegisterForEvent<FirstFile>((x) => FirstFile());
+        this.RegisterForEvent<LastFile>((x) => LastFile());
+        this.RegisterForEvent<NextDirectory>((x) => NextDirectory());
+        this.RegisterForEvent<PrevDirectory>((x) => PrevDirectory());
     }
 
     [RelayCommand]
@@ -215,7 +222,6 @@ public partial class SearchResultViewModel : ObservableObject
         FireBrowsingEnabledEvents();
     }
 
-    [RelayCommand]
     private void PrevDirectory()
     {
         if (!PrevDirectoryAvailable)
@@ -243,7 +249,6 @@ public partial class SearchResultViewModel : ObservableObject
         FireBrowsingEnabledEvents();
     }
 
-    [RelayCommand]
     private void NextDirectory()
     {
         if (!NextDirectoryAvailable)
@@ -271,7 +276,6 @@ public partial class SearchResultViewModel : ObservableObject
         FireBrowsingEnabledEvents();
     }
 
-    [RelayCommand]
     private void FirstFile()
     {
         StopSlideshow();
@@ -279,7 +283,6 @@ public partial class SearchResultViewModel : ObservableObject
         FireBrowsingEnabledEvents();
     }
 
-    [RelayCommand]
     private void LastFile()
     {
         StopSlideshow();

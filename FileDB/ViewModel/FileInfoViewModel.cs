@@ -321,4 +321,22 @@ public partial class FileInfoViewModel : ObservableObject
         var functionKey = int.Parse(parameter);
         Events.Send(new CategorizationFunctionKeyPressed(functionKey));
     }
+
+    [RelayCommand]
+    private void PrevFile() => Events.Send<PrevFile>();
+
+    [RelayCommand]
+    private void NextFile() => Events.Send<NextFile>();
+
+    [RelayCommand]
+    private void FirstFile() => Events.Send<FirstFile>();
+
+    [RelayCommand]
+    private void LastFile() => Events.Send<LastFile>();
+
+    [RelayCommand]
+    private void NextDirectory() => Events.Send<NextDirectory>();
+
+    [RelayCommand]
+    private void PrevDirectory() => Events.Send<PrevDirectory>();
 }

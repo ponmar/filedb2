@@ -1,4 +1,5 @@
-﻿using FileDBShared.Model;
+﻿using FileDB.ViewModel;
+using FileDBShared.Model;
 using System.Collections.Generic;
 using System.Windows.Media.Imaging;
 
@@ -24,6 +25,13 @@ public record NewSearchResult();
 public record SelectSearchResultFile(FilesModel File);
 public record CloseSearchResultFile();
 public record RemoveFileFromSearchResult(FilesModel File);
+
+public record PrevFile;
+public record NextFile;
+public record FirstFile;
+public record LastFile;
+public record NextDirectory;
+public record PrevDirectory;
 
 public record ShowImage(BitmapImage Image, double RotateDegrees);
 public record CloseImage;

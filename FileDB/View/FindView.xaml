@@ -72,6 +72,13 @@
             Key="F12"
             Command="{Binding FunctionKeyCommand}"
             CommandParameter="12" />
+
+        <KeyBinding Key="Left" Command="{Binding PrevFileCommand}" />
+        <KeyBinding Key="Right" Command="{Binding NextFileCommand}" />
+        <KeyBinding Key="Home" Command="{Binding FirstFileCommand}" />
+        <KeyBinding Key="End" Command="{Binding LastFileCommand}" />
+        <KeyBinding Key="PageDown" Command="{Binding NextDirectoryCommand}" />
+        <KeyBinding Key="PageUp" Command="{Binding PrevDirectoryCommand}" />
     </UserControl.InputBindings>
 
     <Grid Margin="0,0,0,0">
