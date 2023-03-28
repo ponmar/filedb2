@@ -1,3 +1,11 @@
+3.11:
+* Add a button for setting current search result file as a person profile image
+* Show a file type icon in the middle when browsing non-image files
+* Avoid loading images twice when having the presentation window open
+* Avoid trying to load non-image files as images (faster browsing for non-image files)
+* Fix crash when opening presentation window without a valid image selected
+* Layout improvements
+
 3.10:
 * Add ShortItemNameMaxLength setting and show shortened item names during file categorization
 * Fix culture specific sorting problems by introducing a culture override setting
