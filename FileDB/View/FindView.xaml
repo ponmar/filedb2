@@ -133,15 +133,15 @@
                 Grid.Column="1"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center" Orientation="Vertical"
-                Visibility="{Binding CurrentFileLoadError, Converter={converters:StringNullOrEmptyToVisibilityConverter}}">
+                Visibility="{Binding FileLoadError, Converter={converters:StringNullOrEmptyToVisibilityConverter}}">
 
                 <TextBlock
                     Style="{StaticResource PageTextBlock}"
-                    Text="{Binding CurrentFileInternalPath, Converter={StaticResource FileInternalPathToFileTypeIconConverter}}"
+                    Text="{Binding InternalPath, Converter={StaticResource FileInternalPathToFileTypeIconConverter}}"
                     FontSize="64" />
                 <TextBlock
                     Style="{StaticResource PageTextBlock}"
-                    Text="{Binding CurrentFileLoadError}"
+                    Text="{Binding FileLoadError}"
                     TextWrapping="Wrap" />
             </StackPanel>
 

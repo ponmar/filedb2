@@ -21,26 +21,26 @@
     <Border Style="{StaticResource BorderGroup}" Margin="0 0 0 0">
         <Expander Style="{StaticResource Expander}" Header="Information" Margin="5" IsExpanded="True">
             <StackPanel Orientation="Vertical" Margin="5 0 5 0">
-                <TextBlock Style="{StaticResource PageInnerTextBlock}" FontSize="{Binding OverlayFontSize}" Text="{Binding CurrentFileDateTime}" Margin="0 10 0 10" Visibility="{Binding CurrentFileDateTime, Converter={converters:StringNullOrEmptyToVisibilityConverter}}"/>
+                <TextBlock Style="{StaticResource PageInnerTextBlock}" FontSize="{Binding OverlayFontSize}" Text="{Binding DateTime}" Margin="0 10 0 10" Visibility="{Binding DateTime, Converter={converters:StringNullOrEmptyToVisibilityConverter}}"/>
 
-                <TextBlock Style="{StaticResource PageInnerHighlightedTextBlock}" FontSize="{Binding OverlayFontSize}" Text="&#x1F642;" Margin="0 10 0 0" Visibility="{Binding CurrentFilePersons, Converter={converters:StringNullOrEmptyToVisibilityConverter}}" ToolTip="Persons"/>
-                <TextBlock Style="{StaticResource PageInnerTextBlock}" FontSize="{Binding OverlayFontSize}" Text="{Binding CurrentFilePersons}" Margin="0 0 0 5" Visibility="{Binding CurrentFilePersons, Converter={converters:StringNullOrEmptyToVisibilityConverter}}"/>
+                <TextBlock Style="{StaticResource PageInnerHighlightedTextBlock}" FontSize="{Binding OverlayFontSize}" Text="&#x1F642;" Margin="0 10 0 0" Visibility="{Binding Persons, Converter={converters:StringNullOrEmptyToVisibilityConverter}}" ToolTip="Persons"/>
+                <TextBlock Style="{StaticResource PageInnerTextBlock}" FontSize="{Binding OverlayFontSize}" Text="{Binding Persons}" Margin="0 0 0 5" Visibility="{Binding Persons, Converter={converters:StringNullOrEmptyToVisibilityConverter}}"/>
 
-                <TextBlock Style="{StaticResource PageInnerHighlightedTextBlock}" FontSize="{Binding OverlayFontSize}" Text="&#x1F3E0;" Margin="0 10 0 0" Visibility="{Binding CurrentFileLocations, Converter={converters:StringNullOrEmptyToVisibilityConverter}}" ToolTip="Locations"/>
-                <TextBlock Style="{StaticResource PageInnerTextBlock}" FontSize="{Binding OverlayFontSize}" Text="{Binding CurrentFileLocations}" Margin="0 0 0 10" Visibility="{Binding CurrentFileLocations, Converter={converters:StringNullOrEmptyToVisibilityConverter}}"/>
+                <TextBlock Style="{StaticResource PageInnerHighlightedTextBlock}" FontSize="{Binding OverlayFontSize}" Text="&#x1F3E0;" Margin="0 10 0 0" Visibility="{Binding Locations, Converter={converters:StringNullOrEmptyToVisibilityConverter}}" ToolTip="Locations"/>
+                <TextBlock Style="{StaticResource PageInnerTextBlock}" FontSize="{Binding OverlayFontSize}" Text="{Binding Locations}" Margin="0 0 0 10" Visibility="{Binding Locations, Converter={converters:StringNullOrEmptyToVisibilityConverter}}"/>
 
-                <TextBlock Style="{StaticResource PageInnerHighlightedTextBlock}" FontSize="{Binding OverlayFontSize}" Text="&#x1F516;" Margin="0 10 0 0" Visibility="{Binding CurrentFileTags, Converter={converters:StringNullOrEmptyToVisibilityConverter}}" ToolTip="Tags"/>
-                <TextBlock Style="{StaticResource PageInnerTextBlock}" FontSize="{Binding OverlayFontSize}" Text="{Binding CurrentFileTags}" Margin="0 0 0 10" Visibility="{Binding CurrentFileTags, Converter={converters:StringNullOrEmptyToVisibilityConverter}}"/>
+                <TextBlock Style="{StaticResource PageInnerHighlightedTextBlock}" FontSize="{Binding OverlayFontSize}" Text="&#x1F516;" Margin="0 10 0 0" Visibility="{Binding Tags, Converter={converters:StringNullOrEmptyToVisibilityConverter}}" ToolTip="Tags"/>
+                <TextBlock Style="{StaticResource PageInnerTextBlock}" FontSize="{Binding OverlayFontSize}" Text="{Binding Tags}" Margin="0 0 0 10" Visibility="{Binding Tags, Converter={converters:StringNullOrEmptyToVisibilityConverter}}"/>
 
-                <TextBlock Style="{StaticResource PageInnerHighlightedTextBlock}" FontSize="{Binding OverlayFontSize}" Text="&#x1F6F0;" Margin="0 10 0 0" Visibility="{Binding CurrentFilePosition, Converter={converters:StringNullOrEmptyToVisibilityConverter}}" ToolTip="GPS position"/>
-                <TextBlock Style="{StaticResource PageInnerTextBlock}" FontSize="{Binding OverlayFontSize}" Margin="0 0 0 10" Visibility="{Binding CurrentFilePosition, Converter={converters:StringNullOrEmptyToVisibilityConverter}}">
-                    <Hyperlink NavigateUri="{Binding CurrentFilePositionLink}" RequestNavigate="OpenLocationUri">
-                        <TextBlock Text="{Binding CurrentFilePosition}" Visibility="{Binding CurrentFilePosition, Converter={converters:StringNullOrEmptyToVisibilityConverter}}"/>
+                <TextBlock Style="{StaticResource PageInnerHighlightedTextBlock}" FontSize="{Binding OverlayFontSize}" Text="&#x1F6F0;" Margin="0 10 0 0" Visibility="{Binding Position, Converter={converters:StringNullOrEmptyToVisibilityConverter}}" ToolTip="GPS position"/>
+                <TextBlock Style="{StaticResource PageInnerTextBlock}" FontSize="{Binding OverlayFontSize}" Margin="0 0 0 10" Visibility="{Binding Position, Converter={converters:StringNullOrEmptyToVisibilityConverter}}">
+                    <Hyperlink NavigateUri="{Binding PositionLink}" RequestNavigate="OpenLocationUri">
+                        <TextBlock Text="{Binding Position}" Visibility="{Binding Position, Converter={converters:StringNullOrEmptyToVisibilityConverter}}"/>
                     </Hyperlink>
                 </TextBlock>
 
-                <TextBlock Style="{StaticResource PageInnerHighlightedTextBlock}" FontSize="{Binding OverlayFontSize}" Text="&#x1F4DD;" Margin="0 10 0 0" Visibility="{Binding CurrentFileDescription, Converter={converters:StringNullOrEmptyToVisibilityConverter}}" ToolTip="Description"/>
-                <TextBlock MaxWidth="300" Style="{StaticResource PageInnerTextBlock}" FontSize="{Binding OverlayFontSize}" Text="{Binding CurrentFileDescription}" Margin="0 0 0 5" ToolTip="{Binding CurrentFileDescription}" TextWrapping="Wrap" Visibility="{Binding CurrentFileDescription, Converter={converters:StringNullOrEmptyToVisibilityConverter}}" HorizontalAlignment="Left"/>
+                <TextBlock Style="{StaticResource PageInnerHighlightedTextBlock}" FontSize="{Binding OverlayFontSize}" Text="&#x1F4DD;" Margin="0 10 0 0" Visibility="{Binding Description, Converter={converters:StringNullOrEmptyToVisibilityConverter}}" ToolTip="Description"/>
+                <TextBlock MaxWidth="300" Style="{StaticResource PageInnerTextBlock}" FontSize="{Binding OverlayFontSize}" Text="{Binding Description}" Margin="0 0 0 5" ToolTip="{Binding Description}" TextWrapping="Wrap" Visibility="{Binding Description, Converter={converters:StringNullOrEmptyToVisibilityConverter}}" HorizontalAlignment="Left"/>
             </StackPanel>
         </Expander>
     </Border>

@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:FileDB.View" xmlns:converters="clr-namespace:FileDB.Converters" xmlns:viewmodel="clr-namespace:FileDB.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:FindViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Border Style="{StaticResource MaximizedBorderGroup}" Margin="20 0 20 20" Padding="10" Visibility="{Binding CurrentFileDescription, Converter={converters:StringNullOrEmptyToVisibilityConverter}}">
-        <TextBlock Style="{StaticResource PageInnerSubHeading}" FontSize="{Binding OverlayFontSize}" Text="{Binding CurrentFileDescription}" ToolTip="{Binding CurrentFileDescription}" TextWrapping="Wrap"/>
+    <Border Style="{StaticResource MaximizedBorderGroup}" Margin="20 0 20 20" Padding="10" Visibility="{Binding Description, Converter={converters:StringNullOrEmptyToVisibilityConverter}}">
+        <TextBlock Style="{StaticResource PageInnerSubHeading}" FontSize="{Binding OverlayFontSize}" Text="{Binding Description}" ToolTip="{Binding Description}" TextWrapping="Wrap"/>
     </Border>
 </UserControl>

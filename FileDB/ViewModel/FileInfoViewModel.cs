@@ -71,42 +71,39 @@ public partial class FileInfoViewModel : ObservableObject
     private FilesModel? selectedFile;
 
     [ObservableProperty]
-    private string currentFileInternalPath = string.Empty;
+    private string internalPath = string.Empty;
 
     [ObservableProperty]
-    private string currentFileInternalDirectoryPath = string.Empty;
+    private string description = string.Empty;
 
     [ObservableProperty]
-    private string currentFileDescription = string.Empty;
+    private string dateTime = string.Empty;
 
     [ObservableProperty]
-    private string currentFileDateTime = string.Empty;
+    private string position = string.Empty;
 
     [ObservableProperty]
-    private string currentFilePosition = string.Empty;
+    private Uri? positionLink;
 
     [ObservableProperty]
-    private Uri? currentFilePositionLink;
+    private string persons = string.Empty;
 
     [ObservableProperty]
-    private string currentFilePersons = string.Empty;
+    private string locations = string.Empty;
 
     [ObservableProperty]
-    private string currentFileLocations = string.Empty;
+    private string tags = string.Empty;
 
     [ObservableProperty]
-    private string currentFileTags = string.Empty;
+    private string fileLoadError = string.Empty;
 
-    [ObservableProperty]
-    private string currentFileLoadError = string.Empty;
+    private string absolutePath = string.Empty;
+    private BitmapImage? image = null;
+    private int rotation = 0;
 
-    private string currentFilePath = string.Empty;
-    private BitmapImage? currentFileImage = null;
-    private int currentFileRotation = 0;
-
-    private IEnumerable<PersonModel> currentFilePersonList = new List<PersonModel>();
-    private IEnumerable<LocationModel> currentFileLocationList = new List<LocationModel>();
-    private IEnumerable<TagModel> currentFileTagList = new List<TagModel>();
+    private IEnumerable<PersonModel> personList = new List<PersonModel>();
+    private IEnumerable<LocationModel> locationList = new List<LocationModel>();
+    private IEnumerable<TagModel> tagList = new List<TagModel>();
 
     private readonly IConfigRepository configRepository;
     private readonly IDbAccessRepository dbAccessRepository;
@@ -139,10 +136,10 @@ public partial class FileInfoViewModel : ObservableObject
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                if (x.FilePath == currentFilePath)
+                if (x.FilePath == absolutePath)
                 {
-                    currentFileImage = x.Image;
-                    Events.Send(new ShowImage(currentFileImage, -currentFileRotation));
+                    image = x.Image;
+                    Events.Send(new ShowImage(image, -rotation));
                 }
             });
         });
@@ -151,10 +148,10 @@ public partial class FileInfoViewModel : ObservableObject
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                if (x.FilePath == currentFilePath)
+                if (x.FilePath == absolutePath)
                 {
-                    CurrentFileLoadError = $"Image loading error:\n{x.Exception.Message}";
-                    currentFileImage = null;
+                    FileLoadError = $"Image loading error:\n{x.Exception.Message}";
+                    image = null;
                     Events.Send<CloseImage>();
                 }
             });
@@ -164,18 +161,18 @@ public partial class FileInfoViewModel : ObservableObject
     [RelayCommand]
     private void OpenFileLocation()
     {
-        if (!string.IsNullOrEmpty(currentFilePath) && File.Exists(currentFilePath))
+        if (!string.IsNullOrEmpty(absolutePath) && File.Exists(absolutePath))
         {
-            Utils.SelectFileInExplorer(currentFilePath);
+            Utils.SelectFileInExplorer(absolutePath);
         }
     }
 
     [RelayCommand]
     private void OpenFileWithDefaultApp()
     {
-        if (!string.IsNullOrEmpty(currentFilePath) && File.Exists(currentFilePath))
+        if (!string.IsNullOrEmpty(absolutePath) && File.Exists(absolutePath))
         {
-            Utils.OpenFileWithDefaultApp(currentFilePath);
+            Utils.OpenFileWithDefaultApp(absolutePath);
         }
     }
 
@@ -201,54 +198,52 @@ public partial class FileInfoViewModel : ObservableObject
     {
         SelectedFile = selection;
 
-        currentFilePersonList = dbAccessRepository.DbAccess.GetPersonsFromFile(selection.Id);
-        currentFileLocationList = dbAccessRepository.DbAccess.GetLocationsFromFile(selection.Id);
-        currentFileTagList = dbAccessRepository.DbAccess.GetTagsFromFile(selection.Id);
+        personList = dbAccessRepository.DbAccess.GetPersonsFromFile(selection.Id);
+        locationList = dbAccessRepository.DbAccess.GetLocationsFromFile(selection.Id);
+        tagList = dbAccessRepository.DbAccess.GetTagsFromFile(selection.Id);
 
-        CurrentFileInternalDirectoryPath = Path.GetDirectoryName(selection.Path)!.Replace(@"\", "/");
-        CurrentFileInternalPath = selection.Path;
-        CurrentFileDescription = selection.Description ?? string.Empty;
-        CurrentFileDateTime = GetFileDateTimeString(selection.Datetime);
-        CurrentFilePosition = selection.Position != null ? Utils.CreateShortFilePositionString(selection.Position) : string.Empty;
-        CurrentFilePositionLink = selection.Position != null ? Utils.CreatePositionUri(selection.Position, configRepository.Config.LocationLink) : null;
-        CurrentFilePersons = GetFilePersonsString(selection);
-        CurrentFileLocations = GetFileLocationsString(selection.Id);
-        CurrentFileTags = GetFileTagsString(selection.Id);
-        CurrentFileLoadError = string.Empty;
+        InternalPath = selection.Path;
+        Description = selection.Description ?? string.Empty;
+        DateTime = GetFileDateTimeString(selection.Datetime);
+        Position = selection.Position != null ? Utils.CreateShortFilePositionString(selection.Position) : string.Empty;
+        PositionLink = selection.Position != null ? Utils.CreatePositionUri(selection.Position, configRepository.Config.LocationLink) : null;
+        Persons = GetFilePersonsString(selection);
+        Locations = GetFileLocationsString(selection.Id);
+        Tags = GetFileTagsString(selection.Id);
+        FileLoadError = string.Empty;
 
         var fileType = FileTypeUtils.GetFileType(selection.Path);
         if (fileType != FileType.Picture)
         {
-            CurrentFileLoadError = "File type not supported.";
-            currentFileImage = null;
+            FileLoadError = "File type not supported.";
+            image = null;
             Events.Send<CloseImage>();
             return;
         }
 
-        currentFileRotation = DatabaseParsing.OrientationToDegrees(selection.Orientation ?? 0);
-        currentFilePath = filesystemAccessRepository.FilesystemAccess.ToAbsolutePath(selection.Path);
+        rotation = DatabaseParsing.OrientationToDegrees(selection.Orientation ?? 0);
+        absolutePath = filesystemAccessRepository.FilesystemAccess.ToAbsolutePath(selection.Path);
 
-        imageLoader.LoadImage(currentFilePath);
+        imageLoader.LoadImage(absolutePath);
     }
 
     private void CloseFile()
     {
         SelectedFile = null;
 
-        CurrentFileInternalPath = string.Empty;
-        CurrentFileInternalDirectoryPath = string.Empty;
-        CurrentFileDescription = string.Empty;
-        CurrentFileDateTime = string.Empty;
-        CurrentFilePosition = string.Empty;
-        CurrentFilePositionLink = null;
-        CurrentFilePersons = string.Empty;
-        CurrentFileLocations = string.Empty;
-        CurrentFileTags = string.Empty;
-        CurrentFileLoadError = "No match";
+        InternalPath = string.Empty;
+        Description = string.Empty;
+        DateTime = string.Empty;
+        Position = string.Empty;
+        PositionLink = null;
+        Persons = string.Empty;
+        Locations = string.Empty;
+        Tags = string.Empty;
+        FileLoadError = "No match";
 
-        currentFileRotation = 0;
-        currentFilePath = string.Empty;
-        currentFileImage = null;
+        rotation = 0;
+        absolutePath = string.Empty;
+        image = null;
 
         Events.Send<CloseImage>();
     }
@@ -264,7 +259,7 @@ public partial class FileInfoViewModel : ObservableObject
         // Note: when no time is available the string is used to avoid including time 00:00
         var resultString = datetimeString!.Contains('T') ? datetime.Value.ToString("yyyy-MM-dd HH:mm") : datetimeString;
 
-        var now = DateTime.Now;
+        var now = System.DateTime.Now;
         int yearsAgo = DatabaseUtils.GetAgeInYears(now, datetime.Value);
         if (yearsAgo == 0 && now.Year == datetime.Value.Year)
         {
@@ -283,19 +278,19 @@ public partial class FileInfoViewModel : ObservableObject
 
     private string GetFilePersonsString(FilesModel selection)
     {
-        var personStrings = currentFilePersonList.Select(p => $"{p.Firstname} {p.Lastname}{Utils.GetPersonAgeInFileString(selection.Datetime, p.DateOfBirth)}");
+        var personStrings = personList.Select(p => $"{p.Firstname} {p.Lastname}{Utils.GetPersonAgeInFileString(selection.Datetime, p.DateOfBirth)}");
         return string.Join("\n", personStrings);
     }
 
     private string GetFileLocationsString(int fileId)
     {
-        var locationStrings = currentFileLocationList.Select(l => l.Name);
+        var locationStrings = locationList.Select(l => l.Name);
         return string.Join("\n", locationStrings);
     }
 
     private string GetFileTagsString(int fileId)
     {
-        var tagStrings = currentFileTagList.Select(t => t.Name);
+        var tagStrings = tagList.Select(t => t.Name);
         return string.Join("\n", tagStrings);
     }
 
@@ -308,9 +303,9 @@ public partial class FileInfoViewModel : ObservableObject
             Title = $"{Utils.ApplicationName} {Utils.GetVersionString()} - Presentation"
         };
 
-        if (currentFilePath != string.Empty && currentFileImage != null)
+        if (absolutePath != string.Empty && image != null)
         {
-            window.ShowImage(currentFileImage, -currentFileRotation);
+            window.ShowImage(image, -rotation);
         }
 
         window.Show();
