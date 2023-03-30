@@ -50,7 +50,7 @@ public partial class SearchResultViewModel : ObservableObject
                 {
                     if (searchResult.Count > 0)
                     {
-                        LoadFile(0);
+                        SearchResultIndex = 0;
                         SortSearchResult(false);
                         if (!updateViaHistorySelection)
                         {

@@ -16,7 +16,8 @@ public static class Bootstrapper
         Container.Register(Component.For<IFileSystem>().ImplementedBy<FileSystem>());
         Container.Register(Component.For<IDialogs>().ImplementedBy<Dialogs>());
         Container.Register(Component.For<INotifierFactory>().ImplementedBy<NotifierFactory>());
-        
+        Container.Register(Component.For<IImageLoader>().ImplementedBy<ImageLoader>());
+
         Container.Register(
             Component.For(
                 typeof(INotificationHandling),

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using FileDB.View;
@@ -78,9 +77,6 @@ public partial class FileInfoViewModel : ObservableObject
     private string currentFileInternalDirectoryPath = string.Empty;
 
     [ObservableProperty]
-    private string currentFilePath = string.Empty;
-
-    [ObservableProperty]
     private string currentFileDescription = string.Empty;
 
     [ObservableProperty]
@@ -104,9 +100,10 @@ public partial class FileInfoViewModel : ObservableObject
     [ObservableProperty]
     private string currentFileLoadError = string.Empty;
 
+    private string currentFilePath = string.Empty;
     private BitmapImage? currentFileImage = null;
-
     private int currentFileRotation = 0;
+
     private IEnumerable<PersonModel> currentFilePersonList = new List<PersonModel>();
     private IEnumerable<LocationModel> currentFileLocationList = new List<LocationModel>();
     private IEnumerable<TagModel> currentFileTagList = new List<TagModel>();
@@ -114,12 +111,14 @@ public partial class FileInfoViewModel : ObservableObject
     private readonly IConfigRepository configRepository;
     private readonly IDbAccessRepository dbAccessRepository;
     private readonly IFilesystemAccessRepository filesystemAccessRepository;
+    private readonly IImageLoader imageLoader;
 
-    public FileInfoViewModel(IConfigRepository configRepository, IDbAccessRepository dbAccessRepository, IFilesystemAccessRepository filesystemAccessRepository)
+    public FileInfoViewModel(IConfigRepository configRepository, IDbAccessRepository dbAccessRepository, IFilesystemAccessRepository filesystemAccessRepository, IImageLoader imageLoader)
     {
         this.configRepository = configRepository;
         this.dbAccessRepository = dbAccessRepository;
         this.filesystemAccessRepository = filesystemAccessRepository;
+        this.imageLoader = imageLoader;
 
         this.RegisterForEvent<ConfigUpdated>((x) =>
         {
@@ -135,23 +134,48 @@ public partial class FileInfoViewModel : ObservableObject
         {
             CloseFile();
         });
+
+        this.RegisterForEvent<ImageLoaded>((x) =>
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                if (x.FilePath == currentFilePath)
+                {
+                    currentFileImage = x.Image;
+                    Events.Send(new ShowImage(currentFileImage, -currentFileRotation));
+                }
+            });
+        });
+
+        this.RegisterForEvent<ImageLoadError>((x) =>
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                if (x.FilePath == currentFilePath)
+                {
+                    CurrentFileLoadError = $"Image loading error:\n{x.Exception.Message}";
+                    currentFileImage = null;
+                    Events.Send<CloseImage>();
+                }
+            });
+        });
     }
 
     [RelayCommand]
     private void OpenFileLocation()
     {
-        if (!string.IsNullOrEmpty(CurrentFilePath) && File.Exists(CurrentFilePath))
+        if (!string.IsNullOrEmpty(currentFilePath) && File.Exists(currentFilePath))
         {
-            Utils.SelectFileInExplorer(CurrentFilePath);
+            Utils.SelectFileInExplorer(currentFilePath);
         }
     }
 
     [RelayCommand]
     private void OpenFileWithDefaultApp()
     {
-        if (!string.IsNullOrEmpty(CurrentFilePath) && File.Exists(CurrentFilePath))
+        if (!string.IsNullOrEmpty(currentFilePath) && File.Exists(currentFilePath))
         {
-            Utils.OpenFileWithDefaultApp(CurrentFilePath);
+            Utils.OpenFileWithDefaultApp(currentFilePath);
         }
     }
 
@@ -183,7 +207,6 @@ public partial class FileInfoViewModel : ObservableObject
 
         CurrentFileInternalDirectoryPath = Path.GetDirectoryName(selection.Path)!.Replace(@"\", "/");
         CurrentFileInternalPath = selection.Path;
-        CurrentFilePath = filesystemAccessRepository.FilesystemAccess.ToAbsolutePath(selection.Path);
         CurrentFileDescription = selection.Description ?? string.Empty;
         CurrentFileDateTime = GetFileDateTimeString(selection.Datetime);
         CurrentFilePosition = selection.Position != null ? Utils.CreateShortFilePositionString(selection.Position) : string.Empty;
@@ -191,6 +214,7 @@ public partial class FileInfoViewModel : ObservableObject
         CurrentFilePersons = GetFilePersonsString(selection);
         CurrentFileLocations = GetFileLocationsString(selection.Id);
         CurrentFileTags = GetFileTagsString(selection.Id);
+        CurrentFileLoadError = string.Empty;
 
         var fileType = FileTypeUtils.GetFileType(selection.Path);
         if (fileType != FileType.Picture)
@@ -202,32 +226,9 @@ public partial class FileInfoViewModel : ObservableObject
         }
 
         currentFileRotation = DatabaseParsing.OrientationToDegrees(selection.Orientation ?? 0);
+        currentFilePath = filesystemAccessRepository.FilesystemAccess.ToAbsolutePath(selection.Path);
 
-        var uri = new Uri(CurrentFilePath, UriKind.Absolute);
-        try
-        {
-            CurrentFileLoadError = string.Empty;
-            currentFileImage = new BitmapImage(uri);
-            Events.Send(new ShowImage(currentFileImage, -currentFileRotation));
-        }
-        catch (WebException e)
-        {
-            CurrentFileLoadError = $"Image loading error:\n{e.Message}";
-            currentFileImage = null;
-            Events.Send<CloseImage>();
-        }
-        catch (IOException e)
-        {
-            CurrentFileLoadError = $"Image loading error:\n{e.Message}";
-            currentFileImage = null;
-            Events.Send<CloseImage>();
-        }
-        catch (NotSupportedException e)
-        {
-            CurrentFileLoadError = $"File format not supported:\n{e.Message}";
-            currentFileImage = null;
-            Events.Send<CloseImage>();
-        }
+        imageLoader.LoadImage(currentFilePath);
     }
 
     private void CloseFile()
@@ -236,7 +237,6 @@ public partial class FileInfoViewModel : ObservableObject
 
         CurrentFileInternalPath = string.Empty;
         CurrentFileInternalDirectoryPath = string.Empty;
-        CurrentFilePath = string.Empty;
         CurrentFileDescription = string.Empty;
         CurrentFileDateTime = string.Empty;
         CurrentFilePosition = string.Empty;
@@ -244,9 +244,10 @@ public partial class FileInfoViewModel : ObservableObject
         CurrentFilePersons = string.Empty;
         CurrentFileLocations = string.Empty;
         CurrentFileTags = string.Empty;
-        currentFileRotation = 0;
-
         CurrentFileLoadError = "No match";
+
+        currentFileRotation = 0;
+        currentFilePath = string.Empty;
         currentFileImage = null;
 
         Events.Send<CloseImage>();
@@ -307,7 +308,7 @@ public partial class FileInfoViewModel : ObservableObject
             Title = $"{Utils.ApplicationName} {Utils.GetVersionString()} - Presentation"
         };
 
-        if (CurrentFilePath != string.Empty && currentFileImage != null)
+        if (currentFilePath != string.Empty && currentFileImage != null)
         {
             window.ShowImage(currentFileImage, -currentFileRotation);
         }
