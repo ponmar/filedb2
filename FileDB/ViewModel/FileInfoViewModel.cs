@@ -16,17 +16,6 @@ namespace FileDB.ViewModel;
 
 public enum RotationDirection { Clockwise, CounterClockwise }
 
-[AttributeUsage(AttributeTargets.Field)]
-public class FileExtensionsAttribute : Attribute
-{
-    public string[] FileExtensions { get; }
-
-    public FileExtensionsAttribute(string[] fileExtensions)
-    {
-        FileExtensions = fileExtensions;
-    }
-}
-
 public record PersonToUpdate(int Id, string Name, string ShortName);
 public record LocationToUpdate(int Id, string Name, string ShortName);
 public record TagToUpdate(int Id, string Name, string ShortName);
@@ -212,19 +201,21 @@ public partial class FileInfoViewModel : ObservableObject
         Tags = GetFileTagsString(selection.Id);
         FileLoadError = string.Empty;
 
+        image = null;
+        Events.Send<CloseImage>();
+
+        absolutePath = filesystemAccessRepository.FilesystemAccess.ToAbsolutePath(selection.Path);
+        rotation = DatabaseParsing.OrientationToDegrees(selection.Orientation ?? 0);
+
         var fileType = FileTypeUtils.GetFileType(selection.Path);
-        if (fileType != FileType.Picture)
+        if (fileType == FileType.Picture)
+        {
+            imageLoader.LoadImage(absolutePath);
+        }
+        else
         {
             FileLoadError = "File type not supported.";
-            image = null;
-            Events.Send<CloseImage>();
-            return;
         }
-
-        rotation = DatabaseParsing.OrientationToDegrees(selection.Orientation ?? 0);
-        absolutePath = filesystemAccessRepository.FilesystemAccess.ToAbsolutePath(selection.Path);
-
-        imageLoader.LoadImage(absolutePath);
     }
 
     private void CloseFile()

@@ -11,20 +11,26 @@ public interface IImageLoader
     void LoadImage(string filePath);
 }
 
+public class ImageLoadResult
+{
+    public BitmapImage? Image { get; set; } = null;
+    public Exception? Exception { get; set; } = null;
+}
+
 public class ImageLoader : IImageLoader
 {
-    public const int CacheMaxSize = 5;
+    public const int CacheMaxSize = 100;
     private readonly Random random = new();
 
-    public ConcurrentDictionary<string, BitmapImage?> ImageCache { get; } = new();
+    public ConcurrentDictionary<string, ImageLoadResult> ImageCache { get; } = new();
 
     public void LoadImage(string filePath)
     {
-        if (ImageCache.TryGetValue(filePath, out var image))
+        if (ImageCache.TryGetValue(filePath, out var loadResult) && loadResult.Exception == null)
         {
-            if (image != null)
+            if (loadResult.Image != null)
             {
-                Events.Send(new ImageLoaded(filePath, image));
+                Events.Send(new ImageLoaded(filePath, loadResult.Image));
             }
             return;
         }
@@ -36,7 +42,7 @@ public class ImageLoader : IImageLoader
             ImageCache.TryRemove(imageToRemove);
         }
 
-        ImageCache[filePath] = null;
+        ImageCache[filePath] = new ImageLoadResult();
 
         var thread = new Thread(new ThreadStart(new SingleImageLoader(this, filePath).Load));
         thread.Start();
@@ -56,20 +62,19 @@ public class SingleImageLoader
 
     public void Load()
     {
-        BitmapImage image;
+        var loadResult = imageLoader.ImageCache[filePath];
+
         try
         {
             var uri = new Uri(filePath, UriKind.Absolute);
-            image = new BitmapImage(uri);
+            loadResult.Image = new BitmapImage(uri);
+            loadResult.Image.Freeze();
+            Events.Send(new ImageLoaded(filePath, loadResult.Image));
         }
         catch (Exception e)
         {
+            loadResult.Exception = e;
             Events.Send(new ImageLoadError(filePath, e));
-            return;
         }
-        image.Freeze();
-
-        imageLoader.ImageCache[filePath] = image;
-        Events.Send(new ImageLoaded(filePath, image));
     }
 }

@@ -5,6 +5,17 @@ using System.Linq;
 
 namespace FileDB.ViewModel;
 
+[AttributeUsage(AttributeTargets.Field)]
+public class FileExtensionsAttribute : Attribute
+{
+    public string[] FileExtensions { get; }
+
+    public FileExtensionsAttribute(string[] fileExtensions)
+    {
+        FileExtensions = fileExtensions;
+    }
+}
+
 public enum FileType
 {
     [FileExtensions(new string[] { ".jpg", ".png", ".bmp", ".gif" })]
