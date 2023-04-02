@@ -26,7 +26,6 @@ public class SearchResult
 public partial class SearchResultViewModel : ObservableObject
 {
     private readonly IConfigRepository configRepository;
-    private readonly IDbAccessRepository dbAccessRepository;
     private readonly IDialogs dialogs;
     private readonly ISearchResultRepository searchResultRepository;
     private readonly IFilesystemAccessRepository filesystemAccessRepository;
@@ -122,16 +121,13 @@ public partial class SearchResultViewModel : ObservableObject
 
     public int SearchNumberOfHits => SearchResult != null ? SearchResult.Count : 0;
 
-    public int TotalNumberOfFiles { get; }
-
     public bool HasSearchResult => SearchResult != null;
 
     public bool HasNonEmptySearchResult => SearchResult != null && SearchResult.Count > 0;
 
-    public SearchResultViewModel(IConfigRepository configRepository, IDbAccessRepository dbAccessRepository, IDialogs dialogs, ISearchResultRepository searchResultRepository, IFilesystemAccessRepository filesystemAccessRepository, IImageLoader imageLoader)
+    public SearchResultViewModel(IConfigRepository configRepository, IDialogs dialogs, ISearchResultRepository searchResultRepository, IFilesystemAccessRepository filesystemAccessRepository, IImageLoader imageLoader)
     {
         this.configRepository = configRepository;
-        this.dbAccessRepository = dbAccessRepository;
         this.dialogs = dialogs;
         this.searchResultRepository = searchResultRepository;
         this.filesystemAccessRepository = filesystemAccessRepository;
@@ -141,7 +137,6 @@ public partial class SearchResultViewModel : ObservableObject
         slideshowTimer.Interval = TimeSpan.FromSeconds(configRepository.Config.SlideshowDelay);
 
         SelectedSortMethod = configRepository.Config.DefaultSortMethod;
-        TotalNumberOfFiles = this.dbAccessRepository.DbAccess.GetFileCount();
 
         this.RegisterForEvent<ConfigUpdated>((x) =>
         {

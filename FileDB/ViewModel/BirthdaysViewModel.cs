@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.IO.Abstractions;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
-using FileDB.Configuration;
 using FileDB.Model;
 using FileDBInterface.DbAccess;
 using FileDBShared.Model;
