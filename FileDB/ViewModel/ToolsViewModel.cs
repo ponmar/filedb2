@@ -94,60 +94,6 @@ public partial class ToolsViewModel : ObservableObject
         Utils.OpenDirectoryInExplorer(new DatabaseBackup(configRepository, fileSystem).BackupDirectory);
     }
 
-    [RelayCommand]
-    private void CreateCache()
-    {
-        CacheResult = "Running...";
-
-        var configDir = new AppDataConfig<Config>(Utils.ApplicationName, ServiceLocator.Resolve<IFileSystem>()).ConfigDirectory;
-        var cacheDir = Path.Combine(configDir, DefaultConfigs.CacheSubdir);
-        if (!Directory.Exists(cacheDir))
-        {
-            try
-            {
-                Directory.CreateDirectory(cacheDir);
-            }
-            catch (Exception e)
-            {
-                CacheResult = $"Cache creation error: {e.Message}";
-                return;
-            }
-        }
-
-        var profileFileIds = dbAccessRepository.DbAccess.GetPersons().Where(x => x.ProfileFileId != null).Select(x => x.ProfileFileId!.Value);
-        var numCachedFiles = 0;
-        foreach (var profileFileId in profileFileIds)
-        {
-            var file = dbAccessRepository.DbAccess.GetFileById(profileFileId)!;
-            var sourcePath = filesystemAccessRepository.FilesystemAccess.ToAbsolutePath(file.Path);
-            var destinationPath = Path.Combine(cacheDir, $"{profileFileId}");
-            try
-            {
-                if (!File.Exists(destinationPath))
-                {
-                    File.Copy(sourcePath, destinationPath);
-                    numCachedFiles++;
-                }
-            }
-            catch (Exception e)
-            {
-                CacheResult = $"Unable to cache file: {e.Message}";
-                return;
-            }
-        }
-
-        CacheResult = $"Cached {numCachedFiles} files.";
-    }
-
-    [RelayCommand]
-    private void OpenCacheDirectory()
-    {
-        var configDir = new AppDataConfig<Config>(Utils.ApplicationName, ServiceLocator.Resolve<IFileSystem>()).ConfigDirectory;
-        var cacheDir = Path.Combine(configDir, DefaultConfigs.CacheSubdir);
-        var dirToOpen = Directory.Exists(cacheDir) ? cacheDir : configDir;
-        Utils.OpenDirectoryInExplorer(dirToOpen);
-    }
-
     private void ScanBackupFiles()
     {
         BackupFiles.Clear();

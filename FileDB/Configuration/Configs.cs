@@ -35,8 +35,6 @@ public record Config(
 
 public static class DefaultConfigs
 {
-    public const string CacheSubdir = "Cache";
-
     public static Config Default =>
         new(Name: "Default",
             Database: "filedb.db",
