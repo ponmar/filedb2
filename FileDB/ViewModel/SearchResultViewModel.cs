@@ -30,6 +30,7 @@ public partial class SearchResultViewModel : ObservableObject
     private readonly IDialogs dialogs;
     private readonly ISearchResultRepository searchResultRepository;
     private readonly IFilesystemAccessRepository filesystemAccessRepository;
+    private readonly IImageLoader imageLoader;
 
     private readonly Random random = new();
     private readonly DispatcherTimer slideshowTimer = new();
@@ -125,13 +126,14 @@ public partial class SearchResultViewModel : ObservableObject
 
     public bool HasNonEmptySearchResult => SearchResult != null && SearchResult.Count > 0;
 
-    public SearchResultViewModel(IConfigRepository configRepository, IDbAccessRepository dbAccessRepository, IDialogs dialogs, ISearchResultRepository searchResultRepository, IFilesystemAccessRepository filesystemAccessRepository)
+    public SearchResultViewModel(IConfigRepository configRepository, IDbAccessRepository dbAccessRepository, IDialogs dialogs, ISearchResultRepository searchResultRepository, IFilesystemAccessRepository filesystemAccessRepository, IImageLoader imageLoader)
     {
         this.configRepository = configRepository;
         this.dbAccessRepository = dbAccessRepository;
         this.dialogs = dialogs;
         this.searchResultRepository = searchResultRepository;
         this.filesystemAccessRepository = filesystemAccessRepository;
+        this.imageLoader = imageLoader;
 
         slideshowTimer.Tick += SlideshowTimer_Tick;
         slideshowTimer.Interval = TimeSpan.FromSeconds(configRepository.Config.SlideshowDelay);
@@ -384,6 +386,19 @@ public partial class SearchResultViewModel : ObservableObject
             }
 
             Events.Send(new SelectSearchResultFile(selection));
+
+            var numImagesToLoad = Math.Max(1, configRepository.Config.NumImagesToPreload);
+            for (int preloadIndex = index + 1; preloadIndex <= index + numImagesToLoad; preloadIndex++)
+            {
+                if (preloadIndex == SearchResult.Count)
+                {
+                    break;
+                }
+
+                var preLoadFile = SearchResult.Files[preloadIndex];
+                var fileAbsolutePath = filesystemAccessRepository.FilesystemAccess.ToAbsolutePath(preLoadFile.Path);
+                imageLoader.LoadImage(fileAbsolutePath);
+            }
         }
     }
 

@@ -63,6 +63,12 @@ public class ConfigValidator : AbstractValidator<Config>
             RuleFor(c => c.CultureOverride)
                .Must(IsCulture!).WithMessage("Invalid culture override");
         });
+
+        RuleFor(c => c.ImageMemoryCacheCount)
+            .GreaterThanOrEqualTo(0);
+
+        RuleFor(c => c.NumImagesToPreload)
+            .GreaterThanOrEqualTo(0);
     }
 
     private bool IsCulture(string cultureName)

@@ -32,21 +32,21 @@ public partial class FileCategorizationViewModel : ObservableObject
     [NotifyPropertyChangedFor(nameof(SelectedPersonCanBeRemoved))]
     private PersonToUpdate? selectedPersonToUpdate;
 
-    private int currentFileRotation = 0;
+    private int imageRotation = 0;
 
-    private IEnumerable<PersonModel> currentFilePersonList = new List<PersonModel>();
-    private IEnumerable<LocationModel> currentFileLocationList = new List<LocationModel>();
-    private IEnumerable<TagModel> currentFileTagList = new List<TagModel>();
+    private IEnumerable<PersonModel> personList = new List<PersonModel>();
+    private IEnumerable<LocationModel> locationList = new List<LocationModel>();
+    private IEnumerable<TagModel> tagList = new List<TagModel>();
 
     public bool SelectedPersonCanBeAdded =>
         SelectedFile != null &&
         SelectedPersonToUpdate != null &&
-        !currentFilePersonList.Any(x => x.Id == SelectedPersonToUpdate.Id);
+        !personList.Any(x => x.Id == SelectedPersonToUpdate.Id);
 
     public bool SelectedPersonCanBeRemoved =>
         SelectedFile != null &&
         SelectedPersonToUpdate != null &&
-        currentFilePersonList.Any(x => x.Id == SelectedPersonToUpdate.Id);
+        personList.Any(x => x.Id == SelectedPersonToUpdate.Id);
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(SelectedLocationCanBeAdded))]
@@ -56,12 +56,12 @@ public partial class FileCategorizationViewModel : ObservableObject
     public bool SelectedLocationCanBeAdded =>
         SelectedFile != null &&
         SelectedLocationToUpdate != null &&
-        !currentFileLocationList.Any(x => x.Id == SelectedLocationToUpdate.Id);
+        !locationList.Any(x => x.Id == SelectedLocationToUpdate.Id);
 
     public bool SelectedLocationCanBeRemoved =>
         SelectedFile != null &&
         SelectedLocationToUpdate != null &&
-        currentFileLocationList.Any(x => x.Id == SelectedLocationToUpdate.Id);
+        locationList.Any(x => x.Id == SelectedLocationToUpdate.Id);
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(SelectedTagCanBeAdded))]
@@ -71,12 +71,12 @@ public partial class FileCategorizationViewModel : ObservableObject
     public bool SelectedTagCanBeAdded =>
         SelectedFile != null &&
         SelectedTagToUpdate != null &&
-        !currentFileTagList.Any(x => x.Id == SelectedTagToUpdate.Id);
+        !tagList.Any(x => x.Id == SelectedTagToUpdate.Id);
 
     public bool SelectedTagCanBeRemoved =>
         SelectedFile != null &&
         SelectedTagToUpdate != null &&
-        currentFileTagList.Any(x => x.Id == SelectedTagToUpdate.Id);
+        tagList.Any(x => x.Id == SelectedTagToUpdate.Id);
 
     public ObservableCollection<UpdateHistoryItem> UpdateHistoryItems { get; } = new();
 
@@ -172,19 +172,19 @@ public partial class FileCategorizationViewModel : ObservableObject
         NewFileDescription = SelectedFile.Description;
         NewFileDateTime = SelectedFile.Datetime;
 
-        currentFilePersonList = dbAccessRepository.DbAccess.GetPersonsFromFile(SelectedFile.Id);
+        personList = dbAccessRepository.DbAccess.GetPersonsFromFile(SelectedFile.Id);
         OnPropertyChanged(nameof(SelectedPersonCanBeAdded));
         OnPropertyChanged(nameof(SelectedPersonCanBeRemoved));
 
-        currentFileLocationList = dbAccessRepository.DbAccess.GetLocationsFromFile(SelectedFile.Id);
+        locationList = dbAccessRepository.DbAccess.GetLocationsFromFile(SelectedFile.Id);
         OnPropertyChanged(nameof(SelectedLocationCanBeAdded));
         OnPropertyChanged(nameof(SelectedLocationCanBeRemoved));
 
-        currentFileTagList = dbAccessRepository.DbAccess.GetTagsFromFile(SelectedFile.Id);
+        tagList = dbAccessRepository.DbAccess.GetTagsFromFile(SelectedFile.Id);
         OnPropertyChanged(nameof(SelectedTagCanBeAdded));
         OnPropertyChanged(nameof(SelectedTagCanBeRemoved));
 
-        currentFileRotation = DatabaseParsing.OrientationToDegrees(SelectedFile.Orientation ?? 0);
+        imageRotation = DatabaseParsing.OrientationToDegrees(SelectedFile.Orientation ?? 0);
     }
 
     private void CloseFile()
@@ -192,7 +192,7 @@ public partial class FileCategorizationViewModel : ObservableObject
         SelectedFile = null;
         NewFileDescription = string.Empty;
         NewFileDateTime = string.Empty;
-        currentFileRotation = 0;
+        imageRotation = 0;
     }
 
     [RelayCommand]
@@ -311,7 +311,7 @@ public partial class FileCategorizationViewModel : ObservableObject
     {
         if (SelectedFile != null)
         {
-            int cameraNewDegrees = currentFileRotation;
+            int cameraNewDegrees = imageRotation;
             if (imageRotationDirection == RotationDirection.CounterClockwise)
             {
                 cameraNewDegrees += 90;
@@ -580,7 +580,6 @@ public partial class FileCategorizationViewModel : ObservableObject
         prevEditedFileId = fileId;
         Events.Send<FileEdited>();
     }
-
 
     private void AddUpdateHistoryItem(UpdateHistoryType type, int itemId, string itemName)
     {

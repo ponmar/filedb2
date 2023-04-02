@@ -85,13 +85,19 @@ public partial class SettingsViewModel : ObservableObject
     public List<WindowModeDescription> WindowModes => Utils.GetWindowModes();
 
     [ObservableProperty]
-    int overlayTextSize;
+    private int imageMemoryCacheCount;
 
     [ObservableProperty]
-    int overlayTextSizeLarge;
+    private int numImagesToPreload;
 
     [ObservableProperty]
-    int shortItemNameMaxLength;
+    private int overlayTextSize;
+
+    [ObservableProperty]
+    private int overlayTextSizeLarge;
+
+    [ObservableProperty]
+    private int shortItemNameMaxLength;
 
     [RelayCommand]
     private void SetDefaultSlideshowDelay()
@@ -145,6 +151,18 @@ public partial class SettingsViewModel : ObservableObject
     private void SetDefaultReadOnly()
     {
         ReadOnly = DefaultConfigs.Default.ReadOnly;
+    }
+
+    [RelayCommand]
+    private void SetDefaultImageMemoryCacheCount()
+    {
+        ImageMemoryCacheCount = DefaultConfigs.Default.ImageMemoryCacheCount;
+    }
+
+    [RelayCommand]
+    private void SetDefaultNumImagesToPreload()
+    {
+        NumImagesToPreload = DefaultConfigs.Default.NumImagesToPreload;
     }
 
     [RelayCommand]
@@ -261,6 +279,8 @@ public partial class SettingsViewModel : ObservableObject
         FileToLocationMaxDistance = config.FileToLocationMaxDistance;
         WindowMode = config.WindowMode;
         CacheFiles = config.CacheFiles;
+        ImageMemoryCacheCount = config.ImageMemoryCacheCount;
+        NumImagesToPreload = config.NumImagesToPreload;
         OverlayTextSize = config.OverlayTextSize;
         OverlayTextSizeLarge = config.OverlayTextSizeLarge;
         ShortItemNameMaxLength = config.ShortItemNameMaxLength;
@@ -297,6 +317,8 @@ public partial class SettingsViewModel : ObservableObject
             LocationLink,
             WindowMode,
             CacheFiles,
+            ImageMemoryCacheCount,
+            NumImagesToPreload,
             OverlayTextSize,
             OverlayTextSizeLarge,
             ShortItemNameMaxLength,

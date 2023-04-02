@@ -19,10 +19,16 @@ public class ImageLoadResult
 
 public class ImageLoader : IImageLoader
 {
-    public const int CacheMaxSize = 100;
     private readonly Random random = new();
 
     public ConcurrentDictionary<string, ImageLoadResult> ImageCache { get; } = new();
+
+    private readonly IConfigRepository configRepository;
+
+    public ImageLoader(IConfigRepository configRepository)
+    {
+        this.configRepository = configRepository;
+    }
 
     public void LoadImage(string filePath)
     {
@@ -35,7 +41,7 @@ public class ImageLoader : IImageLoader
             return;
         }
 
-        if (ImageCache.Keys.Count == CacheMaxSize)
+        if (ImageCache.Keys.Count > 0 && ImageCache.Keys.Count >= configRepository.Config.ImageMemoryCacheCount)
         {
             int randomIndex = random.Next(0, ImageCache.Keys.Count);
             var imageToRemove = ImageCache.ElementAt(randomIndex);

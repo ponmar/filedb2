@@ -27,6 +27,8 @@ public class ConfigMigrator : IMigrator<Config>
             config.LocationLink,
             config.WindowMode,
             config.CacheFiles,
+            config.ImageMemoryCacheCount,
+            config.NumImagesToPreload,
             config.OverlayTextSize != 0 ? config.OverlayTextSize : defaultValues.OverlayTextSize,
             config.OverlayTextSizeLarge != 0 ? config.OverlayTextSizeLarge : defaultValues.OverlayTextSizeLarge,
             config.ShortItemNameMaxLength != 0 ? config.ShortItemNameMaxLength : defaultValues.ShortItemNameMaxLength,

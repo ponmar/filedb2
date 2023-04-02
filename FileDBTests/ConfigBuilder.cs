@@ -24,6 +24,8 @@ public class ConfigBuilder
     public string LocationLink { get; init; }
     public WindowMode WindowMode { get; init; }
     public bool CacheFiles { get; init; }
+    public int ImageMemoryCacheCount { get; init; }
+    public int NumImagesToPreload { get; init; }
     public int OverlayTextSize { get; init; }
     public int OverlayTextSizeLarge { get; init; }
     public int ShortItemNameMaxLength { get; init; }
@@ -52,6 +54,8 @@ public class ConfigBuilder
             LocationLink,
             WindowMode,
             CacheFiles,
+            ImageMemoryCacheCount,
+            NumImagesToPreload,
             OverlayTextSize,
             OverlayTextSizeLarge,
             ShortItemNameMaxLength,
