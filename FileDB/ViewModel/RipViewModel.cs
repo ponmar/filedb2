@@ -4,6 +4,8 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
+using System.Windows;
+using System.Windows.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FileDB.Comparers;
 using FileDB.Configuration;
@@ -15,8 +17,10 @@ namespace FileDB.ViewModel;
 
 public partial class DeceasedPerson : ObservableObject
 {
+    public string? ProfilePictureAbsPath { get; }
+
     [ObservableProperty]
-    private string profileFileIdPath;
+    private BitmapImage? profilePicture = null;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(Name))]
@@ -32,10 +36,10 @@ public partial class DeceasedPerson : ObservableObject
     public DateTime Deceased => DatabaseParsing.ParsePersonDeceasedDate(Person.Deceased!);
     public int Age => DatabaseUtils.GetAgeInYears(Deceased, DatabaseParsing.ParsePersonDateOfBirth(Person.DateOfBirth!));
 
-    public DeceasedPerson(PersonModel person, string profileFileIdPath)
+    public DeceasedPerson(PersonModel person, string? profilePictureAbsPath)
     {
-        this.profileFileIdPath = profileFileIdPath;
         this.person = person;
+        ProfilePictureAbsPath = profilePictureAbsPath;
     }
 
     public bool MatchesTextFilter(string textFilter)
@@ -63,24 +67,30 @@ public partial class RipViewModel : ObservableObject
     private readonly IConfigRepository configRepository;
     private readonly IDbAccessRepository dbAccessRepository;
     private readonly IFilesystemAccessRepository filesystemAccessRepository;
+    private readonly IImageLoader imageLoader;
 
-    public RipViewModel(IConfigRepository configRepository, IDbAccessRepository dbAccessRepository, IFilesystemAccessRepository filesystemAccessRepository)
+    public RipViewModel(IConfigRepository configRepository, IDbAccessRepository dbAccessRepository, IFilesystemAccessRepository filesystemAccessRepository, IImageLoader imageLoader)
     {
         this.configRepository = configRepository;
         this.dbAccessRepository = dbAccessRepository;
         this.filesystemAccessRepository = filesystemAccessRepository;
+        this.imageLoader = imageLoader;
+
+        this.RegisterForEvent<ConfigUpdated>((x) => UpdatePersons());
+        this.RegisterForEvent<PersonsUpdated>((x) => UpdatePersons());
+
+        this.RegisterForEvent<ImageLoaded>((x) =>
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                foreach (var personVm in allPersons.Where(p => p.ProfilePictureAbsPath == x.FilePath))
+                {
+                    personVm.ProfilePicture = x.Image;
+                }
+            });
+        });
 
         UpdatePersons();
-
-        this.RegisterForEvent<ConfigUpdated>((x) =>
-        {
-            UpdatePersons();
-        });
-
-        this.RegisterForEvent<PersonsUpdated>((x) =>
-        {
-            UpdatePersons();
-        });
     }
 
     private void UpdatePersons()
@@ -88,30 +98,20 @@ public partial class RipViewModel : ObservableObject
         allPersons.Clear();
         Persons.Clear();
 
-        var configDir = new AppDataConfig<Config>(Utils.ApplicationName, ServiceLocator.Resolve<IFileSystem>()).ConfigDirectory;
-        var cacheDir = Path.Combine(configDir, DefaultConfigs.CacheSubdir);
-
         foreach (var person in dbAccessRepository.DbAccess.GetPersons().Where(x => x.DateOfBirth != null && x.Deceased != null))
         {
-            string profileFileIdPath;
+            string? profileFileIdPath = null;
             if (person.ProfileFileId != null)
             {
-                if (configRepository.Config.CacheFiles)
-                {
-                    profileFileIdPath = Path.Combine(cacheDir, $"{person.ProfileFileId.Value}");
-                }
-                else
-                {
-                    var profileFile = dbAccessRepository.DbAccess.GetFileById(person.ProfileFileId.Value);
-                    profileFileIdPath = filesystemAccessRepository.FilesystemAccess.ToAbsolutePath(profileFile!.Path);
-                }
-            }
-            else
-            {
-                profileFileIdPath = string.Empty;
+                var profileFile = dbAccessRepository.DbAccess.GetFileById(person.ProfileFileId.Value);
+                profileFileIdPath = filesystemAccessRepository.FilesystemAccess.ToAbsolutePath(profileFile!.Path);
             }
 
             allPersons.Add(new DeceasedPerson(person, profileFileIdPath));
+            if (profileFileIdPath != null)
+            {
+                imageLoader.LoadImage(profileFileIdPath);
+            }
         }
 
         foreach (var person in allPersons)

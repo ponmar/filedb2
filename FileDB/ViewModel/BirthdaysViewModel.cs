@@ -4,6 +4,8 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
+using System.Windows;
+using System.Windows.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FileDB.Configuration;
 using FileDB.Model;
@@ -26,8 +28,10 @@ public partial class PersonBirthday : ObservableObject
     [ObservableProperty]
     private int age;
 
+    public string? ProfilePictureAbsPath { get; }
+
     [ObservableProperty]
-    private string profileFileIdPath;
+    private BitmapImage? profilePicture = null;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(Name))]
@@ -35,11 +39,10 @@ public partial class PersonBirthday : ObservableObject
 
     public string Name => $"{Person.Firstname} {Person.Lastname}";
 
-    public PersonBirthday(PersonModel person, string profileFileIdPath)
+    public PersonBirthday(PersonModel person, string? profilePictureAbsPath)
     {
         this.person = person;
-        this.profileFileIdPath = profileFileIdPath;
-
+        ProfilePictureAbsPath = profilePictureAbsPath;
         Update(person);
     }
 
@@ -109,24 +112,34 @@ public partial class BirthdaysViewModel : ObservableObject
     private readonly IPersonsRepository personsRepository;
     private readonly IDbAccessRepository dbAccessRepository;
     private readonly IFilesystemAccessRepository filesystemAccessRepository;
+    private readonly IImageLoader imageLoader;
 
-    public BirthdaysViewModel(IConfigRepository configRepository, IPersonsRepository personsRepository, IFilesystemAccessRepository filesystemAccessRepository, IDbAccessRepository dbAccessRepository)
+    public BirthdaysViewModel(IConfigRepository configRepository, IPersonsRepository personsRepository, IFilesystemAccessRepository filesystemAccessRepository, IDbAccessRepository dbAccessRepository, IImageLoader imageLoader)
     {
         this.configRepository = configRepository;
         this.personsRepository = personsRepository;
         this.filesystemAccessRepository = filesystemAccessRepository;
         this.dbAccessRepository = dbAccessRepository;
+        this.imageLoader = imageLoader;
 
-        UpdatePersons();
-
-        this.RegisterForEvent<ConfigUpdated>((x) =>
-        {
-            UpdatePersons();
-        });
+        this.RegisterForEvent<ConfigUpdated>((x) => UpdatePersons());
 
         this.RegisterForEvent<PersonsUpdated>((x) => UpdatePersons());
 
         this.RegisterForEvent<DateChanged>((x) => UpdatePersons());
+
+        this.RegisterForEvent<ImageLoaded>((x) =>
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                foreach (var personVm in allPersons.Where(p => p.ProfilePictureAbsPath == x.FilePath))
+                {
+                    personVm.ProfilePicture = x.Image;
+                }
+            });
+        });
+
+        UpdatePersons();
     }
 
     private void UpdatePersons()
@@ -134,30 +147,20 @@ public partial class BirthdaysViewModel : ObservableObject
         allPersons.Clear();
         Persons.Clear();
 
-        var configDir = new AppDataConfig<Config>(Utils.ApplicationName, ServiceLocator.Resolve<IFileSystem>()).ConfigDirectory;
-        var cacheDir = Path.Combine(configDir, DefaultConfigs.CacheSubdir);
-
         foreach (var person in personsRepository.Persons.Where(x => x.DateOfBirth != null && x.Deceased == null))
         {
-            string profileFileIdPath;
+            string? profileFileIdPath = null;
             if (person.ProfileFileId != null)
             {
-                if (configRepository.Config.CacheFiles)
-                {
-                    profileFileIdPath = Path.Combine(cacheDir, $"{person.ProfileFileId.Value}");
-                }
-                else
-                {
-                    var profileFile = dbAccessRepository.DbAccess.GetFileById(person.ProfileFileId.Value);
-                    profileFileIdPath = filesystemAccessRepository.FilesystemAccess.ToAbsolutePath(profileFile!.Path);
-                }
+                var profileFile = dbAccessRepository.DbAccess.GetFileById(person.ProfileFileId.Value);
+                profileFileIdPath = filesystemAccessRepository.FilesystemAccess.ToAbsolutePath(profileFile!.Path);
             }
-            else
-            {
-                profileFileIdPath = string.Empty;
-            } 
 
             allPersons.Add(new PersonBirthday(person, profileFileIdPath));
+            if (profileFileIdPath != null)
+            {
+                imageLoader.LoadImage(profileFileIdPath);
+            }
         }
 
         foreach (var person in allPersons)

@@ -41,12 +41,14 @@ public class ImageLoader : IImageLoader
             return;
         }
 
+        /*
         if (ImageCache.Keys.Count > 0 && ImageCache.Keys.Count >= configRepository.Config.ImageMemoryCacheCount)
         {
             int randomIndex = random.Next(0, ImageCache.Keys.Count);
             var imageToRemove = ImageCache.ElementAt(randomIndex);
             ImageCache.TryRemove(imageToRemove);
         }
+        */
 
         ImageCache[filePath] = new ImageLoadResult();
 

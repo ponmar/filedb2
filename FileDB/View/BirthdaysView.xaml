@@ -12,11 +12,12 @@
     <UserControl.Resources>
 
         <converters:EnumerationToVisibilityConverter x:Key="EnumerationToVisibilityConverter" />
+        <converters:ValueToVisibilityConverter x:Key="ValueToVisibilityConverter" />
 
         <DataTemplate x:Key="PersonTemplate">
             <Border Style="{StaticResource BorderGroup}">
                 <StackPanel Orientation="Horizontal" Margin="5" Width="400">
-                    <Image Width="100" Height="100" Margin="5" Source="{Binding ProfileFileIdPath}" RenderOptions.BitmapScalingMode="Fant" VerticalAlignment="Center"/>
+                    <Image Visibility="{Binding ProfilePicture, Converter={StaticResource ValueToVisibilityConverter}}" Width="100" Height="100" Margin="5" Source="{Binding ProfilePicture}" RenderOptions.BitmapScalingMode="Fant" VerticalAlignment="Center"/>
                     <StackPanel Orientation="Vertical" VerticalAlignment="Center">
                         <StackPanel Orientation="Horizontal" Margin="5">
                             <TextBlock Text="{Binding Name}" Margin="5" Style="{StaticResource PageSubHeading}"/>

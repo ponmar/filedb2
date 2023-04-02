@@ -74,9 +74,6 @@ public partial class SettingsViewModel : ObservableObject
     private WindowMode windowMode;
 
     [ObservableProperty]
-    private bool cacheFiles;
-
-    [ObservableProperty]
     private ObservableCollection<CultureInfo> cultures = new();
 
     [ObservableProperty]
@@ -163,12 +160,6 @@ public partial class SettingsViewModel : ObservableObject
     private void SetDefaultNumImagesToPreload()
     {
         NumImagesToPreload = DefaultConfigs.Default.NumImagesToPreload;
-    }
-
-    [RelayCommand]
-    private void SetDefaultCacheFiles()
-    {
-        CacheFiles = DefaultConfigs.Default.CacheFiles;
     }
 
     [RelayCommand]
@@ -278,7 +269,6 @@ public partial class SettingsViewModel : ObservableObject
         LocationLink = config.LocationLink;
         FileToLocationMaxDistance = config.FileToLocationMaxDistance;
         WindowMode = config.WindowMode;
-        CacheFiles = config.CacheFiles;
         ImageMemoryCacheCount = config.ImageMemoryCacheCount;
         NumImagesToPreload = config.NumImagesToPreload;
         OverlayTextSize = config.OverlayTextSize;
@@ -316,7 +306,6 @@ public partial class SettingsViewModel : ObservableObject
             MissingFilesRootDirNotification,
             LocationLink,
             WindowMode,
-            CacheFiles,
             ImageMemoryCacheCount,
             NumImagesToPreload,
             OverlayTextSize,

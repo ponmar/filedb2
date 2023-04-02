@@ -26,7 +26,6 @@ public class ConfigMigrator : IMigrator<Config>
             config.MissingFilesRootDirNotification,
             config.LocationLink,
             config.WindowMode,
-            config.CacheFiles,
             config.ImageMemoryCacheCount,
             config.NumImagesToPreload,
             config.OverlayTextSize != 0 ? config.OverlayTextSize : defaultValues.OverlayTextSize,

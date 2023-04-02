@@ -23,7 +23,6 @@ public class ConfigBuilder
     public bool MissingFilesRootDirNotification { get; init; }
     public string LocationLink { get; init; }
     public WindowMode WindowMode { get; init; }
-    public bool CacheFiles { get; init; }
     public int ImageMemoryCacheCount { get; init; }
     public int NumImagesToPreload { get; init; }
     public int OverlayTextSize { get; init; }
@@ -53,7 +52,6 @@ public class ConfigBuilder
             MissingFilesRootDirNotification,
             LocationLink,
             WindowMode,
-            CacheFiles,
             ImageMemoryCacheCount,
             NumImagesToPreload,
             OverlayTextSize,
