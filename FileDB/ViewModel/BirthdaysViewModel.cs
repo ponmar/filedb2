@@ -108,15 +108,13 @@ public partial class BirthdaysViewModel : ObservableObject
 
     public ObservableCollection<PersonBirthday> Persons { get; } = new();
 
-    private readonly IConfigRepository configRepository;
     private readonly IPersonsRepository personsRepository;
     private readonly IDbAccessRepository dbAccessRepository;
     private readonly IFilesystemAccessRepository filesystemAccessRepository;
     private readonly IImageLoader imageLoader;
 
-    public BirthdaysViewModel(IConfigRepository configRepository, IPersonsRepository personsRepository, IFilesystemAccessRepository filesystemAccessRepository, IDbAccessRepository dbAccessRepository, IImageLoader imageLoader)
+    public BirthdaysViewModel(IPersonsRepository personsRepository, IFilesystemAccessRepository filesystemAccessRepository, IDbAccessRepository dbAccessRepository, IImageLoader imageLoader)
     {
-        this.configRepository = configRepository;
         this.personsRepository = personsRepository;
         this.filesystemAccessRepository = filesystemAccessRepository;
         this.dbAccessRepository = dbAccessRepository;
@@ -145,7 +143,6 @@ public partial class BirthdaysViewModel : ObservableObject
     private void UpdatePersons()
     {
         allPersons.Clear();
-        Persons.Clear();
 
         foreach (var person in personsRepository.Persons.Where(x => x.DateOfBirth != null && x.Deceased == null))
         {
@@ -163,12 +160,6 @@ public partial class BirthdaysViewModel : ObservableObject
             }
         }
 
-        foreach (var person in allPersons)
-        {
-            var observablePerson = Persons.FirstOrDefault(x => x.Person.Id == person.Person.Id);
-            observablePerson?.Update(person.Person);
-        }
-
         allPersons.Sort(new PersonsByDaysLeftUntilBirthdaySorter());
 
         FilterPersons();
@@ -176,20 +167,10 @@ public partial class BirthdaysViewModel : ObservableObject
 
     private void FilterPersons()
     {
-        foreach (var person in allPersons)
+        Persons.Clear();
+        foreach (var person in allPersons.Where(x => x.MatchesTextFilter(FilterText)))
         {
-            if (person.MatchesTextFilter(FilterText))
-            {
-                if (!Persons.Any(x => x.Person.Id == person.Person.Id))
-                {
-                    // TODO: sorting is not correct after adding at end here. Insert at correct index?
-                    Persons.Add(person);
-                }
-            }
-            else
-            {
-                Persons.Remove(person);
-            }
+            Persons.Add(person);
         }
     }
 }

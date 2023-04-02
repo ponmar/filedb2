@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.IO.Abstractions;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FileDB.Comparers;
-using FileDB.Configuration;
 using FileDB.Model;
 using FileDBInterface.DbAccess;
 using FileDBShared.Model;
@@ -64,14 +61,12 @@ public partial class RipViewModel : ObservableObject
 
     public ObservableCollection<DeceasedPerson> Persons { get; set; } = new();
 
-    private readonly IConfigRepository configRepository;
     private readonly IDbAccessRepository dbAccessRepository;
     private readonly IFilesystemAccessRepository filesystemAccessRepository;
     private readonly IImageLoader imageLoader;
 
-    public RipViewModel(IConfigRepository configRepository, IDbAccessRepository dbAccessRepository, IFilesystemAccessRepository filesystemAccessRepository, IImageLoader imageLoader)
+    public RipViewModel(IDbAccessRepository dbAccessRepository, IFilesystemAccessRepository filesystemAccessRepository, IImageLoader imageLoader)
     {
-        this.configRepository = configRepository;
         this.dbAccessRepository = dbAccessRepository;
         this.filesystemAccessRepository = filesystemAccessRepository;
         this.imageLoader = imageLoader;
@@ -96,7 +91,6 @@ public partial class RipViewModel : ObservableObject
     private void UpdatePersons()
     {
         allPersons.Clear();
-        Persons.Clear();
 
         foreach (var person in dbAccessRepository.DbAccess.GetPersons().Where(x => x.DateOfBirth != null && x.Deceased != null))
         {
@@ -114,15 +108,6 @@ public partial class RipViewModel : ObservableObject
             }
         }
 
-        foreach (var person in allPersons)
-        {
-            var observablePerson = Persons.FirstOrDefault(x => x.Person.Id == person.Person.Id);
-            if (observablePerson != null)
-            {
-                observablePerson.Person = person.Person;
-            }
-        }
-
         allPersons.Sort(new PersonsByDeceasedSorter());
         allPersons.Reverse();
 
@@ -131,20 +116,10 @@ public partial class RipViewModel : ObservableObject
 
     private void FilterPersons()
     {
-        foreach (var person in allPersons)
+        Persons.Clear();
+        foreach (var person in allPersons.Where(x => x.MatchesTextFilter(FilterText)))
         {
-            if (person.MatchesTextFilter(FilterText))
-            {
-                if (!Persons.Any(x => x.Person.Id == person.Person.Id))
-                {
-                    // TODO: sorting is not correct after adding at end here. Insert at correct index?
-                    Persons.Add(person);
-                }
-            }
-            else
-            {
-                Persons.Remove(person);
-            }
+            Persons.Add(person);
         }
     }
 }
