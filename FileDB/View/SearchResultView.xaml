@@ -31,9 +31,9 @@
 
             <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical" Margin="5" VerticalAlignment="Center">
                 <Grid>
-                    <ProgressBar Style="{StaticResource PageProgressBar}" Minimum="0" Maximum="{Binding SearchNumberOfHits, Mode=OneWay}" Value="{Binding SearchResultItemNumber, Mode=OneWay}" Width="549" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 0 0 5"/>
+                    <ProgressBar Style="{StaticResource PageProgressBar}" Minimum="0" Maximum="{Binding SearchNumberOfHits, Mode=OneWay}" Value="{Binding SelectedFileNumber, Mode=OneWay}" Width="549" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 0 0 5"/>
                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 0 0 3">
-                                        <Run Text="{Binding SearchResultItemNumber, Mode=OneWay}"/>
+                                        <Run Text="{Binding SelectedFileNumber, Mode=OneWay}"/>
                                         <Run Text="/"/>
                                         <Run Text="{Binding SearchNumberOfHits, Mode=OneWay}"/>
                     </TextBlock>

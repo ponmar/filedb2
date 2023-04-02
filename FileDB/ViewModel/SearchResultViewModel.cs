@@ -51,7 +51,7 @@ public partial class SearchResultViewModel : ObservableObject
                 {
                     if (searchResult.Count > 0)
                     {
-                        SearchResultIndex = 0;
+                        SelectedFileIndex = 0;
                         SortSearchResult(false);
                         if (!updateViaHistorySelection)
                         {
@@ -61,11 +61,13 @@ public partial class SearchResultViewModel : ObservableObject
                     }
                     else
                     {
+                        SelectedFileIndex = -1;
                         Events.Send<CloseSearchResultFile>();
                     }
                 }
                 else
                 {
+                    SelectedFileIndex = -1;
                     Events.Send<CloseSearchResultFile>();
                 }
 
@@ -111,12 +113,12 @@ public partial class SearchResultViewModel : ObservableObject
     }
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(SearchResultItemNumber))]
-    private int searchResultIndex = -1;
+    [NotifyPropertyChangedFor(nameof(SelectedFileNumber))]
+    private int selectedFileIndex = -1;
 
-    public int SearchResultItemNumber => SearchResultIndex + 1;
+    public int SelectedFileNumber => SelectedFileIndex + 1;
 
-    public string CurrentFileInternalPath => HasNonEmptySearchResult ? SearchResult!.Files[SearchResultIndex].Path : string.Empty;
+    public string CurrentFileInternalPath => HasNonEmptySearchResult ? SearchResult!.Files[SelectedFileIndex].Path : string.Empty;
 
     public int SearchNumberOfHits => SearchResult != null ? SearchResult.Count : 0;
 
@@ -169,7 +171,7 @@ public partial class SearchResultViewModel : ObservableObject
             if (SearchResult.Files.Count > 0)
             {
                 FireSearchResultUpdatedEvents();
-                var newIndex = SearchResultIndex == 0 ? 0 : SearchResultIndex - 1;
+                var newIndex = SelectedFileIndex == 0 ? 0 : SelectedFileIndex - 1;
                 LoadFile(newIndex);
             }
             else
@@ -181,7 +183,7 @@ public partial class SearchResultViewModel : ObservableObject
         this.RegisterForEvent<FileEdited>((x) =>
         {
             // Reload current file that another viewmodel edited
-            LoadFile(SearchResultIndex);
+            LoadFile(SelectedFileIndex);
         });
 
         this.RegisterForEvent<SelectPrevFile>((x) => PrevFile());
@@ -208,13 +210,13 @@ public partial class SearchResultViewModel : ObservableObject
 
     private void SelectPrevFile()
     {
-        LoadFile(SearchResultIndex - 1);
+        LoadFile(SelectedFileIndex - 1);
         FireBrowsingEnabledEvents();
     }
 
     private void SelectNextFile()
     {
-        LoadFile(SearchResultIndex + 1);
+        LoadFile(SelectedFileIndex + 1);
         FireBrowsingEnabledEvents();
     }
 
@@ -234,12 +236,12 @@ public partial class SearchResultViewModel : ObservableObject
 
         StopSlideshow();
 
-        if (SearchResultIndex < 1)
+        if (SelectedFileIndex < 1)
             return;
 
-        var currentDirectory = Path.GetDirectoryName(SearchResult!.Files[SearchResultIndex].Path);
+        var currentDirectory = Path.GetDirectoryName(SearchResult!.Files[SelectedFileIndex].Path);
 
-        for (int i = SearchResultIndex - 1; i >= 0; i--)
+        for (int i = SelectedFileIndex - 1; i >= 0; i--)
         {
             var directory = Path.GetDirectoryName(SearchResult.Files[i].Path);
             if (directory != currentDirectory)
@@ -262,12 +264,12 @@ public partial class SearchResultViewModel : ObservableObject
 
         StopSlideshow();
 
-        if (SearchResultIndex == -1 || SearchResultIndex == SearchResult!.Count - 1)
+        if (SelectedFileIndex == -1 || SelectedFileIndex == SearchResult!.Count - 1)
             return;
 
-        var currentDirectory = Path.GetDirectoryName(SearchResult.Files[SearchResultIndex].Path);
+        var currentDirectory = Path.GetDirectoryName(SearchResult.Files[SelectedFileIndex].Path);
 
-        for (int i = SearchResultIndex + 1; i < SearchResult.Count; i++)
+        for (int i = SelectedFileIndex + 1; i < SearchResult.Count; i++)
         {
             var directory = Path.GetDirectoryName(SearchResult.Files[i].Path);
             if (directory != currentDirectory)
@@ -336,7 +338,7 @@ public partial class SearchResultViewModel : ObservableObject
         {
             if (RepeatActive)
             {
-                if (SearchResultIndex == SearchResult!.Count - 1)
+                if (SelectedFileIndex == SearchResult!.Count - 1)
                 {
                     LoadFile(0);
                 }
@@ -348,7 +350,7 @@ public partial class SearchResultViewModel : ObservableObject
             else
             {
                 SelectNextFile();
-                if (SearchResultIndex == SearchResult!.Count - 1)
+                if (SelectedFileIndex == SearchResult!.Count - 1)
                 {
                     StopSlideshow();
                 }
@@ -373,9 +375,9 @@ public partial class SearchResultViewModel : ObservableObject
         if (SearchResult != null &&
             index >= 0 && index < SearchResult.Count)
         {
-            SearchResultIndex = index;
+            SelectedFileIndex = index;
             OnPropertyChanged(nameof(CurrentFileInternalPath));
-            var selection = SearchResult.Files[SearchResultIndex];
+            var selection = SearchResult.Files[SelectedFileIndex];
 
             // TODO: make this a bool setting?
             // Note: reading of orientation from Exif is done here to get correct visualization for files added to database before orientation was parsed
@@ -402,10 +404,10 @@ public partial class SearchResultViewModel : ObservableObject
         }
     }
 
-    public bool PrevFileAvailable => SearchResultIndex > 0;
-    public bool NextFileAvailable => searchResult != null && SearchResultIndex < searchResult.Count - 1;
-    public bool FirstFileAvailable => searchResult != null && SearchResultIndex > 0;
-    public bool LastFileAvailable => searchResult != null && SearchResultIndex < searchResult.Count - 1;
+    public bool PrevFileAvailable => SelectedFileIndex > 0;
+    public bool NextFileAvailable => searchResult != null && SelectedFileIndex < searchResult.Count - 1;
+    public bool FirstFileAvailable => searchResult != null && SelectedFileIndex > 0;
+    public bool LastFileAvailable => searchResult != null && SelectedFileIndex < searchResult.Count - 1;
     public bool PrevDirectoryAvailable => HasNonEmptySearchResult;
     public bool NextDirectoryAvailable => HasNonEmptySearchResult;
 
@@ -433,7 +435,7 @@ public partial class SearchResultViewModel : ObservableObject
         StopSlideshow();
         if (HasNonEmptySearchResult)
         {
-            var selectedFile = SearchResult!.Files[SearchResultIndex];
+            var selectedFile = SearchResult!.Files[SelectedFileIndex];
             if (desc)
             {
                 SearchResult.Files.Sort((x, y) => comparer.Compare(y, x));
