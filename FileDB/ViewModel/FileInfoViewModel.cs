@@ -11,6 +11,7 @@ using FileDBInterface.DbAccess;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Model;
+using System.Windows.Media;
 
 namespace FileDB.ViewModel;
 
@@ -86,6 +87,9 @@ public partial class FileInfoViewModel : ObservableObject
     [ObservableProperty]
     private string fileLoadError = string.Empty;
 
+    [ObservableProperty]
+    private ImageSource? imageSource = null;
+
     private string absolutePath = string.Empty;
     private BitmapImage? image = null;
     private int rotation = 0;
@@ -128,7 +132,7 @@ public partial class FileInfoViewModel : ObservableObject
                 if (x.FilePath == absolutePath)
                 {
                     image = x.Image;
-                    Events.Send(new ShowImage(image, -rotation));
+                    ImageSource = ImageUtils.Rotate(image, -rotation);
                 }
             });
         });
@@ -141,7 +145,7 @@ public partial class FileInfoViewModel : ObservableObject
                 {
                     FileLoadError = $"Image loading error:\n{x.Exception.Message}";
                     image = null;
-                    Events.Send<CloseImage>();
+                    ImageSource = null;
                 }
             });
         });
@@ -197,12 +201,12 @@ public partial class FileInfoViewModel : ObservableObject
         Position = selection.Position != null ? Utils.CreateShortFilePositionString(selection.Position) : string.Empty;
         PositionLink = selection.Position != null ? Utils.CreatePositionUri(selection.Position, configRepository.Config.LocationLink) : null;
         Persons = GetFilePersonsString(selection);
-        Locations = GetFileLocationsString(selection.Id);
-        Tags = GetFileTagsString(selection.Id);
+        Locations = GetFileLocationsString();
+        Tags = GetFileTagsString();
         FileLoadError = string.Empty;
 
         image = null;
-        Events.Send<CloseImage>();
+        ImageSource = null;
 
         absolutePath = filesystemAccessRepository.FilesystemAccess.ToAbsolutePath(selection.Path);
         rotation = DatabaseParsing.OrientationToDegrees(selection.Orientation ?? 0);
@@ -236,7 +240,7 @@ public partial class FileInfoViewModel : ObservableObject
         absolutePath = string.Empty;
         image = null;
 
-        Events.Send<CloseImage>();
+        ImageSource = null;
     }
 
     private string GetFileDateTimeString(string? datetimeString)
@@ -273,13 +277,13 @@ public partial class FileInfoViewModel : ObservableObject
         return string.Join("\n", personStrings);
     }
 
-    private string GetFileLocationsString(int fileId)
+    private string GetFileLocationsString()
     {
         var locationStrings = locationList.Select(l => l.Name);
         return string.Join("\n", locationStrings);
     }
 
-    private string GetFileTagsString(int fileId)
+    private string GetFileTagsString()
     {
         var tagStrings = tagList.Select(t => t.Name);
         return string.Join("\n", tagStrings);
@@ -293,11 +297,6 @@ public partial class FileInfoViewModel : ObservableObject
             Owner = Application.Current.MainWindow,
             Title = $"{Utils.ApplicationName} {Utils.GetVersionString()} - Presentation"
         };
-
-        if (absolutePath != string.Empty && image != null)
-        {
-            window.ShowImage(image, -rotation);
-        }
 
         window.Show();
     }

@@ -124,7 +124,7 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Image
-                        x:Name="CurrentFileImage"
+                        Source="{Binding ImageSource}"
                         RenderOptions.BitmapScalingMode="Fant"
                         Stretch="Uniform" />
                 </Grid>

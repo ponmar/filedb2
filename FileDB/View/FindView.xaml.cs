@@ -15,21 +15,5 @@ public partial class FindView : UserControl
     {
         InitializeComponent();
         DataContext = ServiceLocator.Resolve<FileInfoViewModel>();
-
-        this.RegisterForEvent<ShowImage>((x) =>
-        {
-            var transformBmp = new TransformedBitmap();
-            transformBmp.BeginInit();
-            transformBmp.Source = x.Image;
-            transformBmp.Transform = new RotateTransform(x.RotateDegrees);
-            transformBmp.EndInit();
-
-            CurrentFileImage.Source = transformBmp;
-        });
-
-        this.RegisterForEvent<CloseImage>((x) =>
-        {
-            CurrentFileImage.Source = null;
-        });
     }
 }

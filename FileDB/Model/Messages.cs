@@ -2,6 +2,7 @@
 using FileDBShared.Model;
 using System;
 using System.Collections.Generic;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace FileDB.Model;
@@ -36,9 +37,6 @@ public record SelectFileInPrevDirectory;
 
 public record ImageLoaded(string FilePath, BitmapImage Image);
 public record ImageLoadError(string FilePath, Exception Exception);
-
-public record ShowImage(BitmapImage Image, double RotateDegrees);
-public record CloseImage;
 
 public record FilesImported(List<FilesModel> Files);
 

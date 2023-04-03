@@ -15,24 +15,6 @@ public partial class PresentationWindow : Window
     {
         InitializeComponent();
         DataContext = ServiceLocator.Resolve<FileInfoViewModel>();
-
-        this.RegisterForEvent<ShowImage>((x) => ShowImage(x.Image, x.RotateDegrees));
-
-        this.RegisterForEvent<CloseImage>((x) =>
-        {
-            CurrentFileImage.Source = null;
-        });
-    }
-
-    public void ShowImage(BitmapImage image, double rotateDegrees)
-    {
-        var transformBmp = new TransformedBitmap();
-        transformBmp.BeginInit();
-        transformBmp.Source = image;
-        transformBmp.Transform = new RotateTransform(rotateDegrees);
-        transformBmp.EndInit();
-
-        CurrentFileImage.Source = transformBmp;
     }
 
     private void Window_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)

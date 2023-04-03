@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
-using System.Windows.Media.Imaging;
+using System.Windows.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FileDB.Model;
 using FileDBInterface.DbAccess;
@@ -28,7 +28,7 @@ public partial class PersonBirthday : ObservableObject
     public string? ProfilePictureAbsPath { get; }
 
     [ObservableProperty]
-    private BitmapImage? profilePicture = null;
+    private ImageSource? profilePicture = null;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(Name))]
@@ -129,7 +129,9 @@ public partial class BirthdaysViewModel : ObservableObject
             {
                 foreach (var personVm in allPersons.Where(p => p.ProfilePictureAbsPath == x.FilePath))
                 {
-                    personVm.ProfilePicture = x.Image;
+                    var profileFile = dbAccessRepository.DbAccess.GetFileById(personVm.Person.ProfileFileId!.Value);
+                    int rotateDegrees = DatabaseParsing.OrientationToDegrees(profileFile.Orientation ?? 0);
+                    personVm.ProfilePicture = ImageUtils.Rotate(x.Image, -rotateDegrees);
                 }
             });
         });
