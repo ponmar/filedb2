@@ -91,7 +91,7 @@ namespace FileDB.ViewModel
         [RelayCommand]
         private void SelectFolder()
         {
-            Events.Send<CloseModalDialogRequested>();
+            Events.Send<CloseModalDialogRequest>();
 
             if (SelectedFolder != null)
             {

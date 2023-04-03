@@ -14,7 +14,7 @@ public partial class AddTagWindow : Window
         InitializeComponent();
         DataContext = ServiceLocator.Resolve<AddTagViewModel>("tagId", tagId);
 
-        this.RegisterForEvent<CloseModalDialogRequested>((x) => Close());
+        this.RegisterForEvent<CloseModalDialogRequest>((x) => Close());
     }
 
     private void Model_CloseModalDialogRequested(object? sender, System.EventArgs e)

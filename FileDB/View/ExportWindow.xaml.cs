@@ -14,7 +14,7 @@ namespace FileDB.View
             InitializeComponent();
             DataContext = ServiceLocator.Resolve<ExportViewModel>();
 
-            this.RegisterForEvent<CloseModalDialogRequested>((x) => Close());
+            this.RegisterForEvent<CloseModalDialogRequest>((x) => Close());
         }
     }
 }

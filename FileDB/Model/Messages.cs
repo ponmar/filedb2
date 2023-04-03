@@ -38,4 +38,4 @@ public record ImageLoadError(string FilePath, Exception Exception);
 
 public record FilesImported(List<FilesModel> Files);
 
-public record CloseModalDialogRequested;
+public record CloseModalDialogRequest;

@@ -52,7 +52,7 @@ namespace FileDB.ViewModel
                 {
                     DatabaseSetup.CreateDatabase(DatabasePath);
                     CreatedDatabasePath = DatabasePath;
-                    Events.Send<CloseModalDialogRequested>();
+                    Events.Send<CloseModalDialogRequest>();
                 }
                 catch (DatabaseWrapperException e)
                 {

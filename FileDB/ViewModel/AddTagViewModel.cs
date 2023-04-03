@@ -61,7 +61,7 @@ public partial class AddTagViewModel : ObservableObject
                 AffectedTag = dbAccessRepository.DbAccess.GetTags().First(x => x.Name == tag.Name);
             }
 
-            Events.Send<CloseModalDialogRequested>();
+            Events.Send<CloseModalDialogRequest>();
             Events.Send<TagEdited>();
         }
         catch (DataValidationException e)

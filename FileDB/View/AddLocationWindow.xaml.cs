@@ -14,6 +14,6 @@ public partial class AddLocationWindow : Window
         InitializeComponent();
         DataContext = ServiceLocator.Resolve<AddLocationViewModel>("locationId", locationId);
 
-        this.RegisterForEvent<CloseModalDialogRequested>((x) => Close());
+        this.RegisterForEvent<CloseModalDialogRequest>((x) => Close());
     }
 }

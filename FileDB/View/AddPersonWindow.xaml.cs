@@ -14,6 +14,6 @@ public partial class AddPersonWindow : Window
         InitializeComponent();
         DataContext = ServiceLocator.Resolve<AddPersonViewModel>("personId", personId);
 
-        this.RegisterForEvent<CloseModalDialogRequested>((x) => Close());
+        this.RegisterForEvent<CloseModalDialogRequest>((x) => Close());
     }
 }

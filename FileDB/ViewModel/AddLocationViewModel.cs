@@ -78,7 +78,7 @@ public partial class AddLocationViewModel : ObservableObject
                 AffectedLocation = dbAccessRepository.DbAccess.GetLocations().First(x => x.Name == location.Name);
             }
 
-            Events.Send<CloseModalDialogRequested>();
+            Events.Send<CloseModalDialogRequest>();
             Events.Send<LocationEdited>();
         }
         catch (DataValidationException e)
