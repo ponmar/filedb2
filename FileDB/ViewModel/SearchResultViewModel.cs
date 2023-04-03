@@ -16,7 +16,7 @@ namespace FileDB.ViewModel;
 
 public class SearchResult
 {
-    public required List<FilesModel> Files { get; init; }
+    public required List<FileModel> Files { get; init; }
 
     public string Name => $"{Count} files";
 
@@ -425,7 +425,7 @@ public partial class SearchResultViewModel : ObservableObject
         OnPropertyChanged(nameof(CurrentFileInternalPath));
     }
 
-    private void SortFiles(IComparer<FilesModel> comparer, bool desc, bool preserveSelection)
+    private void SortFiles(IComparer<FileModel> comparer, bool desc, bool preserveSelection)
     {
         StopSlideshow();
         if (HasNonEmptySearchResult)
@@ -448,19 +448,19 @@ public partial class SearchResultViewModel : ObservableObject
         switch (SelectedSortMethod)
         {
             case SortMethod.Date:
-                SortFiles(new FilesModelByDateSorter(), false, preserveSelection);
+                SortFiles(new FileModelByDateSorter(), false, preserveSelection);
                 break;
 
             case SortMethod.DateDesc:
-                SortFiles(new FilesModelByDateSorter(), true, preserveSelection);
+                SortFiles(new FileModelByDateSorter(), true, preserveSelection);
                 break;
 
             case SortMethod.Path:
-                SortFiles(new FilesModelByPathSorter(), false, preserveSelection);
+                SortFiles(new FileModelByPathSorter(), false, preserveSelection);
                 break;
 
             case SortMethod.PathDesc:
-                SortFiles(new FilesModelByPathSorter(), true, preserveSelection);
+                SortFiles(new FileModelByPathSorter(), true, preserveSelection);
                 break;
         }
     }

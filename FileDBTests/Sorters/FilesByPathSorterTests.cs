@@ -9,7 +9,7 @@ namespace FileDBTests.Sorters;
 [TestClass]
 public class FilesByPathSorterTests
 {
-    private FilesModelByPathSorter sorter;
+    private FileModelByPathSorter sorter;
 
     [TestInitialize]
     public void Initialize()
@@ -22,11 +22,11 @@ public class FilesByPathSorterTests
     [TestMethod]
     public void Compare()
     {
-        var items = new List<FilesModel>()
+        var items = new List<FileModel>()
         {
-            new FilesModel() { Id = 0, Path = "aaa" },
-            new FilesModel() { Id = 2, Path = "ccc" },
-            new FilesModel() { Id = 1, Path = "bbb" },
+            new FileModel() { Id = 0, Path = "aaa" },
+            new FileModel() { Id = 2, Path = "ccc" },
+            new FileModel() { Id = 1, Path = "bbb" },
         };
 
         items.Sort(sorter);

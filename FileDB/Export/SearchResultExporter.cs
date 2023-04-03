@@ -19,7 +19,7 @@ public class SearchResultExporter
         this.filesystemAccessRepository = filesystemAccessRepository;
     }
 
-    public void Export(string destinationDirectory, string header, List<FilesModel> files, bool exportIncludesFiles, bool exportIncludesHtml, bool exportIncludesM3u, bool exportIncludesFilesWithMetaData, bool exportIncludesJson)
+    public void Export(string destinationDirectory, string header, List<FileModel> files, bool exportIncludesFiles, bool exportIncludesHtml, bool exportIncludesM3u, bool exportIncludesFilesWithMetaData, bool exportIncludesJson)
     {
         var data = GetExportedData(files, header, "UnmodifiedFiles");
 
@@ -55,7 +55,7 @@ public class SearchResultExporter
         }
     }
 
-    private SearchResultExport GetExportedData(List<FilesModel> files, string header, string filesSubdir)
+    private SearchResultExport GetExportedData(List<FileModel> files, string header, string filesSubdir)
     {
         var exportedFiles = new List<ExportedFile>();
         var persons = new List<PersonModel>();

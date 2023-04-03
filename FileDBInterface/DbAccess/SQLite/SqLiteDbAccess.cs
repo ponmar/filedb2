@@ -48,10 +48,10 @@ public class SqLiteDbAccess : IDbAccess
 
     #region Files
 
-    public IEnumerable<FilesModel> GetFiles()
+    public IEnumerable<FileModel> GetFiles()
     {
         using var connection = DatabaseSetup.CreateConnection(database);
-        return connection.Query<FilesModel>("select * from [files]");
+        return connection.Query<FileModel>("select * from [files]");
     }
 
     public int GetFileCount()
@@ -60,49 +60,49 @@ public class SqLiteDbAccess : IDbAccess
         return connection.ExecuteScalar<int>("select count(*) from [files]");
     }
 
-    public IEnumerable<FilesModel> SearchFilesFromIds(IEnumerable<int> fileIds)
+    public IEnumerable<FileModel> SearchFilesFromIds(IEnumerable<int> fileIds)
     {
         // TODO: dapper can not handle too many fileIds? Need to split into several queries?
         using var connection = DatabaseSetup.CreateConnection(database);
         var sql = "select * from [files] where Id in @ids";
-        return connection.Query<FilesModel>(sql, new { ids = fileIds });
+        return connection.Query<FileModel>(sql, new { ids = fileIds });
     }
 
-    public IEnumerable<FilesModel> SearchFiles(string criteria)
+    public IEnumerable<FileModel> SearchFiles(string criteria)
     {
         // Note: 'like' is case insensitive
         using var connection = DatabaseSetup.CreateConnection(database);
         var sql = "select * from [files] where (Path like @criteria or Description like @criteria)";
-        return connection.Query<FilesModel>(sql, new { criteria = $"%{criteria}%" });
+        return connection.Query<FileModel>(sql, new { criteria = $"%{criteria}%" });
     }
 
-    public IEnumerable<FilesModel> SearchFilesBySex(Sex sex)
+    public IEnumerable<FileModel> SearchFilesBySex(Sex sex)
     {
         var personIds = SearchPersonsBySex(sex).Select(p => p.Id);
         return SearchFilesWithPersons(personIds);
     }
 
-    public IEnumerable<FilesModel> SearchFilesByPath(string criteria)
+    public IEnumerable<FileModel> SearchFilesByPath(string criteria)
     {
         // Note: 'like' is case insensitive
         using var connection = DatabaseSetup.CreateConnection(database);
         var sql = "select * from [files] where Path like @criteria";
-        return connection.Query<FilesModel>(sql, new { criteria = criteria + "%" });
+        return connection.Query<FileModel>(sql, new { criteria = criteria + "%" });
     }
 
-    public IEnumerable<FilesModel> SearchFilesByExtension(string extension)
+    public IEnumerable<FileModel> SearchFilesByExtension(string extension)
     {
         // Note: 'like' is case insensitive
         using var connection = DatabaseSetup.CreateConnection(database);
         var sql = "select * from [files] where Path like @criteria";
-        return connection.Query<FilesModel>(sql, new { criteria = "%" + extension });
+        return connection.Query<FileModel>(sql, new { criteria = "%" + extension });
     }
 
-    public IEnumerable<FilesModel> SearchFilesRandom(int numFiles)
+    public IEnumerable<FileModel> SearchFilesRandom(int numFiles)
     {
         using var connection = DatabaseSetup.CreateConnection(database);
         var sql = $"select * from [files] order by random() limit {numFiles}";
-        return connection.Query<FilesModel>(sql);
+        return connection.Query<FileModel>(sql);
     }
 
     public IEnumerable<LocationModel> SearchLocationsNearGpsPosition(double latitude, double longitude, double radius)
@@ -123,12 +123,12 @@ public class SqLiteDbAccess : IDbAccess
         }
     }
 
-    public IEnumerable<FilesModel> SearchFilesNearGpsPosition(double latitude, double longitude, double radius)
+    public IEnumerable<FileModel> SearchFilesNearGpsPosition(double latitude, double longitude, double radius)
     {
         using var connection = DatabaseSetup.CreateConnection(database);
         var sql = "select * from [files] where Position is not null";
 
-        foreach (var fileWithPosition in connection.Query<FilesModel>(sql))
+        foreach (var fileWithPosition in connection.Query<FileModel>(sql))
         {
             var gpsPos = DatabaseParsing.ParseFilesPosition(fileWithPosition.Position);
             if (gpsPos != null)
@@ -141,22 +141,22 @@ public class SqLiteDbAccess : IDbAccess
         }
     }
 
-    public FilesModel GetFileById(int id)
+    public FileModel GetFileById(int id)
     {
         using var connection = DatabaseSetup.CreateConnection(database);
-        return connection.QueryFirst<FilesModel>("select * from [files] where Id = @id", new { id });
+        return connection.QueryFirst<FileModel>("select * from [files] where Id = @id", new { id });
     }
 
-    public FilesModel? GetFileByPath(string path)
+    public FileModel? GetFileByPath(string path)
     {
         using var connection = DatabaseSetup.CreateConnection(database);
-        return connection.QueryFirstOrDefault<FilesModel>("select * from [files] where Path = @path", new { path });
+        return connection.QueryFirstOrDefault<FileModel>("select * from [files] where Path = @path", new { path });
     }
 
-    public IEnumerable<FilesModel> SearchFilesByDate(DateTime start, DateTime end)
+    public IEnumerable<FileModel> SearchFilesByDate(DateTime start, DateTime end)
     {
         using var connection = DatabaseSetup.CreateConnection(database);
-        foreach (var fileWithDate in connection.Query<FilesModel>($"select * from [files] where Datetime is not null"))
+        foreach (var fileWithDate in connection.Query<FileModel>($"select * from [files] where Datetime is not null"))
         {
             if (DateTime.TryParse(fileWithDate.Datetime, out var fileDatetime) &&
                 fileDatetime >= start && fileDatetime <= end)
@@ -166,28 +166,28 @@ public class SqLiteDbAccess : IDbAccess
         }
     }
 
-    public IEnumerable<FilesModel> SearchFilesWithPersons(IEnumerable<int> personIds)
+    public IEnumerable<FileModel> SearchFilesWithPersons(IEnumerable<int> personIds)
     {
         using var connection = DatabaseSetup.CreateConnection(database);
-        return connection.Query<FilesModel>($"select * from [files] inner join filepersons on files.Id = filepersons.FileId where filepersons.PersonId in ({string.Join(',', personIds)})");
+        return connection.Query<FileModel>($"select * from [files] inner join filepersons on files.Id = filepersons.FileId where filepersons.PersonId in ({string.Join(',', personIds)})");
     }
 
-    public IEnumerable<FilesModel> SearchFilesWithLocations(IEnumerable<int> locationIds)
+    public IEnumerable<FileModel> SearchFilesWithLocations(IEnumerable<int> locationIds)
     {
         using var connection = DatabaseSetup.CreateConnection(database);
-        return connection.Query<FilesModel>($"select * from [files] inner join filelocations on files.Id = filelocations.FileId where filelocations.LocationId in ({string.Join(',', locationIds)})");
+        return connection.Query<FileModel>($"select * from [files] inner join filelocations on files.Id = filelocations.FileId where filelocations.LocationId in ({string.Join(',', locationIds)})");
     }
 
-    public IEnumerable<FilesModel> SearchFilesWithTags(IEnumerable<int> tagIds)
+    public IEnumerable<FileModel> SearchFilesWithTags(IEnumerable<int> tagIds)
     {
         using var connection = DatabaseSetup.CreateConnection(database);
-        return connection.Query<FilesModel>($"select * from [files] inner join filetags on files.Id = filetags.FileId where filetags.TagId in ({string.Join(',', tagIds)})");
+        return connection.Query<FileModel>($"select * from [files] inner join filetags on files.Id = filetags.FileId where filetags.TagId in ({string.Join(',', tagIds)})");
     }
 
-    public IEnumerable<FilesModel> SearchFilesWithMissingData()
+    public IEnumerable<FileModel> SearchFilesWithMissingData()
     {
         using var connection = DatabaseSetup.CreateConnection(database);
-        var files = connection.Query<FilesModel>($"select * from [files] where Description is null");
+        var files = connection.Query<FileModel>($"select * from [files] where Description is null");
         foreach (var file in files)
         {
             if (!FileHasPersons(file.Id) &&
@@ -201,7 +201,7 @@ public class SqLiteDbAccess : IDbAccess
 
     public void InsertFile(string internalPath, string? description, IFilesystemAccess filesystemAccess, bool findMetadata)
     {
-        if (!FilesModelValidator.ValidateDescription(description))
+        if (!FileModelValidator.ValidateDescription(description))
         {
             throw new DataValidationException("Description invalid");
         }
@@ -217,7 +217,7 @@ public class SqLiteDbAccess : IDbAccess
         try
         {
             using var connection = DatabaseSetup.CreateConnection(database);
-            var files = new FilesModel() { Id = default, Path = internalPath, Description = description, Datetime = fileMetadata.Datetime, Position = fileMetadata.Position, Orientation = fileMetadata.Orientation };
+            var files = new FileModel() { Id = default, Path = internalPath, Description = description, Datetime = fileMetadata.Datetime, Position = fileMetadata.Position, Orientation = fileMetadata.Orientation };
             var sql = "insert into [files] (Path, Description, Datetime, Position, Orientation) values (@Path, @Description, @Datetime, @Position, @Orientation)";
             connection.Execute(sql, files);
         }
@@ -246,7 +246,7 @@ public class SqLiteDbAccess : IDbAccess
 
     public void UpdateFileDescription(int id, string? description)
     {
-        if (!FilesModelValidator.ValidateDescription(description))
+        if (!FileModelValidator.ValidateDescription(description))
         {
             throw new DataValidationException("Invalid description");
         }
@@ -265,7 +265,7 @@ public class SqLiteDbAccess : IDbAccess
 
     public void UpdateFileDatetime(int id, string? datetime)
     {
-        if (!FilesModelValidator.ValidateDatetime(datetime))
+        if (!FileModelValidator.ValidateDatetime(datetime))
         {
             throw new DataValidationException("Invalid datetime");
         }
@@ -284,7 +284,7 @@ public class SqLiteDbAccess : IDbAccess
 
     public void UpdateFileOrientation(int id, int? orientation)
     {
-        if (!FilesModelValidator.ValidateOrientation(orientation))
+        if (!FileModelValidator.ValidateOrientation(orientation))
         {
             throw new DataValidationException("Invalid orientation");
         }

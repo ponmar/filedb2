@@ -58,7 +58,7 @@ public partial class FileInfoViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(FileSelected))]
-    private FilesModel? selectedFile;
+    private FileModel? selectedFile;
 
     [ObservableProperty]
     private string internalPath = string.Empty;
@@ -174,7 +174,7 @@ public partial class FileInfoViewModel : ObservableObject
     {
         if (SelectedFile != null)
         {
-            ClipboardService.SetText(Utils.CreateFileList(new List<FilesModel>() { SelectedFile }));
+            ClipboardService.SetText(Utils.CreateFileList(new List<FileModel>() { SelectedFile }));
         }
     }
 
@@ -187,7 +187,7 @@ public partial class FileInfoViewModel : ObservableObject
         }
     }
 
-    private void LoadFile(FilesModel selection)
+    private void LoadFile(FileModel selection)
     {
         SelectedFile = selection;
 
@@ -271,7 +271,7 @@ public partial class FileInfoViewModel : ObservableObject
         return resultString;
     }
 
-    private string GetFilePersonsString(FilesModel selection)
+    private string GetFilePersonsString(FileModel selection)
     {
         var personStrings = personList.Select(p => $"{p.Firstname} {p.Lastname}{Utils.GetPersonAgeInFileString(selection.Datetime, p.DateOfBirth)}");
         return string.Join("\n", personStrings);

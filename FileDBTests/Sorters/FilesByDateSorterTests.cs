@@ -9,7 +9,7 @@ namespace FileDBTests.Sorters;
 [TestClass]
 public class FilesByDateSorterTests
 {
-    private FilesModelByDateSorter sorter;
+    private FileModelByDateSorter sorter;
 
     [TestInitialize]
     public void Initialize()
@@ -22,13 +22,13 @@ public class FilesByDateSorterTests
     [TestMethod]
     public void Compare()
     {
-        var items = new List<FilesModel>()
+        var items = new List<FileModel>()
         {
-            new FilesModel() { Id = 3, Path = "a", Datetime = null },
-            new FilesModel() { Id = 1, Path = "path", Datetime = "2000-10-20" },
-            new FilesModel() { Id = 0, Path = "path", Datetime = "1999-10-20" },
-            new FilesModel() { Id = 2, Path = "path", Datetime = "2000-10-21" },
-            new FilesModel() { Id = 4, Path = "b", Datetime = null },
+            new FileModel() { Id = 3, Path = "a", Datetime = null },
+            new FileModel() { Id = 1, Path = "path", Datetime = "2000-10-20" },
+            new FileModel() { Id = 0, Path = "path", Datetime = "1999-10-20" },
+            new FileModel() { Id = 2, Path = "path", Datetime = "2000-10-21" },
+            new FileModel() { Id = 4, Path = "b", Datetime = null },
         };
 
         items.Sort(sorter);

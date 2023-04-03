@@ -10,9 +10,9 @@ public class NoDbAccess : IDbAccess
 {
     public string Database { get; set; } = string.Empty;
 
-    public IEnumerable<FilesModel> GetFiles()
+    public IEnumerable<FileModel> GetFiles()
     {
-        return new List<FilesModel>();
+        return new List<FileModel>();
     }
 
     public int GetFileCount()
@@ -20,34 +20,34 @@ public class NoDbAccess : IDbAccess
         return 0;
     }
 
-    public IEnumerable<FilesModel> SearchFilesFromIds(IEnumerable<int> fileIds)
+    public IEnumerable<FileModel> SearchFilesFromIds(IEnumerable<int> fileIds)
     {
-        return new List<FilesModel>();
+        return new List<FileModel>();
     }
 
-    public IEnumerable<FilesModel> SearchFiles(string criteria)
+    public IEnumerable<FileModel> SearchFiles(string criteria)
     {
-        return new List<FilesModel>();
+        return new List<FileModel>();
     }
 
-    public IEnumerable<FilesModel> SearchFilesBySex(Sex sex)
+    public IEnumerable<FileModel> SearchFilesBySex(Sex sex)
     {
-        return new List<FilesModel>();
+        return new List<FileModel>();
     }
 
-    public IEnumerable<FilesModel> SearchFilesByPath(string criteria)
+    public IEnumerable<FileModel> SearchFilesByPath(string criteria)
     {
-        return new List<FilesModel>();
+        return new List<FileModel>();
     }
 
-    public IEnumerable<FilesModel> SearchFilesByExtension(string extension)
+    public IEnumerable<FileModel> SearchFilesByExtension(string extension)
     {
-        return new List<FilesModel>();
+        return new List<FileModel>();
     }
 
-    public IEnumerable<FilesModel> SearchFilesRandom(int numFiles)
+    public IEnumerable<FileModel> SearchFilesRandom(int numFiles)
     {
-        return new List<FilesModel>();
+        return new List<FileModel>();
     }
 
     public IEnumerable<LocationModel> SearchLocationsNearGpsPosition(double latitude, double longitude, double radius)
@@ -55,44 +55,44 @@ public class NoDbAccess : IDbAccess
         return new List<LocationModel>();
     }
 
-    public IEnumerable<FilesModel> SearchFilesNearGpsPosition(double latitude, double longitude, double radius)
+    public IEnumerable<FileModel> SearchFilesNearGpsPosition(double latitude, double longitude, double radius)
     {
-        return new List<FilesModel>();
+        return new List<FileModel>();
     }
 
-    public FilesModel GetFileById(int id)
+    public FileModel GetFileById(int id)
     {
         throw new NotImplementedException();
     }
 
-    public FilesModel? GetFileByPath(string path)
+    public FileModel? GetFileByPath(string path)
     {
         return null;
     }
 
-    public IEnumerable<FilesModel> SearchFilesByDate(DateTime start, DateTime end)
+    public IEnumerable<FileModel> SearchFilesByDate(DateTime start, DateTime end)
     {
-        return new List<FilesModel>();
+        return new List<FileModel>();
     }
 
-    public IEnumerable<FilesModel> SearchFilesWithPersons(IEnumerable<int> personIds)
+    public IEnumerable<FileModel> SearchFilesWithPersons(IEnumerable<int> personIds)
     {
-        return new List<FilesModel>();
+        return new List<FileModel>();
     }
 
-    public IEnumerable<FilesModel> SearchFilesWithLocations(IEnumerable<int> locationIds)
+    public IEnumerable<FileModel> SearchFilesWithLocations(IEnumerable<int> locationIds)
     {
-        return new List<FilesModel>();
+        return new List<FileModel>();
     }
 
-    public IEnumerable<FilesModel> SearchFilesWithTags(IEnumerable<int> tagIds)
+    public IEnumerable<FileModel> SearchFilesWithTags(IEnumerable<int> tagIds)
     {
-        return new List<FilesModel>();
+        return new List<FileModel>();
     }
 
-    public IEnumerable<FilesModel> SearchFilesWithMissingData()
+    public IEnumerable<FileModel> SearchFilesWithMissingData()
     {
-        return new List<FilesModel>();
+        return new List<FileModel>();
     }
 
     public void InsertFile(string internalPath, string? description, IFilesystemAccess fileSystemAccess, bool findMetadata)

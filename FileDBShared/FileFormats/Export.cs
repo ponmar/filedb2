@@ -32,4 +32,4 @@ public record DatabaseExport(
     List<PersonModel> Persons,
     List<LocationModel> Locations,
     List<TagModel> Tags,
-    List<FilesModel> Files);
+    List<FileModel> Files);

@@ -142,7 +142,7 @@ public class SearchResultFilesWithOverlayExporter : ISearchResultExporter
 
         if (file.Description != null && descriptionPlacement == DescriptionPlacement.Subtitle)
         {
-            var lines = file.Description.Split(FilesModelValidator.DescriptionLineEnding);
+            var lines = file.Description.Split(FileModelValidator.DescriptionLineEnding);
             foreach (var line in lines)
             {
                 textLines.Add(new TextLine(line, TextType.Normal));

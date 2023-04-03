@@ -3,11 +3,11 @@ using FluentValidation;
 
 namespace FileDBShared.Validators;
 
-public class FilesModelValidator : AbstractValidator<FilesModel>
+public class FileModelValidator : AbstractValidator<FileModel>
 {
     public const string DescriptionLineEnding = "\n";
 
-    public FilesModelValidator()
+    public FileModelValidator()
     {
         RuleFor(x => x.Id).GreaterThanOrEqualTo(0).WithMessage("{PropertyName} must be greater than or equal to 0");
 

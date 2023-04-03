@@ -7,10 +7,10 @@ namespace FileDBInterface.DbAccess;
 
 public interface IFilesAccess
 {
-    public IEnumerable<FilesModel> GetFiles();
+    public IEnumerable<FileModel> GetFiles();
     public int GetFileCount();
-    public FilesModel? GetFileById(int id);
-    public FilesModel? GetFileByPath(string path);
+    public FileModel? GetFileById(int id);
+    public FileModel? GetFileByPath(string path);
     public void InsertFile(string internalPath, string? description, IFilesystemAccess filesystemAccess, bool findMetadata);
     public void DeleteFile(int id);
     public void UpdateFileFromMetaData(int id, IFilesystemAccess filesystemAccess);
@@ -18,18 +18,18 @@ public interface IFilesAccess
     public void UpdateFileDatetime(int id, string? datetime);
     public void UpdateFileOrientation(int id, int? orientation);
 
-    public IEnumerable<FilesModel> SearchFilesFromIds(IEnumerable<int> fileIds);
-    public IEnumerable<FilesModel> SearchFiles(string criteria);
-    public IEnumerable<FilesModel> SearchFilesBySex(Sex sex);
-    public IEnumerable<FilesModel> SearchFilesByDate(DateTime start, DateTime end);
-    public IEnumerable<FilesModel> SearchFilesByPath(string criteria);
-    public IEnumerable<FilesModel> SearchFilesByExtension(string extension);
-    public IEnumerable<FilesModel> SearchFilesRandom(int numFiles);
-    public IEnumerable<FilesModel> SearchFilesNearGpsPosition(double latitude, double longitude, double radius);
-    public IEnumerable<FilesModel> SearchFilesWithPersons(IEnumerable<int> personIds);
-    public IEnumerable<FilesModel> SearchFilesWithLocations(IEnumerable<int> locationIds);
-    public IEnumerable<FilesModel> SearchFilesWithTags(IEnumerable<int> tagIds);
-    public IEnumerable<FilesModel> SearchFilesWithMissingData();
+    public IEnumerable<FileModel> SearchFilesFromIds(IEnumerable<int> fileIds);
+    public IEnumerable<FileModel> SearchFiles(string criteria);
+    public IEnumerable<FileModel> SearchFilesBySex(Sex sex);
+    public IEnumerable<FileModel> SearchFilesByDate(DateTime start, DateTime end);
+    public IEnumerable<FileModel> SearchFilesByPath(string criteria);
+    public IEnumerable<FileModel> SearchFilesByExtension(string extension);
+    public IEnumerable<FileModel> SearchFilesRandom(int numFiles);
+    public IEnumerable<FileModel> SearchFilesNearGpsPosition(double latitude, double longitude, double radius);
+    public IEnumerable<FileModel> SearchFilesWithPersons(IEnumerable<int> personIds);
+    public IEnumerable<FileModel> SearchFilesWithLocations(IEnumerable<int> locationIds);
+    public IEnumerable<FileModel> SearchFilesWithTags(IEnumerable<int> tagIds);
+    public IEnumerable<FileModel> SearchFilesWithMissingData();
 
     public void InsertFilePerson(int fileId, int personId);
     public void DeleteFilePerson(int fileId, int personId);

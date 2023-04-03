@@ -14,7 +14,7 @@ public partial class FileCategorizationViewModel : ObservableObject
 {
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(FileSelected))]
-    private FilesModel? selectedFile;
+    private FileModel? selectedFile;
 
     public bool FileSelected => SelectedFile != null;
 
@@ -165,7 +165,7 @@ public partial class FileCategorizationViewModel : ObservableObject
         }
     }
 
-    private void LoadFile(FilesModel file)
+    private void LoadFile(FileModel file)
     {
         SelectedFile = file;
 
@@ -201,7 +201,7 @@ public partial class FileCategorizationViewModel : ObservableObject
         if (SelectedFile != null)
         {
             var fileId = SelectedFile.Id;
-            NewFileDescription = NewFileDescription?.Trim().ReplaceLineEndings(FilesModelValidator.DescriptionLineEnding);
+            NewFileDescription = NewFileDescription?.Trim().ReplaceLineEndings(FileModelValidator.DescriptionLineEnding);
             var description = string.IsNullOrEmpty(NewFileDescription) ? null : NewFileDescription;
 
             try

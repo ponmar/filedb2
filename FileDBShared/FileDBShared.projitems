@@ -11,7 +11,7 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)FileFormats\Export.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\DatabaseParsing.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Model\FilesModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\FileModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\LocationModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\PersonModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\TagModel.cs" />

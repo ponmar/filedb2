@@ -18,17 +18,17 @@ public class UtilsTests
     [TestMethod]
     public void CreateFileList_NoFiles_EmptyString()
     {
-        Assert.AreEqual(string.Empty, Utils.CreateFileList(new List<FilesModel>()));
+        Assert.AreEqual(string.Empty, Utils.CreateFileList(new List<FileModel>()));
     }
 
     [TestMethod]
     public void CreateFileList_SomeFiles_ValidFileList()
     {
-        var files = new List<FilesModel>()
+        var files = new List<FileModel>()
         {
-            new FilesModel() { Id = 1, Path = "path" },
-            new FilesModel() { Id = 2, Path = "path" },
-            new FilesModel() { Id = 3, Path = "path" },
+            new FileModel() { Id = 1, Path = "path" },
+            new FileModel() { Id = 2, Path = "path" },
+            new FileModel() { Id = 3, Path = "path" },
         };
         Assert.AreEqual("1;2;3", Utils.CreateFileList(files));
     }

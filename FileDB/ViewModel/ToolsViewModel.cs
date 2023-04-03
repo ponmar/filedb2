@@ -135,8 +135,8 @@ public partial class ToolsViewModel : ObservableObject
     {
         DabaseValidationErrors.Clear();
 
-        var filesValidator = new FilesModelValidator();
-        List<FilesModel> invalidFiles = new();
+        var filesValidator = new FileModelValidator();
+        List<FileModel> invalidFiles = new();
         foreach (var file in dbAccessRepository.DbAccess.GetFiles())
         {
             var result = filesValidator.Validate(file);
@@ -206,7 +206,7 @@ public partial class ToolsViewModel : ObservableObject
     {
         FileFinderResult = "Running, please wait...";
 
-        List<FilesModel> missingFiles = new();
+        List<FileModel> missingFiles = new();
         foreach (var file in filesystemAccessRepository.FilesystemAccess.GetFilesMissingInFilesystem(dbAccessRepository.DbAccess.GetFiles()))
         {
             missingFiles.Add(file);

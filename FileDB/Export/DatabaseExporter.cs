@@ -15,7 +15,7 @@ public class DatabaseExporter
         this.destinationDirectory = destinationDirectory;
     }
 
-    public void Export(List<PersonModel> persons, List<LocationModel> locations, List<TagModel> tags, List<FilesModel> files)
+    public void Export(List<PersonModel> persons, List<LocationModel> locations, List<TagModel> tags, List<FileModel> files)
     {
         var fileContent = new DatabaseExport(Utils.GetVersionString(), DateTime.Now, persons, locations, tags, files);
 

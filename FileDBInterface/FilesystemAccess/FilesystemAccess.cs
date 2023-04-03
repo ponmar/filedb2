@@ -99,7 +99,7 @@ public class FilesystemAccess : IFilesystemAccess
         return dirs.Select(p => ToInternalFilesPath(p));
     }
 
-    public IEnumerable<FilesModel> GetFilesMissingInFilesystem(IEnumerable<FilesModel> allFiles)
+    public IEnumerable<FileModel> GetFilesMissingInFilesystem(IEnumerable<FileModel> allFiles)
     {
         foreach (var file in allFiles)
         {

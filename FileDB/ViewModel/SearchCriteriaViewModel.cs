@@ -15,14 +15,14 @@ namespace FileDB.ViewModel;
 
 public interface ISearchResultRepository
 {
-    IEnumerable<FilesModel> Files { get; }
+    IEnumerable<FileModel> Files { get; }
 
-    FilesModel? SelectedFile { get; }
+    FileModel? SelectedFile { get; }
 }
 
 public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRepository
 {
-    public IEnumerable<FilesModel> Files { get; private set; } = Enumerable.Empty<FilesModel>();
+    public IEnumerable<FileModel> Files { get; private set; } = Enumerable.Empty<FileModel>();
 
     [ObservableProperty]
     private string numRandomFiles = "10";
@@ -155,7 +155,7 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(FileSelected))]
     [NotifyPropertyChangedFor(nameof(CurrentFileHasPosition))]
-    private FilesModel? selectedFile;
+    private FileModel? selectedFile;
 
     public bool CurrentFileHasPosition => SelectedFile != null && !string.IsNullOrEmpty(SelectedFile.Position);
 
@@ -329,7 +329,7 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
 
         var fileExtensions = SelectedFileType.GetAttribute<FileExtensionsAttribute>().FileExtensions;
 
-        var result = new List<FilesModel>();
+        var result = new List<FileModel>();
         foreach (var extension in fileExtensions)
         {
             result.AddRange(dbAccessRepository.DbAccess.SearchFilesByExtension(extension));
@@ -496,7 +496,7 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
                 return;
             }
 
-            var result = new List<FilesModel>();
+            var result = new List<FileModel>();
             var personsWithAge = dbAccessRepository.DbAccess.GetPersons().Where(p => p.DateOfBirth != null);
 
             foreach (var person in personsWithAge)

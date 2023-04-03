@@ -1,6 +1,6 @@
 ﻿namespace FileDBShared.Model;
 
-public class FilesModel
+public class FileModel
 {
     public required int Id { get; set; }
     public required string Path { get; set; } // Format: path/to/file/filename

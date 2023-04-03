@@ -3,9 +3,9 @@ using FileDBShared.Model;
 
 namespace FileDB.Sorters;
 
-public class FilesModelByDateSorter : IComparer<FilesModel>
+public class FileModelByDateSorter : IComparer<FileModel>
 {
-    public int Compare(FilesModel? x, FilesModel? y)
+    public int Compare(FileModel? x, FileModel? y)
     {
         if (x!.Datetime == y!.Datetime)
         {

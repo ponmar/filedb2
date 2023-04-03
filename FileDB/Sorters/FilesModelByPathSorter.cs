@@ -3,9 +3,9 @@ using FileDBShared.Model;
 
 namespace FileDB.Sorters;
 
-public class FilesModelByPathSorter : IComparer<FilesModel>
+public class FileModelByPathSorter : IComparer<FileModel>
 {
-    public int Compare(FilesModel? x, FilesModel? y)
+    public int Compare(FileModel? x, FileModel? y)
     {
         return x!.Path.CompareTo(y!.Path);
     }

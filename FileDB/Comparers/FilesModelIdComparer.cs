@@ -3,9 +3,9 @@ using FileDBShared.Model;
 
 namespace FileDB.Comparers;
 
-public class FilesModelIdComparer : IEqualityComparer<FilesModel>
+public class FileModelIdComparer : IEqualityComparer<FileModel>
 {
-    public int GetHashCode(FilesModel co)
+    public int GetHashCode(FileModel co)
     {
         if (co == null)
         {
@@ -14,7 +14,7 @@ public class FilesModelIdComparer : IEqualityComparer<FilesModel>
         return co.Id.GetHashCode();
     }
 
-    public bool Equals(FilesModel? x1, FilesModel? x2)
+    public bool Equals(FileModel? x1, FileModel? x2)
     {
         if (ReferenceEquals(x1, x2))
         {

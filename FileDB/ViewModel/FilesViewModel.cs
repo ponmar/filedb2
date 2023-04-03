@@ -160,7 +160,7 @@ public partial class FilesViewModel : ObservableObject
 
             try
             {
-                List<FilesModel> importedFiles = new();
+                List<FileModel> importedFiles = new();
 
                 var counter = 1;
                 foreach (var fileToAdd in filesToAdd)

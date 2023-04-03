@@ -84,7 +84,7 @@ public class SearchResultHtmlExporter : ISearchResultExporter
                     pictureDescription += ": ";
                 }
                 var htmlDescription = HttpUtility.HtmlEncode(file.Description);
-                htmlDescription = htmlDescription.Replace(FilesModelValidator.DescriptionLineEnding, "<br>");
+                htmlDescription = htmlDescription.Replace(FileModelValidator.DescriptionLineEnding, "<br>");
                 pictureDescription += htmlDescription;
             }
 

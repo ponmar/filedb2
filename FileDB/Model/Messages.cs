@@ -22,9 +22,9 @@ public record CategorizationFunctionKeyPressed(int FunctionKey);
 public record FullscreenBrowsingRequested(bool Fullscreen);
 
 public record NewSearchResult();
-public record SelectSearchResultFile(FilesModel File);
+public record SelectSearchResultFile(FileModel File);
 public record CloseSearchResultFile();
-public record RemoveFileFromSearchResult(FilesModel File);
+public record RemoveFileFromSearchResult(FileModel File);
 
 public record SelectPrevFile;
 public record SelectNextFile;
@@ -36,6 +36,6 @@ public record SelectFileInPrevDirectory;
 public record ImageLoaded(string FilePath, BitmapImage Image);
 public record ImageLoadError(string FilePath, Exception Exception);
 
-public record FilesImported(List<FilesModel> Files);
+public record FilesImported(List<FileModel> Files);
 
 public record CloseModalDialogRequest;

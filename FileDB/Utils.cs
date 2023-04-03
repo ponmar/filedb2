@@ -61,7 +61,7 @@ public static class Utils
         Process.Start("explorer", $"\"{explorerPath}\"");
     }
 
-    public static string CreateFileList(List<FilesModel> files)
+    public static string CreateFileList(List<FileModel> files)
     {
         return CreateFileList(files.Select(x => x.Id));
     }
