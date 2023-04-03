@@ -1,8 +1,6 @@
-﻿using FileDB.ViewModel;
-using FileDBShared.Model;
+﻿using FileDBShared.Model;
 using System;
 using System.Collections.Generic;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace FileDB.Model;

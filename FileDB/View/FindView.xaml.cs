@@ -1,7 +1,4 @@
 ﻿using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using FileDB.Model;
 using FileDB.ViewModel;
 
 namespace FileDB.View;

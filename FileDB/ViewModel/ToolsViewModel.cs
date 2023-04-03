@@ -6,7 +6,6 @@ using System.IO.Abstractions;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using FileDB.Configuration;
 using FileDB.Export;
 using FileDB.Model;
 using FileDBShared.Model;

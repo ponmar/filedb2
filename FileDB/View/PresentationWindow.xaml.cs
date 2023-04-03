@@ -1,8 +1,5 @@
-﻿using FileDB.Model;
-using FileDB.ViewModel;
+﻿using FileDB.ViewModel;
 using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 namespace FileDB.View;
 
