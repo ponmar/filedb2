@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Linq;
 using System.Threading;
 using System.Windows.Media.Imaging;
 
@@ -40,14 +41,13 @@ public class ImageLoader : IImageLoader
             return;
         }
 
-        /*
-        if (ImageCache.Keys.Count > 0 && ImageCache.Keys.Count >= configRepository.Config.ImageMemoryCacheCount)
+        var loadedImages = ImageCache.Values.Where(x => x.Image != null);
+        while (loadedImages.Any() && loadedImages.Count() >= configRepository.Config.ImageMemoryCacheCount)
         {
-            int randomIndex = random.Next(0, ImageCache.Keys.Count);
-            var imageToRemove = ImageCache.ElementAt(randomIndex);
-            ImageCache.TryRemove(imageToRemove);
+            int randomIndex = random.Next(0, loadedImages.Count());
+            var itemToRemove = ImageCache.ElementAt(randomIndex);
+            ImageCache.TryRemove(itemToRemove);
         }
-        */
 
         ImageCache[filePath] = new ImageLoadResult();
 
