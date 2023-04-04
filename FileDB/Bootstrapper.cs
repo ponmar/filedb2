@@ -21,6 +21,7 @@ public static class Bootstrapper
         Container.Register(
             Component.For(
                 typeof(INotificationHandling),
+                typeof(INotificationsRepository),
                 typeof(IConfigRepository),
                 typeof(IDbAccessRepository),
                 typeof(IFilesystemAccessRepository),
@@ -34,6 +35,7 @@ public static class Bootstrapper
                 typeof(ITagsRepository))
                     .ImplementedBy<DatabaseCache>());
 
+        Container.Register(Component.For<MainViewModel>().ImplementedBy<MainViewModel>());
         Container.Register(Component.For<AboutViewModel>().ImplementedBy<AboutViewModel>());
         Container.Register(Component.For<BirthdaysViewModel>().ImplementedBy<BirthdaysViewModel>());
         Container.Register(Component.For<FilesViewModel>().ImplementedBy<FilesViewModel>());

@@ -48,12 +48,12 @@ public partial class MainViewModel : ObservableObject
     private bool readWriteMode;
 
     private IConfigRepository configRepository;
-    private readonly INotificationHandling notificationHandling;
+    private readonly INotificationsRepository notificationsRepository;
 
-    public MainViewModel(IConfigRepository configRepository, INotificationHandling notificationHandling)
+    public MainViewModel(IConfigRepository configRepository, INotificationsRepository notificationsRepository)
     {
         this.configRepository = configRepository;
-        this.notificationHandling = notificationHandling;
+        this.notificationsRepository = notificationsRepository;
 
         defaultWindowState = configRepository.Config.WindowMode == WindowMode.Normal ? WindowState.Normal : WindowState.Maximized;
         defaultWindowStyle = configRepository.Config.WindowMode == WindowMode.Fullscreen ? WindowStyle.None : WindowStyle.ThreeDBorderWindow;
@@ -63,12 +63,12 @@ public partial class MainViewModel : ObservableObject
 
         readWriteMode = !configRepository.Config.ReadOnly;
 
-        NumNotifications = notificationHandling.Notifications.Count;
+        NumNotifications = notificationsRepository.Notifications.Count();
         HighlightedNotificationType = NotificationsToType();
 
         this.RegisterForEvent<NotificationsUpdated>((x) =>
         {
-            NumNotifications = notificationHandling.Notifications.Count;
+            NumNotifications = notificationsRepository.Notifications.Count();
             HighlightedNotificationType = NotificationsToType();
         });
 
@@ -87,6 +87,6 @@ public partial class MainViewModel : ObservableObject
 
     private NotificationType NotificationsToType()
     {
-        return notificationHandling.Notifications.Count > 0 ? notificationHandling.Notifications.Max(x => x.Type) : Enum.GetValues<NotificationType>().First();
+        return notificationsRepository.Notifications.Count() > 0 ? notificationsRepository.Notifications.Max(x => x.Type) : Enum.GetValues<NotificationType>().First();
     }
 }

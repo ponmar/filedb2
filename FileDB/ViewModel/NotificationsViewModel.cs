@@ -19,13 +19,15 @@ public partial class NotificationsViewModel : ObservableObject
     private readonly IDbAccessRepository dbAccessRepository;
     private readonly INotifierFactory notifierFactory;
     private readonly INotificationHandling notificationHandling;
+    private readonly INotificationsRepository notificationsRepository;
 
-    public NotificationsViewModel(IConfigRepository configRepository, IDbAccessRepository dbAccessRepository, INotifierFactory notifierFactory, INotificationHandling notificationHandling)
+    public NotificationsViewModel(IConfigRepository configRepository, IDbAccessRepository dbAccessRepository, INotifierFactory notifierFactory, INotificationHandling notificationHandling, INotificationsRepository notificationsRepository)
     {
         this.configRepository = configRepository;
         this.dbAccessRepository = dbAccessRepository;
         this.notifierFactory = notifierFactory;
         this.notificationHandling = notificationHandling;
+        this.notificationsRepository = notificationsRepository;
 
         this.RegisterForEvent<ConfigUpdated>((x) =>
         {
@@ -81,7 +83,10 @@ public partial class NotificationsViewModel : ObservableObject
     private void LoadNotifications()
     {
         Notifications.Clear();
-        notificationHandling.Notifications.ForEach(x => Notifications.Add(x));
+        foreach (var notification in notificationsRepository.Notifications)
+        {
+            Notifications.Add(notification);
+        }
         OnPropertyChanged(nameof(Notifications));
     }
 

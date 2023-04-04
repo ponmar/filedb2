@@ -8,9 +8,13 @@ using FileDBInterface.FilesystemAccess;
 
 namespace FileDB.Model;
 
-public interface INotificationHandling
+public interface INotificationsRepository
 {
-    List<Notification> Notifications { get; }
+    IEnumerable<Notification> Notifications { get; }
+}
+
+public interface INotificationHandling
+{ 
     void AddNotification(Notification notification);
     void ClearNotifications();
 }
@@ -36,7 +40,7 @@ public interface IConfigUpdater
     void UpdateConfig(Config config);
 }
 
-public class Model : INotificationHandling, IConfigRepository, IConfigUpdater, IDbAccessRepository, IFilesystemAccessRepository
+public class Model : INotificationHandling, INotificationsRepository, IConfigRepository, IConfigUpdater, IDbAccessRepository, IFilesystemAccessRepository
 {
     public IDbAccess DbAccess { get; private set; }
     public IFilesystemAccess FilesystemAccess { get; private set; }
@@ -44,7 +48,9 @@ public class Model : INotificationHandling, IConfigRepository, IConfigUpdater, I
 
     private DateTime date = DateTime.Now;
 
-    public List<Notification> Notifications { get; } = new();
+    public IEnumerable<Notification> Notifications => notifications;
+
+    private readonly List<Notification> notifications = new();
 
     public Model()
     {
@@ -68,8 +74,8 @@ public class Model : INotificationHandling, IConfigRepository, IConfigUpdater, I
 
     public void AddNotification(Notification notification)
     {
-        Notifications.RemoveAll(x => x.Message == notification.Message);
-        Notifications.Add(notification);
+        notifications.RemoveAll(x => x.Message == notification.Message);
+        notifications.Add(notification);
         Events.Send<NotificationsUpdated>();
     }
 
@@ -80,9 +86,9 @@ public class Model : INotificationHandling, IConfigRepository, IConfigUpdater, I
 
     public void ClearNotifications()
     {
-        if (Notifications.Count > 0)
+        if (notifications.Count > 0)
         {
-            Notifications.Clear();
+            notifications.Clear();
             Events.Send<NotificationsUpdated>();
         }
     }

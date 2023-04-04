@@ -12,8 +12,7 @@ namespace FileDB
         public MainWindow()
         {
             InitializeComponent();
-            var configRepository = ServiceLocator.Resolve<IConfigRepository>();
-            DataContext = new MainViewModel(configRepository, ServiceLocator.Resolve<INotificationHandling>());
+            DataContext = ServiceLocator.Resolve<MainViewModel>();
         }
 
         private void TabItem_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
