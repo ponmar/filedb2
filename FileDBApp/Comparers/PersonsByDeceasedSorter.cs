@@ -4,8 +4,8 @@ namespace FileDBApp.Comparers;
 
 public class PersonsByDeceasedSorter : IComparer<DeceasedPerson>
 {
-    public int Compare(DeceasedPerson x, DeceasedPerson y)
+    public int Compare(DeceasedPerson? x, DeceasedPerson? y)
     {
-        return x.Deceased.CompareTo(y.Deceased);
+        return x!.Deceased.CompareTo(y!.Deceased);
     }
 }
