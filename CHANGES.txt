@@ -1,3 +1,11 @@
+3.12:
+* Fix ordering of persons in some filtering scenarios at the Birthday and Rip view
+* Profile pictures use the stored image rotation at Birthday and Rip view
+* Add an image cache for faster image browsing
+* Preload images in the background while browsing a search result
+* Add settings ImageMemoryCacheCount and NumImagesToPreload
+* Remove setting CacheFiles and tool for creating that cache
+
 3.11:
 * Add a button for setting current search result file as a person profile image
 * Show a file type icon in the middle when browsing non-image files
