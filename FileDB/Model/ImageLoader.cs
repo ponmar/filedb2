@@ -44,7 +44,7 @@ public class ImageLoader : IImageLoader
         var loadedImages = ImageCache.Values.Where(x => x.Image != null);
         while (loadedImages.Any() && loadedImages.Count() >= configRepository.Config.ImageMemoryCacheCount)
         {
-            int randomIndex = random.Next(0, loadedImages.Count());
+            int randomIndex = random.Next(loadedImages.Count() - 1);
             var itemToRemove = ImageCache.ElementAt(randomIndex);
             ImageCache.TryRemove(itemToRemove);
         }
