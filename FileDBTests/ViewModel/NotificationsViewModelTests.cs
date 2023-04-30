@@ -20,6 +20,7 @@ public class NotificationsViewModelTests
     private IDbAccess fakeDbAccess;
     private INotifierFactory fakeNotifierFactory;
     private INotificationHandling fakeNotificationHandling;
+    private INotificationsRepository fakeNotificationsRepo;
 
     private NotificationsViewModel viewModel;
 
@@ -35,6 +36,7 @@ public class NotificationsViewModelTests
         fakeDbAccess = A.Fake<IDbAccess>();
         fakeNotifierFactory = A.Fake<INotifierFactory>();
         fakeNotificationHandling = A.Fake<INotificationHandling>();
+        fakeNotificationsRepo = A.Fake<INotificationsRepository>();
 
         A.CallTo(() => fakeConfigRepo.Config).Returns(config);
         A.CallTo(() => fakeDbAccessRepo.DbAccess).Returns(fakeDbAccess);
@@ -51,7 +53,7 @@ public class NotificationsViewModelTests
     [TestMethod]
     public void Constructor_NoNotifications()
     {
-        viewModel = new NotificationsViewModel(fakeConfigRepo, fakeDbAccessRepo, fakeNotifierFactory, fakeNotificationHandling);
+        viewModel = new NotificationsViewModel(fakeConfigRepo, fakeDbAccessRepo, fakeNotifierFactory, fakeNotificationHandling, fakeNotificationsRepo);
 
         Assert.AreEqual(0, viewModel.Notifications.Count);
     }
@@ -60,9 +62,9 @@ public class NotificationsViewModelTests
     public void Constructor_SomeNotifications()
     {
         var initialNotifications = SomeNotifications();
-        A.CallTo(() => fakeNotificationHandling.Notifications).Returns(initialNotifications);
+        A.CallTo(() => fakeNotificationsRepo.Notifications).Returns(initialNotifications);
         
-        viewModel = new NotificationsViewModel(fakeConfigRepo, fakeDbAccessRepo, fakeNotifierFactory, fakeNotificationHandling);
+        viewModel = new NotificationsViewModel(fakeConfigRepo, fakeDbAccessRepo, fakeNotifierFactory, fakeNotificationHandling, fakeNotificationsRepo);
 
         Assert.AreEqual(initialNotifications.Count, viewModel.Notifications.Count);
     }
@@ -71,9 +73,9 @@ public class NotificationsViewModelTests
     public void NotificationsUpdated()
     {
         var notifications = SomeNotifications();
-        A.CallTo(() => fakeNotificationHandling.Notifications).Returns(notifications);
+        A.CallTo(() => fakeNotificationsRepo.Notifications).Returns(notifications);
 
-        viewModel = new NotificationsViewModel(fakeConfigRepo, fakeDbAccessRepo, fakeNotifierFactory, fakeNotificationHandling);
+        viewModel = new NotificationsViewModel(fakeConfigRepo, fakeDbAccessRepo, fakeNotifierFactory, fakeNotificationHandling, fakeNotificationsRepo);
         
         notifications.AddRange(SomeNotifications());
         Events.Send<NotificationsUpdated>();
