@@ -65,10 +65,10 @@ public class ConfigValidator : AbstractValidator<Config>
         });
 
         RuleFor(c => c.ImageMemoryCacheCount)
-            .GreaterThanOrEqualTo(0);
+            .GreaterThan(0);
 
         RuleFor(c => c.NumImagesToPreload)
-            .GreaterThanOrEqualTo(0);
+            .GreaterThan(0);
     }
 
     private bool IsCulture(string cultureName)
