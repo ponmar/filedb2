@@ -1,3 +1,7 @@
+3.13:
+* Improve default values for ImageMemoryCacheCount and NumImagesToPreload (used when upgrading from an old config)
+* Fix crash when sometimes removing an image from the cache (smoetimes the random index was too high)
+
 3.12:
 * Fix ordering of persons in some filtering scenarios at the Birthday and Rip view
 * Profile pictures use the stored image rotation at Birthday and Rip view
