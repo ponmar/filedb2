@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Windows.Media.Imaging;
@@ -41,12 +43,18 @@ public class ImageLoader : IImageLoader
             return;
         }
 
-        var loadedImages = ImageCache.Values.Where(x => x.Image != null);
-        while (loadedImages.Any() && loadedImages.Count() >= configRepository.Config.ImageMemoryCacheCount)
+        var loadedImages = ImageCache.Values.Where(x => x.Image != null).ToList();
+        while (loadedImages.Any() && loadedImages.Count >= configRepository.Config.ImageMemoryCacheCount)
         {
-            int randomIndex = random.Next(loadedImages.Count() - 1);
-            var itemToRemove = ImageCache.ElementAt(randomIndex);
-            ImageCache.TryRemove(itemToRemove);
+            int randomIndex = random.Next(loadedImages.Count - 1);
+            var imageToRemove = loadedImages[randomIndex];
+            loadedImages.RemoveAt(randomIndex);
+
+            var itemsToRemove = ImageCache.Where(kvp => kvp.Value.Equals(imageToRemove));
+            foreach (var itemToRemove in itemsToRemove)
+            {
+                ImageCache.TryRemove(itemToRemove.Key, out _);
+            }
         }
 
         ImageCache[filePath] = new ImageLoadResult();
