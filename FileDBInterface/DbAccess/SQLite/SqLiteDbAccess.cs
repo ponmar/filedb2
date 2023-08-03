@@ -465,7 +465,7 @@ public class SqLiteDbAccess : IDbAccess
     public IEnumerable<LocationModel> GetLocationsFromFile(int fileId)
     {
         using var connection = DatabaseSetup.CreateConnection(database);
-        return connection.Query<LocationModel>("select * from [locations] where Id in (select LocationId from [filelocations] where FileId = @fileId)", new { fileid = fileId });
+        return connection.Query<LocationModel>("select * from [locations] where Id in (select LocationId from [filelocations] where FileId = @fileId)", new { fileId = fileId });
     }
 
     public int GetLocationCount()
