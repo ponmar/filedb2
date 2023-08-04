@@ -41,8 +41,8 @@
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <Button Style="{StaticResource NavigationButton}" Command="{Binding PrevFileCommand}" IsEnabled="{Binding PrevFileAvailable}" ToolTip="Go to previous (left)" Margin="3 3 3 3">&#x2B60;</Button>
                     <Button Style="{StaticResource NavigationButton}" Command="{Binding NextFileCommand}" IsEnabled="{Binding NextFileAvailable}" ToolTip="Go to next (right)" Margin="3 3 3 3">&#x2B62;</Button>
-                    <Button Style="{StaticResource NavigationButton}" Command="{Binding PrevDirectoryCommand}" IsEnabled="{Binding PrevDirectoryAvailable}" ToolTip="Go to previous directory (page down)" Margin="20 3 3 3">&#x21C7;</Button>
-                    <Button Style="{StaticResource NavigationButton}" Command="{Binding NextDirectoryCommand}" IsEnabled="{Binding NextDirectoryAvailable}" ToolTip="Go to next directory (page up)" Margin="3 3 3 3">&#x21C9;</Button>
+                    <Button Style="{StaticResource NavigationButton}" Command="{Binding PrevDirectoryCommand}" IsEnabled="{Binding PrevDirectoryAvailable}" ToolTip="Go to previous directory (page up)" Margin="20 3 3 3">&#x21C7;</Button>
+                    <Button Style="{StaticResource NavigationButton}" Command="{Binding NextDirectoryCommand}" IsEnabled="{Binding NextDirectoryAvailable}" ToolTip="Go to next directory (page down)" Margin="3 3 3 3">&#x21C9;</Button>
                     <Button Style="{StaticResource NavigationButton}" Command="{Binding FirstFileCommand}" IsEnabled="{Binding FirstFileAvailable}" ToolTip="Go to first" Margin="20 3 3 3">&#x21E4;</Button>
                     <Button Style="{StaticResource NavigationButton}" Command="{Binding LastFileCommand}" IsEnabled="{Binding LastFileAvailable}" ToolTip="Go to last" Margin="3 3 3 3">&#x21E5;</Button>
                     <ToggleButton Style="{StaticResource NavigationToggleButton}" Command="{Binding ToggleSlideshowCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" IsChecked="{Binding SlideshowActive}" ToolTip="Toggle slideshow" Margin="20 3 3 3">&#x1F39E;</ToggleButton>
