@@ -30,6 +30,7 @@ public partial class SearchResultViewModel : ObservableObject
     private readonly ISearchResultRepository searchResultRepository;
     private readonly IFilesystemAccessRepository filesystemAccessRepository;
     private readonly IImageLoader imageLoader;
+    private readonly ISpeeker speeker;
 
     private readonly Random random = new();
     private readonly DispatcherTimer slideshowTimer = new();
@@ -125,13 +126,29 @@ public partial class SearchResultViewModel : ObservableObject
 
     public bool HasNonEmptySearchResult => SearchResult != null && SearchResult.Count > 0;
 
-    public SearchResultViewModel(IConfigRepository configRepository, IDialogs dialogs, ISearchResultRepository searchResultRepository, IFilesystemAccessRepository filesystemAccessRepository, IImageLoader imageLoader)
+    [ObservableProperty]
+    private bool speekActive;
+
+    partial void OnSpeekActiveChanged(bool value)
+    {
+        if (value)
+        {
+            SpeekFileDescription();
+        }
+        else
+        {
+            speeker.CancelSpeek();
+        }
+    }
+
+    public SearchResultViewModel(IConfigRepository configRepository, IDialogs dialogs, ISearchResultRepository searchResultRepository, IFilesystemAccessRepository filesystemAccessRepository, IImageLoader imageLoader, ISpeeker speeker)
     {
         this.configRepository = configRepository;
         this.dialogs = dialogs;
         this.searchResultRepository = searchResultRepository;
         this.filesystemAccessRepository = filesystemAccessRepository;
         this.imageLoader = imageLoader;
+        this.speeker = speeker;
 
         slideshowTimer.Tick += SlideshowTimer_Tick;
         slideshowTimer.Interval = TimeSpan.FromSeconds(configRepository.Config.SlideshowDelay);
@@ -396,8 +413,26 @@ public partial class SearchResultViewModel : ObservableObject
                 var fileAbsolutePath = filesystemAccessRepository.FilesystemAccess.ToAbsolutePath(preLoadFile.Path);
                 imageLoader.LoadImage(fileAbsolutePath);
             }
+
+            SpeekFileDescription();
         }
     }
+
+    private void SpeekFileDescription()
+    {
+        if (SpeekActive && HasNonEmptySearchResult)
+        {
+            var selection = SearchResult!.Files[SelectedFileIndex];
+            if (selection.Description is not null)
+            {
+                speeker.Speek(selection.Description!);
+            }
+            else
+            {
+                speeker.CancelSpeek();
+            }
+        }
+    }    
 
     public bool PrevFileAvailable => SelectedFileIndex > 0;
     public bool NextFileAvailable => searchResult != null && SelectedFileIndex < searchResult.Count - 1;
