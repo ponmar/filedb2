@@ -18,7 +18,7 @@ public class AboutViewModel : ObservableObject
 
     public string Changes => File.Exists(ChangesFilePath) ? File.ReadAllText(ChangesFilePath) : "Not deployed";
 
-    public string Heading => $"About {Utils.ApplicationName} version {Utils.GetVersionString()}";
+    public string Version => $"{Utils.ApplicationName} version {Utils.GetVersionString()}";
 
     public ObservableCollection<LicenseFileFormatDto> Licenses { get; } = new();
 

@@ -79,6 +79,19 @@ public partial class SettingsViewModel : ObservableObject
     [ObservableProperty]
     private CultureInfo? selectedCulture;
 
+    partial void OnSelectedCultureChanged(CultureInfo? value)
+    {
+        // TODO: trigger reloading of strings
+        if (value is not null)
+        {
+            Utils.SetUICulture(value);
+        }
+        else
+        {
+            Utils.SetInvariantUICulture();
+        }
+    }
+
     public List<WindowModeDescription> WindowModes => Utils.GetWindowModes();
 
     [ObservableProperty]

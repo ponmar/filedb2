@@ -321,4 +321,67 @@
   <data name="SearchCombineResultLabel" xml:space="preserve">
     <value>Result:</value>
   </data>
+  <data name="AboutHeader" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="AboutVersionHeader" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="AboutGettingStartedHeader" xml:space="preserve">
+    <value>Getting Started</value>
+  </data>
+  <data name="AboutNotesHeader" xml:space="preserve">
+    <value>Notes About Your Files Collection</value>
+  </data>
+  <data name="AboutCommandLineArgumentsHeader" xml:space="preserve">
+    <value>Command Line Arguments</value>
+  </data>
+  <data name="AboutDownloadsHeader" xml:space="preserve">
+    <value>Downloads</value>
+  </data>
+  <data name="AboutChangelogHeader" xml:space="preserve">
+    <value>Changelog</value>
+  </data>
+  <data name="AboutLicenseHeader" xml:space="preserve">
+    <value>License</value>
+  </data>
+  <data name="AboutNuGetPackageLicensesHeader" xml:space="preserve">
+    <value>NuGet Package Licenses</value>
+  </data>
+  <data name="AboutGettingStarted1" xml:space="preserve">
+    <value>Play around with the included demo (files and meta-data). It is activated by default when no local configuration exists or by using a command line argument (see below).</value>
+  </data>
+  <data name="AboutGettingStarted2" xml:space="preserve">
+    <value>Cleanup your files collection (see guideline below)</value>
+  </data>
+  <data name="AboutGettingStarted3" xml:space="preserve">
+    <value>Add file meta-data from the files collection</value>
+  </data>
+  <data name="AboutGettingStarted4" xml:space="preserve">
+    <value>Tag persons, locations and tags</value>
+  </data>
+  <data name="AboutGettingStarted5" xml:space="preserve">
+    <value>Find your wanted pictures and run slideshows!</value>
+  </data>
+  <data name="AboutNotes1" xml:space="preserve">
+    <value>FileDB only modifies data in the configured database. It does not modify any files in your files collection. Files are read when importing meta-data and when viewing files.</value>
+  </data>
+  <data name="AboutNotes2" xml:space="preserve">
+    <value>Although any directory structure can be imported to FileDB, take a moment to think about the directory structure before importing the meta-data. This layout has been proven to work very well:</value>
+  </data>
+  <data name="AboutNotes3" xml:space="preserve">
+    <value>If you rename or delete files that has been imported to FileDB you need to remove the FileDB meta-data as well (and possibly add them again). A tool will be provided in the future that helps out with this procedure.</value>
+  </data>
+  <data name="AboutCommandLineArgDemoText" xml:space="preserve">
+    <value>Enable demo configuration to play around with</value>
+  </data>
+  <data name="AboutDownloadsReleases" xml:space="preserve">
+    <value>Releases:</value>
+  </data>
+  <data name="AboutDownloadsClickToOpen" xml:space="preserve">
+    <value>Click to open</value>
+  </data>
+  <data name="AboutLicense" xml:space="preserve">
+    <value>MIT (see LICENSE.txt)</value>
+  </data>
 </root>

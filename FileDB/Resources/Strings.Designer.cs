@@ -61,6 +61,195 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Changelog.
+        /// </summary>
+        public static string AboutChangelogHeader {
+            get {
+                return ResourceManager.GetString("AboutChangelogHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable demo configuration to play around with.
+        /// </summary>
+        public static string AboutCommandLineArgDemoText {
+            get {
+                return ResourceManager.GetString("AboutCommandLineArgDemoText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Command Line Arguments.
+        /// </summary>
+        public static string AboutCommandLineArgumentsHeader {
+            get {
+                return ResourceManager.GetString("AboutCommandLineArgumentsHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click to open.
+        /// </summary>
+        public static string AboutDownloadsClickToOpen {
+            get {
+                return ResourceManager.GetString("AboutDownloadsClickToOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Downloads.
+        /// </summary>
+        public static string AboutDownloadsHeader {
+            get {
+                return ResourceManager.GetString("AboutDownloadsHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Releases:.
+        /// </summary>
+        public static string AboutDownloadsReleases {
+            get {
+                return ResourceManager.GetString("AboutDownloadsReleases", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play around with the included demo (files and meta-data). It is activated by default when no local configuration exists or by using a command line argument (see below)..
+        /// </summary>
+        public static string AboutGettingStarted1 {
+            get {
+                return ResourceManager.GetString("AboutGettingStarted1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cleanup your files collection (see guideline below).
+        /// </summary>
+        public static string AboutGettingStarted2 {
+            get {
+                return ResourceManager.GetString("AboutGettingStarted2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add file meta-data from the files collection.
+        /// </summary>
+        public static string AboutGettingStarted3 {
+            get {
+                return ResourceManager.GetString("AboutGettingStarted3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tag persons, locations and tags.
+        /// </summary>
+        public static string AboutGettingStarted4 {
+            get {
+                return ResourceManager.GetString("AboutGettingStarted4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find your wanted pictures and run slideshows!.
+        /// </summary>
+        public static string AboutGettingStarted5 {
+            get {
+                return ResourceManager.GetString("AboutGettingStarted5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Getting Started.
+        /// </summary>
+        public static string AboutGettingStartedHeader {
+            get {
+                return ResourceManager.GetString("AboutGettingStartedHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to About.
+        /// </summary>
+        public static string AboutHeader {
+            get {
+                return ResourceManager.GetString("AboutHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MIT (see LICENSE.txt).
+        /// </summary>
+        public static string AboutLicense {
+            get {
+                return ResourceManager.GetString("AboutLicense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to License.
+        /// </summary>
+        public static string AboutLicenseHeader {
+            get {
+                return ResourceManager.GetString("AboutLicenseHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FileDB only modifies data in the configured database. It does not modify any files in your files collection. Files are read when importing meta-data and when viewing files..
+        /// </summary>
+        public static string AboutNotes1 {
+            get {
+                return ResourceManager.GetString("AboutNotes1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Although any directory structure can be imported to FileDB, take a moment to think about the directory structure before importing the meta-data. This layout has been proven to work very well:.
+        /// </summary>
+        public static string AboutNotes2 {
+            get {
+                return ResourceManager.GetString("AboutNotes2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If you rename or delete files that has been imported to FileDB you need to remove the FileDB meta-data as well (and possibly add them again). A tool will be provided in the future that helps out with this procedure..
+        /// </summary>
+        public static string AboutNotes3 {
+            get {
+                return ResourceManager.GetString("AboutNotes3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notes About Your Files Collection.
+        /// </summary>
+        public static string AboutNotesHeader {
+            get {
+                return ResourceManager.GetString("AboutNotesHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NuGet Package Licenses.
+        /// </summary>
+        public static string AboutNuGetPackageLicensesHeader {
+            get {
+                return ResourceManager.GetString("AboutNuGetPackageLicensesHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version.
+        /// </summary>
+        public static string AboutVersionHeader {
+            get {
+                return ResourceManager.GetString("AboutVersionHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Seach files between dates.
         /// </summary>
         public static string SeachFilesBetweenDatesToolTip {

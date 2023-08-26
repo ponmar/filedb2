@@ -4,15 +4,21 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:FileDB.View"
+             xmlns:rs="clr-namespace:FileDB.Resources"
              xmlns:viewmodel="clr-namespace:FileDB.ViewModel"
              d:DataContext="{d:DesignInstance Type=viewmodel:AboutViewModel}"
              mc:Ignorable="d"
-             d:DesignHeight="1000" d:DesignWidth="800">
+             d:DesignHeight="1300" d:DesignWidth="800">
     <DockPanel>
-        <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageHeading}" Text="{Binding Heading}"></TextBlock>
+        <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageHeading}" Text="{x:Static rs:Strings.AboutHeader}"/>
         <ScrollViewer>
             <StackPanel Orientation="Vertical" Style="{StaticResource PageStackPanel}">
-                <TextBlock Style="{StaticResource PageSubHeading}">Getting Started</TextBlock>
+                <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.AboutVersionHeader}"/>
+                <Border Style="{StaticResource BorderGroup}">
+                    <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageTextBlock}" Text="{Binding Version}"/>
+                </Border>
+
+                <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.AboutGettingStartedHeader}"/>
                 <Border Style="{StaticResource BorderGroup}">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -27,27 +33,27 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="1."/>
-                        <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="Play around with the included demo (files and meta-data). It is activated by default when no local configuration exists or by using a command line argument (see below)."/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="{x:Static rs:Strings.AboutGettingStarted1}"/>
 
                         <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="2."/>
-                        <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="Cleanup your files collection (see guideline below)"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="{x:Static rs:Strings.AboutGettingStarted2}"/>
 
                         <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="3."/>
-                        <TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="Add file meta-data from the files collection"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="{x:Static rs:Strings.AboutGettingStarted3}"/>
 
                         <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="4."/>
-                        <TextBlock Grid.Row="3" Grid.Column="1" Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="Tag persons, locations and tags"/>
+                        <TextBlock Grid.Row="3" Grid.Column="1" Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="{x:Static rs:Strings.AboutGettingStarted4}"/>
 
                         <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="5."/>
-                        <TextBlock Grid.Row="4" Grid.Column="1" Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="Find your wanted pictures and run slideshows!"/>
+                        <TextBlock Grid.Row="4" Grid.Column="1" Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="{x:Static rs:Strings.AboutGettingStarted5}"/>
                     </Grid>
                 </Border>
 
-                <TextBlock Style="{StaticResource PageSubHeading}">Notes About Your Files Collection</TextBlock>
+                <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.AboutNotesHeader}"/>
                 <Border Style="{StaticResource BorderGroup}">
                     <StackPanel Orientation="Vertical" Style="{StaticResource PageStackPanel}">
-                        <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap">FileDB only modifies data in the configured database. It does not modify any files in your files collection. Files are read when importing meta-data and when viewing files.</TextBlock>
-                        <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap">Although any directory structure can be imported to FileDB, take a moment to think about the directory structure before importing the meta-data. This layout has been proven to work very well:</TextBlock>
+                        <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="{x:Static rs:Strings.AboutNotes1}"/>
+                        <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="{x:Static rs:Strings.AboutNotes2}"/>
 
                         <TreeView Margin="10" Style="{StaticResource PageTreeView}" IsHitTestVisible="False">
                             <TreeViewItem Header="root" IsExpanded="True" Style="{StaticResource PageTreeViewItem}">
@@ -69,41 +75,41 @@
                             </TreeViewItem>
                         </TreeView>
 
-                        <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap">If you rename or delete files that has been imported to FileDB you need to remove the FileDB meta-data as well (and possibly add them again). A tool will be provided in the future that helps out with this procedure.</TextBlock>
+                        <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="{x:Static rs:Strings.AboutNotes3}"/>
                     </StackPanel>
                 </Border>
 
-                <TextBlock Style="{StaticResource PageSubHeading}">Command Line Arguments</TextBlock>
+                <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.AboutCommandLineArgumentsHeader}"/>
                 <Border Style="{StaticResource BorderGroup}">
                     <StackPanel Orientation="Horizontal" Style="{StaticResource PageStackPanel}">
-                        <TextBlock Style="{StaticResource PageTextBlock}">--demo</TextBlock>
-                        <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap">Enable demo configuration to play around with</TextBlock>
+                        <TextBlock Style="{StaticResource PageTextBlock}" Text="--demo"/>
+                        <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="{x:Static rs:Strings.AboutCommandLineArgDemoText}"/>
                     </StackPanel>
                 </Border>
 
-                <TextBlock Style="{StaticResource PageSubHeading}">Downloads</TextBlock>
+                <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.AboutDownloadsHeader}"/>
                 <Border Style="{StaticResource BorderGroup}">
                     <StackPanel Orientation="Horizontal" Style="{StaticResource PageStackPanel}">
-                        <TextBlock Style="{StaticResource PageTextBlock}" Text="Releases:"/>
+                        <TextBlock Style="{StaticResource PageTextBlock}" Text="{x:Static rs:Strings.AboutDownloadsReleases}"/>
                         <TextBlock Style="{StaticResource PageTextBlock}">
                             <Hyperlink NavigateUri="{Binding DownloadLink}" RequestNavigate="OpenUri">
-                                <TextBlock Text="Click to open" ToolTip="{Binding DownloadLink}"/>
+                                <TextBlock Text="{x:Static rs:Strings.AboutDownloadsClickToOpen}" ToolTip="{Binding DownloadLink}"/>
                             </Hyperlink>
                         </TextBlock>
                     </StackPanel>
                 </Border>
 
-                <TextBlock Style="{StaticResource PageSubHeading}">Changelog</TextBlock>
+                <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.AboutChangelogHeader}"/>
                 <Border Style="{StaticResource BorderGroup}">
                     <TextBlock Style="{StaticResource PageTextBlock}" Margin="20" Text="{Binding Changes}" TextWrapping="Wrap"/>
                 </Border>
 
-                <TextBlock Style="{StaticResource PageSubHeading}">License</TextBlock>
+                <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.AboutLicenseHeader}"/>
                 <Border Style="{StaticResource BorderGroup}">
-                    <TextBlock Style="{StaticResource PageTextBlock}" Margin="20" Text="MIT (see LICENSE.txt)"/>
+                    <TextBlock Style="{StaticResource PageTextBlock}" Margin="20" Text="{x:Static rs:Strings.AboutLicense}"/>
                 </Border>
-                
-                <TextBlock Style="{StaticResource PageSubHeading}">NuGet Package Licenses</TextBlock>
+
+                <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.AboutNuGetPackageLicensesHeader}"/>
                 <Border Style="{StaticResource BorderGroup}">
                     <ListView ItemsSource="{Binding Licenses}" Grid.IsSharedSizeScope="True" Background="Transparent" BorderThickness="0" Margin="10">
                         <ListView.ItemTemplate>
