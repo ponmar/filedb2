@@ -384,4 +384,19 @@
   <data name="AboutLicense" xml:space="preserve">
     <value>MIT (see LICENSE.txt)</value>
   </data>
+  <data name="AddLocationNameLabel" xml:space="preserve">
+    <value>Name:</value>
+  </data>
+  <data name="AddLocationDescriptionLabel" xml:space="preserve">
+    <value>Description (optional):</value>
+  </data>
+  <data name="AddLocationPositionLabel" xml:space="preserve">
+    <value>GPS position (optional):</value>
+  </data>
+  <data name="AddLocationPositionToolTip" xml:space="preserve">
+    <value>latitude longitude</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Save</value>
+  </data>
 </root>

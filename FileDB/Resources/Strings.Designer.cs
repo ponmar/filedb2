@@ -250,6 +250,51 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Description (optional):.
+        /// </summary>
+        public static string AddLocationDescriptionLabel {
+            get {
+                return ResourceManager.GetString("AddLocationDescriptionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name:.
+        /// </summary>
+        public static string AddLocationNameLabel {
+            get {
+                return ResourceManager.GetString("AddLocationNameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GPS position (optional):.
+        /// </summary>
+        public static string AddLocationPositionLabel {
+            get {
+                return ResourceManager.GetString("AddLocationPositionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to latitude longitude.
+        /// </summary>
+        public static string AddLocationPositionToolTip {
+            get {
+                return ResourceManager.GetString("AddLocationPositionToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string SaveButton {
+            get {
+                return ResourceManager.GetString("SaveButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Seach files between dates.
         /// </summary>
         public static string SeachFilesBetweenDatesToolTip {

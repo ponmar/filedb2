@@ -27,17 +27,17 @@
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="Name:"/>
+                <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="{x:Static rs:Strings.AddLocationNameLabel}"/>
                 <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource PageTextBox}" Width="100" Text="{Binding Name}" x:Name="TextBoxWithInitialFocus"/>
 
-                <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="Description (optional):"/>
+                <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="{x:Static rs:Strings.AddLocationDescriptionLabel}"/>
                 <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource PageTextBox}" Width="100" Text="{Binding Description}"/>
 
-                <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="GPS position (optional):"/>
-                <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource PageTextBox}" Width="100" Text="{Binding Position}" ToolTip="latitude longitude"/>
+                <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="{x:Static rs:Strings.AddLocationPositionLabel}"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource PageTextBox}" Width="100" Text="{Binding Position}" ToolTip="{x:Static rs:Strings.AddLocationPositionToolTip}"/>
             </Grid>
         </Border>
 
-        <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SaveCommand}">Save</Button>
+        <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SaveCommand}" Content="{x:Static rs:Strings.SaveButton}"/>
     </StackPanel>
 </Window>
