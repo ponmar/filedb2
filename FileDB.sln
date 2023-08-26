@@ -67,6 +67,7 @@ Global
 		{F8779775-0828-4579-80CC-313C3DCBC6C9} = {5137B3DC-331D-42AB-963B-070292CE70A8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
+		RESX_MoveToResources = {"Items":[{"Extensions":".cs,.vb","Patterns":"$File.$Key|$File.$Key|StringResourceKey.$Key|$Namespace.StringResourceKey.$Key|nameof($File.$Key), ResourceType = typeof($File)|ErrorMessageResourceType = typeof($File), ErrorMessageResourceName = nameof($File.$Key)"},{"Extensions":".cshtml,.vbhtml","Patterns":"@$Namespace.$File.$Key|@$File.$Key|@StringResourceKey.$Key|@$Namespace.StringResourceKey.$Key"},{"Extensions":".cpp,.c,.hxx,.h","Patterns":"$File::$Key"},{"Extensions":".aspx,.ascx","Patterns":"<%$ Resources:$File,$Key %>|<%= $File.$Key %>|<%= $Namespace.$File.$Key %>"},{"Extensions":".xaml","Patterns":"\"{x:Static rs:$File.$Key}\""},{"Extensions":".ts","Patterns":"resources.$Key"},{"Extensions":".html","Patterns":"{{ resources.$Key }}"}]}
 		SolutionGuid = {08E00FB7-E14F-46E8-95BF-67CC9B9F40CA}
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution

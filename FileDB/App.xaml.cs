@@ -10,7 +10,6 @@ using FileDBInterface.DbAccess;
 using FileDBInterface.FilesystemAccess;
 using TextCopy;
 using System.Collections.Generic;
-using System.Globalization;
 using FileDB.Model;
 using System.IO.Abstractions;
 
@@ -24,9 +23,7 @@ namespace FileDB
         private void Application_Startup(object sender, StartupEventArgs startupEventArgs)
         {
             Bootstrapper.Bootstrap();
-
             Utils.SetInvariantCulture();
-
             bool demoModeEnabled = startupEventArgs.Args.Any(x => x == "--demo");
 
             var appDataConfig = new AppDataConfig<Config>(Utils.ApplicationName, ServiceLocator.Resolve<IFileSystem>());
@@ -61,9 +58,10 @@ namespace FileDB
                 }
             }
 
+            // Note: system UI culture will be used as default when no culture specified
             if (config.CultureOverride != null)
             {
-                CultureInfo.CurrentCulture = new CultureInfo(config.CultureOverride, false);
+                Utils.SetUICulture(config.CultureOverride);
             }
 
             IDbAccess dbAccess;

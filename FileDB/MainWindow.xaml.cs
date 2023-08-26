@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using FileDB.Model;
 using FileDB.ViewModel;
 
 namespace FileDB

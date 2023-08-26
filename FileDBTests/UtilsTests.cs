@@ -68,6 +68,16 @@ public class UtilsTests
     }
 
     [TestMethod]
+    public void CreateShortFilePositionString_SwedishUICulture()
+    {
+        Utils.SetInvariantCulture();
+        Utils.SetUICulture("se");
+
+        var result = Utils.CreateShortFilePositionString("50.123456789 49.987654321");
+        Assert.AreEqual("50.123... 49.988...", result);
+    }
+
+    [TestMethod]
     public void CreatePositionLink()
     {
         var result = Utils.CreatePositionLink("10.5 11.2", "https://example.com/LAT_LON");

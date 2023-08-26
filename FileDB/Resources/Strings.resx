@@ -1,0 +1,324 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="SearchTextLabel" xml:space="preserve">
+    <value>Text:</value>
+  </data>
+  <data name="SearchTextToolTip" xml:space="preserve">
+    <value>Search criteria for text (matches file path/description)</value>
+  </data>
+  <data name="SearchButton" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="SearchFileTypeLabel" xml:space="preserve">
+    <value>File type:</value>
+  </data>
+  <data name="SearchBrowseButton" xml:space="preserve">
+    <value>Browse...</value>
+  </data>
+  <data name="SearchNewFilesButton" xml:space="preserve">
+    <value>New files</value>
+  </data>
+  <data name="SearchAllWithoutMetaDataButton" xml:space="preserve">
+    <value>All without meta-data</value>
+  </data>
+  <data name="SearchAllFilesButton" xml:space="preserve">
+    <value>All files</value>
+  </data>
+  <data name="SearchAllFromCurrentDirectoryButton" xml:space="preserve">
+    <value>All from current directory</value>
+  </data>
+  <data name="SearchUniqueButton" xml:space="preserve">
+    <value>Unique</value>
+  </data>
+  <data name="SearchGroupButton" xml:space="preserve">
+    <value>Group</value>
+  </data>
+  <data name="SearchAnyButton" xml:space="preserve">
+    <value>Any</value>
+  </data>
+  <data name="SearchFromCurrentFileButton" xml:space="preserve">
+    <value>From current file</value>
+  </data>
+  <data name="SearchComplementButton" xml:space="preserve">
+    <value>Complement</value>
+  </data>
+  <data name="SearchForFilesWithinSelectedDirectoryToolTip" xml:space="preserve">
+    <value>Search for files within selected directory</value>
+  </data>
+  <data name="SearchAllFilesToolTip" xml:space="preserve">
+    <value>Search all files</value>
+  </data>
+  <data name="SearchAllFilesWithinCurrentFileDirectoryToolTip" xml:space="preserve">
+    <value>Search all files within current file directory (recursive)</value>
+  </data>
+  <data name="SearchNewFilesButtonToolTip" xml:space="preserve">
+    <value>Search for newly added files meta-data</value>
+  </data>
+  <data name="SeachFilesByTypeToolTip" xml:space="preserve">
+    <value>Seach files by type</value>
+  </data>
+  <data name="SeachFilesBetweenDatesToolTip" xml:space="preserve">
+    <value>Seach files between dates</value>
+  </data>
+  <data name="SearchRandomFilesToolTip" xml:space="preserve">
+    <value>Search random files</value>
+  </data>
+  <data name="SearchPersonsToolTip" xml:space="preserve">
+    <value>Persons</value>
+  </data>
+  <data name="SearchByOnlySelectedPersonToolTip" xml:space="preserve">
+    <value>Search by only selected person</value>
+  </data>
+  <data name="SearchBySelectedPersonAndOthersToolTip" xml:space="preserve">
+    <value>Search by selected person and others</value>
+  </data>
+  <data name="SearchBySelectedPersonToolTip" xml:space="preserve">
+    <value>Search by selected person</value>
+  </data>
+  <data name="SearchPerson1ToolTip" xml:space="preserve">
+    <value>Person #1</value>
+  </data>
+  <data name="SearchPerson2ToolTip" xml:space="preserve">
+    <value>Person #2</value>
+  </data>
+  <data name="SearchByOnlySelectedPersonsToolTip" xml:space="preserve">
+    <value>Search by only selected persons</value>
+  </data>
+  <data name="SearchBySelectedPersonsAndOthersToolTip" xml:space="preserve">
+    <value>Search by selected persons and others</value>
+  </data>
+  <data name="SearchBySelectedPersonsToolTip" xml:space="preserve">
+    <value>Search by selected persons</value>
+  </data>
+  <data name="SearchLocationsToolTip" xml:space="preserve">
+    <value>Locations</value>
+  </data>
+  <data name="SearchByLocationToolTip" xml:space="preserve">
+    <value>Search by location</value>
+  </data>
+  <data name="SearchTagsToolTip" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="SearchByTagToolTip" xml:space="preserve">
+    <value>Search by tag</value>
+  </data>
+  <data name="SearchFromAgeYearsToolTip" xml:space="preserve">
+    <value>From age (years)</value>
+  </data>
+  <data name="SearchToAgeYearsToolTip" xml:space="preserve">
+    <value>To age (years)</value>
+  </data>
+  <data name="SearchForFileWithPersonsOfTheSpecifiedAgeToolTip" xml:space="preserve">
+    <value>Search for file with persons of the specified age</value>
+  </data>
+  <data name="SearchBySexToolTip" xml:space="preserve">
+    <value>Search by sex (ISO/IEC 5218)</value>
+  </data>
+  <data name="SearchFormatLATLONToolTip" xml:space="preserve">
+    <value>Format: LAT LON</value>
+  </data>
+  <data name="SearchRadiusInMetersToolTip" xml:space="preserve">
+    <value>Radius in meters</value>
+  </data>
+  <data name="SeachFilesInSpecifiedAreaToolTip" xml:space="preserve">
+    <value>Seach files in specified area</value>
+  </data>
+  <data name="SearchByFileListToolTip" xml:space="preserve">
+    <value>Search by file list</value>
+  </data>
+  <data name="SearchAllFilesExceptWhatWasSpecifiedToolTip" xml:space="preserve">
+    <value>Search all files except what was specified</value>
+  </data>
+  <data name="SearchAllFilesFromSearch1ThatAlsoBelongToSearch2ToolTip" xml:space="preserve">
+    <value>All files from search 1 that also belong to search 2</value>
+  </data>
+  <data name="SearchAllFilesFromSearch1And2ToolTip" xml:space="preserve">
+    <value>All files from search 1 and 2</value>
+  </data>
+  <data name="SearchAllFilesThatAreInEitherOfTheSearchesButNotInTheirIntersectionToolTip" xml:space="preserve">
+    <value>All files that are in either of the searches, but not in their intersection</value>
+  </data>
+  <data name="SearchIntersectionButton" xml:space="preserve">
+    <value>Intersection</value>
+  </data>
+  <data name="SearchUnionButton" xml:space="preserve">
+    <value>Union</value>
+  </data>
+  <data name="SearchDifferenceButton" xml:space="preserve">
+    <value>Difference</value>
+  </data>
+  <data name="SearchCopyButton" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="SearchOpenButton" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="SearchBasicLabel" xml:space="preserve">
+    <value>Basic</value>
+  </data>
+  <data name="SearchFileDateLabel" xml:space="preserve">
+    <value>File date:</value>
+  </data>
+  <data name="SearchRandomFilesLabel" xml:space="preserve">
+    <value>Random files:</value>
+  </data>
+  <data name="SearchCategoriesLabel" xml:space="preserve">
+    <value>Categories</value>
+  </data>
+  <data name="SearchPersonAgeLabel" xml:space="preserve">
+    <value>Person age:</value>
+  </data>
+  <data name="SearchPersonSexLabel" xml:space="preserve">
+    <value>Person sex:</value>
+  </data>
+  <data name="SearchPositionLabel" xml:space="preserve">
+    <value>Position</value>
+  </data>
+  <data name="SearchLocationWithGPSPositionLabel" xml:space="preserve">
+    <value>Location (with GPS position):</value>
+  </data>
+  <data name="SearchGoogleMapsURLLabel" xml:space="preserve">
+    <value>Google Maps URL:</value>
+  </data>
+  <data name="SearchLatitudeLongitudeLabel" xml:space="preserve">
+    <value>Latitude longitude:</value>
+  </data>
+  <data name="SearchRadiusLabel" xml:space="preserve">
+    <value>Radius [m]:</value>
+  </data>
+  <data name="SearchAdvancedLabel" xml:space="preserve">
+    <value>Advanced</value>
+  </data>
+  <data name="SearchFileListLabel" xml:space="preserve">
+    <value>File list:</value>
+  </data>
+  <data name="SearchCombineLabel" xml:space="preserve">
+    <value>Combine</value>
+  </data>
+  <data name="SearchCombineSearch1Label" xml:space="preserve">
+    <value>Search 1:</value>
+  </data>
+  <data name="SearchCombineSearch2Label" xml:space="preserve">
+    <value>Search 2:</value>
+  </data>
+  <data name="SearchCombineResultLabel" xml:space="preserve">
+    <value>Result:</value>
+  </data>
+</root>

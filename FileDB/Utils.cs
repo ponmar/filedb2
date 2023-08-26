@@ -33,9 +33,29 @@ public static class Utils
 
     public static void SetInvariantCulture()
     {
-        CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
-        Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
-        Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
+        SetCulture(CultureInfo.InvariantCulture);
+    }
+
+    public static void SetCulture(CultureInfo culture)
+    {
+        Thread.CurrentThread.CurrentCulture = culture;
+        CultureInfo.DefaultThreadCurrentCulture = culture;
+    }
+
+    public static void SetInvariantUICulture()
+    {
+        SetUICulture(CultureInfo.InvariantCulture);
+    }
+
+    public static void SetUICulture(string cultureName)
+    {
+        SetUICulture(new CultureInfo(cultureName));
+    }
+
+    public static void SetUICulture(CultureInfo culture)
+    {
+        Thread.CurrentThread.CurrentUICulture = culture;
+        CultureInfo.DefaultThreadCurrentUICulture = culture;
     }
 
     public static void OpenUriInBrowser(string uri)
