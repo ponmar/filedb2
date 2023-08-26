@@ -367,6 +367,15 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Name:.
+        /// </summary>
+        public static string AddTagNameLabel {
+            get {
+                return ResourceManager.GetString("AddTagNameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         public static string SaveButton {

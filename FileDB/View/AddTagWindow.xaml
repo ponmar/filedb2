@@ -25,11 +25,11 @@
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="Name:"/>
+                <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="{x:Static rs:Strings.AddTagNameLabel}"/>
                 <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource PageTextBox}" Width="100" Text="{Binding Name}" x:Name="TextBoxWithInitialFocus"/>
             </Grid>
         </Border>
 
-        <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SaveCommand}">Save</Button>
+        <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SaveCommand}" Content="{x:Static rs:Strings.SaveButton}"/>
     </StackPanel>
 </Window>
