@@ -8,7 +8,7 @@
         xmlns:viewmodel="clr-namespace:FileDB.ViewModel"
         d:DataContext="{d:DesignInstance Type=viewmodel:BrowseDirectoriesViewModel}"
         mc:Ignorable="d"
-        Title="Browse..."
+        Title="{x:Static rs:Strings.BrowseDirectoriesTitle}"
         Width="500"
         Height="400" 
         ResizeMode="NoResize"
@@ -24,7 +24,7 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         
-        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageInnerTextBlock}" Margin="5" Text="Select your directory:"/>
+        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageInnerTextBlock}" Margin="5" Text="{x:Static rs:Strings.BrowseDirectoriesSelectYourDirectoryLabel}"/>
         <local:ExtendedTreeView Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Folders}" SelectedItem_="{Binding SelectedFolder, Mode=TwoWay}" Style="{StaticResource PageTreeView}" Margin="5">
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Folders}" DataType="{x:Type viewmodel:IFolder}">
@@ -32,6 +32,6 @@
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
         </local:ExtendedTreeView>
-        <Button Grid.Row="2" Grid.Column="0" Margin="5" Width="100" Style="{StaticResource NormalButton}" Command="{Binding SelectFolderCommand}" ToolTip="Search for files within selected directory" HorizontalAlignment="Right">Select</Button>
+        <Button Grid.Row="2" Grid.Column="0" Margin="5" Width="100" Style="{StaticResource NormalButton}" Command="{Binding SelectFolderCommand}" ToolTip="{x:Static rs:Strings.BrowseDirectoriesSelectToolTip}" HorizontalAlignment="Right" Content="{x:Static rs:Strings.BrowseDirectoriesSelectButton}"/>
     </Grid>
 </Window>

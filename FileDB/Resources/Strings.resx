@@ -441,4 +441,16 @@
   <data name="RipFilterLabel" xml:space="preserve">
     <value>Filter:</value>
   </data>
+  <data name="BrowseDirectoriesTitle" xml:space="preserve">
+    <value>Browse...</value>
+  </data>
+  <data name="BrowseDirectoriesSelectYourDirectoryLabel" xml:space="preserve">
+    <value>Select your directory:</value>
+  </data>
+  <data name="BrowseDirectoriesSelectButton" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="BrowseDirectoriesSelectToolTip" xml:space="preserve">
+    <value>Search for files within selected directory</value>
+  </data>
 </root>

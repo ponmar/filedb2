@@ -394,6 +394,42 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select.
+        /// </summary>
+        public static string BrowseDirectoriesSelectButton {
+            get {
+                return ResourceManager.GetString("BrowseDirectoriesSelectButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search for files within selected directory.
+        /// </summary>
+        public static string BrowseDirectoriesSelectToolTip {
+            get {
+                return ResourceManager.GetString("BrowseDirectoriesSelectToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select your directory:.
+        /// </summary>
+        public static string BrowseDirectoriesSelectYourDirectoryLabel {
+            get {
+                return ResourceManager.GetString("BrowseDirectoriesSelectYourDirectoryLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Browse....
+        /// </summary>
+        public static string BrowseDirectoriesTitle {
+            get {
+                return ResourceManager.GetString("BrowseDirectoriesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Filter:.
         /// </summary>
         public static string RipFilterLabel {
