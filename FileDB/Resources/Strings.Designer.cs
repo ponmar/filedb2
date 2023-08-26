@@ -286,6 +286,87 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Date of birth (optional):.
+        /// </summary>
+        public static string AddPersonDateOfBirthLabel {
+            get {
+                return ResourceManager.GetString("AddPersonDateOfBirthLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deceased (optional):.
+        /// </summary>
+        public static string AddPersonDeceasedLabel {
+            get {
+                return ResourceManager.GetString("AddPersonDeceasedLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description (optional):.
+        /// </summary>
+        public static string AddPersonDescriptionLabel {
+            get {
+                return ResourceManager.GetString("AddPersonDescriptionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Firstname:.
+        /// </summary>
+        public static string AddPersonFirstnameLabel {
+            get {
+                return ResourceManager.GetString("AddPersonFirstnameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lastname:.
+        /// </summary>
+        public static string AddPersonLastnameLabel {
+            get {
+                return ResourceManager.GetString("AddPersonLastnameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profile picture file id (optional):.
+        /// </summary>
+        public static string AddPersonProfilePictureFileIdLabel {
+            get {
+                return ResourceManager.GetString("AddPersonProfilePictureFileIdLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set current file.
+        /// </summary>
+        public static string AddPersonSetCurrentFileLabel {
+            get {
+                return ResourceManager.GetString("AddPersonSetCurrentFileLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set profile picture from the selected file in current search result.
+        /// </summary>
+        public static string AddPersonSetCurrentFileToolTip {
+            get {
+                return ResourceManager.GetString("AddPersonSetCurrentFileToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sex (ISO/IEC 5218):.
+        /// </summary>
+        public static string AddPersonSexLabel {
+            get {
+                return ResourceManager.GetString("AddPersonSexLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         public static string SaveButton {

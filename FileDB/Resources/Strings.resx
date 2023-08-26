@@ -399,4 +399,31 @@
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="AddPersonFirstnameLabel" xml:space="preserve">
+    <value>Firstname:</value>
+  </data>
+  <data name="AddPersonLastnameLabel" xml:space="preserve">
+    <value>Lastname:</value>
+  </data>
+  <data name="AddPersonSexLabel" xml:space="preserve">
+    <value>Sex (ISO/IEC 5218):</value>
+  </data>
+  <data name="AddPersonDescriptionLabel" xml:space="preserve">
+    <value>Description (optional):</value>
+  </data>
+  <data name="AddPersonDateOfBirthLabel" xml:space="preserve">
+    <value>Date of birth (optional):</value>
+  </data>
+  <data name="AddPersonDeceasedLabel" xml:space="preserve">
+    <value>Deceased (optional):</value>
+  </data>
+  <data name="AddPersonProfilePictureFileIdLabel" xml:space="preserve">
+    <value>Profile picture file id (optional):</value>
+  </data>
+  <data name="AddPersonSetCurrentFileLabel" xml:space="preserve">
+    <value>Set current file</value>
+  </data>
+  <data name="AddPersonSetCurrentFileToolTip" xml:space="preserve">
+    <value>Set profile picture from the selected file in current search result</value>
+  </data>
 </root>

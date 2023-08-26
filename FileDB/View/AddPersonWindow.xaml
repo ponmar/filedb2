@@ -32,30 +32,30 @@
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="Firstname:"/>
+                <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="{x:Static rs:Strings.AddPersonFirstnameLabel}"/>
                 <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource PageTextBox}" Width="150" Text="{Binding Firstname}" x:Name="TextBoxWithInitialFocus"/>
 
-                <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="Lastname:"/>
+                <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="{x:Static rs:Strings.AddPersonLastnameLabel}"/>
                 <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource PageTextBox}" Width="150" Text="{Binding Lastname}"/>
 
-                <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="Sex (ISO/IEC 5218):"/>
+                <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="{x:Static rs:Strings.AddPersonSexLabel}"/>
                 <ComboBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource PageComboBox}" Width="150" ItemsSource="{Binding SexValues}" SelectedItem="{Binding SexSelection}"/>
 
-                <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="Description (optional):"/>
+                <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="{x:Static rs:Strings.AddPersonDescriptionLabel}"/>
                 <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource PageTextBox}" Width="150" Text="{Binding Description}"/>
 
-                <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="Date of birth (optional):"/>
+                <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="{x:Static rs:Strings.AddPersonDateOfBirthLabel}"/>
                 <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource PageTextBox}" Width="150" Text="{Binding DateOfBirth}" ToolTip="YYYY-MM-DD, YYYY-MM or YYYY"/>
 
-                <TextBlock Grid.Row="5" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="Deceased (optional):"/>
+                <TextBlock Grid.Row="5" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="{x:Static rs:Strings.AddPersonDeceasedLabel}"/>
                 <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource PageTextBox}" Width="150" Text="{Binding Deceased}" ToolTip="YYYY-MM-DD, YYYY-MM or YYYY"/>
 
-                <TextBlock Grid.Row="6" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="Profile picture file id (optional):"/>
+                <TextBlock Grid.Row="6" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="{x:Static rs:Strings.AddPersonProfilePictureFileIdLabel}"/>
                 <TextBlock Grid.Row="6" Grid.Column="1" Style="{StaticResource PageTextBlock}" Text="{Binding ProfilePictureFileId}"/>
-                <Button Grid.Row="6" Grid.Column="2" Style="{StaticResource NormalButton}" Content="Set current file" ToolTip="Set profile picture from the selected file in current search result" Command="{Binding SetProfilePictureFromSearchResultCommand}" IsEnabled="{Binding CanSetProfilePicture}"/>
+                <Button Grid.Row="6" Grid.Column="2" Style="{StaticResource NormalButton}" Content="{x:Static rs:Strings.AddPersonSetCurrentFileLabel}" ToolTip="{x:Static rs:Strings.AddPersonSetCurrentFileToolTip}" Command="{Binding SetProfilePictureFromSearchResultCommand}" IsEnabled="{Binding CanSetProfilePicture}"/>
             </Grid>
         </Border>
 
-        <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SaveCommand}">Save</Button>
+        <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SaveCommand}" Content="{x:Static rs:Strings.SaveButton}"/>
     </StackPanel>
 </Window>
