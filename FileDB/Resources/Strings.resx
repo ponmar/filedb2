@@ -429,4 +429,16 @@
   <data name="AddTagNameLabel" xml:space="preserve">
     <value>Name:</value>
   </data>
+  <data name="BirthdaysHeading" xml:space="preserve">
+    <value>Birthdays</value>
+  </data>
+  <data name="BirthdaysFilterLabel" xml:space="preserve">
+    <value>Filter:</value>
+  </data>
+  <data name="RipHeading" xml:space="preserve">
+    <value>Rest in Peace</value>
+  </data>
+  <data name="RipFilterLabel" xml:space="preserve">
+    <value>Filter:</value>
+  </data>
 </root>

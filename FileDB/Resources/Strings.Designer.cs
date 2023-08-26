@@ -376,6 +376,42 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Filter:.
+        /// </summary>
+        public static string BirthdaysFilterLabel {
+            get {
+                return ResourceManager.GetString("BirthdaysFilterLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Birthdays.
+        /// </summary>
+        public static string BirthdaysHeading {
+            get {
+                return ResourceManager.GetString("BirthdaysHeading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filter:.
+        /// </summary>
+        public static string RipFilterLabel {
+            get {
+                return ResourceManager.GetString("RipFilterLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rest in Peace.
+        /// </summary>
+        public static string RipHeading {
+            get {
+                return ResourceManager.GetString("RipHeading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         public static string SaveButton {
