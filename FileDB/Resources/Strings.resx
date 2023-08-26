@@ -453,4 +453,16 @@
   <data name="BrowseDirectoriesSelectToolTip" xml:space="preserve">
     <value>Search for files within selected directory</value>
   </data>
+  <data name="CreateDatabaseTitle" xml:space="preserve">
+    <value>Create Database</value>
+  </data>
+  <data name="CreateDatabasePathLabel" xml:space="preserve">
+    <value>Path to .db file:</value>
+  </data>
+  <data name="CreateDatabaseBrowseButton" xml:space="preserve">
+    <value>Browse...</value>
+  </data>
+  <data name="CreateDatabaseCreateButton" xml:space="preserve">
+    <value>Create</value>
+  </data>
 </root>

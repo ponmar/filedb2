@@ -8,7 +8,7 @@
     xmlns:rs="clr-namespace:FileDB.Resources"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodel="clr-namespace:FileDB.ViewModel"
-    Title="Create Database"
+    Title="{x:Static rs:Strings.CreateDatabaseTitle}"
     d:DataContext="{d:DesignInstance Type=viewmodel:CreateDatabaseViewModel}"
     FocusManager.FocusedElement="{Binding ElementName=TextBoxWithInitialFocus}"
     ResizeMode="NoResize"
@@ -36,9 +36,8 @@
                     Grid.Column="0"
                     Margin="10,10,3,10"
                     VerticalAlignment="Center"
-                    Style="{StaticResource PageTextBlock}">
-                    Path to .db file:
-                </TextBlock>
+                    Style="{StaticResource PageTextBlock}" Text="{x:Static rs:Strings.CreateDatabasePathLabel}"/>
+
                 <TextBox
                     Grid.Row="0"
                     Grid.Column="1"
@@ -52,9 +51,8 @@
                     Margin="3,10,10,10"
                     VerticalAlignment="Center"
                     Command="{Binding SelectCommand}"
-                    Style="{StaticResource NormalButton}">
-                    Browse...
-                </Button>
+                    Style="{StaticResource NormalButton}" Content="{x:Static rs:Strings.CreateDatabaseBrowseButton}"/>
+
             </Grid>
         </Border>
 
@@ -62,8 +60,6 @@
             Margin="5"
             Command="{Binding CreateCommand}"
             IsEnabled="{Binding DatabasePath, Converter={StaticResource StringContentToBoolConverter}}"
-            Style="{StaticResource NormalButton}">
-            Create
-        </Button>
+            Style="{StaticResource NormalButton}" Content="{x:Static rs:Strings.CreateDatabaseCreateButton}"/>
     </StackPanel>
 </Window>

@@ -430,6 +430,42 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Browse....
+        /// </summary>
+        public static string CreateDatabaseBrowseButton {
+            get {
+                return ResourceManager.GetString("CreateDatabaseBrowseButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create.
+        /// </summary>
+        public static string CreateDatabaseCreateButton {
+            get {
+                return ResourceManager.GetString("CreateDatabaseCreateButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Path to .db file:.
+        /// </summary>
+        public static string CreateDatabasePathLabel {
+            get {
+                return ResourceManager.GetString("CreateDatabasePathLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create Database.
+        /// </summary>
+        public static string CreateDatabaseTitle {
+            get {
+                return ResourceManager.GetString("CreateDatabaseTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Filter:.
         /// </summary>
         public static string RipFilterLabel {
