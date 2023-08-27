@@ -466,6 +466,105 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Browse....
+        /// </summary>
+        public static string ExportBrowseButton {
+            get {
+                return ResourceManager.GetString("ExportBrowseButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Destination directory:.
+        /// </summary>
+        public static string ExportDestinationLabel {
+            get {
+                return ResourceManager.GetString("ExportDestinationLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export....
+        /// </summary>
+        public static string ExportExportButton {
+            get {
+                return ResourceManager.GetString("ExportExportButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Header:.
+        /// </summary>
+        public static string ExportHeaderLabel {
+            get {
+                return ResourceManager.GetString("ExportHeaderLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy files to destination directory.
+        /// </summary>
+        public static string ExportHeaderToolTip {
+            get {
+                return ResourceManager.GetString("ExportHeaderToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to HTML with meta-data and search result files.
+        /// </summary>
+        public static string ExportHTMLWithMetaDataAndSearchResultFilesLabel {
+            get {
+                return ResourceManager.GetString("ExportHTMLWithMetaDataAndSearchResultFilesLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to M3U playlist.
+        /// </summary>
+        public static string ExportM3UPlaylistLabel {
+            get {
+                return ResourceManager.GetString("ExportM3UPlaylistLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search result files.
+        /// </summary>
+        public static string ExportSearchResultFilesLabel {
+            get {
+                return ResourceManager.GetString("ExportSearchResultFilesLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search result files with meta-data.
+        /// </summary>
+        public static string ExportSearchResultFilesWithMetaDataLabel {
+            get {
+                return ResourceManager.GetString("ExportSearchResultFilesWithMetaDataLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search result meta-data (JSON).
+        /// </summary>
+        public static string ExportSearchResultMetaDataJSONLabel {
+            get {
+                return ResourceManager.GetString("ExportSearchResultMetaDataJSONLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export.
+        /// </summary>
+        public static string ExportTitle {
+            get {
+                return ResourceManager.GetString("ExportTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Filter:.
         /// </summary>
         public static string RipFilterLabel {

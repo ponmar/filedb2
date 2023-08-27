@@ -465,4 +465,37 @@
   <data name="CreateDatabaseCreateButton" xml:space="preserve">
     <value>Create</value>
   </data>
+  <data name="ExportTitle" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="ExportHeaderLabel" xml:space="preserve">
+    <value>Header:</value>
+  </data>
+  <data name="ExportHeaderToolTip" xml:space="preserve">
+    <value>Copy files to destination directory</value>
+  </data>
+  <data name="ExportDestinationLabel" xml:space="preserve">
+    <value>Destination directory:</value>
+  </data>
+  <data name="ExportBrowseButton" xml:space="preserve">
+    <value>Browse...</value>
+  </data>
+  <data name="ExportSearchResultFilesLabel" xml:space="preserve">
+    <value>Search result files</value>
+  </data>
+  <data name="ExportM3UPlaylistLabel" xml:space="preserve">
+    <value>M3U playlist</value>
+  </data>
+  <data name="ExportHTMLWithMetaDataAndSearchResultFilesLabel" xml:space="preserve">
+    <value>HTML with meta-data and search result files</value>
+  </data>
+  <data name="ExportSearchResultFilesWithMetaDataLabel" xml:space="preserve">
+    <value>Search result files with meta-data</value>
+  </data>
+  <data name="ExportSearchResultMetaDataJSONLabel" xml:space="preserve">
+    <value>Search result meta-data (JSON)</value>
+  </data>
+  <data name="ExportExportButton" xml:space="preserve">
+    <value>Export...</value>
+  </data>
 </root>
