@@ -117,4 +117,385 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="SearchTextLabel" xml:space="preserve">
+    <value>Text:</value>
+  </data>
+  <data name="SearchTextToolTip" xml:space="preserve">
+    <value>Sökkriterier för text (matchar filsökväg/beskrivning)</value>
+  </data>
+  <data name="SearchButton" xml:space="preserve">
+    <value>Sök</value>
+  </data>
+  <data name="SearchFileTypeLabel" xml:space="preserve">
+    <value>Filtyp:</value>
+  </data>
+  <data name="SearchBrowseButton" xml:space="preserve">
+    <value>Bläddra...</value>
+  </data>
+  <data name="SearchNewFilesButton" xml:space="preserve">
+    <value>Nya filer</value>
+  </data>
+  <data name="SearchAllWithoutMetaDataButton" xml:space="preserve">
+    <value>Allt utan metadata</value>
+  </data>
+  <data name="SearchAllFilesButton" xml:space="preserve">
+    <value>Alla filer</value>
+  </data>
+  <data name="SearchAllFromCurrentDirectoryButton" xml:space="preserve">
+    <value>Allt från nuvarande katalog</value>
+  </data>
+  <data name="SearchUniqueButton" xml:space="preserve">
+    <value>Unika</value>
+  </data>
+  <data name="SearchGroupButton" xml:space="preserve">
+    <value>Grupp</value>
+  </data>
+  <data name="SearchAnyButton" xml:space="preserve">
+    <value>Hur som helst</value>
+  </data>
+  <data name="SearchFromCurrentFileButton" xml:space="preserve">
+    <value>Från nuvarande fil</value>
+  </data>
+  <data name="SearchComplementButton" xml:space="preserve">
+    <value>Tillägg</value>
+  </data>
+  <data name="SearchForFilesWithinSelectedDirectoryToolTip" xml:space="preserve">
+    <value>Sök efter filer i den valda katalogen</value>
+  </data>
+  <data name="SearchAllFilesToolTip" xml:space="preserve">
+    <value>Sök alla filer</value>
+  </data>
+  <data name="SearchAllFilesWithinCurrentFileDirectoryToolTip" xml:space="preserve">
+    <value>Sök alla filer i aktuell filkatalog (rekursiv)</value>
+  </data>
+  <data name="SearchNewFilesButtonToolTip" xml:space="preserve">
+    <value>Sök efter metadata bland nyligen tillagda filer</value>
+  </data>
+  <data name="SeachFilesByTypeToolTip" xml:space="preserve">
+    <value>Sök filer efter typ</value>
+  </data>
+  <data name="SeachFilesBetweenDatesToolTip" xml:space="preserve">
+    <value>Sök efter filer mellan datum</value>
+  </data>
+  <data name="SearchRandomFilesToolTip" xml:space="preserve">
+    <value>Sök slumpmässiga filer</value>
+  </data>
+  <data name="SearchPersonsToolTip" xml:space="preserve">
+    <value>Personer</value>
+  </data>
+  <data name="SearchByOnlySelectedPersonToolTip" xml:space="preserve">
+    <value>Sök endast efter vald person</value>
+  </data>
+  <data name="SearchBySelectedPersonAndOthersToolTip" xml:space="preserve">
+    <value>Sök efter vald person och andra</value>
+  </data>
+  <data name="SearchBySelectedPersonToolTip" xml:space="preserve">
+    <value>Sök efter vald person</value>
+  </data>
+  <data name="SearchPerson1ToolTip" xml:space="preserve">
+    <value>Person #1</value>
+  </data>
+  <data name="SearchPerson2ToolTip" xml:space="preserve">
+    <value>Person #2</value>
+  </data>
+  <data name="SearchByOnlySelectedPersonsToolTip" xml:space="preserve">
+    <value>Sök endast efter utvalda personer</value>
+  </data>
+  <data name="SearchBySelectedPersonsAndOthersToolTip" xml:space="preserve">
+    <value>Sök efter valda personer och andra</value>
+  </data>
+  <data name="SearchBySelectedPersonsToolTip" xml:space="preserve">
+    <value>Sök efter valda personer</value>
+  </data>
+  <data name="SearchLocationsToolTip" xml:space="preserve">
+    <value>Platser</value>
+  </data>
+  <data name="SearchByLocationToolTip" xml:space="preserve">
+    <value>Sök på område</value>
+  </data>
+  <data name="SearchTagsToolTip" xml:space="preserve">
+    <value>Taggar</value>
+  </data>
+  <data name="SearchByTagToolTip" xml:space="preserve">
+    <value>Sök efter tagg</value>
+  </data>
+  <data name="SearchFromAgeYearsToolTip" xml:space="preserve">
+    <value>Från ålder (år)</value>
+  </data>
+  <data name="SearchToAgeYearsToolTip" xml:space="preserve">
+    <value>Till ålder (år)</value>
+  </data>
+  <data name="SearchForFileWithPersonsOfTheSpecifiedAgeToolTip" xml:space="preserve">
+    <value>Sök efter fil med personer i den angivna åldern</value>
+  </data>
+  <data name="SearchBySexToolTip" xml:space="preserve">
+    <value>Sök efter kön (ISO/IEC 5218)</value>
+  </data>
+  <data name="SearchFormatLATLONToolTip" xml:space="preserve">
+    <value>Format: LAT LON</value>
+  </data>
+  <data name="SearchRadiusInMetersToolTip" xml:space="preserve">
+    <value>Radie i meter</value>
+  </data>
+  <data name="SeachFilesInSpecifiedAreaToolTip" xml:space="preserve">
+    <value>Sök efter filer i angivet område</value>
+  </data>
+  <data name="SearchByFileListToolTip" xml:space="preserve">
+    <value>Sök efter fillista</value>
+  </data>
+  <data name="SearchAllFilesExceptWhatWasSpecifiedToolTip" xml:space="preserve">
+    <value>Sök i alla filer förutom vad som angavs</value>
+  </data>
+  <data name="SearchAllFilesFromSearch1ThatAlsoBelongToSearch2ToolTip" xml:space="preserve">
+    <value>Alla filer från sökning 1 som också tillhör sökning 2</value>
+  </data>
+  <data name="SearchAllFilesFromSearch1And2ToolTip" xml:space="preserve">
+    <value>Alla filer från sökning 1 och 2</value>
+  </data>
+  <data name="SearchAllFilesThatAreInEitherOfTheSearchesButNotInTheirIntersectionToolTip" xml:space="preserve">
+    <value>Alla filer som finns i någon av sökningarna, men inte i deras korsning</value>
+  </data>
+  <data name="SearchIntersectionButton" xml:space="preserve">
+    <value>Korsning</value>
+  </data>
+  <data name="SearchUnionButton" xml:space="preserve">
+    <value>Union</value>
+  </data>
+  <data name="SearchDifferenceButton" xml:space="preserve">
+    <value>Differens</value>
+  </data>
+  <data name="SearchCopyButton" xml:space="preserve">
+    <value>Kopiera</value>
+  </data>
+  <data name="SearchOpenButton" xml:space="preserve">
+    <value>Öppna</value>
+  </data>
+  <data name="SearchBasicLabel" xml:space="preserve">
+    <value>Grundläggande</value>
+  </data>
+  <data name="SearchFileDateLabel" xml:space="preserve">
+    <value>Fildatum:</value>
+  </data>
+  <data name="SearchRandomFilesLabel" xml:space="preserve">
+    <value>Slumpmässiga filer:</value>
+  </data>
+  <data name="SearchCategoriesLabel" xml:space="preserve">
+    <value>Kategorier</value>
+  </data>
+  <data name="SearchPersonAgeLabel" xml:space="preserve">
+    <value>Personens ålder:</value>
+  </data>
+  <data name="SearchPersonSexLabel" xml:space="preserve">
+    <value>Personens kön:</value>
+  </data>
+  <data name="SearchPositionLabel" xml:space="preserve">
+    <value>Position</value>
+  </data>
+  <data name="SearchLocationWithGPSPositionLabel" xml:space="preserve">
+    <value>Plats (med GPS-position):</value>
+  </data>
+  <data name="SearchGoogleMapsURLLabel" xml:space="preserve">
+    <value>Google Maps URL:</value>
+  </data>
+  <data name="SearchLatitudeLongitudeLabel" xml:space="preserve">
+    <value>Latitud longitud:</value>
+  </data>
+  <data name="SearchRadiusLabel" xml:space="preserve">
+    <value>Radie [m]:</value>
+  </data>
+  <data name="SearchAdvancedLabel" xml:space="preserve">
+    <value>Avancerat</value>
+  </data>
+  <data name="SearchFileListLabel" xml:space="preserve">
+    <value>Fillista:</value>
+  </data>
+  <data name="SearchCombineLabel" xml:space="preserve">
+    <value>Kombinera</value>
+  </data>
+  <data name="SearchCombineSearch1Label" xml:space="preserve">
+    <value>Sök 1:</value>
+  </data>
+  <data name="SearchCombineSearch2Label" xml:space="preserve">
+    <value>Sök 2:</value>
+  </data>
+  <data name="SearchCombineResultLabel" xml:space="preserve">
+    <value>Resultat:</value>
+  </data>
+  <data name="AboutHeader" xml:space="preserve">
+    <value>Om</value>
+  </data>
+  <data name="AboutVersionHeader" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="AboutGettingStartedHeader" xml:space="preserve">
+    <value>Kom igång</value>
+  </data>
+  <data name="AboutNotesHeader" xml:space="preserve">
+    <value>Anteckningar om din filsamling</value>
+  </data>
+  <data name="AboutCommandLineArgumentsHeader" xml:space="preserve">
+    <value>Kommandoradsargument</value>
+  </data>
+  <data name="AboutDownloadsHeader" xml:space="preserve">
+    <value>Nedladdningar</value>
+  </data>
+  <data name="AboutChangelogHeader" xml:space="preserve">
+    <value>Ändringslogg</value>
+  </data>
+  <data name="AboutLicenseHeader" xml:space="preserve">
+    <value>Licens</value>
+  </data>
+  <data name="AboutNuGetPackageLicensesHeader" xml:space="preserve">
+    <value>NuGet-paketlicenser</value>
+  </data>
+  <data name="AboutGettingStarted1" xml:space="preserve">
+    <value>Lek med den medföljande demon (filer och metadata). Den aktiveras som standard när ingen lokal konfiguration finns eller genom att använda ett kommandoradsargument (se nedan).</value>
+  </data>
+  <data name="AboutGettingStarted2" xml:space="preserve">
+    <value>Rensa din filsamling (se riktlinjen nedan)</value>
+  </data>
+  <data name="AboutGettingStarted3" xml:space="preserve">
+    <value>Lägg till filmetadata från filsamlingen</value>
+  </data>
+  <data name="AboutGettingStarted4" xml:space="preserve">
+    <value>Tagga personer, platser och taggar</value>
+  </data>
+  <data name="AboutGettingStarted5" xml:space="preserve">
+    <value>Hitta dina önskade bilder och kör bildspel!</value>
+  </data>
+  <data name="AboutNotes1" xml:space="preserve">
+    <value>FileDB ändrar endast data i den konfigurerade databasen. Det ändrar inte några filer i din filsamling. Filer läses vid import av metadata och vid visning av filer.</value>
+  </data>
+  <data name="AboutNotes2" xml:space="preserve">
+    <value>Även om alla katalogstrukturer kan importeras till FileDB, ta en stund att tänka på katalogstrukturen innan du importerar metadata. Denna katalogstruktur har visat sig fungera mycket bra:</value>
+  </data>
+  <data name="AboutNotes3" xml:space="preserve">
+    <value>Om du byter namn på eller tar bort filer som har importerats till FileDB måste du också ta bort FileDB-metadata (och eventuellt lägga till dem igen). Ett verktyg kommer att tillhandahållas i framtiden som hjälper till med denna procedur.</value>
+  </data>
+  <data name="AboutCommandLineArgDemoText" xml:space="preserve">
+    <value>Aktivera demokonfiguration att leka med</value>
+  </data>
+  <data name="AboutDownloadsReleases" xml:space="preserve">
+    <value>Lanseringar:</value>
+  </data>
+  <data name="AboutDownloadsClickToOpen" xml:space="preserve">
+    <value>Klicka för att öppna</value>
+  </data>
+  <data name="AboutLicense" xml:space="preserve">
+    <value>MIT (se LICENSE.txt)</value>
+  </data>
+  <data name="AddLocationNameLabel" xml:space="preserve">
+    <value>Namn:</value>
+  </data>
+  <data name="AddLocationDescriptionLabel" xml:space="preserve">
+    <value>Beskrivning (valfri):</value>
+  </data>
+  <data name="AddLocationPositionLabel" xml:space="preserve">
+    <value>GPS-position (valfritt):</value>
+  </data>
+  <data name="AddLocationPositionToolTip" xml:space="preserve">
+    <value>Latitud Longitud</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Spara</value>
+  </data>
+  <data name="AddPersonFirstnameLabel" xml:space="preserve">
+    <value>Förnamn:</value>
+  </data>
+  <data name="AddPersonLastnameLabel" xml:space="preserve">
+    <value>Efternamn:</value>
+  </data>
+  <data name="AddPersonSexLabel" xml:space="preserve">
+    <value>Kön (ISO/IEC 5218):</value>
+  </data>
+  <data name="AddPersonDescriptionLabel" xml:space="preserve">
+    <value>Beskrivning (valfri):</value>
+  </data>
+  <data name="AddPersonDateOfBirthLabel" xml:space="preserve">
+    <value>Födelsedatum (valfritt):</value>
+  </data>
+  <data name="AddPersonDeceasedLabel" xml:space="preserve">
+    <value>Avliden (valfri):</value>
+  </data>
+  <data name="AddPersonProfilePictureFileIdLabel" xml:space="preserve">
+    <value>Profilbildsfil-ID (valfri):</value>
+  </data>
+  <data name="AddPersonSetCurrentFileLabel" xml:space="preserve">
+    <value>Sätt aktuell fil</value>
+  </data>
+  <data name="AddPersonSetCurrentFileToolTip" xml:space="preserve">
+    <value>Använd profilbild från den valda filen i nuvarande sökresultat</value>
+  </data>
+  <data name="AddTagNameLabel" xml:space="preserve">
+    <value>Namn:</value>
+  </data>
+  <data name="BirthdaysHeading" xml:space="preserve">
+    <value>Födelsedagar</value>
+  </data>
+  <data name="BirthdaysFilterLabel" xml:space="preserve">
+    <value>Filter:</value>
+  </data>
+  <data name="RipHeading" xml:space="preserve">
+    <value>Vila i fred</value>
+  </data>
+  <data name="RipFilterLabel" xml:space="preserve">
+    <value>Filter:</value>
+  </data>
+  <data name="BrowseDirectoriesTitle" xml:space="preserve">
+    <value>Bläddra...</value>
+  </data>
+  <data name="BrowseDirectoriesSelectYourDirectoryLabel" xml:space="preserve">
+    <value>Välj din katalog:</value>
+  </data>
+  <data name="BrowseDirectoriesSelectButton" xml:space="preserve">
+    <value>Välj</value>
+  </data>
+  <data name="BrowseDirectoriesSelectToolTip" xml:space="preserve">
+    <value>Sök efter filer i den valda katalogen</value>
+  </data>
+  <data name="CreateDatabaseTitle" xml:space="preserve">
+    <value>Skapa databas</value>
+  </data>
+  <data name="CreateDatabasePathLabel" xml:space="preserve">
+    <value>Sökväg till .db-fil:</value>
+  </data>
+  <data name="CreateDatabaseBrowseButton" xml:space="preserve">
+    <value>Bläddra...</value>
+  </data>
+  <data name="CreateDatabaseCreateButton" xml:space="preserve">
+    <value>Skapa</value>
+  </data>
+  <data name="ExportTitle" xml:space="preserve">
+    <value>Exportera</value>
+  </data>
+  <data name="ExportHeaderLabel" xml:space="preserve">
+    <value>Header:</value>
+  </data>
+  <data name="ExportHeaderToolTip" xml:space="preserve">
+    <value>Kopiera filer till destinationskatalogen</value>
+  </data>
+  <data name="ExportDestinationLabel" xml:space="preserve">
+    <value>Målkatalog:</value>
+  </data>
+  <data name="ExportBrowseButton" xml:space="preserve">
+    <value>Bläddra...</value>
+  </data>
+  <data name="ExportSearchResultFilesLabel" xml:space="preserve">
+    <value>Sökresultatfiler</value>
+  </data>
+  <data name="ExportM3UPlaylistLabel" xml:space="preserve">
+    <value>Spellista</value>
+  </data>
+  <data name="ExportHTMLWithMetaDataAndSearchResultFilesLabel" xml:space="preserve">
+    <value>HTML med metadata och sökresultatfiler</value>
+  </data>
+  <data name="ExportSearchResultFilesWithMetaDataLabel" xml:space="preserve">
+    <value>Sökresultatfiler med metadata</value>
+  </data>
+  <data name="ExportSearchResultMetaDataJSONLabel" xml:space="preserve">
+    <value>Metadata för sökresultat (JSON)</value>
+  </data>
+  <data name="ExportExportButton" xml:space="preserve">
+    <value>Exportera...</value>
+  </data>
 </root>
