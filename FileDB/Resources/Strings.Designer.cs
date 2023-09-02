@@ -169,15 +169,6 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to About.
-        /// </summary>
-        public static string AboutHeader {
-            get {
-                return ResourceManager.GetString("AboutHeader", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to MIT (see LICENSE.txt).
         /// </summary>
         public static string AboutLicense {
@@ -237,6 +228,15 @@ namespace FileDB.Resources {
         public static string AboutNuGetPackageLicensesHeader {
             get {
                 return ResourceManager.GetString("AboutNuGetPackageLicensesHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to About.
+        /// </summary>
+        public static string AboutTitle {
+            get {
+                return ResourceManager.GetString("AboutTitle", resourceCulture);
             }
         }
         
@@ -387,9 +387,9 @@ namespace FileDB.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Birthdays.
         /// </summary>
-        public static string BirthdaysHeading {
+        public static string BirthdaysTitle {
             get {
-                return ResourceManager.GetString("BirthdaysHeading", resourceCulture);
+                return ResourceManager.GetString("BirthdaysTitle", resourceCulture);
             }
         }
         
@@ -462,6 +462,15 @@ namespace FileDB.Resources {
         public static string CreateDatabaseTitle {
             get {
                 return ResourceManager.GetString("CreateDatabaseTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exit.
+        /// </summary>
+        public static string ExitToolTip {
+            get {
+                return ResourceManager.GetString("ExitToolTip", resourceCulture);
             }
         }
         
@@ -565,6 +574,15 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Files.
+        /// </summary>
+        public static string FilesTitle {
+            get {
+                return ResourceManager.GetString("FilesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add....
         /// </summary>
         public static string LocationsAddButton {
@@ -606,6 +624,33 @@ namespace FileDB.Resources {
         public static string LocationsTitle {
             get {
                 return ResourceManager.GetString("LocationsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dismiss all.
+        /// </summary>
+        public static string NotificationsDismissAllButton {
+            get {
+                return ResourceManager.GetString("NotificationsDismissAllButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No notifications available..
+        /// </summary>
+        public static string NotificationsNoNotificationsAvailable {
+            get {
+                return ResourceManager.GetString("NotificationsNoNotificationsAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notifications.
+        /// </summary>
+        public static string NotificationsTitle {
+            get {
+                return ResourceManager.GetString("NotificationsTitle", resourceCulture);
             }
         }
         
@@ -657,9 +702,9 @@ namespace FileDB.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Rest in Peace.
         /// </summary>
-        public static string RipHeading {
+        public static string RipTitle {
             get {
-                return ResourceManager.GetString("RipHeading", resourceCulture);
+                return ResourceManager.GetString("RipTitle", resourceCulture);
             }
         }
         
@@ -979,6 +1024,15 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copy file id.
+        /// </summary>
+        public static string SearchCopyButtonToolTip {
+            get {
+                return ResourceManager.GetString("SearchCopyButtonToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Difference.
         /// </summary>
         public static string SearchDifferenceButton {
@@ -1096,6 +1150,24 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Locate.
+        /// </summary>
+        public static string SearchLocateButton {
+            get {
+                return ResourceManager.GetString("SearchLocateButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Locate file in Explorer.
+        /// </summary>
+        public static string SearchLocateButtonToolTip {
+            get {
+                return ResourceManager.GetString("SearchLocateButtonToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Locations.
         /// </summary>
         public static string SearchLocationsToolTip {
@@ -1110,6 +1182,15 @@ namespace FileDB.Resources {
         public static string SearchLocationWithGPSPositionLabel {
             get {
                 return ResourceManager.GetString("SearchLocationWithGPSPositionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maximize.
+        /// </summary>
+        public static string SearchMaximizeButtonToolTip {
+            get {
+                return ResourceManager.GetString("SearchMaximizeButtonToolTip", resourceCulture);
             }
         }
         
@@ -1137,6 +1218,24 @@ namespace FileDB.Resources {
         public static string SearchOpenButton {
             get {
                 return ResourceManager.GetString("SearchOpenButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open file with default application.
+        /// </summary>
+        public static string SearchOpenButtonToolTip {
+            get {
+                return ResourceManager.GetString("SearchOpenButtonToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open presentation window.
+        /// </summary>
+        public static string SearchOpenPresentationWindowButtonToolTip {
+            get {
+                return ResourceManager.GetString("SearchOpenPresentationWindowButtonToolTip", resourceCulture);
             }
         }
         
@@ -1231,6 +1330,24 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to X.
+        /// </summary>
+        public static string SearchRemoveButton {
+            get {
+                return ResourceManager.GetString("SearchRemoveButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove file from search result.
+        /// </summary>
+        public static string SearchRemoveButtonToolTip {
+            get {
+                return ResourceManager.GetString("SearchRemoveButtonToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tags.
         /// </summary>
         public static string SearchTagsToolTip {
@@ -1258,11 +1375,29 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string SearchTitle {
+            get {
+                return ResourceManager.GetString("SearchTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to To age (years).
         /// </summary>
         public static string SearchToAgeYearsToolTip {
             get {
                 return ResourceManager.GetString("SearchToAgeYearsToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toggle large text.
+        /// </summary>
+        public static string SearchToggleLargeTextButtonToolTip {
+            get {
+                return ResourceManager.GetString("SearchToggleLargeTextButtonToolTip", resourceCulture);
             }
         }
         
@@ -1281,6 +1416,15 @@ namespace FileDB.Resources {
         public static string SearchUniqueButton {
             get {
                 return ResourceManager.GetString("SearchUniqueButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string SettingsTitle {
+            get {
+                return ResourceManager.GetString("SettingsTitle", resourceCulture);
             }
         }
         
@@ -1317,6 +1461,15 @@ namespace FileDB.Resources {
         public static string TagsTitle {
             get {
                 return ResourceManager.GetString("TagsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tools.
+        /// </summary>
+        public static string ToolsTitle {
+            get {
+                return ResourceManager.GetString("ToolsTitle", resourceCulture);
             }
         }
     }

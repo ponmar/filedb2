@@ -11,7 +11,7 @@ public partial class PresentationWindow : Window
     public PresentationWindow()
     {
         InitializeComponent();
-        DataContext = ServiceLocator.Resolve<FileInfoViewModel>();
+        DataContext = ServiceLocator.Resolve<SearchViewModel>();
     }
 
     private void Window_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)

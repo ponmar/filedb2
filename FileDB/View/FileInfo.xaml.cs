@@ -12,7 +12,7 @@ public partial class FileInfo : UserControl
     public FileInfo()
     {
         InitializeComponent();
-        DataContext = ServiceLocator.Resolve<FileInfoViewModel>();
+        DataContext = ServiceLocator.Resolve<SearchViewModel>();
     }
 
     private void OpenLocationUri(object sender, RequestNavigateEventArgs e)

@@ -10,7 +10,7 @@
              mc:Ignorable="d"
              d:DesignHeight="1300" d:DesignWidth="800">
     <DockPanel>
-        <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageHeading}" Text="{x:Static rs:Strings.AboutHeader}"/>
+        <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageHeading}" Text="{x:Static rs:Strings.AboutTitle}"/>
         <ScrollViewer>
             <StackPanel Orientation="Vertical" Style="{StaticResource PageStackPanel}">
                 <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.AboutVersionHeader}"/>

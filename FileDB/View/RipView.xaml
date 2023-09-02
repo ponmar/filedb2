@@ -35,7 +35,7 @@
     </UserControl.Resources>
 
     <DockPanel>
-        <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageHeading}" Text="{x:Static rs:Strings.RipHeading}"/>
+        <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageHeading}" Text="{x:Static rs:Strings.RipTitle}"/>
         <ScrollViewer PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
             <StackPanel Style="{StaticResource PageStackPanel}">
                 <StackPanel Orientation="Horizontal">

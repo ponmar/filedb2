@@ -321,7 +321,7 @@
   <data name="SearchCombineResultLabel" xml:space="preserve">
     <value>Resultat:</value>
   </data>
-  <data name="AboutHeader" xml:space="preserve">
+  <data name="AboutTitle" xml:space="preserve">
     <value>Om</value>
   </data>
   <data name="AboutVersionHeader" xml:space="preserve">
@@ -429,13 +429,13 @@
   <data name="AddTagNameLabel" xml:space="preserve">
     <value>Namn:</value>
   </data>
-  <data name="BirthdaysHeading" xml:space="preserve">
+  <data name="BirthdaysTitle" xml:space="preserve">
     <value>Födelsedagar</value>
   </data>
   <data name="BirthdaysFilterLabel" xml:space="preserve">
     <value>Filter:</value>
   </data>
-  <data name="RipHeading" xml:space="preserve">
+  <data name="RipTitle" xml:space="preserve">
     <value>Vila i fred</value>
   </data>
   <data name="RipFilterLabel" xml:space="preserve">
@@ -536,5 +536,56 @@
   </data>
   <data name="PersonsDeleteButton" xml:space="preserve">
     <value>Ta bort vald...</value>
+  </data>
+  <data name="SearchTitle" xml:space="preserve">
+    <value>Sök</value>
+  </data>
+  <data name="FilesTitle" xml:space="preserve">
+    <value>Filer</value>
+  </data>
+  <data name="SettingsTitle" xml:space="preserve">
+    <value>Inställningar</value>
+  </data>
+  <data name="ToolsTitle" xml:space="preserve">
+    <value>Verktyg</value>
+  </data>
+  <data name="NotificationsTitle" xml:space="preserve">
+    <value>Aviseringar</value>
+  </data>
+  <data name="ExitToolTip" xml:space="preserve">
+    <value>Avsluta</value>
+  </data>
+  <data name="NotificationsDismissAllButton" xml:space="preserve">
+    <value>Avfärda alla</value>
+  </data>
+  <data name="NotificationsNoNotificationsAvailable" xml:space="preserve">
+    <value>Inga aviseringar tillgängliga.</value>
+  </data>
+  <data name="SearchLocateButton" xml:space="preserve">
+    <value>Lokalisera</value>
+  </data>
+  <data name="SearchLocateButtonToolTip" xml:space="preserve">
+    <value>Lokalisera filen i Utforskaren</value>
+  </data>
+  <data name="SearchOpenButtonToolTip" xml:space="preserve">
+    <value>Öppna med standardprogram</value>
+  </data>
+  <data name="SearchCopyButtonToolTip" xml:space="preserve">
+    <value>Kopiera fil-ID</value>
+  </data>
+  <data name="SearchRemoveButton" xml:space="preserve">
+    <value>X</value>
+  </data>
+  <data name="SearchRemoveButtonToolTip" xml:space="preserve">
+    <value>Ta bort filen från sökresultatet</value>
+  </data>
+  <data name="SearchToggleLargeTextButtonToolTip" xml:space="preserve">
+    <value>Växla stor text</value>
+  </data>
+  <data name="SearchOpenPresentationWindowButtonToolTip" xml:space="preserve">
+    <value>Öppna presentationsfönstret</value>
+  </data>
+  <data name="SearchMaximizeButtonToolTip" xml:space="preserve">
+    <value>Maximera</value>
   </data>
 </root>
