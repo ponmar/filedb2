@@ -588,4 +588,103 @@
   <data name="SearchMaximizeButtonToolTip" xml:space="preserve">
     <value>Maximera</value>
   </data>
+  <data name="PersonsIdHeader" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="PersonsFirstnameHeader" xml:space="preserve">
+    <value>Förnamn</value>
+  </data>
+  <data name="PersonsLastnameHeader" xml:space="preserve">
+    <value>Efternamn</value>
+  </data>
+  <data name="PersonsDescriptionHeader" xml:space="preserve">
+    <value>Beskrivning</value>
+  </data>
+  <data name="PersonsDateOfBirthHeader" xml:space="preserve">
+    <value>Födelsedatum</value>
+  </data>
+  <data name="PersonsDeceasedHeader" xml:space="preserve">
+    <value>Avliden</value>
+  </data>
+  <data name="PersonsAgeHeader" xml:space="preserve">
+    <value>Ålder</value>
+  </data>
+  <data name="PersonsProfileFileIDHeader" xml:space="preserve">
+    <value>Profilfil-ID</value>
+  </data>
+  <data name="PersonsSexHeader" xml:space="preserve">
+    <value>Kön</value>
+  </data>
+  <data name="LocationsIdHeader" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="LocationsNameHeader" xml:space="preserve">
+    <value>Namn</value>
+  </data>
+  <data name="LocationsDescriptionHeader" xml:space="preserve">
+    <value>Beskrivning</value>
+  </data>
+  <data name="LocationsPositionHeader" xml:space="preserve">
+    <value>Position</value>
+  </data>
+  <data name="TagsIdHeader" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="TagsNameHeader" xml:space="preserve">
+    <value>Namn</value>
+  </data>
+  <data name="SearchResultHistoryLabel" xml:space="preserve">
+    <value>Sökhistorik:</value>
+  </data>
+  <data name="SearchResultExportButton" xml:space="preserve">
+    <value>Exportera...</value>
+  </data>
+  <data name="SearchResultExportButtonToolTip" xml:space="preserve">
+    <value>Kopiera sökresultatsfilens lista</value>
+  </data>
+  <data name="SearchResultCopyButton" xml:space="preserve">
+    <value>Kopiera</value>
+  </data>
+  <data name="SearchResultCopyButtonToolTip" xml:space="preserve">
+    <value>Kopiera sökresultatets fil-lista</value>
+  </data>
+  <data name="SearchResultCloseButtonToolTip" xml:space="preserve">
+    <value>Stäng sökresultat</value>
+  </data>
+  <data name="SearchResultCloseButton" xml:space="preserve">
+    <value>X</value>
+  </data>
+  <data name="SearchResultSortByLabel" xml:space="preserve">
+    <value>Sortera efter:</value>
+  </data>
+  <data name="SearchResultGoToPreviousToolTip" xml:space="preserve">
+    <value>Gå till föregående (vänster)</value>
+  </data>
+  <data name="SearchResultGoToNextToolTip" xml:space="preserve">
+    <value>Gå till nästa (höger)</value>
+  </data>
+  <data name="SearchResultGoToPreviousDirectoryToolTip" xml:space="preserve">
+    <value>Gå till föregående katalog (page up)</value>
+  </data>
+  <data name="SearchResultGoToNextDirectoryToolTip" xml:space="preserve">
+    <value>Gå till nästa katalog (page down)</value>
+  </data>
+  <data name="SearchResultGoToFirstToolTip" xml:space="preserve">
+    <value>Gå till första</value>
+  </data>
+  <data name="SearchResultGoToLastToolTip" xml:space="preserve">
+    <value>Gå till sista</value>
+  </data>
+  <data name="SearchResultToggleSlideshowToolTip" xml:space="preserve">
+    <value>Växla bildspel</value>
+  </data>
+  <data name="SearchResultToggleSlideshowRandomToolTip" xml:space="preserve">
+    <value>Växla bildspel slumpmässigt</value>
+  </data>
+  <data name="SearchResultToggleSlideshowRepeatToolTip" xml:space="preserve">
+    <value>Växla bildspelsupprepning</value>
+  </data>
+  <data name="SearchResultToggleFileDescriptionSpeekToolTip" xml:space="preserve">
+    <value>Växla filbeskrivningstal</value>
+  </data>
 </root>

@@ -588,4 +588,103 @@
   <data name="SearchMaximizeButtonToolTip" xml:space="preserve">
     <value>Maximize</value>
   </data>
+  <data name="PersonsIdHeader" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="PersonsFirstnameHeader" xml:space="preserve">
+    <value>Firstname</value>
+  </data>
+  <data name="PersonsLastnameHeader" xml:space="preserve">
+    <value>Lastname</value>
+  </data>
+  <data name="PersonsDescriptionHeader" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="PersonsDateOfBirthHeader" xml:space="preserve">
+    <value>Date of Birth</value>
+  </data>
+  <data name="PersonsDeceasedHeader" xml:space="preserve">
+    <value>Deceased</value>
+  </data>
+  <data name="PersonsAgeHeader" xml:space="preserve">
+    <value>Age</value>
+  </data>
+  <data name="PersonsProfileFileIDHeader" xml:space="preserve">
+    <value>Profile File ID</value>
+  </data>
+  <data name="PersonsSexHeader" xml:space="preserve">
+    <value>Sex</value>
+  </data>
+  <data name="LocationsIdHeader" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="LocationsNameHeader" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="LocationsDescriptionHeader" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="LocationsPositionHeader" xml:space="preserve">
+    <value>Position</value>
+  </data>
+  <data name="TagsIdHeader" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="TagsNameHeader" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="SearchResultHistoryLabel" xml:space="preserve">
+    <value>Search history:</value>
+  </data>
+  <data name="SearchResultExportButton" xml:space="preserve">
+    <value>Export...</value>
+  </data>
+  <data name="SearchResultExportButtonToolTip" xml:space="preserve">
+    <value>Copy search result file list</value>
+  </data>
+  <data name="SearchResultCopyButton" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="SearchResultCopyButtonToolTip" xml:space="preserve">
+    <value>Copy search result file list</value>
+  </data>
+  <data name="SearchResultCloseButtonToolTip" xml:space="preserve">
+    <value>Close search result</value>
+  </data>
+  <data name="SearchResultCloseButton" xml:space="preserve">
+    <value>X</value>
+  </data>
+  <data name="SearchResultSortByLabel" xml:space="preserve">
+    <value>Sort by:</value>
+  </data>
+  <data name="SearchResultGoToPreviousToolTip" xml:space="preserve">
+    <value>Go to previous (left)</value>
+  </data>
+  <data name="SearchResultGoToNextToolTip" xml:space="preserve">
+    <value>Go to next (right)</value>
+  </data>
+  <data name="SearchResultGoToPreviousDirectoryToolTip" xml:space="preserve">
+    <value>Go to previous directory (page up)</value>
+  </data>
+  <data name="SearchResultGoToNextDirectoryToolTip" xml:space="preserve">
+    <value>Go to next directory (page down)</value>
+  </data>
+  <data name="SearchResultGoToFirstToolTip" xml:space="preserve">
+    <value>Go to first</value>
+  </data>
+  <data name="SearchResultGoToLastToolTip" xml:space="preserve">
+    <value>Go to last</value>
+  </data>
+  <data name="SearchResultToggleSlideshowToolTip" xml:space="preserve">
+    <value>Toggle slideshow</value>
+  </data>
+  <data name="SearchResultToggleSlideshowRandomToolTip" xml:space="preserve">
+    <value>Toggle slideshow random</value>
+  </data>
+  <data name="SearchResultToggleSlideshowRepeatToolTip" xml:space="preserve">
+    <value>Toggle slideshow repeat</value>
+  </data>
+  <data name="SearchResultToggleFileDescriptionSpeekToolTip" xml:space="preserve">
+    <value>Toggle file description speek</value>
+  </data>
 </root>

@@ -25,7 +25,18 @@
                         <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding RemovePersonCommand}" IsEnabled="{Binding SelectedPerson, Converter={StaticResource ValueToBoolConverter}}" Content="{x:Static rs:Strings.PersonsDeleteButton}"/>
                     </StackPanel>
 
-                    <DataGrid Margin="10" ItemsSource="{Binding Persons}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single">
+                    <DataGrid Margin="10" ItemsSource="{Binding Persons}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="{x:Static rs:Strings.PersonsIdHeader}" Binding="{Binding Id}"/>
+                            <DataGridTextColumn Header="{x:Static rs:Strings.PersonsFirstnameHeader}" Binding="{Binding Firstname}"/>
+                            <DataGridTextColumn Header="{x:Static rs:Strings.PersonsLastnameHeader}" Binding="{Binding Lastname}"/>
+                            <DataGridTextColumn Header="{x:Static rs:Strings.PersonsDescriptionHeader}" Binding="{Binding Description}"/>
+                            <DataGridTextColumn Header="{x:Static rs:Strings.PersonsDateOfBirthHeader}" Binding="{Binding DateOfBirth}"/>
+                            <DataGridTextColumn Header="{x:Static rs:Strings.PersonsDeceasedHeader}" Binding="{Binding Deceased}"/>
+                            <DataGridTextColumn Header="{x:Static rs:Strings.PersonsAgeHeader}" Binding="{Binding Age}"/>
+                            <DataGridTextColumn Header="{x:Static rs:Strings.PersonsProfileFileIDHeader}" Binding="{Binding ProfileFileId}"/>
+                            <DataGridTextColumn Header="{x:Static rs:Strings.PersonsSexHeader}" Binding="{Binding Sex}"/>
+                        </DataGrid.Columns>
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectionChanged">
                                 <i:InvokeCommandAction Command="{Binding PersonSelectionCommand}" CommandParameter="{Binding Path=SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}" />

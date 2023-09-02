@@ -601,11 +601,47 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string LocationsDescriptionHeader {
+            get {
+                return ResourceManager.GetString("LocationsDescriptionHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit selected....
         /// </summary>
         public static string LocationsEditButton {
             get {
                 return ResourceManager.GetString("LocationsEditButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Id.
+        /// </summary>
+        public static string LocationsIdHeader {
+            get {
+                return ResourceManager.GetString("LocationsIdHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string LocationsNameHeader {
+            get {
+                return ResourceManager.GetString("LocationsNameHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Position.
+        /// </summary>
+        public static string LocationsPositionHeader {
+            get {
+                return ResourceManager.GetString("LocationsPositionHeader", resourceCulture);
             }
         }
         
@@ -664,6 +700,33 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Age.
+        /// </summary>
+        public static string PersonsAgeHeader {
+            get {
+                return ResourceManager.GetString("PersonsAgeHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date of Birth.
+        /// </summary>
+        public static string PersonsDateOfBirthHeader {
+            get {
+                return ResourceManager.GetString("PersonsDateOfBirthHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deceased.
+        /// </summary>
+        public static string PersonsDeceasedHeader {
+            get {
+                return ResourceManager.GetString("PersonsDeceasedHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete selected....
         /// </summary>
         public static string PersonsDeleteButton {
@@ -673,11 +736,65 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string PersonsDescriptionHeader {
+            get {
+                return ResourceManager.GetString("PersonsDescriptionHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit selected....
         /// </summary>
         public static string PersonsEditButton {
             get {
                 return ResourceManager.GetString("PersonsEditButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Firstname.
+        /// </summary>
+        public static string PersonsFirstnameHeader {
+            get {
+                return ResourceManager.GetString("PersonsFirstnameHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Id.
+        /// </summary>
+        public static string PersonsIdHeader {
+            get {
+                return ResourceManager.GetString("PersonsIdHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lastname.
+        /// </summary>
+        public static string PersonsLastnameHeader {
+            get {
+                return ResourceManager.GetString("PersonsLastnameHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profile File ID.
+        /// </summary>
+        public static string PersonsProfileFileIDHeader {
+            get {
+                return ResourceManager.GetString("PersonsProfileFileIDHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sex.
+        /// </summary>
+        public static string PersonsSexHeader {
+            get {
+                return ResourceManager.GetString("PersonsSexHeader", resourceCulture);
             }
         }
         
@@ -1348,6 +1465,168 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to X.
+        /// </summary>
+        public static string SearchResultCloseButton {
+            get {
+                return ResourceManager.GetString("SearchResultCloseButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close search result.
+        /// </summary>
+        public static string SearchResultCloseButtonToolTip {
+            get {
+                return ResourceManager.GetString("SearchResultCloseButtonToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy.
+        /// </summary>
+        public static string SearchResultCopyButton {
+            get {
+                return ResourceManager.GetString("SearchResultCopyButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy search result file list.
+        /// </summary>
+        public static string SearchResultCopyButtonToolTip {
+            get {
+                return ResourceManager.GetString("SearchResultCopyButtonToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export....
+        /// </summary>
+        public static string SearchResultExportButton {
+            get {
+                return ResourceManager.GetString("SearchResultExportButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy search result file list.
+        /// </summary>
+        public static string SearchResultExportButtonToolTip {
+            get {
+                return ResourceManager.GetString("SearchResultExportButtonToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Go to first.
+        /// </summary>
+        public static string SearchResultGoToFirstToolTip {
+            get {
+                return ResourceManager.GetString("SearchResultGoToFirstToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Go to last.
+        /// </summary>
+        public static string SearchResultGoToLastToolTip {
+            get {
+                return ResourceManager.GetString("SearchResultGoToLastToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Go to next directory (page down).
+        /// </summary>
+        public static string SearchResultGoToNextDirectoryToolTip {
+            get {
+                return ResourceManager.GetString("SearchResultGoToNextDirectoryToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Go to next (right).
+        /// </summary>
+        public static string SearchResultGoToNextToolTip {
+            get {
+                return ResourceManager.GetString("SearchResultGoToNextToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Go to previous directory (page up).
+        /// </summary>
+        public static string SearchResultGoToPreviousDirectoryToolTip {
+            get {
+                return ResourceManager.GetString("SearchResultGoToPreviousDirectoryToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Go to previous (left).
+        /// </summary>
+        public static string SearchResultGoToPreviousToolTip {
+            get {
+                return ResourceManager.GetString("SearchResultGoToPreviousToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search history:.
+        /// </summary>
+        public static string SearchResultHistoryLabel {
+            get {
+                return ResourceManager.GetString("SearchResultHistoryLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sort by:.
+        /// </summary>
+        public static string SearchResultSortByLabel {
+            get {
+                return ResourceManager.GetString("SearchResultSortByLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toggle file description speek.
+        /// </summary>
+        public static string SearchResultToggleFileDescriptionSpeekToolTip {
+            get {
+                return ResourceManager.GetString("SearchResultToggleFileDescriptionSpeekToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toggle slideshow random.
+        /// </summary>
+        public static string SearchResultToggleSlideshowRandomToolTip {
+            get {
+                return ResourceManager.GetString("SearchResultToggleSlideshowRandomToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toggle slideshow repeat.
+        /// </summary>
+        public static string SearchResultToggleSlideshowRepeatToolTip {
+            get {
+                return ResourceManager.GetString("SearchResultToggleSlideshowRepeatToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toggle slideshow.
+        /// </summary>
+        public static string SearchResultToggleSlideshowToolTip {
+            get {
+                return ResourceManager.GetString("SearchResultToggleSlideshowToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tags.
         /// </summary>
         public static string SearchTagsToolTip {
@@ -1452,6 +1731,24 @@ namespace FileDB.Resources {
         public static string TagsDeleteButton {
             get {
                 return ResourceManager.GetString("TagsDeleteButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Id.
+        /// </summary>
+        public static string TagsIdHeader {
+            get {
+                return ResourceManager.GetString("TagsIdHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string TagsNameHeader {
+            get {
+                return ResourceManager.GetString("TagsNameHeader", resourceCulture);
             }
         }
         

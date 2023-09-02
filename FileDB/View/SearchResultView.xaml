@@ -26,7 +26,7 @@
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical" Margin="10" VerticalAlignment="Center">
-                <TextBlock Style="{StaticResource PageInnerTextBlock}" Margin="0,0,0,5">Search history:</TextBlock>
+                <TextBlock Style="{StaticResource PageInnerTextBlock}" Margin="0,0,0,5" Text="{x:Static rs:Strings.SearchResultHistoryLabel}"/>
                 <ComboBox Style="{StaticResource PageInnerComboBox}" ItemsSource="{Binding SearchResultHistory}" SelectedItem="{Binding SearchResultHistorySelection}" DisplayMemberPath="Name" Width="75" IsEnabled="{Binding SearchResultHistory, Converter={StaticResource EnumerationHasContentConverter}}"/>
             </StackPanel>
 
@@ -40,28 +40,28 @@
                     </TextBlock>
                 </Grid>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Style="{StaticResource NavigationButton}" Command="{Binding PrevFileCommand}" IsEnabled="{Binding PrevFileAvailable}" ToolTip="Go to previous (left)" Margin="3 3 3 3">&#x2B60;</Button>
-                    <Button Style="{StaticResource NavigationButton}" Command="{Binding NextFileCommand}" IsEnabled="{Binding NextFileAvailable}" ToolTip="Go to next (right)" Margin="3 3 3 3">&#x2B62;</Button>
-                    <Button Style="{StaticResource NavigationButton}" Command="{Binding PrevDirectoryCommand}" IsEnabled="{Binding PrevDirectoryAvailable}" ToolTip="Go to previous directory (page up)" Margin="20 3 3 3">&#x21C7;</Button>
-                    <Button Style="{StaticResource NavigationButton}" Command="{Binding NextDirectoryCommand}" IsEnabled="{Binding NextDirectoryAvailable}" ToolTip="Go to next directory (page down)" Margin="3 3 3 3">&#x21C9;</Button>
-                    <Button Style="{StaticResource NavigationButton}" Command="{Binding FirstFileCommand}" IsEnabled="{Binding FirstFileAvailable}" ToolTip="Go to first" Margin="20 3 3 3">&#x21E4;</Button>
-                    <Button Style="{StaticResource NavigationButton}" Command="{Binding LastFileCommand}" IsEnabled="{Binding LastFileAvailable}" ToolTip="Go to last" Margin="3 3 3 3">&#x21E5;</Button>
-                    <ToggleButton Style="{StaticResource NavigationToggleButton}" Command="{Binding ToggleSlideshowCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" IsChecked="{Binding SlideshowActive}" ToolTip="Toggle slideshow" Margin="20 3 3 3">&#x1F39E;</ToggleButton>
-                    <ToggleButton Style="{StaticResource NavigationToggleButton}" IsEnabled="{Binding HasNonEmptySearchResult}" IsChecked="{Binding RandomActive}" ToolTip="Toggle slideshow random" Margin="3 3 3 3">&#x21AD;</ToggleButton>
-                    <ToggleButton Style="{StaticResource NavigationToggleButton}" IsEnabled="{Binding HasNonEmptySearchResult}" IsChecked="{Binding RepeatActive}" ToolTip="Toggle slideshow repeat" Margin="3 3 3 3">&#x21BB;</ToggleButton>
-                    <ToggleButton Style="{StaticResource NavigationToggleButton}" IsEnabled="{Binding HasNonEmptySearchResult}" IsChecked="{Binding SpeekActive}" ToolTip="Toggle file description speek" Margin="3 3 3 3">&#x1F4AC;</ToggleButton>
+                    <Button Style="{StaticResource NavigationButton}" Command="{Binding PrevFileCommand}" IsEnabled="{Binding PrevFileAvailable}" ToolTip="{x:Static rs:Strings.SearchResultGoToPreviousToolTip}" Margin="3 3 3 3">&#x2B60;</Button>
+                    <Button Style="{StaticResource NavigationButton}" Command="{Binding NextFileCommand}" IsEnabled="{Binding NextFileAvailable}" ToolTip="{x:Static rs:Strings.SearchResultGoToNextToolTip}" Margin="3 3 3 3">&#x2B62;</Button>
+                    <Button Style="{StaticResource NavigationButton}" Command="{Binding PrevDirectoryCommand}" IsEnabled="{Binding PrevDirectoryAvailable}" ToolTip="{x:Static rs:Strings.SearchResultGoToPreviousDirectoryToolTip}" Margin="20 3 3 3">&#x21C7;</Button>
+                    <Button Style="{StaticResource NavigationButton}" Command="{Binding NextDirectoryCommand}" IsEnabled="{Binding NextDirectoryAvailable}" ToolTip="{x:Static rs:Strings.SearchResultGoToNextDirectoryToolTip}" Margin="3 3 3 3">&#x21C9;</Button>
+                    <Button Style="{StaticResource NavigationButton}" Command="{Binding FirstFileCommand}" IsEnabled="{Binding FirstFileAvailable}" ToolTip="{x:Static rs:Strings.SearchResultGoToFirstToolTip}" Margin="20 3 3 3">&#x21E4;</Button>
+                    <Button Style="{StaticResource NavigationButton}" Command="{Binding LastFileCommand}" IsEnabled="{Binding LastFileAvailable}" ToolTip="{x:Static rs:Strings.SearchResultGoToLastToolTip}" Margin="3 3 3 3">&#x21E5;</Button>
+                    <ToggleButton Style="{StaticResource NavigationToggleButton}" Command="{Binding ToggleSlideshowCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" IsChecked="{Binding SlideshowActive}" ToolTip="{x:Static rs:Strings.SearchResultToggleSlideshowToolTip}" Margin="20 3 3 3">&#x1F39E;</ToggleButton>
+                    <ToggleButton Style="{StaticResource NavigationToggleButton}" IsEnabled="{Binding HasNonEmptySearchResult}" IsChecked="{Binding RandomActive}" ToolTip="{x:Static rs:Strings.SearchResultToggleSlideshowRandomToolTip}" Margin="3 3 3 3">&#x21AD;</ToggleButton>
+                    <ToggleButton Style="{StaticResource NavigationToggleButton}" IsEnabled="{Binding HasNonEmptySearchResult}" IsChecked="{Binding RepeatActive}" ToolTip="{x:Static rs:Strings.SearchResultToggleSlideshowRepeatToolTip}" Margin="3 3 3 3">&#x21BB;</ToggleButton>
+                    <ToggleButton Style="{StaticResource NavigationToggleButton}" IsEnabled="{Binding HasNonEmptySearchResult}" IsChecked="{Binding SpeekActive}" ToolTip="{x:Static rs:Strings.SearchResultToggleFileDescriptionSpeekToolTip}" Margin="3 3 3 3">&#x1F4AC;</ToggleButton>
                 </StackPanel>
                 <TextBlock Style="{StaticResource PageInnerTextBlock}" Margin="0 3 0 0" HorizontalAlignment="Center" Text="{Binding CurrentFileInternalPath}"/>
             </StackPanel>
 
             <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Vertical" VerticalAlignment="Center" Margin="10">
                 <StackPanel Orientation="Horizontal" Margin="0,5" HorizontalAlignment="Right">
-                    <Button Style="{StaticResource NormalButton}" Command="{Binding ExportFileListCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip="Copy search result file list">Export...</Button>
-                    <Button Style="{StaticResource NormalButton}" Command="{Binding CopyFileListCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" Margin="5,0" ToolTip="Copy search result file list">Copy</Button>
-                    <Button Style="{StaticResource NormalButton}" Command="{Binding ClearSearchCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" Content="X" ToolTip="Close search result" HorizontalAlignment="Right"/>
+                    <Button Style="{StaticResource NormalButton}" Command="{Binding ExportFileListCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip="{x:Static rs:Strings.SearchResultExportButtonToolTip}" Content="{x:Static rs:Strings.SearchResultExportButton}"/>
+                    <Button Style="{StaticResource NormalButton}" Command="{Binding CopyFileListCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" Margin="5,0" ToolTip="{x:Static rs:Strings.SearchResultCopyButtonToolTip}" Content="{x:Static rs:Strings.SearchResultCopyButton}"/>
+                    <Button Style="{StaticResource NormalButton}" Command="{Binding ClearSearchCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip="{x:Static rs:Strings.SearchResultCloseButtonToolTip}" HorizontalAlignment="Right" Content="{x:Static rs:Strings.SearchResultCloseButton}" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,5">
-                    <TextBlock Style="{StaticResource PageInnerTextBlock}" VerticalAlignment="Center" Margin="0 0 5 0">Sort by:</TextBlock>
+                    <TextBlock Style="{StaticResource PageInnerTextBlock}" VerticalAlignment="Center" Margin="0 0 5 0" Text="{x:Static rs:Strings.SearchResultSortByLabel}"/>
                     <ComboBox Width="125" ItemsSource="{Binding SortMethods}" DisplayMemberPath="Name" SelectedValuePath="Method" SelectedValue="{Binding SelectedSortMethod}" VerticalAlignment="Center"/>
                 </StackPanel>
             </StackPanel>
