@@ -15,14 +15,14 @@
     </UserControl.Resources>
 
     <DockPanel>
-        <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Update Persons</TextBlock>
+        <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageHeading}" Text="{x:Static rs:Strings.PersonsTitle}"/>
         <ScrollViewer PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
             <Border Style="{StaticResource BorderGroup}" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <StackPanel Style="{StaticResource PageStackPanel}">
                     <StackPanel Orientation="Horizontal" Visibility="{Binding ReadWriteMode, Converter={StaticResource BoolToVis}}">
-                        <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding AddPersonCommand}">Add...</Button>
-                        <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding EditPersonCommand}" IsEnabled="{Binding SelectedPerson, Converter={StaticResource ValueToBoolConverter}}">Edit selected...</Button>
-                        <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding RemovePersonCommand}" IsEnabled="{Binding SelectedPerson, Converter={StaticResource ValueToBoolConverter}}">Delete selected...</Button>
+                        <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding AddPersonCommand}" Content="{x:Static rs:Strings.PersonsAddButton}"/>
+                        <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding EditPersonCommand}" IsEnabled="{Binding SelectedPerson, Converter={StaticResource ValueToBoolConverter}}" Content="{x:Static rs:Strings.PersonsEditButton}"/>
+                        <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding RemovePersonCommand}" IsEnabled="{Binding SelectedPerson, Converter={StaticResource ValueToBoolConverter}}" Content="{x:Static rs:Strings.PersonsDeleteButton}"/>
                     </StackPanel>
 
                     <DataGrid Margin="10" ItemsSource="{Binding Persons}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single">

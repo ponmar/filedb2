@@ -16,14 +16,14 @@
     </UserControl.Resources>
 
     <DockPanel>
-        <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Update Tags</TextBlock>
+        <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageHeading}" Text="{x:Static rs:Strings.TagsTitle}"/>
         <ScrollViewer PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
             <Border Style="{StaticResource BorderGroup}" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <StackPanel Style="{StaticResource PageStackPanel}">
                     <StackPanel Orientation="Horizontal" Visibility="{Binding ReadWriteMode, Converter={StaticResource BoolToVis}}">
-                        <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding AddTagCommand}">Add...</Button>
-                        <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding EditTagCommand}" IsEnabled="{Binding SelectedTag, Converter={StaticResource ValueToBoolConverter}}">Edit selected...</Button>
-                        <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding RemoveTagCommand}" IsEnabled="{Binding SelectedTag, Converter={StaticResource ValueToBoolConverter}}">Delete selected...</Button>
+                        <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding AddTagCommand}" Content="{x:Static rs:Strings.TagsAddButton}"/>
+                        <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding EditTagCommand}" IsEnabled="{Binding SelectedTag, Converter={StaticResource ValueToBoolConverter}}" Content="{x:Static rs:Strings.TagEditButton}"/>
+                        <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding RemoveTagCommand}" IsEnabled="{Binding SelectedTag, Converter={StaticResource ValueToBoolConverter}}" Content="{x:Static rs:Strings.TagsDeleteButton}"/>
                     </StackPanel>
 
                     <DataGrid Margin="10" ItemsSource="{Binding Tags}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single">

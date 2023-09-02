@@ -565,6 +565,87 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add....
+        /// </summary>
+        public static string LocationsAddButton {
+            get {
+                return ResourceManager.GetString("LocationsAddButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete selected....
+        /// </summary>
+        public static string LocationsDeleteButton {
+            get {
+                return ResourceManager.GetString("LocationsDeleteButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit selected....
+        /// </summary>
+        public static string LocationsEditButton {
+            get {
+                return ResourceManager.GetString("LocationsEditButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show on map.
+        /// </summary>
+        public static string LocationsShowOnMapButton {
+            get {
+                return ResourceManager.GetString("LocationsShowOnMapButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update Locations.
+        /// </summary>
+        public static string LocationsTitle {
+            get {
+                return ResourceManager.GetString("LocationsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add....
+        /// </summary>
+        public static string PersonsAddButton {
+            get {
+                return ResourceManager.GetString("PersonsAddButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete selected....
+        /// </summary>
+        public static string PersonsDeleteButton {
+            get {
+                return ResourceManager.GetString("PersonsDeleteButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit selected....
+        /// </summary>
+        public static string PersonsEditButton {
+            get {
+                return ResourceManager.GetString("PersonsEditButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update Persons.
+        /// </summary>
+        public static string PersonsTitle {
+            get {
+                return ResourceManager.GetString("PersonsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Filter:.
         /// </summary>
         public static string RipFilterLabel {
@@ -1200,6 +1281,42 @@ namespace FileDB.Resources {
         public static string SearchUniqueButton {
             get {
                 return ResourceManager.GetString("SearchUniqueButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit selected....
+        /// </summary>
+        public static string TagEditButton {
+            get {
+                return ResourceManager.GetString("TagEditButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add....
+        /// </summary>
+        public static string TagsAddButton {
+            get {
+                return ResourceManager.GetString("TagsAddButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete selected....
+        /// </summary>
+        public static string TagsDeleteButton {
+            get {
+                return ResourceManager.GetString("TagsDeleteButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update Tags.
+        /// </summary>
+        public static string TagsTitle {
+            get {
+                return ResourceManager.GetString("TagsTitle", resourceCulture);
             }
         }
     }

@@ -15,15 +15,15 @@
     </UserControl.Resources>
 
     <DockPanel>
-        <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Update Locations</TextBlock>
+        <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageHeading}" Text="{x:Static rs:Strings.LocationsTitle}"/>
         <ScrollViewer PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
             <Border Style="{StaticResource BorderGroup}" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <StackPanel Style="{StaticResource PageStackPanel}">
                     <StackPanel Orientation="Horizontal" Visibility="{Binding ReadWriteMode, Converter={StaticResource BoolToVis}}">
-                        <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding AddLocationCommand}">Add...</Button>
-                        <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding EditLocationCommand}" IsEnabled="{Binding SelectedLocation, Converter={StaticResource ValueToBoolConverter}}">Edit selected...</Button>
-                        <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding RemoveLocationCommand}" IsEnabled="{Binding SelectedLocation, Converter={StaticResource ValueToBoolConverter}}">Delete selected...</Button>
-                        <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding ShowLocationOnMapCommand}" IsEnabled="{Binding SelectedLocationHasPosition}">Show on map</Button>
+                        <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding AddLocationCommand}" Content="{x:Static rs:Strings.LocationsAddButton}"/>
+                        <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding EditLocationCommand}" IsEnabled="{Binding SelectedLocation, Converter={StaticResource ValueToBoolConverter}}" Content="{x:Static rs:Strings.LocationsEditButton}"/>
+                        <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding RemoveLocationCommand}" IsEnabled="{Binding SelectedLocation, Converter={StaticResource ValueToBoolConverter}}" Content="{x:Static rs:Strings.LocationsDeleteButton}"/>
+                        <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding ShowLocationOnMapCommand}" IsEnabled="{Binding SelectedLocationHasPosition}" Content="{x:Static rs:Strings.LocationsShowOnMapButton}"/>
                     </StackPanel>
 
                     <DataGrid Margin="10" ItemsSource="{Binding Locations}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single">

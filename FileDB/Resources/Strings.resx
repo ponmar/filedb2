@@ -498,4 +498,43 @@
   <data name="ExportExportButton" xml:space="preserve">
     <value>Export...</value>
   </data>
+  <data name="TagsTitle" xml:space="preserve">
+    <value>Update Tags</value>
+  </data>
+  <data name="TagsAddButton" xml:space="preserve">
+    <value>Add...</value>
+  </data>
+  <data name="TagEditButton" xml:space="preserve">
+    <value>Edit selected...</value>
+  </data>
+  <data name="TagsDeleteButton" xml:space="preserve">
+    <value>Delete selected...</value>
+  </data>
+  <data name="LocationsTitle" xml:space="preserve">
+    <value>Update Locations</value>
+  </data>
+  <data name="LocationsAddButton" xml:space="preserve">
+    <value>Add...</value>
+  </data>
+  <data name="LocationsEditButton" xml:space="preserve">
+    <value>Edit selected...</value>
+  </data>
+  <data name="LocationsDeleteButton" xml:space="preserve">
+    <value>Delete selected...</value>
+  </data>
+  <data name="LocationsShowOnMapButton" xml:space="preserve">
+    <value>Show on map</value>
+  </data>
+  <data name="PersonsTitle" xml:space="preserve">
+    <value>Update Persons</value>
+  </data>
+  <data name="PersonsAddButton" xml:space="preserve">
+    <value>Add...</value>
+  </data>
+  <data name="PersonsEditButton" xml:space="preserve">
+    <value>Edit selected...</value>
+  </data>
+  <data name="PersonsDeleteButton" xml:space="preserve">
+    <value>Delete selected...</value>
+  </data>
 </root>

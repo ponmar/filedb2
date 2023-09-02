@@ -498,4 +498,43 @@
   <data name="ExportExportButton" xml:space="preserve">
     <value>Exportera...</value>
   </data>
+  <data name="TagsTitle" xml:space="preserve">
+    <value>Uppdatera taggar</value>
+  </data>
+  <data name="TagsAddButton" xml:space="preserve">
+    <value>Lägg till...</value>
+  </data>
+  <data name="TagEditButton" xml:space="preserve">
+    <value>Redigera vald...</value>
+  </data>
+  <data name="TagsDeleteButton" xml:space="preserve">
+    <value>Ta bort vald...</value>
+  </data>
+  <data name="LocationsTitle" xml:space="preserve">
+    <value>Uppdatera platser</value>
+  </data>
+  <data name="LocationsAddButton" xml:space="preserve">
+    <value>Lägg till...</value>
+  </data>
+  <data name="LocationsEditButton" xml:space="preserve">
+    <value>Redigera vald...</value>
+  </data>
+  <data name="LocationsDeleteButton" xml:space="preserve">
+    <value>Ta bort vald...</value>
+  </data>
+  <data name="LocationsShowOnMapButton" xml:space="preserve">
+    <value>Visa på karta</value>
+  </data>
+  <data name="PersonsTitle" xml:space="preserve">
+    <value>Uppdatera personer</value>
+  </data>
+  <data name="PersonsAddButton" xml:space="preserve">
+    <value>Lägg till...</value>
+  </data>
+  <data name="PersonsEditButton" xml:space="preserve">
+    <value>Redigera vald...</value>
+  </data>
+  <data name="PersonsDeleteButton" xml:space="preserve">
+    <value>Ta bort vald...</value>
+  </data>
 </root>
