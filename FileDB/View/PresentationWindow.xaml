@@ -7,7 +7,7 @@
         xmlns:rs="clr-namespace:FileDB.Resources"
         xmlns:converters="clr-namespace:FileDB.Converters"
         xmlns:viewmodel="clr-namespace:FileDB.ViewModel"
-        xmlns:view="clr-namespace:FileDB.View" d:DataContext="{d:DesignInstance Type=viewmodel:FindViewModel}"
+        xmlns:view="clr-namespace:FileDB.View" d:DataContext="{d:DesignInstance Type=viewmodel:SearchViewModel}"
         mc:Ignorable="d"
         Background="Black"
         MouseDoubleClick="Window_MouseDoubleClick">

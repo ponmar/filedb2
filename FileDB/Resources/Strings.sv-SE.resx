@@ -687,4 +687,43 @@
   <data name="SearchResultToggleFileDescriptionSpeekToolTip" xml:space="preserve">
     <value>Växla filbeskrivningstal</value>
   </data>
+  <data name="FileInfoHeader" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="FileInfoPersonsToolTip" xml:space="preserve">
+    <value>Personer</value>
+  </data>
+  <data name="FileInfoLocationsToolTip" xml:space="preserve">
+    <value>Platser</value>
+  </data>
+  <data name="FileInfoTagsToolTip" xml:space="preserve">
+    <value>Taggar</value>
+  </data>
+  <data name="FileInfoPositionToolTip" xml:space="preserve">
+    <value>GPS-position</value>
+  </data>
+  <data name="FileInfoDescriptionToolTip" xml:space="preserve">
+    <value>Beskrivning</value>
+  </data>
+  <data name="PresentationWindowTitle" xml:space="preserve">
+    <value>{0} {1} - Presentation</value>
+  </data>
+  <data name="AddLocationEditTitle" xml:space="preserve">
+    <value>Redigera plats</value>
+  </data>
+  <data name="AddLocationAddTitle" xml:space="preserve">
+    <value>Lägg till plats</value>
+  </data>
+  <data name="AddPersonEditTitle" xml:space="preserve">
+    <value>Redigera person</value>
+  </data>
+  <data name="AddPersonAddTitle" xml:space="preserve">
+    <value>Lägg till person</value>
+  </data>
+  <data name="AddTagEditTitle" xml:space="preserve">
+    <value>Redigera tagg</value>
+  </data>
+  <data name="AddTagAddTitle" xml:space="preserve">
+    <value>﻿Lägg till tagg</value>
+  </data>
 </root>

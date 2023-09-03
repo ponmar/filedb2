@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Model;
+using FileDB.Resources;
 using FileDBInterface.Exceptions;
 using FileDBShared.Model;
 using System.Linq;
@@ -34,7 +35,7 @@ public partial class AddLocationViewModel : ObservableObject
         this.dialogs = dialogs;
         this.locationId = locationId;
 
-        title = locationId.HasValue ? "Edit Location" : "Add Location";
+        title = locationId.HasValue ? Strings.AddLocationEditTitle : Strings.AddLocationAddTitle;
 
         if (locationId.HasValue)
         {

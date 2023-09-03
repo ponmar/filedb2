@@ -4,6 +4,7 @@ using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Model;
+using FileDB.Resources;
 using FileDBInterface.Exceptions;
 using FileDBShared.Model;
 
@@ -54,7 +55,7 @@ public partial class AddPersonViewModel : ObservableObject
         this.searchResultRepository = searchResultRepository;
         this.personId = personId;
 
-        title = personId.HasValue ? "Edit Person" : "Add Person";
+        title = personId.HasValue ? Strings.AddPersonEditTitle : Strings.AddPersonAddTitle;
 
         if (personId.HasValue)
         {

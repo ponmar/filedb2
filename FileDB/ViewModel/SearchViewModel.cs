@@ -12,6 +12,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Model;
 using System.Windows.Media;
+using FileDB.Resources;
 
 namespace FileDB.ViewModel;
 
@@ -295,7 +296,7 @@ public partial class SearchViewModel : ObservableObject
         var window = new PresentationWindow()
         {
             Owner = Application.Current.MainWindow,
-            Title = $"{Utils.ApplicationName} {Utils.GetVersionString()} - Presentation"
+            Title = string.Format(Strings.PresentationWindowTitle, Utils.ApplicationName, Utils.GetVersionString()),
         };
 
         window.Show();

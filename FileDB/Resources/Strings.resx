@@ -687,4 +687,43 @@
   <data name="SearchResultToggleFileDescriptionSpeekToolTip" xml:space="preserve">
     <value>Toggle file description speek</value>
   </data>
+  <data name="FileInfoHeader" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="FileInfoPersonsToolTip" xml:space="preserve">
+    <value>Persons</value>
+  </data>
+  <data name="FileInfoLocationsToolTip" xml:space="preserve">
+    <value>Locations</value>
+  </data>
+  <data name="FileInfoTagsToolTip" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="FileInfoPositionToolTip" xml:space="preserve">
+    <value>GPS position</value>
+  </data>
+  <data name="FileInfoDescriptionToolTip" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="PresentationWindowTitle" xml:space="preserve">
+    <value>{0} {1} - Presentation</value>
+  </data>
+  <data name="AddLocationEditTitle" xml:space="preserve">
+    <value>Edit Location</value>
+  </data>
+  <data name="AddLocationAddTitle" xml:space="preserve">
+    <value>Add Location</value>
+  </data>
+  <data name="AddPersonEditTitle" xml:space="preserve">
+    <value>Edit Person</value>
+  </data>
+  <data name="AddPersonAddTitle" xml:space="preserve">
+    <value>Add Person</value>
+  </data>
+  <data name="AddTagEditTitle" xml:space="preserve">
+    <value>Edit Tag</value>
+  </data>
+  <data name="AddTagAddTitle" xml:space="preserve">
+    <value>Add Tag</value>
+  </data>
 </root>

@@ -250,11 +250,29 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Location.
+        /// </summary>
+        public static string AddLocationAddTitle {
+            get {
+                return ResourceManager.GetString("AddLocationAddTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Description (optional):.
         /// </summary>
         public static string AddLocationDescriptionLabel {
             get {
                 return ResourceManager.GetString("AddLocationDescriptionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Location.
+        /// </summary>
+        public static string AddLocationEditTitle {
+            get {
+                return ResourceManager.GetString("AddLocationEditTitle", resourceCulture);
             }
         }
         
@@ -286,6 +304,15 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Person.
+        /// </summary>
+        public static string AddPersonAddTitle {
+            get {
+                return ResourceManager.GetString("AddPersonAddTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date of birth (optional):.
         /// </summary>
         public static string AddPersonDateOfBirthLabel {
@@ -309,6 +336,15 @@ namespace FileDB.Resources {
         public static string AddPersonDescriptionLabel {
             get {
                 return ResourceManager.GetString("AddPersonDescriptionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Person.
+        /// </summary>
+        public static string AddPersonEditTitle {
+            get {
+                return ResourceManager.GetString("AddPersonEditTitle", resourceCulture);
             }
         }
         
@@ -363,6 +399,24 @@ namespace FileDB.Resources {
         public static string AddPersonSexLabel {
             get {
                 return ResourceManager.GetString("AddPersonSexLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Tag.
+        /// </summary>
+        public static string AddTagAddTitle {
+            get {
+                return ResourceManager.GetString("AddTagAddTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Tag.
+        /// </summary>
+        public static string AddTagEditTitle {
+            get {
+                return ResourceManager.GetString("AddTagEditTitle", resourceCulture);
             }
         }
         
@@ -570,6 +624,60 @@ namespace FileDB.Resources {
         public static string ExportTitle {
             get {
                 return ResourceManager.GetString("ExportTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string FileInfoDescriptionToolTip {
+            get {
+                return ResourceManager.GetString("FileInfoDescriptionToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Information.
+        /// </summary>
+        public static string FileInfoHeader {
+            get {
+                return ResourceManager.GetString("FileInfoHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Locations.
+        /// </summary>
+        public static string FileInfoLocationsToolTip {
+            get {
+                return ResourceManager.GetString("FileInfoLocationsToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persons.
+        /// </summary>
+        public static string FileInfoPersonsToolTip {
+            get {
+                return ResourceManager.GetString("FileInfoPersonsToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GPS position.
+        /// </summary>
+        public static string FileInfoPositionToolTip {
+            get {
+                return ResourceManager.GetString("FileInfoPositionToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tags.
+        /// </summary>
+        public static string FileInfoTagsToolTip {
+            get {
+                return ResourceManager.GetString("FileInfoTagsToolTip", resourceCulture);
             }
         }
         
@@ -804,6 +912,15 @@ namespace FileDB.Resources {
         public static string PersonsTitle {
             get {
                 return ResourceManager.GetString("PersonsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} {1} - Presentation.
+        /// </summary>
+        public static string PresentationWindowTitle {
+            get {
+                return ResourceManager.GetString("PresentationWindowTitle", resourceCulture);
             }
         }
         

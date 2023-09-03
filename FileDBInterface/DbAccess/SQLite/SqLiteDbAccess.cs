@@ -388,7 +388,7 @@ public class SqLiteDbAccess : IDbAccess
     public PersonModel GetPersonById(int id)
     {
         using var connection = DatabaseSetup.CreateConnection(database);
-        return connection.QueryFirst<PersonModel>("select * from [persons] where Id = @ID", new { id });
+        return connection.QueryFirst<PersonModel>("select * from [persons] where Id=@id", new { id });
     }
 
     public bool HasPersonId(int id)
@@ -477,7 +477,7 @@ public class SqLiteDbAccess : IDbAccess
     public LocationModel GetLocationById(int id)
     {
         using var connection = DatabaseSetup.CreateConnection(database);
-        return connection.QueryFirst<LocationModel>("select * from [locations] where Id = @id", new { id });
+        return connection.QueryFirst<LocationModel>("select * from [locations] where Id=@id", new { id });
     }
 
     public bool HasLocationId(int id)
@@ -567,7 +567,7 @@ public class SqLiteDbAccess : IDbAccess
     public TagModel GetTagById(int id)
     {
         using var connection = DatabaseSetup.CreateConnection(database);
-        return connection.QueryFirst<TagModel>("select * from [tags] where Id = @id", new { id });
+        return connection.QueryFirst<TagModel>("select * from [tags] where Id=@id", new { id });
     }
 
     public bool HasTagId(int id)

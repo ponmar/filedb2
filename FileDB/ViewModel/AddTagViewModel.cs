@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Model;
+using FileDB.Resources;
 using FileDBInterface.Exceptions;
 using FileDBShared.Model;
 using System.Linq;
@@ -28,7 +29,7 @@ public partial class AddTagViewModel : ObservableObject
         this.dialogs = dialogs;
         this.tagId = tagId;
 
-        title = tagId.HasValue ? "Edit Tag" : "Add Tag";
+        title = tagId.HasValue ? Strings.AddTagEditTitle : Strings.AddTagAddTitle;
 
         if (tagId.HasValue)
         {
