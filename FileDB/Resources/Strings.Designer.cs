@@ -2266,6 +2266,168 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Database Backup.
+        /// </summary>
+        public static string ToolsDatabaseBackupHeader {
+            get {
+                return ResourceManager.GetString("ToolsDatabaseBackupHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open database backup directory.
+        /// </summary>
+        public static string ToolsDatabaseBackupOpenDatabaseBackupDirectoryButton {
+            get {
+                return ResourceManager.GetString("ToolsDatabaseBackupOpenDatabaseBackupDirectoryButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Backup of your files collection, FileDB configuration and FileDB databases to external media should be done continuously!.
+        /// </summary>
+        public static string ToolsDatabaseBackupWarning1 {
+            get {
+                return ResourceManager.GetString("ToolsDatabaseBackupWarning1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Database recovery must be done manually if needed..
+        /// </summary>
+        public static string ToolsDatabaseBackupWarning2 {
+            get {
+                return ResourceManager.GetString("ToolsDatabaseBackupWarning2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy file list with invalid meta-data.
+        /// </summary>
+        public static string ToolsDatabaseDataValidationCopyButton {
+            get {
+                return ResourceManager.GetString("ToolsDatabaseDataValidationCopyButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Database Data Validation.
+        /// </summary>
+        public static string ToolsDatabaseDataValidationHeader {
+            get {
+                return ResourceManager.GetString("ToolsDatabaseDataValidationHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Database data validation can be performed after an application upgrade or when data has been imported manually via SQL statements..
+        /// </summary>
+        public static string ToolsDatabaseDataValidationInfo {
+            get {
+                return ResourceManager.GetString("ToolsDatabaseDataValidationInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Directory:.
+        /// </summary>
+        public static string ToolsDatabaseExportDirectoryLabel {
+            get {
+                return ResourceManager.GetString("ToolsDatabaseExportDirectoryLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Database Export.
+        /// </summary>
+        public static string ToolsDatabaseExportHeader {
+            get {
+                return ResourceManager.GetString("ToolsDatabaseExportHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This tool can be used to export data to 3rd party applications..
+        /// </summary>
+        public static string ToolsDatabaseExportInfo {
+            get {
+                return ResourceManager.GetString("ToolsDatabaseExportInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy file list with no longer applicable files.
+        /// </summary>
+        public static string ToolsFilesCollectionFilteringCopyButton {
+            get {
+                return ResourceManager.GetString("ToolsFilesCollectionFilteringCopyButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Files Collection Filtering.
+        /// </summary>
+        public static string ToolsFilesCollectionFilteringHeader {
+            get {
+                return ResourceManager.GetString("ToolsFilesCollectionFilteringHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This tool can be used to find imported files that should, after an updated configuration or upgraded software, no longer be included..
+        /// </summary>
+        public static string ToolsFilesCollectionFilteringInfo {
+            get {
+                return ResourceManager.GetString("ToolsFilesCollectionFilteringInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy file list with missing files.
+        /// </summary>
+        public static string ToolsFindMetaDataForMissingFilesCopyButton {
+            get {
+                return ResourceManager.GetString("ToolsFindMetaDataForMissingFilesCopyButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find Meta-Data for Missing Files.
+        /// </summary>
+        public static string ToolsFindMetaDataForMissingFilesHeader {
+            get {
+                return ResourceManager.GetString("ToolsFindMetaDataForMissingFilesHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This tool can be used to find outdated meta-data. This may happen if you have removed, moved or renamed files in your files collection..
+        /// </summary>
+        public static string ToolsFindMetaDataForMissingFilesInfo {
+            get {
+                return ResourceManager.GetString("ToolsFindMetaDataForMissingFilesInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This operation can be slow for a large collection of files or if the media access is slow (for example when using a network share)..
+        /// </summary>
+        public static string ToolsFindMetaDataForMissingFilesWarning {
+            get {
+                return ResourceManager.GetString("ToolsFindMetaDataForMissingFilesWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Run.
+        /// </summary>
+        public static string ToolsRunButton {
+            get {
+                return ResourceManager.GetString("ToolsRunButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tools.
         /// </summary>
         public static string ToolsTitle {

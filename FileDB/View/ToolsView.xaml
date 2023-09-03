@@ -8,30 +8,30 @@
              xmlns:converters="clr-namespace:FileDB.Converters" xmlns:viewmodel="clr-namespace:FileDB.ViewModel"
              d:DataContext="{d:DesignInstance Type=viewmodel:ToolsViewModel}"
              mc:Ignorable="d"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="1200" d:DesignWidth="800">
     <UserControl.Resources>
         <converters:EnumerationToVisibilityConverter x:Key="EnumerationToVisibilityConverter" />
         <converters:StringContentToBoolConverter x:Key="StringContentToBoolConverter"/>
     </UserControl.Resources>
 
     <DockPanel>
-        <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Tools</TextBlock>
+        <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageHeading}" Text="Tools"/>
         <ScrollViewer>
             <StackPanel Orientation="Vertical" Style="{StaticResource PageStackPanel}">
-                <TextBlock Style="{StaticResource PageSubHeading}">Database Backup</TextBlock>
+                <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.ToolsDatabaseBackupHeader}"/>
                 <Border Style="{StaticResource BorderGroup}">
                     <StackPanel Orientation="Vertical">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Style="{StaticResource PageWarning}">&#x26A0;</TextBlock>
-                            <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap">Backup of your files collection, FileDB configuration and FileDB databases to external media should be done continuously!</TextBlock>
+                            <TextBlock Style="{StaticResource PageWarning}" Text="&#x26A0;"/>
+                            <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="{x:Static rs:Strings.ToolsDatabaseBackupWarning1}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Style="{StaticResource PageWarning}">&#x26A0;</TextBlock>
-                            <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap">Database recovery must be done manually if needed.</TextBlock>
+                            <TextBlock Style="{StaticResource PageWarning}" Text="&#x26A0;"/>
+                            <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="{x:Static rs:Strings.ToolsDatabaseBackupWarning2}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding CreateBackupCommand}" HorizontalAlignment="Left">Run</Button>
-                            <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding OpenDatabaseBackupDirectoryCommand}" HorizontalAlignment="Left">Open database backup directory</Button>
+                            <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding CreateBackupCommand}" HorizontalAlignment="Left" Content="{x:Static rs:Strings.ToolsRunButton}"/>
+                            <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding OpenDatabaseBackupDirectoryCommand}" HorizontalAlignment="Left" Content="{x:Static rs:Strings.ToolsDatabaseBackupOpenDatabaseBackupDirectoryButton}"/>
                         </StackPanel>
                         <TextBlock Style="{StaticResource PageTextBlock}" Text="{Binding BackupResult}"/>
                         <TextBlock Style="{StaticResource PageTextBlock}" Text="{Binding BackupListHeader}"/>
@@ -47,55 +47,55 @@
                     </StackPanel>
                 </Border>
 
-                <TextBlock Style="{StaticResource PageSubHeading}">Database Export</TextBlock>
+                <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.ToolsDatabaseExportHeader}"/>
                 <Border Style="{StaticResource BorderGroup}">
                     <StackPanel Orientation="Vertical">
-                        <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="This tool can be used to export data to 3rd party applications."/>
+                        <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="{x:Static rs:Strings.ToolsDatabaseExportInfo}"/>
                         <StackPanel Orientation="Horizontal">
-                            <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding DatabaseExportCommand}" IsEnabled="{Binding DatabaseExportDirectory, Converter={StaticResource StringContentToBoolConverter}}" HorizontalAlignment="Left">Run</Button>
-                            <TextBlock Text="Directory:" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center"/>
+                            <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding DatabaseExportCommand}" IsEnabled="{Binding DatabaseExportDirectory, Converter={StaticResource StringContentToBoolConverter}}" HorizontalAlignment="Left" Content="{x:Static rs:Strings.ToolsRunButton}"/>
+                            <TextBlock Text="{x:Static rs:Strings.ToolsDatabaseExportDirectoryLabel}" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center"/>
                             <TextBox Style="{StaticResource PageTextBox}" Width="300" Text="{Binding DatabaseExportDirectory, UpdateSourceTrigger=PropertyChanged}"/>
                         </StackPanel>
                         <TextBlock Style="{StaticResource PageTextBlock}" Text="{Binding DatabaseExportResult}"/>
                     </StackPanel>
                 </Border>
 
-                <TextBlock Style="{StaticResource PageSubHeading}">Files Collection Filtering</TextBlock>
+                <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.ToolsFilesCollectionFilteringHeader}"/>
                 <Border Style="{StaticResource BorderGroup}">
                     <StackPanel Orientation="Vertical">
-                        <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="This tool can be used to find imported files that should, after an updated configuration or upgraded software, no longer be included."/>
+                        <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="{x:Static rs:Strings.ToolsFilesCollectionFilteringInfo}"/>
                         <StackPanel Orientation="Horizontal">
-                            <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding FindImportedNoLongerApplicableFilesCommand}" HorizontalAlignment="Left">Run</Button>
-                            <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding CopyImportedNoLongerApplicableFilesListCommand}" IsEnabled="{Binding ImportedNoLongerApplicableFileList, Converter={StaticResource StringContentToBoolConverter}}" HorizontalAlignment="Left">Copy file list with no longer applicable files</Button>
+                            <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding FindImportedNoLongerApplicableFilesCommand}" HorizontalAlignment="Left" Content="{x:Static rs:Strings.ToolsRunButton}"/>
+                            <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding CopyImportedNoLongerApplicableFilesListCommand}" IsEnabled="{Binding ImportedNoLongerApplicableFileList, Converter={StaticResource StringContentToBoolConverter}}" HorizontalAlignment="Left" Content="{x:Static rs:Strings.ToolsFilesCollectionFilteringCopyButton}"/>
                         </StackPanel>
                         <TextBlock Style="{StaticResource PageTextBlock}" Text="{Binding FindImportedNoLongerApplicableFilesResult}"/>
                     </StackPanel>
                 </Border>
 
-                <TextBlock Style="{StaticResource PageSubHeading}">Database Data Validation</TextBlock>
+                <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.ToolsDatabaseDataValidationHeader}"/>
                 <Border Style="{StaticResource BorderGroup}">
                     <StackPanel Orientation="Vertical">
-                        <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="Database data validation can be performed after an application upgrade or when data has been imported manually via SQL statements."/>
+                        <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="{x:Static rs:Strings.ToolsDatabaseDataValidationInfo}"/>
                         <StackPanel Orientation="Horizontal">
-                            <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding DatabaseValidationCommand}" HorizontalAlignment="Left">Run</Button>
-                            <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding CopyInvalidFileListCommand}" IsEnabled="{Binding InvalidFileList, Converter={StaticResource StringContentToBoolConverter}}" HorizontalAlignment="Left">Copy file list with invalid meta-data</Button>
+                            <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding DatabaseValidationCommand}" HorizontalAlignment="Left" Content="{x:Static rs:Strings.ToolsRunButton}"/>
+                            <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding CopyInvalidFileListCommand}" IsEnabled="{Binding InvalidFileList, Converter={StaticResource StringContentToBoolConverter}}" HorizontalAlignment="Left" Content="{x:Static rs:Strings.ToolsDatabaseDataValidationCopyButton}"/>
                         </StackPanel>
                         <TextBlock Style="{StaticResource PageTextBlock}" Text="{Binding DatabaseValidationResult}"/>
                         <ListBox Visibility="{Binding DabaseValidationErrors, Converter={StaticResource EnumerationToVisibilityConverter}}" Margin="10" ItemsSource="{Binding DabaseValidationErrors}" HorizontalAlignment="Left"/>
                     </StackPanel>
                 </Border>
 
-                <TextBlock Style="{StaticResource PageSubHeading}">Find Meta-Data for Missing Files</TextBlock>
+                <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.ToolsFindMetaDataForMissingFilesHeader}"/>
                 <Border Style="{StaticResource BorderGroup}">
                     <StackPanel Orientation="Vertical">
-                        <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="This tool can be used to find outdated meta-data. This may happen if you have removed, moved or renamed files in your files collection."/>
+                        <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="{x:Static rs:Strings.ToolsFindMetaDataForMissingFilesInfo}"/>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Style="{StaticResource PageWarning}">&#x26A0;</TextBlock>
-                            <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap">This operation can be slow for a large collection of files or if the media access is slow (for example when using a network share).</TextBlock>
+                            <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="{x:Static rs:Strings.ToolsFindMetaDataForMissingFilesWarning}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding FileFinderCommand}" HorizontalAlignment="Left">Run</Button>
-                            <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding CopyFileFinderResultCommand}" IsEnabled="{Binding MissingFilesList, Converter={StaticResource StringContentToBoolConverter}}" HorizontalAlignment="Left">Copy file list with missing files</Button>
+                            <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding FileFinderCommand}" HorizontalAlignment="Left" Content="{x:Static rs:Strings.ToolsRunButton}"/>
+                            <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding CopyFileFinderResultCommand}" IsEnabled="{Binding MissingFilesList, Converter={StaticResource StringContentToBoolConverter}}" HorizontalAlignment="Left" Content="{x:Static rs:Strings.ToolsFindMetaDataForMissingFilesCopyButton}"/>
                         </StackPanel>
                         <TextBlock Style="{StaticResource PageTextBlock}" Text="{Binding FileFinderResult}"/>
                     </StackPanel>

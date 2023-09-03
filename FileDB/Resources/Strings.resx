@@ -855,4 +855,58 @@
   <data name="SettingsNumberOfLoadedImagesToKeepInMemoryToolTip" xml:space="preserve">
     <value>1 or higher</value>
   </data>
+  <data name="ToolsDatabaseBackupHeader" xml:space="preserve">
+    <value>Database Backup</value>
+  </data>
+  <data name="ToolsDatabaseExportHeader" xml:space="preserve">
+    <value>Database Export</value>
+  </data>
+  <data name="ToolsFilesCollectionFilteringHeader" xml:space="preserve">
+    <value>Files Collection Filtering</value>
+  </data>
+  <data name="ToolsDatabaseDataValidationHeader" xml:space="preserve">
+    <value>Database Data Validation</value>
+  </data>
+  <data name="ToolsFindMetaDataForMissingFilesHeader" xml:space="preserve">
+    <value>Find Meta-Data for Missing Files</value>
+  </data>
+  <data name="ToolsRunButton" xml:space="preserve">
+    <value>Run</value>
+  </data>
+  <data name="ToolsDatabaseBackupWarning1" xml:space="preserve">
+    <value>Backup of your files collection, FileDB configuration and FileDB databases to external media should be done continuously!</value>
+  </data>
+  <data name="ToolsDatabaseBackupWarning2" xml:space="preserve">
+    <value>Database recovery must be done manually if needed.</value>
+  </data>
+  <data name="ToolsDatabaseBackupOpenDatabaseBackupDirectoryButton" xml:space="preserve">
+    <value>Open database backup directory</value>
+  </data>
+  <data name="ToolsDatabaseExportInfo" xml:space="preserve">
+    <value>This tool can be used to export data to 3rd party applications.</value>
+  </data>
+  <data name="ToolsDatabaseExportDirectoryLabel" xml:space="preserve">
+    <value>Directory:</value>
+  </data>
+  <data name="ToolsFilesCollectionFilteringInfo" xml:space="preserve">
+    <value>This tool can be used to find imported files that should, after an updated configuration or upgraded software, no longer be included.</value>
+  </data>
+  <data name="ToolsDatabaseDataValidationInfo" xml:space="preserve">
+    <value>Database data validation can be performed after an application upgrade or when data has been imported manually via SQL statements.</value>
+  </data>
+  <data name="ToolsFindMetaDataForMissingFilesInfo" xml:space="preserve">
+    <value>This tool can be used to find outdated meta-data. This may happen if you have removed, moved or renamed files in your files collection.</value>
+  </data>
+  <data name="ToolsFindMetaDataForMissingFilesWarning" xml:space="preserve">
+    <value>This operation can be slow for a large collection of files or if the media access is slow (for example when using a network share).</value>
+  </data>
+  <data name="ToolsFindMetaDataForMissingFilesCopyButton" xml:space="preserve">
+    <value>Copy file list with missing files</value>
+  </data>
+  <data name="ToolsDatabaseDataValidationCopyButton" xml:space="preserve">
+    <value>Copy file list with invalid meta-data</value>
+  </data>
+  <data name="ToolsFilesCollectionFilteringCopyButton" xml:space="preserve">
+    <value>Copy file list with no longer applicable files</value>
+  </data>
 </root>

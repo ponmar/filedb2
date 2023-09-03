@@ -855,4 +855,58 @@
   <data name="SettingsNumberOfLoadedImagesToKeepInMemoryToolTip" xml:space="preserve">
     <value>1 eller högre</value>
   </data>
+  <data name="ToolsDatabaseBackupHeader" xml:space="preserve">
+    <value>Databas-backup</value>
+  </data>
+  <data name="ToolsDatabaseExportHeader" xml:space="preserve">
+    <value>Databasexport</value>
+  </data>
+  <data name="ToolsFilesCollectionFilteringHeader" xml:space="preserve">
+    <value>Filsamlingsfiltrering</value>
+  </data>
+  <data name="ToolsDatabaseDataValidationHeader" xml:space="preserve">
+    <value>Validering av databasinnehåll</value>
+  </data>
+  <data name="ToolsFindMetaDataForMissingFilesHeader" xml:space="preserve">
+    <value>Hitta metadata för saknade filer</value>
+  </data>
+  <data name="ToolsRunButton" xml:space="preserve">
+    <value>Kör</value>
+  </data>
+  <data name="ToolsFilesCollectionFilteringCopyButton" xml:space="preserve">
+    <value>Kopiera fillista med ej längre tillämpliga filer</value>
+  </data>
+  <data name="ToolsDatabaseBackupWarning1" xml:space="preserve">
+    <value>Säkerhetskopiering av din filsamling, FileDB-konfiguration och FileDB-databaser till externa medier bör göras kontinuerligt!</value>
+  </data>
+  <data name="ToolsDatabaseBackupWarning2" xml:space="preserve">
+    <value>Databasåterställning måste göras manuellt om det behövs.</value>
+  </data>
+  <data name="ToolsDatabaseBackupOpenDatabaseBackupDirectoryButton" xml:space="preserve">
+    <value>Öppna databasens säkerhetskopieringskatalog</value>
+  </data>
+  <data name="ToolsDatabaseExportInfo" xml:space="preserve">
+    <value>Detta verktyg kan användas för att exportera data till applikationer från tredje part.</value>
+  </data>
+  <data name="ToolsDatabaseExportDirectoryLabel" xml:space="preserve">
+    <value>Katalog:</value>
+  </data>
+  <data name="ToolsFilesCollectionFilteringInfo" xml:space="preserve">
+    <value>Detta verktyg kan användas för att hitta importerade filer som, efter en uppdaterad konfiguration eller uppgraderad programvara, inte längre ska ingå.</value>
+  </data>
+  <data name="ToolsDatabaseDataValidationInfo" xml:space="preserve">
+    <value>Databasdatavalidering kan utföras efter en applikationsuppgradering eller när data har importerats manuellt via SQL-kommandon.</value>
+  </data>
+  <data name="ToolsFindMetaDataForMissingFilesInfo" xml:space="preserve">
+    <value>Det här verktyget kan användas för att hitta föråldrade metadata. Detta kan hända om du har tagit bort, flyttat eller bytt namn på filer i din filsamling.</value>
+  </data>
+  <data name="ToolsFindMetaDataForMissingFilesWarning" xml:space="preserve">
+    <value>Denna åtgärd kan vara långsam för en stor samling filer eller om medieåtkomsten är långsam (till exempel när du använder en nätverksdelning).</value>
+  </data>
+  <data name="ToolsFindMetaDataForMissingFilesCopyButton" xml:space="preserve">
+    <value>Kopiera fillista med saknade filer</value>
+  </data>
+  <data name="ToolsDatabaseDataValidationCopyButton" xml:space="preserve">
+    <value>Kopiera fillista med ogiltig metadata</value>
+  </data>
 </root>
