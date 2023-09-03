@@ -726,4 +726,133 @@
   <data name="AddTagAddTitle" xml:space="preserve">
     <value>Add Tag</value>
   </data>
+  <data name="SettingsResetChangesButton" xml:space="preserve">
+    <value>Reset changes</value>
+  </data>
+  <data name="SettingsResetChangesButtonToolTip" xml:space="preserve">
+    <value>Reset changes to last saved configuration</value>
+  </data>
+  <data name="SettingsSaveButton" xml:space="preserve">
+    <value>Save...</value>
+  </data>
+  <data name="SettingsDefaultButton" xml:space="preserve">
+    <value>Default</value>
+  </data>
+  <data name="SettingsDefaultButtonToolTip" xml:space="preserve">
+    <value>Reset to default</value>
+  </data>
+  <data name="SettingsGeneralHeading" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="SettingsBrowsingHeading" xml:space="preserve">
+    <value>Browsing</value>
+  </data>
+  <data name="SettingsImportHeading" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="SettingsNotificationsHeading" xml:space="preserve">
+    <value>Notifications</value>
+  </data>
+  <data name="SettingsPerformanceHeading" xml:space="preserve">
+    <value>Performance</value>
+  </data>
+  <data name="SettingsConfigurationNameLabel" xml:space="preserve">
+    <value>Configuration name:</value>
+  </data>
+  <data name="SettingsDatabaseLabel" xml:space="preserve">
+    <value>Database:</value>
+  </data>
+  <data name="SettingsFilesRootDirectoryLabel" xml:space="preserve">
+    <value>Files root directory:</value>
+  </data>
+  <data name="SettingsWindowModeLabel" xml:space="preserve">
+    <value>Window mode:</value>
+  </data>
+  <data name="SettingsCultureOverrideLabel" xml:space="preserve">
+    <value>Culture override:</value>
+  </data>
+  <data name="SettingsReadOnlyModeLabel" xml:space="preserve">
+    <value>Read-only mode</value>
+  </data>
+  <data name="SettingsSlideshowDelaySecondsLabel" xml:space="preserve">
+    <value>Slideshow delay (seconds):</value>
+  </data>
+  <data name="SettingsSearchHistorySizeLabel" xml:space="preserve">
+    <value>Search history size:</value>
+  </data>
+  <data name="SettingsLocationLinkLabel" xml:space="preserve">
+    <value>Location link:</value>
+  </data>
+  <data name="SettingsOverlayTextSizeLabel" xml:space="preserve">
+    <value>Overlay text size:</value>
+  </data>
+  <data name="SettingsOverlayTextSizeForLargeModeLabel" xml:space="preserve">
+    <value>Overlay text size for large mode:</value>
+  </data>
+  <data name="SettingsShortItemNameMaxLengthLabel" xml:space="preserve">
+    <value>Short item name max length:</value>
+  </data>
+  <data name="SettingsDefaultSortMethodLabel" xml:space="preserve">
+    <value>Default sort method:</value>
+  </data>
+  <data name="SettingsKeepSelectionAfterSortLabel" xml:space="preserve">
+    <value>Keep selection after sort</value>
+  </data>
+  <data name="SettingsBlacklistedFilePathPatternsLabel" xml:space="preserve">
+    <value>Blacklisted file path patterns:</value>
+  </data>
+  <data name="SettingsWhitelistedFilePathPatternsLabel" xml:space="preserve">
+    <value>Whitelisted file path patterns:</value>
+  </data>
+  <data name="SettingsLocationMaxDistanceAtImportLabel" xml:space="preserve">
+    <value>Location max distance at import (meters):</value>
+  </data>
+  <data name="SettingsIncludeHiddenDirectoriesLabel" xml:space="preserve">
+    <value>Include hidden directories</value>
+  </data>
+  <data name="SettingsBirthdayReminderLabel" xml:space="preserve">
+    <value>Birthday reminder</value>
+  </data>
+  <data name="SettingsBirthdayReminderForDeceasedLabel" xml:space="preserve">
+    <value>Birthday reminder for deceased</value>
+  </data>
+  <data name="SettingsRIPReminderLabel" xml:space="preserve">
+    <value>RIP reminder</value>
+  </data>
+  <data name="SettingsFilesRootDirectoryMissingLabel" xml:space="preserve">
+    <value>Files root directory missing (i.e. network share not mounted)</value>
+  </data>
+  <data name="SettingsBackupReminderLabel" xml:space="preserve">
+    <value>Backup reminder (monthly)</value>
+  </data>
+  <data name="SettingsNumberOfSearchResultImagesToPreloadLabel" xml:space="preserve">
+    <value>Number of search result images to preload:</value>
+  </data>
+  <data name="SettingsNumberOfLoadedImagesToKeepInMemoryLabel" xml:space="preserve">
+    <value>Number of loaded images to keep in memory:</value>
+  </data>
+  <data name="SettingsLocationLinkToolTip" xml:space="preserve">
+    <value>LAT and LON is replaced with actual GPS position data when generating links. Set empty to disable feature.</value>
+  </data>
+  <data name="SettingsOverlayTextSizeToolTip" xml:space="preserve">
+    <value>Range: 8 - 50</value>
+  </data>
+  <data name="SettingsOverlayTextSizeForLargeModeToolTip" xml:space="preserve">
+    <value>Range: 8 - 50</value>
+  </data>
+  <data name="SettingsShortItemNameMaxLengthToolTip" xml:space="preserve">
+    <value>Range: 10 - 100</value>
+  </data>
+  <data name="SettingsBlacklistedFilePathPatternsToolTip" xml:space="preserve">
+    <value>Format: pattern1;pattern2;pattern3</value>
+  </data>
+  <data name="SettingsWhitelistedFilePathPatternsToolTip" xml:space="preserve">
+    <value>Format: pattern1;pattern2;pattern3</value>
+  </data>
+  <data name="SettingsNumberOfSearchResultImagesToPreloadToolTip" xml:space="preserve">
+    <value>1 or higher</value>
+  </data>
+  <data name="SettingsNumberOfLoadedImagesToKeepInMemoryToolTip" xml:space="preserve">
+    <value>1 or higher</value>
+  </data>
 </root>

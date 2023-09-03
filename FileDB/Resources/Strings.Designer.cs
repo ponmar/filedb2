@@ -1816,11 +1816,398 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Backup reminder (monthly).
+        /// </summary>
+        public static string SettingsBackupReminderLabel {
+            get {
+                return ResourceManager.GetString("SettingsBackupReminderLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Birthday reminder for deceased.
+        /// </summary>
+        public static string SettingsBirthdayReminderForDeceasedLabel {
+            get {
+                return ResourceManager.GetString("SettingsBirthdayReminderForDeceasedLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Birthday reminder.
+        /// </summary>
+        public static string SettingsBirthdayReminderLabel {
+            get {
+                return ResourceManager.GetString("SettingsBirthdayReminderLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Blacklisted file path patterns:.
+        /// </summary>
+        public static string SettingsBlacklistedFilePathPatternsLabel {
+            get {
+                return ResourceManager.GetString("SettingsBlacklistedFilePathPatternsLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Format: pattern1;pattern2;pattern3.
+        /// </summary>
+        public static string SettingsBlacklistedFilePathPatternsToolTip {
+            get {
+                return ResourceManager.GetString("SettingsBlacklistedFilePathPatternsToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Browsing.
+        /// </summary>
+        public static string SettingsBrowsingHeading {
+            get {
+                return ResourceManager.GetString("SettingsBrowsingHeading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Configuration name:.
+        /// </summary>
+        public static string SettingsConfigurationNameLabel {
+            get {
+                return ResourceManager.GetString("SettingsConfigurationNameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Culture override:.
+        /// </summary>
+        public static string SettingsCultureOverrideLabel {
+            get {
+                return ResourceManager.GetString("SettingsCultureOverrideLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Database:.
+        /// </summary>
+        public static string SettingsDatabaseLabel {
+            get {
+                return ResourceManager.GetString("SettingsDatabaseLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default.
+        /// </summary>
+        public static string SettingsDefaultButton {
+            get {
+                return ResourceManager.GetString("SettingsDefaultButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset to default.
+        /// </summary>
+        public static string SettingsDefaultButtonToolTip {
+            get {
+                return ResourceManager.GetString("SettingsDefaultButtonToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default sort method:.
+        /// </summary>
+        public static string SettingsDefaultSortMethodLabel {
+            get {
+                return ResourceManager.GetString("SettingsDefaultSortMethodLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Files root directory:.
+        /// </summary>
+        public static string SettingsFilesRootDirectoryLabel {
+            get {
+                return ResourceManager.GetString("SettingsFilesRootDirectoryLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Files root directory missing (i.e. network share not mounted).
+        /// </summary>
+        public static string SettingsFilesRootDirectoryMissingLabel {
+            get {
+                return ResourceManager.GetString("SettingsFilesRootDirectoryMissingLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to General.
+        /// </summary>
+        public static string SettingsGeneralHeading {
+            get {
+                return ResourceManager.GetString("SettingsGeneralHeading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import.
+        /// </summary>
+        public static string SettingsImportHeading {
+            get {
+                return ResourceManager.GetString("SettingsImportHeading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Include hidden directories.
+        /// </summary>
+        public static string SettingsIncludeHiddenDirectoriesLabel {
+            get {
+                return ResourceManager.GetString("SettingsIncludeHiddenDirectoriesLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Keep selection after sort.
+        /// </summary>
+        public static string SettingsKeepSelectionAfterSortLabel {
+            get {
+                return ResourceManager.GetString("SettingsKeepSelectionAfterSortLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Location link:.
+        /// </summary>
+        public static string SettingsLocationLinkLabel {
+            get {
+                return ResourceManager.GetString("SettingsLocationLinkLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LAT and LON is replaced with actual GPS position data when generating links. Set empty to disable feature..
+        /// </summary>
+        public static string SettingsLocationLinkToolTip {
+            get {
+                return ResourceManager.GetString("SettingsLocationLinkToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Location max distance at import (meters):.
+        /// </summary>
+        public static string SettingsLocationMaxDistanceAtImportLabel {
+            get {
+                return ResourceManager.GetString("SettingsLocationMaxDistanceAtImportLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notifications.
+        /// </summary>
+        public static string SettingsNotificationsHeading {
+            get {
+                return ResourceManager.GetString("SettingsNotificationsHeading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of loaded images to keep in memory:.
+        /// </summary>
+        public static string SettingsNumberOfLoadedImagesToKeepInMemoryLabel {
+            get {
+                return ResourceManager.GetString("SettingsNumberOfLoadedImagesToKeepInMemoryLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1 or higher.
+        /// </summary>
+        public static string SettingsNumberOfLoadedImagesToKeepInMemoryToolTip {
+            get {
+                return ResourceManager.GetString("SettingsNumberOfLoadedImagesToKeepInMemoryToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of search result images to preload:.
+        /// </summary>
+        public static string SettingsNumberOfSearchResultImagesToPreloadLabel {
+            get {
+                return ResourceManager.GetString("SettingsNumberOfSearchResultImagesToPreloadLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1 or higher.
+        /// </summary>
+        public static string SettingsNumberOfSearchResultImagesToPreloadToolTip {
+            get {
+                return ResourceManager.GetString("SettingsNumberOfSearchResultImagesToPreloadToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Overlay text size for large mode:.
+        /// </summary>
+        public static string SettingsOverlayTextSizeForLargeModeLabel {
+            get {
+                return ResourceManager.GetString("SettingsOverlayTextSizeForLargeModeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Range: 8 - 50.
+        /// </summary>
+        public static string SettingsOverlayTextSizeForLargeModeToolTip {
+            get {
+                return ResourceManager.GetString("SettingsOverlayTextSizeForLargeModeToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Overlay text size:.
+        /// </summary>
+        public static string SettingsOverlayTextSizeLabel {
+            get {
+                return ResourceManager.GetString("SettingsOverlayTextSizeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Range: 8 - 50.
+        /// </summary>
+        public static string SettingsOverlayTextSizeToolTip {
+            get {
+                return ResourceManager.GetString("SettingsOverlayTextSizeToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Performance.
+        /// </summary>
+        public static string SettingsPerformanceHeading {
+            get {
+                return ResourceManager.GetString("SettingsPerformanceHeading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Read-only mode.
+        /// </summary>
+        public static string SettingsReadOnlyModeLabel {
+            get {
+                return ResourceManager.GetString("SettingsReadOnlyModeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset changes.
+        /// </summary>
+        public static string SettingsResetChangesButton {
+            get {
+                return ResourceManager.GetString("SettingsResetChangesButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset changes to last saved configuration.
+        /// </summary>
+        public static string SettingsResetChangesButtonToolTip {
+            get {
+                return ResourceManager.GetString("SettingsResetChangesButtonToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RIP reminder.
+        /// </summary>
+        public static string SettingsRIPReminderLabel {
+            get {
+                return ResourceManager.GetString("SettingsRIPReminderLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save....
+        /// </summary>
+        public static string SettingsSaveButton {
+            get {
+                return ResourceManager.GetString("SettingsSaveButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search history size:.
+        /// </summary>
+        public static string SettingsSearchHistorySizeLabel {
+            get {
+                return ResourceManager.GetString("SettingsSearchHistorySizeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Short item name max length:.
+        /// </summary>
+        public static string SettingsShortItemNameMaxLengthLabel {
+            get {
+                return ResourceManager.GetString("SettingsShortItemNameMaxLengthLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Range: 10 - 100.
+        /// </summary>
+        public static string SettingsShortItemNameMaxLengthToolTip {
+            get {
+                return ResourceManager.GetString("SettingsShortItemNameMaxLengthToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slideshow delay (seconds):.
+        /// </summary>
+        public static string SettingsSlideshowDelaySecondsLabel {
+            get {
+                return ResourceManager.GetString("SettingsSlideshowDelaySecondsLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
         public static string SettingsTitle {
             get {
                 return ResourceManager.GetString("SettingsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Whitelisted file path patterns:.
+        /// </summary>
+        public static string SettingsWhitelistedFilePathPatternsLabel {
+            get {
+                return ResourceManager.GetString("SettingsWhitelistedFilePathPatternsLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Format: pattern1;pattern2;pattern3.
+        /// </summary>
+        public static string SettingsWhitelistedFilePathPatternsToolTip {
+            get {
+                return ResourceManager.GetString("SettingsWhitelistedFilePathPatternsToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Window mode:.
+        /// </summary>
+        public static string SettingsWindowModeLabel {
+            get {
+                return ResourceManager.GetString("SettingsWindowModeLabel", resourceCulture);
             }
         }
         

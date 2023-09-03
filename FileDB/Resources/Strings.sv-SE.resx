@@ -726,4 +726,133 @@
   <data name="AddTagAddTitle" xml:space="preserve">
     <value>﻿Lägg till tagg</value>
   </data>
+  <data name="SettingsResetChangesButton" xml:space="preserve">
+    <value>Återställ ändringar</value>
+  </data>
+  <data name="SettingsResetChangesButtonToolTip" xml:space="preserve">
+    <value>Återställ ändringar till senast sparade konfiguration</value>
+  </data>
+  <data name="SettingsSaveButton" xml:space="preserve">
+    <value>Spara...</value>
+  </data>
+  <data name="SettingsDefaultButton" xml:space="preserve">
+    <value>Standard</value>
+  </data>
+  <data name="SettingsDefaultButtonToolTip" xml:space="preserve">
+    <value>Återställ till standard</value>
+  </data>
+  <data name="SettingsGeneralHeading" xml:space="preserve">
+    <value>Allmänt</value>
+  </data>
+  <data name="SettingsBrowsingHeading" xml:space="preserve">
+    <value>Bläddring</value>
+  </data>
+  <data name="SettingsImportHeading" xml:space="preserve">
+    <value>Importera</value>
+  </data>
+  <data name="SettingsNotificationsHeading" xml:space="preserve">
+    <value>Aviseringar</value>
+  </data>
+  <data name="SettingsPerformanceHeading" xml:space="preserve">
+    <value>Prestanda</value>
+  </data>
+  <data name="SettingsConfigurationNameLabel" xml:space="preserve">
+    <value>Konfigurering:</value>
+  </data>
+  <data name="SettingsDatabaseLabel" xml:space="preserve">
+    <value>Databas:</value>
+  </data>
+  <data name="SettingsFilesRootDirectoryLabel" xml:space="preserve">
+    <value>Filer rotkatalog:</value>
+  </data>
+  <data name="SettingsWindowModeLabel" xml:space="preserve">
+    <value>Fönsterläge:</value>
+  </data>
+  <data name="SettingsCultureOverrideLabel" xml:space="preserve">
+    <value>Åsidosätt kultur:</value>
+  </data>
+  <data name="SettingsReadOnlyModeLabel" xml:space="preserve">
+    <value>Skrivskyddat läge</value>
+  </data>
+  <data name="SettingsSlideshowDelaySecondsLabel" xml:space="preserve">
+    <value>Bildspelsfördröjning (sekunder):</value>
+  </data>
+  <data name="SettingsSearchHistorySizeLabel" xml:space="preserve">
+    <value>Sökhistorik:</value>
+  </data>
+  <data name="SettingsLocationLinkLabel" xml:space="preserve">
+    <value>Plats länk:</value>
+  </data>
+  <data name="SettingsOverlayTextSizeLabel" xml:space="preserve">
+    <value>Övertäckning färg:</value>
+  </data>
+  <data name="SettingsOverlayTextSizeForLargeModeLabel" xml:space="preserve">
+    <value>Överlagra textstorlek för stort läge:</value>
+  </data>
+  <data name="SettingsShortItemNameMaxLengthLabel" xml:space="preserve">
+    <value>Kort artikelnamn maxlängd:</value>
+  </data>
+  <data name="SettingsDefaultSortMethodLabel" xml:space="preserve">
+    <value>Standard sorteringsmetod:</value>
+  </data>
+  <data name="SettingsKeepSelectionAfterSortLabel" xml:space="preserve">
+    <value>Behåll urvalet efter sortering</value>
+  </data>
+  <data name="SettingsBlacklistedFilePathPatternsLabel" xml:space="preserve">
+    <value>Svartlistade filsökvägsmönster:</value>
+  </data>
+  <data name="SettingsWhitelistedFilePathPatternsLabel" xml:space="preserve">
+    <value>Vitlistade filsökvägsmönster:</value>
+  </data>
+  <data name="SettingsLocationMaxDistanceAtImportLabel" xml:space="preserve">
+    <value>Plats max avstånd vid import (meter):</value>
+  </data>
+  <data name="SettingsIncludeHiddenDirectoriesLabel" xml:space="preserve">
+    <value>Inkludera dolda kataloger</value>
+  </data>
+  <data name="SettingsBirthdayReminderLabel" xml:space="preserve">
+    <value>Födelsedagspåminnelse</value>
+  </data>
+  <data name="SettingsBirthdayReminderForDeceasedLabel" xml:space="preserve">
+    <value>Födelsedagspåminnelse för avlidna</value>
+  </data>
+  <data name="SettingsRIPReminderLabel" xml:space="preserve">
+    <value>RIP-påminnelse</value>
+  </data>
+  <data name="SettingsFilesRootDirectoryMissingLabel" xml:space="preserve">
+    <value>Filer rotkatalog saknas (dvs. nätverksresurs inte monterad)</value>
+  </data>
+  <data name="SettingsBackupReminderLabel" xml:space="preserve">
+    <value>Påminnelse om säkerhetskopiering (månadsvis)</value>
+  </data>
+  <data name="SettingsNumberOfSearchResultImagesToPreloadLabel" xml:space="preserve">
+    <value>Antal sökresultatbilder som ska förinstalleras:</value>
+  </data>
+  <data name="SettingsNumberOfLoadedImagesToKeepInMemoryLabel" xml:space="preserve">
+    <value>Antal laddade bilder att spara i minnet:</value>
+  </data>
+  <data name="SettingsLocationLinkToolTip" xml:space="preserve">
+    <value>LAT och LON ersätts med faktiska GPS-positionsdata vid generering av länkar. Ställ in tom för att inaktivera funktionen.</value>
+  </data>
+  <data name="SettingsOverlayTextSizeToolTip" xml:space="preserve">
+    <value>Räckvidd: 8 - 50</value>
+  </data>
+  <data name="SettingsOverlayTextSizeForLargeModeToolTip" xml:space="preserve">
+    <value>Räckvidd: 8 - 50</value>
+  </data>
+  <data name="SettingsShortItemNameMaxLengthToolTip" xml:space="preserve">
+    <value>Räckvidd: 10 - 100</value>
+  </data>
+  <data name="SettingsBlacklistedFilePathPatternsToolTip" xml:space="preserve">
+    <value>Format: mönster1;mönster2;mönster3</value>
+  </data>
+  <data name="SettingsWhitelistedFilePathPatternsToolTip" xml:space="preserve">
+    <value>Format: mönster1;mönster2;mönster3</value>
+  </data>
+  <data name="SettingsNumberOfSearchResultImagesToPreloadToolTip" xml:space="preserve">
+    <value>1 eller högre</value>
+  </data>
+  <data name="SettingsNumberOfLoadedImagesToKeepInMemoryToolTip" xml:space="preserve">
+    <value>1 eller högre</value>
+  </data>
 </root>

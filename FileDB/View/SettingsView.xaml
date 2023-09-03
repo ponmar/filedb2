@@ -14,15 +14,15 @@
     </UserControl.Resources>
 
     <DockPanel>
-        <TextBlock Style="{StaticResource PageHeading}" DockPanel.Dock="Top">Settings</TextBlock>
+        <TextBlock Style="{StaticResource PageHeading}" DockPanel.Dock="Top" Text="{x:Static rs:Strings.SettingsTitle}"/>
         <ScrollViewer>
             <StackPanel Orientation="Vertical" Style="{StaticResource PageStackPanel}" Grid.IsSharedSizeScope="True">
                 <StackPanel Orientation="Horizontal" Style="{StaticResource PageStackPanel}">
-                    <Button Margin="5" Width="100" Style="{StaticResource NormalButton}" Command="{Binding ResetConfigurationCommand}" ToolTip="Reset changes to last saved configuration">Reset changes</Button>
-                    <Button Margin="5" Width="100" Style="{StaticResource NormalButton}" Command="{Binding SaveConfigurationCommand}">Save...</Button>
+                    <Button Margin="5" MinWidth="100" Style="{StaticResource NormalButton}" Command="{Binding ResetConfigurationCommand}" ToolTip="{x:Static rs:Strings.SettingsResetChangesButtonToolTip}" Content="{x:Static rs:Strings.SettingsResetChangesButton}"/>
+                    <Button Margin="5" MinWidth="100" Style="{StaticResource NormalButton}" Command="{Binding SaveConfigurationCommand}" Content="{x:Static rs:Strings.SettingsSaveButton}"/>
                 </StackPanel>
 
-                <TextBlock Text="General" Style="{StaticResource PageSubHeading}"/>
+                <TextBlock Text="{x:Static rs:Strings.SettingsGeneralHeading}" Style="{StaticResource PageSubHeading}"/>
                 <Border Style="{StaticResource BorderGroup}">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -40,34 +40,34 @@
                             <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
 
-                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center">Configuration name:</TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center" Text="{x:Static rs:Strings.SettingsConfigurationNameLabel}"/>
                         <TextBox Grid.Row="0" Grid.Column="1" Width="250" Style="{StaticResource PageTextBox}" Text="{Binding ConfigName}"></TextBox>
 
-                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center">Database:</TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center" Text="{x:Static rs:Strings.SettingsDatabaseLabel}"/>
                         <TextBox Grid.Row="1" Grid.Column="1" Width="250" Style="{StaticResource PageTextBox}" Text="{Binding Database}"></TextBox>
-                        <Button Grid.Row="1" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding BrowseDatabaseCommand}">Browse...</Button>
-                        <Button Grid.Row="1" Grid.Column="3" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding CreateDatabaseCommand}">Create...</Button>
+                        <Button Grid.Row="1" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding BrowseDatabaseCommand}" Content="Browse..."/>
+                        <Button Grid.Row="1" Grid.Column="3" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding CreateDatabaseCommand}" Content="Create..."/>
 
-                        <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center">Files root directory:</TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center" Text="{x:Static rs:Strings.SettingsFilesRootDirectoryLabel}"/>
                         <TextBox Grid.Row="2" Grid.Column="1" Width="250" Style="{StaticResource PageTextBox}" Text="{Binding FilesRootDirectory}"></TextBox>
-                        <Button Grid.Row="2" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding BrowseFilesRootDirectoryCommand}">Browse...</Button>
+                        <Button Grid.Row="2" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding BrowseFilesRootDirectoryCommand}" Content="Browse..."/>
 
-                        <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center">Window mode:</TextBlock>
+                        <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center" Text="{x:Static rs:Strings.SettingsWindowModeLabel}"/>
                         <ComboBox Grid.Row="3" Grid.Column="1" Style="{StaticResource PageComboBox}" ItemsSource="{Binding WindowModes}" DisplayMemberPath="Name" SelectedValuePath="Mode" SelectedValue="{Binding WindowMode}"/>
-                        <Button Grid.Row="3" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultWindowModeCommand}" ToolTip="Reset to default">Default</Button>
+                        <Button Grid.Row="3" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultWindowModeCommand}" ToolTip="{x:Static rs:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static rs:Strings.SettingsDefaultButton}"/>
 
-                        <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center">Culture override:</TextBlock>
+                        <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center" Text="{x:Static rs:Strings.SettingsCultureOverrideLabel}"/>
                         <ComboBox Grid.Row="4" Grid.Column="1" Style="{StaticResource PageComboBox}" ItemsSource="{Binding Cultures}" DisplayMemberPath="DisplayName" SelectedValue="{Binding SelectedCulture}"/>
-                        <Button Grid.Row="4" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultCultureOverrideCommand}" ToolTip="Reset to default">Default</Button>
+                        <Button Grid.Row="4" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultCultureOverrideCommand}" ToolTip="{x:Static rs:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static rs:Strings.SettingsDefaultButton}"/>
 
                         <CheckBox Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource PageCheckBox}" IsChecked="{Binding Path=ReadOnly, Mode=TwoWay}">
-                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="Read-only mode"/>
+                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{x:Static rs:Strings.SettingsReadOnlyModeLabel}"/>
                         </CheckBox>
-                        <Button Grid.Row="5" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultReadOnlyCommand}" ToolTip="Reset to default">Default</Button>
+                        <Button Grid.Row="5" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultReadOnlyCommand}" ToolTip="{x:Static rs:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static rs:Strings.SettingsDefaultButton}"/>
                     </Grid>
                 </Border>
 
-                <TextBlock Text="Browsing" Style="{StaticResource PageSubHeading}"/>
+                <TextBlock Text="{x:Static rs:Strings.SettingsBrowsingHeading}" Style="{StaticResource PageSubHeading}"/>
                 <Border Style="{StaticResource BorderGroup}">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -87,42 +87,42 @@
                             <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
 
-                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center">Slideshow delay (seconds):</TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center" Text="{x:Static rs:Strings.SettingsSlideshowDelaySecondsLabel}"/>
                         <TextBox Grid.Row="0" Grid.Column="1" Width="250" Style="{StaticResource PageTextBox}" Text="{Binding SlideshowDelay, Converter={StaticResource IntToStringConverter}}"></TextBox>
-                        <Button Grid.Row="0" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultSlideshowDelayCommand}" ToolTip="Reset to default">Default</Button>
+                        <Button Grid.Row="0" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultSlideshowDelayCommand}" ToolTip="{x:Static rs:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static rs:Strings.SettingsDefaultButton}"/>
 
-                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center">Search history size:</TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center" Text="{x:Static rs:Strings.SettingsSearchHistorySizeLabel}"/>
                         <TextBox Grid.Row="1" Grid.Column="1" Width="250" Style="{StaticResource PageTextBox}" Text="{Binding SearchHistorySize, Converter={StaticResource IntToStringConverter}}"></TextBox>
-                        <Button Grid.Row="1" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultSearchHistorySizeCommand}" ToolTip="Reset to default">Default</Button>
+                        <Button Grid.Row="1" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultSearchHistorySizeCommand}" ToolTip="{x:Static rs:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static rs:Strings.SettingsDefaultButton}"/>
 
-                        <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center">Location link:</TextBlock>
-                        <TextBox Grid.Row="2" Grid.Column="1" Width="250" Style="{StaticResource PageTextBox}" Text="{Binding LocationLink}" ToolTip="LAT and LON is replaced with actual GPS position data when generating links. Set empty to disable feature."></TextBox>
-                        <Button Grid.Row="2" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultLocationLinkCommand}" ToolTip="Reset to default">Default</Button>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center" Text="{x:Static rs:Strings.SettingsLocationLinkLabel}"/>
+                        <TextBox Grid.Row="2" Grid.Column="1" Width="250" Style="{StaticResource PageTextBox}" Text="{Binding LocationLink}" ToolTip="{x:Static rs:Strings.SettingsLocationLinkToolTip}"/>
+                        <Button Grid.Row="2" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultLocationLinkCommand}" ToolTip="{x:Static rs:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static rs:Strings.SettingsDefaultButton}"/>
 
-                        <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center">Overlay text size:</TextBlock>
-                        <TextBox Grid.Row="3" Grid.Column="1" Width="250" Style="{StaticResource PageTextBox}" Text="{Binding OverlayTextSize}" ToolTip="Range: 8 - 50"></TextBox>
-                        <Button Grid.Row="3" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultOverlayTextSizeCommand}" ToolTip="Reset to default">Default</Button>
+                        <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center" Text="{x:Static rs:Strings.SettingsOverlayTextSizeLabel}"/>
+                        <TextBox Grid.Row="3" Grid.Column="1" Width="250" Style="{StaticResource PageTextBox}" Text="{Binding OverlayTextSize}" ToolTip="{x:Static rs:Strings.SettingsOverlayTextSizeToolTip}"></TextBox>
+                        <Button Grid.Row="3" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultOverlayTextSizeCommand}" ToolTip="{x:Static rs:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static rs:Strings.SettingsDefaultButton}"/>
 
-                        <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center">Overlay text size for large mode:</TextBlock>
-                        <TextBox Grid.Row="4" Grid.Column="1" Width="250" Style="{StaticResource PageTextBox}" Text="{Binding OverlayTextSizeLarge}" ToolTip="Range: 8 - 50"></TextBox>
-                        <Button Grid.Row="4" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultOverlayTextSizeLargeCommand}" ToolTip="Reset to default">Default</Button>
+                        <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center" Text="{x:Static rs:Strings.SettingsOverlayTextSizeForLargeModeLabel}"/>
+                        <TextBox Grid.Row="4" Grid.Column="1" Width="250" Style="{StaticResource PageTextBox}" Text="{Binding OverlayTextSizeLarge}" ToolTip="{x:Static rs:Strings.SettingsOverlayTextSizeForLargeModeToolTip}"></TextBox>
+                        <Button Grid.Row="4" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultOverlayTextSizeLargeCommand}" ToolTip="{x:Static rs:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static rs:Strings.SettingsDefaultButton}"/>
 
-                        <TextBlock Grid.Row="5" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center">Short item name max length:</TextBlock>
-                        <TextBox Grid.Row="5" Grid.Column="1" Width="250" Style="{StaticResource PageTextBox}" Text="{Binding ShortItemNameMaxLength}" ToolTip="Range: 10 - 100"></TextBox>
-                        <Button Grid.Row="5" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultShortItemNameMaxLengthCommand}" ToolTip="Reset to default">Default</Button>
+                        <TextBlock Grid.Row="5" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center" Text="{x:Static rs:Strings.SettingsShortItemNameMaxLengthLabel}"/>
+                        <TextBox Grid.Row="5" Grid.Column="1" Width="250" Style="{StaticResource PageTextBox}" Text="{Binding ShortItemNameMaxLength}" ToolTip="{x:Static rs:Strings.SettingsShortItemNameMaxLengthToolTip}"></TextBox>
+                        <Button Grid.Row="5" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultShortItemNameMaxLengthCommand}" ToolTip="{x:Static rs:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static rs:Strings.SettingsDefaultButton}"/>
 
-                        <TextBlock Grid.Row="6" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center">Default sort method:</TextBlock>
+                        <TextBlock Grid.Row="6" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center" Text="{x:Static rs:Strings.SettingsDefaultSortMethodLabel}"/>
                         <ComboBox Grid.Row="6" Grid.Column="1" Style="{StaticResource PageComboBox}" ItemsSource="{Binding SortMethods}" DisplayMemberPath="Name" SelectedValuePath="Method" SelectedValue="{Binding DefaultSortMethod}"/>
-                        <Button Grid.Row="6" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultDefaultSortMethodCommand}" ToolTip="Reset to default">Default</Button>
+                        <Button Grid.Row="6" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultDefaultSortMethodCommand}" ToolTip="{x:Static rs:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static rs:Strings.SettingsDefaultButton}"/>
 
                         <CheckBox Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource PageCheckBox}" IsChecked="{Binding Path=KeepSelectionAfterSort, Mode=TwoWay}">
-                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="Keep selection after sort"></TextBlock>
+                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{x:Static rs:Strings.SettingsKeepSelectionAfterSortLabel}"/>
                         </CheckBox>
-                        <Button Grid.Row="7" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultKeepSelectionAfterSortCommand}" ToolTip="Reset to default">Default</Button>
+                        <Button Grid.Row="7" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultKeepSelectionAfterSortCommand}" ToolTip="{x:Static rs:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static rs:Strings.SettingsDefaultButton}"/>
                     </Grid>
                 </Border>
 
-                <TextBlock Text="Import" Style="{StaticResource PageSubHeading}"/>
+                <TextBlock Text="{x:Static rs:Strings.SettingsImportHeading}" Style="{StaticResource PageSubHeading}"/>
                 <Border Style="{StaticResource BorderGroup}">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -149,26 +149,26 @@
                             <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
 
-                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center">Blacklisted file path patterns:</TextBlock>
-                        <TextBox Width="250" Grid.Row="0" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding BlacklistedFilePathPatterns}" ToolTip="Format: pattern1;pattern2;pattern3"></TextBox>
-                        <Button Grid.Row="0" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultBlacklistedFilePathPatternsCommand}" ToolTip="Reset to default">Default</Button>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center" Text="{x:Static rs:Strings.SettingsBlacklistedFilePathPatternsLabel}"/>
+                        <TextBox Width="250" Grid.Row="0" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding BlacklistedFilePathPatterns}" ToolTip="{x:Static rs:Strings.SettingsBlacklistedFilePathPatternsToolTip}"></TextBox>
+                        <Button Grid.Row="0" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultBlacklistedFilePathPatternsCommand}" ToolTip="{x:Static rs:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static rs:Strings.SettingsDefaultButton}"/>
 
-                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center">Whitelisted file path patterns:</TextBlock>
-                        <TextBox Width="250" Grid.Row="1" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding WhitelistedFilePathPatterns}" ToolTip="Format: pattern1;pattern2;pattern3"></TextBox>
-                        <Button Grid.Row="1" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultWhitelistedFilePathPatternsCommand}" ToolTip="Reset to default">Default</Button>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center" Text="{x:Static rs:Strings.SettingsWhitelistedFilePathPatternsLabel}"/>
+                        <TextBox Width="250" Grid.Row="1" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding WhitelistedFilePathPatterns}" ToolTip="{x:Static rs:Strings.SettingsWhitelistedFilePathPatternsToolTip}"></TextBox>
+                        <Button Grid.Row="1" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultWhitelistedFilePathPatternsCommand}" ToolTip="{x:Static rs:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static rs:Strings.SettingsDefaultButton}"/>
 
-                        <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center">Location max distance at import (meters):</TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center" Text="{x:Static rs:Strings.SettingsLocationMaxDistanceAtImportLabel}"/>
                         <TextBox Width="250" Grid.Row="2" Grid.Column="1" Style="{StaticResource PageTextBox}" Text="{Binding FileToLocationMaxDistance, Converter={StaticResource IntToStringConverter}}"></TextBox>
-                        <Button Grid.Row="2" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultFileToLocationMaxDistanceCommand}" ToolTip="Reset to default">Default</Button>
+                        <Button Grid.Row="2" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultFileToLocationMaxDistanceCommand}" ToolTip="{x:Static rs:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static rs:Strings.SettingsDefaultButton}"/>
 
                         <CheckBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource PageCheckBox}" IsChecked="{Binding Path=IncludeHiddenDirectories, Mode=TwoWay}">
-                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="Include hidden directories"></TextBlock>
+                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{x:Static rs:Strings.SettingsIncludeHiddenDirectoriesLabel}"/>
                         </CheckBox>
-                        <Button Grid.Row="3" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultIncludeHiddenDirectoriesCommand}" ToolTip="Reset to default">Default</Button>
+                        <Button Grid.Row="3" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultIncludeHiddenDirectoriesCommand}" ToolTip="{x:Static rs:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static rs:Strings.SettingsDefaultButton}"/>
                     </Grid>
                 </Border>
 
-                <TextBlock Text="Notifications" Style="{StaticResource PageSubHeading}"/>
+                <TextBlock Text="{x:Static rs:Strings.SettingsNotificationsHeading}" Style="{StaticResource PageSubHeading}"/>
                 <Border Style="{StaticResource BorderGroup}">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -185,35 +185,35 @@
                             <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
                         <CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource PageCheckBox}" IsChecked="{Binding Path=BirthdayReminder, Mode=TwoWay}">
-                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="Birthday reminder"></TextBlock>
-                        </CheckBox>                            
-                        <Button Grid.Row="0" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultBirthdayReminderCommand}" ToolTip="Reset to default">Default</Button>
+                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{x:Static rs:Strings.SettingsBirthdayReminderLabel}"/>
+                        </CheckBox>
+                        <Button Grid.Row="0" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultBirthdayReminderCommand}" ToolTip="{x:Static rs:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static rs:Strings.SettingsDefaultButton}"/>
 
                         <CheckBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource PageCheckBox}" IsChecked="{Binding Path=BirthdayReminderForDeceased, Mode=TwoWay}">
-                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="Birthday reminder for deceased"></TextBlock>
+                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{x:Static rs:Strings.SettingsBirthdayReminderForDeceasedLabel}"/>
                         </CheckBox>
-                        <Button Grid.Row="1" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultBirthdayReminderForDeceasedCommand}" ToolTip="Reset to default">Default</Button>
+                        <Button Grid.Row="1" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultBirthdayReminderForDeceasedCommand}" ToolTip="{x:Static rs:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static rs:Strings.SettingsDefaultButton}"/>
 
                         <CheckBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource PageCheckBox}" IsChecked="{Binding Path=RipReminder, Mode=TwoWay}">
-                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="RIP reminder"></TextBlock>
+                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{x:Static rs:Strings.SettingsRIPReminderLabel}"/>
                         </CheckBox>
-                        <Button Grid.Row="2" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultRipReminderCommand}" ToolTip="Reset to default">Default</Button>
+                        <Button Grid.Row="2" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultRipReminderCommand}" ToolTip="{x:Static rs:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static rs:Strings.SettingsDefaultButton}"/>
 
                         <CheckBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource PageCheckBox}" IsChecked="{Binding Path=MissingFilesRootDirNotification, Mode=TwoWay}">
-                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="Files root directory missing (i.e. network share not mounted)"></TextBlock>
+                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{x:Static rs:Strings.SettingsFilesRootDirectoryMissingLabel}"/>
                         </CheckBox>
-                        <Button Grid.Row="3" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultMissingFilesRootDirNotificationCommand}" ToolTip="Reset to default">Default</Button>
+                        <Button Grid.Row="3" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultMissingFilesRootDirNotificationCommand}" ToolTip="{x:Static rs:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static rs:Strings.SettingsDefaultButton}"/>
 
                         <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
                             <CheckBox HorizontalAlignment="Right" Style="{StaticResource PageCheckBox}" IsChecked="{Binding Path=BackupReminder, Mode=TwoWay}" VerticalAlignment="Center">
-                                <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="Backup reminder (monthly)"></TextBlock>
+                                <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{x:Static rs:Strings.SettingsBackupReminderLabel}"/>
                             </CheckBox>
                         </StackPanel>
-                        <Button Grid.Row="4" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultBackupReminderCommand}" ToolTip="Reset to default">Default</Button>
+                        <Button Grid.Row="4" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultBackupReminderCommand}" ToolTip="{x:Static rs:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static rs:Strings.SettingsDefaultButton}"/>
                     </Grid>
                 </Border>
 
-                <TextBlock Text="Performance" Style="{StaticResource PageSubHeading}"/>
+                <TextBlock Text="{x:Static rs:Strings.SettingsPerformanceHeading}" Style="{StaticResource PageSubHeading}"/>
                 <Border Style="{StaticResource BorderGroup}">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -227,13 +227,13 @@
                             <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
 
-                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center">Number of search result images to preload:</TextBlock>
-                        <TextBox Grid.Row="0" Grid.Column="1" Width="250" Style="{StaticResource PageTextBox}" Text="{Binding NumImagesToPreload, Converter={StaticResource IntToStringConverter}}" ToolTip="1 or higher"></TextBox>
-                        <Button Grid.Row="0" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultNumImagesToPreloadCommand}" ToolTip="Reset to default">Default</Button>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center" Text="{x:Static rs:Strings.SettingsNumberOfSearchResultImagesToPreloadLabel}"/>
+                        <TextBox Grid.Row="0" Grid.Column="1" Width="250" Style="{StaticResource PageTextBox}" Text="{Binding NumImagesToPreload, Converter={StaticResource IntToStringConverter}}" ToolTip="{x:Static rs:Strings.SettingsNumberOfSearchResultImagesToPreloadToolTip}"></TextBox>
+                        <Button Grid.Row="0" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultNumImagesToPreloadCommand}" ToolTip="{x:Static rs:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static rs:Strings.SettingsDefaultButton}"/>
 
-                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center">Number of loaded images to keep in memory:</TextBlock>
-                        <TextBox Grid.Row="1" Grid.Column="1" Width="250" Style="{StaticResource PageTextBox}" Text="{Binding ImageMemoryCacheCount, Converter={StaticResource IntToStringConverter}}" ToolTip="1 or higher"></TextBox>
-                        <Button Grid.Row="1" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultImageMemoryCacheCountCommand}" ToolTip="Reset to default">Default</Button>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center" Text="{x:Static rs:Strings.SettingsNumberOfLoadedImagesToKeepInMemoryLabel}"/>
+                        <TextBox Grid.Row="1" Grid.Column="1" Width="250" Style="{StaticResource PageTextBox}" Text="{Binding ImageMemoryCacheCount, Converter={StaticResource IntToStringConverter}}" ToolTip="{x:Static rs:Strings.SettingsNumberOfLoadedImagesToKeepInMemoryToolTip}"></TextBox>
+                        <Button Grid.Row="1" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultImageMemoryCacheCountCommand}" ToolTip="{x:Static rs:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static rs:Strings.SettingsDefaultButton}"/>
                     </Grid>
                 </Border>
             </StackPanel>
