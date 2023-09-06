@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FileDB.Resources;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -18,7 +19,7 @@ public class MissingFilesRootDirNotifier : INotifier
         List<Notification> notifications = new();
         if (!Directory.Exists(rootDirectory))
         {
-            notifications.Add(new Notification(NotificationType.Warning, $"Files root directory is missing: {rootDirectory}", DateTime.Now));
+            notifications.Add(new Notification(NotificationType.Warning, string.Format(Strings.MissingFilesRootDirNotifierFilesRootDirectoryIsMissing, rootDirectory), DateTime.Now));
         }
         return notifications;
     }

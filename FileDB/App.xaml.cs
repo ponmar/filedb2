@@ -12,6 +12,7 @@ using TextCopy;
 using System.Collections.Generic;
 using FileDB.Model;
 using System.IO.Abstractions;
+using FileDB.Resources;
 
 namespace FileDB
 {
@@ -20,11 +21,12 @@ namespace FileDB
     /// </summary>
     public partial class App : Application
     {
+        private const string DemoCommandLineArgument = "--demo";
+
         private void Application_Startup(object sender, StartupEventArgs startupEventArgs)
         {
             Bootstrapper.Bootstrap();
             Utils.SetInvariantCulture();
-            bool demoModeEnabled = startupEventArgs.Args.Any(x => x == "--demo");
 
             var appDataConfig = new AppDataConfig<Config>(Utils.ApplicationName, ServiceLocator.Resolve<IFileSystem>());
 
@@ -33,35 +35,33 @@ namespace FileDB
 
             var notifications = new List<Notification>();
 
+            var demoModeEnabled = startupEventArgs.Args.Contains(DemoCommandLineArgument);
             if (demoModeEnabled)
             {
                 config = DefaultConfigs.CreateDemo();
-                notifications.Add(new(NotificationType.Info, "Demo configuration enabled. Have fun!", DateTime.Now));
+                SetUiCulture(config.CultureOverride);
+                notifications.Add(new(NotificationType.Info, Strings.StartupNotificationDemoConfigurationEnabled, DateTime.Now));
             }
             else if (!appDataConfig.FileExists())
             {
-                notifications.Add(new(NotificationType.Warning, $"No local {Utils.ApplicationName} configuration file exists. Loading demo configuration.", DateTime.Now));
                 config = DefaultConfigs.CreateDemo();
+                SetUiCulture(config.CultureOverride);
+                notifications.Add(new(NotificationType.Warning, string.Format(Strings.StartupNotificationNoConfigurationFile, Utils.ApplicationName), DateTime.Now));
             }
             else
             {
                 config = appDataConfig.Read() ?? DefaultConfigs.Default;
                 config = new ConfigMigrator().Migrate(config, DefaultConfigs.Default);
+                SetUiCulture(config.CultureOverride);
 
                 var validator = new ConfigValidator();
                 var result = validator.Validate(config);
                 if (!result.IsValid)
                 {
-                    notifications.Add(new(NotificationType.Error, "Configuration not valid", DateTime.Now));
+                    notifications.Add(new(NotificationType.Error, Strings.StartupNotificationConfigurationNotValid, DateTime.Now));
                     var dialogs = ServiceLocator.Resolve<IDialogs>();
                     dialogs.ShowErrorDialog(result);
                 }
-            }
-
-            // Note: system UI culture will be used as default when no culture specified
-            if (config.CultureOverride != null)
-            {
-                Utils.SetUICulture(config.CultureOverride);
             }
 
             IDbAccess dbAccess;
@@ -83,6 +83,15 @@ namespace FileDB
 
             var notificationsHandling = ServiceLocator.Resolve<INotificationHandling>();
             notifications.ForEach(notificationsHandling.AddNotification);
+        }
+
+        private void SetUiCulture(string? culture)
+        {
+            // Note: system UI culture will be used as default when no culture specified
+            if (culture is not null)
+            {
+                Utils.SetUICulture(culture);
+            }
         }
 
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)

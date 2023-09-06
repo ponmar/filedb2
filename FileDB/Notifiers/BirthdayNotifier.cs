@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FileDB.Resources;
 using FileDBShared.Model;
 
 namespace FileDB.Notifiers;
@@ -39,13 +40,14 @@ public class BirthdayNotifier : INotifier
             if (dateOfBirth.Month == today.Month &&
                 dateOfBirth.Day == today.Day)
             {
+                var personName = $"{person.Firstname} {person.Lastname}";
                 if (isDeceased)
                 {
-                    notifications.Add(new Notification(NotificationType.Info, $"Today is the birthday for {person.Firstname} {person.Lastname}!", DateTime.Now));
+                    notifications.Add(new Notification(NotificationType.Info, string.Format(Strings.BirthdayNotifierTodayIsTheBirthdayFor, personName), DateTime.Now));
                 }
                 else
                 {
-                    notifications.Add(new Notification(NotificationType.Info, $"Happy Birthday {person.Firstname} {person.Lastname}!", DateTime.Now));
+                    notifications.Add(new Notification(NotificationType.Info, string.Format(Strings.BirthdayNotifierHappyBirthday, personName), DateTime.Now));
                 }
             }
         }

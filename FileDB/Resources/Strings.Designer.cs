@@ -430,6 +430,42 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Backup reminder: Last database backup created {0} days ago!.
+        /// </summary>
+        public static string BackupNotifierLongTimeSinceBackup {
+            get {
+                return ResourceManager.GetString("BackupNotifierLongTimeSinceBackup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Backup reminder: No database backup has been created!.
+        /// </summary>
+        public static string BackupNotifierNoDatabaseBackupHasBeenCreated {
+            get {
+                return ResourceManager.GetString("BackupNotifierNoDatabaseBackupHasBeenCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Happy Birthday {0}!.
+        /// </summary>
+        public static string BirthdayNotifierHappyBirthday {
+            get {
+                return ResourceManager.GetString("BirthdayNotifierHappyBirthday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Today is the birthday for {0}!.
+        /// </summary>
+        public static string BirthdayNotifierTodayIsTheBirthdayFor {
+            get {
+                return ResourceManager.GetString("BirthdayNotifierTodayIsTheBirthdayFor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Filter:.
         /// </summary>
         public static string BirthdaysFilterLabel {
@@ -925,6 +961,15 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Files root directory is missing: {0}.
+        /// </summary>
+        public static string MissingFilesRootDirNotifierFilesRootDirectoryIsMissing {
+            get {
+                return ResourceManager.GetString("MissingFilesRootDirNotifierFilesRootDirectoryIsMissing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dismiss all.
         /// </summary>
         public static string NotificationsDismissAllButton {
@@ -1074,6 +1119,15 @@ namespace FileDB.Resources {
         public static string PresentationWindowTitle {
             get {
                 return ResourceManager.GetString("PresentationWindowTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rest in Peace {0}!.
+        /// </summary>
+        public static string RestInPeaceNotifierRestInPeace {
+            get {
+                return ResourceManager.GetString("RestInPeaceNotifierRestInPeace", resourceCulture);
             }
         }
         
@@ -2361,6 +2415,33 @@ namespace FileDB.Resources {
         public static string SettingsWindowModeLabel {
             get {
                 return ResourceManager.GetString("SettingsWindowModeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Configuration not valid.
+        /// </summary>
+        public static string StartupNotificationConfigurationNotValid {
+            get {
+                return ResourceManager.GetString("StartupNotificationConfigurationNotValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Demo configuration enabled. Have fun!.
+        /// </summary>
+        public static string StartupNotificationDemoConfigurationEnabled {
+            get {
+                return ResourceManager.GetString("StartupNotificationDemoConfigurationEnabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No local {0} configuration file exists. Loading demo configuration..
+        /// </summary>
+        public static string StartupNotificationNoConfigurationFile {
+            get {
+                return ResourceManager.GetString("StartupNotificationNoConfigurationFile", resourceCulture);
             }
         }
         

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FileDB.Resources;
 using FileDBShared.Model;
 
 namespace FileDB.Notifiers;
@@ -27,7 +28,8 @@ public class RestInPeaceNotifier : INotifier
                 if (deceased.Month == today.Month &&
                     deceased.Day == today.Day)
                 {
-                    notifications.Add(new Notification(NotificationType.Info, $"Rest in Peace {person.Firstname} {person.Lastname}!", DateTime.Now));
+                    var personName = $"{person.Firstname} {person.Lastname}";
+                    notifications.Add(new Notification(NotificationType.Info, string.Format(Strings.RestInPeaceNotifierRestInPeace, personName), DateTime.Now));
                 }
             }
         }

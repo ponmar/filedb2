@@ -960,4 +960,31 @@
   <data name="FilesIncludeMetaDataLabel" xml:space="preserve">
     <value>Include available meta-data (recommended)</value>
   </data>
+  <data name="BackupNotifierNoDatabaseBackupHasBeenCreated" xml:space="preserve">
+    <value>Backup reminder: No database backup has been created!</value>
+  </data>
+  <data name="BackupNotifierLongTimeSinceBackup" xml:space="preserve">
+    <value>Backup reminder: Last database backup created {0} days ago!</value>
+  </data>
+  <data name="BirthdayNotifierTodayIsTheBirthdayFor" xml:space="preserve">
+    <value>Today is the birthday for {0}!</value>
+  </data>
+  <data name="BirthdayNotifierHappyBirthday" xml:space="preserve">
+    <value>Happy Birthday {0}!</value>
+  </data>
+  <data name="MissingFilesRootDirNotifierFilesRootDirectoryIsMissing" xml:space="preserve">
+    <value>Files root directory is missing: {0}</value>
+  </data>
+  <data name="RestInPeaceNotifierRestInPeace" xml:space="preserve">
+    <value>Rest in Peace {0}!</value>
+  </data>
+  <data name="StartupNotificationDemoConfigurationEnabled" xml:space="preserve">
+    <value>Demo configuration enabled. Have fun!</value>
+  </data>
+  <data name="StartupNotificationNoConfigurationFile" xml:space="preserve">
+    <value>No local {0} configuration file exists. Loading demo configuration.</value>
+  </data>
+  <data name="StartupNotificationConfigurationNotValid" xml:space="preserve">
+    <value>Configuration not valid</value>
+  </data>
 </root>

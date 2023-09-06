@@ -960,4 +960,31 @@
   <data name="FilesIncludeMetaDataLabel" xml:space="preserve">
     <value>Inkludera tillgängliga metadata (rekommenderas)</value>
   </data>
+  <data name="BackupNotifierNoDatabaseBackupHasBeenCreated" xml:space="preserve">
+    <value>Påminnelse om säkerhetskopiering: Databasen har inte säkerhetskopierats!</value>
+  </data>
+  <data name="BackupNotifierLongTimeSinceBackup" xml:space="preserve">
+    <value>Påminnelse om säkerhetskopiering: Senaste säkerhetskopiering av databas skapades för {0} dagar sedan!</value>
+  </data>
+  <data name="BirthdayNotifierTodayIsTheBirthdayFor" xml:space="preserve">
+    <value>Idag är det födelsedag för {0}!</value>
+  </data>
+  <data name="BirthdayNotifierHappyBirthday" xml:space="preserve">
+    <value>Grattis på födelsedagen {0}!</value>
+  </data>
+  <data name="MissingFilesRootDirNotifierFilesRootDirectoryIsMissing" xml:space="preserve">
+    <value>Filsamlingens rotkatalog saknas: {0}!</value>
+  </data>
+  <data name="RestInPeaceNotifierRestInPeace" xml:space="preserve">
+    <value>Vila i fred {0}!</value>
+  </data>
+  <data name="StartupNotificationDemoConfigurationEnabled" xml:space="preserve">
+    <value>Demokonfiguration aktiverad. Ha det så kul!</value>
+  </data>
+  <data name="StartupNotificationNoConfigurationFile" xml:space="preserve">
+    <value>Det finns ingen lokal {0} konfigurationsfil. Laddar demokonfiguration.</value>
+  </data>
+  <data name="StartupNotificationConfigurationNotValid" xml:space="preserve">
+    <value>Konfigurationen är ogiltig</value>
+  </data>
 </root>
