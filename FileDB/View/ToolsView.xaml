@@ -15,7 +15,7 @@
     </UserControl.Resources>
 
     <DockPanel>
-        <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageHeading}" Text="Tools"/>
+        <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageHeading}" Text="{x:Static rs:Strings.ToolsTitle}"/>
         <ScrollViewer>
             <StackPanel Orientation="Vertical" Style="{StaticResource PageStackPanel}">
                 <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.ToolsDatabaseBackupHeader}"/>

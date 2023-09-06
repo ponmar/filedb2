@@ -27,52 +27,52 @@
                 </Grid.RowDefinitions>
                 
                 <TextBlock Grid.Column="0" Text="{Binding Path}" Margin="0,0,50,0" Style="{StaticResource PageTextBlock}"/>
-                <TextBlock Grid.Column="1" Text="{Binding DateModified}" ToolTip="File date modified" Margin="0" Style="{StaticResource PageTextBlock}"/>
+                <TextBlock Grid.Column="1" Text="{Binding DateModified}" ToolTip="{x:Static rs:Strings.FilesFileDateModifiedToolTip}" Margin="0" Style="{StaticResource PageTextBlock}"/>
             </Grid>
         </DataTemplate>
     </UserControl.Resources>
     <DockPanel>
-        <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageHeading}">Files</TextBlock>
+        <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageHeading}" Text="{x:Static rs:Strings.FilesTitle}"/>
         <ScrollViewer>
             <StackPanel Orientation="Vertical" Style="{StaticResource PageStackPanel}">
-                <TextBlock Style="{StaticResource PageSubHeading}">Add Meta-Data</TextBlock>
+                <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.FilesAddMetaDataHeader}"/>
                 <Border Style="{StaticResource BorderGroup}" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <StackPanel Orientation="Vertical" Style="{StaticResource PageStackPanel}">
-                        <TextBlock Style="{StaticResource PageTextBlock}">Check your settings to adjust what files will be listed.</TextBlock>
+                        <TextBlock Style="{StaticResource PageTextBlock}" Text="{x:Static rs:Strings.FilesInfoText}"/>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Style="{StaticResource PageWarning}">&#x26A0;</TextBlock>
-                            <TextBlock Style="{StaticResource PageTextBlock}">This operation can be slow for a large collection of files or if the media access is slow (for example when using a network share).</TextBlock>
+                            <TextBlock Style="{StaticResource PageWarning}" Text="&#x26A0;"/>
+                            <TextBlock Style="{StaticResource PageTextBlock}" Text="{x:Static rs:Strings.FilesWarningText}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="From files collection:" VerticalAlignment="Center" Margin="10 0 0 0"/>
-                            <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding ScanNewFilesCommand}">Find...</Button>
+                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{x:Static rs:Strings.FilesFromFilesCollectionLabel}" VerticalAlignment="Center" Margin="10 0 0 0"/>
+                            <Button Style="{StaticResource NormalButton}" Margin="10" Command="{Binding ScanNewFilesCommand}" Content="{x:Static rs:Strings.FilesFindButton}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="From files collection sub directory:" VerticalAlignment="Center" Margin="10 5 5 5"/>
+                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{x:Static rs:Strings.FilesFromFilesCollectionSubDirectoryLabel}" VerticalAlignment="Center" Margin="10 5 5 5"/>
                             <TextBox Style="{StaticResource PageTextBox}" Width="250" Margin="5" Text="{Binding SubdirToScan, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center"/>
-                            <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding BrowseSubDirectoryCommand}">Browse...</Button>
-                            <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding ScanNewFilesInDirectoryCommand}" IsEnabled="{Binding SubdirToScan, Converter={StaticResource StringContentToBoolConverter}}">Find...</Button>
+                            <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding BrowseSubDirectoryCommand}" Content="{x:Static rs:Strings.FilesBrowseButton}"/>
+                            <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding ScanNewFilesInDirectoryCommand}" IsEnabled="{Binding SubdirToScan, Converter={StaticResource StringContentToBoolConverter}}" Content="{x:Static rs:Strings.FilesFindButton}"/>
                         </StackPanel>
                         <CheckBox Style="{StaticResource PageCheckBox}" IsChecked="{Binding FindFileMetadata}">
-                            <TextBlock Style="{StaticResource PageInnerTextBlock}" ToolTip="Enables parsing of time and GPS position from file Exif data and timestamp via path">Include available meta-data (recommended)</TextBlock>
+                            <TextBlock Style="{StaticResource PageInnerTextBlock}" ToolTip="{x:Static rs:Strings.FilesIncludeMetaDataToolTip}" Text="{x:Static rs:Strings.FilesIncludeMetaDataLabel}"/>
                         </CheckBox>
                         <StackPanel Orientation="Horizontal">
-                            <Button Style="{StaticResource NormalButton}" Margin="10" Click="SelectAll_Click" IsEnabled="{Binding NewFiles, Converter={StaticResource EnumerationHasContentConverter}}">Select all</Button>
-                            <Button Style="{StaticResource NormalButton}" Margin="10" Click="DeselectAllButton_Click" IsEnabled="{Binding NewFiles, Converter={StaticResource EnumerationHasContentConverter}}">Deselect all</Button>
-                            <Button Style="{StaticResource NormalButton}" Width="200" Margin="10" Command="{Binding ImportNewFilesCommand}" IsEnabled="{Binding NewFilesSelected}">Add meta-data for selected files...</Button>
-                            <Button Style="{StaticResource NormalButton}" Width="200" Margin="10" Command="{Binding CopyImportedFileListCommand}" IsEnabled="{Binding ImportedFileList, Converter={StaticResource StringContentToBoolConverter}}">Copy file list for added files</Button>
+                            <Button Style="{StaticResource NormalButton}" Margin="10" Click="SelectAll_Click" IsEnabled="{Binding NewFiles, Converter={StaticResource EnumerationHasContentConverter}}" Content="{x:Static rs:Strings.FilesSelectAllButton}"/>
+                            <Button Style="{StaticResource NormalButton}" Margin="10" Click="DeselectAllButton_Click" IsEnabled="{Binding NewFiles, Converter={StaticResource EnumerationHasContentConverter}}" Content="{x:Static rs:Strings.FilesDeselectAllButton}"/>
+                            <Button Style="{StaticResource NormalButton}" Width="200" Margin="10" Command="{Binding ImportNewFilesCommand}" IsEnabled="{Binding NewFilesSelected}" Content="{x:Static rs:Strings.FilesAddMetaDataForSelectedFilesButton}"/>
+                            <Button Style="{StaticResource NormalButton}" Width="200" Margin="10" Command="{Binding CopyImportedFileListCommand}" IsEnabled="{Binding ImportedFileList, Converter={StaticResource StringContentToBoolConverter}}" Content="{x:Static rs:Strings.FilesCopyFileListForAddedFilesButton}"/>
                         </StackPanel>
                         <TextBlock Style="{StaticResource PageTextBlock}" Text="{Binding ImportResult}" Visibility="{Binding ImportResult, Converter={StaticResource StringNullOrEmptyToVisibilityConverter}}"/>
                         <ListView x:Name="NewFilesListView" Visibility="{Binding NewFiles, Converter={StaticResource EnumerationToVisibilityConverter}}" Background="Transparent" BorderThickness="0" ItemsSource="{Binding NewFiles}" ItemTemplate="{StaticResource NewFileTemplate}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.IsSharedSizeScope="True" SelectionChanged="ListView_SelectionChanged"/>
                     </StackPanel>
                 </Border>
 
-                <TextBlock Style="{StaticResource PageSubHeading}">Remove Meta-Data</TextBlock>
+                <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.FilesRemoveMetaDataHeader}"/>
                 <Border Style="{StaticResource BorderGroup}" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <StackPanel Orientation="Horizontal" Margin="15">
-                        <TextBlock Margin="5" Style="{StaticResource PageInnerTextBlock}" Text="File list:" VerticalAlignment="Center"/>
+                        <TextBlock Margin="5" Style="{StaticResource PageInnerTextBlock}" Text="{x:Static rs:Strings.FilesFileListLabel}" VerticalAlignment="Center"/>
                         <TextBox Margin="5" Style="{StaticResource PageInnerTextBox}" Width="200" VerticalAlignment="Center" Text="{Binding RemoveFileList, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                        <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding RemoveFileListMethodCommand}" Content="Remove..."  VerticalAlignment="Center" IsEnabled="{Binding RemoveFileList, Converter={StaticResource StringContentToBoolConverter}}"/>
+                        <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding RemoveFileListMethodCommand}" Content="{x:Static rs:Strings.FilesRemoveButton}"  VerticalAlignment="Center" IsEnabled="{Binding RemoveFileList, Converter={StaticResource StringContentToBoolConverter}}"/>
                     </StackPanel>
                 </Border>
             </StackPanel>

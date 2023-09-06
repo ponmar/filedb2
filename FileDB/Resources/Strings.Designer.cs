@@ -682,11 +682,164 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add meta-data for selected files....
+        /// </summary>
+        public static string FilesAddMetaDataForSelectedFilesButton {
+            get {
+                return ResourceManager.GetString("FilesAddMetaDataForSelectedFilesButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Meta-Data.
+        /// </summary>
+        public static string FilesAddMetaDataHeader {
+            get {
+                return ResourceManager.GetString("FilesAddMetaDataHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Browse....
+        /// </summary>
+        public static string FilesBrowseButton {
+            get {
+                return ResourceManager.GetString("FilesBrowseButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy file list for added files.
+        /// </summary>
+        public static string FilesCopyFileListForAddedFilesButton {
+            get {
+                return ResourceManager.GetString("FilesCopyFileListForAddedFilesButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deselect all.
+        /// </summary>
+        public static string FilesDeselectAllButton {
+            get {
+                return ResourceManager.GetString("FilesDeselectAllButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File date modified.
+        /// </summary>
+        public static string FilesFileDateModifiedToolTip {
+            get {
+                return ResourceManager.GetString("FilesFileDateModifiedToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File list:.
+        /// </summary>
+        public static string FilesFileListLabel {
+            get {
+                return ResourceManager.GetString("FilesFileListLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find....
+        /// </summary>
+        public static string FilesFindButton {
+            get {
+                return ResourceManager.GetString("FilesFindButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From files collection:.
+        /// </summary>
+        public static string FilesFromFilesCollectionLabel {
+            get {
+                return ResourceManager.GetString("FilesFromFilesCollectionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From files collection sub directory:.
+        /// </summary>
+        public static string FilesFromFilesCollectionSubDirectoryLabel {
+            get {
+                return ResourceManager.GetString("FilesFromFilesCollectionSubDirectoryLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Include available meta-data (recommended).
+        /// </summary>
+        public static string FilesIncludeMetaDataLabel {
+            get {
+                return ResourceManager.GetString("FilesIncludeMetaDataLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enables parsing of time and GPS position from file Exif data and timestamp via path.
+        /// </summary>
+        public static string FilesIncludeMetaDataToolTip {
+            get {
+                return ResourceManager.GetString("FilesIncludeMetaDataToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check your settings to adjust what files will be listed..
+        /// </summary>
+        public static string FilesInfoText {
+            get {
+                return ResourceManager.GetString("FilesInfoText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove....
+        /// </summary>
+        public static string FilesRemoveButton {
+            get {
+                return ResourceManager.GetString("FilesRemoveButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove Meta-Data.
+        /// </summary>
+        public static string FilesRemoveMetaDataHeader {
+            get {
+                return ResourceManager.GetString("FilesRemoveMetaDataHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select all.
+        /// </summary>
+        public static string FilesSelectAllButton {
+            get {
+                return ResourceManager.GetString("FilesSelectAllButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Files.
         /// </summary>
         public static string FilesTitle {
             get {
                 return ResourceManager.GetString("FilesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This operation can be slow for a large collection of files or if the media access is slow (for example when using a network share)..
+        /// </summary>
+        public static string FilesWarningText {
+            get {
+                return ResourceManager.GetString("FilesWarningText", resourceCulture);
             }
         }
         

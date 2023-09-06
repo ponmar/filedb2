@@ -909,4 +909,55 @@
   <data name="ToolsFilesCollectionFilteringCopyButton" xml:space="preserve">
     <value>Copy file list with no longer applicable files</value>
   </data>
+  <data name="FilesAddMetaDataHeader" xml:space="preserve">
+    <value>Add Meta-Data</value>
+  </data>
+  <data name="FilesRemoveMetaDataHeader" xml:space="preserve">
+    <value>Remove Meta-Data</value>
+  </data>
+  <data name="FilesFindButton" xml:space="preserve">
+    <value>Find...</value>
+  </data>
+  <data name="FilesBrowseButton" xml:space="preserve">
+    <value>Browse...</value>
+  </data>
+  <data name="FilesSelectAllButton" xml:space="preserve">
+    <value>Select all</value>
+  </data>
+  <data name="FilesDeselectAllButton" xml:space="preserve">
+    <value>Deselect all</value>
+  </data>
+  <data name="FilesAddMetaDataForSelectedFilesButton" xml:space="preserve">
+    <value>Add meta-data for selected files...</value>
+  </data>
+  <data name="FilesCopyFileListForAddedFilesButton" xml:space="preserve">
+    <value>Copy file list for added files</value>
+  </data>
+  <data name="FilesRemoveButton" xml:space="preserve">
+    <value>Remove...</value>
+  </data>
+  <data name="FilesInfoText" xml:space="preserve">
+    <value>Check your settings to adjust what files will be listed.</value>
+  </data>
+  <data name="FilesWarningText" xml:space="preserve">
+    <value>This operation can be slow for a large collection of files or if the media access is slow (for example when using a network share).</value>
+  </data>
+  <data name="FilesFromFilesCollectionLabel" xml:space="preserve">
+    <value>From files collection:</value>
+  </data>
+  <data name="FilesFromFilesCollectionSubDirectoryLabel" xml:space="preserve">
+    <value>From files collection sub directory:</value>
+  </data>
+  <data name="FilesIncludeMetaDataToolTip" xml:space="preserve">
+    <value>Enables parsing of time and GPS position from file Exif data and timestamp via path</value>
+  </data>
+  <data name="FilesFileListLabel" xml:space="preserve">
+    <value>File list:</value>
+  </data>
+  <data name="FilesFileDateModifiedToolTip" xml:space="preserve">
+    <value>File date modified</value>
+  </data>
+  <data name="FilesIncludeMetaDataLabel" xml:space="preserve">
+    <value>Include available meta-data (recommended)</value>
+  </data>
 </root>
