@@ -520,6 +520,114 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add selected location to file.
+        /// </summary>
+        public static string CategorizationAddSelectedLocationToFileToolTip {
+            get {
+                return ResourceManager.GetString("CategorizationAddSelectedLocationToFileToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add selected person to file.
+        /// </summary>
+        public static string CategorizationAddSelectedPersonToFileToolTip {
+            get {
+                return ResourceManager.GetString("CategorizationAddSelectedPersonToFileToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add selected tag to file.
+        /// </summary>
+        public static string CategorizationAddSelectedTagToFileToolTip {
+            get {
+                return ResourceManager.GetString("CategorizationAddSelectedTagToFileToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apply meta-data from last edit.
+        /// </summary>
+        public static string CategorizationApplyMetaDataFromLastEditButton {
+            get {
+                return ResourceManager.GetString("CategorizationApplyMetaDataFromLastEditButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apply meta-data (persons, locations, tags and description) from last edit.
+        /// </summary>
+        public static string CategorizationApplyMetaDataFromLastEditToolTip {
+            get {
+                return ResourceManager.GetString("CategorizationApplyMetaDataFromLastEditToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create a new location and add it to current file.
+        /// </summary>
+        public static string CategorizationCreateANewLocationAndAddItToCurrentFileToolTip {
+            get {
+                return ResourceManager.GetString("CategorizationCreateANewLocationAndAddItToCurrentFileToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create a new person and add it to current file.
+        /// </summary>
+        public static string CategorizationCreateANewPersonAndAddItToCurrentFileToolTip {
+            get {
+                return ResourceManager.GetString("CategorizationCreateANewPersonAndAddItToCurrentFileToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create a new tag and add it to current file.
+        /// </summary>
+        public static string CategorizationCreateANewTagAndAddItToCurrentFileToolTip {
+            get {
+                return ResourceManager.GetString("CategorizationCreateANewTagAndAddItToCurrentFileToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date &amp;amp; time formats:&amp;#x0a;YYYY&amp;#x0a;YYYY-MM&amp;#x0a;YYYY-MM-DD&amp;#x0a;YYYY-MM-DDTHH:MM:SS.
+        /// </summary>
+        public static string CategorizationDateAndTimeFormatToolTip {
+            get {
+                return ResourceManager.GetString("CategorizationDateAndTimeFormatToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File date &amp;amp; time.
+        /// </summary>
+        public static string CategorizationFileDateAndTimeToolTip {
+            get {
+                return ResourceManager.GetString("CategorizationFileDateAndTimeToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File description.
+        /// </summary>
+        public static string CategorizationFileDescriptionToolTip {
+            get {
+                return ResourceManager.GetString("CategorizationFileDescriptionToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New....
+        /// </summary>
+        public static string CategorizationNewButton {
+            get {
+                return ResourceManager.GetString("CategorizationNewButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No changes..
         /// </summary>
         public static string CategorizationNoChanges {
@@ -529,11 +637,119 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reload file date, time, GPS position and orientation from file Exif data or file path.
+        /// </summary>
+        public static string CategorizationReloadFileDateTimeGPSPositionAndOrientationToolTip {
+            get {
+                return ResourceManager.GetString("CategorizationReloadFileDateTimeGPSPositionAndOrientationToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reload meta-data....
+        /// </summary>
+        public static string CategorizationReloadMetaDataButton {
+            get {
+                return ResourceManager.GetString("CategorizationReloadMetaDataButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reload orientation from Exif data.
+        /// </summary>
+        public static string CategorizationReloadOrientationToolTip {
+            get {
+                return ResourceManager.GetString("CategorizationReloadOrientationToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove item from update history.
         /// </summary>
         public static string CategorizationRemoveItemFromUpdateHistory {
             get {
                 return ResourceManager.GetString("CategorizationRemoveItemFromUpdateHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove selected location from file.
+        /// </summary>
+        public static string CategorizationRemoveSelectedLocationFromFileToolTip {
+            get {
+                return ResourceManager.GetString("CategorizationRemoveSelectedLocationFromFileToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove selected person from file.
+        /// </summary>
+        public static string CategorizationRemoveSelectedPersonFromFileToolTip {
+            get {
+                return ResourceManager.GetString("CategorizationRemoveSelectedPersonFromFileToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove selected tag from file.
+        /// </summary>
+        public static string CategorizationRemoveSelectedTagFromFileToolTip {
+            get {
+                return ResourceManager.GetString("CategorizationRemoveSelectedTagFromFileToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rotate 90 degrees clockwise.
+        /// </summary>
+        public static string CategorizationRotate90DegreesClockwiseToolTip {
+            get {
+                return ResourceManager.GetString("CategorizationRotate90DegreesClockwiseToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rotate 90 degrees counter clockwise.
+        /// </summary>
+        public static string CategorizationRotate90DegreesCounterClockwiseToolTip {
+            get {
+                return ResourceManager.GetString("CategorizationRotate90DegreesCounterClockwiseToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set.
+        /// </summary>
+        public static string CategorizationSetButton {
+            get {
+                return ResourceManager.GetString("CategorizationSetButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set file date &amp;amp; time.
+        /// </summary>
+        public static string CategorizationSetFileDateAndTimeToolTip {
+            get {
+                return ResourceManager.GetString("CategorizationSetFileDateAndTimeToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set file description.
+        /// </summary>
+        public static string CategorizationSetFileDescriptionToolTip {
+            get {
+                return ResourceManager.GetString("CategorizationSetFileDescriptionToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update.
+        /// </summary>
+        public static string CategorizationUpdateHeader {
+            get {
+                return ResourceManager.GetString("CategorizationUpdateHeader", resourceCulture);
             }
         }
         
