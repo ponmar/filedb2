@@ -996,4 +996,76 @@
   <data name="CategorizationRemoveItemFromUpdateHistory" xml:space="preserve">
     <value>Ta bort objekt från uppdateringshistoriken</value>
   </data>
+  <data name="CategorizationUpdateHeader" xml:space="preserve">
+    <value>Uppdatera</value>
+  </data>
+  <data name="CategorizationAddSelectedPersonToFileToolTip" xml:space="preserve">
+    <value>Lägg till vald person till filen</value>
+  </data>
+  <data name="CategorizationAddSelectedLocationToFileToolTip" xml:space="preserve">
+    <value>Lägg till vald plats till filen</value>
+  </data>
+  <data name="CategorizationAddSelectedTagToFileToolTip" xml:space="preserve">
+    <value>Lägg till vald etikett till fil!</value>
+  </data>
+  <data name="CategorizationRemoveSelectedPersonFromFileToolTip" xml:space="preserve">
+    <value>Ta bort vald person från filen</value>
+  </data>
+  <data name="CategorizationRemoveSelectedLocationFromFileToolTip" xml:space="preserve">
+    <value>Ta bort vald plats från filen</value>
+  </data>
+  <data name="CategorizationRemoveSelectedTagFromFileToolTip" xml:space="preserve">
+    <value>Ta bort vald etikett från filen</value>
+  </data>
+  <data name="CategorizationNewButton" xml:space="preserve">
+    <value>Ny...</value>
+  </data>
+  <data name="CategorizationCreateANewPersonAndAddItToCurrentFileToolTip" xml:space="preserve">
+    <value>Skapa en ny person och lägg till den till aktuell fil</value>
+  </data>
+  <data name="CategorizationCreateANewLocationAndAddItToCurrentFileToolTip" xml:space="preserve">
+    <value>Skapa en ny plats och lägg till den till aktuell fil</value>
+  </data>
+  <data name="CategorizationCreateANewTagAndAddItToCurrentFileToolTip" xml:space="preserve">
+    <value>Skapa en ny etikett och lägg till den i aktuell fil</value>
+  </data>
+  <data name="CategorizationSetButton" xml:space="preserve">
+    <value>Spara</value>
+  </data>
+  <data name="CategorizationSetFileDescriptionToolTip" xml:space="preserve">
+    <value>Spara filbeskrivning</value>
+  </data>
+  <data name="CategorizationFileDescriptionToolTip" xml:space="preserve">
+    <value>Filbeskrivning</value>
+  </data>
+  <data name="CategorizationFileDateAndTimeToolTip" xml:space="preserve">
+    <value>Fildatum och tid</value>
+  </data>
+  <data name="CategorizationDateAndTimeFormatToolTip" xml:space="preserve">
+    <value>Datum &amp;amp;; tidsformat:&amp;#x0a;ÅÅÅÅÅ-MM ÅÅÅÅ-MM-DD&amp;#x0a;&amp;#x0a;&amp;#x0a;ÅÅÅÅ-MM-DDTHH:MM:SS</value>
+  </data>
+  <data name="CategorizationSetFileDateAndTimeToolTip" xml:space="preserve">
+    <value>Ställ in fildatum &amp;amp; tid</value>
+  </data>
+  <data name="CategorizationApplyMetaDataFromLastEditButton" xml:space="preserve">
+    <value>Tillämpa metadata från senaste förändring</value>
+  </data>
+  <data name="CategorizationApplyMetaDataFromLastEditToolTip" xml:space="preserve">
+    <value>Tillämpa metadata (personer, platser, etiketter och beskrivning) från senaste förändringen</value>
+  </data>
+  <data name="CategorizationReloadMetaDataButton" xml:space="preserve">
+    <value>Ladda om metadata...</value>
+  </data>
+  <data name="CategorizationReloadFileDateTimeGPSPositionAndOrientationToolTip" xml:space="preserve">
+    <value>Ladda om fildatum, tid, GPS-position och orientering från fil Exif-data eller filsökväg</value>
+  </data>
+  <data name="CategorizationRotate90DegreesClockwiseToolTip" xml:space="preserve">
+    <value>Rotera 90 grader medurs</value>
+  </data>
+  <data name="CategorizationRotate90DegreesCounterClockwiseToolTip" xml:space="preserve">
+    <value>Rotera 90 grader moturs</value>
+  </data>
+  <data name="CategorizationReloadOrientationToolTip" xml:space="preserve">
+    <value>Ladda om orientering från Exif-data</value>
+  </data>
 </root>

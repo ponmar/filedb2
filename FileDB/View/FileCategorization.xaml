@@ -20,7 +20,7 @@
     </UserControl.Resources>
 
     <Border Style="{StaticResource BorderGroup}" Visibility="{Binding ReadWriteMode, Converter={StaticResource BoolToVis}}">
-        <Expander Style="{StaticResource Expander}" Header="Update" Margin="5" IsExpanded="False">
+        <Expander Style="{StaticResource Expander}" Header="{x:Static rs:Strings.CategorizationUpdateHeader}" Margin="5" IsExpanded="False">
             <StackPanel Orientation="Vertical">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -44,9 +44,9 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <Button Width="25" Grid.Row="0" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding AddFilePersonCommand}" IsEnabled="{Binding SelectedPersonCanBeAdded}" ToolTip="Add selected person to file">+</Button>
-                    <Button Width="25" Grid.Row="0" Grid.Column="3" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding RemoveFilePersonCommand}" IsEnabled="{Binding SelectedPersonCanBeRemoved}" ToolTip="Remove selected person from file">-</Button>
-                    <Button Grid.Row="0" Grid.Column="4" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding CreatePersonCommand}" ToolTip="Create a new person and add it to current file">New...</Button>
+                    <Button Width="25" Grid.Row="0" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding AddFilePersonCommand}" IsEnabled="{Binding SelectedPersonCanBeAdded}" ToolTip="{x:Static rs:Strings.CategorizationAddSelectedPersonToFileToolTip}">+</Button>
+                    <Button Width="25" Grid.Row="0" Grid.Column="3" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding RemoveFilePersonCommand}" IsEnabled="{Binding SelectedPersonCanBeRemoved}" ToolTip="{x:Static rs:Strings.CategorizationRemoveSelectedPersonFromFileToolTip}">-</Button>
+                    <Button Grid.Row="0" Grid.Column="4" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding CreatePersonCommand}" ToolTip="{x:Static rs:Strings.CategorizationCreateANewPersonAndAddItToCurrentFileToolTip}" Content="{x:Static rs:Strings.CategorizationNewButton}"/>
 
                     <TextBlock Style="{StaticResource PageInnerTextBlock}" Grid.Row="1" Grid.Column="0" Text="&#x1F3E0;" VerticalAlignment="Center" Margin="5" ToolTip="Location"/>
                     <ComboBox Style="{StaticResource PageInnerComboBox}" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Locations}" VerticalAlignment="Center" SelectedItem="{Binding SelectedLocationToUpdate}">
@@ -56,9 +56,9 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <Button Width="25" Grid.Row="1" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding AddFileLocationCommand}" IsEnabled="{Binding SelectedLocationCanBeAdded}" ToolTip="Add selected location to file">+</Button>
-                    <Button Width="25" Grid.Row="1" Grid.Column="3" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding RemoveFileLocationCommand}" IsEnabled="{Binding SelectedLocationCanBeRemoved}" ToolTip="Remove selected location from file">-</Button>
-                    <Button Grid.Row="1" Grid.Column="4" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding CreateLocationCommand}" ToolTip="Create a new location and add it to current file">New...</Button>
+                    <Button Width="25" Grid.Row="1" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding AddFileLocationCommand}" IsEnabled="{Binding SelectedLocationCanBeAdded}" ToolTip="{x:Static rs:Strings.CategorizationAddSelectedLocationToFileToolTip}">+</Button>
+                    <Button Width="25" Grid.Row="1" Grid.Column="3" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding RemoveFileLocationCommand}" IsEnabled="{Binding SelectedLocationCanBeRemoved}" ToolTip="{x:Static rs:Strings.CategorizationRemoveSelectedLocationFromFileToolTip}">-</Button>
+                    <Button Grid.Row="1" Grid.Column="4" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding CreateLocationCommand}" ToolTip="{x:Static rs:Strings.CategorizationCreateANewLocationAndAddItToCurrentFileToolTip}" Content="{x:Static rs:Strings.CategorizationNewButton}"/>
 
                     <TextBlock Style="{StaticResource PageInnerTextBlock}" Grid.Row="2" Grid.Column="0" Text="&#x1F516;" VerticalAlignment="Center" Margin="5" ToolTip="Tag"/>
                     <ComboBox Style="{StaticResource PageInnerComboBox}" Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Tags}" VerticalAlignment="Center" SelectedItem="{Binding SelectedTagToUpdate}">
@@ -68,9 +68,9 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <Button Width="25" Grid.Row="2" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding AddFileTagCommand}" IsEnabled="{Binding SelectedTagCanBeAdded}" ToolTip="Add selected tag to file">+</Button>
-                    <Button Width="25" Grid.Row="2" Grid.Column="3" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding RemoveFileTagCommand}" IsEnabled="{Binding SelectedTagCanBeRemoved}" ToolTip="Remove selected tag from file">-</Button>
-                    <Button Grid.Row="2" Grid.Column="4" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding CreateTagCommand}" ToolTip="Create a new tag and add it to current file">New...</Button>
+                    <Button Width="25" Grid.Row="2" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding AddFileTagCommand}" IsEnabled="{Binding SelectedTagCanBeAdded}" ToolTip="{x:Static rs:Strings.CategorizationAddSelectedTagToFileToolTip}">+</Button>
+                    <Button Width="25" Grid.Row="2" Grid.Column="3" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding RemoveFileTagCommand}" IsEnabled="{Binding SelectedTagCanBeRemoved}" ToolTip="{x:Static rs:Strings.CategorizationRemoveSelectedTagFromFileToolTip}">-</Button>
+                    <Button Grid.Row="2" Grid.Column="4" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding CreateTagCommand}" ToolTip="{x:Static rs:Strings.CategorizationCreateANewTagAndAddItToCurrentFileToolTip}" Content="{x:Static rs:Strings.CategorizationNewButton}"/>
                 </Grid>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -82,16 +82,16 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Style="{StaticResource PageInnerTextBlock}" Grid.Row="0" Grid.Column="0" Text="&#x1F4DD;" VerticalAlignment="Center" Margin="5" ToolTip="File description"/>
-                    <TextBox Style="{StaticResource PageInnerTextBox}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Text="{Binding NewFileDescription}" ToolTip="File description" TextWrapping="Wrap" AcceptsReturn="True" MaxWidth="200"/>
-                    <Button Grid.Row="0" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetFileDescriptionCommand}" IsEnabled="{Binding FileSelected}" ToolTip="Set file description">Set</Button>
+                    <TextBlock Style="{StaticResource PageInnerTextBlock}" Grid.Row="0" Grid.Column="0" Text="&#x1F4DD;" VerticalAlignment="Center" Margin="5" ToolTip="{x:Static rs:Strings.CategorizationFileDescriptionToolTip}"/>
+                    <TextBox Style="{StaticResource PageInnerTextBox}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Text="{Binding NewFileDescription}" ToolTip="{x:Static rs:Strings.CategorizationFileDescriptionToolTip}" TextWrapping="Wrap" AcceptsReturn="True" MaxWidth="200"/>
+                    <Button Grid.Row="0" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetFileDescriptionCommand}" IsEnabled="{Binding FileSelected}" ToolTip="{x:Static rs:Strings.CategorizationSetFileDescriptionToolTip}" Content="{x:Static rs:Strings.CategorizationSetButton}"/>
 
-                    <TextBlock Style="{StaticResource PageInnerTextBlock}" Grid.Row="1" Grid.Column="0" Text="&#x1F4C5;" VerticalAlignment="Center" Margin="5" ToolTip="File date &amp; time"/>
-                    <TextBox Style="{StaticResource PageInnerTextBox}" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Text="{Binding NewFileDateTime}" ToolTip="Date &amp; time formats:&#x0a;YYYY&#x0a;YYYY-MM&#x0a;YYYY-MM-DD&#x0a;YYYY-MM-DDTHH:MM:SS" MaxWidth="200"/>
-                    <Button Grid.Row="1" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetFileDateTimeCommand}" IsEnabled="{Binding FileSelected}" ToolTip="Set file date &amp; time">Set</Button>
+                    <TextBlock Style="{StaticResource PageInnerTextBlock}" Grid.Row="1" Grid.Column="0" Text="&#x1F4C5;" VerticalAlignment="Center" Margin="5" ToolTip="{x:Static rs:Strings.CategorizationFileDateAndTimeToolTip}"/>
+                    <TextBox Style="{StaticResource PageInnerTextBox}" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Text="{Binding NewFileDateTime}" ToolTip="{x:Static rs:Strings.CategorizationDateAndTimeFormatToolTip}" MaxWidth="200"/>
+                    <Button Grid.Row="1" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetFileDateTimeCommand}" IsEnabled="{Binding FileSelected}" ToolTip="{x:Static rs:Strings.CategorizationSetFileDateAndTimeToolTip}" Content="{x:Static rs:Strings.CategorizationSetButton}"/>
                 </Grid>
 
-                <Button Margin="5" Style="{StaticResource NormalButton}" HorizontalAlignment="Left" Command="{Binding ReApplyFileMetaDataCommand}" IsEnabled="{Binding FileSelected}" ToolTip="Apply meta-data (persons, locations, tags and description) from last edit">Apply meta-data from last edit</Button>
+                <Button Margin="5" Style="{StaticResource NormalButton}" HorizontalAlignment="Left" Command="{Binding ReApplyFileMetaDataCommand}" IsEnabled="{Binding FileSelected}" ToolTip="{x:Static rs:Strings.CategorizationApplyMetaDataFromLastEditToolTip}" Content="{x:Static rs:Strings.CategorizationApplyMetaDataFromLastEditButton}"/>
                 <Grid Margin="5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -100,10 +100,10 @@
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <Button Grid.Column="0" Style="{StaticResource NormalButton}" HorizontalAlignment="Left" Command="{Binding UpdateFileFromMetaDataCommand}" IsEnabled="{Binding FileSelected}" ToolTip="Reload file date, time, GPS position and orientation from file Exif data or file path">Reload meta-data...</Button>
-                    <Button Grid.Column="1" Margin="5,0,0,0" Style="{StaticResource NormalButton}" ToolTip="Rotate 90 degrees clockwise" Command="{Binding RotateFileClockwiseCommand}" IsEnabled="{Binding FileSelected}" Width="25">&#8635;</Button>
-                    <Button Grid.Column="2" Margin="5,0,0,0" Style="{StaticResource NormalButton}" ToolTip="Rotate 90 degrees counter clockwise" Command="{Binding RotateFileCounterClockwiseCommand}" IsEnabled="{Binding FileSelected}" Width="25">&#8634;</Button>
-                    <Button Grid.Column="3" Margin="5,0,0,0" Style="{StaticResource NormalButton}" ToolTip="Reload orientation from Exif data" Command="{Binding UpdateFileOrientationFromMetaDataCommand}" IsEnabled="{Binding FileSelected}" Width="25">x</Button>
+                    <Button Grid.Column="0" Style="{StaticResource NormalButton}" HorizontalAlignment="Left" Command="{Binding UpdateFileFromMetaDataCommand}" IsEnabled="{Binding FileSelected}" ToolTip="{x:Static rs:Strings.CategorizationReloadFileDateTimeGPSPositionAndOrientationToolTip}" Content="{x:Static rs:Strings.CategorizationReloadMetaDataButton}"/>
+                    <Button Grid.Column="1" Margin="5,0,0,0" Style="{StaticResource NormalButton}" ToolTip="{x:Static rs:Strings.CategorizationRotate90DegreesClockwiseToolTip}" Command="{Binding RotateFileClockwiseCommand}" IsEnabled="{Binding FileSelected}" Width="25" Content="&#8635;"/>
+                    <Button Grid.Column="2" Margin="5,0,0,0" Style="{StaticResource NormalButton}" ToolTip="{x:Static rs:Strings.CategorizationRotate90DegreesCounterClockwiseToolTip}" Command="{Binding RotateFileCounterClockwiseCommand}" IsEnabled="{Binding FileSelected}" Width="25" Content="&#8634;"/>
+                    <Button Grid.Column="3" Margin="5,0,0,0" Style="{StaticResource NormalButton}" ToolTip="{x:Static rs:Strings.CategorizationReloadOrientationToolTip}" Command="{Binding UpdateFileOrientationFromMetaDataCommand}" IsEnabled="{Binding FileSelected}" Width="25" Content="x"/>
                 </Grid>
             </StackPanel>
         </Expander>

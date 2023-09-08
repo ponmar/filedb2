@@ -996,4 +996,76 @@
   <data name="CategorizationRemoveItemFromUpdateHistory" xml:space="preserve">
     <value>Remove item from update history</value>
   </data>
+  <data name="CategorizationUpdateHeader" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="CategorizationAddSelectedPersonToFileToolTip" xml:space="preserve">
+    <value>Add selected person to file</value>
+  </data>
+  <data name="CategorizationAddSelectedLocationToFileToolTip" xml:space="preserve">
+    <value>Add selected location to file</value>
+  </data>
+  <data name="CategorizationAddSelectedTagToFileToolTip" xml:space="preserve">
+    <value>Add selected tag to file</value>
+  </data>
+  <data name="CategorizationRemoveSelectedPersonFromFileToolTip" xml:space="preserve">
+    <value>Remove selected person from file</value>
+  </data>
+  <data name="CategorizationRemoveSelectedLocationFromFileToolTip" xml:space="preserve">
+    <value>Remove selected location from file</value>
+  </data>
+  <data name="CategorizationRemoveSelectedTagFromFileToolTip" xml:space="preserve">
+    <value>Remove selected tag from file</value>
+  </data>
+  <data name="CategorizationNewButton" xml:space="preserve">
+    <value>New...</value>
+  </data>
+  <data name="CategorizationCreateANewPersonAndAddItToCurrentFileToolTip" xml:space="preserve">
+    <value>Create a new person and add it to current file</value>
+  </data>
+  <data name="CategorizationCreateANewLocationAndAddItToCurrentFileToolTip" xml:space="preserve">
+    <value>Create a new location and add it to current file</value>
+  </data>
+  <data name="CategorizationCreateANewTagAndAddItToCurrentFileToolTip" xml:space="preserve">
+    <value>Create a new tag and add it to current file</value>
+  </data>
+  <data name="CategorizationSetButton" xml:space="preserve">
+    <value>Set</value>
+  </data>
+  <data name="CategorizationSetFileDescriptionToolTip" xml:space="preserve">
+    <value>Set file description</value>
+  </data>
+  <data name="CategorizationFileDescriptionToolTip" xml:space="preserve">
+    <value>File description</value>
+  </data>
+  <data name="CategorizationFileDateAndTimeToolTip" xml:space="preserve">
+    <value>File date &amp;amp; time</value>
+  </data>
+  <data name="CategorizationDateAndTimeFormatToolTip" xml:space="preserve">
+    <value>Date &amp;amp; time formats:&amp;#x0a;YYYY&amp;#x0a;YYYY-MM&amp;#x0a;YYYY-MM-DD&amp;#x0a;YYYY-MM-DDTHH:MM:SS</value>
+  </data>
+  <data name="CategorizationSetFileDateAndTimeToolTip" xml:space="preserve">
+    <value>Set file date &amp;amp; time</value>
+  </data>
+  <data name="CategorizationApplyMetaDataFromLastEditButton" xml:space="preserve">
+    <value>Apply meta-data from last edit</value>
+  </data>
+  <data name="CategorizationApplyMetaDataFromLastEditToolTip" xml:space="preserve">
+    <value>Apply meta-data (persons, locations, tags and description) from last edit</value>
+  </data>
+  <data name="CategorizationReloadMetaDataButton" xml:space="preserve">
+    <value>Reload meta-data...</value>
+  </data>
+  <data name="CategorizationReloadFileDateTimeGPSPositionAndOrientationToolTip" xml:space="preserve">
+    <value>Reload file date, time, GPS position and orientation from file Exif data or file path</value>
+  </data>
+  <data name="CategorizationRotate90DegreesClockwiseToolTip" xml:space="preserve">
+    <value>Rotate 90 degrees clockwise</value>
+  </data>
+  <data name="CategorizationRotate90DegreesCounterClockwiseToolTip" xml:space="preserve">
+    <value>Rotate 90 degrees counter clockwise</value>
+  </data>
+  <data name="CategorizationReloadOrientationToolTip" xml:space="preserve">
+    <value>Reload orientation from Exif data</value>
+  </data>
 </root>
