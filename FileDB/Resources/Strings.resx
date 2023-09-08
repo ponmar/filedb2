@@ -987,4 +987,13 @@
   <data name="StartupNotificationConfigurationNotValid" xml:space="preserve">
     <value>Configuration not valid</value>
   </data>
+  <data name="CategorizationUpdateHistoryTitle" xml:space="preserve">
+    <value>Update History</value>
+  </data>
+  <data name="CategorizationNoChanges" xml:space="preserve">
+    <value>No changes.</value>
+  </data>
+  <data name="CategorizationRemoveItemFromUpdateHistory" xml:space="preserve">
+    <value>Remove item from update history</value>
+  </data>
 </root>

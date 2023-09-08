@@ -520,6 +520,33 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No changes..
+        /// </summary>
+        public static string CategorizationNoChanges {
+            get {
+                return ResourceManager.GetString("CategorizationNoChanges", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove item from update history.
+        /// </summary>
+        public static string CategorizationRemoveItemFromUpdateHistory {
+            get {
+                return ResourceManager.GetString("CategorizationRemoveItemFromUpdateHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update History.
+        /// </summary>
+        public static string CategorizationUpdateHistoryTitle {
+            get {
+                return ResourceManager.GetString("CategorizationUpdateHistoryTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Browse....
         /// </summary>
         public static string CreateDatabaseBrowseButton {

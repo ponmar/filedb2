@@ -14,9 +14,9 @@
     </UserControl.Resources>
 
     <Border Style="{StaticResource BorderGroup}" Visibility="{Binding ReadWriteMode, Converter={StaticResource BoolToVis}}">
-        <Expander Style="{StaticResource Expander}" Header="Update History" Margin="5" IsExpanded="False">
+        <Expander Style="{StaticResource Expander}" Header="{x:Static rs:Strings.CategorizationUpdateHistoryTitle}" Margin="5" IsExpanded="False">
             <StackPanel>
-                <TextBlock Style="{StaticResource PageTextBlock}" Visibility="{Binding HasUpdateHistory, Converter={StaticResource NegatedBooleanToVisibilityConverter}}">No changes.</TextBlock>
+                <TextBlock Style="{StaticResource PageTextBlock}" Visibility="{Binding HasUpdateHistory, Converter={StaticResource NegatedBooleanToVisibilityConverter}}" Text="{x:Static rs:Strings.CategorizationNoChanges}"/>
                 <ListView ItemsSource="{Binding UpdateHistoryItems}" Visibility="{Binding FileSelected, Converter={StaticResource BoolToVis}}" Background="Transparent" BorderThickness="0" Grid.IsSharedSizeScope="True" x:Name="HistoryItemsListView">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
@@ -35,7 +35,7 @@
                                 </Grid.RowDefinitions>
                                 <Button Grid.Column="0" Margin="3" HorizontalAlignment="Left" Style="{StaticResource NormalButton}" Content="{Binding ToggleText}" ToolTip="{Binding ItemName}" Command="{Binding ElementName=HistoryItemsListView, Path=DataContext.ToggleFromHistoryItemCommand}" CommandParameter="{Binding}"/>
                                 <Button Grid.Column="1" Style="{StaticResource NormalButton}" Width="20" Height="20" Command="{Binding ElementName=HistoryItemsListView, Path=DataContext.RemoveHistoryItemCommand}" CommandParameter="{Binding}" VerticalAlignment="Center">
-                                    <TextBlock Margin="0 -4" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Remove item from update history">x</TextBlock>
+                                    <TextBlock Margin="0 -4" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="{x:Static rs:Strings.CategorizationRemoveItemFromUpdateHistory}" Text="x"/>
                                 </Button>
                             </Grid>
                         </DataTemplate>

@@ -214,10 +214,10 @@
     <value>Sök på område</value>
   </data>
   <data name="SearchTagsToolTip" xml:space="preserve">
-    <value>Taggar</value>
+    <value>Etiketter</value>
   </data>
   <data name="SearchByTagToolTip" xml:space="preserve">
-    <value>Sök efter tagg</value>
+    <value>Sök efter etikett</value>
   </data>
   <data name="SearchFromAgeYearsToolTip" xml:space="preserve">
     <value>Från ålder (år)</value>
@@ -358,7 +358,7 @@
     <value>Lägg till filmetadata från filsamlingen</value>
   </data>
   <data name="AboutGettingStarted4" xml:space="preserve">
-    <value>Tagga personer, platser och taggar</value>
+    <value>Märk upp personer, platser och etiketter</value>
   </data>
   <data name="AboutGettingStarted5" xml:space="preserve">
     <value>Hitta dina önskade bilder och kör bildspel!</value>
@@ -499,7 +499,7 @@
     <value>Exportera...</value>
   </data>
   <data name="TagsTitle" xml:space="preserve">
-    <value>Uppdatera taggar</value>
+    <value>Uppdatera etiketter</value>
   </data>
   <data name="TagsAddButton" xml:space="preserve">
     <value>Lägg till...</value>
@@ -697,7 +697,7 @@
     <value>Platser</value>
   </data>
   <data name="FileInfoTagsToolTip" xml:space="preserve">
-    <value>Taggar</value>
+    <value>Etiketter</value>
   </data>
   <data name="FileInfoPositionToolTip" xml:space="preserve">
     <value>GPS-position</value>
@@ -721,10 +721,10 @@
     <value>Lägg till person</value>
   </data>
   <data name="AddTagEditTitle" xml:space="preserve">
-    <value>Redigera tagg</value>
+    <value>Redigera etikett</value>
   </data>
   <data name="AddTagAddTitle" xml:space="preserve">
-    <value>﻿Lägg till tagg</value>
+    <value>﻿Lägg till etikett</value>
   </data>
   <data name="SettingsResetChangesButton" xml:space="preserve">
     <value>Återställ ändringar</value>
@@ -986,5 +986,14 @@
   </data>
   <data name="StartupNotificationConfigurationNotValid" xml:space="preserve">
     <value>Konfigurationen är ogiltig</value>
+  </data>
+  <data name="CategorizationUpdateHistoryTitle" xml:space="preserve">
+    <value>Uppdateringshistorik</value>
+  </data>
+  <data name="CategorizationNoChanges" xml:space="preserve">
+    <value>Inga ändringar.</value>
+  </data>
+  <data name="CategorizationRemoveItemFromUpdateHistory" xml:space="preserve">
+    <value>Ta bort objekt från uppdateringshistoriken</value>
   </data>
 </root>
