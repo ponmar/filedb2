@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using FileDB.Extensions;
 using FileDB.Model;
 
 namespace FileDB.ViewModel;
@@ -20,7 +21,7 @@ public partial class LocationsViewModel : ObservableObject
     [NotifyPropertyChangedFor(nameof(SelectedLocationHasPosition))]
     private Location? selectedLocation;
 
-    public bool SelectedLocationHasPosition => SelectedLocation != null && !string.IsNullOrEmpty(SelectedLocation.Position);
+    public bool SelectedLocationHasPosition => SelectedLocation != null && SelectedLocation.Position.HasContent();
 
     private readonly IConfigRepository configRepository;
     private readonly IDbAccessRepository dbAccessRepository;

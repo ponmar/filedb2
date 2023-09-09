@@ -1,4 +1,5 @@
-﻿using FileDB.Resources;
+﻿using FileDB.Extensions;
+using FileDB.Resources;
 using System;
 using System.IO;
 using System.Linq;
@@ -56,7 +57,7 @@ public static class FileTypeUtils
 {
     public static FileType? GetFileType(string path)
     {
-        if (string.IsNullOrEmpty(path))
+        if (!path.HasContent())
         {
             return null;
         }

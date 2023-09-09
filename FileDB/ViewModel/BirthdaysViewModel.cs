@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
+using FileDB.Extensions;
 using FileDB.Model;
 using FileDBInterface.DbAccess;
 using FileDBShared.Model;
@@ -72,9 +73,9 @@ public partial class PersonBirthday : ObservableObject
 
     public bool MatchesTextFilter(string textFilter)
     {
-        return string.IsNullOrEmpty(textFilter) ||
+        return !textFilter.HasContent() ||
             Name.Contains(textFilter, StringComparison.OrdinalIgnoreCase) ||
-            (!string.IsNullOrEmpty(Person.Description) && Person.Description.Contains(textFilter, StringComparison.OrdinalIgnoreCase));
+            (Person.Description.HasContent() && Person.Description!.Contains(textFilter, StringComparison.OrdinalIgnoreCase));
     }
 }
 

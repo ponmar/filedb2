@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using FileDB.Configuration;
+using FileDB.Extensions;
 using FluentValidation;
 
 namespace FileDB.Validators;
@@ -41,7 +42,7 @@ public class ConfigValidator : AbstractValidator<Config>
         RuleFor(c => c.SearchHistorySize)
             .InclusiveBetween(0, 10).WithMessage("Invalid search history size");
 
-        When(c => !string.IsNullOrEmpty(c.LocationLink), () =>
+        When(c => c.LocationLink.HasContent(), () =>
         {
             RuleFor(c => c.LocationLink)
                 .Must(IsValidUrl).WithMessage("Location link is not a valid url")
@@ -112,7 +113,7 @@ public class ConfigValidator : AbstractValidator<Config>
             return false;
         }
 
-        if (parts.Any(x => string.IsNullOrEmpty(x)))
+        if (parts.Any(x => !x.HasContent()))
         {
             return false;
         }

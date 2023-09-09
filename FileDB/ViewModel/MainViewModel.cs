@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FileDB.Configuration;
+using FileDB.Extensions;
 using FileDB.Model;
 using FileDB.Notifiers;
 
@@ -21,7 +22,7 @@ public partial class MainViewModel : ObservableObject
         get
         {
             var title = $"{Utils.ApplicationName} {Utils.GetVersionString()}";
-            if (!string.IsNullOrEmpty(configRepository.Config.Name))
+            if (configRepository.Config.Name.HasContent())
             {
                 title += $" [{configRepository.Config.Name}]";
             }

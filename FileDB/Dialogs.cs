@@ -1,4 +1,5 @@
-﻿using FileDB.View;
+﻿using FileDB.Extensions;
+using FileDB.View;
 using FileDB.ViewModel;
 using FileDBShared.Model;
 using FluentValidation.Results;
@@ -203,6 +204,6 @@ public class Dialogs : IDialogs
         window.ShowDialog();
 
         var viewModel = (CreateDatabaseViewModel)window.DataContext;
-        return string.IsNullOrEmpty(viewModel.CreatedDatabasePath) ? null : viewModel.CreatedDatabasePath;
+        return viewModel.CreatedDatabasePath.HasContent() ? viewModel.CreatedDatabasePath : null;
     }
 }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using FileDB.Configuration;
+using FileDB.Extensions;
 using FileDB.Sorters;
 using FileDBInterface.DbAccess;
 using FileDBShared.Model;
@@ -94,7 +95,7 @@ public static class Utils
     {
         List<int> fileIds = new();
 
-        if (!string.IsNullOrEmpty(fileList))
+        if (fileList.HasContent())
         {
             var items = fileList.Split(';');
             foreach (var item in items)
@@ -155,12 +156,12 @@ public static class Utils
 
     public static string? CreatePositionLink(string? position, string? locationLinkConfig)
     {
-        if (string.IsNullOrEmpty(position) || string.IsNullOrEmpty(locationLinkConfig))
+        if (!position.HasContent() || !locationLinkConfig.HasContent())
         {
             return null;
         }
 
-        var positionParts = position.Split(" ");
+        var positionParts = position!.Split(" ");
         if (positionParts.Length != 2)
         {
             return null;

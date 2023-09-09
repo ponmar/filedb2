@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using FileDB.Extensions;
 using FileDB.Model;
 using FileDB.Resources;
 using FileDBInterface.Exceptions;
@@ -51,8 +52,8 @@ public partial class AddLocationViewModel : ObservableObject
     {
         try
         {
-            string? newDescription = string.IsNullOrEmpty(Description) ? null : Description;
-            string? newPosition = string.IsNullOrEmpty(Position) ? null : Position;
+            string? newDescription = Description.HasContent() ? Description : null;
+            string? newPosition = Position.HasContent() ? Position : null;
 
             var location = new LocationModel()
             {

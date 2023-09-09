@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using FileDB.Extensions;
 using FileDB.Model;
 using FileDBInterface.Exceptions;
 using FileDBShared.Model;
@@ -202,7 +203,7 @@ public partial class FileCategorizationViewModel : ObservableObject
         {
             var fileId = SelectedFile.Id;
             NewFileDescription = NewFileDescription?.Trim().ReplaceLineEndings(FileModelValidator.DescriptionLineEnding);
-            var description = string.IsNullOrEmpty(NewFileDescription) ? null : NewFileDescription;
+            var description = NewFileDescription.HasContent() ? NewFileDescription : null;
 
             try
             {
@@ -226,7 +227,7 @@ public partial class FileCategorizationViewModel : ObservableObject
             var fileId = SelectedFile.Id;
             NewFileDateTime = NewFileDateTime?.Trim();
 
-            var dateTime = string.IsNullOrEmpty(NewFileDateTime) ? null : NewFileDateTime;
+            var dateTime = NewFileDateTime.HasContent() ? NewFileDateTime : null;
 
             try
             {

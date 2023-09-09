@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Export;
+using FileDB.Extensions;
 using FileDB.Model;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace FileDB.ViewModel
         [ObservableProperty]
         private bool exportIncludesFiles = true;
 
-        public bool ExportEnabled => !string.IsNullOrEmpty(ExportFilesDestinationDirectory);
+        public bool ExportEnabled => ExportFilesDestinationDirectory.HasContent();
 
         partial void OnExportIncludesFilesChanged(bool value)
         {
@@ -74,13 +75,13 @@ namespace FileDB.ViewModel
         [RelayCommand]
         private void Export()
         {
-            if (string.IsNullOrEmpty(ExportFilesHeader))
+            if (!ExportFilesHeader.HasContent())
             {
                 dialogs.ShowErrorDialog("No header specified");
                 return;
             }
 
-            if (string.IsNullOrEmpty(ExportFilesDestinationDirectory))
+            if (!ExportFilesDestinationDirectory.HasContent())
             {
                 dialogs.ShowErrorDialog("No destination directory specified");
                 return;

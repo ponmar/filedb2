@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using FileDB.Extensions;
 using FileDB.Model;
 using FileDBInterface.DbAccess;
 using FileDBInterface.Exceptions;
@@ -34,7 +35,7 @@ namespace FileDB.ViewModel
         [RelayCommand]
         private void Create()
         {
-            if (string.IsNullOrEmpty(DatabasePath))
+            if (!DatabasePath.HasContent())
             {
                 dialogs.ShowErrorDialog("No database filename specified");
                 return;

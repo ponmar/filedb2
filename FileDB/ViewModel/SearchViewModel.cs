@@ -13,6 +13,7 @@ using CommunityToolkit.Mvvm.Input;
 using FileDB.Model;
 using System.Windows.Media;
 using FileDB.Resources;
+using FileDB.Extensions;
 
 namespace FileDB.ViewModel;
 
@@ -155,7 +156,7 @@ public partial class SearchViewModel : ObservableObject
     [RelayCommand]
     private void OpenFileLocation()
     {
-        if (!string.IsNullOrEmpty(absolutePath) && File.Exists(absolutePath))
+        if (absolutePath.HasContent() && File.Exists(absolutePath))
         {
             Utils.SelectFileInExplorer(absolutePath);
         }
@@ -164,7 +165,7 @@ public partial class SearchViewModel : ObservableObject
     [RelayCommand]
     private void OpenFileWithDefaultApp()
     {
-        if (!string.IsNullOrEmpty(absolutePath) && File.Exists(absolutePath))
+        if (absolutePath.HasContent() && File.Exists(absolutePath))
         {
             Utils.OpenFileWithDefaultApp(absolutePath);
         }

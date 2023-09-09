@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using FileDB.Extensions;
 using FileDB.Model;
 using FileDB.Resources;
 using FileDBInterface.Exceptions;
@@ -74,7 +75,7 @@ public partial class AddPersonViewModel : ObservableObject
     private void Save()
     {
         int? newProfileFileId = null;
-        if (!string.IsNullOrEmpty(ProfilePictureFileId))
+        if (ProfilePictureFileId.HasContent())
         {
             if (!int.TryParse(ProfilePictureFileId, out var value))
             {
@@ -85,9 +86,9 @@ public partial class AddPersonViewModel : ObservableObject
             newProfileFileId = value;
         }
 
-        var newDescription = string.IsNullOrEmpty(Description) ? null : Description;
-        var newDateOfBirth = string.IsNullOrEmpty(DateOfBirth) ? null : DateOfBirth;
-        var newDeceased = string.IsNullOrEmpty(Deceased) ? null : Deceased;
+        var newDescription = Description.HasContent() ? Description : null;
+        var newDateOfBirth = DateOfBirth.HasContent() ? DateOfBirth : null;
+        var newDeceased = Deceased.HasContent() ? Deceased : null;
 
         try
         {

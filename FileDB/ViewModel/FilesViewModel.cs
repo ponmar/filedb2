@@ -7,6 +7,7 @@ using System.Threading;
 using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using FileDB.Extensions;
 using FileDB.Model;
 using FileDBInterface.DbAccess;
 using FileDBInterface.Exceptions;
@@ -86,7 +87,7 @@ public partial class FilesViewModel : ObservableObject
     [RelayCommand]
     private void ScanNewFilesInDirectory()
     {
-        if (string.IsNullOrEmpty(SubdirToScan))
+        if (!SubdirToScan.HasContent())
         {
             dialogs.ShowErrorDialog("No directory specified");
             return;

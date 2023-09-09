@@ -77,7 +77,7 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
 
     partial void OnSearchFileGpsPositionUrlChanged(string? value)
     {
-        if (!string.IsNullOrEmpty(value))
+        if (value.HasContent())
         {
             var gpsPos = DatabaseParsing.ParseFilesPositionFromUrl(SearchFileGpsPositionUrl);
             if (gpsPos != null)
@@ -126,7 +126,7 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
     [ObservableProperty]
     private string combineSearchResult = string.Empty;
 
-    public bool CombineSearchResultPossible => !string.IsNullOrEmpty(CombineSearch1) && !string.IsNullOrEmpty(CombineSearch2);
+    public bool CombineSearchResultPossible => CombineSearch1.HasContent() && CombineSearch2.HasContent();
 
     [ObservableProperty]
     private PersonToUpdate? selectedPersonSearch;
@@ -157,7 +157,7 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
     [NotifyPropertyChangedFor(nameof(CurrentFileHasPosition))]
     private FileModel? selectedFile;
 
-    public bool CurrentFileHasPosition => SelectedFile != null && !string.IsNullOrEmpty(SelectedFile.Position);
+    public bool CurrentFileHasPosition => SelectedFile != null && SelectedFile.Position.HasContent();
 
     public ObservableCollection<PersonToUpdate> Persons { get; } = new();
     public ObservableCollection<LocationToUpdate> Locations { get; } = new();
@@ -273,7 +273,7 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
     [RelayCommand]
     private void FindImportedFiles()
     {
-        if (!string.IsNullOrEmpty(ImportedFileList))
+        if (ImportedFileList.HasContent())
         {
             var fileIds = Utils.CreateFileIds(ImportedFileList);
             Files = dbAccessRepository.DbAccess.SearchFilesFromIds(fileIds);
@@ -295,9 +295,9 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
     [RelayCommand]
     private void FindFilesByText()
     {
-        if (!string.IsNullOrEmpty(SearchPattern))
+        if (SearchPattern.HasContent())
         {
-            Files = dbAccessRepository.DbAccess.SearchFiles(SearchPattern);
+            Files = dbAccessRepository.DbAccess.SearchFiles(SearchPattern!);
             Events.Send<NewSearchResult>();
         }
     }
@@ -348,13 +348,13 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
     [RelayCommand]
     private void FindFilesByGpsPosition()
     {
-        if (string.IsNullOrEmpty(SearchFileGpsPosition))
+        if (!SearchFileGpsPosition.HasContent())
         {
             dialogs.ShowErrorDialog("No position specified");
             return;
         }
 
-        if (string.IsNullOrEmpty(SearchFileGpsRadius))
+        if (!SearchFileGpsRadius.HasContent())
         {
             dialogs.ShowErrorDialog("No radius specified");
             return;
@@ -477,7 +477,7 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
     [RelayCommand]
     private void FindFilesByPersonAge()
     {
-        if (!string.IsNullOrEmpty(SearchPersonAgeFrom))
+        if (SearchPersonAgeFrom.HasContent())
         {
             if (!int.TryParse(SearchPersonAgeFrom, out var ageFrom))
             {
@@ -486,7 +486,7 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
             }
 
             int ageTo;
-            if (string.IsNullOrEmpty(SearchPersonAgeTo))
+            if (!SearchPersonAgeTo.HasContent())
             {
                 ageTo = ageFrom;
             }
@@ -531,9 +531,9 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
     [RelayCommand]
     private void FindFilesFromList()
     {
-        if (!string.IsNullOrEmpty(FileListSearch))
+        if (FileListSearch.HasContent())
         {
-            var fileIds = Utils.CreateFileIds(FileListSearch);
+            var fileIds = Utils.CreateFileIds(FileListSearch!);
             Files = dbAccessRepository.DbAccess.SearchFilesFromIds(fileIds);
             Events.Send<NewSearchResult>();
         }
@@ -542,9 +542,9 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
     [RelayCommand]
     private void FindFilesFromListComplement()
     {
-        if (!string.IsNullOrEmpty(FileListSearch))
+        if (FileListSearch.HasContent())
         {
-            var fileIds = Utils.CreateFileIds(FileListSearch);
+            var fileIds = Utils.CreateFileIds(FileListSearch!);
             var allFiles = dbAccessRepository.DbAccess.GetFiles();
             var allFilesComplement = allFiles.Where(x => !fileIds.Contains(x.Id));
             Files = allFilesComplement;
