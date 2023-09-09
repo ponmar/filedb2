@@ -327,7 +327,7 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
             return;
         }
 
-        var fileExtensions = SelectedFileType.GetAttribute<FileExtensionsAttribute>().FileExtensions;
+        var fileExtensions = ((FileType)SelectedFileType).GetSupportedFileExtensions();
 
         var result = new List<FileModel>();
         foreach (var extension in fileExtensions)

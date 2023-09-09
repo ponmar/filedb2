@@ -18,6 +18,7 @@
         <converters:EnumerationEmptyToVisibilityConverter x:Key="EnumerationEmptyToVisibilityConverter"/>
         <converters:StringContentToBoolConverter x:Key="StringContentToBoolConverter"/>
         <converters:ValueToBoolConverter x:Key="ValueToBoolConverter"/>
+        <converters:FileTypeToStringConverter x:Key="FileTypeToStringConverter"/>
     </UserControl.Resources>
 
     <Border Style="{StaticResource BorderGroup}" Margin="0 0 0 10">
@@ -42,7 +43,13 @@
 
                     <StackPanel Margin="10 5" Orientation="Horizontal">
                         <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{x:Static rs:Strings.SearchFileTypeLabel}" VerticalAlignment="Center"/>
-                        <ComboBox ItemsSource="{Binding FileTypes}" Margin="3 0" Style="{StaticResource PageInnerComboBox}" Width="100" VerticalAlignment="Center" SelectedValue="{Binding SelectedFileType}"/>
+                        <ComboBox ItemsSource="{Binding FileTypes}" Margin="3 0" Style="{StaticResource PageInnerComboBox}" Width="100" VerticalAlignment="Center" SelectedValue="{Binding SelectedFileType}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Path=., Converter={StaticResource FileTypeToStringConverter}, Mode=OneWay}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
                         <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesByTypeCommand}" ToolTip="{x:Static rs:Strings.SeachFilesByTypeToolTip}" VerticalAlignment="Center" IsEnabled="{Binding SelectedFileType, Converter={StaticResource ValueToBoolConverter}}" Content="{x:Static rs:Strings.SearchButton}"/>
                     </StackPanel>
 

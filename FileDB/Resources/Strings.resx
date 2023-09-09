@@ -1068,4 +1068,16 @@
   <data name="CategorizationReloadOrientationToolTip" xml:space="preserve">
     <value>Reload orientation from Exif data</value>
   </data>
+  <data name="FileTypePicture" xml:space="preserve">
+    <value>Picture</value>
+  </data>
+  <data name="FileTypeMovie" xml:space="preserve">
+    <value>Movie</value>
+  </data>
+  <data name="FileTypeDocument" xml:space="preserve">
+    <value>Document</value>
+  </data>
+  <data name="FileTypeAudio" xml:space="preserve">
+    <value>Audio</value>
+  </data>
 </root>

@@ -1123,6 +1123,42 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Audio.
+        /// </summary>
+        public static string FileTypeAudio {
+            get {
+                return ResourceManager.GetString("FileTypeAudio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Document.
+        /// </summary>
+        public static string FileTypeDocument {
+            get {
+                return ResourceManager.GetString("FileTypeDocument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Movie.
+        /// </summary>
+        public static string FileTypeMovie {
+            get {
+                return ResourceManager.GetString("FileTypeMovie", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Picture.
+        /// </summary>
+        public static string FileTypePicture {
+            get {
+                return ResourceManager.GetString("FileTypePicture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add....
         /// </summary>
         public static string LocationsAddButton {

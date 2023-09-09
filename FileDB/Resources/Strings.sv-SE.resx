@@ -1068,4 +1068,16 @@
   <data name="CategorizationReloadOrientationToolTip" xml:space="preserve">
     <value>Ladda om orientering från Exif-data</value>
   </data>
+  <data name="FileTypePicture" xml:space="preserve">
+    <value>Bild</value>
+  </data>
+  <data name="FileTypeMovie" xml:space="preserve">
+    <value>Film</value>
+  </data>
+  <data name="FileTypeDocument" xml:space="preserve">
+    <value>Dokument</value>
+  </data>
+  <data name="FileTypeAudio" xml:space="preserve">
+    <value>Ljud</value>
+  </data>
 </root>

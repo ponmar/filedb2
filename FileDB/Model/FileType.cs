@@ -1,34 +1,43 @@
-﻿using FileDB.Extensions;
+﻿using FileDB.Resources;
 using System;
 using System.IO;
 using System.Linq;
 
 namespace FileDB.ViewModel;
 
-[AttributeUsage(AttributeTargets.Field)]
-public class FileExtensionsAttribute : Attribute
-{
-    public string[] FileExtensions { get; }
-
-    public FileExtensionsAttribute(string[] fileExtensions)
-    {
-        FileExtensions = fileExtensions;
-    }
-}
-
 public enum FileType
 {
-    [FileExtensions(new string[] { ".jpg", ".png", ".bmp", ".gif" })]
     Picture,
-
-    [FileExtensions(new string[] { ".mkv", ".avi", ".mpg", ".mov", ".mp4" })]
     Movie,
-
-    [FileExtensions(new string[] { ".doc", ".pdf", ".txt", ".md" })]
     Document,
-
-    [FileExtensions(new string[] { ".mp3", ".wav" })]
     Audio,
+}
+
+public static class FileTypeExtensions
+{
+    public static string ToFriendlyString(this FileType fileType)
+    {
+        return fileType switch
+        {
+            FileType.Picture => Strings.FileTypePicture,
+            FileType.Movie => Strings.FileTypeMovie,
+            FileType.Document => Strings.FileTypeDocument,
+            FileType.Audio => Strings.FileTypeAudio,
+            _ => throw new NotImplementedException(),
+        };
+    }
+
+    public static string[] GetSupportedFileExtensions(this FileType fileType)
+    {
+        return fileType switch
+        {
+            FileType.Picture => new[] { ".jpg", ".png", ".bmp", ".gif" },
+            FileType.Movie => new[] { ".mkv", ".avi", ".mpg", ".mov", ".mp4" },
+            FileType.Document => new[] { ".doc", ".pdf", ".txt", ".md" },
+            FileType.Audio => new[] { ".mp3", ".wav" },
+            _ => throw new NotImplementedException(),
+        };
+    }
 }
 
 public static class FileTypeUtils
@@ -47,12 +56,7 @@ public static class FileTypeUtils
         }
 
         fileExtension = fileExtension.ToLower();
-        var fileTypes = Enum.GetValues<FileType>().Where(x => x.GetAttribute<FileExtensionsAttribute>().FileExtensions.Contains(fileExtension)).ToList();
-        if (!fileTypes.Any())
-        {
-            return null;
-        }
-
-        return fileTypes[0];
+        var fileTypes = Enum.GetValues<FileType>().Where(x => x.GetSupportedFileExtensions().Contains(fileExtension)).ToList();
+        return fileTypes.FirstOrDefault();
     }
 }
