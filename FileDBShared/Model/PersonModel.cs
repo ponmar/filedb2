@@ -1,13 +1,6 @@
-﻿namespace FileDBShared.Model;
+﻿using System;
 
-// Values from: https://en.wikipedia.org/wiki/ISO/IEC_5218
-public enum Sex
-{
-    NotKnown = 0,
-    Male = 1,
-    Female = 2,
-    NotApplicable = 9,
-}
+namespace FileDBShared.Model;
 
 public class PersonModel
 {

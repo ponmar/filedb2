@@ -1,11 +1,10 @@
 ﻿using FileDB.Configuration;
-using FileDB.Extensions;
 
 namespace FileDB.Sorters;
 
 public class SortMethodDescription
 {
-    public string Name => Method.GetDescription();
+    public string Name => Method.ToFriendlyString();
 
     public SortMethod Method { get; }
 

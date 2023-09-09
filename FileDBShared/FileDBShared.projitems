@@ -14,6 +14,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Model\FileModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\LocationModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\PersonModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Sex.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\TagModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Validators\FilesModelValidator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Validators\LocationModelValidator.cs" />

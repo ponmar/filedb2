@@ -27,6 +27,18 @@ public static class FileTypeExtensions
         };
     }
 
+    public static string GetIcon(this FileType fileType)
+    {
+        return fileType switch
+        {
+            FileType.Picture => "\xD83D\xDDBC", // Unicode character name "Frame with Picture"
+            FileType.Movie => "\xD83C\xDFAC", // Unicode character name "Clapper Board"
+            FileType.Document => "\xD83D\xDDCE", // Unicode character name "Document"
+            FileType.Audio => "\xD83C\xDFB5", // Unicode character name "Musical Note"
+            _ => throw new NotImplementedException(),
+        };
+    }
+
     public static string[] GetSupportedFileExtensions(this FileType fileType)
     {
         return fileType switch

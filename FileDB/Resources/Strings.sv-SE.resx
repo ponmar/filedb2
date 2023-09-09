@@ -1080,4 +1080,37 @@
   <data name="FileTypeAudio" xml:space="preserve">
     <value>Ljud</value>
   </data>
+  <data name="SexNotKnown" xml:space="preserve">
+    <value>Ej känd</value>
+  </data>
+  <data name="SexMale" xml:space="preserve">
+    <value>Man</value>
+  </data>
+  <data name="SexFemale" xml:space="preserve">
+    <value>Kvinna</value>
+  </data>
+  <data name="SexNotApplicable" xml:space="preserve">
+    <value>Ej tillämpligt</value>
+  </data>
+  <data name="SortMethodDate" xml:space="preserve">
+    <value>Datum (gammalt - nytt)</value>
+  </data>
+  <data name="SortMethodDateDesc" xml:space="preserve">
+    <value>Datum (nytt - gammalt)</value>
+  </data>
+  <data name="SortMethodPath" xml:space="preserve">
+    <value>Sökväg (A-Ö)</value>
+  </data>
+  <data name="SortMethodPathDesc" xml:space="preserve">
+    <value>Sökväg (Ö-A)</value>
+  </data>
+  <data name="WindowModeNormal" xml:space="preserve">
+    <value>Fönster</value>
+  </data>
+  <data name="WindowModeMaximized" xml:space="preserve">
+    <value>Maximerat fönster</value>
+  </data>
+  <data name="WindowModeFullscreen" xml:space="preserve">
+    <value>Helskärmsfönster</value>
+  </data>
 </root>

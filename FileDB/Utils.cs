@@ -7,7 +7,6 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using FileDB.Configuration;
-using FileDB.Extensions;
 using FileDB.Sorters;
 using FileDBInterface.DbAccess;
 using FileDBShared.Model;
@@ -16,7 +15,7 @@ namespace FileDB;
 
 public class WindowModeDescription
 {
-    public string Name => Mode.GetDescription();
+    public string Name => Mode.ToFriendlyString();
 
     public WindowMode Mode { get; }
 

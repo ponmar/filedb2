@@ -1080,4 +1080,37 @@
   <data name="FileTypeAudio" xml:space="preserve">
     <value>Audio</value>
   </data>
+  <data name="SexNotKnown" xml:space="preserve">
+    <value>Not known</value>
+  </data>
+  <data name="SexMale" xml:space="preserve">
+    <value>Male</value>
+  </data>
+  <data name="SexFemale" xml:space="preserve">
+    <value>Female</value>
+  </data>
+  <data name="SexNotApplicable" xml:space="preserve">
+    <value>Not applicable</value>
+  </data>
+  <data name="SortMethodDate" xml:space="preserve">
+    <value>Date (Old - New)</value>
+  </data>
+  <data name="SortMethodDateDesc" xml:space="preserve">
+    <value>Date (New - Old)</value>
+  </data>
+  <data name="SortMethodPath" xml:space="preserve">
+    <value>Path (A - Z)</value>
+  </data>
+  <data name="SortMethodPathDesc" xml:space="preserve">
+    <value>Path (Z - A)</value>
+  </data>
+  <data name="WindowModeNormal" xml:space="preserve">
+    <value>Window</value>
+  </data>
+  <data name="WindowModeMaximized" xml:space="preserve">
+    <value>Maximized window</value>
+  </data>
+  <data name="WindowModeFullscreen" xml:space="preserve">
+    <value>Fullscreen window</value>
+  </data>
 </root>

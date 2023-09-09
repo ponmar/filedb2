@@ -2698,6 +2698,78 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Female.
+        /// </summary>
+        public static string SexFemale {
+            get {
+                return ResourceManager.GetString("SexFemale", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Male.
+        /// </summary>
+        public static string SexMale {
+            get {
+                return ResourceManager.GetString("SexMale", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not applicable.
+        /// </summary>
+        public static string SexNotApplicable {
+            get {
+                return ResourceManager.GetString("SexNotApplicable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not known.
+        /// </summary>
+        public static string SexNotKnown {
+            get {
+                return ResourceManager.GetString("SexNotKnown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date (Old - New).
+        /// </summary>
+        public static string SortMethodDate {
+            get {
+                return ResourceManager.GetString("SortMethodDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date (New - Old).
+        /// </summary>
+        public static string SortMethodDateDesc {
+            get {
+                return ResourceManager.GetString("SortMethodDateDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Path (A - Z).
+        /// </summary>
+        public static string SortMethodPath {
+            get {
+                return ResourceManager.GetString("SortMethodPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Path (Z - A).
+        /// </summary>
+        public static string SortMethodPathDesc {
+            get {
+                return ResourceManager.GetString("SortMethodPathDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Configuration not valid.
         /// </summary>
         public static string StartupNotificationConfigurationNotValid {
@@ -2946,6 +3018,33 @@ namespace FileDB.Resources {
         public static string ToolsTitle {
             get {
                 return ResourceManager.GetString("ToolsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fullscreen window.
+        /// </summary>
+        public static string WindowModeFullscreen {
+            get {
+                return ResourceManager.GetString("WindowModeFullscreen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maximized window.
+        /// </summary>
+        public static string WindowModeMaximized {
+            get {
+                return ResourceManager.GetString("WindowModeMaximized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Window.
+        /// </summary>
+        public static string WindowModeNormal {
+            get {
+                return ResourceManager.GetString("WindowModeNormal", resourceCulture);
             }
         }
     }
