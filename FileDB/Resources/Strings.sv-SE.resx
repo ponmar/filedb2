@@ -685,7 +685,7 @@
     <value>Växla bildspelsupprepning</value>
   </data>
   <data name="SearchResultToggleFileDescriptionSpeekToolTip" xml:space="preserve">
-    <value>Växla filbeskrivningstal</value>
+    <value>Växla uppläsning av filbeskrivning</value>
   </data>
   <data name="FileInfoHeader" xml:space="preserve">
     <value>Information</value>
@@ -973,7 +973,7 @@
     <value>Grattis på födelsedagen {0}!</value>
   </data>
   <data name="MissingFilesRootDirNotifierFilesRootDirectoryIsMissing" xml:space="preserve">
-    <value>Filsamlingens rotkatalog saknas: {0}!</value>
+    <value>Filsamlingens rotkatalog saknas: {0}</value>
   </data>
   <data name="RestInPeaceNotifierRestInPeace" xml:space="preserve">
     <value>Vila i fred {0}!</value>

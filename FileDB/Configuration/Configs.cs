@@ -2,10 +2,6 @@
 
 namespace FileDB.Configuration;
 
-public enum SortMethod { Date, DateDesc, Path, PathDesc }
-
-public enum WindowMode { Normal, Maximized, Fullscreen }
-
 public record Config(
     string Name,
     string Database,
@@ -87,5 +83,5 @@ public static class DefaultConfigs
             Default.OverlayTextSize,
             Default.OverlayTextSizeLarge,
             Default.ShortItemNameMaxLength,
-            Default.CultureOverride);
+            Default.CultureOverride); // "sv-SE"
 }
