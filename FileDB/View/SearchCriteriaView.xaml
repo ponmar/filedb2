@@ -47,7 +47,7 @@
                         <ComboBox ItemsSource="{Binding FileTypes}" Margin="3 0" Style="{StaticResource PageInnerComboBox}" Width="100" VerticalAlignment="Center" SelectedValue="{Binding SelectedFileType}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Path=., Converter={StaticResource FileTypeToStringConverter}, Mode=OneWay}"/>
+                                    <TextBlock Text="{Binding Path=., Converter={StaticResource FileTypeToStringConverter}}"/>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>

@@ -12,6 +12,7 @@
              d:DesignHeight="130" d:DesignWidth="1000">
     <UserControl.Resources>
         <converters:EnumerationHasContentConverter x:Key="EnumerationHasContentConverter"/>
+        <converters:SortMethodToStringConverter x:Key="SortMethodToStringConverter"/>
     </UserControl.Resources>
     
     <Border Style="{StaticResource BorderGroup}">
@@ -62,7 +63,13 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,5">
                     <TextBlock Style="{StaticResource PageInnerTextBlock}" VerticalAlignment="Center" Margin="0 0 5 0" Text="{x:Static rs:Strings.SearchResultSortByLabel}"/>
-                    <ComboBox Width="125" ItemsSource="{Binding SortMethods}" DisplayMemberPath="Name" SelectedValuePath="Method" SelectedValue="{Binding SelectedSortMethod}" VerticalAlignment="Center"/>
+                    <ComboBox Width="125" ItemsSource="{Binding SortMethods}" SelectedValue="{Binding SelectedSortMethod}" VerticalAlignment="Center">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Path=.,Converter={StaticResource SortMethodToStringConverter}}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
                 </StackPanel>
             </StackPanel>
         </Grid>

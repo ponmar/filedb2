@@ -6,25 +6,11 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
-using FileDB.Configuration;
 using FileDB.Extensions;
-using FileDB.Sorters;
 using FileDBInterface.DbAccess;
 using FileDBShared.Model;
 
 namespace FileDB;
-
-public class WindowModeDescription
-{
-    public string Name => Mode.ToFriendlyString();
-
-    public WindowMode Mode { get; }
-
-    public WindowModeDescription(WindowMode mode)
-    {
-        Mode = mode;
-    }
-}
 
 public static class Utils
 {
@@ -108,26 +94,6 @@ public static class Utils
         }
 
         return fileIds;
-    }
-
-    public static List<SortMethodDescription> GetSortMethods()
-    {
-        List<SortMethodDescription> sortMethods = new();
-        foreach (var value in Enum.GetValues<SortMethod>())
-        {
-            sortMethods.Add(new SortMethodDescription(value));
-        }
-        return sortMethods;
-    }
-
-    public static List<WindowModeDescription> GetWindowModes()
-    {
-        List<WindowModeDescription> modes = new();
-        foreach (var mode in Enum.GetValues<WindowMode>())
-        {
-            modes.Add(new WindowModeDescription(mode));
-        }
-        return modes;
     }
 
     public static string GetPersonAgeInFileString(string? fileDatetimeStr, string? personDateOfBirthStr)

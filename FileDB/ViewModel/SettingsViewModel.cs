@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO.Abstractions;
@@ -32,7 +33,8 @@ public partial class SettingsViewModel : ObservableObject
     [ObservableProperty]
     private SortMethod defaultSortMethod;
 
-    public List<SortMethodDescription> SortMethods => Utils.GetSortMethods();
+    [ObservableProperty]
+    private List<SortMethod> sortMethods = Enum.GetValues<SortMethod>().ToList();
 
     [ObservableProperty]
     private bool keepSelectionAfterSort;
@@ -92,7 +94,8 @@ public partial class SettingsViewModel : ObservableObject
         }
     }
 
-    public List<WindowModeDescription> WindowModes => Utils.GetWindowModes();
+    [ObservableProperty]
+    public List<WindowMode> windowModes = Enum.GetValues<WindowMode>().ToList();
 
     [ObservableProperty]
     private int imageMemoryCacheCount;

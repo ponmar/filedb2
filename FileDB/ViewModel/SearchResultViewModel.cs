@@ -102,7 +102,8 @@ public partial class SearchResultViewModel : ObservableObject
     [ObservableProperty]
     private bool repeatActive = false;
 
-    public List<SortMethodDescription> SortMethods { get; } = Utils.GetSortMethods();
+    [ObservableProperty]
+    private List<SortMethod> sortMethods = Enum.GetValues<SortMethod>().ToList();
 
     [ObservableProperty]
     private SortMethod selectedSortMethod;
