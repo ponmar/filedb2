@@ -1,6 +1,11 @@
+3.14:
+* Add button that toggles file description speech when browsing files
+* Add multi language support (English and Swedish are currently included)
+* SQL query bug fixes
+
 3.13:
 * Improve default values for ImageMemoryCacheCount and NumImagesToPreload (used when upgrading from an old config)
-* Fix crash when sometimes removing an image from the cache (smoetimes the random index was too high)
+* Fix crash when sometimes removing an image from the cache (sometimes the random index was too high)
 
 3.12:
 * Fix ordering of persons in some filtering scenarios at the Birthday and Rip view
