@@ -28,7 +28,7 @@ public class ConfigBuilder
     public int OverlayTextSize { get; init; }
     public int OverlayTextSizeLarge { get; init; }
     public int ShortItemNameMaxLength { get; init; }
-    public string? CultureOverride { get; init; }
+    public string? Language { get; init; }
 
     public Config Build()
     {
@@ -57,6 +57,6 @@ public class ConfigBuilder
             OverlayTextSize,
             OverlayTextSizeLarge,
             ShortItemNameMaxLength,
-            CultureOverride);
+            Language);
     }
 }

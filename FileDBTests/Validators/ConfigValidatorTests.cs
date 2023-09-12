@@ -155,26 +155,26 @@ public class ConfigValidatorTests
     }
 
     [TestMethod]
-    public void Validate_CultureOverrideValid_Success()
+    public void Validate_LanguageValid_Success()
     {
-        var config = new ConfigBuilder() { CultureOverride = "sv-SE" }.Build();
+        var config = new ConfigBuilder() { Language = "sv-SE" }.Build();
         var result = validator.TestValidate(config);
-        result.ShouldNotHaveValidationErrorFor(x => x.CultureOverride);
+        result.ShouldNotHaveValidationErrorFor(x => x.Language);
     }
 
     [TestMethod]
-    public void Validate_CultureOverrideNull_Success()
+    public void Validate_LanguageNull_Success()
     {
-        var config = new ConfigBuilder() { CultureOverride = null }.Build();
+        var config = new ConfigBuilder() { Language = null }.Build();
         var result = validator.TestValidate(config);
-        result.ShouldNotHaveValidationErrorFor(x => x.CultureOverride);
+        result.ShouldNotHaveValidationErrorFor(x => x.Language);
     }
 
     [TestMethod]
-    public void Validate_CultureOverrideInvalid_Error()
+    public void Validate_LanguageInvalid_Error()
     {
-        var config = new ConfigBuilder() { CultureOverride = "invalid-culture" }.Build();
+        var config = new ConfigBuilder() { Language = "invalid-culture" }.Build();
         var result = validator.TestValidate(config);
-        result.ShouldHaveValidationErrorFor(x => x.CultureOverride);
+        result.ShouldHaveValidationErrorFor(x => x.Language);
     }
 }

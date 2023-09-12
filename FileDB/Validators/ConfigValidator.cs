@@ -59,9 +59,9 @@ public class ConfigValidator : AbstractValidator<Config>
         RuleFor(c => c.ShortItemNameMaxLength)
             .InclusiveBetween(10, 100).WithMessage("Invalid short item name max length");
 
-        When(c => c.CultureOverride != null, () =>
+        When(c => c.Language != null, () =>
         {
-            RuleFor(c => c.CultureOverride)
+            RuleFor(c => c.Language)
                .Must(IsCulture!).WithMessage("Invalid culture override");
         });
 

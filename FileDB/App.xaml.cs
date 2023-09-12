@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using FileDB.Model;
 using System.IO.Abstractions;
 using FileDB.Resources;
+using System.Globalization;
 
 namespace FileDB
 {
@@ -26,7 +27,9 @@ namespace FileDB
         private void Application_Startup(object sender, StartupEventArgs startupEventArgs)
         {
             Bootstrapper.Bootstrap();
-            Utils.SetInvariantCulture();
+
+            // Needed to fix sorting with Swedish characters right in comboboxes and datagrids
+            Utils.SetCulture(CultureInfo.GetCultureInfo("sv-SE"));
 
             var appDataConfig = new AppDataConfig<Config>(Utils.ApplicationName, ServiceLocator.Resolve<IFileSystem>());
 
@@ -39,20 +42,20 @@ namespace FileDB
             if (demoModeEnabled)
             {
                 config = DefaultConfigs.CreateDemo();
-                SetUiCulture(config.CultureOverride);
+                SetUiCulture(config.Language);
                 notifications.Add(new(NotificationType.Info, Strings.StartupNotificationDemoConfigurationEnabled, DateTime.Now));
             }
             else if (!appDataConfig.FileExists())
             {
                 config = DefaultConfigs.CreateDemo();
-                SetUiCulture(config.CultureOverride);
+                SetUiCulture(config.Language);
                 notifications.Add(new(NotificationType.Warning, string.Format(Strings.StartupNotificationNoConfigurationFile, Utils.ApplicationName), DateTime.Now));
             }
             else
             {
                 config = appDataConfig.Read() ?? DefaultConfigs.Default;
                 config = new ConfigMigrator().Migrate(config, DefaultConfigs.Default);
-                SetUiCulture(config.CultureOverride);
+                SetUiCulture(config.Language);
 
                 var validator = new ConfigValidator();
                 var result = validator.Validate(config);

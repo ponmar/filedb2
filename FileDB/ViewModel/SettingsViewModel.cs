@@ -237,9 +237,9 @@ public partial class SettingsViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void SetDefaultCultureOverride()
+    private void SetDefaultLanguage()
     {
-        SelectedCulture = Cultures.FirstOrDefault(x => x.Name == DefaultConfigs.Default.CultureOverride);
+        SelectedCulture = Cultures.FirstOrDefault(x => x.Name == DefaultConfigs.Default.Language);
     }
 
     private readonly IConfigRepository configRepository;
@@ -286,7 +286,7 @@ public partial class SettingsViewModel : ObservableObject
         OverlayTextSize = config.OverlayTextSize;
         OverlayTextSizeLarge = config.OverlayTextSizeLarge;
         ShortItemNameMaxLength = config.ShortItemNameMaxLength;
-        SelectedCulture = Cultures.FirstOrDefault(x => x.Name == config.CultureOverride);
+        SelectedCulture = Cultures.FirstOrDefault(x => x.Name == config.Language);
     }
 
     [RelayCommand]

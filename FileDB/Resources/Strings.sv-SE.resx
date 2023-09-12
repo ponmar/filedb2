@@ -748,7 +748,7 @@
     <value>Bläddring</value>
   </data>
   <data name="SettingsImportHeading" xml:space="preserve">
-    <value>Importera</value>
+    <value>Import</value>
   </data>
   <data name="SettingsNotificationsHeading" xml:space="preserve">
     <value>Aviseringar</value>
@@ -826,7 +826,7 @@
     <value>Påminnelse om säkerhetskopiering (månadsvis)</value>
   </data>
   <data name="SettingsNumberOfSearchResultImagesToPreloadLabel" xml:space="preserve">
-    <value>Antal sökresultatbilder som ska förinstalleras:</value>
+    <value>Antal sökresultatbilder som ska förladdas</value>
   </data>
   <data name="SettingsNumberOfLoadedImagesToKeepInMemoryLabel" xml:space="preserve">
     <value>Antal laddade bilder att spara i minnet:</value>

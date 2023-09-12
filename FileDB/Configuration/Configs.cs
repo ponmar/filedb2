@@ -27,7 +27,7 @@ public record Config(
     int OverlayTextSize,
     int OverlayTextSizeLarge,
     int ShortItemNameMaxLength,
-    string? CultureOverride);
+    string? Language);
 
 public static class DefaultConfigs
 {
@@ -56,7 +56,7 @@ public static class DefaultConfigs
             OverlayTextSize: 14,
             OverlayTextSizeLarge: 24,
             ShortItemNameMaxLength: 15,
-            CultureOverride: null);
+            Language: null);
 
     public static Config CreateDemo() =>
         new("Demo",
@@ -83,5 +83,5 @@ public static class DefaultConfigs
             Default.OverlayTextSize,
             Default.OverlayTextSizeLarge,
             Default.ShortItemNameMaxLength,
-            Default.CultureOverride); // "sv-SE"
+            Default.Language); // "sv-SE"
 }
