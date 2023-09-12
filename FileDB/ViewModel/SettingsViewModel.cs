@@ -8,7 +8,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Configuration;
 using FileDB.Model;
-using FileDB.Sorters;
 using FileDB.Validators;
 
 namespace FileDB.ViewModel;
@@ -83,7 +82,6 @@ public partial class SettingsViewModel : ObservableObject
 
     partial void OnSelectedCultureChanged(CultureInfo? value)
     {
-        // TODO: trigger reloading of strings
         if (value is not null)
         {
             Utils.SetUICulture(value);
@@ -254,10 +252,8 @@ public partial class SettingsViewModel : ObservableObject
         this.configUpdater = configUpdater;
         this.dialogs = dialogs;
 
-        foreach (var culture in CultureInfo.GetCultures(CultureTypes.SpecificCultures))
-        {
-            cultures.Add(culture);
-        }
+        cultures.Add(CultureInfo.GetCultureInfo("en"));
+        cultures.Add(CultureInfo.GetCultureInfo("sv-SE"));
 
         UpdateFromConfiguration();
     }

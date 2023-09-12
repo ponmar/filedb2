@@ -1006,7 +1006,7 @@
     <value>Lägg till vald plats till filen</value>
   </data>
   <data name="CategorizationAddSelectedTagToFileToolTip" xml:space="preserve">
-    <value>Lägg till vald etikett till fil!</value>
+    <value>Lägg till vald etikett till fil</value>
   </data>
   <data name="CategorizationRemoveSelectedPersonFromFileToolTip" xml:space="preserve">
     <value>Ta bort vald person från filen</value>
