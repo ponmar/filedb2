@@ -768,8 +768,8 @@
   <data name="SettingsWindowModeLabel" xml:space="preserve">
     <value>Window mode:</value>
   </data>
-  <data name="SettingsCultureOverrideLabel" xml:space="preserve">
-    <value>Culture override:</value>
+  <data name="SettingsLanguageLabel" xml:space="preserve">
+    <value>Language:</value>
   </data>
   <data name="SettingsReadOnlyModeLabel" xml:space="preserve">
     <value>Read-only mode</value>

@@ -768,8 +768,8 @@
   <data name="SettingsWindowModeLabel" xml:space="preserve">
     <value>Fönsterläge:</value>
   </data>
-  <data name="SettingsCultureOverrideLabel" xml:space="preserve">
-    <value>Åsidosätt kultur:</value>
+  <data name="SettingsLanguageLabel" xml:space="preserve">
+    <value>Språk:</value>
   </data>
   <data name="SettingsReadOnlyModeLabel" xml:space="preserve">
     <value>Skrivskyddat läge</value>

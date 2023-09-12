@@ -75,12 +75,12 @@ public partial class SettingsViewModel : ObservableObject
     private WindowMode windowMode;
 
     [ObservableProperty]
-    private ObservableCollection<CultureInfo> cultures = new();
+    private ObservableCollection<CultureInfo> languages = new();
 
     [ObservableProperty]
-    private CultureInfo? selectedCulture;
+    private CultureInfo? selectedLanguage;
 
-    partial void OnSelectedCultureChanged(CultureInfo? value)
+    partial void OnSelectedLanguageChanged(CultureInfo? value)
     {
         if (value is not null)
         {
@@ -239,7 +239,7 @@ public partial class SettingsViewModel : ObservableObject
     [RelayCommand]
     private void SetDefaultLanguage()
     {
-        SelectedCulture = Cultures.FirstOrDefault(x => x.Name == DefaultConfigs.Default.Language);
+        SelectedLanguage = Languages.FirstOrDefault(x => x.Name == DefaultConfigs.Default.Language);
     }
 
     private readonly IConfigRepository configRepository;
@@ -252,8 +252,8 @@ public partial class SettingsViewModel : ObservableObject
         this.configUpdater = configUpdater;
         this.dialogs = dialogs;
 
-        cultures.Add(CultureInfo.GetCultureInfo("en"));
-        cultures.Add(CultureInfo.GetCultureInfo("sv-SE"));
+        languages.Add(CultureInfo.GetCultureInfo("en"));
+        languages.Add(CultureInfo.GetCultureInfo("sv-SE"));
 
         UpdateFromConfiguration();
     }
@@ -286,7 +286,7 @@ public partial class SettingsViewModel : ObservableObject
         OverlayTextSize = config.OverlayTextSize;
         OverlayTextSizeLarge = config.OverlayTextSizeLarge;
         ShortItemNameMaxLength = config.ShortItemNameMaxLength;
-        SelectedCulture = Cultures.FirstOrDefault(x => x.Name == config.Language);
+        SelectedLanguage = Languages.FirstOrDefault(x => x.Name == config.Language);
     }
 
     [RelayCommand]
@@ -323,7 +323,7 @@ public partial class SettingsViewModel : ObservableObject
             OverlayTextSize,
             OverlayTextSizeLarge,
             ShortItemNameMaxLength,
-            SelectedCulture?.Name);
+            SelectedLanguage?.Name);
 
         var result = new ConfigValidator().Validate(configToSave);
         if (!result.IsValid)

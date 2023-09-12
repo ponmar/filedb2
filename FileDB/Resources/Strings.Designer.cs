@@ -2365,15 +2365,6 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Culture override:.
-        /// </summary>
-        public static string SettingsCultureOverrideLabel {
-            get {
-                return ResourceManager.GetString("SettingsCultureOverrideLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Database:.
         /// </summary>
         public static string SettingsDatabaseLabel {
@@ -2460,6 +2451,15 @@ namespace FileDB.Resources {
         public static string SettingsKeepSelectionAfterSortLabel {
             get {
                 return ResourceManager.GetString("SettingsKeepSelectionAfterSortLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language:.
+        /// </summary>
+        public static string SettingsLanguageLabel {
+            get {
+                return ResourceManager.GetString("SettingsLanguageLabel", resourceCulture);
             }
         }
         

@@ -64,9 +64,9 @@
                         </ComboBox>
                         <Button Grid.Row="3" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultWindowModeCommand}" ToolTip="{x:Static rs:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static rs:Strings.SettingsDefaultButton}"/>
 
-                        <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center" Text="{x:Static rs:Strings.SettingsCultureOverrideLabel}"/>
-                        <ComboBox Grid.Row="4" Grid.Column="1" Style="{StaticResource PageComboBox}" ItemsSource="{Binding Cultures}" DisplayMemberPath="DisplayName" SelectedValue="{Binding SelectedCulture}"/>
-                        <Button Grid.Row="4" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultCultureOverrideCommand}" ToolTip="{x:Static rs:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static rs:Strings.SettingsDefaultButton}"/>
+                        <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center" Text="{x:Static rs:Strings.SettingsLanguageLabel}"/>
+                        <ComboBox Grid.Row="4" Grid.Column="1" Style="{StaticResource PageComboBox}" ItemsSource="{Binding Languages}" DisplayMemberPath="DisplayName" SelectedValue="{Binding SelectedLanguage}"/>
+                        <Button Grid.Row="4" Grid.Column="2" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SetDefaultLanguageCommand}" ToolTip="{x:Static rs:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static rs:Strings.SettingsDefaultButton}"/>
 
                         <CheckBox Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource PageCheckBox}" IsChecked="{Binding Path=ReadOnly, Mode=TwoWay}">
                             <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{x:Static rs:Strings.SettingsReadOnlyModeLabel}"/>
