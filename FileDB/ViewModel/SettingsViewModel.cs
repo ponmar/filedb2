@@ -80,18 +80,6 @@ public partial class SettingsViewModel : ObservableObject
     [ObservableProperty]
     private CultureInfo? selectedLanguage;
 
-    partial void OnSelectedLanguageChanged(CultureInfo? value)
-    {
-        if (value is not null)
-        {
-            Utils.SetUICulture(value);
-        }
-        else
-        {
-            Utils.SetInvariantUICulture();
-        }
-    }
-
     [ObservableProperty]
     public List<WindowMode> windowModes = Enum.GetValues<WindowMode>().ToList();
 
