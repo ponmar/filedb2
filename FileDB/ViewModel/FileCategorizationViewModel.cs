@@ -83,6 +83,7 @@ public partial class FileCategorizationViewModel : ObservableObject
 
     public bool HasUpdateHistory => UpdateHistoryItems.Count > 0;
 
+    [ObservableProperty]
     private int? prevEditedFileId = null;
 
     public ObservableCollection<PersonToUpdate> Persons { get; } = new();
@@ -201,16 +202,14 @@ public partial class FileCategorizationViewModel : ObservableObject
     {
         if (SelectedFile != null)
         {
-            var fileId = SelectedFile.Id;
             NewFileDescription = NewFileDescription?.Trim().ReplaceLineEndings(FileModelValidator.DescriptionLineEnding);
             var description = NewFileDescription.HasContent() ? NewFileDescription : null;
 
             try
             {
-                dbAccessRepository.DbAccess.UpdateFileDescription(fileId, description);
+                dbAccessRepository.DbAccess.UpdateFileDescription(SelectedFile.Id, description);
                 SelectedFile.Description = description;
-                prevEditedFileId = fileId;
-                Events.Send<FileEdited>();
+                SetEditedFile();
             }
             catch (DataValidationException e)
             {
@@ -219,22 +218,26 @@ public partial class FileCategorizationViewModel : ObservableObject
         }
     }
 
+    private void SetEditedFile()
+    {
+        PrevEditedFileId = SelectedFile!.Id;
+        Events.Send<FileEdited>();
+    }
+
     [RelayCommand]
     private void SetFileDateTime()
     {
         if (SelectedFile != null)
         {
-            var fileId = SelectedFile.Id;
             NewFileDateTime = NewFileDateTime?.Trim();
 
             var dateTime = NewFileDateTime.HasContent() ? NewFileDateTime : null;
 
             try
             {
-                dbAccessRepository.DbAccess.UpdateFileDatetime(fileId, dateTime);
+                dbAccessRepository.DbAccess.UpdateFileDatetime(SelectedFile.Id, dateTime);
                 SelectedFile.Datetime = dateTime;
-                prevEditedFileId = fileId;
-                Events.Send<FileEdited>();
+                SetEditedFile();
             }
             catch (DataValidationException e)
             {
@@ -246,15 +249,8 @@ public partial class FileCategorizationViewModel : ObservableObject
     [RelayCommand]
     private void ReApplyFileMetaData()
     {
-        if (SelectedFile == null)
+        if (SelectedFile == null || PrevEditedFileId == null)
         {
-            dialogs.ShowErrorDialog("No file selected");
-            return;
-        }
-
-        if (prevEditedFileId == null)
-        {
-            dialogs.ShowErrorDialog("Meta-data not edited previously");
             return;
         }
 
@@ -262,11 +258,11 @@ public partial class FileCategorizationViewModel : ObservableObject
 
         try
         {
-            var prevEditedFile = dbAccessRepository.DbAccess.GetFileById(prevEditedFileId.Value)!;
+            var prevEditedFile = dbAccessRepository.DbAccess.GetFileById(PrevEditedFileId.Value)!;
 
-            var prevPersons = dbAccessRepository.DbAccess.GetPersonsFromFile(prevEditedFileId.Value);
-            var prevLocations = dbAccessRepository.DbAccess.GetLocationsFromFile(prevEditedFileId.Value);
-            var prevTags = dbAccessRepository.DbAccess.GetTagsFromFile(prevEditedFileId.Value);
+            var prevPersons = dbAccessRepository.DbAccess.GetPersonsFromFile(PrevEditedFileId.Value);
+            var prevLocations = dbAccessRepository.DbAccess.GetLocationsFromFile(PrevEditedFileId.Value);
+            var prevTags = dbAccessRepository.DbAccess.GetTagsFromFile(PrevEditedFileId.Value);
 
             var persons = dbAccessRepository.DbAccess.GetPersonsFromFile(fileId);
             var locations = dbAccessRepository.DbAccess.GetLocationsFromFile(fileId);
@@ -404,19 +400,10 @@ public partial class FileCategorizationViewModel : ObservableObject
     [RelayCommand]
     private void AddFilePerson()
     {
-        if (SelectedFile == null)
+        if (SelectedFile != null && SelectedPersonToUpdate != null)
         {
-            dialogs.ShowErrorDialog("No file selected");
-            return;
+            AddFilePersonToCurrentFile(SelectedPersonToUpdate.Id);
         }
-
-        if (SelectedPersonToUpdate == null)
-        {
-            dialogs.ShowErrorDialog("No person selected");
-            return;
-        }
-
-        AddFilePersonToCurrentFile(SelectedPersonToUpdate.Id);
     }
 
     private void AddFilePersonToCurrentFile(int personId)
@@ -452,134 +439,86 @@ public partial class FileCategorizationViewModel : ObservableObject
         {
             dbAccessRepository.DbAccess.InsertFilePerson(SelectedFile.Id, personId);
             AddUpdateHistoryItem(UpdateHistoryType.TogglePerson, personId, $"{person.Firstname} {person.Lastname}");
-            prevEditedFileId = SelectedFile.Id;
-            Events.Send<FileEdited>();
+            SetEditedFile();
         }
     }
 
     [RelayCommand]
     private void RemoveFilePerson()
     {
-        if (SelectedFile == null)
+        if (SelectedFile != null && SelectedPersonToUpdate != null)
         {
-            dialogs.ShowErrorDialog("No file selected");
-            return;
+            dbAccessRepository.DbAccess.DeleteFilePerson(SelectedFile.Id, SelectedPersonToUpdate.Id);
+            AddUpdateHistoryItem(UpdateHistoryType.TogglePerson, SelectedPersonToUpdate.Id, SelectedPersonToUpdate.Name);
+            SetEditedFile();
         }
-
-        if (SelectedPersonToUpdate == null)
-        {
-            dialogs.ShowErrorDialog("No person selected");
-            return;
-        }
-
-        dbAccessRepository.DbAccess.DeleteFilePerson(SelectedFile.Id, SelectedPersonToUpdate.Id);
-        AddUpdateHistoryItem(UpdateHistoryType.TogglePerson, SelectedPersonToUpdate.Id, SelectedPersonToUpdate.Name);
-        prevEditedFileId = SelectedFile.Id;
-        Events.Send<FileEdited>();
     }
 
     [RelayCommand]
     private void AddFileLocation()
     {
-        if (SelectedFile == null)
+        if (SelectedFile != null && SelectedLocationToUpdate != null)
         {
-            dialogs.ShowErrorDialog("No file selected");
-            return;
+            AddFileLocationToCurrentFile(SelectedLocationToUpdate);
         }
-
-        if (SelectedLocationToUpdate == null)
-        {
-            dialogs.ShowErrorDialog("No location selected");
-            return;
-        }
-
-        AddFileLocationToCurrentFile(SelectedLocationToUpdate);
     }
 
     private void AddFileLocationToCurrentFile(LocationToUpdate location)
     {
-        var fileId = SelectedFile.Id;
-        if (!dbAccessRepository.DbAccess.GetLocationsFromFile(fileId).Any(l => l.Id == location.Id))
+        if (SelectedFile != null)
         {
-            dbAccessRepository.DbAccess.InsertFileLocation(fileId, location.Id);
-            AddUpdateHistoryItem(UpdateHistoryType.ToggleLocation, location.Id, location.Name);
-            prevEditedFileId = fileId;
-            Events.Send<FileEdited>();
+            var fileId = SelectedFile.Id;
+            if (!dbAccessRepository.DbAccess.GetLocationsFromFile(fileId).Any(l => l.Id == location.Id))
+            {
+                dbAccessRepository.DbAccess.InsertFileLocation(fileId, location.Id);
+                AddUpdateHistoryItem(UpdateHistoryType.ToggleLocation, location.Id, location.Name);
+                SetEditedFile();
+            }
         }
     }
 
     [RelayCommand]
     private void RemoveFileLocation()
     {
-        if (SelectedFile == null)
+        if (SelectedFile != null && SelectedLocationToUpdate != null)
         {
-            dialogs.ShowErrorDialog("No file selected");
-            return;
+            var fileId = SelectedFile.Id;
+            dbAccessRepository.DbAccess.DeleteFileLocation(fileId, SelectedLocationToUpdate.Id);
+            AddUpdateHistoryItem(UpdateHistoryType.ToggleLocation, SelectedLocationToUpdate.Id, SelectedLocationToUpdate.Name);
+            SetEditedFile();
         }
-
-        if (SelectedLocationToUpdate == null)
-        {
-            dialogs.ShowErrorDialog("No location selected");
-            return;
-        }
-
-        var fileId = SelectedFile.Id;
-        dbAccessRepository.DbAccess.DeleteFileLocation(fileId, SelectedLocationToUpdate.Id);
-        AddUpdateHistoryItem(UpdateHistoryType.ToggleLocation, SelectedLocationToUpdate.Id, SelectedLocationToUpdate.Name);
-        prevEditedFileId = fileId;
-        Events.Send<FileEdited>();
     }
 
     [RelayCommand]
     private void AddFileTag()
     {
-        if (SelectedFile == null)
+        if (SelectedFile != null && SelectedTagToUpdate != null)
         {
-            dialogs.ShowErrorDialog("No file selected");
-            return;
+            AddFileTagToCurrentFile(SelectedTagToUpdate);
         }
-
-        if (SelectedTagToUpdate == null)
-        {
-            dialogs.ShowErrorDialog("No tag selected");
-            return;
-        }
-
-        AddFileTagToCurrentFile(SelectedTagToUpdate);
     }
 
     private void AddFileTagToCurrentFile(TagToUpdate tag)
     {
-        var fileId = SelectedFile.Id;
+        var fileId = SelectedFile!.Id;
         if (!dbAccessRepository.DbAccess.GetTagsFromFile(fileId).Any(t => t.Id == tag.Id))
         {
             dbAccessRepository.DbAccess.InsertFileTag(fileId, tag.Id);
             AddUpdateHistoryItem(UpdateHistoryType.ToggleTag, tag.Id, tag.Name);
-            prevEditedFileId = fileId;
-            Events.Send<FileEdited>();
+            SetEditedFile();
         }
     }
 
     [RelayCommand]
     private void RemoveFileTag()
     {
-        if (SelectedFile == null)
+        if (SelectedFile != null && SelectedTagToUpdate != null)
         {
-            dialogs.ShowErrorDialog("No file selected");
-            return;
+            var fileId = SelectedFile.Id;
+            dbAccessRepository.DbAccess.DeleteFileTag(fileId, SelectedTagToUpdate.Id);
+            AddUpdateHistoryItem(UpdateHistoryType.ToggleTag, SelectedTagToUpdate.Id, SelectedTagToUpdate.Name);
+            SetEditedFile();
         }
-
-        if (SelectedTagToUpdate == null)
-        {
-            dialogs.ShowErrorDialog("No tag selected");
-            return;
-        }
-
-        var fileId = SelectedFile.Id;
-        dbAccessRepository.DbAccess.DeleteFileTag(fileId, SelectedTagToUpdate.Id);
-        AddUpdateHistoryItem(UpdateHistoryType.ToggleTag, SelectedTagToUpdate.Id, SelectedTagToUpdate.Name);
-        prevEditedFileId = fileId;
-        Events.Send<FileEdited>();
     }
 
     private void AddUpdateHistoryItem(UpdateHistoryType type, int itemId, string itemName)

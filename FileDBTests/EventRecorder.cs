@@ -24,16 +24,16 @@ public class EventRecorder
         return events.Where(x => x is T).Cast<T>();
     }
 
-    public void AssertEventRecorded<T>(int? numEvents = null)
+    public T AssertEventRecorded<T>()
     {
-        if (numEvents == null)
-        {
-            Assert.IsTrue(events.Any(x => x is T));
-        }
-        else
-        {
-            Assert.AreEqual(numEvents, events.Count(x => x is T));
-        }
+        return AssertEventsRecorded<T>(1).Single();
+    }
+
+    public IEnumerable<T> AssertEventsRecorded<T>(int numEvents)
+    {
+        var matchingEvents = events.OfType<T>();
+        Assert.AreEqual(numEvents, events.Count);
+        return matchingEvents;
     }
 
     public void AssertNoEventsRecorded()
@@ -49,8 +49,13 @@ public class SingleEventRecorder<T> : EventRecorder where T : class
         Record<T>();
     }
 
-    public void AssertEventRecorded(int? numEvents = null)
+    public T AssertEventRecorded()
     {
-        AssertEventRecorded<T>(numEvents);
+        return AssertEventsRecorded<T>(1).Single();
+    }
+
+    public IEnumerable<T> AssertEventsRecorded(int numEvents)
+    {
+        return AssertEventsRecorded<T>(numEvents);
     }
 }
