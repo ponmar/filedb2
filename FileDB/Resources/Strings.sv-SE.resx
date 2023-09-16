@@ -826,7 +826,7 @@
     <value>Påminnelse om säkerhetskopiering (månadsvis)</value>
   </data>
   <data name="SettingsNumberOfSearchResultImagesToPreloadLabel" xml:space="preserve">
-    <value>Antal sökresultatbilder som ska förladdas</value>
+    <value>Antal sökresultatbilder som ska förladdas:</value>
   </data>
   <data name="SettingsNumberOfLoadedImagesToKeepInMemoryLabel" xml:space="preserve">
     <value>Antal laddade bilder att spara i minnet:</value>
@@ -1112,5 +1112,11 @@
   </data>
   <data name="WindowModeFullscreen" xml:space="preserve">
     <value>Helskärmsfönster</value>
+  </data>
+  <data name="CategorizationMarkButton" xml:space="preserve">
+    <value>Markera</value>
+  </data>
+  <data name="CategorizationMarkButtonToolTip" xml:space="preserve">
+    <value>Markera denna fil för att användas som den senaste editerade filen</value>
   </data>
 </root>

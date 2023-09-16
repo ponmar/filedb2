@@ -1113,4 +1113,10 @@
   <data name="WindowModeFullscreen" xml:space="preserve">
     <value>Fullscreen window</value>
   </data>
+  <data name="CategorizationMarkButton" xml:space="preserve">
+    <value>Mark</value>
+  </data>
+  <data name="CategorizationMarkButtonToolTip" xml:space="preserve">
+    <value>Mark this file to be used as last edited file</value>
+  </data>
 </root>

@@ -297,6 +297,15 @@ public partial class FileCategorizationViewModel : ObservableObject
     }
 
     [RelayCommand]
+    private void MarkPrevEditedFile()
+    {
+        if (SelectedFile != null)
+        {
+            PrevEditedFileId = SelectedFile.Id;
+        }
+    }
+
+    [RelayCommand]
     private void RotateFileClockwise()
     {
         RotateFile(RotationDirection.Clockwise);

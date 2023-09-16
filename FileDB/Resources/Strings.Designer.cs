@@ -619,6 +619,24 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mark.
+        /// </summary>
+        public static string CategorizationMarkButton {
+            get {
+                return ResourceManager.GetString("CategorizationMarkButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mark this file to be used as last edited file.
+        /// </summary>
+        public static string CategorizationMarkButtonToolTip {
+            get {
+                return ResourceManager.GetString("CategorizationMarkButtonToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New....
         /// </summary>
         public static string CategorizationNewButton {
