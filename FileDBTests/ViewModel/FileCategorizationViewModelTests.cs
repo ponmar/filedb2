@@ -45,6 +45,7 @@ public class FileCategorizationViewModelTests
         A.CallTo(() => tagsRepository.Tags).Returns(tags);
 
         eventRecorder.Reset();
+        eventRecorder.Record<FileEdited>();
     }
 
     [TestMethod]
@@ -138,8 +139,6 @@ public class FileCategorizationViewModelTests
     [TestMethod]
     public void SetFileDescription()
     {
-        eventRecorder.Record<FileEdited>();
-
         var viewModel = CreateViewModel();
 
         var editedFileId = 1;

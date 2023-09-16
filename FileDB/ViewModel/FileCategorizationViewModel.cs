@@ -15,6 +15,7 @@ public partial class FileCategorizationViewModel : ObservableObject
 {
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(FileSelected))]
+    [NotifyPropertyChangedFor(nameof(CanApplyMetaDataFromPrevEdit))]
     private FileModel? selectedFile;
 
     public bool FileSelected => SelectedFile != null;
@@ -84,7 +85,10 @@ public partial class FileCategorizationViewModel : ObservableObject
     public bool HasUpdateHistory => UpdateHistoryItems.Count > 0;
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(CanApplyMetaDataFromPrevEdit))]
     private int? prevEditedFileId = null;
+
+    public bool CanApplyMetaDataFromPrevEdit => SelectedFile != null && PrevEditedFileId != null;
 
     public ObservableCollection<PersonToUpdate> Persons { get; } = new();
     public ObservableCollection<LocationToUpdate> Locations { get; } = new();
@@ -247,7 +251,7 @@ public partial class FileCategorizationViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void ReApplyFileMetaData()
+    private void AddMetaDataFromPrevEditedFile()
     {
         if (SelectedFile == null || PrevEditedFileId == null)
         {

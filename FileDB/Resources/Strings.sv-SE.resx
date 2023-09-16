@@ -1048,7 +1048,7 @@
     <value>Ställ in fildatum &amp;amp; tid</value>
   </data>
   <data name="CategorizationApplyMetaDataFromLastEditButton" xml:space="preserve">
-    <value>Tillämpa metadata från senaste förändring</value>
+    <value>Lägg till metadata från den senaste editerade filen</value>
   </data>
   <data name="CategorizationApplyMetaDataFromLastEditToolTip" xml:space="preserve">
     <value>Tillämpa metadata (personer, platser, etiketter och beskrivning) från senaste förändringen</value>

@@ -547,7 +547,7 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Apply meta-data from last edit.
+        ///   Looks up a localized string similar to Add meta-data from last edited file.
         /// </summary>
         public static string CategorizationApplyMetaDataFromLastEditButton {
             get {

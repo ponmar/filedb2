@@ -1048,7 +1048,7 @@
     <value>Set file date &amp;amp; time</value>
   </data>
   <data name="CategorizationApplyMetaDataFromLastEditButton" xml:space="preserve">
-    <value>Apply meta-data from last edit</value>
+    <value>Add meta-data from last edited file</value>
   </data>
   <data name="CategorizationApplyMetaDataFromLastEditToolTip" xml:space="preserve">
     <value>Apply meta-data (persons, locations, tags and description) from last edit</value>
