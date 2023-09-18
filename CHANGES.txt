@@ -1,3 +1,8 @@
+3.15:
+* Add button for marking selected file to be used when adding metadata from last edited file
+* Enable "apply metadata from last edited file"-button only when it can be performed
+* Fix search by text in file update comboboxes
+
 3.14:
 * Add button that toggles file description speech when browsing files
 * Add multi language support (English and Swedish are currently included)
