@@ -37,7 +37,7 @@
                     </Grid.RowDefinitions>
 
                     <TextBlock Style="{StaticResource PageInnerTextBlock}" Grid.Row="0" Grid.Column="0" Text="&#x1F642;" VerticalAlignment="Center" Margin="5" ToolTip="Person"/>
-                    <ComboBox Style="{StaticResource PageInnerComboBox}" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Persons}" VerticalAlignment="Center" SelectedItem="{Binding SelectedPersonToUpdate}">
+                    <ComboBox Style="{StaticResource PageInnerComboBox}" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Persons}" VerticalAlignment="Center" SelectedItem="{Binding SelectedPersonToUpdate}" TextSearch.TextPath="Name">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding ShortName}" ToolTip="{Binding Name}"/>
@@ -49,7 +49,7 @@
                     <Button Grid.Row="0" Grid.Column="4" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding CreatePersonCommand}" ToolTip="{x:Static rs:Strings.CategorizationCreateANewPersonAndAddItToCurrentFileToolTip}" Content="{x:Static rs:Strings.CategorizationNewButton}"/>
 
                     <TextBlock Style="{StaticResource PageInnerTextBlock}" Grid.Row="1" Grid.Column="0" Text="&#x1F3E0;" VerticalAlignment="Center" Margin="5" ToolTip="Location"/>
-                    <ComboBox Style="{StaticResource PageInnerComboBox}" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Locations}" VerticalAlignment="Center" SelectedItem="{Binding SelectedLocationToUpdate}">
+                    <ComboBox Style="{StaticResource PageInnerComboBox}" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Locations}" VerticalAlignment="Center" SelectedItem="{Binding SelectedLocationToUpdate}" TextSearch.TextPath="Name">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding ShortName}" ToolTip="{Binding Name}"/>
@@ -61,7 +61,7 @@
                     <Button Grid.Row="1" Grid.Column="4" Margin="5" Style="{StaticResource NormalButton}" Command="{Binding CreateLocationCommand}" ToolTip="{x:Static rs:Strings.CategorizationCreateANewLocationAndAddItToCurrentFileToolTip}" Content="{x:Static rs:Strings.CategorizationNewButton}"/>
 
                     <TextBlock Style="{StaticResource PageInnerTextBlock}" Grid.Row="2" Grid.Column="0" Text="&#x1F516;" VerticalAlignment="Center" Margin="5" ToolTip="Tag"/>
-                    <ComboBox Style="{StaticResource PageInnerComboBox}" Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Tags}" VerticalAlignment="Center" SelectedItem="{Binding SelectedTagToUpdate}">
+                    <ComboBox Style="{StaticResource PageInnerComboBox}" Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Tags}" VerticalAlignment="Center" SelectedItem="{Binding SelectedTagToUpdate}" TextSearch.TextPath="Name">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding ShortName}" ToolTip="{Binding Name}"/>
