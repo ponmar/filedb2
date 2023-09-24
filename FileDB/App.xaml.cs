@@ -55,17 +55,20 @@ namespace FileDB
                 return;
             }
 
-            if (!File.Exists(configPath))
-            {
-                dialogs.ShowErrorDialog($"Specified FileDB config file does not exist: {configPath}");
-                Shutdown();
-                return;
-            }
-
             var fileSystem = ServiceLocator.Resolve<IFileSystem>();
-            var config = configPath.FromJson<Config>(fileSystem);
 
-            config = new ConfigMigrator().Migrate(config, DefaultConfigs.Default);
+            Config config;
+            if (fileSystem.File.Exists(configPath))
+            {
+                config = configPath.FromJson<Config>(fileSystem);
+                config = new ConfigMigrator().Migrate(config, DefaultConfigs.Default);
+            }
+            else
+            {
+                // Note: new config is stored when manually saved
+                config = DefaultConfigs.Default;
+            }            
+
             SetUiCulture(config.Language);
 
             var validator = new ConfigValidator();
