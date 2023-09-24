@@ -76,7 +76,7 @@ public partial class ToolsViewModel : ObservableObject
     {
         try
         {
-            new DatabaseBackup(configRepository, fileSystem).CreateBackup();
+            new DatabaseBackup(fileSystem, configRepository).CreateBackup();
             BackupResult = "Backup created.";
             ScanBackupFiles();
         }
@@ -87,21 +87,13 @@ public partial class ToolsViewModel : ObservableObject
         }
     }
 
-    [RelayCommand]
-    private void OpenDatabaseBackupDirectory()
-    {
-        Utils.OpenDirectoryInExplorer(new DatabaseBackup(configRepository, fileSystem).BackupDirectory);
-    }
-
     private void ScanBackupFiles()
     {
         BackupFiles.Clear();
 
-        var backupHandler = new DatabaseBackup(configRepository, fileSystem);
-
-        if (Directory.Exists(backupHandler.BackupDirectory))
+        if (Directory.Exists(configRepository.FilePaths.FilesRootDir))
         {
-            foreach (var backupFile in backupHandler.ListAvailableBackupFiles())
+            foreach (var backupFile in new DatabaseBackup(fileSystem, configRepository).ListAvailableBackupFiles())
             {
                 BackupFiles.Add(backupFile);
             }

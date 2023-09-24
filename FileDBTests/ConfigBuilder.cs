@@ -4,9 +4,6 @@ namespace FileDBTests;
 
 public class ConfigBuilder
 {
-    public string Name { get; init; }
-    public string Database { get; init; }
-    public string FilesRootDirectory { get; init; }
     public int FileToLocationMaxDistance { get; init; }
     public string BlacklistedFilePathPatterns { get; init; }
     public string WhitelistedFilePathPatterns { get; init; }
@@ -33,9 +30,6 @@ public class ConfigBuilder
     public Config Build()
     {
         return new(
-            Name,
-            Database,
-            FilesRootDirectory,
             FileToLocationMaxDistance,
             BlacklistedFilePathPatterns,
             WhitelistedFilePathPatterns,

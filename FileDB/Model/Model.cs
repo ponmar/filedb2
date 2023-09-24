@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.Abstractions;
 using System.Windows.Threading;
 using FileDB.Configuration;
+using FileDB.Extensions;
 using FileDB.Notifiers;
 using FileDBInterface.DbAccess;
 using FileDBInterface.FilesystemAccess;
@@ -31,25 +33,30 @@ public interface IFilesystemAccessRepository
 
 public interface IConfigRepository
 {
+    ApplicationFilePaths FilePaths { get; }
     Config Config { get; }
 }
 
 public interface IConfigUpdater
 {
-    void InitConfig(Config config, IDbAccess dbAccess, IFilesystemAccess filesystemAccess, INotifierFactory notifierFactory);
+    void InitConfig(ApplicationFilePaths applicationFilePaths, Config config, IDbAccess dbAccess, IFilesystemAccess filesystemAccess, INotifierFactory notifierFactory);
     void UpdateConfig(Config config);
 }
+
+public record ApplicationFilePaths(string FilesRootDir, string ConfigPath, string DatabasePath);
 
 public class Model : INotificationHandling, INotificationsRepository, IConfigRepository, IConfigUpdater, IDbAccessRepository, IFilesystemAccessRepository
 {
     public IDbAccess DbAccess { get; private set; }
     public IFilesystemAccess FilesystemAccess { get; private set; }
     public INotifierFactory NotifierFactory { get; private set; }
+    public ApplicationFilePaths FilePaths { get; private set; }
 
     private DateTime date = DateTime.Now;
 
-    public IEnumerable<Notification> Notifications => notifications;
+    public Config Config { get; private set; }
 
+    public IEnumerable<Notification> Notifications => notifications;
     private readonly List<Notification> notifications = new();
 
     public Model()
@@ -64,6 +71,7 @@ public class Model : INotificationHandling, INotificationsRepository, IConfigRep
 
     private void DateCheckerTimer_Tick(object? sender, EventArgs e)
     {
+        // TODO: move to a DateObserver class
         var now = DateTime.Now;
         if (date.Date != now.Date)
         {
@@ -93,10 +101,9 @@ public class Model : INotificationHandling, INotificationsRepository, IConfigRep
         }
     }
 
-    public Config Config { get; private set; }
-
-    public void InitConfig(Config config, IDbAccess dbAccess, IFilesystemAccess filesystemAccess, INotifierFactory notifierFactory)
+    public void InitConfig(ApplicationFilePaths filePaths, Config config, IDbAccess dbAccess, IFilesystemAccess filesystemAccess, INotifierFactory notifierFactory)
     {
+        FilePaths = filePaths;
         Config = config;
         DbAccess = dbAccess;
         FilesystemAccess = filesystemAccess;
@@ -107,8 +114,6 @@ public class Model : INotificationHandling, INotificationsRepository, IConfigRep
     public void UpdateConfig(Config config)
     {
         Config = config;
-        DbAccess.Database = config.Database;
-        FilesystemAccess.FilesRootDirectory = config.FilesRootDirectory;
         Events.Send<ConfigUpdated>();
     }
 }

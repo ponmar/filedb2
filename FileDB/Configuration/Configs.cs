@@ -1,11 +1,6 @@
-﻿using System.IO;
-
-namespace FileDB.Configuration;
+﻿namespace FileDB.Configuration;
 
 public record Config(
-    string Name,
-    string Database,
-    string FilesRootDirectory,
     int FileToLocationMaxDistance,
     string BlacklistedFilePathPatterns,
     string WhitelistedFilePathPatterns,
@@ -32,10 +27,7 @@ public record Config(
 public static class DefaultConfigs
 {
     public static Config Default =>
-        new(Name: "Default",
-            Database: "filedb.db",
-            FilesRootDirectory: "files",
-            FileToLocationMaxDistance: 300,
+        new(FileToLocationMaxDistance: 300,
             BlacklistedFilePathPatterns: "Thumbs.db;filedb.db;unsorted;TN_",
             WhitelistedFilePathPatterns: ".jpg;.png;.bmp;.gif;.avi;.mpg;.mp4;.mkv;.mov;.pdf",
             IncludeHiddenDirectories: false,
@@ -57,31 +49,4 @@ public static class DefaultConfigs
             OverlayTextSizeLarge: 24,
             ShortItemNameMaxLength: 15,
             Language: null);
-
-    public static Config CreateDemo() =>
-        new("Demo",
-            Path.Combine(Directory.GetCurrentDirectory(), @"demo\filedb.db"),
-            Path.Combine(Directory.GetCurrentDirectory(), @"demo\files"),
-            Default.FileToLocationMaxDistance,
-            Default.BlacklistedFilePathPatterns,
-            Default.WhitelistedFilePathPatterns,
-            Default.IncludeHiddenDirectories,
-            Default.SlideshowDelay,
-            Default.SearchHistorySize,
-            Default.DefaultSortMethod,
-            Default.KeepSelectionAfterSort,
-            Default.ReadOnly,
-            BackupReminder: false,
-            Default.BirthdayReminder,
-            Default.BirthdayReminderForDeceased,
-            Default.RipReminder,
-            Default.MissingFilesRootDirNotification,
-            Default.LocationLink,
-            Default.WindowMode,
-            Default.ImageMemoryCacheCount,
-            Default.NumImagesToPreload,
-            Default.OverlayTextSize,
-            Default.OverlayTextSizeLarge,
-            Default.ShortItemNameMaxLength,
-            Default.Language); // "sv-SE"
 }

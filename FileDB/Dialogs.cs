@@ -17,6 +17,7 @@ public interface IDialogs
     void ShowInfoDialog(string message);
     void ShowWarningDialog(string message);
     void ShowErrorDialog(string message);
+    void ShowErrorDialog(string message, Exception e);
     void ShowErrorDialog(IEnumerable<string> messages);
     void ShowErrorDialog(ValidationResult validationResult);
     bool ShowConfirmDialog(string question);
@@ -47,6 +48,11 @@ public class Dialogs : IDialogs
     public void ShowErrorDialog(string message)
     {
         MessageBox.Show(message, Utils.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.No);
+    }
+
+    public void ShowErrorDialog(string message, Exception e)
+    {
+        MessageBox.Show($"{message}\n\nException: {e.Message}", Utils.ApplicationName, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.No);
     }
 
     public void ShowErrorDialog(IEnumerable<string> messages)

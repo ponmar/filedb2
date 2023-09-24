@@ -13,20 +13,6 @@ public class ConfigValidator : AbstractValidator<Config>
 {
     public ConfigValidator()
     {
-        RuleFor(c => c.Name).Cascade(CascadeMode.Stop)
-            .NotNull().WithMessage("{PropertyName} is null")
-            .NotEmpty().WithMessage("{PropertyName} is empty")
-            .Length(3, 100).WithMessage("{PropertyName} length is invalid");
-
-        RuleFor(c => c.Database).Cascade(CascadeMode.Stop)
-            .NotNull().WithMessage("{PropertyName} is null")
-            .Must(x => x.EndsWith(".db")).WithMessage("Invalid database file extension")
-            .Must(x => Path.IsPathFullyQualified(x)).WithMessage("Database path is not absolute");
-
-        RuleFor(c => c.FilesRootDirectory).Cascade(CascadeMode.Stop)
-            .NotNull().WithMessage("{PropertyName} is null")
-            .Must(x => Path.IsPathFullyQualified(x)).WithMessage("Files root directory path is not absolute");
-
         RuleFor(c => c.FileToLocationMaxDistance)
             .GreaterThanOrEqualTo(0).WithMessage("Invalid file to location max distance");
 

@@ -43,12 +43,9 @@ public class NotifierFactory : INotifierFactory
 
         if (config.BackupReminder)
         {
-            notifiers.Add(new BackupNotifier(new DatabaseBackup(ServiceLocator.Resolve<IConfigRepository>(), ServiceLocator.Resolve<IFileSystem>()).ListAvailableBackupFiles(), 30));
-        }
-
-        if (config.MissingFilesRootDirNotification)
-        {
-            notifiers.Add(new MissingFilesRootDirNotifier(config.FilesRootDirectory));
+            notifiers.Add(new BackupNotifier(new DatabaseBackup(
+                ServiceLocator.Resolve<IFileSystem>(),
+                ServiceLocator.Resolve<IConfigRepository>()).ListAvailableBackupFiles(), 30));
         }
 
         return notifiers;

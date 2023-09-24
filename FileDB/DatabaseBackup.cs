@@ -1,4 +1,5 @@
 ﻿using FileDB.Model;
+using FileDBInterface.DbAccess;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -23,30 +24,27 @@ public class BackupFile
 
 public class DatabaseBackup
 {
-    public string BackupDirectory { get; }
-
     private const string BackupFileTimestampFormat = "yyyy-MM-ddTHHmmss";
 
-    private readonly IConfigRepository configRepository;
     private readonly IFileSystem fileSystem;
+    private readonly IConfigRepository configRepository;
 
-    public DatabaseBackup(IConfigRepository configRepository, IFileSystem fileSystem)
+    public DatabaseBackup(IFileSystem fileSystem, IConfigRepository configRepository)
     {
-        this.configRepository = configRepository;
         this.fileSystem = fileSystem;
-        BackupDirectory = Path.GetDirectoryName(configRepository.Config.Database)!;
+        this.configRepository = configRepository;
     }
 
     public List<BackupFile> ListAvailableBackupFiles()
     {
         var backupFiles = new List<BackupFile>();
 
-        foreach (var filePath in fileSystem.Directory.GetFiles(BackupDirectory, "backup_*.db"))
+        foreach (var filePath in fileSystem.Directory.GetFiles(configRepository.FilePaths.FilesRootDir, "backup_*.db"))
         {
             var filenameParts = filePath.Split("_");
             if (filenameParts.Length >= 2)
             {
-                var timestampString = filenameParts[filenameParts.Length - 1].Replace(".db", "");
+                var timestampString = filenameParts[^1].Replace(".db", "");
                 try
                 {
                     var timestamp = DateTime.ParseExact(timestampString, BackupFileTimestampFormat, null);
@@ -63,7 +61,7 @@ public class DatabaseBackup
 
     public void CreateBackup()
     {
-        var db = configRepository.Config.Database;
+        var db = configRepository.FilePaths.DatabasePath;
         if (!fileSystem.File.Exists(db))
         {
             throw new IOException($"Database to backup does not exist: {db}");

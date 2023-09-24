@@ -7,6 +7,7 @@ using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Configuration;
+using FileDB.Extensions;
 using FileDB.Model;
 using FileDB.Validators;
 
@@ -14,15 +15,6 @@ namespace FileDB.ViewModel;
 
 public partial class SettingsViewModel : ObservableObject
 {
-    [ObservableProperty]
-    private string configName = string.Empty;
-
-    [ObservableProperty]
-    private string database = string.Empty;
-
-    [ObservableProperty]
-    private string filesRootDirectory = string.Empty;
-
     [ObservableProperty]
     private int slideshowDelay;
 
@@ -233,12 +225,14 @@ public partial class SettingsViewModel : ObservableObject
     private readonly IConfigRepository configRepository;
     private readonly IConfigUpdater configUpdater;
     private readonly IDialogs dialogs;
+    private readonly IFileSystem fileSystem;
 
-    public SettingsViewModel(IConfigRepository configRepository, IConfigUpdater configUpdater, IDialogs dialogs)
+    public SettingsViewModel(IConfigRepository configRepository, IConfigUpdater configUpdater, IDialogs dialogs, IFileSystem fileSystem)
     {
         this.configRepository = configRepository;
         this.configUpdater = configUpdater;
         this.dialogs = dialogs;
+        this.fileSystem = fileSystem;
 
         languages.Add(CultureInfo.GetCultureInfo("en"));
         languages.Add(CultureInfo.GetCultureInfo("sv-SE"));
@@ -250,9 +244,6 @@ public partial class SettingsViewModel : ObservableObject
     {
         var config = configRepository.Config;
 
-        ConfigName = config.Name;
-        Database = config.Database;
-        FilesRootDirectory = config.FilesRootDirectory;
         SlideshowDelay = config.SlideshowDelay;
         SearchHistorySize = config.SearchHistorySize;
         DefaultSortMethod = config.DefaultSortMethod;
@@ -287,9 +278,6 @@ public partial class SettingsViewModel : ObservableObject
     private void SaveConfiguration()
     {
         var configToSave = new Config(
-            ConfigName,
-            Database,
-            FilesRootDirectory,
             FileToLocationMaxDistance,
             BlacklistedFilePathPatterns,
             WhitelistedFilePathPatterns,
@@ -320,52 +308,23 @@ public partial class SettingsViewModel : ObservableObject
             return;
         }
 
-        var appDataConfig = new AppDataConfig<Config>(Utils.ApplicationName, ServiceLocator.Resolve<IFileSystem>());
-
-        if (!dialogs.ShowConfirmDialog($"Write your configuration to {appDataConfig.FilePath}?"))
+        if (!dialogs.ShowConfirmDialog($"Save configuration?"))
         {
             return;
         }
 
-        Utils.BackupFile(appDataConfig.FilePath);
-
-        if (appDataConfig.Write(configToSave))
+        try
         {
+            var configPath = configRepository.FilePaths.ConfigPath;
+            Utils.BackupFile(configPath);
+            var json = configToSave.ToJson();
+            fileSystem.File.WriteAllText(configPath, json);
+
             configUpdater.UpdateConfig(configToSave);
         }
-        else
+        catch (Exception e)
         {
-            dialogs.ShowErrorDialog("Unable to save configuration");
-        }
-    }
-
-    [RelayCommand]
-    private void BrowseDatabase()
-    {
-        var result = dialogs.BrowseExistingFileDialog(@"c:\", $"{Utils.ApplicationName} database files (*.db)|*.db");
-        if (result != null)
-        {
-            Database = result;
-        }
-    }
-
-    [RelayCommand]
-    private void BrowseFilesRootDirectory()
-    {
-        var result = dialogs.BrowseExistingDirectory(@"c:\", "Select your files root directory");
-        if (result != null)
-        {
-            FilesRootDirectory = result;
-        }
-    }
-
-    [RelayCommand]
-    public void CreateDatabase()
-    {
-        var createdDatabasePath = dialogs.ShowCreateDatabaseDialog();
-        if (createdDatabasePath != null)
-        {
-            Database = createdDatabasePath;
+            dialogs.ShowErrorDialog("Unable to save configuration", e);
         }
     }
 }

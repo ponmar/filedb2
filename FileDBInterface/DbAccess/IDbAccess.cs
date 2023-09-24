@@ -2,5 +2,5 @@
 
 public interface IDbAccess : IPersonAccess, ILocationAccess, ITagAccess, IFilesAccess
 {
-    string Database { get; set; }
+    string Database { get; }
 }

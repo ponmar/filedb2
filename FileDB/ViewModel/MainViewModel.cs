@@ -21,11 +21,7 @@ public partial class MainViewModel : ObservableObject
     {
         get
         {
-            var title = $"{Utils.ApplicationName} {Utils.GetVersionString()}";
-            if (configRepository.Config.Name.HasContent())
-            {
-                title += $" [{configRepository.Config.Name}]";
-            }
+            var title = $"{Utils.ApplicationName} {Utils.GetVersionString()} - {configRepository.FilePaths.ConfigPath}";
             if (!ReadWriteMode)
             {
                 title += " (read only)";

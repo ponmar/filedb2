@@ -29,10 +29,7 @@
                             <TextBlock Style="{StaticResource PageWarning}" Text="&#x26A0;"/>
                             <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="{x:Static rs:Strings.ToolsDatabaseBackupWarning2}"/>
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding CreateBackupCommand}" HorizontalAlignment="Left" Content="{x:Static rs:Strings.ToolsRunButton}"/>
-                            <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding OpenDatabaseBackupDirectoryCommand}" HorizontalAlignment="Left" Content="{x:Static rs:Strings.ToolsDatabaseBackupOpenDatabaseBackupDirectoryButton}"/>
-                        </StackPanel>
+                        <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding CreateBackupCommand}" HorizontalAlignment="Left" Content="{x:Static rs:Strings.ToolsRunButton}"/>
                         <TextBlock Style="{StaticResource PageTextBlock}" Text="{Binding BackupResult}"/>
                         <TextBlock Style="{StaticResource PageTextBlock}" Text="{Binding BackupListHeader}"/>
                         <ListBox Visibility="{Binding BackupFiles, Converter={StaticResource EnumerationToVisibilityConverter}}" Margin="10" ItemsSource="{Binding BackupFiles}" HorizontalAlignment="Left" MaxHeight="150">

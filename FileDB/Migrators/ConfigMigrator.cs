@@ -7,9 +7,6 @@ public class ConfigMigrator : IMigrator<Config>
     public Config Migrate(Config config, Config defaultValues)
     {
         return new Config(
-            config.Name,
-            config.Database,
-            config.FilesRootDirectory,
             config.FileToLocationMaxDistance,
             config.BlacklistedFilePathPatterns,
             config.WhitelistedFilePathPatterns,

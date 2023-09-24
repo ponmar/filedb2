@@ -1,5 +1,5 @@
-﻿using FileDBShared.FileFormats;
-using Newtonsoft.Json;
+﻿using FileDB.Extensions;
+using FileDBShared.FileFormats;
 using System.IO;
 
 namespace FileDB.Export;
@@ -8,7 +8,7 @@ public class SearchResultJsonExporter : ISearchResultExporter
 {
     public void Export(SearchResultExport data, string filename)
     {
-        var json = JsonConvert.SerializeObject(data, Formatting.Indented);
+        var json = data.ToFormattedJson();
         File.WriteAllText(filename, json);
     }
 }

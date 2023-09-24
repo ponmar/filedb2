@@ -19,30 +19,6 @@ public class ConfigValidatorTests
     }
 
     [TestMethod]
-    public void Validate_NameEmpty_Error()
-    {
-        var config = new ConfigBuilder() { Name = "" }.Build();
-        var result = validator.TestValidate(config);
-        result.ShouldHaveValidationErrorFor(x => x.Name);
-    }
-
-    [TestMethod]
-    public void Validate_DatabaseEmpty_Error()
-    {
-        var config = new ConfigBuilder() { Database = "" }.Build();
-        var result = validator.TestValidate(config);
-        result.ShouldHaveValidationErrorFor(x => x.Database);
-    }
-
-    [TestMethod]
-    public void Validate_FilesRootDirectoryEmpty_Error()
-    {
-        var config = new ConfigBuilder() { FilesRootDirectory = "" }.Build();
-        var result = validator.TestValidate(config);
-        result.ShouldHaveValidationErrorFor(x => x.FilesRootDirectory);
-    }
-
-    [TestMethod]
     public void Validate_FileToLocationMaxDistanceNegative_Error()
     {
         var config = new ConfigBuilder() { FileToLocationMaxDistance = -1 }.Build();

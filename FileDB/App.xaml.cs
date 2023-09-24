@@ -6,7 +6,6 @@ using FileDB.Migrators;
 using FileDB.Notifiers;
 using FileDB.Validators;
 using FileDBInterface.DbAccess.SQLite;
-using FileDBInterface.DbAccess;
 using FileDBInterface.FilesystemAccess;
 using TextCopy;
 using System.Collections.Generic;
@@ -14,6 +13,8 @@ using FileDB.Model;
 using System.IO.Abstractions;
 using FileDB.Resources;
 using System.Globalization;
+using System.IO;
+using FileDB.Extensions;
 
 namespace FileDB
 {
@@ -22,7 +23,7 @@ namespace FileDB
     /// </summary>
     public partial class App : Application
     {
-        private const string DemoCommandLineArgument = "--demo";
+        private const string ConfigFileExtension = ".FileDB";
 
         private void Application_Startup(object sender, StartupEventArgs startupEventArgs)
         {
@@ -31,64 +32,75 @@ namespace FileDB
             // Needed to fix sorting with Swedish characters right in comboboxes and datagrids
             Utils.SetCulture(CultureInfo.GetCultureInfo("sv-SE"));
 
-            var appDataConfig = new AppDataConfig<Config>(Utils.ApplicationName, ServiceLocator.Resolve<IFileSystem>());
+            var dialogs = ServiceLocator.Resolve<IDialogs>();
 
-            var configUpdater = ServiceLocator.Resolve<IConfigUpdater>();
-            Config config;
-
-            var notifications = new List<Notification>();
-
-            var demoModeEnabled = startupEventArgs.Args.Contains(DemoCommandLineArgument);
-            if (demoModeEnabled)
+            if (startupEventArgs.Args.Length != 1)
             {
-                config = DefaultConfigs.CreateDemo();
-                SetUiCulture(config.Language);
-                notifications.Add(new(NotificationType.Info, Strings.StartupNotificationDemoConfigurationEnabled, DateTime.Now));
-            }
-            else if (!appDataConfig.FileExists())
-            {
-                config = DefaultConfigs.CreateDemo();
-                SetUiCulture(config.Language);
-                notifications.Add(new(NotificationType.Warning, string.Format(Strings.StartupNotificationNoConfigurationFile, Utils.ApplicationName), DateTime.Now));
-            }
-            else
-            {
-                config = appDataConfig.Read() ?? DefaultConfigs.Default;
-                config = new ConfigMigrator().Migrate(config, DefaultConfigs.Default);
-                SetUiCulture(config.Language);
-
-                var validator = new ConfigValidator();
-                var result = validator.Validate(config);
-                if (!result.IsValid)
-                {
-                    notifications.Add(new(NotificationType.Error, Strings.StartupNotificationConfigurationNotValid, DateTime.Now));
-                    var dialogs = ServiceLocator.Resolve<IDialogs>();
-                    dialogs.ShowErrorDialog(result);
-                }
+                dialogs.ShowErrorDialog("No files collection selected - use a command line argument");
+                Shutdown();
+                return;
             }
 
-            IDbAccess dbAccess;
-            try
+            var configPath = startupEventArgs.Args.First();
+            var filesRootDirectory = Path.GetDirectoryName(configPath)!;
+            var databaseFilename = Path.GetFileNameWithoutExtension(configPath) + ".db";
+            var databasePath = Path.Combine(filesRootDirectory, databaseFilename);
+            var applicationFilePaths = new ApplicationFilePaths(filesRootDirectory, configPath, databasePath);
+
+            if (!configPath.EndsWith(ConfigFileExtension))
             {
-                dbAccess = new SqLiteDbAccess(config.Database);
+                dialogs.ShowErrorDialog($"Command line argument ({configPath}) does not have file extension FileDB");
+                Shutdown();
+                return;
             }
-            catch (Exception e)
+
+            if (!File.Exists(configPath))
             {
-                notifications.Add(new Notification(NotificationType.Error, e.Message, DateTime.Now));
-                dbAccess = new NoDbAccess();
+                dialogs.ShowErrorDialog($"Specified FileDB config file does not exist: {configPath}");
+                Shutdown();
+                return;
+            }
+
+            if (!File.Exists(databasePath))
+            {
+                dialogs.ShowErrorDialog($"No such database: {databasePath}");
+                Shutdown();
+                return;
             }
 
             var fileSystem = ServiceLocator.Resolve<IFileSystem>();
-            var filesystemAccess = new FilesystemAccess(fileSystem) { FilesRootDirectory = config.FilesRootDirectory };
+            var config = configPath.FromJson<Config>(fileSystem);
+
+            config = new ConfigMigrator().Migrate(config, DefaultConfigs.Default);
+            SetUiCulture(config.Language);
+
+            var validator = new ConfigValidator();
+            var result = validator.Validate(config);
+            if (!result.IsValid)
+            {
+                dialogs.ShowErrorDialog(result);
+                Shutdown();
+                return;
+            }
+
+            var notifications = new List<Notification>();
+            if (filesRootDirectory.EndsWith("demo"))
+            {
+                notifications.Add(new(NotificationType.Info, Strings.StartupNotificationDemoConfigurationEnabled, DateTime.Now));
+            }
+
+            var dbAccess = new SqLiteDbAccess(databasePath);
+            var filesystemAccess = new FilesystemAccess(fileSystem) { FilesRootDirectory = filesRootDirectory };
             var notifierFactory = new NotifierFactory();
 
-            configUpdater.InitConfig(config, dbAccess, filesystemAccess, notifierFactory);
+            var configUpdater = ServiceLocator.Resolve<IConfigUpdater>();
+            configUpdater.InitConfig(applicationFilePaths, config, dbAccess, filesystemAccess, notifierFactory);
 
             var notificationsHandling = ServiceLocator.Resolve<INotificationHandling>();
             notifications.ForEach(notificationsHandling.AddNotification);
         }
 
-        private void SetUiCulture(string? culture)
+        private static void SetUiCulture(string? culture)
         {
             // Note: system UI culture will be used as default when no culture specified
             if (culture is not null)
