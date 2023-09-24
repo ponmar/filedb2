@@ -16,13 +16,22 @@ namespace FileDB.ViewModel;
 public partial class SettingsViewModel : ObservableObject
 {
     [ObservableProperty]
+    private bool isDirty;
+
+    [ObservableProperty]
     private int slideshowDelay;
+
+    partial void OnSlideshowDelayChanged(int value) => IsDirty = true;
 
     [ObservableProperty]
     private int searchHistorySize;
 
+    partial void OnSearchHistorySizeChanged(int value) => IsDirty = true;
+
     [ObservableProperty]
     private SortMethod defaultSortMethod;
+
+    partial void OnDefaultSortMethodChanged(SortMethod value) => IsDirty = true;
 
     [ObservableProperty]
     private List<SortMethod> sortMethods = Enum.GetValues<SortMethod>().ToList();
@@ -30,41 +39,67 @@ public partial class SettingsViewModel : ObservableObject
     [ObservableProperty]
     private bool keepSelectionAfterSort;
 
+    partial void OnKeepSelectionAfterSortChanged(bool value) => IsDirty = true;
+
     [ObservableProperty]
     private bool includeHiddenDirectories;
+
+    partial void OnIncludeHiddenDirectoriesChanged(bool value) => IsDirty = true;
 
     [ObservableProperty]
     private string blacklistedFilePathPatterns = string.Empty;
 
+    partial void OnBlacklistedFilePathPatternsChanged(string value) => IsDirty = true;
+
     [ObservableProperty]
     private string whitelistedFilePathPatterns = string.Empty;
+
+    partial void OnWhitelistedFilePathPatternsChanged(string value) => IsDirty = true;
 
     [ObservableProperty]
     private bool readOnly;
 
+    partial void OnReadOnlyChanged(bool value) => IsDirty = true;
+
     [ObservableProperty]
     private bool backupReminder;
+
+    partial void OnBackupReminderChanged(bool value) => IsDirty = true;
 
     [ObservableProperty]
     private bool birthdayReminder;
 
+    partial void OnBirthdayReminderChanged(bool value) => IsDirty = true;
+
     [ObservableProperty]
     private bool birthdayReminderForDeceased;
+
+    partial void OnBirthdayReminderForDeceasedChanged(bool value) => IsDirty = true;
 
     [ObservableProperty]
     private bool ripReminder;
 
+    partial void OnRipReminderChanged(bool value) => IsDirty = true;
+
     [ObservableProperty]
     private bool missingFilesRootDirNotification;
+
+    partial void OnMissingFilesRootDirNotificationChanged(bool value) => IsDirty = true;
 
     [ObservableProperty]
     private string locationLink = string.Empty;
 
+    partial void OnLocationLinkChanged(string value) => IsDirty = true;
+
     [ObservableProperty]
     private int fileToLocationMaxDistance;
 
+    partial void OnFileToLocationMaxDistanceChanged(int value) => IsDirty = true;
+
     [ObservableProperty]
     private WindowMode windowMode;
+
+    partial void OnWindowModeChanged(WindowMode value) => IsDirty = true;
 
     [ObservableProperty]
     private ObservableCollection<CultureInfo> languages = new();
@@ -72,23 +107,35 @@ public partial class SettingsViewModel : ObservableObject
     [ObservableProperty]
     private CultureInfo? selectedLanguage;
 
+    partial void OnSelectedLanguageChanged(CultureInfo? value) => IsDirty = true;
+
     [ObservableProperty]
     public List<WindowMode> windowModes = Enum.GetValues<WindowMode>().ToList();
 
     [ObservableProperty]
     private int imageMemoryCacheCount;
 
+    partial void OnImageMemoryCacheCountChanged(int value) => IsDirty = true;
+
     [ObservableProperty]
     private int numImagesToPreload;
+
+    partial void OnNumImagesToPreloadChanged(int value) => IsDirty = true;
 
     [ObservableProperty]
     private int overlayTextSize;
 
+    partial void OnOverlayTextSizeChanged(int value) => IsDirty = true;
+
     [ObservableProperty]
     private int overlayTextSizeLarge;
 
+    partial void OnOverlayTextSizeLargeChanged(int value) => IsDirty = true;
+
     [ObservableProperty]
     private int shortItemNameMaxLength;
+
+    partial void OnShortItemNameMaxLengthChanged(int value) => IsDirty = true;
 
     [RelayCommand]
     private void SetDefaultSlideshowDelay()
@@ -266,6 +313,8 @@ public partial class SettingsViewModel : ObservableObject
         OverlayTextSizeLarge = config.OverlayTextSizeLarge;
         ShortItemNameMaxLength = config.ShortItemNameMaxLength;
         SelectedLanguage = Languages.FirstOrDefault(x => x.Name == config.Language);
+
+        IsDirty = false;
     }
 
     [RelayCommand]
@@ -321,6 +370,8 @@ public partial class SettingsViewModel : ObservableObject
             fileSystem.File.WriteAllText(configPath, json);
 
             configUpdater.UpdateConfig(configToSave);
+
+            IsDirty = false;
         }
         catch (Exception e)
         {

@@ -20,8 +20,8 @@
         <ScrollViewer>
             <StackPanel Orientation="Vertical" Style="{StaticResource PageStackPanel}" Grid.IsSharedSizeScope="True">
                 <StackPanel Orientation="Horizontal" Style="{StaticResource PageStackPanel}">
-                    <Button Margin="5" MinWidth="100" Style="{StaticResource NormalButton}" Command="{Binding ResetConfigurationCommand}" ToolTip="{x:Static rs:Strings.SettingsResetChangesButtonToolTip}" Content="{x:Static rs:Strings.SettingsResetChangesButton}"/>
-                    <Button Margin="5" MinWidth="100" Style="{StaticResource NormalButton}" Command="{Binding SaveConfigurationCommand}" Content="{x:Static rs:Strings.SettingsSaveButton}"/>
+                    <Button Margin="5" MinWidth="100" Style="{StaticResource NormalButton}" Command="{Binding ResetConfigurationCommand}" ToolTip="{x:Static rs:Strings.SettingsResetChangesButtonToolTip}" Content="{x:Static rs:Strings.SettingsResetChangesButton}" IsEnabled="{Binding IsDirty}" />
+                    <Button Margin="5" MinWidth="100" Style="{StaticResource NormalButton}" Command="{Binding SaveConfigurationCommand}" Content="{x:Static rs:Strings.SettingsSaveButton}" IsEnabled="{Binding IsDirty}" />
                 </StackPanel>
 
                 <TextBlock Text="{x:Static rs:Strings.SettingsGeneralHeading}" Style="{StaticResource PageSubHeading}"/>
