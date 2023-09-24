@@ -6,8 +6,6 @@ namespace FileDBInterface.FilesystemAccess;
 
 public interface IFilesystemAccess
 {
-    string FilesRootDirectory { get; set; }
-
     IEnumerable<string> ListNewFilesystemFiles(string path, IEnumerable<string> blacklistedFilePathPatterns, IEnumerable<string> whitelistedFilePathPatterns, bool includeHiddenDirectories, IFilesAccess filesDbAccess);
     bool PathIsApplicable(string internalPath, IEnumerable<string> blacklistedFilePathPatterns, IEnumerable<string> whitelistedFilePathPatterns, bool includeHiddenDirectories);
     IEnumerable<string> ListAllFilesystemDirectories();

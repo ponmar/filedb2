@@ -39,7 +39,7 @@ public class MediaFileGrouper
         var filenames = Directory.GetFiles(directory, "*.*");
         var result = new List<FileInfo>();
 
-        var filesystemAccess = new FilesystemAccess(new FileSystem()) { FilesRootDirectory = "not used" };
+        var filesystemAccess = new FilesystemAccess(new FileSystem(), "not used");
 
         foreach (var filename in filenames)
         {

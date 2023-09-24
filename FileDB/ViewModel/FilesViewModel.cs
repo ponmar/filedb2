@@ -64,24 +64,24 @@ public partial class FilesViewModel : ObservableObject
         this.filesystemAccessRepository = filesystemAccessRepository;
         this.dialogs = dialogs;
 
-        subdirToScan = filesystemAccessRepository.FilesystemAccess.FilesRootDirectory;
+        subdirToScan = configRepository.FilePaths.FilesRootDir;
 
         this.RegisterForEvent<ConfigUpdated>((x) =>
         {
-            SubdirToScan = filesystemAccessRepository.FilesystemAccess.FilesRootDirectory;
+            SubdirToScan = configRepository.FilePaths.FilesRootDir;
         });
     }
 
     [RelayCommand]
     private void BrowseSubDirectory()
     {
-        SubdirToScan = dialogs.BrowseExistingDirectory(filesystemAccessRepository.FilesystemAccess.FilesRootDirectory, "Select a sub directory") ?? string.Empty;
+        SubdirToScan = dialogs.BrowseExistingDirectory(configRepository.FilePaths.FilesRootDir, "Select a sub directory") ?? string.Empty;
     }
 
     [RelayCommand]
     private void ScanNewFiles()
     {
-        ScanNewFiles(filesystemAccessRepository.FilesystemAccess.FilesRootDirectory);
+        ScanNewFiles(configRepository.FilePaths.FilesRootDir);
     }
 
     [RelayCommand]
@@ -97,9 +97,9 @@ public partial class FilesViewModel : ObservableObject
             dialogs.ShowErrorDialog("Specified directory does no exist");
             return;
         }
-        if (!SubdirToScan.StartsWith(filesystemAccessRepository.FilesystemAccess.FilesRootDirectory))
+        if (!SubdirToScan.StartsWith(configRepository.FilePaths.FilesRootDir))
         {
-            dialogs.ShowErrorDialog($"Specified directory is not within the configured files root directory: {filesystemAccessRepository.FilesystemAccess.FilesRootDirectory}");
+            dialogs.ShowErrorDialog($"Specified directory is not within the configured files root directory: {configRepository.FilePaths.FilesRootDir}");
             return;
         }
         ScanNewFiles(SubdirToScan);
@@ -140,7 +140,7 @@ public partial class FilesViewModel : ObservableObject
 
                 if (NewFiles.Count == 0)
                 {
-                    dialogs.ShowInfoDialog($"No new files found. Add your files to '{filesystemAccessRepository.FilesystemAccess.FilesRootDirectory}'.");
+                    dialogs.ShowInfoDialog($"No new files found. Add your files to '{configRepository.FilePaths.FilesRootDir}'.");
                 }
             }));
         });

@@ -90,7 +90,7 @@ namespace FileDB
             }
 
             var dbAccess = new SqLiteDbAccess(databasePath);
-            var filesystemAccess = new FilesystemAccess(fileSystem) { FilesRootDirectory = filesRootDirectory };
+            var filesystemAccess = new FilesystemAccess(fileSystem, filesRootDirectory);
             var notifierFactory = new NotifierFactory();
 
             var configUpdater = ServiceLocator.Resolve<IConfigUpdater>();

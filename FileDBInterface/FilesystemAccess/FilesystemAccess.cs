@@ -16,32 +16,22 @@ public class FilesystemAccess : IFilesystemAccess
     private static readonly ILog log = LogManager.GetLogger(nameof(FilesystemAccess));
 
     private readonly IFileSystem fileSystem;
+    private readonly string filesRootDirectory;
 
-    public FilesystemAccess(IFileSystem fileSystem)
+    public FilesystemAccess(IFileSystem fileSystem, string filesRootDirectory)
     {
         this.fileSystem = fileSystem;
-    }
+        this.filesRootDirectory = filesRootDirectory;
 
-    public required string FilesRootDirectory
-    {
-        get => filesRootDirectory;
-        set
+        if (fileSystem.Directory.Exists(filesRootDirectory))
         {
-            if (filesRootDirectory != value)
-            {
-                filesRootDirectory = value;
-                if (fileSystem.Directory.Exists(filesRootDirectory))
-                {
-                    log.Info($"Using files root directory: {filesRootDirectory}");
-                }
-                else
-                {
-                    log.Warn($"Files root directory does not exist: {filesRootDirectory}");
-                }
-            }
+            log.Info($"Using files root directory: {filesRootDirectory}");
+        }
+        else
+        {
+            log.Warn($"Files root directory does not exist: {filesRootDirectory}");
         }
     }
-    private string filesRootDirectory;
 
     public IEnumerable<string> ListNewFilesystemFiles(string path, IEnumerable<string> blacklistedFilePathPatterns, IEnumerable<string> whitelistedFilePathPatterns, bool includeHiddenDirectories, IFilesAccess filesDbAccess)
     {
