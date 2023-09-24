@@ -48,6 +48,10 @@ public class NotifierFactory : INotifierFactory
                 ServiceLocator.Resolve<IConfigRepository>()).ListAvailableBackupFiles(), 30));
         }
 
+        notifiers.Add(new MissingDatabaseNotifier(
+            ServiceLocator.Resolve<IConfigRepository>().FilePaths,
+            ServiceLocator.Resolve<IFileSystem>()));
+
         return notifiers;
     }
 }

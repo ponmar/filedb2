@@ -15,6 +15,7 @@ using FileDB.Resources;
 using System.Globalization;
 using System.IO;
 using FileDB.Extensions;
+using FileDBInterface.DbAccess;
 
 namespace FileDB
 {
@@ -61,13 +62,6 @@ namespace FileDB
                 return;
             }
 
-            if (!File.Exists(databasePath))
-            {
-                dialogs.ShowErrorDialog($"No such database: {databasePath}");
-                Shutdown();
-                return;
-            }
-
             var fileSystem = ServiceLocator.Resolve<IFileSystem>();
             var config = configPath.FromJson<Config>(fileSystem);
 
@@ -89,7 +83,10 @@ namespace FileDB
                 notifications.Add(new(NotificationType.Info, Strings.StartupNotificationDemoConfigurationEnabled, DateTime.Now));
             }
 
-            var dbAccess = new SqLiteDbAccess(databasePath);
+            IDbAccess dbAccess = fileSystem.File.Exists(databasePath) ?
+                new SqLiteDbAccess(databasePath) :
+                new NoDbAccess();
+
             var filesystemAccess = new FilesystemAccess(fileSystem, filesRootDirectory);
             var notifierFactory = new NotifierFactory();
 
