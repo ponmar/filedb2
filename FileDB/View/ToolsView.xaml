@@ -18,6 +18,14 @@
         <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageHeading}" Text="{x:Static rs:Strings.ToolsTitle}"/>
         <ScrollViewer>
             <StackPanel Orientation="Vertical" Style="{StaticResource PageStackPanel}">
+                <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.ToolsCreateDatabaseHeader}"/>
+                <Border Style="{StaticResource BorderGroup}">
+                    <StackPanel Orientation="Vertical">
+                        <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding CreateDatabaseCommand}" HorizontalAlignment="Left" Content="{x:Static rs:Strings.ToolsRunButton}"/>
+                        <TextBlock Style="{StaticResource PageTextBlock}" Text="{Binding CreateDatabaseResult}"/>
+                    </StackPanel>
+                </Border>
+
                 <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.ToolsDatabaseBackupHeader}"/>
                 <Border Style="{StaticResource BorderGroup}">
                     <StackPanel Orientation="Vertical">

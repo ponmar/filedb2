@@ -30,7 +30,6 @@ public interface IDialogs
     TagModel? ShowAddTagDialog(int? tagId = null);
     string? ShowBrowseDirectoriesDialog();
     void ShowExportDialog(SearchResult searchResult);
-    string? ShowCreateDatabaseDialog();
 }
 
 public class Dialogs : IDialogs
@@ -199,17 +198,5 @@ public class Dialogs : IDialogs
         var viewModel = (ExportViewModel)window.DataContext;
         viewModel.SearchResult = searchResult;
         window.ShowDialog();
-    }
-
-    public string? ShowCreateDatabaseDialog()
-    {
-        var window = new CreateDatabaseWindow
-        {
-            Owner = Application.Current.MainWindow
-        };
-        window.ShowDialog();
-
-        var viewModel = (CreateDatabaseViewModel)window.DataContext;
-        return viewModel.CreatedDatabasePath.HasContent() ? viewModel.CreatedDatabasePath : null;
     }
 }

@@ -1119,4 +1119,10 @@
   <data name="CategorizationMarkButtonToolTip" xml:space="preserve">
     <value>Mark this file to be used as last edited file</value>
   </data>
+  <data name="ToolNotExecuted" xml:space="preserve">
+    <value>Not executed.</value>
+  </data>
+  <data name="ToolsCreateDatabaseHeader" xml:space="preserve">
+    <value>Create Database</value>
+  </data>
 </root>

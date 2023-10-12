@@ -1119,4 +1119,10 @@
   <data name="CategorizationMarkButtonToolTip" xml:space="preserve">
     <value>Markera denna fil för att användas som den senaste editerade filen</value>
   </data>
+  <data name="ToolNotExecuted" xml:space="preserve">
+    <value>Ej exekverad.</value>
+  </data>
+  <data name="ToolsCreateDatabaseHeader" xml:space="preserve">
+    <value>Skapa databas</value>
+  </data>
 </root>

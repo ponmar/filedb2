@@ -8,6 +8,9 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Export;
 using FileDB.Model;
+using FileDB.Resources;
+using FileDBInterface.DbAccess;
+using FileDBInterface.Exceptions;
 using FileDBShared.Model;
 using FileDBShared.Validators;
 using TextCopy;
@@ -16,27 +19,28 @@ namespace FileDB.ViewModel;
 
 public partial class ToolsViewModel : ObservableObject
 {
-    private const string ToolNotExecutedText = "Not executed.";
+    [ObservableProperty]
+    private string createDatabaseResult = Strings.ToolNotExecuted;
 
     [ObservableProperty]
-    private string backupResult = ToolNotExecutedText;
+    private string backupResult = Strings.ToolNotExecuted;
 
     [ObservableProperty]
     private string backupListHeader = string.Empty;
 
     [ObservableProperty]
-    private string cacheResult = ToolNotExecutedText;
+    private string cacheResult = Strings.ToolNotExecuted;
 
     public ObservableCollection<BackupFile> BackupFiles { get; } = new();
 
     [ObservableProperty]
-    private string findImportedNoLongerApplicableFilesResult = ToolNotExecutedText;
+    private string findImportedNoLongerApplicableFilesResult = Strings.ToolNotExecuted;
 
     [ObservableProperty]
     private string importedNoLongerApplicableFileList = string.Empty;
 
     [ObservableProperty]
-    private string databaseValidationResult = ToolNotExecutedText;
+    private string databaseValidationResult = Strings.ToolNotExecuted;
 
     public ObservableCollection<string> DabaseValidationErrors { get; } = new();
 
@@ -44,7 +48,7 @@ public partial class ToolsViewModel : ObservableObject
     private string invalidFileList = string.Empty;
 
     [ObservableProperty]
-    private string fileFinderResult = ToolNotExecutedText;
+    private string fileFinderResult = Strings.ToolNotExecuted;
 
     [ObservableProperty]
     private string missingFilesList = string.Empty;
@@ -53,7 +57,7 @@ public partial class ToolsViewModel : ObservableObject
     private string databaseExportDirectory = string.Empty;
 
     [ObservableProperty]
-    private string databaseExportResult = ToolNotExecutedText;
+    private string databaseExportResult = Strings.ToolNotExecuted;
 
     private readonly IConfigRepository configRepository;
     private readonly IDbAccessRepository dbAccessRepository;
@@ -69,6 +73,32 @@ public partial class ToolsViewModel : ObservableObject
         this.dialogs = dialogs;
         this.fileSystem = fileSystem;
         ScanBackupFiles();
+    }
+
+    [RelayCommand]
+    private void CreateDatabase()
+    {
+        var databasePath = configRepository.FilePaths.DatabasePath;
+
+        if (File.Exists(databasePath))
+        {
+            dialogs.ShowErrorDialog($"Database {databasePath} already exists");
+            return;
+        }
+
+        if (dialogs.ShowConfirmDialog($"Create database {databasePath}?"))
+        {
+            try
+            {
+                DatabaseSetup.CreateDatabase(databasePath);
+                CreateDatabaseResult = $"Created database: {databasePath}";
+                Events.Send<CloseModalDialogRequest>();
+            }
+            catch (DatabaseWrapperException e)
+            {
+                dialogs.ShowErrorDialog(e.Message);
+            }
+        }
     }
 
     [RelayCommand]

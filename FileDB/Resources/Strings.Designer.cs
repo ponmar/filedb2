@@ -2869,6 +2869,24 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Not executed..
+        /// </summary>
+        public static string ToolNotExecuted {
+            get {
+                return ResourceManager.GetString("ToolNotExecuted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create Database.
+        /// </summary>
+        public static string ToolsCreateDatabaseHeader {
+            get {
+                return ResourceManager.GetString("ToolsCreateDatabaseHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Database Backup.
         /// </summary>
         public static string ToolsDatabaseBackupHeader {
