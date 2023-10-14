@@ -63,9 +63,9 @@ namespace FileDB.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Changelog.
         /// </summary>
-        public static string AboutChangelogHeader {
+        public static string AboutChangelogTitle {
             get {
-                return ResourceManager.GetString("AboutChangelogHeader", resourceCulture);
+                return ResourceManager.GetString("AboutChangelogTitle", resourceCulture);
             }
         }
         
@@ -81,9 +81,9 @@ namespace FileDB.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Command Line Arguments.
         /// </summary>
-        public static string AboutCommandLineArgumentsHeader {
+        public static string AboutCommandLineArgumentsTitle {
             get {
-                return ResourceManager.GetString("AboutCommandLineArgumentsHeader", resourceCulture);
+                return ResourceManager.GetString("AboutCommandLineArgumentsTitle", resourceCulture);
             }
         }
         
@@ -97,20 +97,20 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Downloads.
-        /// </summary>
-        public static string AboutDownloadsHeader {
-            get {
-                return ResourceManager.GetString("AboutDownloadsHeader", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Releases:.
         /// </summary>
         public static string AboutDownloadsReleases {
             get {
                 return ResourceManager.GetString("AboutDownloadsReleases", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Downloads.
+        /// </summary>
+        public static string AboutDownloadsTitle {
+            get {
+                return ResourceManager.GetString("AboutDownloadsTitle", resourceCulture);
             }
         }
         
@@ -162,9 +162,9 @@ namespace FileDB.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Getting Started.
         /// </summary>
-        public static string AboutGettingStartedHeader {
+        public static string AboutGettingStartedTitle {
             get {
-                return ResourceManager.GetString("AboutGettingStartedHeader", resourceCulture);
+                return ResourceManager.GetString("AboutGettingStartedTitle", resourceCulture);
             }
         }
         
@@ -180,9 +180,9 @@ namespace FileDB.Resources {
         /// <summary>
         ///   Looks up a localized string similar to License.
         /// </summary>
-        public static string AboutLicenseHeader {
+        public static string AboutLicenseTitle {
             get {
-                return ResourceManager.GetString("AboutLicenseHeader", resourceCulture);
+                return ResourceManager.GetString("AboutLicenseTitle", resourceCulture);
             }
         }
         
@@ -216,18 +216,18 @@ namespace FileDB.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Notes About Your Files Collection.
         /// </summary>
-        public static string AboutNotesHeader {
+        public static string AboutNotesTitle {
             get {
-                return ResourceManager.GetString("AboutNotesHeader", resourceCulture);
+                return ResourceManager.GetString("AboutNotesTitle", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to NuGet Package Licenses.
         /// </summary>
-        public static string AboutNuGetPackageLicensesHeader {
+        public static string AboutNuGetPackageLicensesTitle {
             get {
-                return ResourceManager.GetString("AboutNuGetPackageLicensesHeader", resourceCulture);
+                return ResourceManager.GetString("AboutNuGetPackageLicensesTitle", resourceCulture);
             }
         }
         
@@ -243,9 +243,9 @@ namespace FileDB.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Version.
         /// </summary>
-        public static string AboutVersionHeader {
+        public static string AboutVersionTitle {
             get {
-                return ResourceManager.GetString("AboutVersionHeader", resourceCulture);
+                return ResourceManager.GetString("AboutVersionTitle", resourceCulture);
             }
         }
         
@@ -763,20 +763,20 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update.
-        /// </summary>
-        public static string CategorizationUpdateHeader {
-            get {
-                return ResourceManager.GetString("CategorizationUpdateHeader", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Update History.
         /// </summary>
         public static string CategorizationUpdateHistoryTitle {
             get {
                 return ResourceManager.GetString("CategorizationUpdateHistoryTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update.
+        /// </summary>
+        public static string CategorizationUpdateTitle {
+            get {
+                return ResourceManager.GetString("CategorizationUpdateTitle", resourceCulture);
             }
         }
         
@@ -934,15 +934,6 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Information.
-        /// </summary>
-        public static string FileInfoHeader {
-            get {
-                return ResourceManager.GetString("FileInfoHeader", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Locations.
         /// </summary>
         public static string FileInfoLocationsToolTip {
@@ -979,6 +970,15 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Information.
+        /// </summary>
+        public static string FileInfoTitle {
+            get {
+                return ResourceManager.GetString("FileInfoTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add meta-data for selected files....
         /// </summary>
         public static string FilesAddMetaDataForSelectedFilesButton {
@@ -990,9 +990,9 @@ namespace FileDB.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Add Meta-Data.
         /// </summary>
-        public static string FilesAddMetaDataHeader {
+        public static string FilesAddMetaDataTitle {
             get {
-                return ResourceManager.GetString("FilesAddMetaDataHeader", resourceCulture);
+                return ResourceManager.GetString("FilesAddMetaDataTitle", resourceCulture);
             }
         }
         
@@ -1107,9 +1107,9 @@ namespace FileDB.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Remove Meta-Data.
         /// </summary>
-        public static string FilesRemoveMetaDataHeader {
+        public static string FilesRemoveMetaDataTitle {
             get {
-                return ResourceManager.GetString("FilesRemoveMetaDataHeader", resourceCulture);
+                return ResourceManager.GetString("FilesRemoveMetaDataTitle", resourceCulture);
             }
         }
         
@@ -1197,9 +1197,9 @@ namespace FileDB.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Description.
         /// </summary>
-        public static string LocationsDescriptionHeader {
+        public static string LocationsDescriptionTitle {
             get {
-                return ResourceManager.GetString("LocationsDescriptionHeader", resourceCulture);
+                return ResourceManager.GetString("LocationsDescriptionTitle", resourceCulture);
             }
         }
         
@@ -1215,27 +1215,27 @@ namespace FileDB.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Id.
         /// </summary>
-        public static string LocationsIdHeader {
+        public static string LocationsIdTitle {
             get {
-                return ResourceManager.GetString("LocationsIdHeader", resourceCulture);
+                return ResourceManager.GetString("LocationsIdTitle", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
-        public static string LocationsNameHeader {
+        public static string LocationsNameTitle {
             get {
-                return ResourceManager.GetString("LocationsNameHeader", resourceCulture);
+                return ResourceManager.GetString("LocationsNameTitle", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Position.
         /// </summary>
-        public static string LocationsPositionHeader {
+        public static string LocationsPositionTitle {
             get {
-                return ResourceManager.GetString("LocationsPositionHeader", resourceCulture);
+                return ResourceManager.GetString("LocationsPositionTitle", resourceCulture);
             }
         }
         
@@ -1305,27 +1305,27 @@ namespace FileDB.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Age.
         /// </summary>
-        public static string PersonsAgeHeader {
+        public static string PersonsAgeTitle {
             get {
-                return ResourceManager.GetString("PersonsAgeHeader", resourceCulture);
+                return ResourceManager.GetString("PersonsAgeTitle", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Date of Birth.
         /// </summary>
-        public static string PersonsDateOfBirthHeader {
+        public static string PersonsDateOfBirthTitle {
             get {
-                return ResourceManager.GetString("PersonsDateOfBirthHeader", resourceCulture);
+                return ResourceManager.GetString("PersonsDateOfBirthTitle", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Deceased.
         /// </summary>
-        public static string PersonsDeceasedHeader {
+        public static string PersonsDeceasedTitle {
             get {
-                return ResourceManager.GetString("PersonsDeceasedHeader", resourceCulture);
+                return ResourceManager.GetString("PersonsDeceasedTitle", resourceCulture);
             }
         }
         
@@ -1341,9 +1341,9 @@ namespace FileDB.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Description.
         /// </summary>
-        public static string PersonsDescriptionHeader {
+        public static string PersonsDescriptionTitle {
             get {
-                return ResourceManager.GetString("PersonsDescriptionHeader", resourceCulture);
+                return ResourceManager.GetString("PersonsDescriptionTitle", resourceCulture);
             }
         }
         
@@ -1359,45 +1359,45 @@ namespace FileDB.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Firstname.
         /// </summary>
-        public static string PersonsFirstnameHeader {
+        public static string PersonsFirstnameTitle {
             get {
-                return ResourceManager.GetString("PersonsFirstnameHeader", resourceCulture);
+                return ResourceManager.GetString("PersonsFirstnameTitle", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Id.
         /// </summary>
-        public static string PersonsIdHeader {
+        public static string PersonsIdTitle {
             get {
-                return ResourceManager.GetString("PersonsIdHeader", resourceCulture);
+                return ResourceManager.GetString("PersonsIdTitle", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Lastname.
         /// </summary>
-        public static string PersonsLastnameHeader {
+        public static string PersonsLastnameTitle {
             get {
-                return ResourceManager.GetString("PersonsLastnameHeader", resourceCulture);
+                return ResourceManager.GetString("PersonsLastnameTitle", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Profile File ID.
         /// </summary>
-        public static string PersonsProfileFileIDHeader {
+        public static string PersonsProfileFileIDTitle {
             get {
-                return ResourceManager.GetString("PersonsProfileFileIDHeader", resourceCulture);
+                return ResourceManager.GetString("PersonsProfileFileIDTitle", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Sex.
         /// </summary>
-        public static string PersonsSexHeader {
+        public static string PersonsSexTitle {
             get {
-                return ResourceManager.GetString("PersonsSexHeader", resourceCulture);
+                return ResourceManager.GetString("PersonsSexTitle", resourceCulture);
             }
         }
         
@@ -2844,18 +2844,18 @@ namespace FileDB.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Id.
         /// </summary>
-        public static string TagsIdHeader {
+        public static string TagsIdTitle {
             get {
-                return ResourceManager.GetString("TagsIdHeader", resourceCulture);
+                return ResourceManager.GetString("TagsIdTitle", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
-        public static string TagsNameHeader {
+        public static string TagsNameTitle {
             get {
-                return ResourceManager.GetString("TagsNameHeader", resourceCulture);
+                return ResourceManager.GetString("TagsNameTitle", resourceCulture);
             }
         }
         
@@ -2880,18 +2880,9 @@ namespace FileDB.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Create Database.
         /// </summary>
-        public static string ToolsCreateDatabaseHeader {
+        public static string ToolsCreateDatabaseTitle {
             get {
-                return ResourceManager.GetString("ToolsCreateDatabaseHeader", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Database Backup.
-        /// </summary>
-        public static string ToolsDatabaseBackupHeader {
-            get {
-                return ResourceManager.GetString("ToolsDatabaseBackupHeader", resourceCulture);
+                return ResourceManager.GetString("ToolsCreateDatabaseTitle", resourceCulture);
             }
         }
         
@@ -2901,6 +2892,15 @@ namespace FileDB.Resources {
         public static string ToolsDatabaseBackupOpenDatabaseBackupDirectoryButton {
             get {
                 return ResourceManager.GetString("ToolsDatabaseBackupOpenDatabaseBackupDirectoryButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Database Backup.
+        /// </summary>
+        public static string ToolsDatabaseBackupTitle {
+            get {
+                return ResourceManager.GetString("ToolsDatabaseBackupTitle", resourceCulture);
             }
         }
         
@@ -2932,20 +2932,20 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Database Data Validation.
-        /// </summary>
-        public static string ToolsDatabaseDataValidationHeader {
-            get {
-                return ResourceManager.GetString("ToolsDatabaseDataValidationHeader", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Database data validation can be performed after an application upgrade or when data has been imported manually via SQL statements..
         /// </summary>
         public static string ToolsDatabaseDataValidationInfo {
             get {
                 return ResourceManager.GetString("ToolsDatabaseDataValidationInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Database Data Validation.
+        /// </summary>
+        public static string ToolsDatabaseDataValidationTitle {
+            get {
+                return ResourceManager.GetString("ToolsDatabaseDataValidationTitle", resourceCulture);
             }
         }
         
@@ -2959,20 +2959,20 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Database Export.
-        /// </summary>
-        public static string ToolsDatabaseExportHeader {
-            get {
-                return ResourceManager.GetString("ToolsDatabaseExportHeader", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to This tool can be used to export data to 3rd party applications..
         /// </summary>
         public static string ToolsDatabaseExportInfo {
             get {
                 return ResourceManager.GetString("ToolsDatabaseExportInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Database Export.
+        /// </summary>
+        public static string ToolsDatabaseExportTitle {
+            get {
+                return ResourceManager.GetString("ToolsDatabaseExportTitle", resourceCulture);
             }
         }
         
@@ -2986,20 +2986,20 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Files Collection Filtering.
-        /// </summary>
-        public static string ToolsFilesCollectionFilteringHeader {
-            get {
-                return ResourceManager.GetString("ToolsFilesCollectionFilteringHeader", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to This tool can be used to find imported files that should, after an updated configuration or upgraded software, no longer be included..
         /// </summary>
         public static string ToolsFilesCollectionFilteringInfo {
             get {
                 return ResourceManager.GetString("ToolsFilesCollectionFilteringInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Files Collection Filtering.
+        /// </summary>
+        public static string ToolsFilesCollectionFilteringTitle {
+            get {
+                return ResourceManager.GetString("ToolsFilesCollectionFilteringTitle", resourceCulture);
             }
         }
         
@@ -3013,20 +3013,20 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Find Meta-Data for Missing Files.
-        /// </summary>
-        public static string ToolsFindMetaDataForMissingFilesHeader {
-            get {
-                return ResourceManager.GetString("ToolsFindMetaDataForMissingFilesHeader", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to This tool can be used to find outdated meta-data. This may happen if you have removed, moved or renamed files in your files collection..
         /// </summary>
         public static string ToolsFindMetaDataForMissingFilesInfo {
             get {
                 return ResourceManager.GetString("ToolsFindMetaDataForMissingFilesInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find Meta-Data for Missing Files.
+        /// </summary>
+        public static string ToolsFindMetaDataForMissingFilesTitle {
+            get {
+                return ResourceManager.GetString("ToolsFindMetaDataForMissingFilesTitle", resourceCulture);
             }
         }
         

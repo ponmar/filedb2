@@ -28,10 +28,10 @@
 
                     <DataGrid Margin="10" ItemsSource="{Binding Locations}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single" AutoGenerateColumns="False">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="{x:Static rs:Strings.LocationsIdHeader}" Binding="{Binding Id}"/>
-                            <DataGridTextColumn Header="{x:Static rs:Strings.LocationsNameHeader}" Binding="{Binding Name}"/>
-                            <DataGridTextColumn Header="{x:Static rs:Strings.LocationsDescriptionHeader}" Binding="{Binding Description}"/>
-                            <DataGridTextColumn Header="{x:Static rs:Strings.LocationsPositionHeader}" Binding="{Binding Position}"/>
+                            <DataGridTextColumn Header="{x:Static rs:Strings.LocationsIdTitle}" Binding="{Binding Id}"/>
+                            <DataGridTextColumn Header="{x:Static rs:Strings.LocationsNameTitle}" Binding="{Binding Name}"/>
+                            <DataGridTextColumn Header="{x:Static rs:Strings.LocationsDescriptionTitle}" Binding="{Binding Description}"/>
+                            <DataGridTextColumn Header="{x:Static rs:Strings.LocationsPositionTitle}" Binding="{Binding Position}"/>
                         </DataGrid.Columns>
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectionChanged">

@@ -35,7 +35,7 @@
         <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageHeading}" Text="{x:Static rs:Strings.FilesTitle}"/>
         <ScrollViewer>
             <StackPanel Orientation="Vertical" Style="{StaticResource PageStackPanel}">
-                <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.FilesAddMetaDataHeader}"/>
+                <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.FilesAddMetaDataTitle}"/>
                 <Border Style="{StaticResource BorderGroup}" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <StackPanel Orientation="Vertical" Style="{StaticResource PageStackPanel}">
                         <TextBlock Style="{StaticResource PageTextBlock}" Text="{x:Static rs:Strings.FilesInfoText}"/>
@@ -67,7 +67,7 @@
                     </StackPanel>
                 </Border>
 
-                <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.FilesRemoveMetaDataHeader}"/>
+                <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.FilesRemoveMetaDataTitle}"/>
                 <Border Style="{StaticResource BorderGroup}" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <StackPanel Orientation="Horizontal" Margin="15">
                         <TextBlock Margin="5" Style="{StaticResource PageInnerTextBlock}" Text="{x:Static rs:Strings.FilesFileListLabel}" VerticalAlignment="Center"/>

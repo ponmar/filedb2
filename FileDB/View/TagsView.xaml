@@ -28,8 +28,8 @@
 
                     <DataGrid Margin="10" ItemsSource="{Binding Tags}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single" AutoGenerateColumns="False">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="{x:Static rs:Strings.TagsIdHeader}" Binding="{Binding Id}"/>
-                            <DataGridTextColumn Header="{x:Static rs:Strings.TagsNameHeader}" Binding="{Binding Name}"/>
+                            <DataGridTextColumn Header="{x:Static rs:Strings.TagsIdTitle}" Binding="{Binding Id}"/>
+                            <DataGridTextColumn Header="{x:Static rs:Strings.TagsNameTitle}" Binding="{Binding Name}"/>
                         </DataGrid.Columns>
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectionChanged">

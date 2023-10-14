@@ -13,12 +13,12 @@
         <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageHeading}" Text="{x:Static rs:Strings.AboutTitle}"/>
         <ScrollViewer>
             <StackPanel Orientation="Vertical" Style="{StaticResource PageStackPanel}">
-                <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.AboutVersionHeader}"/>
+                <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.AboutVersionTitle}"/>
                 <Border Style="{StaticResource BorderGroup}">
                     <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageTextBlock}" Text="{Binding Version}"/>
                 </Border>
 
-                <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.AboutGettingStartedHeader}"/>
+                <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.AboutGettingStartedTitle}"/>
                 <Border Style="{StaticResource BorderGroup}">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -49,7 +49,7 @@
                     </Grid>
                 </Border>
 
-                <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.AboutNotesHeader}"/>
+                <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.AboutNotesTitle}"/>
                 <Border Style="{StaticResource BorderGroup}">
                     <StackPanel Orientation="Vertical" Style="{StaticResource PageStackPanel}">
                         <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="{x:Static rs:Strings.AboutNotes1}"/>
@@ -79,7 +79,7 @@
                     </StackPanel>
                 </Border>
 
-                <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.AboutCommandLineArgumentsHeader}"/>
+                <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.AboutCommandLineArgumentsTitle}"/>
                 <Border Style="{StaticResource BorderGroup}">
                     <StackPanel Orientation="Horizontal" Style="{StaticResource PageStackPanel}">
                         <TextBlock Style="{StaticResource PageTextBlock}" Text="--demo"/>
@@ -87,7 +87,7 @@
                     </StackPanel>
                 </Border>
 
-                <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.AboutDownloadsHeader}"/>
+                <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.AboutDownloadsTitle}"/>
                 <Border Style="{StaticResource BorderGroup}">
                     <StackPanel Orientation="Horizontal" Style="{StaticResource PageStackPanel}">
                         <TextBlock Style="{StaticResource PageTextBlock}" Text="{x:Static rs:Strings.AboutDownloadsReleases}"/>
@@ -99,17 +99,17 @@
                     </StackPanel>
                 </Border>
 
-                <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.AboutChangelogHeader}"/>
+                <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.AboutChangelogTitle}"/>
                 <Border Style="{StaticResource BorderGroup}">
                     <TextBlock Style="{StaticResource PageTextBlock}" Margin="20" Text="{Binding Changes}" TextWrapping="Wrap"/>
                 </Border>
 
-                <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.AboutLicenseHeader}"/>
+                <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.AboutLicenseTitle}"/>
                 <Border Style="{StaticResource BorderGroup}">
                     <TextBlock Style="{StaticResource PageTextBlock}" Margin="20" Text="{x:Static rs:Strings.AboutLicense}"/>
                 </Border>
 
-                <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.AboutNuGetPackageLicensesHeader}"/>
+                <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.AboutNuGetPackageLicensesTitle}"/>
                 <Border Style="{StaticResource BorderGroup}">
                     <ListView ItemsSource="{Binding Licenses}" Grid.IsSharedSizeScope="True" Background="Transparent" BorderThickness="0" Margin="10">
                         <ListView.ItemTemplate>

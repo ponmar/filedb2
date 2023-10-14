@@ -27,15 +27,15 @@
 
                     <DataGrid Margin="10" ItemsSource="{Binding Persons}" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single" AutoGenerateColumns="False">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="{x:Static rs:Strings.PersonsIdHeader}" Binding="{Binding Id}"/>
-                            <DataGridTextColumn Header="{x:Static rs:Strings.PersonsFirstnameHeader}" Binding="{Binding Firstname}"/>
-                            <DataGridTextColumn Header="{x:Static rs:Strings.PersonsLastnameHeader}" Binding="{Binding Lastname}"/>
-                            <DataGridTextColumn Header="{x:Static rs:Strings.PersonsDescriptionHeader}" Binding="{Binding Description}"/>
-                            <DataGridTextColumn Header="{x:Static rs:Strings.PersonsDateOfBirthHeader}" Binding="{Binding DateOfBirth}"/>
-                            <DataGridTextColumn Header="{x:Static rs:Strings.PersonsDeceasedHeader}" Binding="{Binding Deceased}"/>
-                            <DataGridTextColumn Header="{x:Static rs:Strings.PersonsAgeHeader}" Binding="{Binding Age}"/>
-                            <DataGridTextColumn Header="{x:Static rs:Strings.PersonsProfileFileIDHeader}" Binding="{Binding ProfileFileId}"/>
-                            <DataGridTextColumn Header="{x:Static rs:Strings.PersonsSexHeader}" Binding="{Binding Sex}"/>
+                            <DataGridTextColumn Header="{x:Static rs:Strings.PersonsIdTitle}" Binding="{Binding Id}"/>
+                            <DataGridTextColumn Header="{x:Static rs:Strings.PersonsFirstnameTitle}" Binding="{Binding Firstname}"/>
+                            <DataGridTextColumn Header="{x:Static rs:Strings.PersonsLastnameTitle}" Binding="{Binding Lastname}"/>
+                            <DataGridTextColumn Header="{x:Static rs:Strings.PersonsDescriptionTitle}" Binding="{Binding Description}"/>
+                            <DataGridTextColumn Header="{x:Static rs:Strings.PersonsDateOfBirthTitle}" Binding="{Binding DateOfBirth}"/>
+                            <DataGridTextColumn Header="{x:Static rs:Strings.PersonsDeceasedTitle}" Binding="{Binding Deceased}"/>
+                            <DataGridTextColumn Header="{x:Static rs:Strings.PersonsAgeTitle}" Binding="{Binding Age}"/>
+                            <DataGridTextColumn Header="{x:Static rs:Strings.PersonsProfileFileIDTitle}" Binding="{Binding ProfileFileId}"/>
+                            <DataGridTextColumn Header="{x:Static rs:Strings.PersonsSexTitle}" Binding="{Binding Sex}"/>
                         </DataGrid.Columns>
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectionChanged">

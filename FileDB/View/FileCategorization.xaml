@@ -20,7 +20,7 @@
     </UserControl.Resources>
 
     <Border Style="{StaticResource BorderGroup}" Visibility="{Binding ReadWriteMode, Converter={StaticResource BoolToVis}}">
-        <Expander Style="{StaticResource Expander}" Header="{x:Static rs:Strings.CategorizationUpdateHeader}" Margin="5" IsExpanded="False">
+        <Expander Style="{StaticResource Expander}" Header="{x:Static rs:Strings.CategorizationUpdateTitle}" Margin="5" IsExpanded="False">
             <StackPanel Orientation="Vertical">
                 <Grid>
                     <Grid.ColumnDefinitions>
