@@ -2878,6 +2878,33 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Directory for configured database does not exist..
+        /// </summary>
+        public static string ToolsBackupDatabaseDirectoryDoesNotExist {
+            get {
+                return ResourceManager.GetString("ToolsBackupDatabaseDirectoryDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Backup created..
+        /// </summary>
+        public static string ToolsCreateBackupResult {
+            get {
+                return ResourceManager.GetString("ToolsCreateBackupResult", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Created database &apos;{0}&apos;.
+        /// </summary>
+        public static string ToolsCreateDatabaseCreated {
+            get {
+                return ResourceManager.GetString("ToolsCreateDatabaseCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create database &apos;{0}&apos;?.
         /// </summary>
         public static string ToolsCreateDatabaseCreateDatabase {
@@ -2901,6 +2928,33 @@ namespace FileDB.Resources {
         public static string ToolsCreateDatabaseTitle {
             get {
                 return ResourceManager.GetString("ToolsCreateDatabaseTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} errors found:.
+        /// </summary>
+        public static string ToolsDabaseValidationErrorsFound {
+            get {
+                return ResourceManager.GetString("ToolsDabaseValidationErrorsFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Database backup files:.
+        /// </summary>
+        public static string ToolsDatabaseBackupFilesLabel {
+            get {
+                return ResourceManager.GetString("ToolsDatabaseBackupFilesLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No database backup files found!.
+        /// </summary>
+        public static string ToolsDatabaseBackupNoFilesFound {
+            get {
+                return ResourceManager.GetString("ToolsDatabaseBackupNoFilesFound", resourceCulture);
             }
         }
         
@@ -2986,11 +3040,92 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No such directory..
+        /// </summary>
+        public static string ToolsDatabaseExportNoSuchDirectory {
+            get {
+                return ResourceManager.GetString("ToolsDatabaseExportNoSuchDirectory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exported {0} persons, {1} locations, {2} tags and {3} files..
+        /// </summary>
+        public static string ToolsDatabaseExportResult {
+            get {
+                return ResourceManager.GetString("ToolsDatabaseExportResult", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specified directory is not empty..
+        /// </summary>
+        public static string ToolsDatabaseExportSpecifiedDirectoryIsNotEmpty {
+            get {
+                return ResourceManager.GetString("ToolsDatabaseExportSpecifiedDirectoryIsNotEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Database Export.
         /// </summary>
         public static string ToolsDatabaseExportTitle {
             get {
                 return ResourceManager.GetString("ToolsDatabaseExportTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File {0}: {1}.
+        /// </summary>
+        public static string ToolsDatabaseValidationFileError {
+            get {
+                return ResourceManager.GetString("ToolsDatabaseValidationFileError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Location {0}: {1}.
+        /// </summary>
+        public static string ToolsDatabaseValidationLocationError {
+            get {
+                return ResourceManager.GetString("ToolsDatabaseValidationLocationError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No errors found..
+        /// </summary>
+        public static string ToolsDatabaseValidationNoErrorsFound {
+            get {
+                return ResourceManager.GetString("ToolsDatabaseValidationNoErrorsFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Person {0}: {1}.
+        /// </summary>
+        public static string ToolsDatabaseValidationPersonError {
+            get {
+                return ResourceManager.GetString("ToolsDatabaseValidationPersonError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tag {0}: {1}.
+        /// </summary>
+        public static string ToolsDatabaseValidationTagError {
+            get {
+                return ResourceManager.GetString("ToolsDatabaseValidationTagError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File list copied to clipboard..
+        /// </summary>
+        public static string ToolsFileListCopiedToClipboard {
+            get {
+                return ResourceManager.GetString("ToolsFileListCopiedToClipboard", resourceCulture);
             }
         }
         
@@ -3054,6 +3189,33 @@ namespace FileDB.Resources {
         public static string ToolsFindMetaDataForMissingFilesWarning {
             get {
                 return ResourceManager.GetString("ToolsFindMetaDataForMissingFilesWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Found {0} files that now should be filtered..
+        /// </summary>
+        public static string ToolsFoundNotApplicableFilesCountFilesThatNowShouldBeFiltered {
+            get {
+                return ResourceManager.GetString("ToolsFoundNotApplicableFilesCountFilesThatNowShouldBeFiltered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} meta-data for missing files found..
+        /// </summary>
+        public static string ToolsMissingFilesFound {
+            get {
+                return ResourceManager.GetString("ToolsMissingFilesFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No missing files found..
+        /// </summary>
+        public static string ToolsNoMissingFilesFound {
+            get {
+                return ResourceManager.GetString("ToolsNoMissingFilesFound", resourceCulture);
             }
         }
         

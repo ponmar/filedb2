@@ -1131,4 +1131,58 @@
   <data name="ToolsCreateDatabaseCreateDatabase" xml:space="preserve">
     <value>Create database '{0}'?</value>
   </data>
+  <data name="ToolsCreateDatabaseCreated" xml:space="preserve">
+    <value>Created database '{0}'</value>
+  </data>
+  <data name="ToolsCreateBackupResult" xml:space="preserve">
+    <value>Backup created.</value>
+  </data>
+  <data name="ToolsDatabaseBackupFilesLabel" xml:space="preserve">
+    <value>Database backup files:</value>
+  </data>
+  <data name="ToolsDatabaseBackupNoFilesFound" xml:space="preserve">
+    <value>No database backup files found!</value>
+  </data>
+  <data name="ToolsBackupDatabaseDirectoryDoesNotExist" xml:space="preserve">
+    <value>Directory for configured database does not exist.</value>
+  </data>
+  <data name="ToolsFoundNotApplicableFilesCountFilesThatNowShouldBeFiltered" xml:space="preserve">
+    <value>Found {0} files that now should be filtered.</value>
+  </data>
+  <data name="ToolsDatabaseValidationFileError" xml:space="preserve">
+    <value>File {0}: {1}</value>
+  </data>
+  <data name="ToolsDatabaseValidationPersonError" xml:space="preserve">
+    <value>Person {0}: {1}</value>
+  </data>
+  <data name="ToolsDatabaseValidationLocationError" xml:space="preserve">
+    <value>Location {0}: {1}</value>
+  </data>
+  <data name="ToolsDatabaseValidationTagError" xml:space="preserve">
+    <value>Tag {0}: {1}</value>
+  </data>
+  <data name="ToolsDabaseValidationErrorsFound" xml:space="preserve">
+    <value>{0} errors found:</value>
+  </data>
+  <data name="ToolsDatabaseValidationNoErrorsFound" xml:space="preserve">
+    <value>No errors found.</value>
+  </data>
+  <data name="ToolsFileListCopiedToClipboard" xml:space="preserve">
+    <value>File list copied to clipboard.</value>
+  </data>
+  <data name="ToolsNoMissingFilesFound" xml:space="preserve">
+    <value>No missing files found.</value>
+  </data>
+  <data name="ToolsMissingFilesFound" xml:space="preserve">
+    <value>{0} meta-data for missing files found.</value>
+  </data>
+  <data name="ToolsDatabaseExportNoSuchDirectory" xml:space="preserve">
+    <value>No such directory.</value>
+  </data>
+  <data name="ToolsDatabaseExportSpecifiedDirectoryIsNotEmpty" xml:space="preserve">
+    <value>Specified directory is not empty.</value>
+  </data>
+  <data name="ToolsDatabaseExportResult" xml:space="preserve">
+    <value>Exported {0} persons, {1} locations, {2} tags and {3} files.</value>
+  </data>
 </root>

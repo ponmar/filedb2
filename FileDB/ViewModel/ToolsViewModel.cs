@@ -70,7 +70,7 @@ public partial class ToolsViewModel : ObservableObject
             try
             {
                 DatabaseSetup.CreateDatabase(databasePath);
-                dialogs.ShowInfoDialog($"Created database '{databasePath}'");
+                dialogs.ShowInfoDialog(string.Format(Strings.ToolsCreateDatabaseCreated, databasePath));
                 Events.Send<CloseModalDialogRequest>();
             }
             catch (DatabaseWrapperException e)
@@ -86,7 +86,7 @@ public partial class ToolsViewModel : ObservableObject
         try
         {
             new DatabaseBackup(fileSystem, configRepository).CreateBackup();
-            dialogs.ShowInfoDialog("Backup created.");
+            dialogs.ShowInfoDialog(Strings.ToolsCreateBackupResult);
             ScanBackupFiles();
         }
         catch (IOException e)
@@ -106,11 +106,11 @@ public partial class ToolsViewModel : ObservableObject
                 BackupFiles.Add(backupFile);
             }
 
-            BackupListHeader = BackupFiles.Count > 0 ? $"Database backup files:" : $"No database backup files found!";
+            BackupListHeader = BackupFiles.Count > 0 ? Strings.ToolsDatabaseBackupFilesLabel : Strings.ToolsDatabaseBackupNoFilesFound;
         }
         else
         {
-            BackupListHeader = "Directory for configured database does not exist.";
+            BackupListHeader = Strings.ToolsBackupDatabaseDirectoryDoesNotExist;
         }
     }
 
@@ -121,7 +121,7 @@ public partial class ToolsViewModel : ObservableObject
         var whitelistedFilePathPatterns = configRepository.Config.WhitelistedFilePathPatterns.Split(";");
         var notApplicableFiles = dbAccessRepository.DbAccess.GetFiles().Where(x => !filesystemAccessRepository.FilesystemAccess.PathIsApplicable(x.Path, blacklistedFilePathPatterns, whitelistedFilePathPatterns, configRepository.Config.IncludeHiddenDirectories)).ToList();
         ImportedNoLongerApplicableFileList = Utils.CreateFileList(notApplicableFiles);
-        dialogs.ShowInfoDialog($"Found {notApplicableFiles.Count} files that now should be filtered.");
+        dialogs.ShowInfoDialog(string.Format(Strings.ToolsFoundNotApplicableFilesCountFilesThatNowShouldBeFiltered, notApplicableFiles.Count));
     }
 
     [RelayCommand]
@@ -144,7 +144,7 @@ public partial class ToolsViewModel : ObservableObject
             {
                 foreach (var error in result.Errors)
                 {
-                    DabaseValidationErrors.Add($"File {file.Id}: {error.ErrorMessage}");
+                    DabaseValidationErrors.Add(string.Format(Strings.ToolsDatabaseValidationFileError, file.Id, error.ErrorMessage));
                 }
                 invalidFiles.Add(file);
             }
@@ -159,7 +159,7 @@ public partial class ToolsViewModel : ObservableObject
             {
                 foreach (var error in result.Errors)
                 {
-                    DabaseValidationErrors.Add($"Person {person.Id}: {error.ErrorMessage}");
+                    DabaseValidationErrors.Add(string.Format(Strings.ToolsDatabaseValidationPersonError, person.Id, error.ErrorMessage));
                 }
             }
         }
@@ -172,7 +172,7 @@ public partial class ToolsViewModel : ObservableObject
             {
                 foreach (var error in result.Errors)
                 {
-                    DabaseValidationErrors.Add($"Location {location.Id}: {error.ErrorMessage}");
+                    DabaseValidationErrors.Add(string.Format(Strings.ToolsDatabaseValidationLocationError, location.Id, error.ErrorMessage));
                 }
             }
         }
@@ -185,12 +185,12 @@ public partial class ToolsViewModel : ObservableObject
             {
                 foreach (var error in result.Errors)
                 {
-                    DabaseValidationErrors.Add($"Tag {tag.Id}: {error.ErrorMessage}");
+                    DabaseValidationErrors.Add(string.Format(Strings.ToolsDatabaseValidationTagError, tag.Id, error.ErrorMessage));
                 }
             }
         }
 
-        var resultText = DabaseValidationErrors.Count > 0 ? $"{DabaseValidationErrors.Count} errors found:" : $"No errors found.";
+        var resultText = DabaseValidationErrors.Count > 0 ? string.Format(Strings.ToolsDabaseValidationErrorsFound, DabaseValidationErrors.Count) : Strings.ToolsDatabaseValidationNoErrorsFound;
         dialogs.ShowInfoDialog(resultText);
         OnPropertyChanged(nameof(DabaseValidationErrors));
     }
@@ -199,7 +199,7 @@ public partial class ToolsViewModel : ObservableObject
     private void CopyInvalidFileList()
     {
         ClipboardService.SetText(InvalidFileList);
-        dialogs.ShowInfoDialog("File list copied to clipboard.");
+        dialogs.ShowInfoDialog(Strings.ToolsFileListCopiedToClipboard);
     }
 
     [RelayCommand]
@@ -211,7 +211,7 @@ public partial class ToolsViewModel : ObservableObject
             missingFiles.Add(file);
         }
 
-        var result = missingFiles.Count == 0 ? "No missing files found." : $"{missingFiles.Count} meta-data for missing files found.";
+        var result = missingFiles.Count == 0 ? Strings.ToolsNoMissingFilesFound : string.Format(Strings.ToolsMissingFilesFound, missingFiles.Count);
         dialogs.ShowInfoDialog(result);
         MissingFilesList = Utils.CreateFileList(missingFiles);
     }
@@ -220,7 +220,7 @@ public partial class ToolsViewModel : ObservableObject
     private void CopyFileFinderResult()
     {
         ClipboardService.SetText(MissingFilesList);
-        dialogs.ShowInfoDialog("File list copied to clipboard.");
+        dialogs.ShowInfoDialog(Strings.ToolsFileListCopiedToClipboard);
     }
 
     [RelayCommand]
@@ -228,13 +228,13 @@ public partial class ToolsViewModel : ObservableObject
     {
         if (!Directory.Exists(DatabaseExportDirectory))
         {
-            dialogs.ShowErrorDialog("No such directory.");
+            dialogs.ShowErrorDialog(Strings.ToolsDatabaseExportNoSuchDirectory);
             return;
         }
 
         if (Directory.GetFileSystemEntries(DatabaseExportDirectory).Length > 0)
         {
-            dialogs.ShowErrorDialog("Specified directory is not empty.");
+            dialogs.ShowErrorDialog(Strings.ToolsDatabaseExportSpecifiedDirectoryIsNotEmpty);
             return;
         }
 
@@ -246,7 +246,7 @@ public partial class ToolsViewModel : ObservableObject
             var tags = dbAccessRepository.DbAccess.GetTags().ToList();
             var files = dbAccessRepository.DbAccess.GetFiles().ToList();
             exporter.Export(persons, locations, tags, files);
-            dialogs.ShowInfoDialog($"Exported {persons.Count} persons, {locations.Count} locations, {tags.Count} tags and {files.Count} files.");
+            dialogs.ShowInfoDialog(string.Format(Strings.ToolsDatabaseExportResult, persons.Count, locations.Count, tags.Count, files.Count));
         }
         catch (Exception e)
         {
