@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO.Abstractions;
 using System.Windows.Threading;
 using FileDB.Configuration;
-using FileDB.Extensions;
 using FileDB.Notifiers;
 using FileDBInterface.DbAccess;
 using FileDBInterface.FilesystemAccess;
@@ -18,7 +16,8 @@ public interface INotificationsRepository
 public interface INotificationHandling
 { 
     void AddNotification(Notification notification);
-    void ClearNotifications();
+    void DismissNotification(string message);
+    void DismissNotifications();
 }
 
 public interface IDbAccessRepository
@@ -87,12 +86,16 @@ public class Model : INotificationHandling, INotificationsRepository, IConfigRep
         Events.Send<NotificationsUpdated>();
     }
 
-    public void AddNotification(NotificationType type, string message)
+    public void DismissNotification(string message)
     {
-        AddNotification(new Notification(type, message, DateTime.Now));
+        var numRemoved = notifications.RemoveAll(x => x.Message == message);
+        if (numRemoved > 0)
+        {
+            Events.Send<NotificationsUpdated>();
+        }
     }
 
-    public void ClearNotifications()
+    public void DismissNotifications()
     {
         if (notifications.Count > 0)
         {

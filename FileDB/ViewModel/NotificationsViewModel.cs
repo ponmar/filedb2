@@ -93,6 +93,6 @@ public partial class NotificationsViewModel : ObservableObject
     [RelayCommand]
     private void ClearNotifications()
     {
-        notificationHandling.ClearNotifications();
+        notificationHandling.DismissNotifications();
     }
 }

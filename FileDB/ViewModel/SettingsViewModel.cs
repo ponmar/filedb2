@@ -9,6 +9,8 @@ using CommunityToolkit.Mvvm.Input;
 using FileDB.Configuration;
 using FileDB.Extensions;
 using FileDB.Model;
+using FileDB.Notifiers;
+using FileDB.Resources;
 using FileDB.Validators;
 
 namespace FileDB.ViewModel;
@@ -17,6 +19,18 @@ public partial class SettingsViewModel : ObservableObject
 {
     [ObservableProperty]
     private bool isDirty;
+
+    partial void OnIsDirtyChanged(bool value)
+    {
+        if (value)
+        {
+            notificationHandling.AddNotification(new(NotificationType.Info, Strings.SettingsUnsavedSettingsNotification, DateTime.Now));
+        }
+        else
+        {
+            notificationHandling.DismissNotification(Strings.SettingsUnsavedSettingsNotification);
+        }
+    }
 
     [ObservableProperty]
     private int slideshowDelay;
@@ -273,13 +287,15 @@ public partial class SettingsViewModel : ObservableObject
     private readonly IConfigUpdater configUpdater;
     private readonly IDialogs dialogs;
     private readonly IFileSystem fileSystem;
+    private readonly INotificationHandling notificationHandling;
 
-    public SettingsViewModel(IConfigRepository configRepository, IConfigUpdater configUpdater, IDialogs dialogs, IFileSystem fileSystem)
+    public SettingsViewModel(IConfigRepository configRepository, IConfigUpdater configUpdater, IDialogs dialogs, IFileSystem fileSystem, INotificationHandling notificationHandling)
     {
         this.configRepository = configRepository;
         this.configUpdater = configUpdater;
         this.dialogs = dialogs;
         this.fileSystem = fileSystem;
+        this.notificationHandling = notificationHandling;
 
         languages.Add(CultureInfo.GetCultureInfo("en"));
         languages.Add(CultureInfo.GetCultureInfo("sv-SE"));

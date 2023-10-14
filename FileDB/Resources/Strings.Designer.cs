@@ -2689,6 +2689,15 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You have unsaved settings.
+        /// </summary>
+        public static string SettingsUnsavedSettingsNotification {
+            get {
+                return ResourceManager.GetString("SettingsUnsavedSettingsNotification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Whitelisted file path patterns:.
         /// </summary>
         public static string SettingsWhitelistedFilePathPatternsLabel {
