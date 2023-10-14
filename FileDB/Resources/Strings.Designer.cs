@@ -115,7 +115,7 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Play around with the included demo (files and meta-data). It is activated by default when no local configuration exists or by using a command line argument (see below)..
+        ///   Looks up a localized string similar to Play around with the included demo files collection. It is activated by default when no local configuration exists or by using a command line argument (see below)..
         /// </summary>
         public static string AboutGettingStarted1 {
             get {
@@ -133,7 +133,7 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add file meta-data from the files collection.
+        ///   Looks up a localized string similar to Create a database for your files collection and adjust your settings.
         /// </summary>
         public static string AboutGettingStarted3 {
             get {

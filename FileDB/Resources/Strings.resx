@@ -349,13 +349,13 @@
     <value>NuGet Package Licenses</value>
   </data>
   <data name="AboutGettingStarted1" xml:space="preserve">
-    <value>Play around with the included demo (files and meta-data). It is activated by default when no local configuration exists or by using a command line argument (see below).</value>
+    <value>Play around with the included demo files collection. It is activated by default when no local configuration exists or by using a command line argument (see below).</value>
   </data>
   <data name="AboutGettingStarted2" xml:space="preserve">
     <value>Cleanup your files collection (see guideline below)</value>
   </data>
   <data name="AboutGettingStarted3" xml:space="preserve">
-    <value>Add file meta-data from the files collection</value>
+    <value>Create a database for your files collection and adjust your settings</value>
   </data>
   <data name="AboutGettingStarted4" xml:space="preserve">
     <value>Tag persons, locations and tags</value>

@@ -349,13 +349,13 @@
     <value>NuGet-paketlicenser</value>
   </data>
   <data name="AboutGettingStarted1" xml:space="preserve">
-    <value>Lek med den medföljande demon (filer och metadata). Den aktiveras som standard när ingen lokal konfiguration finns eller genom att använda ett kommandoradsargument (se nedan).</value>
+    <value>Lek med den medföljande demo fil-samlingen. Den aktiveras som standard när ingen lokal konfiguration finns eller genom att använda ett kommandoradsargument (se nedan).</value>
   </data>
   <data name="AboutGettingStarted2" xml:space="preserve">
     <value>Rensa din filsamling (se riktlinjen nedan)</value>
   </data>
   <data name="AboutGettingStarted3" xml:space="preserve">
-    <value>Lägg till filmetadata från filsamlingen</value>
+    <value>Skapa en databas för din filsamling och ange dina inställningar</value>
   </data>
   <data name="AboutGettingStarted4" xml:space="preserve">
     <value>Märk upp personer, platser och etiketter</value>
