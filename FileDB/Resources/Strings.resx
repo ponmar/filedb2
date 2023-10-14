@@ -1125,4 +1125,10 @@
   <data name="ToolsCreateDatabaseTitle" xml:space="preserve">
     <value>Create Database</value>
   </data>
+  <data name="ToolsCreateDatabaseFileAlreadyExists" xml:space="preserve">
+    <value>Database '{0}' already exists</value>
+  </data>
+  <data name="ToolsCreateDatabaseCreateDatabase" xml:space="preserve">
+    <value>Create database '{0}'?</value>
+  </data>
 </root>

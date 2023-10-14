@@ -22,7 +22,6 @@
                 <Border Style="{StaticResource BorderGroup}">
                     <StackPanel Orientation="Vertical">
                         <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding CreateDatabaseCommand}" HorizontalAlignment="Left" Content="{x:Static rs:Strings.ToolsRunButton}"/>
-                        <TextBlock Style="{StaticResource PageTextBlock}" Text="{Binding CreateDatabaseResult}"/>
                     </StackPanel>
                 </Border>
 
@@ -38,7 +37,6 @@
                             <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="{x:Static rs:Strings.ToolsDatabaseBackupWarning2}"/>
                         </StackPanel>
                         <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding CreateBackupCommand}" HorizontalAlignment="Left" Content="{x:Static rs:Strings.ToolsRunButton}"/>
-                        <TextBlock Style="{StaticResource PageTextBlock}" Text="{Binding BackupResult}"/>
                         <TextBlock Style="{StaticResource PageTextBlock}" Text="{Binding BackupListHeader}"/>
                         <ListBox Visibility="{Binding BackupFiles, Converter={StaticResource EnumerationToVisibilityConverter}}" Margin="10" ItemsSource="{Binding BackupFiles}" HorizontalAlignment="Left" MaxHeight="150">
                             <ListBox.ItemTemplate>
@@ -61,7 +59,6 @@
                             <TextBlock Text="{x:Static rs:Strings.ToolsDatabaseExportDirectoryLabel}" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center"/>
                             <TextBox Style="{StaticResource PageTextBox}" Width="300" Text="{Binding DatabaseExportDirectory, UpdateSourceTrigger=PropertyChanged}"/>
                         </StackPanel>
-                        <TextBlock Style="{StaticResource PageTextBlock}" Text="{Binding DatabaseExportResult}"/>
                     </StackPanel>
                 </Border>
 
@@ -73,7 +70,6 @@
                             <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding FindImportedNoLongerApplicableFilesCommand}" HorizontalAlignment="Left" Content="{x:Static rs:Strings.ToolsRunButton}"/>
                             <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding CopyImportedNoLongerApplicableFilesListCommand}" IsEnabled="{Binding ImportedNoLongerApplicableFileList, Converter={StaticResource StringContentToBoolConverter}}" HorizontalAlignment="Left" Content="{x:Static rs:Strings.ToolsFilesCollectionFilteringCopyButton}"/>
                         </StackPanel>
-                        <TextBlock Style="{StaticResource PageTextBlock}" Text="{Binding FindImportedNoLongerApplicableFilesResult}"/>
                     </StackPanel>
                 </Border>
 
@@ -85,7 +81,6 @@
                             <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding DatabaseValidationCommand}" HorizontalAlignment="Left" Content="{x:Static rs:Strings.ToolsRunButton}"/>
                             <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding CopyInvalidFileListCommand}" IsEnabled="{Binding InvalidFileList, Converter={StaticResource StringContentToBoolConverter}}" HorizontalAlignment="Left" Content="{x:Static rs:Strings.ToolsDatabaseDataValidationCopyButton}"/>
                         </StackPanel>
-                        <TextBlock Style="{StaticResource PageTextBlock}" Text="{Binding DatabaseValidationResult}"/>
                         <ListBox Visibility="{Binding DabaseValidationErrors, Converter={StaticResource EnumerationToVisibilityConverter}}" Margin="10" ItemsSource="{Binding DabaseValidationErrors}" HorizontalAlignment="Left"/>
                     </StackPanel>
                 </Border>
@@ -102,7 +97,6 @@
                             <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding FileFinderCommand}" HorizontalAlignment="Left" Content="{x:Static rs:Strings.ToolsRunButton}"/>
                             <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding CopyFileFinderResultCommand}" IsEnabled="{Binding MissingFilesList, Converter={StaticResource StringContentToBoolConverter}}" HorizontalAlignment="Left" Content="{x:Static rs:Strings.ToolsFindMetaDataForMissingFilesCopyButton}"/>
                         </StackPanel>
-                        <TextBlock Style="{StaticResource PageTextBlock}" Text="{Binding FileFinderResult}"/>
                     </StackPanel>
                 </Border>
             </StackPanel>

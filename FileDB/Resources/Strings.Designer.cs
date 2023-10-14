@@ -2878,6 +2878,24 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create database &apos;{0}&apos;?.
+        /// </summary>
+        public static string ToolsCreateDatabaseCreateDatabase {
+            get {
+                return ResourceManager.GetString("ToolsCreateDatabaseCreateDatabase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Database &apos;{0}&apos; already exists.
+        /// </summary>
+        public static string ToolsCreateDatabaseFileAlreadyExists {
+            get {
+                return ResourceManager.GetString("ToolsCreateDatabaseFileAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create Database.
         /// </summary>
         public static string ToolsCreateDatabaseTitle {
