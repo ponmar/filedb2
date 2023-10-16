@@ -38,14 +38,15 @@ public class FileBackup
         var backupFiles = new List<BackupFile>();
 
         var backupDir = Path.GetDirectoryName(filePath)!;
-        var backupFilesPattern = Path.GetFileNameWithoutExtension(filePath) + "_backup_*.db";
+        var fileExtension = Path.GetExtension(filePath);
+        var backupFilesPattern = Path.GetFileNameWithoutExtension(filePath) + "_backup_*" + fileExtension;
 
         foreach (var filePath in fileSystem.Directory.GetFiles(backupDir, backupFilesPattern))
         {
             var filenameParts = filePath.Split("_");
             if (filenameParts.Length >= 2)
             {
-                var timestampString = filenameParts[^1].Replace(".db", "");
+                var timestampString = filenameParts[^1].Replace(fileExtension, "");
                 try
                 {
                     var timestamp = DateTime.ParseExact(timestampString, BackupFileTimestampFormat, null);
