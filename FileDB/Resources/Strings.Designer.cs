@@ -1267,6 +1267,15 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Database is missing ({0}). Create a new database at the Tools tab or restore it manually and then restart the application..
+        /// </summary>
+        public static string NotificationDatabaseIsMissing {
+            get {
+                return ResourceManager.GetString("NotificationDatabaseIsMissing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dismiss all.
         /// </summary>
         public static string NotificationsDismissAllButton {
@@ -2905,7 +2914,7 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Created database &apos;{0}&apos;.
+        ///   Looks up a localized string similar to Created database &apos;{0}&apos;. Restart the application to start using the new database..
         /// </summary>
         public static string ToolsCreateDatabaseCreated {
             get {
@@ -2919,6 +2928,15 @@ namespace FileDB.Resources {
         public static string ToolsCreateDatabaseCreateDatabase {
             get {
                 return ResourceManager.GetString("ToolsCreateDatabaseCreateDatabase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This tool is used to setup a new database..
+        /// </summary>
+        public static string ToolsCreateDatabaseDescription {
+            get {
+                return ResourceManager.GetString("ToolsCreateDatabaseDescription", resourceCulture);
             }
         }
         
@@ -3040,7 +3058,7 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This tool can be used to export data to 3rd party applications..
+        ///   Looks up a localized string similar to This tool can be used to export the complete database to JSON format to be used by 3rd party applications..
         /// </summary>
         public static string ToolsDatabaseExportInfo {
             get {

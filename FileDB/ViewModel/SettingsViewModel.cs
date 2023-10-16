@@ -381,7 +381,7 @@ public partial class SettingsViewModel : ObservableObject
         try
         {
             var configPath = configRepository.FilePaths.ConfigPath;
-            Utils.BackupFile(configPath);
+            new FileBackup(fileSystem, configPath).CreateBackup();
             var json = configToSave.ToJson();
             fileSystem.File.WriteAllText(configPath, json);
 

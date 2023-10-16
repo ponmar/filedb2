@@ -1,6 +1,4 @@
-﻿using FileDB.Model;
-using FileDBInterface.DbAccess;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions;
@@ -22,24 +20,27 @@ public class BackupFile
     }
 }
 
-public class DatabaseBackup
+public class FileBackup
 {
     private const string BackupFileTimestampFormat = "yyyy-MM-ddTHHmmss";
 
     private readonly IFileSystem fileSystem;
-    private readonly IConfigRepository configRepository;
+    private readonly string filePath;
 
-    public DatabaseBackup(IFileSystem fileSystem, IConfigRepository configRepository)
+    public FileBackup(IFileSystem fileSystem, string filePath)
     {
         this.fileSystem = fileSystem;
-        this.configRepository = configRepository;
+        this.filePath = filePath;
     }
 
     public List<BackupFile> ListAvailableBackupFiles()
     {
         var backupFiles = new List<BackupFile>();
 
-        foreach (var filePath in fileSystem.Directory.GetFiles(configRepository.FilePaths.FilesRootDir, "backup_*.db"))
+        var backupDir = Path.GetDirectoryName(filePath)!;
+        var backupFilesPattern = Path.GetFileNameWithoutExtension(filePath) + "_backup_*.db";
+
+        foreach (var filePath in fileSystem.Directory.GetFiles(backupDir, backupFilesPattern))
         {
             var filenameParts = filePath.Split("_");
             if (filenameParts.Length >= 2)
@@ -61,15 +62,14 @@ public class DatabaseBackup
 
     public void CreateBackup()
     {
-        var db = configRepository.FilePaths.DatabasePath;
-        if (!fileSystem.File.Exists(db))
+        if (!fileSystem.File.Exists(filePath))
         {
-            throw new IOException($"Database to backup does not exist: {db}");
+            throw new IOException($"Database to backup does not exist: {filePath}");
         }
 
-        var directoryPath = Path.GetDirectoryName(db);
         var timestamp = DateTime.Now.ToString(BackupFileTimestampFormat);
-        var backupFilename = $"backup_{timestamp}.db";
+        var directoryPath = Path.GetDirectoryName(filePath);
+        var backupFilename = $"{Path.GetFileNameWithoutExtension(filePath)}_backup_{timestamp}{Path.GetExtension(filePath)}";
         var backupFilePath = Path.Combine(directoryPath!, backupFilename);
 
         if (fileSystem.File.Exists(backupFilePath))
@@ -77,6 +77,6 @@ public class DatabaseBackup
             throw new IOException($"Backup file already exists: {backupFilePath}");
         }
 
-        fileSystem.File.Copy(db, backupFilePath);
+        fileSystem.File.Copy(filePath, backupFilePath);
     }
 }

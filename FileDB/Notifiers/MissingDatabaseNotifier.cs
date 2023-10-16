@@ -1,4 +1,5 @@
 ﻿using FileDB.Model;
+using FileDB.Resources;
 using System;
 using System.Collections.Generic;
 using System.IO.Abstractions;
@@ -21,7 +22,7 @@ public class MissingDatabaseNotifier : INotifier
         var notifications = new List<Notification>();
         if (!fileSystem.File.Exists(filePaths.DatabasePath))
         {
-            notifications.Add(new Notification(NotificationType.Error, $"Database is missing ({filePaths.DatabasePath}). Restore it manually or create a new database at the Tools tab.", DateTime.Now));
+            notifications.Add(new Notification(NotificationType.Error, string.Format(Strings.NotificationDatabaseIsMissing, filePaths.DatabasePath), DateTime.Now));
         }
         return notifications;
     }

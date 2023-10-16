@@ -9,14 +9,14 @@
 * Settings tab: enable save and reset buttons only when something changed
 * Add tool for creating a database (previously located in the settings page)
 * Tools show results in popup dialogs
-* !!! Upgrade instruction: !!!
-  1. Move "C:\Users\<user>\AppData\Roaming\FileDB\Config.json" to your files collection root directory
-  2. Rename "Config.json" to your wanted name and with new file extension (for example "My Files.FileDB")
-  3. Move the database to to your files collection root directory
-  4. Rename the database to match your settings file (for example "My Files.db")
-  5. Start FileDB and add blacklisted file path patterns ".db;.FileDB;" at the settings tab
-  6. Optional: Register the .FileDB file extension by double clicking at the settings file
-  7. Optional: Add desktop shortcut by making a shortcut to the .FileDB-file
+!!! Upgrade Instruction !!!
+1. Move settings ("C:\Users\<user>\AppData\Roaming\FileDB\Config.json") to the files collection root directory
+2. Rename settings ("Config.json") to your wanted name and use new file extension (for example "My Files.FileDB")
+3. Move the database to to your files collection root directory
+4. Rename the database to match your settings file (for example "My Files.db")
+5. Start FileDB and add blacklisted file path patterns ".FileDB" and ".db" at the settings tab
+6. Optional: Register the .FileDB file extension in Windows by double clicking at the settings file and browse FileDB.exe
+7. Optional: Add desktop shortcuts for quick access by making, for example, a shortcut to "My Files.FileDB"
 
 3.15:
 * Add button for marking selected file to be used when adding metadata from last edited file

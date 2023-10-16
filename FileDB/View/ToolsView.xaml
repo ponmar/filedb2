@@ -21,7 +21,10 @@
                 <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.ToolsCreateDatabaseTitle}"/>
                 <Border Style="{StaticResource BorderGroup}">
                     <StackPanel Orientation="Vertical">
-                        <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding CreateDatabaseCommand}" HorizontalAlignment="Left" Content="{x:Static rs:Strings.ToolsRunButton}"/>
+                        <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="{x:Static rs:Strings.ToolsCreateDatabaseDescription}"/>
+                        <StackPanel Orientation="Vertical">
+                            <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding CreateDatabaseCommand}" HorizontalAlignment="Left" Content="{x:Static rs:Strings.ToolsRunButton}"/>
+                        </StackPanel>
                     </StackPanel>
                 </Border>
 
@@ -36,7 +39,7 @@
                             <TextBlock Style="{StaticResource PageWarning}" Text="&#x26A0;"/>
                             <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="{x:Static rs:Strings.ToolsDatabaseBackupWarning2}"/>
                         </StackPanel>
-                        <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding CreateBackupCommand}" HorizontalAlignment="Left" Content="{x:Static rs:Strings.ToolsRunButton}"/>
+                        <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding CreateDatabaseBackupCommand}" HorizontalAlignment="Left" Content="{x:Static rs:Strings.ToolsRunButton}"/>
                         <TextBlock Style="{StaticResource PageTextBlock}" Text="{Binding BackupListHeader}"/>
                         <ListBox Visibility="{Binding BackupFiles, Converter={StaticResource EnumerationToVisibilityConverter}}" Margin="10" ItemsSource="{Binding BackupFiles}" HorizontalAlignment="Left" MaxHeight="150">
                             <ListBox.ItemTemplate>

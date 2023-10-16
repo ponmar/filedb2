@@ -81,11 +81,11 @@ public partial class ToolsViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void CreateBackup()
+    private void CreateDatabaseBackup()
     {
         try
         {
-            new DatabaseBackup(fileSystem, configRepository).CreateBackup();
+            new FileBackup(fileSystem, configRepository.FilePaths.DatabasePath).CreateBackup();
             dialogs.ShowInfoDialog(Strings.ToolsCreateBackupResult);
             ScanBackupFiles();
         }
@@ -101,7 +101,7 @@ public partial class ToolsViewModel : ObservableObject
 
         if (Directory.Exists(configRepository.FilePaths.FilesRootDir))
         {
-            foreach (var backupFile in new DatabaseBackup(fileSystem, configRepository).ListAvailableBackupFiles())
+            foreach (var backupFile in new FileBackup(fileSystem, configRepository.FilePaths.DatabasePath).ListAvailableBackupFiles())
             {
                 BackupFiles.Add(backupFile);
             }

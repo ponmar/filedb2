@@ -8,17 +8,18 @@ namespace FileDB.Notifiers;
 public class BackupNotifier : INotifier
 {
     private readonly int afterDays;
-    private readonly IEnumerable<BackupFile> backupFiles;
+    private readonly FileBackup fileBackup;
 
-    public BackupNotifier(IEnumerable<BackupFile> backupFiles, int afterDays = 30)
+    public BackupNotifier(FileBackup fileBackup, int afterDays = 30)
     {
-        this.backupFiles = backupFiles;
+        this.fileBackup = fileBackup;
         this.afterDays = afterDays;
     }
 
     public List<Notification> Run()
     {
         List<Notification> notifications = new();
+        var backupFiles = fileBackup.ListAvailableBackupFiles();
         if (!backupFiles.Any())
         {
             notifications.Add(new Notification(NotificationType.Warning, Strings.BackupNotifierNoDatabaseBackupHasBeenCreated, DateTime.Now));

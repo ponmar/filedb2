@@ -883,7 +883,7 @@
     <value>Open database backup directory</value>
   </data>
   <data name="ToolsDatabaseExportInfo" xml:space="preserve">
-    <value>This tool can be used to export data to 3rd party applications.</value>
+    <value>This tool can be used to export the complete database to JSON format to be used by 3rd party applications.</value>
   </data>
   <data name="ToolsDatabaseExportDirectoryLabel" xml:space="preserve">
     <value>Directory:</value>
@@ -1132,7 +1132,7 @@
     <value>Create database '{0}'?</value>
   </data>
   <data name="ToolsCreateDatabaseCreated" xml:space="preserve">
-    <value>Created database '{0}'</value>
+    <value>Created database '{0}'. Restart the application to start using the new database.</value>
   </data>
   <data name="ToolsCreateBackupResult" xml:space="preserve">
     <value>Backup created.</value>
@@ -1187,5 +1187,11 @@
   </data>
   <data name="SettingsUnsavedSettingsNotification" xml:space="preserve">
     <value>You have unsaved settings</value>
+  </data>
+  <data name="ToolsCreateDatabaseDescription" xml:space="preserve">
+    <value>This tool is used to setup a new database.</value>
+  </data>
+  <data name="NotificationDatabaseIsMissing" xml:space="preserve">
+    <value>Database is missing ({0}). Create a new database at the Tools tab or restore it manually and then restart the application.</value>
   </data>
 </root>

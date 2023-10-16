@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -146,21 +145,6 @@ public static class Utils
     {
         var version = Assembly.GetEntryAssembly()!.GetName().Version!;
         return $"{version.Major}.{version.Minor}";
-    }
-
-    public static void BackupFile(string filePath, string? destinationFilenamePrefix = null)
-    {
-        if (!File.Exists(filePath))
-        {
-            return;
-        }
-
-        var timestamp = DateTime.Now.ToString("yyyy-MM-dd_HHmmss");
-        destinationFilenamePrefix ??= Path.GetFileNameWithoutExtension(filePath)!;
-        var destinationFilename = destinationFilenamePrefix + "_" + timestamp + Path.GetExtension(filePath);
-        var destinationFilePath = Path.Combine(Path.GetDirectoryName(filePath)!, destinationFilename);
-
-        File.Copy(filePath, destinationFilePath);
     }
 
     public static string CreateShortText(string text, int maxLength)
