@@ -364,7 +364,7 @@ public partial class SettingsViewModel : ObservableObject
             OverlayTextSize,
             OverlayTextSizeLarge,
             ShortItemNameMaxLength,
-            SelectedLanguage?.Name);
+            SelectedLanguage?.Name == "en" ? null : SelectedLanguage?.Name);
 
         var result = new ConfigValidator().Validate(configToSave);
         if (!result.IsValid)

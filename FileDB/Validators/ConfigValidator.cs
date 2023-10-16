@@ -48,7 +48,7 @@ public class ConfigValidator : AbstractValidator<Config>
         When(c => c.Language != null, () =>
         {
             RuleFor(c => c.Language)
-               .Must(IsCulture!).WithMessage("Invalid culture override");
+               .Must(IsCulture!).WithMessage("Invalid language");
         });
 
         RuleFor(c => c.ImageMemoryCacheCount)
