@@ -874,10 +874,7 @@
     <value>Run</value>
   </data>
   <data name="ToolsDatabaseBackupWarning1" xml:space="preserve">
-    <value>Backup of your files collection, FileDB configuration and FileDB databases to external media should be done continuously!</value>
-  </data>
-  <data name="ToolsDatabaseBackupWarning2" xml:space="preserve">
-    <value>Database recovery must be done manually if needed.</value>
+    <value>Database recovery must be done manually if needed. Backup of your files collection, settings and database to external media should be done continuously!</value>
   </data>
   <data name="ToolsDatabaseBackupOpenDatabaseBackupDirectoryButton" xml:space="preserve">
     <value>Open database backup directory</value>

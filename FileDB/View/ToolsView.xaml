@@ -31,14 +31,7 @@
                 <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.ToolsDatabaseBackupTitle}"/>
                 <Border Style="{StaticResource BorderGroup}">
                     <StackPanel Orientation="Vertical">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Style="{StaticResource PageWarning}" Text="&#x26A0;"/>
-                            <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="{x:Static rs:Strings.ToolsDatabaseBackupWarning1}"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Style="{StaticResource PageWarning}" Text="&#x26A0;"/>
-                            <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="{x:Static rs:Strings.ToolsDatabaseBackupWarning2}"/>
-                        </StackPanel>
+                        <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="This tool can be used to make a database backup within the files collection directory."/>
                         <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding CreateDatabaseBackupCommand}" HorizontalAlignment="Left" Content="{x:Static rs:Strings.ToolsRunButton}"/>
                         <TextBlock Style="{StaticResource PageTextBlock}" Text="{Binding BackupListHeader}"/>
                         <ListBox Visibility="{Binding BackupFiles, Converter={StaticResource EnumerationToVisibilityConverter}}" Margin="10" ItemsSource="{Binding BackupFiles}" HorizontalAlignment="Left" MaxHeight="150">
@@ -50,6 +43,14 @@
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageWarning}" Text="&#x26A0;" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="{x:Static rs:Strings.ToolsDatabaseBackupWarning1}"/>
+                        </Grid>
                     </StackPanel>
                 </Border>
 
@@ -92,10 +93,14 @@
                 <Border Style="{StaticResource BorderGroup}">
                     <StackPanel Orientation="Vertical">
                         <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="{x:Static rs:Strings.ToolsFindMetaDataForMissingFilesInfo}"/>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Style="{StaticResource PageWarning}">&#x26A0;</TextBlock>
-                            <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="{x:Static rs:Strings.ToolsFindMetaDataForMissingFilesWarning}"/>
-                        </StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Style="{StaticResource PageWarning}" VerticalAlignment="Center">&#x26A0;</TextBlock>
+                            <TextBlock Grid.Column="1" Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="{x:Static rs:Strings.ToolsFindMetaDataForMissingFilesWarning}"/>
+                        </Grid>
                         <StackPanel Orientation="Horizontal">
                             <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding FileFinderCommand}" HorizontalAlignment="Left" Content="{x:Static rs:Strings.ToolsRunButton}"/>
                             <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding CopyFileFinderResultCommand}" IsEnabled="{Binding MissingFilesList, Converter={StaticResource StringContentToBoolConverter}}" HorizontalAlignment="Left" Content="{x:Static rs:Strings.ToolsFindMetaDataForMissingFilesCopyButton}"/>

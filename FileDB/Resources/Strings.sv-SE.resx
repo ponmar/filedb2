@@ -877,10 +877,7 @@
     <value>Kopiera fillista med ej längre tillämpliga filer</value>
   </data>
   <data name="ToolsDatabaseBackupWarning1" xml:space="preserve">
-    <value>Säkerhetskopiering av din filsamling, FileDB-konfiguration och FileDB-databaser till externa medier bör göras kontinuerligt!</value>
-  </data>
-  <data name="ToolsDatabaseBackupWarning2" xml:space="preserve">
-    <value>Databasåterställning måste göras manuellt om det behövs.</value>
+    <value>Databasåterställning måste göras manuellt om det behövs. Säkerhetskopiering av din filsamling, inställningar och databas till externa medier bör göras kontinuerligt!</value>
   </data>
   <data name="ToolsDatabaseBackupOpenDatabaseBackupDirectoryButton" xml:space="preserve">
     <value>Öppna databasens säkerhetskopieringskatalog</value>

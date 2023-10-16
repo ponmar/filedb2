@@ -3004,20 +3004,11 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Backup of your files collection, FileDB configuration and FileDB databases to external media should be done continuously!.
+        ///   Looks up a localized string similar to Database recovery must be done manually if needed. Backup of your files collection, settings and database to external media should be done continuously!.
         /// </summary>
         public static string ToolsDatabaseBackupWarning1 {
             get {
                 return ResourceManager.GetString("ToolsDatabaseBackupWarning1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Database recovery must be done manually if needed..
-        /// </summary>
-        public static string ToolsDatabaseBackupWarning2 {
-            get {
-                return ResourceManager.GetString("ToolsDatabaseBackupWarning2", resourceCulture);
             }
         }
         
