@@ -3040,7 +3040,16 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Directory:.
+        ///   Looks up a localized string similar to Browse....
+        /// </summary>
+        public static string ToolsDatabaseExportDestinationDirectoryBrowseButton {
+            get {
+                return ResourceManager.GetString("ToolsDatabaseExportDestinationDirectoryBrowseButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Destination directory:.
         /// </summary>
         public static string ToolsDatabaseExportDirectoryLabel {
             get {

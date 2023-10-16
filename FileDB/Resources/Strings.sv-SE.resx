@@ -886,7 +886,7 @@
     <value>Detta verktyg kan användas för att exportera data till applikationer från tredje part.</value>
   </data>
   <data name="ToolsDatabaseExportDirectoryLabel" xml:space="preserve">
-    <value>Katalog:</value>
+    <value>Målkatalog:</value>
   </data>
   <data name="ToolsFilesCollectionFilteringInfo" xml:space="preserve">
     <value>Detta verktyg kan användas för att hitta importerade filer som, efter en uppdaterad konfiguration eller uppgraderad programvara, inte längre ska ingå.</value>

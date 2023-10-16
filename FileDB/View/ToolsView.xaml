@@ -59,10 +59,11 @@
                     <StackPanel Orientation="Vertical">
                         <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="{x:Static rs:Strings.ToolsDatabaseExportInfo}"/>
                         <StackPanel Orientation="Horizontal">
-                            <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding DatabaseExportCommand}" IsEnabled="{Binding DatabaseExportDirectory, Converter={StaticResource StringContentToBoolConverter}}" HorizontalAlignment="Left" Content="{x:Static rs:Strings.ToolsRunButton}"/>
                             <TextBlock Text="{x:Static rs:Strings.ToolsDatabaseExportDirectoryLabel}" Style="{StaticResource PageTextBlock}" VerticalAlignment="Center"/>
-                            <TextBox Style="{StaticResource PageTextBox}" Width="300" Text="{Binding DatabaseExportDirectory, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBox Style="{StaticResource PageTextBox}" Width="250" Text="{Binding DatabaseExportDirectory, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Button Style="{StaticResource NormalButton}" Content="{x:Static rs:Strings.ToolsDatabaseExportDestinationDirectoryBrowseButton}" Command="{Binding BrowseDatabaseExportDirectoryCommand}"/>
                         </StackPanel>
+                        <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding DatabaseExportCommand}" IsEnabled="{Binding DatabaseExportDirectory, Converter={StaticResource StringContentToBoolConverter}}" HorizontalAlignment="Left" Content="{x:Static rs:Strings.ToolsRunButton}"/>
                     </StackPanel>
                 </Border>
 

@@ -883,7 +883,7 @@
     <value>This tool can be used to export the complete database to JSON format to be used by 3rd party applications.</value>
   </data>
   <data name="ToolsDatabaseExportDirectoryLabel" xml:space="preserve">
-    <value>Directory:</value>
+    <value>Destination directory:</value>
   </data>
   <data name="ToolsFilesCollectionFilteringInfo" xml:space="preserve">
     <value>This tool can be used to find imported files that should, after an updated configuration or upgraded software, no longer be included.</value>
@@ -1190,5 +1190,8 @@
   </data>
   <data name="NotificationDatabaseIsMissing" xml:space="preserve">
     <value>Database is missing ({0}). Create a new database at the Tools tab or restore it manually and then restart the application.</value>
+  </data>
+  <data name="ToolsDatabaseExportDestinationDirectoryBrowseButton" xml:space="preserve">
+    <value>Browse...</value>
   </data>
 </root>
