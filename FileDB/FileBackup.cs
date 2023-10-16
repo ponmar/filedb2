@@ -65,7 +65,7 @@ public class FileBackup
     {
         if (!fileSystem.File.Exists(filePath))
         {
-            throw new IOException($"Database to backup does not exist: {filePath}");
+            throw new IOException($"File to backup does not exist: {filePath}");
         }
 
         var timestamp = DateTime.Now.ToString(BackupFileTimestampFormat);
