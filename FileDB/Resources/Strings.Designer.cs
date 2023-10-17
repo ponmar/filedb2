@@ -115,7 +115,7 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Play around with the included demo files collection. It is activated by default when no local configuration exists or by using a command line argument (see below)..
+        ///   Looks up a localized string similar to Play around with the included demo files collection..
         /// </summary>
         public static string AboutGettingStarted1 {
             get {
@@ -2914,7 +2914,7 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Created database &apos;{0}&apos;. Restart the application to start using the new database..
+        ///   Looks up a localized string similar to Created database &apos;{0}&apos;. Restart the application to start using it..
         /// </summary>
         public static string ToolsCreateDatabaseCreated {
             get {
@@ -3238,7 +3238,7 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No missing files found..
+        ///   Looks up a localized string similar to No meta-data for missing files found..
         /// </summary>
         public static string ToolsNoMissingFilesFound {
             get {

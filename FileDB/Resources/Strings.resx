@@ -349,7 +349,7 @@
     <value>NuGet Package Licenses</value>
   </data>
   <data name="AboutGettingStarted1" xml:space="preserve">
-    <value>Play around with the included demo files collection. It is activated by default when no local configuration exists or by using a command line argument (see below).</value>
+    <value>Play around with the included demo files collection.</value>
   </data>
   <data name="AboutGettingStarted2" xml:space="preserve">
     <value>Cleanup your files collection (see guideline below)</value>
@@ -1129,7 +1129,7 @@
     <value>Create database '{0}'?</value>
   </data>
   <data name="ToolsCreateDatabaseCreated" xml:space="preserve">
-    <value>Created database '{0}'. Restart the application to start using the new database.</value>
+    <value>Created database '{0}'. Restart the application to start using it.</value>
   </data>
   <data name="ToolsCreateBackupResult" xml:space="preserve">
     <value>Backup created.</value>
@@ -1168,7 +1168,7 @@
     <value>File list copied to clipboard.</value>
   </data>
   <data name="ToolsNoMissingFilesFound" xml:space="preserve">
-    <value>No missing files found.</value>
+    <value>No meta-data for missing files found.</value>
   </data>
   <data name="ToolsMissingFilesFound" xml:space="preserve">
     <value>{0} meta-data for missing files found.</value>

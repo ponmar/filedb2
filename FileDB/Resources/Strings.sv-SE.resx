@@ -349,7 +349,7 @@
     <value>NuGet-paketlicenser</value>
   </data>
   <data name="AboutGettingStarted1" xml:space="preserve">
-    <value>Lek med den medföljande demo fil-samlingen. Den aktiveras som standard när ingen lokal konfiguration finns eller genom att använda ett kommandoradsargument (se nedan).</value>
+    <value>Lek med den medföljande demo fil-samlingen.</value>
   </data>
   <data name="AboutGettingStarted2" xml:space="preserve">
     <value>Rensa din filsamling (se riktlinjen nedan)</value>
@@ -484,7 +484,7 @@
     <value>Sökresultatfiler</value>
   </data>
   <data name="ExportM3UPlaylistLabel" xml:space="preserve">
-    <value>Spellista</value>
+    <value>M3U spellista</value>
   </data>
   <data name="ExportHTMLWithMetaDataAndSearchResultFilesLabel" xml:space="preserve">
     <value>HTML med metadata och sökresultatfiler</value>
@@ -1121,5 +1121,77 @@
   </data>
   <data name="ToolsCreateDatabaseTitle" xml:space="preserve">
     <value>Skapa databas</value>
+  </data>
+  <data name="NotificationDatabaseIsMissing" xml:space="preserve">
+    <value>Databasen saknas ({0}). Skapa en ny database på Verktygs-fliken eller återställ den manuellt och starta sedan om programmet.</value>
+  </data>
+  <data name="SettingsUnsavedSettingsNotification" xml:space="preserve">
+    <value>Du har osparade ändringar</value>
+  </data>
+  <data name="ToolsBackupDatabaseDirectoryDoesNotExist" xml:space="preserve">
+    <value>Katalogen för konfigurerad databas finns inte.</value>
+  </data>
+  <data name="ToolsCreateBackupResult" xml:space="preserve">
+    <value>Säkerhetskopia skapad.</value>
+  </data>
+  <data name="ToolsCreateDatabaseCreated" xml:space="preserve">
+    <value>Skapade databas '{0}'. Starta om programmet för att börja använda den.</value>
+  </data>
+  <data name="ToolsCreateDatabaseCreateDatabase" xml:space="preserve">
+    <value>Skapa databas '{0}'?</value>
+  </data>
+  <data name="ToolsCreateDatabaseDescription" xml:space="preserve">
+    <value>Detta verktyg används för att skapa en ny databas.</value>
+  </data>
+  <data name="ToolsCreateDatabaseFileAlreadyExists" xml:space="preserve">
+    <value>Databas '{0}' finns redan</value>
+  </data>
+  <data name="ToolsDabaseValidationErrorsFound" xml:space="preserve">
+    <value>{0} fel hittades:</value>
+  </data>
+  <data name="ToolsDatabaseBackupFilesLabel" xml:space="preserve">
+    <value>Säkerhetskopior av databasen:</value>
+  </data>
+  <data name="ToolsDatabaseBackupNoFilesFound" xml:space="preserve">
+    <value>Inga säkerhetskopior av databasen hittades!</value>
+  </data>
+  <data name="ToolsDatabaseExportDestinationDirectoryBrowseButton" xml:space="preserve">
+    <value>Utforska...</value>
+  </data>
+  <data name="ToolsDatabaseExportNoSuchDirectory" xml:space="preserve">
+    <value>Katalogen finns inte.</value>
+  </data>
+  <data name="ToolsDatabaseExportResult" xml:space="preserve">
+    <value>Exporterade {0} personer, {1} platser, {2} etiketter och {3} filer.</value>
+  </data>
+  <data name="ToolsDatabaseExportSpecifiedDirectoryIsNotEmpty" xml:space="preserve">
+    <value>Den angivna katalogen är inte tom.</value>
+  </data>
+  <data name="ToolsDatabaseValidationFileError" xml:space="preserve">
+    <value>Fil {0}: {1}</value>
+  </data>
+  <data name="ToolsDatabaseValidationLocationError" xml:space="preserve">
+    <value>Plats {0}: {1}</value>
+  </data>
+  <data name="ToolsDatabaseValidationNoErrorsFound" xml:space="preserve">
+    <value>Inga fel hittades.</value>
+  </data>
+  <data name="ToolsDatabaseValidationPersonError" xml:space="preserve">
+    <value>Person {0}: {1}</value>
+  </data>
+  <data name="ToolsDatabaseValidationTagError" xml:space="preserve">
+    <value>Etikett {0}: {1}</value>
+  </data>
+  <data name="ToolsFileListCopiedToClipboard" xml:space="preserve">
+    <value>Fillista kopierad till clipboard.</value>
+  </data>
+  <data name="ToolsFoundNotApplicableFilesCountFilesThatNowShouldBeFiltered" xml:space="preserve">
+    <value>Hittade {0} filer som nu borde ha filtrerats.</value>
+  </data>
+  <data name="ToolsMissingFilesFound" xml:space="preserve">
+    <value>{0} meta-data för saknade filer hittades.</value>
+  </data>
+  <data name="ToolsNoMissingFilesFound" xml:space="preserve">
+    <value>Ingen meta-data för saknade filer hittades.</value>
   </data>
 </root>
