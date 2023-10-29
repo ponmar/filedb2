@@ -1,6 +1,6 @@
-# README #
+# README
 
-## About ##
+## About
 
 This is a project for storing, maintaining and presenting meta-data (persons, locations and tags) for files. A typical use case is to make a picture and video collection searchable and for running slideshows with extra information.
 
@@ -18,7 +18,7 @@ FileDB cons:
 
 * Categorizing files is a bit time consuming. However, the main application tries to make this process as simple as possible. Competing cloud services usually identifies persons automatically with face recognition, but that feature is not implemented in FileDB.
 
-### Main Application ###
+### Main Application
 
 The FileDB main application is the GUI towards the internal database that stores the file meta-data. This application includes file browsing, meta-data editing and advanced search features.
 
@@ -26,26 +26,26 @@ The application uses one configuration file that, for example, points out the fi
 
 A demo configuration with some images and meta-data is available to show case the FileDB potential.
 
-### App ###
+### App
 
 An app is being developed for visualizing exported FileDB data.
 
-### 3rd Party Software Integrations ###
+### 3rd Party Software Integrations
 
 FileDB gives you the possibility to export the internal database and file searches to your own applications.
 
-## Getting Started ##
+## Getting Started
 
-### Prerequisites ###
+### Prerequisites
 
 * A collection of files. Note that it is recommended to have a backup procedure for your file collection before running FileDB (although FileDB itself does not modify your files). A demo configuration and file collection is included for demo purposes.
 * .NET7 desktop runtime
 
-### Downloads ###
+### Downloads
 
 Download official releases [here](https://drive.google.com/drive/folders/1GyZpdDcMdUOlvvtwtKUuylazoy7XaIcm).
 
-## Documentation ##
+## Documentation
 
 The release contains the following documentation:
 
@@ -53,15 +53,15 @@ The release contains the following documentation:
 * [Changelog](CHANGES.txt)
 * Main application About page
 
-## Developer Information ##
+## Developer Information
 
-### About ###
+### About
 
 The main application is a C# WPF application. Accessing the internal database and files are done via the FileDBInterface project. Dapper is used for all database access.
 
 The app is based on .NET MAUI. It has been tested on Android and Windows.
 
-### Building from Source ###
+### Building from Source
 
 1. Clone GIT repository
 2. Checkout wanted branch
@@ -70,17 +70,17 @@ The app is based on .NET MAUI. It has been tested on Android and Windows.
 5. Set FileDB project as startup project
 6. Start project. Note that a command line argument can be used to enable demo mode to avoid affecting the real database during development.
 
-### Contribute ###
+### Contribute
 
-So far this project has been developed by me, Pontus Markstrom, and I would love to see that change both regarding number of developers and users. Feel free to contribute!
+So far this project has been developed by me, Pontus Markström, and I would love to see that change both regarding number of developers and users. Feel free to contribute!
 
-### Branch Strategy ###
+### Branch Strategy
 
 * master: branch used for official releases in combination with vX.Y version tags
 * dev: development branch, merged to master when ready for new release
 * feature/*: feature-branches merged to dev via pull-requests
 
-## Licenses ##
+## Licenses
 
 This project uses the [MIT license](LICENSE.txt).
 

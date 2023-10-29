@@ -1,9 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using FileDB.Extensions;
+using FileDB.Model;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.IO.Abstractions;
 
 namespace FileDB.ViewModel;
 
@@ -16,16 +19,19 @@ public class AboutViewModel : ObservableObject
 
     public string DownloadLink => Utils.ApplicationDownloadUrl;
 
-    public string Changes => File.Exists(ChangesFilePath) ? File.ReadAllText(ChangesFilePath) : "Not deployed";
+    public string Changes => fileSystem.File.Exists(ChangesFilePath) ? fileSystem.File.ReadAllText(ChangesFilePath) : "Not deployed";
 
     public string Version => $"{Utils.ApplicationName} version {Utils.GetVersionString()}";
 
     public ObservableCollection<LicenseFileFormatDto> Licenses { get; } = new();
 
-    public AboutViewModel()
+    private readonly IFileSystem fileSystem;
+
+    public AboutViewModel(IFileSystem fileSystem)
     {
-        var licensesJson = File.ReadAllText(LicensesJsonFilePath);
-        var licenses = JsonConvert.DeserializeObject<List<LicenseFileFormatDto>>(licensesJson);
+        this.fileSystem = fileSystem;
+
+        var licenses = LicensesJsonFilePath.FromJson<List<LicenseFileFormatDto>>(fileSystem);
         licenses!.ForEach(x => Licenses.Add(x));
     }
 }
