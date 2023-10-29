@@ -14,6 +14,7 @@ using FileDB.Model;
 using System.Windows.Media;
 using FileDB.Resources;
 using FileDB.Extensions;
+using System.IO.Abstractions;
 
 namespace FileDB.ViewModel;
 
@@ -104,13 +105,15 @@ public partial class SearchViewModel : ObservableObject
     private readonly IDbAccessRepository dbAccessRepository;
     private readonly IFilesystemAccessRepository filesystemAccessRepository;
     private readonly IImageLoader imageLoader;
+    private readonly IFileSystem fileSystem;
 
-    public SearchViewModel(IConfigRepository configRepository, IDbAccessRepository dbAccessRepository, IFilesystemAccessRepository filesystemAccessRepository, IImageLoader imageLoader)
+    public SearchViewModel(IConfigRepository configRepository, IDbAccessRepository dbAccessRepository, IFilesystemAccessRepository filesystemAccessRepository, IImageLoader imageLoader, IFileSystem fileSystem)
     {
         this.configRepository = configRepository;
         this.dbAccessRepository = dbAccessRepository;
         this.filesystemAccessRepository = filesystemAccessRepository;
         this.imageLoader = imageLoader;
+        this.fileSystem = fileSystem;
 
         this.RegisterForEvent<ConfigUpdated>((x) =>
         {
@@ -156,7 +159,7 @@ public partial class SearchViewModel : ObservableObject
     [RelayCommand]
     private void OpenFileLocation()
     {
-        if (absolutePath.HasContent() && File.Exists(absolutePath))
+        if (absolutePath.HasContent() && fileSystem.File.Exists(absolutePath))
         {
             Utils.SelectFileInExplorer(absolutePath);
         }
@@ -165,7 +168,7 @@ public partial class SearchViewModel : ObservableObject
     [RelayCommand]
     private void OpenFileWithDefaultApp()
     {
-        if (absolutePath.HasContent() && File.Exists(absolutePath))
+        if (absolutePath.HasContent() && fileSystem.File.Exists(absolutePath))
         {
             Utils.OpenFileWithDefaultApp(absolutePath);
         }

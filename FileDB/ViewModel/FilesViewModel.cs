@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.IO.Abstractions;
 using System.Linq;
 using System.Threading;
 using System.Windows;
@@ -56,13 +57,15 @@ public partial class FilesViewModel : ObservableObject
     private readonly IDbAccessRepository dbAccessRepository;
     private readonly IFilesystemAccessRepository filesystemAccessRepository;
     private readonly IDialogs dialogs;
+    private readonly IFileSystem fileSystem;
 
-    public FilesViewModel(IConfigRepository configRepository, IDbAccessRepository dbAccessRepository, IFilesystemAccessRepository filesystemAccessRepository, IDialogs dialogs)
+    public FilesViewModel(IConfigRepository configRepository, IDbAccessRepository dbAccessRepository, IFilesystemAccessRepository filesystemAccessRepository, IDialogs dialogs, IFileSystem fileSystem)
     {
         this.configRepository = configRepository;
         this.dbAccessRepository = dbAccessRepository;
         this.filesystemAccessRepository = filesystemAccessRepository;
         this.dialogs = dialogs;
+        this.fileSystem = fileSystem;
 
         subdirToScan = configRepository.FilePaths.FilesRootDir;
 
@@ -246,7 +249,7 @@ public partial class FilesViewModel : ObservableObject
     private string GetDateModified(string internalPath)
     {
         var path = filesystemAccessRepository.FilesystemAccess.ToAbsolutePath(internalPath);
-        var dateModified = File.GetLastWriteTime(path);
+        var dateModified = fileSystem.File.GetLastWriteTime(path);
         return dateModified.ToString("yyyy-MM-dd HH:mm");
     }
 
