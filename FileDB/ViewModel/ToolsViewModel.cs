@@ -247,7 +247,7 @@ public partial class ToolsViewModel : ObservableObject
 
         try
         {
-            var exporter = new DatabaseExporter(DatabaseExportDirectory);
+            var exporter = new DatabaseExporter(DatabaseExportDirectory, fileSystem);
             var persons = dbAccessRepository.DbAccess.GetPersons().ToList();
             var locations = dbAccessRepository.DbAccess.GetLocations().ToList();
             var tags = dbAccessRepository.DbAccess.GetTags().ToList();
