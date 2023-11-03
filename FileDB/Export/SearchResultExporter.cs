@@ -1,6 +1,7 @@
 ﻿using FileDB.Model;
 using FileDBShared.FileFormats;
 using FileDBShared.Model;
+using QuestPDF.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -65,14 +66,14 @@ public class SearchResultExporter
         if (exportTypes.Contains(SearchResultExportType.Html))
         {
             var path = Path.Combine(destinationDirectory, "Html");
-            var exporter = new SearchResultHtmlExporter(fileSystem);
+            var exporter = new SearchResultHtmlExporter(fileSystem, filesystemAccessRepository);
             exporter.Export(data, path);
         }
 
         if (exportTypes.Contains(SearchResultExportType.Pdf))
         {
             var path = Path.Combine(destinationDirectory, "export.pdf");
-            var exporter = new SearchResultPdfExporter(fileSystem);
+            var exporter = new SearchResultPdfExporter(fileSystem, filesystemAccessRepository, PageSizes.A4.Landscape());
             exporter.Export(data, path);
         }
     }
