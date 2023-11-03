@@ -1,5 +1,4 @@
 ﻿using FileDBShared.FileFormats;
-using System.IO;
 using System.IO.Abstractions;
 
 namespace FileDB.Export;

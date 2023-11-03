@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace FileDBShared.Model;
+﻿namespace FileDBShared.Model;
 
 public class PersonModel
 {

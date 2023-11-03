@@ -9,6 +9,16 @@ using System.Linq;
 
 namespace FileDB.Export;
 
+public enum SearchResultExportType
+{
+    Files,
+    Html,
+    M3u,
+    FilesWithMetaData, 
+    Json,
+    Pdf
+}
+
 public class SearchResultExporter
 {
     private readonly IDbAccessRepository dbAccessRepository;
@@ -22,44 +32,44 @@ public class SearchResultExporter
         this.fileSystem = fileSystem;
     }
 
-    public void Export(string destinationDirectory, string header, List<FileModel> files, bool exportIncludesFiles, bool exportIncludesHtml, bool exportIncludesM3u, bool exportIncludesFilesWithMetaData, bool exportIncludesJson, bool exportIncludesPdf)
+    public void Export(string destinationDirectory, string header, List<FileModel> files, List<SearchResultExportType> exportTypes)
     {
         var data = GetExportedData(files, header, "UnmodifiedFiles");
 
-        if (exportIncludesFiles)
+        if (exportTypes.Contains(SearchResultExportType.Files))
         {
             new SearchResultFilesExporter().Export(data, destinationDirectory);
         }
 
-        if (exportIncludesFilesWithMetaData)
+        if (exportTypes.Contains(SearchResultExportType.FilesWithMetaData))
         {
             var filesWithDataDirPath = Path.Combine(destinationDirectory, "FilesWithData");
             var exporter = new SearchResultFilesWithOverlayExporter(filesystemAccessRepository, DescriptionPlacement.Subtitle, fileSystem);
             exporter.Export(data, filesWithDataDirPath);
         }
 
-        if (exportIncludesJson)
+        if (exportTypes.Contains(SearchResultExportType.Json))
         {
             var path = Path.Combine(destinationDirectory, "data.json");
             var exporter = new SearchResultJsonExporter(fileSystem);
             exporter.Export(data, path);
         }
 
-        if (exportIncludesM3u)
+        if (exportTypes.Contains(SearchResultExportType.M3u))
         {
             var path = Path.Combine(destinationDirectory, "playlist.m3u");
             var exporter = new SearchResultM3uExporter(fileSystem);
             exporter.Export(data, path);
         }
 
-        if (exportIncludesHtml)
+        if (exportTypes.Contains(SearchResultExportType.Html))
         {
             var path = Path.Combine(destinationDirectory, "Html");
             var exporter = new SearchResultHtmlExporter(fileSystem);
             exporter.Export(data, path);
         }
 
-        if (exportIncludesPdf)
+        if (exportTypes.Contains(SearchResultExportType.Pdf))
         {
             var path = Path.Combine(destinationDirectory, "export.pdf");
             var exporter = new SearchResultPdfExporter(fileSystem);

@@ -3,7 +3,6 @@ using System.Linq;
 using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FileDB.Configuration;
-using FileDB.Extensions;
 using FileDB.Model;
 using FileDB.Notifiers;
 

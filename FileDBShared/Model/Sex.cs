@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace FileDBShared.Model;
+﻿namespace FileDBShared.Model;
 
 // Values from: https://en.wikipedia.org/wiki/ISO/IEC_5218
 public enum Sex

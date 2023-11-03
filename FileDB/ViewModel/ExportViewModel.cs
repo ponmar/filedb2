@@ -5,7 +5,6 @@ using FileDB.Extensions;
 using FileDB.Model;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
 
@@ -93,7 +92,7 @@ namespace FileDB.ViewModel
                 return;
             }
 
-            if (!Directory.Exists(ExportFilesDestinationDirectory))
+            if (!fileSystem.Directory.Exists(ExportFilesDestinationDirectory))
             {
                 dialogs.ShowErrorDialog("Destination directory does not exist");
                 return;
@@ -105,8 +104,33 @@ namespace FileDB.ViewModel
                 return;
             }
 
-            var selection = new List<bool>() { ExportIncludesFiles, ExportIncludesHtml, ExportIncludesM3u, ExportIncludesFilesWithMetaData, ExportIncludesJson, ExportIncludesPdf };
-            if (!selection.Any(x => x))
+            var selections = new List<SearchResultExportType>();
+            if (ExportIncludesFiles)
+            {
+                selections.Add(SearchResultExportType.Files);
+            }
+            if (ExportIncludesHtml)
+            {
+                selections.Add(SearchResultExportType.Html);
+            }
+            if (ExportIncludesM3u)
+            {
+                selections.Add(SearchResultExportType.M3u);
+            }
+            if (ExportIncludesFilesWithMetaData)
+            {
+                selections.Add(SearchResultExportType.FilesWithMetaData);
+            }
+            if (ExportIncludesJson)
+            {
+                selections.Add(SearchResultExportType.Json);
+            }
+            if (ExportIncludesPdf)
+            {
+                selections.Add(SearchResultExportType.Pdf);
+            }
+
+            if (!selections.Any())
             {
                 dialogs.ShowErrorDialog("Nothing to export");
                 return;
@@ -123,8 +147,7 @@ namespace FileDB.ViewModel
                 try
                 {
                     var exporter = new SearchResultExporter(dbAccessRepository, filesystemAccessRepository, fileSystem);
-                    exporter.Export(ExportFilesDestinationDirectory, ExportFilesHeader, SearchResult.Files,
-                        ExportIncludesFiles, ExportIncludesHtml, ExportIncludesM3u, ExportIncludesFilesWithMetaData, ExportIncludesJson, ExportIncludesPdf);
+                    exporter.Export(ExportFilesDestinationDirectory, ExportFilesHeader, SearchResult.Files, selections);
                     dialogs.ShowInfoDialog("Export finished successfully.");
                 }
                 catch (Exception e)
@@ -134,9 +157,9 @@ namespace FileDB.ViewModel
             });
         }
 
-        private static bool IsDirectoryEmpty(string path)
+        private bool IsDirectoryEmpty(string path)
         {
-            return !Directory.EnumerateFileSystemEntries(path).Any();
+            return !fileSystem.Directory.EnumerateFileSystemEntries(path).Any();
         }
     }
 }
