@@ -16,6 +16,7 @@ using System.Globalization;
 using System.IO;
 using FileDB.Extensions;
 using FileDBInterface.DbAccess;
+using QuestPDF.Infrastructure;
 
 namespace FileDB
 {
@@ -28,6 +29,8 @@ namespace FileDB
 
         private void Application_Startup(object sender, StartupEventArgs startupEventArgs)
         {
+            QuestPDF.Settings.License = LicenseType.Community;
+
             Bootstrapper.Bootstrap();
 
             // Needed to fix sorting with Swedish characters right in comboboxes and datagrids

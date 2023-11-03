@@ -49,6 +49,9 @@
                     <CheckBox Style="{StaticResource PageInnerCheckBox}" Margin="3" IsChecked="{Binding ExportIncludesJson}">
                         <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{x:Static rs:Strings.ExportSearchResultMetaDataJSONLabel}"/>
                     </CheckBox>
+                    <CheckBox Style="{StaticResource PageInnerCheckBox}" Margin="3" IsChecked="{Binding ExportIncludesPdf}">
+                        <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{x:Static rs:Strings.ExportSearchResultPdfLabel}"/>
+                    </CheckBox>
                 </StackPanel>
                 <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding ExportCommand}" IsEnabled="{Binding ExportEnabled}" HorizontalAlignment="Center" Content="{x:Static rs:Strings.ExportExportButton}"/>
             </StackPanel>

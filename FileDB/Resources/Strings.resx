@@ -1194,4 +1194,7 @@
   <data name="ToolsDatabaseExportDestinationDirectoryBrowseButton" xml:space="preserve">
     <value>Browse...</value>
   </data>
+  <data name="ExportSearchResultPdfLabel" xml:space="preserve">
+    <value>Pdf with meta-data</value>
+  </data>
 </root>

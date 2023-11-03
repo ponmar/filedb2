@@ -15,6 +15,7 @@
     <PackageReference Include="FluentValidation" Version="11.8.0" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.77" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="QuestPDF" Version="2023.10.1" />
     <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
     <PackageReference Include="System.IO.Abstractions" Version="19.2.69" />
     <PackageReference Include="System.Speech" Version="7.0.0" />

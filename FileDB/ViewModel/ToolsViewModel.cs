@@ -59,7 +59,7 @@ public partial class ToolsViewModel : ObservableObject
     {
         var databasePath = configRepository.FilePaths.DatabasePath;
 
-        if (File.Exists(databasePath))
+        if (fileSystem.File.Exists(databasePath))
         {
             dialogs.ShowErrorDialog(string.Format(Strings.ToolsCreateDatabaseFileAlreadyExists, databasePath));
             return;
@@ -99,7 +99,7 @@ public partial class ToolsViewModel : ObservableObject
     {
         BackupFiles.Clear();
 
-        if (Directory.Exists(configRepository.FilePaths.FilesRootDir))
+        if (fileSystem.Directory.Exists(configRepository.FilePaths.FilesRootDir))
         {
             foreach (var backupFile in new FileBackup(fileSystem, configRepository.FilePaths.DatabasePath).ListAvailableBackupFiles())
             {
@@ -233,13 +233,13 @@ public partial class ToolsViewModel : ObservableObject
     [RelayCommand]
     private void DatabaseExport()
     {
-        if (!Directory.Exists(DatabaseExportDirectory))
+        if (!fileSystem.Directory.Exists(DatabaseExportDirectory))
         {
             dialogs.ShowErrorDialog(Strings.ToolsDatabaseExportNoSuchDirectory);
             return;
         }
 
-        if (Directory.GetFileSystemEntries(DatabaseExportDirectory).Length > 0)
+        if (fileSystem.Directory.GetFileSystemEntries(DatabaseExportDirectory).Length > 0)
         {
             dialogs.ShowErrorDialog(Strings.ToolsDatabaseExportSpecifiedDirectoryIsNotEmpty);
             return;

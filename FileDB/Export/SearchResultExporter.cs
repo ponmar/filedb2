@@ -22,7 +22,7 @@ public class SearchResultExporter
         this.fileSystem = fileSystem;
     }
 
-    public void Export(string destinationDirectory, string header, List<FileModel> files, bool exportIncludesFiles, bool exportIncludesHtml, bool exportIncludesM3u, bool exportIncludesFilesWithMetaData, bool exportIncludesJson)
+    public void Export(string destinationDirectory, string header, List<FileModel> files, bool exportIncludesFiles, bool exportIncludesHtml, bool exportIncludesM3u, bool exportIncludesFilesWithMetaData, bool exportIncludesJson, bool exportIncludesPdf)
     {
         var data = GetExportedData(files, header, "UnmodifiedFiles");
 
@@ -40,23 +40,30 @@ public class SearchResultExporter
 
         if (exportIncludesJson)
         {
-            var jsonPath = Path.Combine(destinationDirectory, "data.json");
+            var path = Path.Combine(destinationDirectory, "data.json");
             var exporter = new SearchResultJsonExporter(fileSystem);
-            exporter.Export(data, jsonPath);
+            exporter.Export(data, path);
         }
 
         if (exportIncludesM3u)
         {
-            var m3uPath = Path.Combine(destinationDirectory, "playlist.m3u");
+            var path = Path.Combine(destinationDirectory, "playlist.m3u");
             var exporter = new SearchResultM3uExporter(fileSystem);
-            exporter.Export(data, m3uPath);
+            exporter.Export(data, path);
         }
 
         if (exportIncludesHtml)
         {
-            var htmlSubdirPath = Path.Combine(destinationDirectory, "Html");
+            var path = Path.Combine(destinationDirectory, "Html");
             var exporter = new SearchResultHtmlExporter(fileSystem);
-            exporter.Export(data, htmlSubdirPath);
+            exporter.Export(data, path);
+        }
+
+        if (exportIncludesPdf)
+        {
+            var path = Path.Combine(destinationDirectory, "export.pdf");
+            var exporter = new SearchResultPdfExporter(fileSystem);
+            exporter.Export(data, path);
         }
     }
 

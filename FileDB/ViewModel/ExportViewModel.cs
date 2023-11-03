@@ -55,6 +55,9 @@ namespace FileDB.ViewModel
         [ObservableProperty]
         private bool exportIncludesJson = true;
 
+        [ObservableProperty]
+        private bool exportIncludesPdf = true;
+
         private readonly IDialogs dialogs;
         private readonly IDbAccessRepository dbAccessRepository;
         private readonly IFilesystemAccessRepository filesystemAccessRepository;
@@ -102,7 +105,7 @@ namespace FileDB.ViewModel
                 return;
             }
 
-            var selection = new List<bool>() { ExportIncludesFiles, ExportIncludesHtml, ExportIncludesM3u, ExportIncludesFilesWithMetaData, ExportIncludesJson };
+            var selection = new List<bool>() { ExportIncludesFiles, ExportIncludesHtml, ExportIncludesM3u, ExportIncludesFilesWithMetaData, ExportIncludesJson, ExportIncludesPdf };
             if (!selection.Any(x => x))
             {
                 dialogs.ShowErrorDialog("Nothing to export");
@@ -121,7 +124,7 @@ namespace FileDB.ViewModel
                 {
                     var exporter = new SearchResultExporter(dbAccessRepository, filesystemAccessRepository, fileSystem);
                     exporter.Export(ExportFilesDestinationDirectory, ExportFilesHeader, SearchResult.Files,
-                        ExportIncludesFiles, ExportIncludesHtml, ExportIncludesM3u, ExportIncludesFilesWithMetaData, ExportIncludesJson);
+                        ExportIncludesFiles, ExportIncludesHtml, ExportIncludesM3u, ExportIncludesFilesWithMetaData, ExportIncludesJson, ExportIncludesPdf);
                     dialogs.ShowInfoDialog("Export finished successfully.");
                 }
                 catch (Exception e)

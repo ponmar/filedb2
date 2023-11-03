@@ -916,6 +916,15 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pdf with meta-data.
+        /// </summary>
+        public static string ExportSearchResultPdfLabel {
+            get {
+                return ResourceManager.GetString("ExportSearchResultPdfLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Export.
         /// </summary>
         public static string ExportTitle {
