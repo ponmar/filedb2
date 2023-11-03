@@ -6,7 +6,7 @@ using System.IO.Abstractions;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using FileDB.Export;
+using FileDB.Export.Database;
 using FileDB.Model;
 using FileDB.Resources;
 using FileDBInterface.DbAccess;
@@ -247,7 +247,7 @@ public partial class ToolsViewModel : ObservableObject
 
         try
         {
-            var exporter = new DatabaseExporter(DatabaseExportDirectory, fileSystem);
+            var exporter = new DatabaseExportHandler(DatabaseExportDirectory, fileSystem);
             var persons = dbAccessRepository.DbAccess.GetPersons().ToList();
             var locations = dbAccessRepository.DbAccess.GetLocations().ToList();
             var tags = dbAccessRepository.DbAccess.GetTags().ToList();

@@ -2,9 +2,9 @@
 using FileDBShared.FileFormats;
 using System.IO.Abstractions;
 
-namespace FileDB.Export;
+namespace FileDB.Export.Database;
 
-public class DatabaseJsonExporter
+public class DatabaseJsonExporter : IDatabaseExporter
 {
     private readonly IFileSystem fileSystem;
 

@@ -4,16 +4,16 @@ using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using System.IO.Abstractions;
 
-namespace FileDB.Export;
+namespace FileDB.Export.SearchResult;
 
-public class SearchResultPdfExporter : ISearchResultExporter
+public class PdfExporter : ISearchResultExporter
 {
     private readonly IFileSystem fileSystem;
     private readonly IFilesystemAccessRepository filesystemAccessRepository;
     private readonly PageSize pageSize;
 
-    public SearchResultPdfExporter(IFileSystem fileSystem, IFilesystemAccessRepository filesystemAccessRepository, PageSize pageSize)
-    { 
+    public PdfExporter(IFileSystem fileSystem, IFilesystemAccessRepository filesystemAccessRepository, PageSize pageSize)
+    {
         this.fileSystem = fileSystem;
         this.filesystemAccessRepository = filesystemAccessRepository;
         this.pageSize = pageSize;

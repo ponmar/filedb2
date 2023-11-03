@@ -5,14 +5,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions;
 
-namespace FileDB.Export;
+namespace FileDB.Export.Database;
 
-public class DatabaseExporter
+public class DatabaseExportHandler
 {
     private readonly string destinationDirectory;
     private readonly IFileSystem fileSystem;
 
-    public DatabaseExporter(string destinationDirectory, IFileSystem fileSystem)
+    public DatabaseExportHandler(string destinationDirectory, IFileSystem fileSystem)
     {
         this.destinationDirectory = destinationDirectory;
         this.fileSystem = fileSystem;

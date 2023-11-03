@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using FileDB.Export;
+using FileDB.Export.SearchResult;
 using FileDB.Extensions;
 using FileDB.Model;
 using System;
@@ -146,7 +146,7 @@ namespace FileDB.ViewModel
                 progress.Report("Exporting...");
                 try
                 {
-                    var exporter = new SearchResultExporter(dbAccessRepository, filesystemAccessRepository, fileSystem);
+                    var exporter = new SearchResultExportHandler(dbAccessRepository, filesystemAccessRepository, fileSystem);
                     exporter.Export(ExportFilesDestinationDirectory, ExportFilesHeader, SearchResult.Files, selections);
                     dialogs.ShowInfoDialog("Export finished successfully.");
                 }

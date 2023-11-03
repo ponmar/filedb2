@@ -8,25 +8,25 @@ using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
 
-namespace FileDB.Export;
+namespace FileDB.Export.SearchResult;
 
 public enum SearchResultExportType
 {
     Files,
     Html,
     M3u,
-    FilesWithMetaData, 
+    FilesWithMetaData,
     Json,
     Pdf
 }
 
-public class SearchResultExporter
+public class SearchResultExportHandler
 {
     private readonly IDbAccessRepository dbAccessRepository;
     private readonly IFilesystemAccessRepository filesystemAccessRepository;
     private readonly IFileSystem fileSystem;
 
-    public SearchResultExporter(IDbAccessRepository dbAccessRepository, IFilesystemAccessRepository filesystemAccessRepository, IFileSystem fileSystem)
+    public SearchResultExportHandler(IDbAccessRepository dbAccessRepository, IFilesystemAccessRepository filesystemAccessRepository, IFileSystem fileSystem)
     {
         this.dbAccessRepository = dbAccessRepository;
         this.filesystemAccessRepository = filesystemAccessRepository;
@@ -39,41 +39,41 @@ public class SearchResultExporter
 
         if (exportTypes.Contains(SearchResultExportType.Files))
         {
-            new SearchResultFilesExporter().Export(data, destinationDirectory);
+            new FilesExporter().Export(data, destinationDirectory);
         }
 
         if (exportTypes.Contains(SearchResultExportType.FilesWithMetaData))
         {
             var filesWithDataDirPath = Path.Combine(destinationDirectory, "FilesWithData");
-            var exporter = new SearchResultFilesWithOverlayExporter(filesystemAccessRepository, DescriptionPlacement.Subtitle, fileSystem);
+            var exporter = new FilesWithOverlayExporter(filesystemAccessRepository, DescriptionPlacement.Subtitle, fileSystem);
             exporter.Export(data, filesWithDataDirPath);
         }
 
         if (exportTypes.Contains(SearchResultExportType.Json))
         {
             var path = Path.Combine(destinationDirectory, "data.json");
-            var exporter = new SearchResultJsonExporter(fileSystem);
+            var exporter = new JsonExporter(fileSystem);
             exporter.Export(data, path);
         }
 
         if (exportTypes.Contains(SearchResultExportType.M3u))
         {
             var path = Path.Combine(destinationDirectory, "playlist.m3u");
-            var exporter = new SearchResultM3uExporter(fileSystem);
+            var exporter = new M3uExporter(fileSystem);
             exporter.Export(data, path);
         }
 
         if (exportTypes.Contains(SearchResultExportType.Html))
         {
             var path = Path.Combine(destinationDirectory, "Html");
-            var exporter = new SearchResultHtmlExporter(fileSystem, filesystemAccessRepository);
+            var exporter = new HtmlExporter(fileSystem, filesystemAccessRepository);
             exporter.Export(data, path);
         }
 
         if (exportTypes.Contains(SearchResultExportType.Pdf))
         {
             var path = Path.Combine(destinationDirectory, "export.pdf");
-            var exporter = new SearchResultPdfExporter(fileSystem, filesystemAccessRepository, PageSizes.A4.Landscape());
+            var exporter = new PdfExporter(fileSystem, filesystemAccessRepository, PageSizes.A4.Landscape());
             exporter.Export(data, path);
         }
     }

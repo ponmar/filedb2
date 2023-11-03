@@ -7,14 +7,14 @@ using System.IO.Abstractions;
 using System.Linq;
 using System.Web;
 
-namespace FileDB.Export;
+namespace FileDB.Export.SearchResult;
 
-public class SearchResultHtmlExporter : ISearchResultExporter
+public class HtmlExporter : ISearchResultExporter
 {
     private readonly IFileSystem fileSystem;
     private readonly IFilesystemAccessRepository filesystemAccessRepository;
 
-    public SearchResultHtmlExporter(IFileSystem fileSystem, IFilesystemAccessRepository filesystemAccessRepository)
+    public HtmlExporter(IFileSystem fileSystem, IFilesystemAccessRepository filesystemAccessRepository)
     {
         this.fileSystem = fileSystem;
         this.filesystemAccessRepository = filesystemAccessRepository;
@@ -22,7 +22,7 @@ public class SearchResultHtmlExporter : ISearchResultExporter
 
     public void Export(SearchResultExport data, string destinationDirPath)
     {
-        if (!Directory.Exists(destinationDirPath))
+        if (!fileSystem.Directory.Exists(destinationDirPath))
         {
             fileSystem.Directory.CreateDirectory(destinationDirPath);
         }

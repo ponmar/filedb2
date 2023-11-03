@@ -1,13 +1,13 @@
 ﻿using FileDBShared.FileFormats;
 using System.IO.Abstractions;
 
-namespace FileDB.Export;
+namespace FileDB.Export.SearchResult;
 
-public class SearchResultM3uExporter : ISearchResultExporter
+public class M3uExporter : ISearchResultExporter
 {
     private readonly IFileSystem fileSystem;
 
-    public SearchResultM3uExporter(IFileSystem fileSystem)
+    public M3uExporter(IFileSystem fileSystem)
     {
         this.fileSystem = fileSystem;
     }

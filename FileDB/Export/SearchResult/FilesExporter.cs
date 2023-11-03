@@ -3,9 +3,9 @@ using FileDBShared.FileFormats;
 using System.IO;
 using System.IO.Abstractions;
 
-namespace FileDB.Export;
+namespace FileDB.Export.SearchResult;
 
-public class SearchResultFilesExporter : ISearchResultExporter
+public class FilesExporter : ISearchResultExporter
 {
     public void Export(SearchResultExport data, string path)
     {

@@ -2,13 +2,13 @@
 using FileDBShared.FileFormats;
 using System.IO.Abstractions;
 
-namespace FileDB.Export;
+namespace FileDB.Export.SearchResult;
 
-public class SearchResultJsonExporter : ISearchResultExporter
+public class JsonExporter : ISearchResultExporter
 {
     private readonly IFileSystem fileSystem;
 
-    public SearchResultJsonExporter(IFileSystem fileSystem)
+    public JsonExporter(IFileSystem fileSystem)
     {
         this.fileSystem = fileSystem;
     }

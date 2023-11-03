@@ -1,6 +1,6 @@
 ﻿using FileDBShared.FileFormats;
 
-namespace FileDB.Export;
+namespace FileDB.Export.SearchResult;
 
 public interface ISearchResultExporter
 {

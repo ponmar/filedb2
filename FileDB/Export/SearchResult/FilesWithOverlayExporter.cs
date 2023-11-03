@@ -9,7 +9,7 @@ using FileDBShared.FileFormats;
 using FileDB.Model;
 using System.IO.Abstractions;
 
-namespace FileDB.Export;
+namespace FileDB.Export.SearchResult;
 
 enum TextType { Normal, Heading }
 
@@ -17,7 +17,7 @@ record TextLine(string Text, TextType Type);
 
 public enum DescriptionPlacement { Heading, Subtitle }
 
-public class SearchResultFilesWithOverlayExporter : ISearchResultExporter
+public class FilesWithOverlayExporter : ISearchResultExporter
 {
     private const int EmptyLineHeight = 15;
     private const int BackgroundMargin = 20;
@@ -28,7 +28,7 @@ public class SearchResultFilesWithOverlayExporter : ISearchResultExporter
     private readonly DescriptionPlacement descriptionPlacement;
     private readonly IFileSystem fileSystem;
 
-    public SearchResultFilesWithOverlayExporter(IFilesystemAccessRepository filesystemAccessRepository, DescriptionPlacement descriptionPlacement, IFileSystem fileSystem)
+    public FilesWithOverlayExporter(IFilesystemAccessRepository filesystemAccessRepository, DescriptionPlacement descriptionPlacement, IFileSystem fileSystem)
     {
         this.filesystemAccessRepository = filesystemAccessRepository;
         this.descriptionPlacement = descriptionPlacement;
@@ -96,7 +96,7 @@ public class SearchResultFilesWithOverlayExporter : ISearchResultExporter
         var pictureDateText = string.Empty;
         if (file.Datetime != null)
         {
-            pictureDateText = $"{SearchResultHtmlExporter.CreateExportedFileDatetime(file.Datetime)}";
+            pictureDateText = $"{HtmlExporter.CreateExportedFileDatetime(file.Datetime)}";
         }
         var pictureDescription = string.Empty;
         if (file.Description != null && descriptionPlacement == DescriptionPlacement.Heading)
@@ -187,7 +187,7 @@ public class SearchResultFilesWithOverlayExporter : ISearchResultExporter
 
             DrawLines(textLines, graphics, font, headingFont, rect, lineHeight);
         }
-        
+
         if (subtitleLines.Count > 0)
         {
             var (rect, lineHeight) = MeasureLines(subtitleLines, graphics, font, headingFont);
