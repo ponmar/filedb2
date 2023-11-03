@@ -1,10 +1,18 @@
 ﻿using FileDBShared.FileFormats;
 using System.IO;
+using System.IO.Abstractions;
 
 namespace FileDB.Export;
 
 public class SearchResultM3uExporter : ISearchResultExporter
 {
+    private readonly IFileSystem fileSystem;
+
+    public SearchResultM3uExporter(IFileSystem fileSystem)
+    {
+        this.fileSystem = fileSystem;
+    }
+
     public void Export(SearchResultExport data, string filename)
     {
         var m3uLinebreak = "\r\n";
@@ -17,6 +25,6 @@ public class SearchResultM3uExporter : ISearchResultExporter
             content += $"{file.ExportedPath}{m3uLinebreak}";
         }
 
-        File.WriteAllText(filename, content);
+        fileSystem.File.WriteAllText(filename, content);
     }
 }

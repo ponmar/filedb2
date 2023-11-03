@@ -6,6 +6,7 @@ using FileDB.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Abstractions;
 using System.Linq;
 
 namespace FileDB.ViewModel
@@ -57,12 +58,14 @@ namespace FileDB.ViewModel
         private readonly IDialogs dialogs;
         private readonly IDbAccessRepository dbAccessRepository;
         private readonly IFilesystemAccessRepository filesystemAccessRepository;
+        private readonly IFileSystem fileSystem;
 
-        public ExportViewModel(IDialogs dialogs, IDbAccessRepository dbAccessRepository, IFilesystemAccessRepository filesystemAccessRepository)
+        public ExportViewModel(IDialogs dialogs, IDbAccessRepository dbAccessRepository, IFilesystemAccessRepository filesystemAccessRepository, IFileSystem fileSystem)
         {
             this.dialogs = dialogs;
             this.dbAccessRepository = dbAccessRepository;
             this.filesystemAccessRepository = filesystemAccessRepository;
+            this.fileSystem = fileSystem;
         }
 
         [RelayCommand]
@@ -116,11 +119,12 @@ namespace FileDB.ViewModel
                 progress.Report("Exporting...");
                 try
                 {
-                    new SearchResultExporter(dbAccessRepository, filesystemAccessRepository).Export(ExportFilesDestinationDirectory, ExportFilesHeader, SearchResult.Files,
-                    ExportIncludesFiles, ExportIncludesHtml, ExportIncludesM3u, ExportIncludesFilesWithMetaData, ExportIncludesJson);
+                    var exporter = new SearchResultExporter(dbAccessRepository, filesystemAccessRepository, fileSystem);
+                    exporter.Export(ExportFilesDestinationDirectory, ExportFilesHeader, SearchResult.Files,
+                        ExportIncludesFiles, ExportIncludesHtml, ExportIncludesM3u, ExportIncludesFilesWithMetaData, ExportIncludesJson);
                     dialogs.ShowInfoDialog("Export finished successfully.");
                 }
-                catch (IOException e)
+                catch (Exception e)
                 {
                     dialogs.ShowErrorDialog("Export error: " + e.Message);
                 }

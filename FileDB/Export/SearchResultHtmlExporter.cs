@@ -3,6 +3,7 @@ using FileDBShared.FileFormats;
 using FileDBShared.Model;
 using FileDBShared.Validators;
 using System.IO;
+using System.IO.Abstractions;
 using System.Linq;
 using System.Web;
 
@@ -10,11 +11,18 @@ namespace FileDB.Export;
 
 public class SearchResultHtmlExporter : ISearchResultExporter
 {
+    private readonly IFileSystem fileSystem;
+
+    public SearchResultHtmlExporter(IFileSystem fileSystem)
+    {
+        this.fileSystem = fileSystem;
+    }
+
     public void Export(SearchResultExport data, string destinationDirPath)
     {
         if (!Directory.Exists(destinationDirPath))
         {
-            Directory.CreateDirectory(destinationDirPath);
+            fileSystem.Directory.CreateDirectory(destinationDirPath);
         }
 
         var documentBase =
@@ -68,7 +76,7 @@ public class SearchResultHtmlExporter : ISearchResultExporter
             var sourceFilePath = fileSyustemAccess.FilesystemAccess.ToAbsolutePath(file.OriginalPath);
             var destinationFilename = Path.GetFileName(file.ExportedPath);
             var destFilePath = Path.Combine(destinationDirPath, destinationFilename);
-            File.Copy(sourceFilePath, destFilePath);
+            fileSystem.File.Copy(sourceFilePath, destFilePath);
 
             var pictureDateText = string.Empty;
             if (file.Datetime != null)
@@ -131,7 +139,7 @@ public class SearchResultHtmlExporter : ISearchResultExporter
             .Replace("%APPLICATION_NAME%", Utils.ApplicationName);
 
         var htmlPath = Path.Combine(destinationDirPath, "index.html");
-        File.WriteAllText(htmlPath, html);
+        fileSystem.File.WriteAllText(htmlPath, html);
     }
 
     public static string? CreateExportedFileDatetime(string fileDatetime)

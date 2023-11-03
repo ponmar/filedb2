@@ -7,6 +7,7 @@ using System;
 using FileDBShared.Validators;
 using FileDBShared.FileFormats;
 using FileDB.Model;
+using System.IO.Abstractions;
 
 namespace FileDB.Export;
 
@@ -25,18 +26,20 @@ public class SearchResultFilesWithOverlayExporter : ISearchResultExporter
 
     private readonly IFilesystemAccessRepository filesystemAccessRepository;
     private readonly DescriptionPlacement descriptionPlacement;
+    private readonly IFileSystem fileSystem;
 
-    public SearchResultFilesWithOverlayExporter(IFilesystemAccessRepository filesystemAccessRepository, DescriptionPlacement descriptionPlacement)
+    public SearchResultFilesWithOverlayExporter(IFilesystemAccessRepository filesystemAccessRepository, DescriptionPlacement descriptionPlacement, IFileSystem fileSystem)
     {
         this.filesystemAccessRepository = filesystemAccessRepository;
         this.descriptionPlacement = descriptionPlacement;
+        this.fileSystem = fileSystem;
     }
 
     public void Export(SearchResultExport data, string path)
     {
-        if (!Directory.Exists(path))
+        if (!fileSystem.Directory.Exists(path))
         {
-            Directory.CreateDirectory(path);
+            fileSystem.Directory.CreateDirectory(path);
         }
 
         int index = 1;
@@ -157,6 +160,7 @@ public class SearchResultFilesWithOverlayExporter : ISearchResultExporter
         try
         {
             var sourceFilePath = filesystemAccessRepository.FilesystemAccess.ToAbsolutePath(file.OriginalPath);
+            // TODO: how to load bitmap from FileSystem?
             return new Bitmap(sourceFilePath);
         }
         catch
@@ -243,6 +247,7 @@ public class SearchResultFilesWithOverlayExporter : ISearchResultExporter
 
     private void SaveBitmap(Bitmap bitmap, string path)
     {
+        // TODO: how to save bitmap to FileSystem?
         bitmap.Save(path, ImageFormat.Png);
     }
 }

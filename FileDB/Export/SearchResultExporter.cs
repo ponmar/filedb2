@@ -4,6 +4,7 @@ using FileDBShared.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Abstractions;
 using System.Linq;
 
 namespace FileDB.Export;
@@ -12,11 +13,13 @@ public class SearchResultExporter
 {
     private readonly IDbAccessRepository dbAccessRepository;
     private readonly IFilesystemAccessRepository filesystemAccessRepository;
+    private readonly IFileSystem fileSystem;
 
-    public SearchResultExporter(IDbAccessRepository dbAccessRepository, IFilesystemAccessRepository filesystemAccessRepository)
+    public SearchResultExporter(IDbAccessRepository dbAccessRepository, IFilesystemAccessRepository filesystemAccessRepository, IFileSystem fileSystem)
     {
         this.dbAccessRepository = dbAccessRepository;
         this.filesystemAccessRepository = filesystemAccessRepository;
+        this.fileSystem = fileSystem;
     }
 
     public void Export(string destinationDirectory, string header, List<FileModel> files, bool exportIncludesFiles, bool exportIncludesHtml, bool exportIncludesM3u, bool exportIncludesFilesWithMetaData, bool exportIncludesJson)
@@ -31,27 +34,29 @@ public class SearchResultExporter
         if (exportIncludesFilesWithMetaData)
         {
             var filesWithDataDirPath = Path.Combine(destinationDirectory, "FilesWithData");
-            new SearchResultFilesWithOverlayExporter(
-                filesystemAccessRepository,
-                DescriptionPlacement.Subtitle).Export(data, filesWithDataDirPath);
+            var exporter = new SearchResultFilesWithOverlayExporter(filesystemAccessRepository, DescriptionPlacement.Subtitle, fileSystem);
+            exporter.Export(data, filesWithDataDirPath);
         }
 
         if (exportIncludesJson)
         {
             var jsonPath = Path.Combine(destinationDirectory, "data.json");
-            new SearchResultJsonExporter().Export(data, jsonPath);
+            var exporter = new SearchResultJsonExporter(fileSystem);
+            exporter.Export(data, jsonPath);
         }
 
         if (exportIncludesM3u)
         {
             var m3uPath = Path.Combine(destinationDirectory, "playlist.m3u");
-            new SearchResultM3uExporter().Export(data, m3uPath);
+            var exporter = new SearchResultM3uExporter(fileSystem);
+            exporter.Export(data, m3uPath);
         }
 
         if (exportIncludesHtml)
         {
             var htmlSubdirPath = Path.Combine(destinationDirectory, "Html");
-            new SearchResultHtmlExporter().Export(data, htmlSubdirPath);
+            var exporter = new SearchResultHtmlExporter(fileSystem);
+            exporter.Export(data, htmlSubdirPath);
         }
     }
 
