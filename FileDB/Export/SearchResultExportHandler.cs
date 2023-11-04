@@ -1,4 +1,5 @@
-﻿using FileDB.Model;
+﻿using FileDB.Export.SearchResult;
+using FileDB.Model;
 using FileDBShared.FileFormats;
 using FileDBShared.Model;
 using QuestPDF.Helpers;
@@ -8,7 +9,7 @@ using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
 
-namespace FileDB.Export.SearchResult;
+namespace FileDB.Export;
 
 public enum SearchResultExportType
 {

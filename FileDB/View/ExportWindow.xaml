@@ -23,6 +23,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
                         <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
 
                     <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageInnerTextBlock}" Margin="3" Text="{x:Static rs:Strings.ExportHeaderLabel}" VerticalAlignment="Center"/>
@@ -31,28 +32,31 @@
                     <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageInnerTextBlock}" Margin="3" Text="{x:Static rs:Strings.ExportDestinationLabel}" VerticalAlignment="Center"/>
                     <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource PageInnerTextBox}" Margin="3" Width="200" VerticalAlignment="Center" Text="{Binding ExportFilesDestinationDirectory, UpdateSourceTrigger=PropertyChanged}" ToolTip="{x:Static rs:Strings.ExportHeaderToolTip}"/>
                     <Button Grid.Row="1" Grid.Column="2" Style="{StaticResource NormalButton}" Margin="3" VerticalAlignment="Center" Command="{Binding BrowseDestinationDirectoryCommand}" Content="{x:Static rs:Strings.ExportBrowseButton}"/>
+
+
+                    <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource PageInnerTextBlock}" Margin="3" Text="{x:Static rs:Strings.ExportDataLabel}"/>
+                    <StackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Vertical">
+                        <CheckBox Style="{StaticResource PageInnerCheckBox}" Margin="3" IsChecked="{Binding ExportIncludesFiles}">
+                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{x:Static rs:Strings.ExportSearchResultFilesLabel}"/>
+                        </CheckBox>
+                        <CheckBox Style="{StaticResource PageInnerCheckBox}" Margin="15,3,3,3" IsChecked="{Binding ExportIncludesM3u}">
+                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{x:Static rs:Strings.ExportM3UPlaylistLabel}"/>
+                        </CheckBox>
+                        <CheckBox Style="{StaticResource PageInnerCheckBox}" Margin="3" IsChecked="{Binding ExportIncludesHtml}">
+                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{x:Static rs:Strings.ExportHTMLWithMetaDataAndSearchResultFilesLabel}"/>
+                        </CheckBox>
+                        <CheckBox Style="{StaticResource PageInnerCheckBox}" Margin="3" IsChecked="{Binding ExportIncludesFilesWithMetaData}">
+                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{x:Static rs:Strings.ExportSearchResultFilesWithMetaDataLabel}"/>
+                        </CheckBox>
+                        <CheckBox Style="{StaticResource PageInnerCheckBox}" Margin="3" IsChecked="{Binding ExportIncludesJson}">
+                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{x:Static rs:Strings.ExportSearchResultMetaDataJSONLabel}"/>
+                        </CheckBox>
+                        <CheckBox Style="{StaticResource PageInnerCheckBox}" Margin="3" IsChecked="{Binding ExportIncludesPdf}">
+                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{x:Static rs:Strings.ExportSearchResultPdfLabel}"/>
+                        </CheckBox>
+                    </StackPanel>
                 </Grid>
                 
-                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="10">
-                    <CheckBox Style="{StaticResource PageInnerCheckBox}" Margin="3" IsChecked="{Binding ExportIncludesFiles}">
-                        <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{x:Static rs:Strings.ExportSearchResultFilesLabel}"/>
-                    </CheckBox>
-                    <CheckBox Style="{StaticResource PageInnerCheckBox}" Margin="15,3,3,3" IsChecked="{Binding ExportIncludesM3u}">
-                        <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{x:Static rs:Strings.ExportM3UPlaylistLabel}"/>
-                    </CheckBox>
-                    <CheckBox Style="{StaticResource PageInnerCheckBox}" Margin="3" IsChecked="{Binding ExportIncludesHtml}">
-                        <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{x:Static rs:Strings.ExportHTMLWithMetaDataAndSearchResultFilesLabel}"/>
-                    </CheckBox>
-                    <CheckBox Style="{StaticResource PageInnerCheckBox}" Margin="3" IsChecked="{Binding ExportIncludesFilesWithMetaData}">
-                        <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{x:Static rs:Strings.ExportSearchResultFilesWithMetaDataLabel}"/>
-                    </CheckBox>
-                    <CheckBox Style="{StaticResource PageInnerCheckBox}" Margin="3" IsChecked="{Binding ExportIncludesJson}">
-                        <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{x:Static rs:Strings.ExportSearchResultMetaDataJSONLabel}"/>
-                    </CheckBox>
-                    <CheckBox Style="{StaticResource PageInnerCheckBox}" Margin="3" IsChecked="{Binding ExportIncludesPdf}">
-                        <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{x:Static rs:Strings.ExportSearchResultPdfLabel}"/>
-                    </CheckBox>
-                </StackPanel>
                 <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding ExportCommand}" IsEnabled="{Binding ExportEnabled}" HorizontalAlignment="Center" Content="{x:Static rs:Strings.ExportExportButton}"/>
             </StackPanel>
         </Border>

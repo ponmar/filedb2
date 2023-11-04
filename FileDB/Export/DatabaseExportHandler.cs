@@ -1,11 +1,12 @@
-﻿using FileDBShared.FileFormats;
+﻿using FileDB.Export.Database;
+using FileDBShared.FileFormats;
 using FileDBShared.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions;
 
-namespace FileDB.Export.Database;
+namespace FileDB.Export;
 
 public class DatabaseExportHandler
 {

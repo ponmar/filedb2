@@ -466,7 +466,7 @@
     <value>Create</value>
   </data>
   <data name="ExportTitle" xml:space="preserve">
-    <value>Export</value>
+    <value>Export Search Result</value>
   </data>
   <data name="ExportHeaderLabel" xml:space="preserve">
     <value>Header:</value>
@@ -481,19 +481,19 @@
     <value>Browse...</value>
   </data>
   <data name="ExportSearchResultFilesLabel" xml:space="preserve">
-    <value>Search result files</value>
+    <value>Files</value>
   </data>
   <data name="ExportM3UPlaylistLabel" xml:space="preserve">
     <value>M3U playlist</value>
   </data>
   <data name="ExportHTMLWithMetaDataAndSearchResultFilesLabel" xml:space="preserve">
-    <value>HTML with meta-data and search result files</value>
+    <value>HTML with files and meta-data</value>
   </data>
   <data name="ExportSearchResultFilesWithMetaDataLabel" xml:space="preserve">
-    <value>Search result files with meta-data</value>
+    <value>Files with meta-data</value>
   </data>
   <data name="ExportSearchResultMetaDataJSONLabel" xml:space="preserve">
-    <value>Search result meta-data (JSON)</value>
+    <value>Meta-data (JSON)</value>
   </data>
   <data name="ExportExportButton" xml:space="preserve">
     <value>Export...</value>
@@ -1195,6 +1195,9 @@
     <value>Browse...</value>
   </data>
   <data name="ExportSearchResultPdfLabel" xml:space="preserve">
-    <value>Pdf with meta-data</value>
+    <value>PDF with files and meta-data</value>
+  </data>
+  <data name="ExportDataLabel" xml:space="preserve">
+    <value>Data to export:</value>
   </data>
 </root>

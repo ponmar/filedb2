@@ -835,6 +835,15 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data to export:.
+        /// </summary>
+        public static string ExportDataLabel {
+            get {
+                return ResourceManager.GetString("ExportDataLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Destination directory:.
         /// </summary>
         public static string ExportDestinationLabel {
@@ -871,7 +880,7 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to HTML with meta-data and search result files.
+        ///   Looks up a localized string similar to HTML with files and meta-data.
         /// </summary>
         public static string ExportHTMLWithMetaDataAndSearchResultFilesLabel {
             get {
@@ -889,7 +898,7 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search result files.
+        ///   Looks up a localized string similar to Files.
         /// </summary>
         public static string ExportSearchResultFilesLabel {
             get {
@@ -898,7 +907,7 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search result files with meta-data.
+        ///   Looks up a localized string similar to Files with meta-data.
         /// </summary>
         public static string ExportSearchResultFilesWithMetaDataLabel {
             get {
@@ -907,7 +916,7 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search result meta-data (JSON).
+        ///   Looks up a localized string similar to Meta-data (JSON).
         /// </summary>
         public static string ExportSearchResultMetaDataJSONLabel {
             get {
@@ -916,7 +925,7 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pdf with meta-data.
+        ///   Looks up a localized string similar to PDF with files and meta-data.
         /// </summary>
         public static string ExportSearchResultPdfLabel {
             get {
@@ -925,7 +934,7 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Export.
+        ///   Looks up a localized string similar to Export Search Result.
         /// </summary>
         public static string ExportTitle {
             get {

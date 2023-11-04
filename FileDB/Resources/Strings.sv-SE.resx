@@ -466,7 +466,7 @@
     <value>Skapa</value>
   </data>
   <data name="ExportTitle" xml:space="preserve">
-    <value>Exportera</value>
+    <value>Exportera sökresultat</value>
   </data>
   <data name="ExportHeaderLabel" xml:space="preserve">
     <value>Header:</value>
@@ -481,19 +481,19 @@
     <value>Bläddra...</value>
   </data>
   <data name="ExportSearchResultFilesLabel" xml:space="preserve">
-    <value>Sökresultatfiler</value>
+    <value>Filer</value>
   </data>
   <data name="ExportM3UPlaylistLabel" xml:space="preserve">
     <value>M3U spellista</value>
   </data>
   <data name="ExportHTMLWithMetaDataAndSearchResultFilesLabel" xml:space="preserve">
-    <value>HTML med metadata och sökresultatfiler</value>
+    <value>HTML med filer och metadata</value>
   </data>
   <data name="ExportSearchResultFilesWithMetaDataLabel" xml:space="preserve">
-    <value>Sökresultatfiler med metadata</value>
+    <value>Filer med metadata</value>
   </data>
   <data name="ExportSearchResultMetaDataJSONLabel" xml:space="preserve">
-    <value>Metadata för sökresultat (JSON)</value>
+    <value>Metadata (JSON)</value>
   </data>
   <data name="ExportExportButton" xml:space="preserve">
     <value>Exportera...</value>
@@ -1193,5 +1193,11 @@
   </data>
   <data name="ToolsNoMissingFilesFound" xml:space="preserve">
     <value>Ingen meta-data för saknade filer hittades.</value>
+  </data>
+  <data name="ExportSearchResultPdfLabel" xml:space="preserve">
+    <value>PDF med filer och metadata</value>
+  </data>
+  <data name="ExportDataLabel" xml:space="preserve">
+    <value>Data att exportera:</value>
   </data>
 </root>

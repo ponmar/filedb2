@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using FileDB.Export.SearchResult;
+using FileDB.Export;
 using FileDB.Extensions;
 using FileDB.Model;
 using System;
