@@ -17,7 +17,7 @@ public record ExportedFile(
     List<int> TagIds);
 
 public record SearchResultExport(
-    string Header,
+    string Name,
     string About,
     string FileList,
     List<ExportedFile> Files,

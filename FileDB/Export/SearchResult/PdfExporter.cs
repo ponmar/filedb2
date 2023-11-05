@@ -31,7 +31,7 @@ public class PdfExporter : ISearchResultExporter
             {
                 frontPage.Margin(10);
                 frontPage.Size(pageSize);
-                frontPage.Content().AlignCenter().AlignMiddle().Text(data.Header).SemiBold().FontSize(32).FontColor(Colors.Blue.Darken2);
+                frontPage.Content().AlignCenter().AlignMiddle().Text(data.Name).SemiBold().FontSize(32).FontColor(Colors.Blue.Darken2);
                 frontPage.Footer().AlignCenter().Text(data.About);
             });
 

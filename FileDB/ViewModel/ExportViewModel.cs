@@ -19,12 +19,13 @@ namespace FileDB.ViewModel
         private string? exportFilesDestinationDirectory;
 
         [ObservableProperty]
-        private string exportFilesHeader = $"{Utils.ApplicationName} Export";
+        [NotifyPropertyChangedFor(nameof(ExportEnabled))]
+        private string exportName = $"{Utils.ApplicationName} Export";
 
         [ObservableProperty]
         private bool exportIncludesFiles = true;
 
-        public bool ExportEnabled => ExportFilesDestinationDirectory.HasContent();
+        public bool ExportEnabled => ExportName.HasContent() && ExportFilesDestinationDirectory.HasContent();
 
         partial void OnExportIncludesFilesChanged(bool value)
         {
@@ -80,18 +81,6 @@ namespace FileDB.ViewModel
         [RelayCommand]
         private void Export()
         {
-            if (!ExportFilesHeader.HasContent())
-            {
-                dialogs.ShowErrorDialog("No header specified");
-                return;
-            }
-
-            if (!ExportFilesDestinationDirectory.HasContent())
-            {
-                dialogs.ShowErrorDialog("No destination directory specified");
-                return;
-            }
-
             if (!fileSystem.Directory.Exists(ExportFilesDestinationDirectory))
             {
                 dialogs.ShowErrorDialog("Destination directory does not exist");
@@ -147,7 +136,7 @@ namespace FileDB.ViewModel
                 try
                 {
                     var exporter = new SearchResultExportHandler(dbAccessRepository, filesystemAccessRepository, fileSystem);
-                    exporter.Export(ExportFilesDestinationDirectory, ExportFilesHeader, SearchResult.Files, selections);
+                    exporter.Export(ExportFilesDestinationDirectory, ExportName, SearchResult.Files, selections);
                     dialogs.ShowInfoDialog("Export finished successfully.");
                 }
                 catch (Exception e)

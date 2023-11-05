@@ -27,7 +27,7 @@
                     </Grid.RowDefinitions>
 
                     <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageInnerTextBlock}" Margin="3" Text="{x:Static rs:Strings.ExportHeaderLabel}" VerticalAlignment="Center"/>
-                    <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource PageInnerTextBox}" Margin="3" VerticalAlignment="Center" Text="{Binding ExportFilesHeader}" ToolTip="{x:Static rs:Strings.ExportHeaderToolTip}"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource PageInnerTextBox}" Margin="3" VerticalAlignment="Center" Text="{Binding ExportName, UpdateSourceTrigger=PropertyChanged}" ToolTip="{x:Static rs:Strings.ExportHeaderToolTip}"/>
 
                     <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageInnerTextBlock}" Margin="3" Text="{x:Static rs:Strings.ExportDestinationLabel}" VerticalAlignment="Center"/>
                     <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource PageInnerTextBox}" Margin="3" Width="200" VerticalAlignment="Center" Text="{Binding ExportFilesDestinationDirectory, UpdateSourceTrigger=PropertyChanged}" ToolTip="{x:Static rs:Strings.ExportHeaderToolTip}"/>

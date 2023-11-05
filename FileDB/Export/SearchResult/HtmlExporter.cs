@@ -132,7 +132,7 @@ public class HtmlExporter : ISearchResultExporter
         }
 
         var html = documentBase
-            .Replace("%HEADER%", HttpUtility.HtmlEncode(data.Header))
+            .Replace("%HEADER%", HttpUtility.HtmlEncode(data.Name))
             .Replace("%ABOUT%", HttpUtility.HtmlEncode(data.About))
             .Replace("%CONTENT%", content)
             .Replace("%APPLICATION_DOWNLOAD_URL%", data.ApplicationDownloadUrl)

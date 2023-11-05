@@ -34,9 +34,9 @@ public class SearchResultExportHandler
         this.fileSystem = fileSystem;
     }
 
-    public void Export(string destinationDirectory, string header, List<FileModel> files, List<SearchResultExportType> exportTypes)
+    public void Export(string destinationDirectory, string name, List<FileModel> files, List<SearchResultExportType> exportTypes)
     {
-        var data = GetExportedData(files, header, "UnmodifiedFiles");
+        var data = GetExportedData(files, name, "UnmodifiedFiles");
 
         if (exportTypes.Contains(SearchResultExportType.Files))
         {
@@ -79,7 +79,7 @@ public class SearchResultExportHandler
         }
     }
 
-    private SearchResultExport GetExportedData(List<FileModel> files, string header, string filesSubdir)
+    private SearchResultExport GetExportedData(List<FileModel> files, string name, string filesSubdir)
     {
         var exportedFiles = new List<ExportedFile>();
         var persons = new List<PersonModel>();
@@ -134,7 +134,7 @@ public class SearchResultExportHandler
         }
 
         return new SearchResultExport(
-            header,
+            name,
             $"Created with {Utils.ApplicationName} {Utils.GetVersionString()} {DateTime.Now:yyyy-MM-dd HH:mm}",
             Utils.CreateFileList(files.Select(x => x.Id)),
             exportedFiles,
