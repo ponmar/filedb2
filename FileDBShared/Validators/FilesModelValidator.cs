@@ -32,7 +32,7 @@ public class FileModelValidator : AbstractValidator<FileModel>
 
     private bool IsInternalFilePath(string path)
     {
-        return !string.IsNullOrEmpty(path) && !path.Contains(@"\") && !path.StartsWith("/") && !path.EndsWith("/");
+        return !string.IsNullOrEmpty(path) && !path.Contains('\\') && !path.StartsWith("/") && !path.EndsWith("/");
     }
 
     public static bool ValidateDescription(string? description)

@@ -135,7 +135,7 @@ public class SearchResultExportHandler
 
         return new SearchResultExport(
             header,
-            $"Exported with {Utils.ApplicationName} version {Utils.GetVersionString()} at {DateTime.Now:yyyy-MM-dd HH:mm}",
+            $"Created with {Utils.ApplicationName} {Utils.GetVersionString()} {DateTime.Now:yyyy-MM-dd HH:mm}",
             Utils.CreateFileList(files.Select(x => x.Id)),
             exportedFiles,
             persons,
