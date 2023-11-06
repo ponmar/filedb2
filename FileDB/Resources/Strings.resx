@@ -376,7 +376,7 @@
     <value>Enable demo configuration to play around with</value>
   </data>
   <data name="AboutDownloadsReleases" xml:space="preserve">
-    <value>Releases:</value>
+    <value>Official releases:</value>
   </data>
   <data name="AboutDownloadsClickToOpen" xml:space="preserve">
     <value>Click to open</value>
@@ -1199,5 +1199,14 @@
   </data>
   <data name="ExportDataLabel" xml:space="preserve">
     <value>Data to export:</value>
+  </data>
+  <data name="AboutAppVersion" xml:space="preserve">
+    <value>Version:</value>
+  </data>
+  <data name="AboutAppAuthor" xml:space="preserve">
+    <value>Author:</value>
+  </data>
+  <data name="AboutAppProjectWebsite" xml:space="preserve">
+    <value>Project website:</value>
   </data>
 </root>

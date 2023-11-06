@@ -13,9 +13,40 @@
         <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageHeading}" Text="{x:Static rs:Strings.AboutTitle}"/>
         <ScrollViewer>
             <StackPanel Orientation="Vertical" Style="{StaticResource PageStackPanel}">
-                <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.AboutVersionTitle}"/>
+                <TextBlock Style="{StaticResource PageSubHeading}" Text="{Binding AppName}"/>
                 <Border Style="{StaticResource BorderGroup}">
-                    <TextBlock DockPanel.Dock="Top" Style="{StaticResource PageTextBlock}" Text="{Binding Version}"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        
+                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="{x:Static rs:Strings.AboutAppVersion}"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource PageTextBlock}" Text="{Binding Version}"/>
+
+                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="{x:Static rs:Strings.AboutAppAuthor}"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource PageTextBlock}" Text="{Binding Author}"/>
+
+                        <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="{x:Static rs:Strings.AboutAppProjectWebsite}"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource PageTextBlock}">
+                           <Hyperlink NavigateUri="{Binding ProjectUrl}" RequestNavigate="OpenUri">
+                               <TextBlock Text="{x:Static rs:Strings.AboutDownloadsClickToOpen}" ToolTip="{Binding ProjectUrl}"/>
+                           </Hyperlink>
+                        </TextBlock>
+
+                        <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="{x:Static rs:Strings.AboutDownloadsReleases}"/>
+                        <TextBlock Grid.Row="3" Grid.Column="1" Style="{StaticResource PageTextBlock}">
+                           <Hyperlink NavigateUri="{Binding DownloadLink}" RequestNavigate="OpenUri">
+                               <TextBlock Text="{x:Static rs:Strings.AboutDownloadsClickToOpen}" ToolTip="{Binding DownloadLink}"/>
+                           </Hyperlink>
+                        </TextBlock>
+                    </Grid>
                 </Border>
 
                 <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.AboutGettingStartedTitle}"/>
@@ -84,18 +115,6 @@
                     <StackPanel Orientation="Horizontal" Style="{StaticResource PageStackPanel}">
                         <TextBlock Style="{StaticResource PageTextBlock}" Text="--demo"/>
                         <TextBlock Style="{StaticResource PageTextBlock}" TextWrapping="Wrap" Text="{x:Static rs:Strings.AboutCommandLineArgDemoText}"/>
-                    </StackPanel>
-                </Border>
-
-                <TextBlock Style="{StaticResource PageSubHeading}" Text="{x:Static rs:Strings.AboutDownloadsTitle}"/>
-                <Border Style="{StaticResource BorderGroup}">
-                    <StackPanel Orientation="Horizontal" Style="{StaticResource PageStackPanel}">
-                        <TextBlock Style="{StaticResource PageTextBlock}" Text="{x:Static rs:Strings.AboutDownloadsReleases}"/>
-                        <TextBlock Style="{StaticResource PageTextBlock}">
-                            <Hyperlink NavigateUri="{Binding DownloadLink}" RequestNavigate="OpenUri">
-                                <TextBlock Text="{x:Static rs:Strings.AboutDownloadsClickToOpen}" ToolTip="{Binding DownloadLink}"/>
-                            </Hyperlink>
-                        </TextBlock>
                     </StackPanel>
                 </Border>
 

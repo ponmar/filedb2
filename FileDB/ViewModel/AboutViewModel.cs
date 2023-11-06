@@ -15,11 +15,14 @@ public class AboutViewModel : ObservableObject
     private const string ChangesFilePath = "CHANGES.txt";
     private readonly string LicensesJsonFilePath = Path.Combine(AppContext.BaseDirectory, "Resources", "licenses.json");
 
+    public string ProjectUrl => Utils.ApplicationProjectUrl;
     public string DownloadLink => Utils.ApplicationDownloadUrl;
 
     public string Changes => fileSystem.File.Exists(ChangesFilePath) ? fileSystem.File.ReadAllText(ChangesFilePath) : "Not deployed";
 
-    public string Version => $"{Utils.ApplicationName} version {Utils.GetVersionString()}";
+    public string AppName => Utils.ApplicationName;
+    public string Author => Utils.Author;
+    public string Version => Utils.GetVersionString();
 
     public ObservableCollection<LicenseFileFormatDto> Licenses { get; } = new();
 

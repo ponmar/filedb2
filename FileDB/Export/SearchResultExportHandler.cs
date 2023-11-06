@@ -135,12 +135,13 @@ public class SearchResultExportHandler
 
         return new SearchResultExport(
             name,
-            $"Created with {Utils.ApplicationName} {Utils.GetVersionString()} {DateTime.Now:yyyy-MM-dd HH:mm}",
+            Utils.GetVersionString(),
+            DateTime.Now,
             Utils.CreateFileList(files.Select(x => x.Id)),
             exportedFiles,
             persons,
             locations,
             tags,
-            Utils.ApplicationDownloadUrl);
+            Utils.ApplicationProjectUrl);
     }
 }

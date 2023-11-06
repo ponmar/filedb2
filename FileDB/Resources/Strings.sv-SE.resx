@@ -376,7 +376,7 @@
     <value>Aktivera demokonfiguration att leka med</value>
   </data>
   <data name="AboutDownloadsReleases" xml:space="preserve">
-    <value>Lanseringar:</value>
+    <value>Officiella lanseringar:</value>
   </data>
   <data name="AboutDownloadsClickToOpen" xml:space="preserve">
     <value>Klicka för att öppna</value>
@@ -1199,5 +1199,14 @@
   </data>
   <data name="ExportDataLabel" xml:space="preserve">
     <value>Data att exportera:</value>
+  </data>
+  <data name="AboutAppAuthor" xml:space="preserve">
+    <value>Skapare:</value>
+  </data>
+  <data name="AboutAppProjectWebsite" xml:space="preserve">
+    <value>Projektets websida:</value>
+  </data>
+  <data name="AboutAppVersion" xml:space="preserve">
+    <value>Version:</value>
   </data>
 </root>

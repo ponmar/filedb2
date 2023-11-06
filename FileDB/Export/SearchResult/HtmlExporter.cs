@@ -31,7 +31,7 @@ public class HtmlExporter : ISearchResultExporter
 @"<!DOCTYPE html>
 <html>
 <head>
-<title>%HEADER%</title>
+<title>%NAME%</title>
 <style>
 .file {
   margin-top: 20px;
@@ -54,10 +54,9 @@ public class HtmlExporter : ISearchResultExporter
 </style>
 </head>
 <body>
-<h1>%HEADER%</h1>
+<h1>%NAME%</h1>
 %CONTENT%
-<p>%ABOUT%</p>
-<p>The %APPLICATION_NAME% application can be downloaded <a href=""%APPLICATION_DOWNLOAD_URL%"">here</a>.</p>
+<p>%APPLICATION_NAME% %FILEDB_VERSION% %EXPORT_DATETIME% <a href=""%APPLICATION_PROJECT_URL%"">%APPLICATION_PROJECT_URL%</a></p>
 </body>
 </html>
 ";
@@ -132,11 +131,12 @@ public class HtmlExporter : ISearchResultExporter
         }
 
         var html = documentBase
-            .Replace("%HEADER%", HttpUtility.HtmlEncode(data.Name))
-            .Replace("%ABOUT%", HttpUtility.HtmlEncode(data.About))
+            .Replace("%NAME%", HttpUtility.HtmlEncode(data.Name))
+            .Replace("%APPLICATION_NAME%", HttpUtility.HtmlEncode(Utils.ApplicationName))
+            .Replace("%FILEDB_VERSION%", HttpUtility.HtmlEncode(data.FileDBVersion))
+            .Replace("%EXPORT_DATETIME%", HttpUtility.HtmlEncode(data.ExportDateTime.ToString("yyyy-MM-dd HH:mm")))
             .Replace("%CONTENT%", content)
-            .Replace("%APPLICATION_DOWNLOAD_URL%", data.ApplicationDownloadUrl)
-            .Replace("%APPLICATION_NAME%", Utils.ApplicationName);
+            .Replace("%APPLICATION_PROJECT_URL%", data.ApplicationProjectUrl);
 
         var htmlPath = Path.Combine(destinationDirPath, "index.html");
         fileSystem.File.WriteAllText(htmlPath, html);

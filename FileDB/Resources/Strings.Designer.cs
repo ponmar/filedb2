@@ -61,6 +61,33 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Author:.
+        /// </summary>
+        public static string AboutAppAuthor {
+            get {
+                return ResourceManager.GetString("AboutAppAuthor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Project website:.
+        /// </summary>
+        public static string AboutAppProjectWebsite {
+            get {
+                return ResourceManager.GetString("AboutAppProjectWebsite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version:.
+        /// </summary>
+        public static string AboutAppVersion {
+            get {
+                return ResourceManager.GetString("AboutAppVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Changelog.
         /// </summary>
         public static string AboutChangelogTitle {
@@ -97,7 +124,7 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Releases:.
+        ///   Looks up a localized string similar to Official releases:.
         /// </summary>
         public static string AboutDownloadsReleases {
             get {

@@ -32,7 +32,11 @@ public class PdfExporter : ISearchResultExporter
                 frontPage.Margin(10);
                 frontPage.Size(pageSize);
                 frontPage.Content().AlignCenter().AlignMiddle().Text(data.Name).SemiBold().FontSize(32).FontColor(Colors.Blue.Darken2);
-                frontPage.Footer().AlignCenter().Text(data.About);
+                frontPage.Footer().AlignCenter().AlignMiddle().Text(text =>
+                {
+                    text.Span($"{Utils.ApplicationName} {data.FileDBVersion} {data.ExportDateTime:yyyy-MM-dd HH:mm} ");
+                    text.Hyperlink(data.ApplicationProjectUrl, data.ApplicationProjectUrl);
+                });
             });
 
             var index = 1;
@@ -103,8 +107,14 @@ public class PdfExporter : ISearchResultExporter
                             column.Item().Text(fileTags);
                         }
 
+                        var item = column.Item();
+                        var degrees = DatabaseParsing.OrientationToDegrees(file.Orientation);
+                        for (int i = 0; i < degrees / 90; i++)
+                        {
+                            item = item.RotateLeft();
+                        }
                         var sourceFilePath = filesystemAccessRepository.FilesystemAccess.ToAbsolutePath(file.OriginalPath);
-                        column.Item().Rotate(DatabaseParsing.OrientationToDegrees(file.Orientation)).Image(sourceFilePath);
+                        item.Image(sourceFilePath);
                     });
                 });
 

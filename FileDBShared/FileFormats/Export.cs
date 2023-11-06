@@ -18,13 +18,14 @@ public record ExportedFile(
 
 public record SearchResultExport(
     string Name,
-    string About,
+    string FileDBVersion,
+    DateTime ExportDateTime,
     string FileList,
     List<ExportedFile> Files,
     List<PersonModel> Persons,
     List<LocationModel> Locations,
     List<TagModel> Tags,
-    string ApplicationDownloadUrl);
+    string ApplicationProjectUrl);
 
 public record DatabaseExport(
     string FileDBVersion,
