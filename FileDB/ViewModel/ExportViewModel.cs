@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using FileDB.Export;
 using FileDB.Extensions;
 using FileDB.Model;
+using FileDB.Resources;
 using System;
 using System.Collections.Generic;
 using System.IO.Abstractions;
@@ -20,7 +21,7 @@ namespace FileDB.ViewModel
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(ExportEnabled))]
-        private string exportName = $"{Utils.ApplicationName} Export";
+        private string exportName = "My Files";
 
         [ObservableProperty]
         private bool exportIncludesFiles = true;
@@ -75,7 +76,7 @@ namespace FileDB.ViewModel
         private void BrowseDestinationDirectory()
         {
             var initialPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            ExportFilesDestinationDirectory = dialogs.BrowseExistingDirectory(initialPath, "Select your destination directory");
+            ExportFilesDestinationDirectory = dialogs.BrowseExistingDirectory(initialPath, Strings.ExportSelectYourDestinationDirectory);
         }
 
         [RelayCommand]
@@ -83,13 +84,13 @@ namespace FileDB.ViewModel
         {
             if (!fileSystem.Directory.Exists(ExportFilesDestinationDirectory))
             {
-                dialogs.ShowErrorDialog("Destination directory does not exist");
+                dialogs.ShowErrorDialog(Strings.ExportDestinationDirectoryDoesNotExist);
                 return;
             }
 
             if (!IsDirectoryEmpty(ExportFilesDestinationDirectory))
             {
-                dialogs.ShowErrorDialog("Destination directory is not empty");
+                dialogs.ShowErrorDialog(Strings.ExportDestinationDirectoryIsNotEmpty);
                 return;
             }
 
@@ -121,27 +122,27 @@ namespace FileDB.ViewModel
 
             if (!selections.Any())
             {
-                dialogs.ShowErrorDialog("Nothing to export");
+                dialogs.ShowErrorDialog(Strings.ExportNothingToExport);
                 return;
             }
 
-            if (!dialogs.ShowConfirmDialog($"Export selected data for {SearchResult!.Count} files to {ExportFilesDestinationDirectory}?"))
+            if (!dialogs.ShowConfirmDialog(string.Format(Strings.ExportSelectedData, SearchResult!.Count, ExportFilesDestinationDirectory)))
             {
                 return;
             }
 
             dialogs.ShowProgressDialog(progress =>
             {
-                progress.Report("Exporting...");
+                progress.Report(Strings.ExportExporting);
                 try
                 {
                     var exporter = new SearchResultExportHandler(dbAccessRepository, filesystemAccessRepository, fileSystem);
                     exporter.Export(ExportFilesDestinationDirectory, ExportName, SearchResult.Files, selections);
-                    dialogs.ShowInfoDialog("Export finished successfully.");
+                    dialogs.ShowInfoDialog(Strings.ExportFinishedSuccessfully);
                 }
                 catch (Exception e)
                 {
-                    dialogs.ShowErrorDialog("Export error: " + e.Message);
+                    dialogs.ShowErrorDialog(string.Format(Strings.ExportError, e.Message));
                 }
             });
         }

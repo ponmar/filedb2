@@ -1209,4 +1209,28 @@
   <data name="AboutAppVersion" xml:space="preserve">
     <value>Version:</value>
   </data>
+  <data name="ExportDestinationDirectoryDoesNotExist" xml:space="preserve">
+    <value>Destinationskatalogen finns inte</value>
+  </data>
+  <data name="ExportDestinationDirectoryIsNotEmpty" xml:space="preserve">
+    <value>Destinationskatalogen är inte tom</value>
+  </data>
+  <data name="ExportError" xml:space="preserve">
+    <value>Fel vid export: {0}</value>
+  </data>
+  <data name="ExportExporting" xml:space="preserve">
+    <value>Exporterar...</value>
+  </data>
+  <data name="ExportFinishedSuccessfully" xml:space="preserve">
+    <value>Exporten slutfördes framgångsrikt.</value>
+  </data>
+  <data name="ExportNothingToExport" xml:space="preserve">
+    <value>Inget att exportera</value>
+  </data>
+  <data name="ExportSelectedData" xml:space="preserve">
+    <value>Exportera vald data för {0} filer till {1}?</value>
+  </data>
+  <data name="ExportSelectYourDestinationDirectory" xml:space="preserve">
+    <value>Väljd din destinationskatalog</value>
+  </data>
 </root>

@@ -1209,4 +1209,28 @@
   <data name="AboutAppProjectWebsite" xml:space="preserve">
     <value>Project website:</value>
   </data>
+  <data name="ExportSelectYourDestinationDirectory" xml:space="preserve">
+    <value>Select your destination directory</value>
+  </data>
+  <data name="ExportDestinationDirectoryDoesNotExist" xml:space="preserve">
+    <value>Destination directory does not exist</value>
+  </data>
+  <data name="ExportDestinationDirectoryIsNotEmpty" xml:space="preserve">
+    <value>Destination directory is not empty</value>
+  </data>
+  <data name="ExportNothingToExport" xml:space="preserve">
+    <value>Nothing to export</value>
+  </data>
+  <data name="ExportSelectedData" xml:space="preserve">
+    <value>Export selected data for {0} files to {1}?</value>
+  </data>
+  <data name="ExportExporting" xml:space="preserve">
+    <value>Exporting...</value>
+  </data>
+  <data name="ExportFinishedSuccessfully" xml:space="preserve">
+    <value>Export finished successfully.</value>
+  </data>
+  <data name="ExportError" xml:space="preserve">
+    <value>Export error: {0}</value>
+  </data>
 </root>

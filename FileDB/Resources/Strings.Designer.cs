@@ -871,6 +871,24 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Destination directory does not exist.
+        /// </summary>
+        public static string ExportDestinationDirectoryDoesNotExist {
+            get {
+                return ResourceManager.GetString("ExportDestinationDirectoryDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Destination directory is not empty.
+        /// </summary>
+        public static string ExportDestinationDirectoryIsNotEmpty {
+            get {
+                return ResourceManager.GetString("ExportDestinationDirectoryIsNotEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Destination directory:.
         /// </summary>
         public static string ExportDestinationLabel {
@@ -880,11 +898,38 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Export error: {0}.
+        /// </summary>
+        public static string ExportError {
+            get {
+                return ResourceManager.GetString("ExportError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Export....
         /// </summary>
         public static string ExportExportButton {
             get {
                 return ResourceManager.GetString("ExportExportButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exporting....
+        /// </summary>
+        public static string ExportExporting {
+            get {
+                return ResourceManager.GetString("ExportExporting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export finished successfully..
+        /// </summary>
+        public static string ExportFinishedSuccessfully {
+            get {
+                return ResourceManager.GetString("ExportFinishedSuccessfully", resourceCulture);
             }
         }
         
@@ -925,6 +970,15 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nothing to export.
+        /// </summary>
+        public static string ExportNothingToExport {
+            get {
+                return ResourceManager.GetString("ExportNothingToExport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Files.
         /// </summary>
         public static string ExportSearchResultFilesLabel {
@@ -957,6 +1011,24 @@ namespace FileDB.Resources {
         public static string ExportSearchResultPdfLabel {
             get {
                 return ResourceManager.GetString("ExportSearchResultPdfLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export selected data for {0} files to {1}?.
+        /// </summary>
+        public static string ExportSelectedData {
+            get {
+                return ResourceManager.GetString("ExportSelectedData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select your destination directory.
+        /// </summary>
+        public static string ExportSelectYourDestinationDirectory {
+            get {
+                return ResourceManager.GetString("ExportSelectYourDestinationDirectory", resourceCulture);
             }
         }
         
