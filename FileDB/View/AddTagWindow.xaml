@@ -30,6 +30,6 @@
             </Grid>
         </Border>
 
-        <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding SaveCommand}" Content="{x:Static rs:Strings.SaveButton}"/>
+        <Button Margin="10" HorizontalAlignment="Right" Style="{StaticResource NormalButton}" Command="{Binding SaveCommand}" Content="{x:Static rs:Strings.SaveButton}"/>
     </StackPanel>
 </Window>
