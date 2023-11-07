@@ -36,7 +36,7 @@ public class SearchResultExportHandler
 
     public void Export(string destinationDirectory, string name, List<FileModel> files, List<SearchResultExportType> exportTypes)
     {
-        var data = GetExportedData(files, name, "UnmodifiedFiles");
+        var data = GetExportedData(files, name, "Files");
 
         if (exportTypes.Contains(SearchResultExportType.Files))
         {
