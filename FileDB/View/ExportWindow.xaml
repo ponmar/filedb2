@@ -57,7 +57,7 @@
                     </StackPanel>
                 </Grid>
                 
-                <Button Margin="10" Style="{StaticResource NormalButton}" Command="{Binding ExportCommand}" IsEnabled="{Binding ExportEnabled}" HorizontalAlignment="Center" Content="{x:Static rs:Strings.ExportExportButton}"/>
+                <Button Margin="13" Style="{StaticResource NormalButton}" Command="{Binding ExportCommand}" IsEnabled="{Binding ExportEnabled}" HorizontalAlignment="Right" Content="{x:Static rs:Strings.ExportExportButton}"/>
             </StackPanel>
         </Border>
     </StackPanel>
