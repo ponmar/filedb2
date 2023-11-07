@@ -39,7 +39,6 @@ public class PdfExporter : ISearchResultExporter
                 });
             });
 
-            var index = 1;
             foreach (var file in data.Files.Where(x => FileTypeUtils.GetFileType(x.OriginalPath) == FileType.Picture))
             {
                 var pictureDateText = string.Empty;
@@ -58,7 +57,7 @@ public class PdfExporter : ISearchResultExporter
                     pictureDescription += file.Description;
                 }
 
-                var fileHeading = $"[{index} / {data.Files.Count}] {pictureDateText}{pictureDescription}";
+                var fileHeading = $"{pictureDateText}{pictureDescription}";
 
                 string? filePersons = null;
                 if (file.PersonIds.Count > 0)
@@ -116,9 +115,13 @@ public class PdfExporter : ISearchResultExporter
                         var sourceFilePath = filesystemAccessRepository.FilesystemAccess.ToAbsolutePath(file.OriginalPath);
                         item.Image(sourceFilePath);
                     });
+                    filePage.Footer().AlignCenter().Text(text =>
+                    {
+                        text.CurrentPageNumber();
+                        text.Span(" / ");
+                        text.TotalPages();
+                    });
                 });
-
-                index++;
             }
         });
 
