@@ -52,14 +52,14 @@ public class SearchResultExportHandler
 
         if (exportTypes.Contains(SearchResultExportType.Json))
         {
-            var path = Path.Combine(destinationDirectory, "data.json");
+            var path = Path.Combine(destinationDirectory, "Export.json");
             var exporter = new JsonExporter(fileSystem);
             exporter.Export(data, path);
         }
 
         if (exportTypes.Contains(SearchResultExportType.M3u))
         {
-            var path = Path.Combine(destinationDirectory, "playlist.m3u");
+            var path = Path.Combine(destinationDirectory, "Export.m3u");
             var exporter = new M3uExporter(fileSystem);
             exporter.Export(data, path);
         }
@@ -73,7 +73,7 @@ public class SearchResultExportHandler
 
         if (exportTypes.Contains(SearchResultExportType.Pdf))
         {
-            var path = Path.Combine(destinationDirectory, "export.pdf");
+            var path = Path.Combine(destinationDirectory, "Export.pdf");
             var exporter = new PdfExporter(fileSystem, filesystemAccessRepository, PageSizes.A4.Landscape());
             exporter.Export(data, path);
         }
