@@ -40,7 +40,7 @@ namespace FileDB
 
             if (startupEventArgs.Args.Length != 1)
             {
-                dialogs.ShowErrorDialog("No files collection selected - use a command line argument");
+                dialogs.ShowErrorDialog("No .FileDB file selected! Double click on your .FileDB file or specify its path via a command line argument.");
                 Shutdown(1);
                 return;
             }
