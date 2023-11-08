@@ -41,7 +41,7 @@ namespace FileDB
             if (startupEventArgs.Args.Length != 1)
             {
                 dialogs.ShowErrorDialog("No files collection selected - use a command line argument");
-                Shutdown();
+                Shutdown(1);
                 return;
             }
 
@@ -54,7 +54,7 @@ namespace FileDB
             if (!configPath.EndsWith(ConfigFileExtension))
             {
                 dialogs.ShowErrorDialog($"Command line argument ({configPath}) does not have file extension FileDB");
-                Shutdown();
+                Shutdown(1);
                 return;
             }
 
@@ -79,7 +79,7 @@ namespace FileDB
             if (!result.IsValid)
             {
                 dialogs.ShowErrorDialog(result);
-                Shutdown();
+                Shutdown(1);
                 return;
             }
 
@@ -101,6 +101,9 @@ namespace FileDB
 
             var notificationsHandling = ServiceLocator.Resolve<INotificationHandling>();
             notifications.ForEach(notificationsHandling.AddNotification);
+
+            // Only load views and viewmodels when this method did not called shutdown above
+            StartupUri = new Uri("MainWindow.xaml", UriKind.Relative);
         }
 
         private static void SetUiCulture(string? culture)
