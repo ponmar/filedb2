@@ -94,10 +94,9 @@ namespace FileDB
                 new NoDbAccess();
 
             var filesystemAccess = new FilesystemAccess(fileSystem, filesRootDirectory);
-            var notifierFactory = new NotifierFactory();
 
             var configUpdater = ServiceLocator.Resolve<IConfigUpdater>();
-            configUpdater.InitConfig(applicationFilePaths, config, dbAccess, filesystemAccess, notifierFactory);
+            configUpdater.InitConfig(applicationFilePaths, config, dbAccess, filesystemAccess);
 
             var notificationsHandling = ServiceLocator.Resolve<INotificationHandling>();
             notifications.ForEach(notificationsHandling.AddNotification);

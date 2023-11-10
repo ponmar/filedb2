@@ -43,7 +43,6 @@ public class UtilsTests
     [TestMethod]
     public void CreateFileIds_EmptyString_ReturnsEmptyList()
     {
-        Assert.AreEqual(0, Utils.CreateFileIds(null).Count);
         Assert.AreEqual(0, Utils.CreateFileIds(string.Empty).Count);
     }
 

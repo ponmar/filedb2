@@ -7,7 +7,7 @@ namespace FileDBSharedTests.Validators;
 [TestClass]
 public class PersonModelValidatorTests
 {
-    private PersonModelValidator validator;
+    private PersonModelValidator validator = new();
 
     [TestInitialize]
     public void Initialize()

@@ -7,7 +7,7 @@ namespace FileDBSharedTests.Validators;
 [TestClass]
 public class TagModelValidatorTests
 {
-    private TagModelValidator validator;
+    private TagModelValidator validator = new();
 
     [TestInitialize]
     public void Initialize()

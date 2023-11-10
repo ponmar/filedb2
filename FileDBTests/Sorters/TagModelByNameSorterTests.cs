@@ -9,7 +9,7 @@ namespace FileDBTests.Sorters;
 [TestClass]
 public class TagModelByNameSorterTests
 {
-    private TagModelByNameSorter sorter;
+    private TagModelByNameSorter sorter = new();
 
     [TestInitialize]
     public void Initialize()

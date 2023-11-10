@@ -7,7 +7,7 @@ namespace FileDBSharedTests.Validators;
 [TestClass]
 public class LocationModelValidatorTests
 {
-    private LocationModelValidator validator;
+    private LocationModelValidator validator = new();
 
     [TestInitialize]
     public void Initialize()

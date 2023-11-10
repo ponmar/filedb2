@@ -22,8 +22,8 @@ public class EnumerationToVisibilityConverterTests
     public void Convert_Null_Collapsed()
     {
         var converter = new EnumerationToVisibilityConverter();
-        List<string> items = null;
-        Assert.AreEqual(Visibility.Collapsed, converter.Convert(items, typeof(IEnumerable), null, CultureInfo.InvariantCulture));
+        List<string>? items = null;
+        Assert.AreEqual(Visibility.Collapsed, converter.Convert(items!, typeof(IEnumerable), null!, CultureInfo.InvariantCulture));
     }
 
     [TestMethod]
@@ -31,7 +31,7 @@ public class EnumerationToVisibilityConverterTests
     {
         var converter = new EnumerationToVisibilityConverter();
         var items = new List<string>();
-        Assert.AreEqual(Visibility.Collapsed, converter.Convert(items, typeof(IEnumerable), null, CultureInfo.InvariantCulture));
+        Assert.AreEqual(Visibility.Collapsed, converter.Convert(items, typeof(IEnumerable), null!, CultureInfo.InvariantCulture));
     }
 
     [TestMethod]
@@ -39,7 +39,7 @@ public class EnumerationToVisibilityConverterTests
     {
         var converter = new EnumerationToVisibilityConverter();
         var items = new List<string>() { "item" };
-        Assert.AreEqual(Visibility.Visible, converter.Convert(items, typeof(IEnumerable), null, CultureInfo.InvariantCulture));
+        Assert.AreEqual(Visibility.Visible, converter.Convert(items, typeof(IEnumerable), null!, CultureInfo.InvariantCulture));
     }
 
     [TestMethod]
@@ -47,6 +47,6 @@ public class EnumerationToVisibilityConverterTests
     {
         var converter = new EnumerationToVisibilityConverter();
         var items = new ObservableCollection<string>() { "item" };
-        Assert.AreEqual(Visibility.Visible, converter.Convert(items, typeof(IEnumerable), null, CultureInfo.InvariantCulture));
+        Assert.AreEqual(Visibility.Visible, converter.Convert(items, typeof(IEnumerable), null!, CultureInfo.InvariantCulture));
     }
 }

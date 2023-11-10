@@ -137,6 +137,7 @@ public class DatabaseParsingTests
     public void ParseFilesPositionFromUrl_Format1()
     {
         var result = DatabaseParsing.ParseFilesPositionFromUrl("https://www.google.se/maps/place/Enhagsv%C3%A4gen+47,+589+43+Link%C3%B6ping/@58.3839033,15.7028438,17z/data=!3m1!4b1!4m5!3m4!1s0x46596c268b2f8165:0xf9d7a0f58269b2a1!8m2!3d58.3839033!4d15.7050325");
+        Assert.IsNotNull(result);
         Assert.AreEqual(58.3839033, result.Value.lat);
         Assert.AreEqual(15.7028438, result.Value.lon);
     }
@@ -145,6 +146,7 @@ public class DatabaseParsingTests
     public void ParseFilesPositionFromUrl_Format2()
     {
         var result = DatabaseParsing.ParseFilesPositionFromUrl("https://www.google.com/maps?q=loc:58.41050909972222,15.618398199722222");
+        Assert.IsNotNull(result);
         Assert.AreEqual(58.41050909972222, result.Value.lat);
         Assert.AreEqual(15.618398199722222, result.Value.lon);
     }

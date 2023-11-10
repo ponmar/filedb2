@@ -7,7 +7,7 @@ namespace FileDBSharedTests.Validators;
 [TestClass]
 public class FileModelValidatorTests
 {
-    private FileModelValidator validator;
+    private FileModelValidator validator = new();
 
     [TestInitialize]
     public void Initialize()
@@ -42,7 +42,7 @@ public class FileModelValidatorTests
     [TestMethod]
     public void Validate_PathIsNull_Error()
     {
-        var model = new FileModel() { Id = -1, Path = null, Description = "description", Datetime = "2010-07-20T20:50:10", Position = "15.1 64.10" };
+        var model = new FileModel() { Id = -1, Path = null!, Description = "description", Datetime = "2010-07-20T20:50:10", Position = "15.1 64.10" };
         var result = validator.TestValidate(model);
         result.ShouldHaveValidationErrorFor(x => x.Path);
     }

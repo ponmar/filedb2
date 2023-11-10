@@ -5,8 +5,8 @@ namespace FileDBTests;
 public class ConfigBuilder
 {
     public int FileToLocationMaxDistance { get; init; }
-    public string BlacklistedFilePathPatterns { get; init; }
-    public string WhitelistedFilePathPatterns { get; init; }
+    public string BlacklistedFilePathPatterns { get; init; } = string.Empty;
+    public string WhitelistedFilePathPatterns { get; init; } = string.Empty;
     public bool IncludeHiddenDirectories { get; init; }
     public int SlideshowDelay { get; init; }
     public int SearchHistorySize { get; init; }
@@ -18,7 +18,7 @@ public class ConfigBuilder
     public bool BirthdayReminderForDeceased { get; init; }
     public bool RipReminder { get; init; }
     public bool MissingFilesRootDirNotification { get; init; }
-    public string LocationLink { get; init; }
+    public string LocationLink { get; init; } = string.Empty;
     public WindowMode WindowMode { get; init; }
     public int ImageMemoryCacheCount { get; init; }
     public int NumImagesToPreload { get; init; }

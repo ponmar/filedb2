@@ -9,7 +9,7 @@ namespace FileDBTests.Sorters;
 [TestClass]
 public class LocationModelByNameSorterTests
 {
-    private LocationModelByNameSorter sorter;
+    private LocationModelByNameSorter sorter = new();
 
     [TestInitialize]
     public void Initialize()

@@ -8,7 +8,7 @@ namespace FileDBTests.Migrators;
 [TestClass]
 public class ConfigMigratorTests
 {
-    private ConfigMigrator migrator;
+    private ConfigMigrator migrator = new();
 
     [TestInitialize]
     public void Initialize()

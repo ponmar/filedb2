@@ -34,7 +34,7 @@ public partial class MainViewModel : ObservableObject
     public bool DeviceIsSelected => SelectedDevice != null;
 
     [ObservableProperty]
-    private string? tempDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "MediaFilesHelper");
+    private string tempDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "MediaFilesHelper");
 
     [ObservableProperty]
     private string downloadResult = DefaultDownloadResult;

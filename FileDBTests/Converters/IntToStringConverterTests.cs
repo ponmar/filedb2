@@ -18,6 +18,6 @@ public class IntToStringConverterTests
     public void Convert()
     {
         var converter = new IntToStringConverter();
-        Assert.AreEqual("1337", converter.Convert(1337, typeof(int), null, CultureInfo.InvariantCulture));
+        Assert.AreEqual("1337", converter.Convert(1337, typeof(int), null!, CultureInfo.InvariantCulture));
     }
 }

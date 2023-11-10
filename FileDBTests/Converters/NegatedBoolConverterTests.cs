@@ -18,7 +18,7 @@ public class NegatedBoolConverterTests
     public void Convert()
     {
         var converter = new NegatedBoolConverter();
-        Assert.AreEqual(true, converter.Convert(false, typeof(bool), null, CultureInfo.InvariantCulture));
-        Assert.AreEqual(false, converter.Convert(true, typeof(bool), null, CultureInfo.InvariantCulture));
+        Assert.AreEqual(true, converter.Convert(false, typeof(bool), null!, CultureInfo.InvariantCulture));
+        Assert.AreEqual(false, converter.Convert(true, typeof(bool), null!, CultureInfo.InvariantCulture));
     }
 }

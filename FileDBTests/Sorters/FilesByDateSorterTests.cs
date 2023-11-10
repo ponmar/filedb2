@@ -9,7 +9,7 @@ namespace FileDBTests.Sorters;
 [TestClass]
 public class FilesByDateSorterTests
 {
-    private FileModelByDateSorter sorter;
+    private FileModelByDateSorter sorter = new();
 
     [TestInitialize]
     public void Initialize()

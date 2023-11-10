@@ -38,7 +38,7 @@ public interface IConfigRepository
 
 public interface IConfigUpdater
 {
-    void InitConfig(ApplicationFilePaths applicationFilePaths, Config config, IDbAccess dbAccess, IFilesystemAccess filesystemAccess, INotifierFactory notifierFactory);
+    void InitConfig(ApplicationFilePaths applicationFilePaths, Config config, IDbAccess dbAccess, IFilesystemAccess filesystemAccess);
     void UpdateConfig(Config config);
 }
 
@@ -46,9 +46,9 @@ public record ApplicationFilePaths(string FilesRootDir, string ConfigPath, strin
 
 public class Model : INotificationHandling, INotificationsRepository, IConfigRepository, IConfigUpdater, IDbAccessRepository, IFilesystemAccessRepository
 {
-    public IDbAccess DbAccess { get; private set; }
+    public IDbAccess DbAccess { get; private set; } = new NoDbAccess();
     public IFilesystemAccess FilesystemAccess { get; private set; }
-    public INotifierFactory NotifierFactory { get; private set; }
+    public INotifierFactory NotifierFactory { get; } = new NotifierFactory();
     public ApplicationFilePaths FilePaths { get; private set; }
 
     private DateTime date = DateTime.Now;
@@ -104,13 +104,12 @@ public class Model : INotificationHandling, INotificationsRepository, IConfigRep
         }
     }
 
-    public void InitConfig(ApplicationFilePaths filePaths, Config config, IDbAccess dbAccess, IFilesystemAccess filesystemAccess, INotifierFactory notifierFactory)
+    public void InitConfig(ApplicationFilePaths filePaths, Config config, IDbAccess dbAccess, IFilesystemAccess filesystemAccess)
     {
         FilePaths = filePaths;
         Config = config;
         DbAccess = dbAccess;
         FilesystemAccess = filesystemAccess;
-        NotifierFactory = notifierFactory;
         Events.Send<ConfigUpdated>();
     }
 
