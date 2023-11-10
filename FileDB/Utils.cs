@@ -134,7 +134,7 @@ public static class Utils
             return null;
         }
 
-        return locationLinkConfig.Replace("LAT", positionParts[0]).Replace("LON", positionParts[1]);
+        return locationLinkConfig!.Replace("LAT", positionParts[0]).Replace("LON", positionParts[1]);
     }
 
     public static Uri? CreatePositionUri(string position, string locationLinkConfig)

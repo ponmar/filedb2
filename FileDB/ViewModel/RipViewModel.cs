@@ -82,7 +82,7 @@ public partial class RipViewModel : ObservableObject
                 foreach (var personVm in allPersons.Where(p => p.ProfilePictureAbsPath == x.FilePath))
                 {
                     var profileFile = dbAccessRepository.DbAccess.GetFileById(personVm.Person.ProfileFileId!.Value);
-                    int rotateDegrees = DatabaseParsing.OrientationToDegrees(profileFile.Orientation ?? 0);
+                    int rotateDegrees = DatabaseParsing.OrientationToDegrees(profileFile!.Orientation ?? 0);
                     personVm.ProfilePicture = ImageUtils.Rotate(x.Image, -rotateDegrees);
                 }
             });
