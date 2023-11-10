@@ -14,6 +14,7 @@ namespace FileDBTests.ViewModel;
 [TestClass]
 public class BirthdaysViewModelTests
 {
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     private IConfigRepository fakeConfigRepo;
     private IDbAccess fakeDbAccess;
     private IDbAccessRepository fakeDbAccessRepo;
@@ -21,6 +22,7 @@ public class BirthdaysViewModelTests
     private IFilesystemAccess fakeFilsystemAccess;
     private IFilesystemAccessRepository fakeFilsystemAccessRepo;
     private IImageLoader fakeImageLoader;
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
     [TestInitialize]
     public void Initialize()

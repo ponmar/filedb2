@@ -8,7 +8,7 @@ namespace FileDBTests.Validators;
 [TestClass]
 public class ConfigValidatorTests
 {
-    private ConfigValidator validator;
+    private ConfigValidator validator = new();
 
     [TestInitialize]
     public void Initialize()

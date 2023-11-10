@@ -11,6 +11,7 @@ namespace FileDBTests.ViewModel;
 [TestClass]
 public class FileCategorizationViewModelTests
 {
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     private IConfigRepository configRepository;
     private IDbAccessRepository dbAccessRepository;
     private IDialogs dialogs;
@@ -18,6 +19,7 @@ public class FileCategorizationViewModelTests
     private IPersonsRepository personsRepository;
     private ILocationsRepository locationsRepository;
     private ITagsRepository tagsRepository;
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
     private readonly List<PersonModel> persons = new();
     private readonly List<LocationModel> locations = new();
