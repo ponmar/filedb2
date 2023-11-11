@@ -1,3 +1,8 @@
+4.1:
+* Add PDF search result export selection
+* Add missing Swedish translations
+* Change filenames for exported files
+
 4.0:
 * Settings and database files must now be located in the files collection root directory
 * File extension changed from .json to .FileDB to be able to open via double click and to simplify setting up shortcuts
