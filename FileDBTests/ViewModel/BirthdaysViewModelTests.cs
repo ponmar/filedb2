@@ -15,12 +15,12 @@ namespace FileDBTests.ViewModel;
 public class BirthdaysViewModelTests
 {
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-    private IConfigRepository fakeConfigRepo;
+    private IConfigProvider fakeConfigRepo;
     private IDbAccess fakeDbAccess;
-    private IDbAccessRepository fakeDbAccessRepo;
+    private IDbAccessProvider fakeDbAccessRepo;
     private IPersonsRepository fakePersonsRepo;
     private IFilesystemAccess fakeFilsystemAccess;
-    private IFilesystemAccessRepository fakeFilsystemAccessRepo;
+    private IFilesystemAccessProvider fakeFilsystemAccessRepo;
     private IImageLoader fakeImageLoader;
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
@@ -29,11 +29,11 @@ public class BirthdaysViewModelTests
     {
         Bootstrapper.Reset();
 
-        fakeConfigRepo = A.Fake<IConfigRepository>();
+        fakeConfigRepo = A.Fake<IConfigProvider>();
         fakeDbAccess = A.Fake<IDbAccess>();
-        fakeDbAccessRepo = A.Fake<IDbAccessRepository>();
+        fakeDbAccessRepo = A.Fake<IDbAccessProvider>();
         fakeFilsystemAccess = A.Fake<IFilesystemAccess>();
-        fakeFilsystemAccessRepo = A.Fake<IFilesystemAccessRepository>();
+        fakeFilsystemAccessRepo = A.Fake<IFilesystemAccessProvider>();
         fakePersonsRepo = A.Fake<IPersonsRepository>();
         fakeImageLoader = A.Fake<IImageLoader>();
 

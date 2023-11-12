@@ -13,13 +13,13 @@ namespace FileDB.Export.SearchResult;
 public class PdfExporter : ISearchResultExporter
 {
     private readonly IFileSystem fileSystem;
-    private readonly IFilesystemAccessRepository filesystemAccessRepository;
+    private readonly IFilesystemAccessProvider filesystemAccessProvider;
     private readonly PageSize pageSize;
 
-    public PdfExporter(IFileSystem fileSystem, IFilesystemAccessRepository filesystemAccessRepository, PageSize pageSize)
+    public PdfExporter(IFileSystem fileSystem, IFilesystemAccessProvider filesystemAccessProvider, PageSize pageSize)
     {
         this.fileSystem = fileSystem;
-        this.filesystemAccessRepository = filesystemAccessRepository;
+        this.filesystemAccessProvider = filesystemAccessProvider;
         this.pageSize = pageSize;
     }
 
@@ -112,7 +112,7 @@ public class PdfExporter : ISearchResultExporter
                         {
                             item = item.RotateLeft();
                         }
-                        var sourceFilePath = filesystemAccessRepository.FilesystemAccess.ToAbsolutePath(file.OriginalPath);
+                        var sourceFilePath = filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(file.OriginalPath);
                         item.Image(sourceFilePath);
                     });
                     filePage.Footer().AlignCenter().Text(text =>

@@ -40,11 +40,11 @@ namespace FileDB.ViewModel
 
         public string? SelectedDirectoryPath { get; private set; }
 
-        private readonly IDbAccessRepository dbAccessRepository;
+        private readonly IDbAccessProvider dbAccessProvider;
 
-        public BrowseDirectoriesViewModel(IDbAccessRepository dbAccessRepository)
+        public BrowseDirectoriesViewModel(IDbAccessProvider dbAccessProvider)
         {
-            this.dbAccessRepository = dbAccessRepository;
+            this.dbAccessProvider = dbAccessProvider;
             ReloadFolders();
         }
 
@@ -55,7 +55,7 @@ namespace FileDB.ViewModel
             Folders.Clear();
             Folders.Add(root);
 
-            foreach (var file in dbAccessRepository.DbAccess.GetFiles())
+            foreach (var file in dbAccessProvider.DbAccess.GetFiles())
             {
                 var directoryEndIndex = file.Path.LastIndexOf("/");
                 if (directoryEndIndex == -1)

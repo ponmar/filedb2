@@ -54,7 +54,7 @@ public partial class SearchViewModel : ObservableObject
     [NotifyPropertyChangedFor(nameof(OverlayFontSize))]
     private bool largeTextMode = false;
 
-    public int OverlayFontSize => LargeTextMode ? configRepository.Config.OverlayTextSizeLarge : configRepository.Config.OverlayTextSize;
+    public int OverlayFontSize => LargeTextMode ? configProvider.Config.OverlayTextSizeLarge : configProvider.Config.OverlayTextSize;
 
     public bool FileSelected => SelectedFile != null;
 
@@ -100,17 +100,17 @@ public partial class SearchViewModel : ObservableObject
     private IEnumerable<LocationModel> locationList = new List<LocationModel>();
     private IEnumerable<TagModel> tagList = new List<TagModel>();
 
-    private readonly IConfigRepository configRepository;
-    private readonly IDbAccessRepository dbAccessRepository;
-    private readonly IFilesystemAccessRepository filesystemAccessRepository;
+    private readonly IConfigProvider configProvider;
+    private readonly IDbAccessProvider dbAccessProvider;
+    private readonly IFilesystemAccessProvider filesystemAccessProvider;
     private readonly IImageLoader imageLoader;
     private readonly IFileSystem fileSystem;
 
-    public SearchViewModel(IConfigRepository configRepository, IDbAccessRepository dbAccessRepository, IFilesystemAccessRepository filesystemAccessRepository, IImageLoader imageLoader, IFileSystem fileSystem)
+    public SearchViewModel(IConfigProvider configProvider, IDbAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IImageLoader imageLoader, IFileSystem fileSystem)
     {
-        this.configRepository = configRepository;
-        this.dbAccessRepository = dbAccessRepository;
-        this.filesystemAccessRepository = filesystemAccessRepository;
+        this.configProvider = configProvider;
+        this.dbAccessProvider = dbAccessProvider;
+        this.filesystemAccessProvider = filesystemAccessProvider;
         this.imageLoader = imageLoader;
         this.fileSystem = fileSystem;
 
@@ -195,15 +195,15 @@ public partial class SearchViewModel : ObservableObject
     {
         SelectedFile = selection;
 
-        personList = dbAccessRepository.DbAccess.GetPersonsFromFile(selection.Id);
-        locationList = dbAccessRepository.DbAccess.GetLocationsFromFile(selection.Id);
-        tagList = dbAccessRepository.DbAccess.GetTagsFromFile(selection.Id);
+        personList = dbAccessProvider.DbAccess.GetPersonsFromFile(selection.Id);
+        locationList = dbAccessProvider.DbAccess.GetLocationsFromFile(selection.Id);
+        tagList = dbAccessProvider.DbAccess.GetTagsFromFile(selection.Id);
 
         InternalPath = selection.Path;
         Description = selection.Description ?? string.Empty;
         DateTime = GetFileDateTimeString(selection.Datetime);
         Position = selection.Position != null ? Utils.CreateShortFilePositionString(selection.Position) : string.Empty;
-        PositionLink = selection.Position != null ? Utils.CreatePositionUri(selection.Position, configRepository.Config.LocationLink) : null;
+        PositionLink = selection.Position != null ? Utils.CreatePositionUri(selection.Position, configProvider.Config.LocationLink) : null;
         Persons = GetFilePersonsString(selection);
         Locations = GetFileLocationsString();
         Tags = GetFileTagsString();
@@ -212,7 +212,7 @@ public partial class SearchViewModel : ObservableObject
         image = null;
         ImageSource = null;
 
-        absolutePath = filesystemAccessRepository.FilesystemAccess.ToAbsolutePath(selection.Path);
+        absolutePath = filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(selection.Path);
         rotation = DatabaseParsing.OrientationToDegrees(selection.Orientation ?? 0);
 
         var fileType = FileTypeUtils.GetFileType(selection.Path);

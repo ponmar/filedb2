@@ -53,38 +53,38 @@ public partial class FilesViewModel : ObservableObject
     [ObservableProperty]
     private bool findFileMetadata = true;
 
-    private IConfigRepository configRepository;
-    private readonly IDbAccessRepository dbAccessRepository;
-    private readonly IFilesystemAccessRepository filesystemAccessRepository;
+    private IConfigProvider configProvider;
+    private readonly IDbAccessProvider dbAccessProvider;
+    private readonly IFilesystemAccessProvider filesystemAccessProvider;
     private readonly IDialogs dialogs;
     private readonly IFileSystem fileSystem;
 
-    public FilesViewModel(IConfigRepository configRepository, IDbAccessRepository dbAccessRepository, IFilesystemAccessRepository filesystemAccessRepository, IDialogs dialogs, IFileSystem fileSystem)
+    public FilesViewModel(IConfigProvider configProvider, IDbAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IDialogs dialogs, IFileSystem fileSystem)
     {
-        this.configRepository = configRepository;
-        this.dbAccessRepository = dbAccessRepository;
-        this.filesystemAccessRepository = filesystemAccessRepository;
+        this.configProvider = configProvider;
+        this.dbAccessProvider = dbAccessProvider;
+        this.filesystemAccessProvider = filesystemAccessProvider;
         this.dialogs = dialogs;
         this.fileSystem = fileSystem;
 
-        subdirToScan = configRepository.FilePaths.FilesRootDir;
+        subdirToScan = configProvider.FilePaths.FilesRootDir;
 
         this.RegisterForEvent<ConfigUpdated>((x) =>
         {
-            SubdirToScan = configRepository.FilePaths.FilesRootDir;
+            SubdirToScan = configProvider.FilePaths.FilesRootDir;
         });
     }
 
     [RelayCommand]
     private void BrowseSubDirectory()
     {
-        SubdirToScan = dialogs.BrowseExistingDirectory(configRepository.FilePaths.FilesRootDir, "Select a sub directory") ?? string.Empty;
+        SubdirToScan = dialogs.BrowseExistingDirectory(configProvider.FilePaths.FilesRootDir, "Select a sub directory") ?? string.Empty;
     }
 
     [RelayCommand]
     private void ScanNewFiles()
     {
-        ScanNewFiles(configRepository.FilePaths.FilesRootDir);
+        ScanNewFiles(configProvider.FilePaths.FilesRootDir);
     }
 
     [RelayCommand]
@@ -100,9 +100,9 @@ public partial class FilesViewModel : ObservableObject
             dialogs.ShowErrorDialog("Specified directory does no exist");
             return;
         }
-        if (!SubdirToScan.StartsWith(configRepository.FilePaths.FilesRootDir))
+        if (!SubdirToScan.StartsWith(configProvider.FilePaths.FilesRootDir))
         {
-            dialogs.ShowErrorDialog($"Specified directory is not within the configured files root directory: {configRepository.FilePaths.FilesRootDir}");
+            dialogs.ShowErrorDialog($"Specified directory is not within the configured files root directory: {configProvider.FilePaths.FilesRootDir}");
             return;
         }
         ScanNewFiles(SubdirToScan);
@@ -120,14 +120,14 @@ public partial class FilesViewModel : ObservableObject
         ImportedFileList = string.Empty;
         OnPropertyChanged(nameof(NewFilesSelected));
 
-        var blacklistedFilePathPatterns = configRepository.Config.BlacklistedFilePathPatterns.Split(";");
-        var whitelistedFilePathPatterns = configRepository.Config.WhitelistedFilePathPatterns.Split(";");
+        var blacklistedFilePathPatterns = configProvider.Config.BlacklistedFilePathPatterns.Split(";");
+        var whitelistedFilePathPatterns = configProvider.Config.WhitelistedFilePathPatterns.Split(";");
 
         dialogs.ShowProgressDialog(progress =>
         {
             progress.Report("Scanning...");
 
-            foreach (var internalFilePath in filesystemAccessRepository.FilesystemAccess.ListNewFilesystemFiles(pathToScan, blacklistedFilePathPatterns, whitelistedFilePathPatterns, configRepository.Config.IncludeHiddenDirectories, dbAccessRepository.DbAccess))
+            foreach (var internalFilePath in filesystemAccessProvider.FilesystemAccess.ListNewFilesystemFiles(pathToScan, blacklistedFilePathPatterns, whitelistedFilePathPatterns, configProvider.Config.IncludeHiddenDirectories, dbAccessProvider.DbAccess))
             {
                 Application.Current.Dispatcher.BeginInvoke(new Action(() =>
                 {
@@ -143,7 +143,7 @@ public partial class FilesViewModel : ObservableObject
 
                 if (NewFiles.Count == 0)
                 {
-                    dialogs.ShowInfoDialog($"No new files found. Add your files to '{configRepository.FilePaths.FilesRootDir}'.");
+                    dialogs.ShowInfoDialog($"No new files found. Add your files to '{configProvider.FilePaths.FilesRootDir}'.");
                 }
             }));
         });
@@ -160,7 +160,7 @@ public partial class FilesViewModel : ObservableObject
 
         dialogs.ShowProgressDialog(progress =>
         {
-            var locations = dbAccessRepository.DbAccess.GetLocations();
+            var locations = dbAccessProvider.DbAccess.GetLocations();
 
             try
             {
@@ -172,15 +172,15 @@ public partial class FilesViewModel : ObservableObject
                     progress.Report($"Adding file {counter} / {filesToAdd.Count}...");
                     Thread.Sleep(1000);
 
-                    dbAccessRepository.DbAccess.InsertFile(fileToAdd.Path, null, filesystemAccessRepository.FilesystemAccess, FindFileMetadata);
+                    dbAccessProvider.DbAccess.InsertFile(fileToAdd.Path, null, filesystemAccessProvider.FilesystemAccess, FindFileMetadata);
 
-                    var importedFile = dbAccessRepository.DbAccess.GetFileByPath(fileToAdd.Path);
+                    var importedFile = dbAccessProvider.DbAccess.GetFileByPath(fileToAdd.Path);
 
                     if (importedFile != null)
                     {
                         importedFiles.Add(importedFile);
 
-                        if (importedFile.Position != null && configRepository.Config.FileToLocationMaxDistance > 0.5)
+                        if (importedFile.Position != null && configProvider.Config.FileToLocationMaxDistance > 0.5)
                         {
                             var importedFilePos = DatabaseParsing.ParseFilesPosition(importedFile.Position)!.Value;
 
@@ -188,9 +188,9 @@ public partial class FilesViewModel : ObservableObject
                             {
                                 var locationPos = DatabaseParsing.ParseFilesPosition(locationWithPosition.Position)!.Value;
                                 var distance = DatabaseUtils.CalculateDistance(importedFilePos.lat, importedFilePos.lon, locationPos.lat, locationPos.lon);
-                                if (distance < configRepository.Config.FileToLocationMaxDistance)
+                                if (distance < configProvider.Config.FileToLocationMaxDistance)
                                 {
-                                    dbAccessRepository.DbAccess.InsertFileLocation(importedFile.Id, locationWithPosition.Id);
+                                    dbAccessProvider.DbAccess.InsertFileLocation(importedFile.Id, locationWithPosition.Id);
                                 }
                             }
                         }
@@ -241,14 +241,14 @@ public partial class FilesViewModel : ObservableObject
 
         if (dialogs.ShowConfirmDialog($"Remove meta-data for {fileIds.Count} files from the specified file list?"))
         {
-            fileIds.ForEach(x => dbAccessRepository.DbAccess.DeleteFile(x));
+            fileIds.ForEach(x => dbAccessProvider.DbAccess.DeleteFile(x));
             dialogs.ShowInfoDialog($"{fileIds.Count} files removed");
         }
     }
 
     private string GetDateModified(string internalPath)
     {
-        var path = filesystemAccessRepository.FilesystemAccess.ToAbsolutePath(internalPath);
+        var path = filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(internalPath);
         var dateModified = fileSystem.File.GetLastWriteTime(path);
         return dateModified.ToString("yyyy-MM-dd HH:mm");
     }

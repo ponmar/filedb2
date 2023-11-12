@@ -20,7 +20,7 @@ public partial class MainViewModel : ObservableObject
     {
         get
         {
-            var title = $"{Utils.ApplicationName} {Utils.GetVersionString()} - {configRepository.FilePaths.ConfigPath}";
+            var title = $"{Utils.ApplicationName} {Utils.GetVersionString()} - {configProvider.FilePaths.ConfigPath}";
             if (!ReadWriteMode)
             {
                 title += " (read only)";
@@ -43,21 +43,21 @@ public partial class MainViewModel : ObservableObject
     [NotifyPropertyChangedFor(nameof(Title))]
     private bool readWriteMode;
 
-    private IConfigRepository configRepository;
+    private IConfigProvider configProvider;
     private readonly INotificationsRepository notificationsRepository;
 
-    public MainViewModel(IConfigRepository configRepository, INotificationsRepository notificationsRepository)
+    public MainViewModel(IConfigProvider configProvider, INotificationsRepository notificationsRepository)
     {
-        this.configRepository = configRepository;
+        this.configProvider = configProvider;
         this.notificationsRepository = notificationsRepository;
 
-        defaultWindowState = configRepository.Config.WindowMode == WindowMode.Normal ? WindowState.Normal : WindowState.Maximized;
-        defaultWindowStyle = configRepository.Config.WindowMode == WindowMode.Fullscreen ? WindowStyle.None : WindowStyle.ThreeDBorderWindow;
+        defaultWindowState = configProvider.Config.WindowMode == WindowMode.Normal ? WindowState.Normal : WindowState.Maximized;
+        defaultWindowStyle = configProvider.Config.WindowMode == WindowMode.Fullscreen ? WindowStyle.None : WindowStyle.ThreeDBorderWindow;
 
         windowState = defaultWindowState;
         windowStyle = defaultWindowStyle;
 
-        readWriteMode = !configRepository.Config.ReadOnly;
+        readWriteMode = !configProvider.Config.ReadOnly;
 
         NumNotifications = notificationsRepository.Notifications.Count();
         HighlightedNotificationType = NotificationsToType();
@@ -76,7 +76,7 @@ public partial class MainViewModel : ObservableObject
 
         this.RegisterForEvent<ConfigUpdated>((x) =>
         {
-            ReadWriteMode = !configRepository.Config.ReadOnly;
+            ReadWriteMode = !configProvider.Config.ReadOnly;
             OnPropertyChanged(nameof(Title));
         });
     }

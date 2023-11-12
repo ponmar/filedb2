@@ -22,25 +22,25 @@ public partial class PersonsViewModel : ObservableObject
     [ObservableProperty]
     private Person? selectedPerson;
 
-    private readonly IConfigRepository configRepository;
-    private readonly IDbAccessRepository dbAccessRepository;
+    private readonly IConfigProvider configProvider;
+    private readonly IDbAccessProvider dbAccessProvider;
     private readonly IDialogs dialogs;
     private readonly IPersonsRepository personsRepository;
 
-    public PersonsViewModel(IConfigRepository configRepository, IDbAccessRepository dbAccessRepository, IDialogs dialogs, IPersonsRepository personsRepository)
+    public PersonsViewModel(IConfigProvider configProvider, IDbAccessProvider dbAccessProvider, IDialogs dialogs, IPersonsRepository personsRepository)
     {
-        this.configRepository = configRepository;
-        this.dbAccessRepository = dbAccessRepository;
+        this.configProvider = configProvider;
+        this.dbAccessProvider = dbAccessProvider;
         this.dialogs = dialogs;
         this.personsRepository = personsRepository;
 
-        readWriteMode = !configRepository.Config.ReadOnly;
+        readWriteMode = !configProvider.Config.ReadOnly;
 
         ReloadPersons();
 
         this.RegisterForEvent<ConfigUpdated>((x) =>
         {
-            ReadWriteMode = !this.configRepository.Config.ReadOnly;
+            ReadWriteMode = !this.configProvider.Config.ReadOnly;
         });
 
         this.RegisterForEvent<PersonsUpdated>((x) =>
@@ -54,10 +54,10 @@ public partial class PersonsViewModel : ObservableObject
     {
         if (dialogs.ShowConfirmDialog($"Remove {SelectedPerson!.Firstname} {SelectedPerson.Lastname}?"))
         {
-            var filesWithPerson = dbAccessRepository.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPerson.Id }).ToList();
+            var filesWithPerson = dbAccessProvider.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPerson.Id }).ToList();
             if (filesWithPerson.Count == 0 || dialogs.ShowConfirmDialog($"Person is used in {filesWithPerson.Count} files, remove anyway?"))
             {
-                dbAccessRepository.DbAccess.DeletePerson(SelectedPerson.Id);
+                dbAccessProvider.DbAccess.DeletePerson(SelectedPerson.Id);
                 Events.Send<PersonEdited>();
             }
         }

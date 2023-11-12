@@ -19,25 +19,25 @@ public partial class TagsViewModel : ObservableObject
     [ObservableProperty]
     private Tag? selectedTag;
 
-    private readonly IConfigRepository configRepository;
-    private readonly IDbAccessRepository dbAccessRepository;
+    private readonly IConfigProvider configProvider;
+    private readonly IDbAccessProvider dbAccessProvider;
     private readonly IDialogs dialogs;
     private readonly ITagsRepository tagsRepository;
 
-    public TagsViewModel(IConfigRepository configRepository, IDbAccessRepository dbAccessRepository, IDialogs dialogs, ITagsRepository tagsRepository)
+    public TagsViewModel(IConfigProvider configProvider, IDbAccessProvider dbAccessProvider, IDialogs dialogs, ITagsRepository tagsRepository)
     {
-        this.configRepository = configRepository;
-        this.dbAccessRepository = dbAccessRepository;
+        this.configProvider = configProvider;
+        this.dbAccessProvider = dbAccessProvider;
         this.dialogs = dialogs;
         this.tagsRepository = tagsRepository;
 
-        ReadWriteMode = !configRepository.Config.ReadOnly;
+        ReadWriteMode = !configProvider.Config.ReadOnly;
 
         ReloadTags();
 
         this.RegisterForEvent<ConfigUpdated>((x) =>
         {
-            ReadWriteMode = !this.configRepository.Config.ReadOnly;
+            ReadWriteMode = !this.configProvider.Config.ReadOnly;
         });
 
         this.RegisterForEvent<TagsUpdated>((x) =>
@@ -51,10 +51,10 @@ public partial class TagsViewModel : ObservableObject
     {
         if (dialogs.ShowConfirmDialog($"Remove {SelectedTag!.Name}?"))
         {
-            var filesWithTag = dbAccessRepository.DbAccess.SearchFilesWithTags(new List<int>() { SelectedTag.Id }).ToList();
+            var filesWithTag = dbAccessProvider.DbAccess.SearchFilesWithTags(new List<int>() { SelectedTag.Id }).ToList();
             if (filesWithTag.Count == 0 || dialogs.ShowConfirmDialog($"Tag is used in {filesWithTag.Count} files, remove anyway?"))
             {
-                dbAccessRepository.DbAccess.DeleteTag(SelectedTag.Id);
+                dbAccessProvider.DbAccess.DeleteTag(SelectedTag.Id);
                 Events.Send<TagEdited>();
             }
         }

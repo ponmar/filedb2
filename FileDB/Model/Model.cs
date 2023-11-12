@@ -20,17 +20,17 @@ public interface INotificationHandling
     void DismissNotifications();
 }
 
-public interface IDbAccessRepository
+public interface IDbAccessProvider
 {
     IDbAccess DbAccess { get; }
 }
 
-public interface IFilesystemAccessRepository
+public interface IFilesystemAccessProvider
 {
     IFilesystemAccess FilesystemAccess { get; }
 }
 
-public interface IConfigRepository
+public interface IConfigProvider
 {
     ApplicationFilePaths FilePaths { get; }
     Config Config { get; }
@@ -44,7 +44,7 @@ public interface IConfigUpdater
 
 public record ApplicationFilePaths(string FilesRootDir, string ConfigPath, string DatabasePath);
 
-public class Model : INotificationHandling, INotificationsRepository, IConfigRepository, IConfigUpdater, IDbAccessRepository, IFilesystemAccessRepository
+public class Model : INotificationHandling, INotificationsRepository, IConfigProvider, IConfigUpdater, IDbAccessProvider, IFilesystemAccessProvider
 {
     public IDbAccess DbAccess { get; private set; } = new NoDbAccess();
     public IFilesystemAccess FilesystemAccess { get; private set; }

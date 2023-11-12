@@ -60,15 +60,15 @@ namespace FileDB.ViewModel
         private bool exportIncludesPdf = true;
 
         private readonly IDialogs dialogs;
-        private readonly IDbAccessRepository dbAccessRepository;
-        private readonly IFilesystemAccessRepository filesystemAccessRepository;
+        private readonly IDbAccessProvider dbAccessProvider;
+        private readonly IFilesystemAccessProvider filesystemAccessProvider;
         private readonly IFileSystem fileSystem;
 
-        public ExportViewModel(IDialogs dialogs, IDbAccessRepository dbAccessRepository, IFilesystemAccessRepository filesystemAccessRepository, IFileSystem fileSystem)
+        public ExportViewModel(IDialogs dialogs, IDbAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IFileSystem fileSystem)
         {
             this.dialogs = dialogs;
-            this.dbAccessRepository = dbAccessRepository;
-            this.filesystemAccessRepository = filesystemAccessRepository;
+            this.dbAccessProvider = dbAccessProvider;
+            this.filesystemAccessProvider = filesystemAccessProvider;
             this.fileSystem = fileSystem;
         }
 
@@ -136,7 +136,7 @@ namespace FileDB.ViewModel
                 progress.Report(Strings.ExportExporting);
                 try
                 {
-                    var exporter = new SearchResultExportHandler(dbAccessRepository, filesystemAccessRepository, fileSystem);
+                    var exporter = new SearchResultExportHandler(dbAccessProvider, filesystemAccessProvider, fileSystem);
                     exporter.Export(ExportFilesDestinationDirectory, ExportName, SearchResult.Files, selections);
                     dialogs.ShowInfoDialog(Strings.ExportFinishedSuccessfully);
                 }

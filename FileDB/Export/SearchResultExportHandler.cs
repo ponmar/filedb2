@@ -23,14 +23,14 @@ public enum SearchResultExportType
 
 public class SearchResultExportHandler
 {
-    private readonly IDbAccessRepository dbAccessRepository;
-    private readonly IFilesystemAccessRepository filesystemAccessRepository;
+    private readonly IDbAccessProvider dbAccessProvider;
+    private readonly IFilesystemAccessProvider filesystemAccessProvider;
     private readonly IFileSystem fileSystem;
 
-    public SearchResultExportHandler(IDbAccessRepository dbAccessRepository, IFilesystemAccessRepository filesystemAccessRepository, IFileSystem fileSystem)
+    public SearchResultExportHandler(IDbAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IFileSystem fileSystem)
     {
-        this.dbAccessRepository = dbAccessRepository;
-        this.filesystemAccessRepository = filesystemAccessRepository;
+        this.dbAccessProvider = dbAccessProvider;
+        this.filesystemAccessProvider = filesystemAccessProvider;
         this.fileSystem = fileSystem;
     }
 
@@ -46,7 +46,7 @@ public class SearchResultExportHandler
         if (exportTypes.Contains(SearchResultExportType.FilesWithMetaData))
         {
             var filesWithDataDirPath = Path.Combine(destinationDirectory, "FilesWithData");
-            var exporter = new FilesWithOverlayExporter(filesystemAccessRepository, DescriptionPlacement.Subtitle, fileSystem);
+            var exporter = new FilesWithOverlayExporter(filesystemAccessProvider, DescriptionPlacement.Subtitle, fileSystem);
             exporter.Export(data, filesWithDataDirPath);
         }
 
@@ -67,14 +67,14 @@ public class SearchResultExportHandler
         if (exportTypes.Contains(SearchResultExportType.Html))
         {
             var path = Path.Combine(destinationDirectory, "Html");
-            var exporter = new HtmlExporter(fileSystem, filesystemAccessRepository);
+            var exporter = new HtmlExporter(fileSystem, filesystemAccessProvider);
             exporter.Export(data, path);
         }
 
         if (exportTypes.Contains(SearchResultExportType.Pdf))
         {
             var path = Path.Combine(destinationDirectory, "Export.pdf");
-            var exporter = new PdfExporter(fileSystem, filesystemAccessRepository, PageSizes.A4.Landscape());
+            var exporter = new PdfExporter(fileSystem, filesystemAccessProvider, PageSizes.A4.Landscape());
             exporter.Export(data, path);
         }
     }
@@ -89,7 +89,7 @@ public class SearchResultExportHandler
         int index = 1;
         foreach (var file in files)
         {
-            var filePersons = dbAccessRepository.DbAccess.GetPersonsFromFile(file.Id);
+            var filePersons = dbAccessProvider.DbAccess.GetPersonsFromFile(file.Id);
             foreach (var person in filePersons)
             {
                 if (!persons.Any(x => x.Id == person.Id))
@@ -98,7 +98,7 @@ public class SearchResultExportHandler
                 }
             }
 
-            var fileLocations = dbAccessRepository.DbAccess.GetLocationsFromFile(file.Id);
+            var fileLocations = dbAccessProvider.DbAccess.GetLocationsFromFile(file.Id);
             foreach (var location in fileLocations)
             {
                 if (!locations.Any(x => x.Id == location.Id))
@@ -107,7 +107,7 @@ public class SearchResultExportHandler
                 }
             }
 
-            var fileTags = dbAccessRepository.DbAccess.GetTagsFromFile(file.Id);
+            var fileTags = dbAccessProvider.DbAccess.GetTagsFromFile(file.Id);
             foreach (var tag in fileTags)
             {
                 if (!tags.Any(x => x.Id == tag.Id))

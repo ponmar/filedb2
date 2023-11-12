@@ -23,19 +23,19 @@ public partial class LocationsViewModel : ObservableObject
 
     public bool SelectedLocationHasPosition => SelectedLocation != null && SelectedLocation.Position.HasContent();
 
-    private readonly IConfigRepository configRepository;
-    private readonly IDbAccessRepository dbAccessRepository;
+    private readonly IConfigProvider configProvider;
+    private readonly IDbAccessProvider dbAccessProvider;
     private readonly IDialogs dialogs;
     private readonly ILocationsRepository locationsRepository;
 
-    public LocationsViewModel(IConfigRepository configRepository, IDbAccessRepository dbAccessRepository, IDialogs dialogs, ILocationsRepository locationsRepository)
+    public LocationsViewModel(IConfigProvider configProvider, IDbAccessProvider dbAccessProvider, IDialogs dialogs, ILocationsRepository locationsRepository)
     {
-        this.configRepository = configRepository;
-        this.dbAccessRepository = dbAccessRepository;
+        this.configProvider = configProvider;
+        this.dbAccessProvider = dbAccessProvider;
         this.dialogs = dialogs;
         this.locationsRepository = locationsRepository;
 
-        readWriteMode = !configRepository.Config.ReadOnly;
+        readWriteMode = !configProvider.Config.ReadOnly;
 
         ReloadLocations();
 
@@ -43,7 +43,7 @@ public partial class LocationsViewModel : ObservableObject
 
         this.RegisterForEvent<ConfigUpdated>((x) =>
         {
-            ReadWriteMode = !configRepository.Config.ReadOnly;
+            ReadWriteMode = !configProvider.Config.ReadOnly;
         });
     }
 
@@ -52,10 +52,10 @@ public partial class LocationsViewModel : ObservableObject
     {
         if (dialogs.ShowConfirmDialog($"Remove {SelectedLocation!.Name}?"))
         {
-            var filesWithLocation = dbAccessRepository.DbAccess.SearchFilesWithLocations(new List<int>() { SelectedLocation.Id }).ToList();
+            var filesWithLocation = dbAccessProvider.DbAccess.SearchFilesWithLocations(new List<int>() { SelectedLocation.Id }).ToList();
             if (filesWithLocation.Count == 0 || dialogs.ShowConfirmDialog($"Location is used in {filesWithLocation.Count} files, remove anyway?"))
             {
-                dbAccessRepository.DbAccess.DeleteLocation(SelectedLocation.Id);
+                dbAccessProvider.DbAccess.DeleteLocation(SelectedLocation.Id);
                 Events.Send<LocationEdited>();
             }
         }
@@ -76,7 +76,7 @@ public partial class LocationsViewModel : ObservableObject
     [RelayCommand]
     private void ShowLocationOnMap()
     {
-        var link = Utils.CreatePositionLink(SelectedLocation!.Position, configRepository.Config.LocationLink);
+        var link = Utils.CreatePositionLink(SelectedLocation!.Position, configProvider.Config.LocationLink);
         if (link != null)
         {
             Utils.OpenUriInBrowser(link);

@@ -9,7 +9,7 @@ public class FilesExporter : ISearchResultExporter
 {
     public void Export(SearchResultExport data, string path)
     {
-        var fileSystemAccess = ServiceLocator.Resolve<IFilesystemAccessRepository>();
+        var fileSystemAccess = ServiceLocator.Resolve<IFilesystemAccessProvider>();
         var fileSystem = ServiceLocator.Resolve<IFileSystem>();
 
         foreach (var file in data.Files)

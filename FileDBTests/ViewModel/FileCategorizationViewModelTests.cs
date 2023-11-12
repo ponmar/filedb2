@@ -12,10 +12,10 @@ namespace FileDBTests.ViewModel;
 public class FileCategorizationViewModelTests
 {
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-    private IConfigRepository configRepository;
-    private IDbAccessRepository dbAccessRepository;
+    private IConfigProvider configProvider;
+    private IDbAccessProvider dbAccessProvider;
     private IDialogs dialogs;
-    private IFilesystemAccessRepository filesystemAccessRepository;
+    private IFilesystemAccessProvider filesystemAccessProvider;
     private IPersonsRepository personsRepository;
     private ILocationsRepository locationsRepository;
     private ITagsRepository tagsRepository;
@@ -30,10 +30,10 @@ public class FileCategorizationViewModelTests
     [TestInitialize]
     public void Init()
     {
-        configRepository = A.Fake<IConfigRepository>();
-        dbAccessRepository = A.Fake<IDbAccessRepository>();
+        configProvider = A.Fake<IConfigProvider>();
+        dbAccessProvider = A.Fake<IDbAccessProvider>();
         dialogs = A.Fake<IDialogs>();
-        filesystemAccessRepository = A.Fake<IFilesystemAccessRepository>();
+        filesystemAccessProvider = A.Fake<IFilesystemAccessProvider>();
         personsRepository = A.Fake<IPersonsRepository>();
         locationsRepository = A.Fake<ILocationsRepository>();
         tagsRepository = A.Fake<ITagsRepository>();
@@ -150,7 +150,7 @@ public class FileCategorizationViewModelTests
         viewModel.NewFileDescription = newDescription;
         viewModel.SetFileDescriptionCommand.Execute(null);
 
-        A.CallTo(() => dbAccessRepository.DbAccess.UpdateFileDescription(editedFileId, newDescription)).MustHaveHappened();
+        A.CallTo(() => dbAccessProvider.DbAccess.UpdateFileDescription(editedFileId, newDescription)).MustHaveHappened();
         eventRecorder.AssertEventRecorded<FileEdited>();
         Assert.AreEqual(editedFileId, viewModel.PrevEditedFileId);
         Assert.AreEqual(0, viewModel.UpdateHistoryItems.Count);
@@ -158,7 +158,7 @@ public class FileCategorizationViewModelTests
 
     private FileCategorizationViewModel CreateViewModel()
     {
-        return new FileCategorizationViewModel(configRepository, dbAccessRepository, dialogs, filesystemAccessRepository, personsRepository, locationsRepository, tagsRepository);
+        return new FileCategorizationViewModel(configProvider, dbAccessProvider, dialogs, filesystemAccessProvider, personsRepository, locationsRepository, tagsRepository);
     }
 
     private void PopulateRepositories()

@@ -16,8 +16,8 @@ public class NotificationsViewModelTests
 {
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     private Config config;
-    private IConfigRepository fakeConfigRepo;
-    private IDbAccessRepository fakeDbAccessRepo;
+    private IConfigProvider fakeConfigRepo;
+    private IDbAccessProvider fakeDbAccessRepo;
     private IDbAccess fakeDbAccess;
     private INotifierFactory fakeNotifierFactory;
     private INotificationHandling fakeNotificationHandling;
@@ -33,8 +33,8 @@ public class NotificationsViewModelTests
 
         config = new ConfigBuilder().Build();
 
-        fakeConfigRepo = A.Fake<IConfigRepository>();
-        fakeDbAccessRepo = A.Fake<IDbAccessRepository>();
+        fakeConfigRepo = A.Fake<IConfigProvider>();
+        fakeDbAccessRepo = A.Fake<IDbAccessProvider>();
         fakeDbAccess = A.Fake<IDbAccess>();
         fakeNotifierFactory = A.Fake<INotifierFactory>();
         fakeNotificationHandling = A.Fake<INotificationHandling>();

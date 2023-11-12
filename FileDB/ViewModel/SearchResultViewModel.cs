@@ -25,10 +25,10 @@ public class SearchResult
 
 public partial class SearchResultViewModel : ObservableObject
 {
-    private readonly IConfigRepository configRepository;
+    private readonly IConfigProvider configProvider;
     private readonly IDialogs dialogs;
     private readonly ISearchResultRepository searchResultRepository;
-    private readonly IFilesystemAccessRepository filesystemAccessRepository;
+    private readonly IFilesystemAccessProvider filesystemAccessProvider;
     private readonly IImageLoader imageLoader;
     private readonly ISpeeker speeker;
 
@@ -110,7 +110,7 @@ public partial class SearchResultViewModel : ObservableObject
 
     partial void OnSelectedSortMethodChanged(SortMethod value)
     {
-        SortSearchResult(configRepository.Config.KeepSelectionAfterSort);
+        SortSearchResult(configProvider.Config.KeepSelectionAfterSort);
     }
 
     [ObservableProperty]
@@ -142,23 +142,23 @@ public partial class SearchResultViewModel : ObservableObject
         }
     }
 
-    public SearchResultViewModel(IConfigRepository configRepository, IDialogs dialogs, ISearchResultRepository searchResultRepository, IFilesystemAccessRepository filesystemAccessRepository, IImageLoader imageLoader, ISpeeker speeker)
+    public SearchResultViewModel(IConfigProvider configProvider, IDialogs dialogs, ISearchResultRepository searchResultRepository, IFilesystemAccessProvider filesystemAccessProvider, IImageLoader imageLoader, ISpeeker speeker)
     {
-        this.configRepository = configRepository;
+        this.configProvider = configProvider;
         this.dialogs = dialogs;
         this.searchResultRepository = searchResultRepository;
-        this.filesystemAccessRepository = filesystemAccessRepository;
+        this.filesystemAccessProvider = filesystemAccessProvider;
         this.imageLoader = imageLoader;
         this.speeker = speeker;
 
         slideshowTimer.Tick += SlideshowTimer_Tick;
-        slideshowTimer.Interval = TimeSpan.FromSeconds(configRepository.Config.SlideshowDelay);
+        slideshowTimer.Interval = TimeSpan.FromSeconds(configProvider.Config.SlideshowDelay);
 
-        SelectedSortMethod = configRepository.Config.DefaultSortMethod;
+        SelectedSortMethod = configProvider.Config.DefaultSortMethod;
 
         this.RegisterForEvent<ConfigUpdated>((x) =>
         {
-            slideshowTimer.Interval = TimeSpan.FromSeconds(configRepository.Config.SlideshowDelay);
+            slideshowTimer.Interval = TimeSpan.FromSeconds(configProvider.Config.SlideshowDelay);
         });
 
         this.RegisterForEvent<NewSearchResult>((x) =>
@@ -396,13 +396,13 @@ public partial class SearchResultViewModel : ObservableObject
             // Note: reading of orientation from Exif is done here to get correct visualization for files added to database before orientation was parsed
             if (selection.Orientation == null)
             {
-                var fileAbsolutePath = filesystemAccessRepository.FilesystemAccess.ToAbsolutePath(selection.Path);
-                selection.Orientation = filesystemAccessRepository.FilesystemAccess.ParseFileMetadata(fileAbsolutePath).Orientation;
+                var fileAbsolutePath = filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(selection.Path);
+                selection.Orientation = filesystemAccessProvider.FilesystemAccess.ParseFileMetadata(fileAbsolutePath).Orientation;
             }
 
             Events.Send(new SelectSearchResultFile(selection));
 
-            var numImagesToLoad = Math.Max(1, configRepository.Config.NumImagesToPreload);
+            var numImagesToLoad = Math.Max(1, configProvider.Config.NumImagesToPreload);
             for (int preloadIndex = index + 1; preloadIndex <= index + numImagesToLoad; preloadIndex++)
             {
                 if (preloadIndex == SearchResult.Count)
@@ -411,7 +411,7 @@ public partial class SearchResultViewModel : ObservableObject
                 }
 
                 var preLoadFile = SearchResult.Files[preloadIndex];
-                var fileAbsolutePath = filesystemAccessRepository.FilesystemAccess.ToAbsolutePath(preLoadFile.Path);
+                var fileAbsolutePath = filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(preLoadFile.Path);
                 imageLoader.LoadImage(fileAbsolutePath);
             }
 
@@ -503,7 +503,7 @@ public partial class SearchResultViewModel : ObservableObject
 
     private void AddSearchResultToHistory()
     {
-        if (SearchResultHistory.Count == configRepository.Config.SearchHistorySize)
+        if (SearchResultHistory.Count == configProvider.Config.SearchHistorySize)
         {
             SearchResultHistory.RemoveAt(0);
         }

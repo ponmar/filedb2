@@ -21,7 +21,7 @@ public interface ITagsRepository
 
 public class DatabaseCache : IPersonsRepository, ILocationsRepository, ITagsRepository
 {
-    private readonly IDbAccessRepository dbAccessRepository;
+    private readonly IDbAccessProvider dbAccessProvider;
 
     public IEnumerable<PersonModel> Persons => persons;
     public IEnumerable<LocationModel> Locations => locations;
@@ -31,9 +31,9 @@ public class DatabaseCache : IPersonsRepository, ILocationsRepository, ITagsRepo
     private readonly List<LocationModel> locations = new();
     private readonly List<TagModel> tags = new();
 
-    public DatabaseCache(IDbAccessRepository dbAccessRepository)
+    public DatabaseCache(IDbAccessProvider dbAccessProvider)
     {
-        this.dbAccessRepository = dbAccessRepository;
+        this.dbAccessProvider = dbAccessProvider;
 
         ReloadPersons();
         ReloadLocations();
@@ -54,7 +54,7 @@ public class DatabaseCache : IPersonsRepository, ILocationsRepository, ITagsRepo
     private void ReloadPersons()
     {
         persons.Clear();
-        persons.AddRange(dbAccessRepository.DbAccess.GetPersons());
+        persons.AddRange(dbAccessProvider.DbAccess.GetPersons());
         persons.Sort(new PersonModelByNameSorter());
         Events.Send<PersonsUpdated>();
     }
@@ -62,7 +62,7 @@ public class DatabaseCache : IPersonsRepository, ILocationsRepository, ITagsRepo
     private void ReloadLocations()
     {
         locations.Clear();
-        locations.AddRange(dbAccessRepository.DbAccess.GetLocations());
+        locations.AddRange(dbAccessProvider.DbAccess.GetLocations());
         locations.Sort(new LocationModelByNameSorter());
         Events.Send<LocationsUpdated>();
     }
@@ -70,7 +70,7 @@ public class DatabaseCache : IPersonsRepository, ILocationsRepository, ITagsRepo
     private void ReloadTags()
     {
         tags.Clear();
-        tags.AddRange(dbAccessRepository.DbAccess.GetTags());
+        tags.AddRange(dbAccessProvider.DbAccess.GetTags());
         tags.Sort(new TagModelByNameSorter());
         Events.Send<TagsUpdated>();
     }

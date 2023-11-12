@@ -12,12 +12,12 @@ namespace FileDB.Export.SearchResult;
 public class HtmlExporter : ISearchResultExporter
 {
     private readonly IFileSystem fileSystem;
-    private readonly IFilesystemAccessRepository filesystemAccessRepository;
+    private readonly IFilesystemAccessProvider filesystemAccessProvider;
 
-    public HtmlExporter(IFileSystem fileSystem, IFilesystemAccessRepository filesystemAccessRepository)
+    public HtmlExporter(IFileSystem fileSystem, IFilesystemAccessProvider filesystemAccessProvider)
     {
         this.fileSystem = fileSystem;
-        this.filesystemAccessRepository = filesystemAccessRepository;
+        this.filesystemAccessProvider = filesystemAccessProvider;
     }
 
     public void Export(SearchResultExport data, string destinationDirPath)
@@ -72,7 +72,7 @@ public class HtmlExporter : ISearchResultExporter
         int index = 1;
         foreach (var file in data.Files)
         {
-            var sourceFilePath = filesystemAccessRepository.FilesystemAccess.ToAbsolutePath(file.OriginalPath);
+            var sourceFilePath = filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(file.OriginalPath);
             var destinationFilename = Path.GetFileName(file.ExportedPath);
             var destFilePath = Path.Combine(destinationDirPath, destinationFilename);
             fileSystem.File.Copy(sourceFilePath, destFilePath);

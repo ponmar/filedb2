@@ -25,14 +25,14 @@ public partial class AddLocationViewModel : ObservableObject
     [ObservableProperty]
     private string? position = string.Empty;
 
-    private readonly IDbAccessRepository dbAccessRepository;
+    private readonly IDbAccessProvider dbAccessProvider;
     private readonly IDialogs dialogs;
 
     public LocationModel? AffectedLocation { get; private set; }
 
-    public AddLocationViewModel(IDbAccessRepository dbAccessRepository, IDialogs dialogs, int? locationId = null)
+    public AddLocationViewModel(IDbAccessProvider dbAccessProvider, IDialogs dialogs, int? locationId = null)
     {
-        this.dbAccessRepository = dbAccessRepository;
+        this.dbAccessProvider = dbAccessProvider;
         this.dialogs = dialogs;
         this.locationId = locationId;
 
@@ -40,7 +40,7 @@ public partial class AddLocationViewModel : ObservableObject
 
         if (locationId.HasValue)
         {
-            var locationModel = dbAccessRepository.DbAccess.GetLocationById(locationId.Value);
+            var locationModel = dbAccessProvider.DbAccess.GetLocationById(locationId.Value);
             Name = locationModel.Name;
             Description = locationModel.Description ?? string.Empty;
             Position = locationModel.Position ?? string.Empty;
@@ -65,19 +65,19 @@ public partial class AddLocationViewModel : ObservableObject
 
             if (locationId.HasValue)
             {
-                dbAccessRepository.DbAccess.UpdateLocation(location);
-                AffectedLocation = dbAccessRepository.DbAccess.GetLocationById(location.Id);
+                dbAccessProvider.DbAccess.UpdateLocation(location);
+                AffectedLocation = dbAccessProvider.DbAccess.GetLocationById(location.Id);
             }
             else
             {
-                if (dbAccessRepository.DbAccess.GetLocations().Any(x => x.Name == location.Name))
+                if (dbAccessProvider.DbAccess.GetLocations().Any(x => x.Name == location.Name))
                 {
                     dialogs.ShowErrorDialog($"Location '{location.Name}' already added");
                     return;
                 }
 
-                dbAccessRepository.DbAccess.InsertLocation(location);
-                AffectedLocation = dbAccessRepository.DbAccess.GetLocations().First(x => x.Name == location.Name);
+                dbAccessProvider.DbAccess.InsertLocation(location);
+                AffectedLocation = dbAccessProvider.DbAccess.GetLocations().First(x => x.Name == location.Name);
             }
 
             Events.Send<CloseModalDialogRequest>();

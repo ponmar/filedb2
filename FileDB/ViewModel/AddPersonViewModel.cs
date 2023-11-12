@@ -45,13 +45,13 @@ public partial class AddPersonViewModel : ObservableObject
 
     public bool CanSetProfilePicture => searchResultRepository.SelectedFile != null;
 
-    private readonly IDbAccessRepository dbAccessRepository;
+    private readonly IDbAccessProvider dbAccessProvider;
     private readonly IDialogs dialogs;
     private readonly ISearchResultRepository searchResultRepository;
 
-    public AddPersonViewModel(IDbAccessRepository dbAccessRepository, IDialogs dialogs, ISearchResultRepository searchResultRepository, int? personId = null)
+    public AddPersonViewModel(IDbAccessProvider dbAccessProvider, IDialogs dialogs, ISearchResultRepository searchResultRepository, int? personId = null)
     {
-        this.dbAccessRepository = dbAccessRepository;
+        this.dbAccessProvider = dbAccessProvider;
         this.dialogs = dialogs;
         this.searchResultRepository = searchResultRepository;
         this.personId = personId;
@@ -60,7 +60,7 @@ public partial class AddPersonViewModel : ObservableObject
 
         if (personId.HasValue)
         {
-            var personModel = dbAccessRepository.DbAccess.GetPersonById(personId.Value);
+            var personModel = dbAccessProvider.DbAccess.GetPersonById(personId.Value);
             Firstname = personModel.Firstname;
             Lastname = personModel.Lastname;
             Description = personModel.Description;
@@ -106,20 +106,20 @@ public partial class AddPersonViewModel : ObservableObject
 
             if (personId.HasValue)
             {
-                dbAccessRepository.DbAccess.UpdatePerson(person);
-                AffectedPerson = dbAccessRepository.DbAccess.GetPersonById(person.Id);
+                dbAccessProvider.DbAccess.UpdatePerson(person);
+                AffectedPerson = dbAccessProvider.DbAccess.GetPersonById(person.Id);
             }
             else
             {
-                var anyPersonsWithThatName = dbAccessRepository.DbAccess.GetPersons().Any(x => x.Firstname == person.Firstname && x.Lastname == person.Lastname);
+                var anyPersonsWithThatName = dbAccessProvider.DbAccess.GetPersons().Any(x => x.Firstname == person.Firstname && x.Lastname == person.Lastname);
                 if (anyPersonsWithThatName &&
                     !dialogs.ShowConfirmDialog($"There is already a person with that name. Add anyway?"))
                 {
                     return;
                 }
 
-                dbAccessRepository.DbAccess.InsertPerson(person);
-                AffectedPerson = dbAccessRepository.DbAccess.GetPersons().First(x => x.Firstname == person.Firstname && x.Lastname == person.Lastname && x.DateOfBirth == person.DateOfBirth && x.Deceased == person.Deceased && x.Description == person.Description);
+                dbAccessProvider.DbAccess.InsertPerson(person);
+                AffectedPerson = dbAccessProvider.DbAccess.GetPersons().First(x => x.Firstname == person.Firstname && x.Lastname == person.Lastname && x.DateOfBirth == person.DateOfBirth && x.Deceased == person.Deceased && x.Description == person.Description);
             }
 
             Events.Send<CloseModalDialogRequest>();

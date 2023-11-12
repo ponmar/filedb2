@@ -23,11 +23,11 @@ public class ImageLoader : IImageLoader
 
     public ConcurrentDictionary<string, ImageLoadResult> ImageCache { get; } = new();
 
-    private readonly IConfigRepository configRepository;
+    private readonly IConfigProvider configProvider;
 
-    public ImageLoader(IConfigRepository configRepository)
+    public ImageLoader(IConfigProvider configProvider)
     {
-        this.configRepository = configRepository;
+        this.configProvider = configProvider;
     }
 
     public void LoadImage(string filePath)
@@ -42,7 +42,7 @@ public class ImageLoader : IImageLoader
         }
 
         var loadedImages = ImageCache.Values.Where(x => x.Image != null).ToList();
-        while (loadedImages.Any() && loadedImages.Count >= configRepository.Config.ImageMemoryCacheCount)
+        while (loadedImages.Any() && loadedImages.Count >= configProvider.Config.ImageMemoryCacheCount)
         {
             int randomIndex = random.Next(loadedImages.Count - 1);
             var imageToRemove = loadedImages[randomIndex];

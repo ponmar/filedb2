@@ -24,13 +24,13 @@ public class FilesWithOverlayExporter : ISearchResultExporter
     private const int BackgroundPadding = 20;
     private readonly SolidBrush textBgBrush = new(Color.FromArgb(229, 37, 37, 38));
 
-    private readonly IFilesystemAccessRepository filesystemAccessRepository;
+    private readonly IFilesystemAccessProvider filesystemAccessProvider;
     private readonly DescriptionPlacement descriptionPlacement;
     private readonly IFileSystem fileSystem;
 
-    public FilesWithOverlayExporter(IFilesystemAccessRepository filesystemAccessRepository, DescriptionPlacement descriptionPlacement, IFileSystem fileSystem)
+    public FilesWithOverlayExporter(IFilesystemAccessProvider filesystemAccessProvider, DescriptionPlacement descriptionPlacement, IFileSystem fileSystem)
     {
-        this.filesystemAccessRepository = filesystemAccessRepository;
+        this.filesystemAccessProvider = filesystemAccessProvider;
         this.descriptionPlacement = descriptionPlacement;
         this.fileSystem = fileSystem;
     }
@@ -159,7 +159,7 @@ public class FilesWithOverlayExporter : ISearchResultExporter
     {
         try
         {
-            var sourceFilePath = filesystemAccessRepository.FilesystemAccess.ToAbsolutePath(file.OriginalPath);
+            var sourceFilePath = filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(file.OriginalPath);
             // TODO: how to load bitmap from FileSystem?
             return new Bitmap(sourceFilePath);
         }

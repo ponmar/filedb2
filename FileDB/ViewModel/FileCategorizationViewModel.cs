@@ -94,25 +94,25 @@ public partial class FileCategorizationViewModel : ObservableObject
     public ObservableCollection<LocationToUpdate> Locations { get; } = new();
     public ObservableCollection<TagToUpdate> Tags { get; } = new();
 
-    private readonly IConfigRepository configRepository;
-    private readonly IDbAccessRepository dbAccessRepository;
+    private readonly IConfigProvider configProvider;
+    private readonly IDbAccessProvider dbAccessProvider;
     private readonly IDialogs dialogs;
-    private readonly IFilesystemAccessRepository filesystemAccessRepository;
+    private readonly IFilesystemAccessProvider filesystemAccessProvider;
     private readonly IPersonsRepository personsRepository;
     private readonly ILocationsRepository locationsRepository;
     private readonly ITagsRepository tagsRepository;
 
-    public FileCategorizationViewModel(IConfigRepository configRepository, IDbAccessRepository dbAccessRepository, IDialogs dialogs, IFilesystemAccessRepository filesystemAccessRepository, IPersonsRepository personsRepository, ILocationsRepository locationsRepository, ITagsRepository tagsRepository)
+    public FileCategorizationViewModel(IConfigProvider configProvider, IDbAccessProvider dbAccessProvider, IDialogs dialogs, IFilesystemAccessProvider filesystemAccessProvider, IPersonsRepository personsRepository, ILocationsRepository locationsRepository, ITagsRepository tagsRepository)
     {
-        this.configRepository = configRepository;
-        this.dbAccessRepository = dbAccessRepository;
+        this.configProvider = configProvider;
+        this.dbAccessProvider = dbAccessProvider;
         this.dialogs = dialogs;
-        this.filesystemAccessRepository = filesystemAccessRepository;
+        this.filesystemAccessProvider = filesystemAccessProvider;
         this.personsRepository = personsRepository;
         this.locationsRepository = locationsRepository;
         this.tagsRepository = tagsRepository;
 
-        ReadWriteMode = !configRepository.Config.ReadOnly;
+        ReadWriteMode = !configProvider.Config.ReadOnly;
 
         ReloadPersons();
         ReloadLocations();
@@ -124,7 +124,7 @@ public partial class FileCategorizationViewModel : ObservableObject
 
         this.RegisterForEvent<ConfigUpdated>((x) =>
         {
-            ReadWriteMode = !configRepository.Config.ReadOnly;
+            ReadWriteMode = !configProvider.Config.ReadOnly;
         });
 
         this.RegisterForEvent<SelectSearchResultFile>((x) =>
@@ -148,7 +148,7 @@ public partial class FileCategorizationViewModel : ObservableObject
         Persons.Clear();
         foreach (var p in personsRepository.Persons)
         {
-            Persons.Add(new PersonToUpdate(p.Id, $"{p.Firstname} {p.Lastname}", Utils.CreateShortText($"{p.Firstname} {p.Lastname}", configRepository.Config.ShortItemNameMaxLength)));
+            Persons.Add(new PersonToUpdate(p.Id, $"{p.Firstname} {p.Lastname}", Utils.CreateShortText($"{p.Firstname} {p.Lastname}", configProvider.Config.ShortItemNameMaxLength)));
         }
     }
 
@@ -157,7 +157,7 @@ public partial class FileCategorizationViewModel : ObservableObject
         Locations.Clear();
         foreach (var location in locationsRepository.Locations)
         {
-            var locationToUpdate = new LocationToUpdate(location.Id, location.Name, Utils.CreateShortText(location.Name, configRepository.Config.ShortItemNameMaxLength));
+            var locationToUpdate = new LocationToUpdate(location.Id, location.Name, Utils.CreateShortText(location.Name, configProvider.Config.ShortItemNameMaxLength));
             Locations.Add(locationToUpdate);
         }
     }
@@ -165,7 +165,7 @@ public partial class FileCategorizationViewModel : ObservableObject
     private void ReloadTags()
     {
         Tags.Clear();
-        foreach (var tag in tagsRepository.Tags.Select(t => new TagToUpdate(t.Id, t.Name, Utils.CreateShortText(t.Name, configRepository.Config.ShortItemNameMaxLength))))
+        foreach (var tag in tagsRepository.Tags.Select(t => new TagToUpdate(t.Id, t.Name, Utils.CreateShortText(t.Name, configProvider.Config.ShortItemNameMaxLength))))
         {
             Tags.Add(tag);
         }
@@ -178,15 +178,15 @@ public partial class FileCategorizationViewModel : ObservableObject
         NewFileDescription = SelectedFile.Description;
         NewFileDateTime = SelectedFile.Datetime;
 
-        personList = dbAccessRepository.DbAccess.GetPersonsFromFile(SelectedFile.Id);
+        personList = dbAccessProvider.DbAccess.GetPersonsFromFile(SelectedFile.Id);
         OnPropertyChanged(nameof(SelectedPersonCanBeAdded));
         OnPropertyChanged(nameof(SelectedPersonCanBeRemoved));
 
-        locationList = dbAccessRepository.DbAccess.GetLocationsFromFile(SelectedFile.Id);
+        locationList = dbAccessProvider.DbAccess.GetLocationsFromFile(SelectedFile.Id);
         OnPropertyChanged(nameof(SelectedLocationCanBeAdded));
         OnPropertyChanged(nameof(SelectedLocationCanBeRemoved));
 
-        tagList = dbAccessRepository.DbAccess.GetTagsFromFile(SelectedFile.Id);
+        tagList = dbAccessProvider.DbAccess.GetTagsFromFile(SelectedFile.Id);
         OnPropertyChanged(nameof(SelectedTagCanBeAdded));
         OnPropertyChanged(nameof(SelectedTagCanBeRemoved));
 
@@ -211,7 +211,7 @@ public partial class FileCategorizationViewModel : ObservableObject
 
             try
             {
-                dbAccessRepository.DbAccess.UpdateFileDescription(SelectedFile.Id, description);
+                dbAccessProvider.DbAccess.UpdateFileDescription(SelectedFile.Id, description);
                 SelectedFile.Description = description;
                 SetEditedFile();
             }
@@ -239,7 +239,7 @@ public partial class FileCategorizationViewModel : ObservableObject
 
             try
             {
-                dbAccessRepository.DbAccess.UpdateFileDatetime(SelectedFile.Id, dateTime);
+                dbAccessProvider.DbAccess.UpdateFileDatetime(SelectedFile.Id, dateTime);
                 SelectedFile.Datetime = dateTime;
                 SetEditedFile();
             }
@@ -262,30 +262,30 @@ public partial class FileCategorizationViewModel : ObservableObject
 
         try
         {
-            var prevEditedFile = dbAccessRepository.DbAccess.GetFileById(PrevEditedFileId.Value)!;
+            var prevEditedFile = dbAccessProvider.DbAccess.GetFileById(PrevEditedFileId.Value)!;
 
-            var prevPersons = dbAccessRepository.DbAccess.GetPersonsFromFile(PrevEditedFileId.Value);
-            var prevLocations = dbAccessRepository.DbAccess.GetLocationsFromFile(PrevEditedFileId.Value);
-            var prevTags = dbAccessRepository.DbAccess.GetTagsFromFile(PrevEditedFileId.Value);
+            var prevPersons = dbAccessProvider.DbAccess.GetPersonsFromFile(PrevEditedFileId.Value);
+            var prevLocations = dbAccessProvider.DbAccess.GetLocationsFromFile(PrevEditedFileId.Value);
+            var prevTags = dbAccessProvider.DbAccess.GetTagsFromFile(PrevEditedFileId.Value);
 
-            var persons = dbAccessRepository.DbAccess.GetPersonsFromFile(fileId);
-            var locations = dbAccessRepository.DbAccess.GetLocationsFromFile(fileId);
-            var tags = dbAccessRepository.DbAccess.GetTagsFromFile(fileId);
+            var persons = dbAccessProvider.DbAccess.GetPersonsFromFile(fileId);
+            var locations = dbAccessProvider.DbAccess.GetLocationsFromFile(fileId);
+            var tags = dbAccessProvider.DbAccess.GetTagsFromFile(fileId);
 
             foreach (var person in prevPersons.Where(x => !persons.Select(x => x.Id).Contains(x.Id)))
             {
-                dbAccessRepository.DbAccess.InsertFilePerson(fileId, person.Id);
+                dbAccessProvider.DbAccess.InsertFilePerson(fileId, person.Id);
             }
             foreach (var location in prevLocations.Where(x => !locations.Select(x => x.Id).Contains(x.Id)))
             {
-                dbAccessRepository.DbAccess.InsertFileLocation(fileId, location.Id);
+                dbAccessProvider.DbAccess.InsertFileLocation(fileId, location.Id);
             }
             foreach (var tag in prevTags.Where(x => !tags.Select(x => x.Id).Contains(x.Id)))
             {
-                dbAccessRepository.DbAccess.InsertFileTag(fileId, tag.Id);
+                dbAccessProvider.DbAccess.InsertFileTag(fileId, tag.Id);
             }
 
-            dbAccessRepository.DbAccess.UpdateFileDescription(fileId, prevEditedFile.Description);
+            dbAccessProvider.DbAccess.UpdateFileDescription(fileId, prevEditedFile.Description);
             SelectedFile.Description = prevEditedFile.Description;
 
             Events.Send<FileEdited>();
@@ -340,7 +340,7 @@ public partial class FileCategorizationViewModel : ObservableObject
             }
 
             var newOrientation = DatabaseParsing.DegreesToOrientation(cameraNewDegrees);
-            dbAccessRepository.DbAccess.UpdateFileOrientation(SelectedFile.Id, newOrientation);
+            dbAccessProvider.DbAccess.UpdateFileOrientation(SelectedFile.Id, newOrientation);
             SelectedFile.Orientation = newOrientation;
 
             Events.Send<FileEdited>();
@@ -354,8 +354,8 @@ public partial class FileCategorizationViewModel : ObservableObject
         {
             if (dialogs.ShowConfirmDialog("Reload orientation from file meta-data?"))
             {
-                var fileMetadata = filesystemAccessRepository.FilesystemAccess.ParseFileMetadata(filesystemAccessRepository.FilesystemAccess.ToAbsolutePath(SelectedFile.Path));
-                dbAccessRepository.DbAccess.UpdateFileOrientation(SelectedFile.Id, fileMetadata.Orientation);
+                var fileMetadata = filesystemAccessProvider.FilesystemAccess.ParseFileMetadata(filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(SelectedFile.Path));
+                dbAccessProvider.DbAccess.UpdateFileOrientation(SelectedFile.Id, fileMetadata.Orientation);
                 SelectedFile.Orientation = fileMetadata.Orientation;
                 Events.Send<FileEdited>();
             }
@@ -369,9 +369,9 @@ public partial class FileCategorizationViewModel : ObservableObject
         {
             if (dialogs.ShowConfirmDialog("Reload date and GPS position from file meta-data?"))
             {
-                dbAccessRepository.DbAccess.UpdateFileFromMetaData(SelectedFile.Id, filesystemAccessRepository.FilesystemAccess);
+                dbAccessProvider.DbAccess.UpdateFileFromMetaData(SelectedFile.Id, filesystemAccessProvider.FilesystemAccess);
 
-                var updatedFile = dbAccessRepository.DbAccess.GetFileById(SelectedFile.Id)!;
+                var updatedFile = dbAccessProvider.DbAccess.GetFileById(SelectedFile.Id)!;
                 SelectedFile.Datetime = updatedFile.Datetime;
                 SelectedFile.Position = updatedFile.Position;
                 SelectedFile.Orientation = updatedFile.Orientation;
@@ -396,7 +396,7 @@ public partial class FileCategorizationViewModel : ObservableObject
         var newLocation = dialogs.ShowAddLocationDialog();
         if (newLocation != null)
         {
-            AddFileLocationToCurrentFile(new LocationToUpdate(newLocation.Id, newLocation.Name, Utils.CreateShortText(newLocation.Name, configRepository.Config.ShortItemNameMaxLength)));
+            AddFileLocationToCurrentFile(new LocationToUpdate(newLocation.Id, newLocation.Name, Utils.CreateShortText(newLocation.Name, configProvider.Config.ShortItemNameMaxLength)));
         }
     }
 
@@ -406,7 +406,7 @@ public partial class FileCategorizationViewModel : ObservableObject
         var newTag = dialogs.ShowAddTagDialog();
         if (newTag != null)
         {
-            AddFileTagToCurrentFile(new TagToUpdate(newTag.Id, newTag.Name, Utils.CreateShortText(newTag.Name, configRepository.Config.ShortItemNameMaxLength)));
+            AddFileTagToCurrentFile(new TagToUpdate(newTag.Id, newTag.Name, Utils.CreateShortText(newTag.Name, configProvider.Config.ShortItemNameMaxLength)));
         }
     }
 
@@ -421,7 +421,7 @@ public partial class FileCategorizationViewModel : ObservableObject
 
     private void AddFilePersonToCurrentFile(int personId)
     {
-        var person = dbAccessRepository.DbAccess.GetPersonById(personId);
+        var person = dbAccessProvider.DbAccess.GetPersonById(personId);
 
         if (SelectedFile!.Datetime != null)
         {
@@ -448,9 +448,9 @@ public partial class FileCategorizationViewModel : ObservableObject
             }
         }
 
-        if (!dbAccessRepository.DbAccess.GetPersonsFromFile(SelectedFile.Id).Any(p => p.Id == personId))
+        if (!dbAccessProvider.DbAccess.GetPersonsFromFile(SelectedFile.Id).Any(p => p.Id == personId))
         {
-            dbAccessRepository.DbAccess.InsertFilePerson(SelectedFile.Id, personId);
+            dbAccessProvider.DbAccess.InsertFilePerson(SelectedFile.Id, personId);
             AddUpdateHistoryItem(UpdateHistoryType.TogglePerson, personId, $"{person.Firstname} {person.Lastname}");
             SetEditedFile();
         }
@@ -461,7 +461,7 @@ public partial class FileCategorizationViewModel : ObservableObject
     {
         if (SelectedFile != null && SelectedPersonToUpdate != null)
         {
-            dbAccessRepository.DbAccess.DeleteFilePerson(SelectedFile.Id, SelectedPersonToUpdate.Id);
+            dbAccessProvider.DbAccess.DeleteFilePerson(SelectedFile.Id, SelectedPersonToUpdate.Id);
             AddUpdateHistoryItem(UpdateHistoryType.TogglePerson, SelectedPersonToUpdate.Id, SelectedPersonToUpdate.Name);
             SetEditedFile();
         }
@@ -481,9 +481,9 @@ public partial class FileCategorizationViewModel : ObservableObject
         if (SelectedFile != null)
         {
             var fileId = SelectedFile.Id;
-            if (!dbAccessRepository.DbAccess.GetLocationsFromFile(fileId).Any(l => l.Id == location.Id))
+            if (!dbAccessProvider.DbAccess.GetLocationsFromFile(fileId).Any(l => l.Id == location.Id))
             {
-                dbAccessRepository.DbAccess.InsertFileLocation(fileId, location.Id);
+                dbAccessProvider.DbAccess.InsertFileLocation(fileId, location.Id);
                 AddUpdateHistoryItem(UpdateHistoryType.ToggleLocation, location.Id, location.Name);
                 SetEditedFile();
             }
@@ -496,7 +496,7 @@ public partial class FileCategorizationViewModel : ObservableObject
         if (SelectedFile != null && SelectedLocationToUpdate != null)
         {
             var fileId = SelectedFile.Id;
-            dbAccessRepository.DbAccess.DeleteFileLocation(fileId, SelectedLocationToUpdate.Id);
+            dbAccessProvider.DbAccess.DeleteFileLocation(fileId, SelectedLocationToUpdate.Id);
             AddUpdateHistoryItem(UpdateHistoryType.ToggleLocation, SelectedLocationToUpdate.Id, SelectedLocationToUpdate.Name);
             SetEditedFile();
         }
@@ -514,9 +514,9 @@ public partial class FileCategorizationViewModel : ObservableObject
     private void AddFileTagToCurrentFile(TagToUpdate tag)
     {
         var fileId = SelectedFile!.Id;
-        if (!dbAccessRepository.DbAccess.GetTagsFromFile(fileId).Any(t => t.Id == tag.Id))
+        if (!dbAccessProvider.DbAccess.GetTagsFromFile(fileId).Any(t => t.Id == tag.Id))
         {
-            dbAccessRepository.DbAccess.InsertFileTag(fileId, tag.Id);
+            dbAccessProvider.DbAccess.InsertFileTag(fileId, tag.Id);
             AddUpdateHistoryItem(UpdateHistoryType.ToggleTag, tag.Id, tag.Name);
             SetEditedFile();
         }
@@ -528,7 +528,7 @@ public partial class FileCategorizationViewModel : ObservableObject
         if (SelectedFile != null && SelectedTagToUpdate != null)
         {
             var fileId = SelectedFile.Id;
-            dbAccessRepository.DbAccess.DeleteFileTag(fileId, SelectedTagToUpdate.Id);
+            dbAccessProvider.DbAccess.DeleteFileTag(fileId, SelectedTagToUpdate.Id);
             AddUpdateHistoryItem(UpdateHistoryType.ToggleTag, SelectedTagToUpdate.Id, SelectedTagToUpdate.Name);
             SetEditedFile();
         }
@@ -558,7 +558,7 @@ public partial class FileCategorizationViewModel : ObservableObject
                     ItemId = itemId,
                     ItemName = itemName,
                     FunctionKey = i,
-                    ShortItemName = Utils.CreateShortText(itemName, configRepository.Config.ShortItemNameMaxLength),
+                    ShortItemName = Utils.CreateShortText(itemName, configProvider.Config.ShortItemNameMaxLength),
                 });
 
                 OnPropertyChanged(nameof(HasUpdateHistory));
@@ -597,9 +597,9 @@ public partial class FileCategorizationViewModel : ObservableObject
         {
             case UpdateHistoryType.TogglePerson:
                 var personId = historyItem.ItemId;
-                if (dbAccessRepository.DbAccess.GetPersonsFromFile(fileId).Any(x => x.Id == personId))
+                if (dbAccessProvider.DbAccess.GetPersonsFromFile(fileId).Any(x => x.Id == personId))
                 {
-                    dbAccessRepository.DbAccess.DeleteFilePerson(fileId, personId);
+                    dbAccessProvider.DbAccess.DeleteFilePerson(fileId, personId);
                 }
                 else
                 {
@@ -609,25 +609,25 @@ public partial class FileCategorizationViewModel : ObservableObject
 
             case UpdateHistoryType.ToggleLocation:
                 var locationId = historyItem.ItemId;
-                if (dbAccessRepository.DbAccess.GetLocationsFromFile(fileId).Any(x => x.Id == locationId))
+                if (dbAccessProvider.DbAccess.GetLocationsFromFile(fileId).Any(x => x.Id == locationId))
                 {
-                    dbAccessRepository.DbAccess.DeleteFileLocation(fileId, locationId);
+                    dbAccessProvider.DbAccess.DeleteFileLocation(fileId, locationId);
                 }
                 else
                 {
-                    dbAccessRepository.DbAccess.InsertFileLocation(fileId, locationId);
+                    dbAccessProvider.DbAccess.InsertFileLocation(fileId, locationId);
                 }
                 break;
 
             case UpdateHistoryType.ToggleTag:
                 var tagId = historyItem.ItemId;
-                if (dbAccessRepository.DbAccess.GetTagsFromFile(fileId).Any(x => x.Id == tagId))
+                if (dbAccessProvider.DbAccess.GetTagsFromFile(fileId).Any(x => x.Id == tagId))
                 {
-                    dbAccessRepository.DbAccess.DeleteFileTag(fileId, tagId);
+                    dbAccessProvider.DbAccess.DeleteFileTag(fileId, tagId);
                 }
                 else
                 {
-                    dbAccessRepository.DbAccess.InsertFileTag(fileId, tagId);
+                    dbAccessProvider.DbAccess.InsertFileTag(fileId, tagId);
                 }
                 break;
         }

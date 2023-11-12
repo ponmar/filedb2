@@ -20,12 +20,12 @@ public partial class AddTagViewModel : ObservableObject
 
     public TagModel? AffectedTag { get; private set; }
 
-    private readonly IDbAccessRepository dbAccessRepository;
+    private readonly IDbAccessProvider dbAccessProvider;
     private readonly IDialogs dialogs;
 
-    public AddTagViewModel(IDbAccessRepository dbAccessRepository, IDialogs dialogs, int? tagId = null)
+    public AddTagViewModel(IDbAccessProvider dbAccessProvider, IDialogs dialogs, int? tagId = null)
     {
-        this.dbAccessRepository = dbAccessRepository;
+        this.dbAccessProvider = dbAccessProvider;
         this.dialogs = dialogs;
         this.tagId = tagId;
 
@@ -33,7 +33,7 @@ public partial class AddTagViewModel : ObservableObject
 
         if (tagId.HasValue)
         {
-            var tagModel = dbAccessRepository.DbAccess.GetTagById(tagId.Value);
+            var tagModel = dbAccessProvider.DbAccess.GetTagById(tagId.Value);
             Name = tagModel.Name;
         }
     }
@@ -47,19 +47,19 @@ public partial class AddTagViewModel : ObservableObject
 
             if (tagId.HasValue)
             {
-                dbAccessRepository.DbAccess.UpdateTag(tag);
-                AffectedTag = dbAccessRepository.DbAccess.GetTagById(tag.Id);
+                dbAccessProvider.DbAccess.UpdateTag(tag);
+                AffectedTag = dbAccessProvider.DbAccess.GetTagById(tag.Id);
             }
             else
             {
-                if (dbAccessRepository.DbAccess.GetTags().Any(x => x.Name == tag.Name))
+                if (dbAccessProvider.DbAccess.GetTags().Any(x => x.Name == tag.Name))
                 {
                     dialogs.ShowErrorDialog($"Tag '{tag.Name}' already added");
                     return;
                 }
 
-                dbAccessRepository.DbAccess.InsertTag(tag);
-                AffectedTag = dbAccessRepository.DbAccess.GetTags().First(x => x.Name == tag.Name);
+                dbAccessProvider.DbAccess.InsertTag(tag);
+                AffectedTag = dbAccessProvider.DbAccess.GetTags().First(x => x.Name == tag.Name);
             }
 
             Events.Send<CloseModalDialogRequest>();

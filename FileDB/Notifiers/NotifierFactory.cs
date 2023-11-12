@@ -44,12 +44,12 @@ public class NotifierFactory : INotifierFactory
         if (config.BackupReminder)
         {
             var fileSystem = ServiceLocator.Resolve<IFileSystem>();
-            var configRepository = ServiceLocator.Resolve<IConfigRepository>();
-            notifiers.Add(new BackupNotifier(new FileBackup(fileSystem, configRepository.FilePaths.DatabasePath), 30));
+            var configProvider = ServiceLocator.Resolve<IConfigProvider>();
+            notifiers.Add(new BackupNotifier(new FileBackup(fileSystem, configProvider.FilePaths.DatabasePath), 30));
         }
 
         notifiers.Add(new MissingDatabaseNotifier(
-            ServiceLocator.Resolve<IConfigRepository>().FilePaths,
+            ServiceLocator.Resolve<IConfigProvider>().FilePaths,
             ServiceLocator.Resolve<IFileSystem>()));
 
         return notifiers;

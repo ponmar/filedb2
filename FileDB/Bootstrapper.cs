@@ -23,9 +23,9 @@ public static class Bootstrapper
             Component.For(
                 typeof(INotificationHandling),
                 typeof(INotificationsRepository),
-                typeof(IConfigRepository),
-                typeof(IDbAccessRepository),
-                typeof(IFilesystemAccessRepository),
+                typeof(IConfigProvider),
+                typeof(IDbAccessProvider),
+                typeof(IFilesystemAccessProvider),
                 typeof(IConfigUpdater))
                     .ImplementedBy<Model.Model>());
 

@@ -107,15 +107,15 @@ public partial class BirthdaysViewModel : ObservableObject
     public ObservableCollection<PersonBirthday> Persons { get; } = new();
 
     private readonly IPersonsRepository personsRepository;
-    private readonly IDbAccessRepository dbAccessRepository;
-    private readonly IFilesystemAccessRepository filesystemAccessRepository;
+    private readonly IDbAccessProvider dbAccessProvider;
+    private readonly IFilesystemAccessProvider filesystemAccessProvider;
     private readonly IImageLoader imageLoader;
 
-    public BirthdaysViewModel(IPersonsRepository personsRepository, IFilesystemAccessRepository filesystemAccessRepository, IDbAccessRepository dbAccessRepository, IImageLoader imageLoader)
+    public BirthdaysViewModel(IPersonsRepository personsRepository, IFilesystemAccessProvider filesystemAccessProvider, IDbAccessProvider dbAccessProvider, IImageLoader imageLoader)
     {
         this.personsRepository = personsRepository;
-        this.filesystemAccessRepository = filesystemAccessRepository;
-        this.dbAccessRepository = dbAccessRepository;
+        this.filesystemAccessProvider = filesystemAccessProvider;
+        this.dbAccessProvider = dbAccessProvider;
         this.imageLoader = imageLoader;
 
         this.RegisterForEvent<ConfigUpdated>((x) => UpdatePersons());
@@ -130,7 +130,7 @@ public partial class BirthdaysViewModel : ObservableObject
             {
                 foreach (var personVm in allPersons.Where(p => p.ProfilePictureAbsPath == x.FilePath))
                 {
-                    var profileFile = dbAccessRepository.DbAccess.GetFileById(personVm.Person.ProfileFileId!.Value);
+                    var profileFile = dbAccessProvider.DbAccess.GetFileById(personVm.Person.ProfileFileId!.Value);
                     int rotateDegrees = DatabaseParsing.OrientationToDegrees(profileFile!.Orientation ?? 0);
                     personVm.ProfilePicture = ImageUtils.Rotate(x.Image, -rotateDegrees);
                 }
@@ -149,8 +149,8 @@ public partial class BirthdaysViewModel : ObservableObject
             string? profileFileIdPath = null;
             if (person.ProfileFileId != null)
             {
-                var profileFile = dbAccessRepository.DbAccess.GetFileById(person.ProfileFileId.Value);
-                profileFileIdPath = filesystemAccessRepository.FilesystemAccess.ToAbsolutePath(profileFile!.Path);
+                var profileFile = dbAccessProvider.DbAccess.GetFileById(person.ProfileFileId.Value);
+                profileFileIdPath = filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(profileFile!.Path);
             }
 
             allPersons.Add(new PersonBirthday(person, profileFileIdPath));

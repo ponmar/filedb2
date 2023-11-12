@@ -283,15 +283,15 @@ public partial class SettingsViewModel : ObservableObject
         SelectedLanguage = Languages.FirstOrDefault(x => x.Name == DefaultConfigs.Default.Language);
     }
 
-    private readonly IConfigRepository configRepository;
+    private readonly IConfigProvider configProvider;
     private readonly IConfigUpdater configUpdater;
     private readonly IDialogs dialogs;
     private readonly IFileSystem fileSystem;
     private readonly INotificationHandling notificationHandling;
 
-    public SettingsViewModel(IConfigRepository configRepository, IConfigUpdater configUpdater, IDialogs dialogs, IFileSystem fileSystem, INotificationHandling notificationHandling)
+    public SettingsViewModel(IConfigProvider configProvider, IConfigUpdater configUpdater, IDialogs dialogs, IFileSystem fileSystem, INotificationHandling notificationHandling)
     {
-        this.configRepository = configRepository;
+        this.configProvider = configProvider;
         this.configUpdater = configUpdater;
         this.dialogs = dialogs;
         this.fileSystem = fileSystem;
@@ -305,7 +305,7 @@ public partial class SettingsViewModel : ObservableObject
 
     private void UpdateFromConfiguration()
     {
-        var config = configRepository.Config;
+        var config = configProvider.Config;
 
         SlideshowDelay = config.SlideshowDelay;
         SearchHistorySize = config.SearchHistorySize;
@@ -380,7 +380,7 @@ public partial class SettingsViewModel : ObservableObject
 
         try
         {
-            var configPath = configRepository.FilePaths.ConfigPath;
+            var configPath = configProvider.FilePaths.ConfigPath;
             new FileBackup(fileSystem, configPath).CreateBackup();
             var json = configToSave.ToJson();
             fileSystem.File.WriteAllText(configPath, json);

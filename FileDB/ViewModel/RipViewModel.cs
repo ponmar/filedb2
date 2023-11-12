@@ -62,14 +62,14 @@ public partial class RipViewModel : ObservableObject
 
     public ObservableCollection<DeceasedPerson> Persons { get; set; } = new();
 
-    private readonly IDbAccessRepository dbAccessRepository;
-    private readonly IFilesystemAccessRepository filesystemAccessRepository;
+    private readonly IDbAccessProvider dbAccessProvider;
+    private readonly IFilesystemAccessProvider filesystemAccessProvider;
     private readonly IImageLoader imageLoader;
 
-    public RipViewModel(IDbAccessRepository dbAccessRepository, IFilesystemAccessRepository filesystemAccessRepository, IImageLoader imageLoader)
+    public RipViewModel(IDbAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IImageLoader imageLoader)
     {
-        this.dbAccessRepository = dbAccessRepository;
-        this.filesystemAccessRepository = filesystemAccessRepository;
+        this.dbAccessProvider = dbAccessProvider;
+        this.filesystemAccessProvider = filesystemAccessProvider;
         this.imageLoader = imageLoader;
 
         this.RegisterForEvent<ConfigUpdated>((x) => UpdatePersons());
@@ -81,7 +81,7 @@ public partial class RipViewModel : ObservableObject
             {
                 foreach (var personVm in allPersons.Where(p => p.ProfilePictureAbsPath == x.FilePath))
                 {
-                    var profileFile = dbAccessRepository.DbAccess.GetFileById(personVm.Person.ProfileFileId!.Value);
+                    var profileFile = dbAccessProvider.DbAccess.GetFileById(personVm.Person.ProfileFileId!.Value);
                     int rotateDegrees = DatabaseParsing.OrientationToDegrees(profileFile!.Orientation ?? 0);
                     personVm.ProfilePicture = ImageUtils.Rotate(x.Image, -rotateDegrees);
                 }
@@ -95,13 +95,13 @@ public partial class RipViewModel : ObservableObject
     {
         allPersons.Clear();
 
-        foreach (var person in dbAccessRepository.DbAccess.GetPersons().Where(x => x.DateOfBirth != null && x.Deceased != null))
+        foreach (var person in dbAccessProvider.DbAccess.GetPersons().Where(x => x.DateOfBirth != null && x.Deceased != null))
         {
             string? profileFileIdPath = null;
             if (person.ProfileFileId != null)
             {
-                var profileFile = dbAccessRepository.DbAccess.GetFileById(person.ProfileFileId.Value);
-                profileFileIdPath = filesystemAccessRepository.FilesystemAccess.ToAbsolutePath(profileFile!.Path);
+                var profileFile = dbAccessProvider.DbAccess.GetFileById(person.ProfileFileId.Value);
+                profileFileIdPath = filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(profileFile!.Path);
             }
 
             allPersons.Add(new DeceasedPerson(person, profileFileIdPath));
