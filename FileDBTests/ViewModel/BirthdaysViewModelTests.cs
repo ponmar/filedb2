@@ -119,10 +119,10 @@ public class BirthdaysViewModelTests
 
     private static List<PersonModel> SomePersons()
     {
-        return new()
-        {
+        return
+        [
             new () { Id = 1, Firstname = "Alice", Lastname = "Andersson", DateOfBirth = "2000-01-01" },
             new () { Id = 2, Firstname = "Bob", Lastname = "Andersson", DateOfBirth = "2000-02-02" },
-        };
+        ];
     }
 }

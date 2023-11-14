@@ -15,7 +15,7 @@ public partial class LocationsViewModel : ObservableObject
     [ObservableProperty]
     private bool readWriteMode;
 
-    public ObservableCollection<Location> Locations { get; } = new();
+    public ObservableCollection<Location> Locations { get; } = [];
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(SelectedLocationHasPosition))]

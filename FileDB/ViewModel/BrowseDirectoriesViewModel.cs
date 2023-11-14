@@ -17,7 +17,7 @@ namespace FileDB.ViewModel
     {
         private readonly IFolder? parent;
         public string Name { get; }
-        public List<IFolder> Folders { get; } = new();
+        public List<IFolder> Folders { get; } = [];
 
         public string Path => parent != null ? parent.Path + "/" + Name : Name;
 
@@ -33,7 +33,7 @@ namespace FileDB.ViewModel
         private const string RootFolderName = "root";
 
         [ObservableProperty]
-        private List<IFolder> folders = new();
+        private List<IFolder> folders = [];
 
         [ObservableProperty]
         private IFolder? selectedFolder;

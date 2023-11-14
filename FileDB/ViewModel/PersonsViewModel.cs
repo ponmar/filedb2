@@ -17,7 +17,7 @@ public partial class PersonsViewModel : ObservableObject
     [ObservableProperty]
     private bool readWriteMode;
 
-    public ObservableCollection<Person> Persons { get; } = new();
+    public ObservableCollection<Person> Persons { get; } = [];
 
     [ObservableProperty]
     private Person? selectedPerson;

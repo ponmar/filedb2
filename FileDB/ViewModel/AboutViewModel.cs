@@ -24,7 +24,7 @@ public class AboutViewModel : ObservableObject
     public string Author => Utils.Author;
     public string Version => Utils.GetVersionString();
 
-    public ObservableCollection<LicenseFileFormatDto> Licenses { get; } = new();
+    public ObservableCollection<LicenseFileFormatDto> Licenses { get; } = [];
 
     private readonly IFileSystem fileSystem;
 

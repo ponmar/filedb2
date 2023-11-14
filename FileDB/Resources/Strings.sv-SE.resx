@@ -1233,4 +1233,13 @@
   <data name="ExportSelectYourDestinationDirectory" xml:space="preserve">
     <value>Väljd din destinationskatalog</value>
   </data>
+  <data name="FilterTypeNoMetaData" xml:space="preserve">
+    <value>Utan metadata</value>
+  </data>
+  <data name="FilterTypeNoDateTime" xml:space="preserve">
+    <value>Utan datum/tid</value>
+  </data>
+  <data name="FilterTypeText" xml:space="preserve">
+    <value>Text</value>
+  </data>
 </root>

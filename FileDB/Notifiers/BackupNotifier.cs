@@ -18,7 +18,7 @@ public class BackupNotifier : INotifier
 
     public List<Notification> Run()
     {
-        List<Notification> notifications = new();
+        List<Notification> notifications = [];
         var backupFiles = fileBackup.ListAvailableBackupFiles();
         if (!backupFiles.Any())
         {

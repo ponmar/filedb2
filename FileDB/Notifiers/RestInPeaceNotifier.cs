@@ -18,7 +18,7 @@ public class RestInPeaceNotifier : INotifier
     public List<Notification> Run()
     {
         var today = DateTime.Today;
-        List<Notification> notifications = new();
+        List<Notification> notifications = [];
 
         foreach (var person in persons.Where(x => x.DateOfBirth != null))
         {

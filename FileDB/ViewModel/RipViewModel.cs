@@ -58,9 +58,9 @@ public partial class RipViewModel : ObservableObject
         FilterPersons();
     }
 
-    private readonly List<DeceasedPerson> allPersons = new();
+    private readonly List<DeceasedPerson> allPersons = [];
 
-    public ObservableCollection<DeceasedPerson> Persons { get; set; } = new();
+    public ObservableCollection<DeceasedPerson> Persons { get; set; } = [];
 
     private readonly IDbAccessProvider dbAccessProvider;
     private readonly IFilesystemAccessProvider filesystemAccessProvider;

@@ -23,12 +23,12 @@ public partial class ToolsViewModel : ObservableObject
     [ObservableProperty]
     private string backupListHeader = string.Empty;
 
-    public ObservableCollection<BackupFile> BackupFiles { get; } = new();
+    public ObservableCollection<BackupFile> BackupFiles { get; } = [];
 
     [ObservableProperty]
     private string importedNoLongerApplicableFileList = string.Empty;
 
-    public ObservableCollection<string> DabaseValidationErrors { get; } = new();
+    public ObservableCollection<string> DabaseValidationErrors { get; } = [];
 
     [ObservableProperty]
     private string invalidFileList = string.Empty;
@@ -137,7 +137,7 @@ public partial class ToolsViewModel : ObservableObject
         DabaseValidationErrors.Clear();
 
         var filesValidator = new FileModelValidator();
-        List<FileModel> invalidFiles = new();
+        List<FileModel> invalidFiles = [];
         foreach (var file in dbAccessProvider.DbAccess.GetFiles())
         {
             var result = filesValidator.Validate(file);
@@ -206,11 +206,7 @@ public partial class ToolsViewModel : ObservableObject
     [RelayCommand]
     private void FileFinder()
     {
-        List<FileModel> missingFiles = new();
-        foreach (var file in filesystemAccessProvider.FilesystemAccess.GetFilesMissingInFilesystem(dbAccessProvider.DbAccess.GetFiles()))
-        {
-            missingFiles.Add(file);
-        }
+        List<FileModel> missingFiles = [.. filesystemAccessProvider.FilesystemAccess.GetFilesMissingInFilesystem(dbAccessProvider.DbAccess.GetFiles())];
 
         var result = missingFiles.Count == 0 ? Strings.ToolsNoMissingFilesFound : string.Format(Strings.ToolsMissingFilesFound, missingFiles.Count);
         dialogs.ShowInfoDialog(result);

@@ -77,7 +77,7 @@ public partial class SearchResultViewModel : ObservableObject
     }
     private SearchResult? searchResult = null;
 
-    public ObservableCollection<SearchResult> SearchResultHistory { get; } = new();
+    public ObservableCollection<SearchResult> SearchResultHistory { get; } = [];
 
     [ObservableProperty]
     private SearchResult? searchResultHistorySelection;

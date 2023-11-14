@@ -102,9 +102,9 @@ public partial class BirthdaysViewModel : ObservableObject
         FilterPersons();
     }
 
-    private readonly List<PersonBirthday> allPersons = new();
+    private readonly List<PersonBirthday> allPersons = [];
 
-    public ObservableCollection<PersonBirthday> Persons { get; } = new();
+    public ObservableCollection<PersonBirthday> Persons { get; } = [];
 
     private readonly IPersonsRepository personsRepository;
     private readonly IDbAccessProvider dbAccessProvider;

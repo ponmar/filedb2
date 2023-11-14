@@ -27,9 +27,9 @@ public class DatabaseCache : IPersonsRepository, ILocationsRepository, ITagsRepo
     public IEnumerable<LocationModel> Locations => locations;
     public IEnumerable<TagModel> Tags => tags;
 
-    private readonly List<PersonModel> persons = new();
-    private readonly List<LocationModel> locations = new();
-    private readonly List<TagModel> tags = new();
+    private readonly List<PersonModel> persons = [];
+    private readonly List<LocationModel> locations = [];
+    private readonly List<TagModel> tags = [];
 
     public DatabaseCache(IDbAccessProvider dbAccessProvider)
     {

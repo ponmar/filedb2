@@ -80,7 +80,7 @@ public partial class FileCategorizationViewModel : ObservableObject
         SelectedTagToUpdate != null &&
         tagList.Any(x => x.Id == SelectedTagToUpdate.Id);
 
-    public ObservableCollection<UpdateHistoryItem> UpdateHistoryItems { get; } = new();
+    public ObservableCollection<UpdateHistoryItem> UpdateHistoryItems { get; } = [];
 
     public bool HasUpdateHistory => UpdateHistoryItems.Count > 0;
 
@@ -90,9 +90,9 @@ public partial class FileCategorizationViewModel : ObservableObject
 
     public bool CanApplyMetaDataFromPrevEdit => SelectedFile != null && PrevEditedFileId != null;
 
-    public ObservableCollection<PersonToUpdate> Persons { get; } = new();
-    public ObservableCollection<LocationToUpdate> Locations { get; } = new();
-    public ObservableCollection<TagToUpdate> Tags { get; } = new();
+    public ObservableCollection<PersonToUpdate> Persons { get; } = [];
+    public ObservableCollection<LocationToUpdate> Locations { get; } = [];
+    public ObservableCollection<TagToUpdate> Tags { get; } = [];
 
     private readonly IConfigProvider configProvider;
     private readonly IDbAccessProvider dbAccessProvider;

@@ -21,9 +21,9 @@ public class FileCategorizationViewModelTests
     private ITagsRepository tagsRepository;
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
-    private readonly List<PersonModel> persons = new();
-    private readonly List<LocationModel> locations = new();
-    private readonly List<TagModel> tags = new();
+    private readonly List<PersonModel> persons = [];
+    private readonly List<LocationModel> locations = [];
+    private readonly List<TagModel> tags = [];
 
     private readonly EventRecorder eventRecorder = new();
 

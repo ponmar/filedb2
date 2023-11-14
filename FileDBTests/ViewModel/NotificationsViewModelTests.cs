@@ -42,8 +42,8 @@ public class NotificationsViewModelTests
 
         A.CallTo(() => fakeConfigRepo.Config).Returns(config);
         A.CallTo(() => fakeDbAccessRepo.DbAccess).Returns(fakeDbAccess);
-        A.CallTo(() => fakeNotifierFactory.GetContinousNotifiers(A<Config>._, A<IDbAccess>._)).Returns(new List<INotifier>());
-        A.CallTo(() => fakeNotifierFactory.GetStartupNotifiers(A<Config>._, A<IDbAccess>._)).Returns(new List<INotifier>());
+        A.CallTo(() => fakeNotifierFactory.GetContinousNotifiers(A<Config>._, A<IDbAccess>._)).Returns([]);
+        A.CallTo(() => fakeNotifierFactory.GetStartupNotifiers(A<Config>._, A<IDbAccess>._)).Returns([]);
     }
 
     [TestCleanup]
@@ -87,11 +87,11 @@ public class NotificationsViewModelTests
 
     private static List<Notification> SomeNotifications()
     {
-        return new()
-        {
+        return
+        [
             new(NotificationType.Error, $"Error text {Guid.NewGuid()}", DateTime.Now),
             new(NotificationType.Warning, $"Warning text {Guid.NewGuid()}", DateTime.Now),
             new(NotificationType.Info, $"Info text {Guid.NewGuid()}", DateTime.Now),
-        };
+        ];
     }
 }

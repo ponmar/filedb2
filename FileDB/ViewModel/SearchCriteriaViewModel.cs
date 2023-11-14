@@ -10,6 +10,7 @@ using System.IO;
 using FileDBInterface.DbAccess;
 using FileDB.Extensions;
 using System.Collections.ObjectModel;
+using FileDB.FilesFilter;
 
 namespace FileDB.ViewModel;
 
@@ -18,6 +19,31 @@ public interface ISearchResultRepository
     IEnumerable<FileModel> Files { get; }
 
     FileModel? SelectedFile { get; }
+}
+
+public partial class FilterSettingsViewModel : ObservableObject
+{
+    [ObservableProperty]
+    private bool removable = true;
+
+    public static IEnumerable<FilterType> FilterTypes => Enum.GetValues<FilterType>().OrderBy(x => x.ToString());
+
+    [ObservableProperty]
+    private FilterType selectedFilterType = FilterTypes.First();
+
+    [ObservableProperty]
+    private string textFilterSearchPattern = string.Empty;
+
+    public IFilesFilter Create()
+    {
+        return SelectedFilterType switch
+        {
+            FilterType.NoDateTime => new WithoutDateTime(),
+            FilterType.NoMetaData => new WithoutMetaData(),
+            FilterType.Text => new Text() { SearchPattern = TextFilterSearchPattern },
+            _ => throw new NotImplementedException(),
+        };
+    }
 }
 
 public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRepository
@@ -150,6 +176,11 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
     [ObservableProperty]
     private string? fileListSearch;
 
+    [ObservableProperty]
+    private ObservableCollection<FilterSettingsViewModel> filterSettings = [new() { Removable = false }];
+
+    public bool FilterCanBeRemoved => FilterSettings.Count > 1;
+
     public bool FileSelected => SelectedFile != null;
 
     [ObservableProperty]
@@ -159,10 +190,10 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
 
     public bool CurrentFileHasPosition => SelectedFile != null && SelectedFile.Position.HasContent();
 
-    public ObservableCollection<PersonToUpdate> Persons { get; } = new();
-    public ObservableCollection<LocationToUpdate> Locations { get; } = new();
-    public ObservableCollection<LocationToUpdate> LocationsWithPosition { get; } = new();
-    public ObservableCollection<TagToUpdate> Tags { get; } = new();
+    public ObservableCollection<PersonToUpdate> Persons { get; } = [];
+    public ObservableCollection<LocationToUpdate> Locations { get; } = [];
+    public ObservableCollection<LocationToUpdate> LocationsWithPosition { get; } = [];
+    public ObservableCollection<TagToUpdate> Tags { get; } = [];
 
     private readonly IConfigProvider configProvider;
     private readonly IDialogs dialogs;
@@ -592,6 +623,44 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
     {
         var fileIds = Utils.CreateFileIds(CombineSearchResult);
         Files = dbAccessProvider.DbAccess.SearchFilesFromIds(fileIds);
+        Events.Send<NewSearchResult>();
+    }
+
+    [RelayCommand]
+    private void AddFilter()
+    {
+        FilterSettings.Add(new FilterSettingsViewModel());
+        OnPropertyChanged(nameof(FilterCanBeRemoved));
+    }
+
+    [RelayCommand]
+    private void RemoveFilter(FilterSettingsViewModel vm)
+    {
+        FilterSettings.Remove(vm);
+        OnPropertyChanged(nameof(FilterCanBeRemoved));
+    }
+
+    [RelayCommand]
+    private void FindFilesFromFilters()
+    {
+        var filters = FilterSettings.Select(x => x.Create());
+
+        IEnumerable<FileModel> result = Enumerable.Empty<FileModel>();
+        var isFirstFilter = true;
+        foreach (var filter in filters)
+        {
+            var files = filter.Run(dbAccessProvider.DbAccess);
+            result = isFirstFilter ? files : result.Intersect(files);
+            isFirstFilter = false;
+
+            if (!result.Any())
+            {
+                // No need to continue with db queries because the next intersection will throw them away
+                break;
+            }
+        }
+
+        Files = result;
         Events.Send<NewSearchResult>();
     }
 }

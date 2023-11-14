@@ -7,7 +7,7 @@ namespace FileDBTests;
 
 public class EventRecorder
 {
-    private readonly List<object> events = new();
+    private readonly List<object> events = [];
 
     public void Record<T>() where T : class
     {

@@ -20,6 +20,7 @@
         <converters:ValueToBoolConverter x:Key="ValueToBoolConverter"/>
         <converters:FileTypeToStringConverter x:Key="FileTypeToStringConverter"/>
         <converters:SexToStringConverter x:Key="SexToStringConverter"/>
+        <converters:FilterTypeToStringConverter x:Key="FilterTypeToStringConverter"/>
     </UserControl.Resources>
 
     <Border Style="{StaticResource BorderGroup}" Margin="0 0 0 10">
@@ -216,6 +217,54 @@
                     </StackPanel>
                 </Grid>
             </TabItem>
+
+            <TabItem Style="{StaticResource PageTabItem}">
+                <TabItem.Header>
+                    <TextBlock Text="Filters" Style="{StaticResource PageTabItemText}" />
+                </TabItem.Header>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <ItemsControl Grid.Row="0" ItemsSource="{Binding FilterSettings}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <ComboBox Grid.Column="0" Margin="3" ItemsSource="{Binding FilterTypes}" SelectedItem="{Binding SelectedFilterType}" Width="100" ToolTip="Filter type">
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Path=., Converter={StaticResource FilterTypeToStringConverter}}"/>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
+                                    <Button Grid.Column="1" Margin="3" Style="{StaticResource NormalButton}" Command="{Binding DataContext.RemoveFilterCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}" Content="-" IsEnabled="{Binding DataContext.FilterCanBeRemoved, RelativeSource={RelativeSource AncestorType=ItemsControl}}" ToolTip="Remove filter" />
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <StackPanel Grid.Row="1" Orientation="Horizontal">
+                        <Button Margin="3" Style="{StaticResource NormalButton}" Command="{Binding AddFilterCommand}" Content="+" ToolTip="Add filter" />
+                        <Button Margin="3" Style="{StaticResource NormalButton}" Command="{Binding FindFilesFromFiltersCommand}" Content="Search"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            
         </TabControl>
     </Border>
 </UserControl>

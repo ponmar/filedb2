@@ -1233,4 +1233,13 @@
   <data name="ExportError" xml:space="preserve">
     <value>Export error: {0}</value>
   </data>
+  <data name="FilterTypeNoMetaData" xml:space="preserve">
+    <value>No meta-data</value>
+  </data>
+  <data name="FilterTypeNoDateTime" xml:space="preserve">
+    <value>No date/time</value>
+  </data>
+  <data name="FilterTypeText" xml:space="preserve">
+    <value>Text</value>
+  </data>
 </root>

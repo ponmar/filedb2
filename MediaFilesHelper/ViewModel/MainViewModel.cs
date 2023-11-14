@@ -20,7 +20,7 @@ public partial class MainViewModel : ObservableObject
     public Dialogs Dialogs { get; set; } = new();
 
     [ObservableProperty]
-    private ObservableCollection<string> devices = new();
+    private ObservableCollection<string> devices = [];
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(DeviceIsSelected))]

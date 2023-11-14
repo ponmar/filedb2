@@ -14,7 +14,7 @@ public partial class TagsViewModel : ObservableObject
     [ObservableProperty]
     private bool readWriteMode;
 
-    public ObservableCollection<Tag> Tags { get; } = new();
+    public ObservableCollection<Tag> Tags { get; } = [];
 
     [ObservableProperty]
     private Tag? selectedTag;

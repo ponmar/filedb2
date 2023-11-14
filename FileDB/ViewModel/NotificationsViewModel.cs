@@ -11,7 +11,7 @@ namespace FileDB.ViewModel;
 
 public partial class NotificationsViewModel : ObservableObject
 {
-    public ObservableCollection<Notification> Notifications { get; } = new();
+    public ObservableCollection<Notification> Notifications { get; } = [];
 
     private readonly DispatcherTimer notifierTimer = new();
 

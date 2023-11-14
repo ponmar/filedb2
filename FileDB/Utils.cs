@@ -80,7 +80,7 @@ public static class Utils
 
     public static List<int> CreateFileIds(string fileList)
     {
-        List<int> fileIds = new();
+        List<int> fileIds = [];
 
         if (fileList.HasContent())
         {

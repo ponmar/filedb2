@@ -37,7 +37,7 @@ public partial class FilesViewModel : ObservableObject
     [ObservableProperty]
     private string subdirToScan;
 
-    public ObservableCollection<NewFile> NewFiles { get; } = new();
+    public ObservableCollection<NewFile> NewFiles { get; } = [];
 
     public bool NewFilesSelected => NewFiles.Any(x => x.IsSelected);
 
@@ -164,7 +164,7 @@ public partial class FilesViewModel : ObservableObject
 
             try
             {
-                List<FileModel> importedFiles = new();
+                List<FileModel> importedFiles = [];
 
                 var counter = 1;
                 foreach (var fileToAdd in filesToAdd)

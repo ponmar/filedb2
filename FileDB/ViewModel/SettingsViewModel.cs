@@ -116,7 +116,7 @@ public partial class SettingsViewModel : ObservableObject
     partial void OnWindowModeChanged(WindowMode value) => IsDirty = true;
 
     [ObservableProperty]
-    private ObservableCollection<CultureInfo> languages = new();
+    private ObservableCollection<CultureInfo> languages = [];
 
     [ObservableProperty]
     private CultureInfo? selectedLanguage;
