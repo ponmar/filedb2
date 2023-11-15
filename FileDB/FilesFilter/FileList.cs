@@ -4,10 +4,11 @@ using System.Collections.Generic;
 
 namespace FileDB.FilesFilter;
 
-public class Text(string searchPattern) : IFilesFilter
+public class FileList(string fileIdsText) : IFilesFilter
 {
     public IEnumerable<FileModel> Run(IDbAccess dbAccess)
     {
-        return dbAccess.SearchFiles(searchPattern);
+        var fileIds = Utils.CreateFileIds(fileIdsText);
+        return dbAccess.SearchFilesFromIds(fileIds);
     }
 }

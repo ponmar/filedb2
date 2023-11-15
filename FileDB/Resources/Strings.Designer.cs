@@ -1294,6 +1294,24 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to File list.
+        /// </summary>
+        public static string FilterTypeFileList {
+            get {
+                return ResourceManager.GetString("FilterTypeFileList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File type.
+        /// </summary>
+        public static string FilterTypeFileType {
+            get {
+                return ResourceManager.GetString("FilterTypeFileType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No date/time.
         /// </summary>
         public static string FilterTypeNoDateTime {

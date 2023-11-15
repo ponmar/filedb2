@@ -8,6 +8,8 @@ public enum FilterType
     NoMetaData,
     NoDateTime,
     Text,
+    FileList,
+    FileType,
 }
 
 public static class FilterTypeExtensions
@@ -19,6 +21,8 @@ public static class FilterTypeExtensions
             FilterType.NoMetaData => Strings.FilterTypeNoMetaData,
             FilterType.NoDateTime => Strings.FilterTypeNoDateTime,
             FilterType.Text => Strings.FilterTypeText,
+            FilterType.FileList => Strings.FilterTypeFileList,
+            FilterType.FileType => Strings.FilterTypeFileType,
             _ => throw new NotImplementedException(),
         };
     }

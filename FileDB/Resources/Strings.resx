@@ -1242,4 +1242,10 @@
   <data name="FilterTypeText" xml:space="preserve">
     <value>Text</value>
   </data>
+  <data name="FilterTypeFileList" xml:space="preserve">
+    <value>File list</value>
+  </data>
+  <data name="FilterTypeFileType" xml:space="preserve">
+    <value>File type</value>
+  </data>
 </root>

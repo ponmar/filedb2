@@ -4,7 +4,7 @@ using System;
 using System.IO;
 using System.Linq;
 
-namespace FileDB.ViewModel;
+namespace FileDB.Model;
 
 public enum FileType
 {

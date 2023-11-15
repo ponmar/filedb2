@@ -10,7 +10,6 @@ using System.IO;
 using FileDBInterface.DbAccess;
 using FileDB.Extensions;
 using System.Collections.ObjectModel;
-using FileDB.FilesFilter;
 
 namespace FileDB.ViewModel;
 
@@ -19,31 +18,6 @@ public interface ISearchResultRepository
     IEnumerable<FileModel> Files { get; }
 
     FileModel? SelectedFile { get; }
-}
-
-public partial class FilterSettingsViewModel : ObservableObject
-{
-    [ObservableProperty]
-    private bool removable = true;
-
-    public static IEnumerable<FilterType> FilterTypes => Enum.GetValues<FilterType>().OrderBy(x => x.ToString());
-
-    [ObservableProperty]
-    private FilterType selectedFilterType = FilterTypes.First();
-
-    [ObservableProperty]
-    private string textFilterSearchPattern = string.Empty;
-
-    public IFilesFilter Create()
-    {
-        return SelectedFilterType switch
-        {
-            FilterType.NoDateTime => new WithoutDateTime(),
-            FilterType.NoMetaData => new WithoutMetaData(),
-            FilterType.Text => new Text() { SearchPattern = TextFilterSearchPattern },
-            _ => throw new NotImplementedException(),
-        };
-    }
 }
 
 public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRepository
@@ -177,7 +151,7 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
     private string? fileListSearch;
 
     [ObservableProperty]
-    private ObservableCollection<FilterSettingsViewModel> filterSettings = [new() { Removable = false }];
+    private ObservableCollection<FilterSettingsViewModel> filterSettings = [new()];
 
     public bool FilterCanBeRemoved => FilterSettings.Count > 1;
 
