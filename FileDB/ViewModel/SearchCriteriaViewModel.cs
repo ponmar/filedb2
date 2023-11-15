@@ -151,7 +151,7 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
     private string? fileListSearch;
 
     [ObservableProperty]
-    private ObservableCollection<FilterSettingsViewModel> filterSettings = [new()];
+    private ObservableCollection<FilterSettingsViewModel> filterSettings = [];
 
     public bool FilterCanBeRemoved => FilterSettings.Count > 1;
 
@@ -184,6 +184,8 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
         this.personsRepository = personsRepository;
         this.locationsRepository = locationsRepository;
         this.tagsRepository = tagsRepository;
+
+        filterSettings.Add(new(personsRepository));
 
         ReloadPersons();
         ReloadLocations();
@@ -603,7 +605,7 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
     [RelayCommand]
     private void AddFilter()
     {
-        FilterSettings.Add(new FilterSettingsViewModel());
+        FilterSettings.Add(new FilterSettingsViewModel(personsRepository));
         OnPropertyChanged(nameof(FilterCanBeRemoved));
     }
 
@@ -617,15 +619,12 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
     [RelayCommand]
     private void FindFilesFromFilters()
     {
-        var filters = FilterSettings.Select(x => x.Create());
-
-        IEnumerable<FileModel> result = Enumerable.Empty<FileModel>();
-        var isFirstFilter = true;
+        var filters = FilterSettings.Select(x => x.Create()).ToList();
+        var result = Enumerable.Empty<FileModel>();
         foreach (var filter in filters)
         {
             var files = filter.Run(dbAccessProvider.DbAccess);
-            result = isFirstFilter ? files : result.Intersect(files);
-            isFirstFilter = false;
+            result = filter == filters.First() ? files : result.Intersect(files);
 
             if (!result.Any())
             {

@@ -1248,4 +1248,7 @@
   <data name="FilterTypeFileType" xml:space="preserve">
     <value>Fil-typ</value>
   </data>
+  <data name="FilterTypePerson" xml:space="preserve">
+    <value>Person</value>
+  </data>
 </root>

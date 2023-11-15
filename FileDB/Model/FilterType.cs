@@ -10,6 +10,7 @@ public enum FilterType
     Text,
     FileList,
     FileType,
+    Person,
 }
 
 public static class FilterTypeExtensions
@@ -23,6 +24,7 @@ public static class FilterTypeExtensions
             FilterType.Text => Strings.FilterTypeText,
             FilterType.FileList => Strings.FilterTypeFileList,
             FilterType.FileType => Strings.FilterTypeFileType,
+            FilterType.Person => Strings.FilterTypePerson,
             _ => throw new NotImplementedException(),
         };
     }
