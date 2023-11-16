@@ -41,12 +41,6 @@
                     <Button Margin="5" Style="{StaticResource NormalButton}" Command="{Binding FindCurrentDirectoryFilesCommand}" IsEnabled="{Binding FileSelected}" ToolTip="{x:Static rs:Strings.SearchAllFilesWithinCurrentFileDirectoryToolTip}" HorizontalAlignment="Left" Content="{x:Static rs:Strings.SearchAllFromCurrentDirectoryButton}"/>
 
                     <StackPanel Orientation="Horizontal" Margin="10 5">
-                        <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{x:Static rs:Strings.SearchTextLabel}" VerticalAlignment="Center" ToolTip="{x:Static rs:Strings.SearchTextToolTip}"/>
-                        <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3 0" Width="100" VerticalAlignment="Center" Text="{Binding SearchPattern, UpdateSourceTrigger=PropertyChanged}" ToolTip="{x:Static rs:Strings.SearchTextToolTip}"/>
-                        <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesByTextCommand}" ToolTip="{x:Static rs:Strings.SearchTextToolTip}" IsEnabled="{Binding SearchPattern, Converter={StaticResource StringContentToBoolConverter}}" Content="{x:Static rs:Strings.SearchButton}"/>
-                    </StackPanel>
-
-                    <StackPanel Orientation="Horizontal" Margin="10 5">
                         <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{x:Static rs:Strings.SearchFileDateLabel}" VerticalAlignment="Center"/>
                         <DatePicker Width="105" Margin="3 0" VerticalAlignment="center" Text="Start" IsTodayHighlighted="True" SelectedDate="{Binding SearchStartDate}" FirstDayOfWeek="Monday"/>
                         <DatePicker Width="105" Margin="3 0" VerticalAlignment="center" Text="End" IsTodayHighlighted="True" SelectedDate="{Binding SearchEndDate}" FirstDayOfWeek="Monday"/>

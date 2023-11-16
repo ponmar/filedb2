@@ -32,9 +32,6 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
     private string importedFileList = string.Empty;
 
     [ObservableProperty]
-    private string? searchPattern;
-
-    [ObservableProperty]
     private DateTime searchStartDate = DateTime.Now;
 
     [ObservableProperty]
@@ -291,16 +288,6 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
         if (selectedDir != null)
         {
             Files = dbAccessProvider.DbAccess.SearchFilesByPath(selectedDir);
-            Events.Send<NewSearchResult>();
-        }
-    }
-
-    [RelayCommand]
-    private void FindFilesByText()
-    {
-        if (SearchPattern.HasContent())
-        {
-            Files = dbAccessProvider.DbAccess.SearchFiles(SearchPattern!);
             Events.Send<NewSearchResult>();
         }
     }
