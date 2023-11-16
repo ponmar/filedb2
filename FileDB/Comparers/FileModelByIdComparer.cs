@@ -3,7 +3,7 @@ using FileDBShared.Model;
 
 namespace FileDB.Comparers;
 
-public class FileModelIdComparer : IEqualityComparer<FileModel>
+public class FileModelByIdComparer : IEqualityComparer<FileModel>
 {
     public int GetHashCode(FileModel co)
     {

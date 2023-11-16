@@ -11,6 +11,8 @@ public enum FilterType
     FileList,
     FileType,
     Person,
+    Location,
+    Tag,
 }
 
 public static class FilterTypeExtensions
@@ -25,6 +27,8 @@ public static class FilterTypeExtensions
             FilterType.FileList => Strings.FilterTypeFileList,
             FilterType.FileType => Strings.FilterTypeFileType,
             FilterType.Person => Strings.FilterTypePerson,
+            FilterType.Location => Strings.FilterTypeLocation,
+            FilterType.Tag => Strings.FilterTypeTag,
             _ => throw new NotImplementedException(),
         };
     }

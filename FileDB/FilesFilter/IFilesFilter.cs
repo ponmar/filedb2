@@ -6,5 +6,7 @@ namespace FileDB.FilesFilter;
 
 public interface IFilesFilter
 {
+    public bool CanRun();
+
     public IEnumerable<FileModel> Run(IDbAccess dbAccess);
 }

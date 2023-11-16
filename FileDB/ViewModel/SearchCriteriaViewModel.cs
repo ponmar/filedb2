@@ -10,6 +10,7 @@ using System.IO;
 using FileDBInterface.DbAccess;
 using FileDB.Extensions;
 using System.Collections.ObjectModel;
+using FileDB.Comparers;
 
 namespace FileDB.ViewModel;
 
@@ -185,7 +186,7 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
         this.locationsRepository = locationsRepository;
         this.tagsRepository = tagsRepository;
 
-        filterSettings.Add(new(personsRepository));
+        filterSettings.Add(new(personsRepository, locationsRepository, tagsRepository));
 
         ReloadPersons();
         ReloadLocations();
@@ -605,7 +606,7 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
     [RelayCommand]
     private void AddFilter()
     {
-        FilterSettings.Add(new FilterSettingsViewModel(personsRepository));
+        FilterSettings.Add(new FilterSettingsViewModel(personsRepository, locationsRepository, tagsRepository));
         OnPropertyChanged(nameof(FilterCanBeRemoved));
     }
 
@@ -619,12 +620,19 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
     [RelayCommand]
     private void FindFilesFromFilters()
     {
+        var fileModelComparer = new FileModelByIdComparer();
         var filters = FilterSettings.Select(x => x.Create()).ToList();
+        if (filters.Any(x => !x.CanRun()))
+        {
+            dialogs.ShowErrorDialog("Invalid filter settings");
+            return;
+        }
+
         var result = Enumerable.Empty<FileModel>();
         foreach (var filter in filters)
         {
             var files = filter.Run(dbAccessProvider.DbAccess);
-            result = filter == filters.First() ? files : result.Intersect(files);
+            result = filter == filters.First() ? files : result.Intersect(files, fileModelComparer);
 
             if (!result.Any())
             {

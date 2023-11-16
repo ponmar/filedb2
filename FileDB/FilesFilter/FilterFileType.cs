@@ -5,8 +5,10 @@ using System.Collections.Generic;
 
 namespace FileDB.FilesFilter;
 
-public class FileType(Model.FileType fileType) : IFilesFilter
+public class FilterFileType(Model.FileType fileType) : IFilesFilter
 {
+    public bool CanRun() => true;
+
     public IEnumerable<FileModel> Run(IDbAccess dbAccess)
     {
         var fileExtensions = fileType.GetSupportedFileExtensions();

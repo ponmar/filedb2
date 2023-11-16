@@ -1312,6 +1312,15 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Location.
+        /// </summary>
+        public static string FilterTypeLocation {
+            get {
+                return ResourceManager.GetString("FilterTypeLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No date/time.
         /// </summary>
         public static string FilterTypeNoDateTime {
@@ -1335,6 +1344,15 @@ namespace FileDB.Resources {
         public static string FilterTypePerson {
             get {
                 return ResourceManager.GetString("FilterTypePerson", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tag.
+        /// </summary>
+        public static string FilterTypeTag {
+            get {
+                return ResourceManager.GetString("FilterTypeTag", resourceCulture);
             }
         }
         

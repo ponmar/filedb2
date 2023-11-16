@@ -1251,4 +1251,10 @@
   <data name="FilterTypePerson" xml:space="preserve">
     <value>Person</value>
   </data>
+  <data name="FilterTypeLocation" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="FilterTypeTag" xml:space="preserve">
+    <value>Tag</value>
+  </data>
 </root>

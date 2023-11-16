@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using FileDB.FilesFilter;
 using FileDB.Model;
+using FileDB.Sorters;
 using FileDBShared.Model;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ public partial class FilterSettingsViewModel : ObservableObject
     [ObservableProperty]
     private string fileListIds = string.Empty;
 
-    public static IEnumerable<Model.FileType> FileTypes => Enum.GetValues<Model.FileType>().OrderBy(x => x.ToFriendlyString());
+    public static IEnumerable<FileType> FileTypes => Enum.GetValues<FileType>().OrderBy(x => x.ToFriendlyString());
 
     [ObservableProperty]
     private Model.FileType selectedFileType = FileTypes.First();
@@ -33,15 +34,35 @@ public partial class FilterSettingsViewModel : ObservableObject
     [ObservableProperty]
     private PersonModel? selectedPerson;
 
-    private readonly IPersonsRepository personsRepository;
+    [ObservableProperty]
+    private ObservableCollection<LocationModel> locations = [];
 
-    public FilterSettingsViewModel(IPersonsRepository personsRepository)
+    [ObservableProperty]
+    private LocationModel? selectedLocation;
+
+    [ObservableProperty]
+    private ObservableCollection<TagModel> tags = [];
+
+    [ObservableProperty]
+    private TagModel? selectedTag;
+
+    private readonly IPersonsRepository personsRepository;
+    private readonly ILocationsRepository locationsRepository;
+    private readonly ITagsRepository tagsRepository;
+
+    public FilterSettingsViewModel(IPersonsRepository personsRepository, ILocationsRepository locationsRepository, ITagsRepository tagsRepository)
     {
         this.personsRepository = personsRepository;
+        this.locationsRepository = locationsRepository;
+        this.tagsRepository = tagsRepository;
 
         ReloadPersons();
+        ReloadLocations();
+        ReloadTags();
 
         this.RegisterForEvent<PersonsUpdated>((x) => ReloadPersons());
+        this.RegisterForEvent<LocationsUpdated>((x) => ReloadLocations());
+        this.RegisterForEvent<TagsUpdated>((x) => ReloadTags());
     }
 
     private void ReloadPersons()
@@ -53,16 +74,36 @@ public partial class FilterSettingsViewModel : ObservableObject
         }
     }
 
+    private void ReloadLocations()
+    {
+        Locations.Clear();
+        foreach (var location in locationsRepository.Locations)
+        {
+            Locations.Add(location);
+        }
+    }
+
+    private void ReloadTags()
+    {
+        Tags.Clear();
+        foreach (var tag in tagsRepository.Tags)
+        {
+            Tags.Add(tag);
+        }
+    }
+
     public IFilesFilter Create()
     {
         return SelectedFilterType switch
         {
-            FilterType.NoDateTime => new WithoutDateTime(),
-            FilterType.NoMetaData => new WithoutMetaData(),
-            FilterType.Text => new Text(TextFilterSearchPattern),
-            FilterType.FileList => new FileList(FileListIds),
-            FilterType.FileType => new FilesFilter.FileType(SelectedFileType),
-            FilterType.Person => new FilesFilter.Person(SelectedPerson!), // TODO: error handling for no persons
+            FilterType.NoDateTime => new FilterWithoutDateTime(),
+            FilterType.NoMetaData => new FilterWithoutMetaData(),
+            FilterType.Text => new FilterText(TextFilterSearchPattern),
+            FilterType.FileList => new FilterFileList(FileListIds),
+            FilterType.FileType => new FilterFileType(SelectedFileType),
+            FilterType.Person => new FilterPerson(SelectedPerson),
+            FilterType.Location => new FilterLocation(SelectedLocation),
+            FilterType.Tag => new FilterTag(SelectedTag),
             _ => throw new NotImplementedException(),
         };
     }

@@ -4,10 +4,12 @@ using System.Collections.Generic;
 
 namespace FileDB.FilesFilter;
 
-public class Person(PersonModel person) : IFilesFilter
+public class FilterWithoutMetaData : IFilesFilter
 {
+    public bool CanRun() => true;
+
     public IEnumerable<FileModel> Run(IDbAccess dbAccess)
     {
-        return dbAccess.SearchFilesWithPersons(new List<int>() { person.Id });
+        return dbAccess.SearchFilesWithMissingData();
     }
 }
