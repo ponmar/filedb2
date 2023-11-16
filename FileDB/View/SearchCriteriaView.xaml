@@ -30,6 +30,56 @@
         <TabControl Margin="5" Style="{StaticResource PageTabControl}">
             <TabItem Style="{StaticResource PageTabItem}">
                 <TabItem.Header>
+                    <TextBlock Text="Filters" Style="{StaticResource PageTabItemText}" />
+                </TabItem.Header>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <ItemsControl Grid.Row="0" ItemsSource="{Binding FilterSettings}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <filters:NoMetaDataView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.NoMetaData}}"/>
+                                    <filters:NoDateTimeView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.NoDateTime}}"/>
+                                    <filters:TextView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Text}}"/>
+                                    <filters:FileListView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.FileList}}"/>
+                                    <filters:FileTypeView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.FileType}}"/>
+                                    <filters:PersonView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Person}}"/>
+                                    <filters:LocationView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Location}}"/>
+                                    <filters:TagView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Tag}}"/>
+
+                                    <Button Grid.Column="1" Margin="3" Style="{StaticResource NormalButton}" Command="{Binding DataContext.RemoveFilterCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}" Content="-" IsEnabled="{Binding DataContext.FilterCanBeRemoved, RelativeSource={RelativeSource AncestorType=ItemsControl}}" ToolTip="Remove filter" />
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <StackPanel Grid.Row="1" Orientation="Horizontal">
+                        <Button Margin="3" Style="{StaticResource NormalButton}" Command="{Binding AddFilterCommand}" Content="+" ToolTip="Add filter" />
+                        <Button Margin="3" Style="{StaticResource NormalButton}" Command="{Binding FindFilesFromFiltersCommand}" Content="Search"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+            <TabItem Style="{StaticResource PageTabItem}">
+                <TabItem.Header>
                     <TextBlock Text="{x:Static rs:Strings.SearchBasicLabel}" Style="{StaticResource PageTabItemText}" />
                 </TabItem.Header>
 
@@ -202,57 +252,7 @@
                     </StackPanel>
                 </Grid>
             </TabItem>
-
-            <TabItem Style="{StaticResource PageTabItem}">
-                <TabItem.Header>
-                    <TextBlock Text="Filters" Style="{StaticResource PageTabItemText}" />
-                </TabItem.Header>
-
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                    </Grid.RowDefinitions>
-
-                    <ItemsControl Grid.Row="0" ItemsSource="{Binding FilterSettings}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel Orientation="Horizontal"/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Margin="5">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="auto"/>
-                                        <ColumnDefinition Width="auto"/>
-                                    </Grid.ColumnDefinitions>
-
-                                    <filters:NoMetaDataView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.NoMetaData}}"/>
-                                    <filters:NoDateTimeView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.NoDateTime}}"/>
-                                    <filters:TextView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Text}}"/>
-                                    <filters:FileListView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.FileList}}"/>
-                                    <filters:FileTypeView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.FileType}}"/>
-                                    <filters:PersonView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Person}}"/>
-                                    <filters:LocationView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Location}}"/>
-                                    <filters:TagView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Tag}}"/>
-
-                                    <Button Grid.Column="1" Margin="3" Style="{StaticResource NormalButton}" Command="{Binding DataContext.RemoveFilterCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}" Content="-" IsEnabled="{Binding DataContext.FilterCanBeRemoved, RelativeSource={RelativeSource AncestorType=ItemsControl}}" ToolTip="Remove filter" />
-                                </Grid>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-
-                    <StackPanel Grid.Row="1" Orientation="Horizontal">
-                        <Button Margin="3" Style="{StaticResource NormalButton}" Command="{Binding AddFilterCommand}" Content="+" ToolTip="Add filter" />
-                        <Button Margin="3" Style="{StaticResource NormalButton}" Command="{Binding FindFilesFromFiltersCommand}" Content="Search"/>
-                    </StackPanel>
-                </Grid>
-            </TabItem>
-            
+           
         </TabControl>
     </Border>
 </UserControl>
