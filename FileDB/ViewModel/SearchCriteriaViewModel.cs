@@ -45,11 +45,6 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
     [ObservableProperty]
     private Sex? searchBySexSelection;
 
-    public static IEnumerable<FileType> FileTypes => Enum.GetValues<FileType>().OrderBy(x => x.ToString());
-
-    [ObservableProperty]
-    private FileType? selectedFileType = null;
-
     [ObservableProperty]
     private LocationToUpdate? selectedLocationForPositionSearch;
 
@@ -324,26 +319,6 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
     private void FindFilesByDate()
     {
         Files = dbAccessProvider.DbAccess.SearchFilesByDate(SearchStartDate.Date, SearchEndDate.Date);
-        Events.Send<NewSearchResult>();
-    }
-
-    [RelayCommand]
-    private void FindFilesByType()
-    {
-        if (SelectedFileType == null)
-        {
-            return;
-        }
-
-        var fileExtensions = ((FileType)SelectedFileType).GetSupportedFileExtensions();
-
-        var result = new List<FileModel>();
-        foreach (var extension in fileExtensions)
-        {
-            result.AddRange(dbAccessProvider.DbAccess.SearchFilesByExtension(extension));
-        }
-
-        Files = result;
         Events.Send<NewSearchResult>();
     }
 

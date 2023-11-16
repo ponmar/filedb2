@@ -46,18 +46,6 @@
                         <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesByTextCommand}" ToolTip="{x:Static rs:Strings.SearchTextToolTip}" IsEnabled="{Binding SearchPattern, Converter={StaticResource StringContentToBoolConverter}}" Content="{x:Static rs:Strings.SearchButton}"/>
                     </StackPanel>
 
-                    <StackPanel Margin="10 5" Orientation="Horizontal">
-                        <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{x:Static rs:Strings.SearchFileTypeLabel}" VerticalAlignment="Center"/>
-                        <ComboBox ItemsSource="{Binding FileTypes}" Margin="3 0" Style="{StaticResource PageInnerComboBox}" Width="100" VerticalAlignment="Center" SelectedValue="{Binding SelectedFileType}">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Path=., Converter={StaticResource FileTypeToStringConverter}}"/>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                        <Button Style="{StaticResource NormalButton}" Command="{Binding FindFilesByTypeCommand}" ToolTip="{x:Static rs:Strings.SeachFilesByTypeToolTip}" VerticalAlignment="Center" IsEnabled="{Binding SelectedFileType, Converter={StaticResource ValueToBoolConverter}}" Content="{x:Static rs:Strings.SearchButton}"/>
-                    </StackPanel>
-
                     <StackPanel Orientation="Horizontal" Margin="10 5">
                         <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{x:Static rs:Strings.SearchFileDateLabel}" VerticalAlignment="Center"/>
                         <DatePicker Width="105" Margin="3 0" VerticalAlignment="center" Text="Start" IsTodayHighlighted="True" SelectedDate="{Binding SearchStartDate}" FirstDayOfWeek="Monday"/>
