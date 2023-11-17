@@ -1357,6 +1357,15 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Person age.
+        /// </summary>
+        public static string FilterTypePersonAge {
+            get {
+                return ResourceManager.GetString("FilterTypePersonAge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tag.
         /// </summary>
         public static string FilterTypeTag {

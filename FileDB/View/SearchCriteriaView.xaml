@@ -65,6 +65,7 @@
                                     <filters:ExceptFileListView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.ExceptFileList}}" />
                                     <filters:FileTypeView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.FileType}}" />
                                     <filters:PersonView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Person}}" />
+                                    <filters:PersonAgeView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.PersonAge}}" />
                                     <filters:LocationView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Location}}" />
                                     <filters:TagView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Tag}}" />
 

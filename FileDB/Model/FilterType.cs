@@ -12,6 +12,7 @@ public enum FilterType
     ExceptFileList,
     FileType,
     Person,
+    PersonAge,
     Location,
     Tag,
 }
@@ -29,6 +30,7 @@ public static class FilterTypeExtensions
             FilterType.ExceptFileList => Strings.FilterTypeExceptFileList,
             FilterType.FileType => Strings.FilterTypeFileType,
             FilterType.Person => Strings.FilterTypePerson,
+            FilterType.PersonAge => Strings.FilterTypePersonAge,
             FilterType.Location => Strings.FilterTypeLocation,
             FilterType.Tag => Strings.FilterTypeTag,
             _ => throw new NotImplementedException(),

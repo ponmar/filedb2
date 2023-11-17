@@ -1260,4 +1260,7 @@
   <data name="FilterTypeExceptFileList" xml:space="preserve">
     <value>File list (except)</value>
   </data>
+  <data name="FilterTypePersonAge" xml:space="preserve">
+    <value>Person age</value>
+  </data>
 </root>

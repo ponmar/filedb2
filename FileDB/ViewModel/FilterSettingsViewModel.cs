@@ -49,6 +49,12 @@ public partial class FilterSettingsViewModel : ObservableObject
     [ObservableProperty]
     private TagModel? selectedTag;
 
+    [ObservableProperty]
+    private string personAgeFrom = string.Empty;
+
+    [ObservableProperty]
+    private string personAgeTo = string.Empty;
+
     private readonly IPersonsRepository personsRepository;
     private readonly ILocationsRepository locationsRepository;
     private readonly ITagsRepository tagsRepository;
@@ -106,6 +112,7 @@ public partial class FilterSettingsViewModel : ObservableObject
             FilterType.ExceptFileList => new FilterExceptFileList(ExceptFileListIds),
             FilterType.FileType => new FilterFileType(SelectedFileType),
             FilterType.Person => new FilterPerson(SelectedPerson),
+            FilterType.PersonAge => new FilterPersonAge(PersonAgeFrom, PersonAgeTo),
             FilterType.Location => new FilterLocation(SelectedLocation),
             FilterType.Tag => new FilterTag(SelectedTag),
             _ => throw new NotImplementedException(),
