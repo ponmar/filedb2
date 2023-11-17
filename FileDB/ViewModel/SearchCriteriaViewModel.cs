@@ -489,13 +489,6 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
     }
 
     [RelayCommand]
-    private void FindFilesFromMissingCategorization()
-    {
-        Files = dbAccessProvider.DbAccess.SearchFilesWithMissingData();
-        Events.Send<NewSearchResult>();
-    }
-
-    [RelayCommand]
     private void CombineSearchIntersection()
     {
         var files1 = Utils.CreateFileIds(CombineSearch1);

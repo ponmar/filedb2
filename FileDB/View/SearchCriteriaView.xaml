@@ -122,12 +122,6 @@
                         ToolTip="{x:Static rs:Strings.SearchNewFilesButtonToolTip}" />
                     <Button
                         Margin="5"
-                        HorizontalAlignment="Left"
-                        Command="{Binding FindFilesFromMissingCategorizationCommand}"
-                        Content="{x:Static rs:Strings.SearchAllWithoutMetaDataButton}"
-                        Style="{StaticResource NormalButton}" />
-                    <Button
-                        Margin="5"
                         VerticalAlignment="Center"
                         Command="{Binding FindAllFilesCommand}"
                         Content="{x:Static rs:Strings.SearchAllFilesButton}"
