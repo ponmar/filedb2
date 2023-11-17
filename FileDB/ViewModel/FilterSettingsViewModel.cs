@@ -23,10 +23,13 @@ public partial class FilterSettingsViewModel : ObservableObject
     [ObservableProperty]
     private string fileListIds = string.Empty;
 
+    [ObservableProperty]
+    private string exceptFileListIds = string.Empty;
+
     public static IEnumerable<FileType> FileTypes => Enum.GetValues<FileType>().OrderBy(x => x.ToFriendlyString());
 
     [ObservableProperty]
-    private Model.FileType selectedFileType = FileTypes.First();
+    private FileType selectedFileType = FileTypes.First();
 
     [ObservableProperty]
     private ObservableCollection<PersonModel> persons = [];
@@ -100,6 +103,7 @@ public partial class FilterSettingsViewModel : ObservableObject
             FilterType.NoMetaData => new FilterWithoutMetaData(),
             FilterType.Text => new FilterText(TextFilterSearchPattern),
             FilterType.FileList => new FilterFileList(FileListIds),
+            FilterType.ExceptFileList => new FilterExceptFileList(ExceptFileListIds),
             FilterType.FileType => new FilterFileType(SelectedFileType),
             FilterType.Person => new FilterPerson(SelectedPerson),
             FilterType.Location => new FilterLocation(SelectedLocation),

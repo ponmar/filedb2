@@ -1294,6 +1294,15 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to File list (except).
+        /// </summary>
+        public static string FilterTypeExceptFileList {
+            get {
+                return ResourceManager.GetString("FilterTypeExceptFileList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File list.
         /// </summary>
         public static string FilterTypeFileList {

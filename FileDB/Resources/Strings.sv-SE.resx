@@ -1257,4 +1257,7 @@
   <data name="FilterTypeTag" xml:space="preserve">
     <value>Etikett</value>
   </data>
+  <data name="FilterTypeExceptFileList" xml:space="preserve">
+    <value>Fil-lista (inverterad)</value>
+  </data>
 </root>

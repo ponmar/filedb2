@@ -141,9 +141,6 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
     private LocationToUpdate? selectedLocationSearch;
 
     [ObservableProperty]
-    private string? fileListSearch;
-
-    [ObservableProperty]
     private ObservableCollection<FilterSettingsViewModel> filterSettings = [];
 
     public bool FilterCanBeRemoved => FilterSettings.Count > 1;
@@ -496,30 +493,6 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
     {
         Files = dbAccessProvider.DbAccess.SearchFilesWithMissingData();
         Events.Send<NewSearchResult>();
-    }
-
-    [RelayCommand]
-    private void FindFilesFromList()
-    {
-        if (FileListSearch.HasContent())
-        {
-            var fileIds = Utils.CreateFileIds(FileListSearch!);
-            Files = dbAccessProvider.DbAccess.SearchFilesFromIds(fileIds);
-            Events.Send<NewSearchResult>();
-        }
-    }
-
-    [RelayCommand]
-    private void FindFilesFromListComplement()
-    {
-        if (FileListSearch.HasContent())
-        {
-            var fileIds = Utils.CreateFileIds(FileListSearch!);
-            var allFiles = dbAccessProvider.DbAccess.GetFiles();
-            var allFilesComplement = allFiles.Where(x => !fileIds.Contains(x.Id));
-            Files = allFilesComplement;
-            Events.Send<NewSearchResult>();
-        }
     }
 
     [RelayCommand]
