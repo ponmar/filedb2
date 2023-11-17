@@ -32,12 +32,6 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
     private string importedFileList = string.Empty;
 
     [ObservableProperty]
-    private DateTime searchStartDate = DateTime.Now;
-
-    [ObservableProperty]
-    private DateTime searchEndDate = DateTime.Now;
-
-    [ObservableProperty]
     private LocationToUpdate? selectedLocationForPositionSearch;
 
     partial void OnSelectedLocationForPositionSearchChanged(LocationToUpdate? value)
@@ -282,13 +276,6 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
             Files = dbAccessProvider.DbAccess.SearchFilesByPath(selectedDir);
             Events.Send<NewSearchResult>();
         }
-    }
-
-    [RelayCommand]
-    private void FindFilesByDate()
-    {
-        Files = dbAccessProvider.DbAccess.SearchFilesByDate(SearchStartDate.Date, SearchEndDate.Date);
-        Events.Send<NewSearchResult>();
     }
 
     [RelayCommand]

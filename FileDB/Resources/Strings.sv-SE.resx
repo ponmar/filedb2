@@ -1237,7 +1237,7 @@
     <value>Utan metadata</value>
   </data>
   <data name="FilterTypeNoDateTime" xml:space="preserve">
-    <value>Utan datum/tid</value>
+    <value>Datum/tid (saknas)</value>
   </data>
   <data name="FilterTypeText" xml:space="preserve">
     <value>Text</value>
@@ -1265,5 +1265,8 @@
   </data>
   <data name="FilterTypePersonSex" xml:space="preserve">
     <value>Persons kön</value>
+  </data>
+  <data name="FilterTypeDateTime" xml:space="preserve">
+    <value>Datum (mellan)</value>
   </data>
 </root>

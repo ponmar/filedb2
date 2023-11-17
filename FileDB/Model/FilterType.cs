@@ -5,6 +5,7 @@ namespace FileDB.Model;
 
 public enum FilterType
 {
+    DateTime,
     NoMetaData,
     NoDateTime,
     Text,
@@ -24,6 +25,7 @@ public static class FilterTypeExtensions
     {
         return filterType switch
         {
+            FilterType.DateTime => Strings.FilterTypeDateTime,
             FilterType.NoMetaData => Strings.FilterTypeNoMetaData,
             FilterType.NoDateTime => Strings.FilterTypeNoDateTime,
             FilterType.Text => Strings.FilterTypeText,

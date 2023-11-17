@@ -2,7 +2,6 @@
 using FileDB.Extensions;
 using FileDB.FilesFilter;
 using FileDB.Model;
-using FileDB.Sorters;
 using FileDBShared.Model;
 using System;
 using System.Collections.Generic;
@@ -17,6 +16,12 @@ public partial class FilterSettingsViewModel : ObservableObject
 
     [ObservableProperty]
     private FilterType selectedFilterType = FilterTypes.First();
+
+    [ObservableProperty]
+    private DateTime dateTimeStart = DateTime.Now;
+
+    [ObservableProperty]
+    private DateTime dateTimeEnd = DateTime.Now;
 
     [ObservableProperty]
     private string textFilterSearchPattern = string.Empty;
@@ -111,6 +116,7 @@ public partial class FilterSettingsViewModel : ObservableObject
     {
         return SelectedFilterType switch
         {
+            FilterType.DateTime => new FilterDateTime(DateTimeStart, DateTimeEnd),
             FilterType.NoDateTime => new FilterWithoutDateTime(),
             FilterType.NoMetaData => new FilterWithoutMetaData(),
             FilterType.Text => new FilterText(TextFilterSearchPattern),

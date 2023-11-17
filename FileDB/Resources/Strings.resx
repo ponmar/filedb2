@@ -1237,7 +1237,7 @@
     <value>No meta-data</value>
   </data>
   <data name="FilterTypeNoDateTime" xml:space="preserve">
-    <value>No date/time</value>
+    <value>Date/time (missing)</value>
   </data>
   <data name="FilterTypeText" xml:space="preserve">
     <value>Text</value>
@@ -1265,5 +1265,8 @@
   </data>
   <data name="FilterTypePersonSex" xml:space="preserve">
     <value>Person sex</value>
+  </data>
+  <data name="FilterTypeDateTime" xml:space="preserve">
+    <value>Date (between)</value>
   </data>
 </root>

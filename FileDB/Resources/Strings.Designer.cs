@@ -1294,6 +1294,15 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Date (between).
+        /// </summary>
+        public static string FilterTypeDateTime {
+            get {
+                return ResourceManager.GetString("FilterTypeDateTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File list (except).
         /// </summary>
         public static string FilterTypeExceptFileList {
@@ -1330,7 +1339,7 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No date/time.
+        ///   Looks up a localized string similar to Date/time (missing).
         /// </summary>
         public static string FilterTypeNoDateTime {
             get {
