@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using FileDB.Extensions;
 using FileDB.FilesFilter;
 using FileDB.Model;
 using FileDB.Sorters;
@@ -54,6 +55,11 @@ public partial class FilterSettingsViewModel : ObservableObject
 
     [ObservableProperty]
     private string personAgeTo = string.Empty;
+
+    public static IEnumerable<Sex> PersonSexValues => Enum.GetValues<Sex>().OrderBy(x => x.ToFriendlyString());
+
+    [ObservableProperty]
+    private Sex selectedPersonSex = PersonSexValues.First();
 
     private readonly IPersonsRepository personsRepository;
     private readonly ILocationsRepository locationsRepository;
@@ -113,6 +119,7 @@ public partial class FilterSettingsViewModel : ObservableObject
             FilterType.FileType => new FilterFileType(SelectedFileType),
             FilterType.Person => new FilterPerson(SelectedPerson),
             FilterType.PersonAge => new FilterPersonAge(PersonAgeFrom, PersonAgeTo),
+            FilterType.PersonSex => new FilterPersonSex(SelectedPersonSex),
             FilterType.Location => new FilterLocation(SelectedLocation),
             FilterType.Tag => new FilterTag(SelectedTag),
             _ => throw new NotImplementedException(),

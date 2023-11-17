@@ -37,11 +37,6 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
     [ObservableProperty]
     private DateTime searchEndDate = DateTime.Now;
 
-    public static IEnumerable<Sex> PersonSexValues => Enum.GetValues<Sex>().OrderBy(x => x.ToString());
-
-    [ObservableProperty]
-    private Sex? searchBySexSelection;
-
     [ObservableProperty]
     private LocationToUpdate? selectedLocationForPositionSearch;
 
@@ -285,16 +280,6 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
         if (selectedDir != null)
         {
             Files = dbAccessProvider.DbAccess.SearchFilesByPath(selectedDir);
-            Events.Send<NewSearchResult>();
-        }
-    }
-
-    [RelayCommand]
-    private void FindFilesBySex()
-    {
-        if (SearchBySexSelection != null)
-        {
-            Files = dbAccessProvider.DbAccess.SearchFilesBySex(SearchBySexSelection.Value);
             Events.Send<NewSearchResult>();
         }
     }

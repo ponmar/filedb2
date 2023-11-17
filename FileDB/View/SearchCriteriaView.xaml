@@ -66,6 +66,7 @@
                                     <filters:FileTypeView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.FileType}}" />
                                     <filters:PersonView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Person}}" />
                                     <filters:PersonAgeView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.PersonAge}}" />
+                                    <filters:PersonSexView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.PersonSex}}" />
                                     <filters:LocationView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Location}}" />
                                     <filters:TagView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Tag}}" />
 
@@ -369,36 +370,6 @@
                                 IsEnabled="{Binding PersonAgeRangeValid}"
                                 Style="{StaticResource NormalButton}"
                                 ToolTip="{x:Static rs:Strings.SearchForFileWithPersonsOfTheSpecifiedAgeToolTip}" />
-                        </StackPanel>
-
-                        <StackPanel Margin="10,5" Orientation="Horizontal">
-                            <TextBlock
-                                Margin="3,0"
-                                VerticalAlignment="Center"
-                                Style="{StaticResource PageInnerTextBlock}"
-                                Text="{x:Static rs:Strings.SearchPersonSexLabel}"
-                                ToolTip="ISO/IEC 5218" />
-                            <ComboBox
-                                Width="100"
-                                Margin="3,0"
-                                VerticalAlignment="Center"
-                                ItemsSource="{Binding PersonSexValues}"
-                                SelectedValue="{Binding SearchBySexSelection}"
-                                Style="{StaticResource PageInnerComboBox}"
-                                ToolTip="ISO/IEC 5218">
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding Path=., Converter={StaticResource SexToStringConverter}}" />
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
-                            <Button
-                                Margin="3,0"
-                                Command="{Binding FindFilesBySexCommand}"
-                                Content="{x:Static rs:Strings.SearchButton}"
-                                IsEnabled="{Binding SearchBySexSelection, Converter={StaticResource ValueToBoolConverter}}"
-                                Style="{StaticResource NormalButton}"
-                                ToolTip="{x:Static rs:Strings.SearchBySexToolTip}" />
                         </StackPanel>
                     </StackPanel>
                 </WrapPanel>

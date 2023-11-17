@@ -1263,4 +1263,7 @@
   <data name="FilterTypePersonAge" xml:space="preserve">
     <value>Person age</value>
   </data>
+  <data name="FilterTypePersonSex" xml:space="preserve">
+    <value>Person sex</value>
+  </data>
 </root>
