@@ -15,7 +15,7 @@ public partial class FilterSettingsViewModel : ObservableObject
     public static IEnumerable<FilterType> FilterTypes => Enum.GetValues<FilterType>().OrderBy(x => x.ToFriendlyString());
 
     [ObservableProperty]
-    private FilterType selectedFilterType = FilterTypes.First();
+    private FilterType selectedFilterType = FilterTypes.First(x => x == FilterType.Person);
 
     [ObservableProperty]
     private DateTime dateTimeStart = DateTime.Now;
