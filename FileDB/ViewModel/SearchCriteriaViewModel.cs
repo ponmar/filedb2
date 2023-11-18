@@ -461,18 +461,19 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
     private void FindFilesFromFilters()
     {
         var fileModelComparer = new FileModelByIdComparer();
-        var filters = FilterSettings.Select(x => x.Create()).ToList();
-        if (filters.Any(x => !x.CanRun()))
+        var filters = FilterSettings.Select(x => (viewModel: x, filter: x.Create())).ToList();
+        var filtersWithInvalidSettings = filters.Where(x => !x.filter.CanRun());
+        if (filtersWithInvalidSettings.Any())
         {
-            dialogs.ShowErrorDialog("Invalid filter settings");
+            dialogs.ShowErrorDialog($"Invalid settings for filters: {string.Join(", ", filtersWithInvalidSettings.Select(x => x.viewModel.SelectedFilterType.ToFriendlyString()))}");
             return;
         }
 
         var result = Enumerable.Empty<FileModel>();
-        foreach (var filter in filters)
+        foreach (var filter in filters.Select(x => x.filter))
         {
             var files = filter.Run(dbAccessProvider.DbAccess);
-            result = filter == filters.First() ? files : result.Intersect(files, fileModelComparer);
+            result = filter == filters.First().filter ? files : result.Intersect(files, fileModelComparer);
 
             if (!result.Any())
             {
