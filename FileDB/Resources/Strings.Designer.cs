@@ -1384,6 +1384,15 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to GPS position.
+        /// </summary>
+        public static string FilterTypePosition {
+            get {
+                return ResourceManager.GetString("FilterTypePosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tag.
         /// </summary>
         public static string FilterTypeTag {

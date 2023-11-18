@@ -17,6 +17,7 @@ public enum FilterType
     PersonSex,
     Location,
     Tag,
+    Position,
 }
 
 public static class FilterTypeExtensions
@@ -37,6 +38,7 @@ public static class FilterTypeExtensions
             FilterType.PersonSex => Strings.FilterTypePersonSex,
             FilterType.Location => Strings.FilterTypeLocation,
             FilterType.Tag => Strings.FilterTypeTag,
+            FilterType.Position => Strings.FilterTypePosition,
             _ => throw new NotImplementedException(),
         };
     }

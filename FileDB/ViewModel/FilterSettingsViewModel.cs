@@ -47,6 +47,9 @@ public partial class FilterSettingsViewModel : ObservableObject
     private ObservableCollection<LocationModel> locations = [];
 
     [ObservableProperty]
+    private ObservableCollection<LocationModel> locationsWithPosition = [];
+
+    [ObservableProperty]
     private LocationModel? selectedLocation;
 
     [ObservableProperty]
@@ -65,6 +68,12 @@ public partial class FilterSettingsViewModel : ObservableObject
 
     [ObservableProperty]
     private Sex selectedPersonSex = PersonSexValues.First();
+
+    [ObservableProperty]
+    private string positionText = string.Empty;
+
+    [ObservableProperty]
+    private string radiusText = "500";
 
     private readonly IPersonsRepository personsRepository;
     private readonly ILocationsRepository locationsRepository;
@@ -97,9 +106,14 @@ public partial class FilterSettingsViewModel : ObservableObject
     private void ReloadLocations()
     {
         Locations.Clear();
+        LocationsWithPosition.Clear();
         foreach (var location in locationsRepository.Locations)
         {
             Locations.Add(location);
+            if (location.Position is not null)
+            {
+                LocationsWithPosition.Add(location);
+            }
         }
     }
 
@@ -128,6 +142,7 @@ public partial class FilterSettingsViewModel : ObservableObject
             FilterType.PersonSex => new FilterPersonSex(SelectedPersonSex),
             FilterType.Location => new FilterLocation(SelectedLocation),
             FilterType.Tag => new FilterTag(SelectedTag),
+            FilterType.Position => new FilterPosition(PositionText, RadiusText),
             _ => throw new NotImplementedException(),
         };
     }

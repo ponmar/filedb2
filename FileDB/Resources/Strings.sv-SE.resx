@@ -1269,4 +1269,7 @@
   <data name="FilterTypeDateTime" xml:space="preserve">
     <value>Datum (mellan)</value>
   </data>
+  <data name="FilterTypePosition" xml:space="preserve">
+    <value>GPS-position</value>
+  </data>
 </root>
