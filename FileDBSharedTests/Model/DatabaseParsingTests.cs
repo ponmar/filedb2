@@ -102,6 +102,13 @@ public class DatabaseParsingTests
     }
 
     [TestMethod]
+    public void PathToFilesDatetime_DateTimeAndPostfixInFilename_Success()
+    {
+        // This filename format is used by Samsung GT-I9195
+        Assert.AreEqual("1957-03-23T12:23:49", DatabaseParsing.PathToFilesDatetime("subdir/1957-03-23/19570323_122349-1.mp4"));
+    }
+
+    [TestMethod]
     public void PathToFilesDatetime_InvalidDate_Error()
     {
         Assert.IsNull(DatabaseParsing.PathToFilesDatetime("subdir/19570323/file.jpg"));

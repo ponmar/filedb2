@@ -53,8 +53,12 @@ public class DatabaseParsing
 
     public static string? PathToFilesDatetime(string path)
     {
-        var filename = Path.GetFileNameWithoutExtension(path)!;
-        if (DateTime.TryParseExact(filename, "yyyyMMdd_HHmmss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var dateFromFilename))
+        var filenameDateTime = Path.GetFileNameWithoutExtension(path)!;
+        if (filenameDateTime.EndsWith("-1"))
+        {
+            filenameDateTime = filenameDateTime[..^2];
+        }
+        if (DateTime.TryParseExact(filenameDateTime, "yyyyMMdd_HHmmss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var dateFromFilename))
         {
             return DateTakenToFilesDatetime(dateFromFilename);
         }
