@@ -63,6 +63,15 @@ public class DatabaseParsing
             return DateTakenToFilesDatetime(dateFromFilename);
         }
 
+        if (filenameDateTime.StartsWith("IMG-"))
+        {
+            var filenameParts = filenameDateTime.Split("-");
+            if (filenameParts.Length == 3 && DateTime.TryParseExact(filenameParts[1], "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out dateFromFilename))
+            {
+                return dateFromFilename.ToString("yyyy-MM-dd");
+            }
+        }
+
         var pathParts = path.Split('/');
         foreach (var pathPart in pathParts)
         {

@@ -109,6 +109,12 @@ public class DatabaseParsingTests
     }
 
     [TestMethod]
+    public void PathToFilesDatetime_DateTimePrefixAndPostfixInFilename_Success()
+    {
+        Assert.AreEqual("2015-12-18", DatabaseParsing.PathToFilesDatetime("subdir/IMG-20151218-WA0004.jpg"));
+    }
+
+    [TestMethod]
     public void PathToFilesDatetime_InvalidDate_Error()
     {
         Assert.IsNull(DatabaseParsing.PathToFilesDatetime("subdir/19570323/file.jpg"));
