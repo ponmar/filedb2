@@ -144,7 +144,7 @@
                             Style="{StaticResource PageInnerTextBlock}"
                             Text="{x:Static rs:Strings.SearchRandomFilesLabel}" />
                         <TextBox
-                            Width="100"
+                            Width="50"
                             Margin="3,0"
                             VerticalAlignment="Center"
                             Style="{StaticResource PageInnerTextBox}"
@@ -163,186 +163,145 @@
                     <TextBlock Style="{StaticResource PageTabItemText}" Text="{x:Static rs:Strings.SearchCategoriesLabel}" />
                 </TabItem.Header>
                 <WrapPanel Orientation="Horizontal">
-                    <StackPanel Orientation="Vertical">
-                        <StackPanel Margin="10,5" Orientation="Horizontal">
-                            <TextBlock
-                                Width="20"
-                                Margin="3,0"
-                                VerticalAlignment="Center"
-                                Style="{StaticResource PageInnerTextBlock}"
-                                Text="&#x1F642;"
-                                ToolTip="{x:Static rs:Strings.SearchPersonsToolTip}" />
-                            <ComboBox
-                                Width="100"
-                                Margin="3,0"
-                                VerticalAlignment="Center"
-                                DisplayMemberPath="Name"
-                                ItemsSource="{Binding Persons}"
-                                SelectedItem="{Binding SelectedPersonSearch}"
-                                Style="{StaticResource PageInnerComboBox}"
-                                ToolTip="{x:Static rs:Strings.SearchPersonsToolTip}" />
-                            <Button
-                                Margin="3,0"
-                                Command="{Binding FindFilesWithPersonUniqueCommand}"
-                                Content="{x:Static rs:Strings.SearchUniqueButton}"
-                                IsEnabled="{Binding SelectedPersonSearch, Converter={StaticResource ValueToBoolConverter}}"
-                                Style="{StaticResource NormalButton}"
-                                ToolTip="{x:Static rs:Strings.SearchByOnlySelectedPersonToolTip}" />
-                            <Button
-                                Margin="3,0"
-                                Command="{Binding FindFilesWithPersonGroupCommand}"
-                                Content="{x:Static rs:Strings.SearchGroupButton}"
-                                IsEnabled="{Binding SelectedPersonSearch, Converter={StaticResource ValueToBoolConverter}}"
-                                Style="{StaticResource NormalButton}"
-                                ToolTip="{x:Static rs:Strings.SearchBySelectedPersonAndOthersToolTip}" />
-                            <Button
-                                Margin="3,0"
-                                Command="{Binding FindFilesWithPersonCommand}"
-                                Content="{x:Static rs:Strings.SearchAnyButton}"
-                                IsEnabled="{Binding SelectedPersonSearch, Converter={StaticResource ValueToBoolConverter}}"
-                                Style="{StaticResource NormalButton}"
-                                ToolTip="{x:Static rs:Strings.SearchBySelectedPersonToolTip}" />
-                        </StackPanel>
-
-                        <StackPanel Margin="10,5" Orientation="Horizontal">
-                            <TextBlock
-                                Width="20"
-                                Margin="3,0"
-                                VerticalAlignment="Center"
-                                Style="{StaticResource PageInnerTextBlock}"
-                                Text="&#x1F642;"
-                                ToolTip="{x:Static rs:Strings.SearchPersonsToolTip}" />
-                            <ComboBox
-                                Width="100"
-                                Margin="3,0"
-                                VerticalAlignment="Center"
-                                DisplayMemberPath="Name"
-                                ItemsSource="{Binding Persons}"
-                                SelectedItem="{Binding SelectedPerson1Search}"
-                                Style="{StaticResource PageInnerComboBox}"
-                                ToolTip="{x:Static rs:Strings.SearchPerson1ToolTip}" />
-                            <ComboBox
-                                Width="100"
-                                Margin="3,0"
-                                VerticalAlignment="Center"
-                                DisplayMemberPath="Name"
-                                ItemsSource="{Binding Persons}"
-                                SelectedItem="{Binding SelectedPerson2Search}"
-                                Style="{StaticResource PageInnerComboBox}"
-                                ToolTip="{x:Static rs:Strings.SearchPerson2ToolTip}" />
-                            <Button
-                                Margin="3,0"
-                                Command="{Binding FindFilesWithPersonsUniqueCommand}"
-                                Content="{x:Static rs:Strings.SearchUniqueButton}"
-                                IsEnabled="{Binding Person1And2Selected}"
-                                Style="{StaticResource NormalButton}"
-                                ToolTip="{x:Static rs:Strings.SearchByOnlySelectedPersonsToolTip}" />
-                            <Button
-                                Margin="3,0"
-                                Command="{Binding FindFilesWithPersonsGroupCommand}"
-                                Content="{x:Static rs:Strings.SearchGroupButton}"
-                                IsEnabled="{Binding Person1And2Selected}"
-                                Style="{StaticResource NormalButton}"
-                                ToolTip="{x:Static rs:Strings.SearchBySelectedPersonsAndOthersToolTip}" />
-                            <Button
-                                Margin="3,0"
-                                Command="{Binding FindFilesWithPersonsCommand}"
-                                Content="{x:Static rs:Strings.SearchAnyButton}"
-                                IsEnabled="{Binding Person1And2Selected}"
-                                Style="{StaticResource NormalButton}"
-                                ToolTip="{x:Static rs:Strings.SearchBySelectedPersonsToolTip}" />
-                        </StackPanel>
+                    <StackPanel Margin="10,5" Orientation="Horizontal">
+                        <TextBlock
+                            Width="20"
+                            Margin="3,0"
+                            VerticalAlignment="Center"
+                            Style="{StaticResource PageInnerTextBlock}"
+                            Text="&#x1F642;"
+                            ToolTip="{x:Static rs:Strings.SearchPersonsToolTip}" />
+                        <ComboBox
+                            Width="100"
+                            Margin="3,0"
+                            VerticalAlignment="Center"
+                            DisplayMemberPath="Name"
+                            ItemsSource="{Binding Persons}"
+                            SelectedItem="{Binding SelectedPersonSearch}"
+                            Style="{StaticResource PageInnerComboBox}"
+                            ToolTip="{x:Static rs:Strings.SearchPersonsToolTip}" />
+                        <Button
+                            Margin="3,0"
+                            Command="{Binding FindFilesWithPersonUniqueCommand}"
+                            Content="{x:Static rs:Strings.SearchUniqueButton}"
+                            IsEnabled="{Binding SelectedPersonSearch, Converter={StaticResource ValueToBoolConverter}}"
+                            Style="{StaticResource NormalButton}"
+                            ToolTip="{x:Static rs:Strings.SearchByOnlySelectedPersonToolTip}" />
+                        <Button
+                            Margin="3,0"
+                            Command="{Binding FindFilesWithPersonGroupCommand}"
+                            Content="{x:Static rs:Strings.SearchGroupButton}"
+                            IsEnabled="{Binding SelectedPersonSearch, Converter={StaticResource ValueToBoolConverter}}"
+                            Style="{StaticResource NormalButton}"
+                            ToolTip="{x:Static rs:Strings.SearchBySelectedPersonAndOthersToolTip}" />
+                        <Button
+                            Margin="3,0"
+                            Command="{Binding FindFilesWithPersonCommand}"
+                            Content="{x:Static rs:Strings.SearchAnyButton}"
+                            IsEnabled="{Binding SelectedPersonSearch, Converter={StaticResource ValueToBoolConverter}}"
+                            Style="{StaticResource NormalButton}"
+                            ToolTip="{x:Static rs:Strings.SearchBySelectedPersonToolTip}" />
                     </StackPanel>
 
-                    <StackPanel Orientation="Vertical">
-                        <StackPanel Margin="10,5" Orientation="Horizontal">
-                            <TextBlock
-                                Width="20"
-                                Margin="3,0"
-                                VerticalAlignment="Center"
-                                Style="{StaticResource PageInnerTextBlock}"
-                                Text="&#x1F3E0;"
-                                ToolTip="{x:Static rs:Strings.SearchLocationsToolTip}" />
-                            <ComboBox
-                                Width="100"
-                                Margin="3,0"
-                                VerticalAlignment="Center"
-                                DisplayMemberPath="Name"
-                                ItemsSource="{Binding Locations}"
-                                SelectedItem="{Binding SelectedLocationSearch}"
-                                Style="{StaticResource PageInnerComboBox}"
-                                ToolTip="{x:Static rs:Strings.SearchLocationsToolTip}" />
-                            <Button
-                                Margin="3,0"
-                                Command="{Binding FindFilesWithLocationCommand}"
-                                Content="{x:Static rs:Strings.SearchButton}"
-                                IsEnabled="{Binding SelectedLocationSearch, Converter={StaticResource ValueToBoolConverter}}"
-                                Style="{StaticResource NormalButton}"
-                                ToolTip="{x:Static rs:Strings.SearchByLocationToolTip}" />
-                        </StackPanel>
-
-                        <StackPanel Margin="10,5" Orientation="Horizontal">
-                            <TextBlock
-                                Width="20"
-                                Margin="3,0"
-                                VerticalAlignment="Center"
-                                Style="{StaticResource PageInnerTextBlock}"
-                                Text="&#x1F516;"
-                                ToolTip="{x:Static rs:Strings.SearchTagsToolTip}" />
-                            <ComboBox
-                                Width="100"
-                                Margin="3,0"
-                                VerticalAlignment="Center"
-                                DisplayMemberPath="Name"
-                                ItemsSource="{Binding Tags}"
-                                SelectedItem="{Binding SelectedTagSearch}"
-                                Style="{StaticResource PageInnerComboBox}"
-                                ToolTip="{x:Static rs:Strings.SearchTagsToolTip}" />
-                            <Button
-                                Margin="3,0"
-                                Command="{Binding FindFilesWithTagCommand}"
-                                Content="{x:Static rs:Strings.SearchButton}"
-                                IsEnabled="{Binding SelectedTagSearch, Converter={StaticResource ValueToBoolConverter}}"
-                                Style="{StaticResource NormalButton}"
-                                ToolTip="{x:Static rs:Strings.SearchByTagToolTip}" />
-                        </StackPanel>
+                    <StackPanel Margin="10,5" Orientation="Horizontal">
+                        <TextBlock
+                            Width="20"
+                            Margin="3,0"
+                            VerticalAlignment="Center"
+                            Style="{StaticResource PageInnerTextBlock}"
+                            Text="&#x1F642;"
+                            ToolTip="{x:Static rs:Strings.SearchPersonsToolTip}" />
+                        <ComboBox
+                            Width="100"
+                            Margin="3,0"
+                            VerticalAlignment="Center"
+                            DisplayMemberPath="Name"
+                            ItemsSource="{Binding Persons}"
+                            SelectedItem="{Binding SelectedPerson1Search}"
+                            Style="{StaticResource PageInnerComboBox}"
+                            ToolTip="{x:Static rs:Strings.SearchPerson1ToolTip}" />
+                        <ComboBox
+                            Width="100"
+                            Margin="3,0"
+                            VerticalAlignment="Center"
+                            DisplayMemberPath="Name"
+                            ItemsSource="{Binding Persons}"
+                            SelectedItem="{Binding SelectedPerson2Search}"
+                            Style="{StaticResource PageInnerComboBox}"
+                            ToolTip="{x:Static rs:Strings.SearchPerson2ToolTip}" />
+                        <Button
+                            Margin="3,0"
+                            Command="{Binding FindFilesWithPersonsUniqueCommand}"
+                            Content="{x:Static rs:Strings.SearchUniqueButton}"
+                            IsEnabled="{Binding Person1And2Selected}"
+                            Style="{StaticResource NormalButton}"
+                            ToolTip="{x:Static rs:Strings.SearchByOnlySelectedPersonsToolTip}" />
+                        <Button
+                            Margin="3,0"
+                            Command="{Binding FindFilesWithPersonsGroupCommand}"
+                            Content="{x:Static rs:Strings.SearchGroupButton}"
+                            IsEnabled="{Binding Person1And2Selected}"
+                            Style="{StaticResource NormalButton}"
+                            ToolTip="{x:Static rs:Strings.SearchBySelectedPersonsAndOthersToolTip}" />
+                        <Button
+                            Margin="3,0"
+                            Command="{Binding FindFilesWithPersonsCommand}"
+                            Content="{x:Static rs:Strings.SearchAnyButton}"
+                            IsEnabled="{Binding Person1And2Selected}"
+                            Style="{StaticResource NormalButton}"
+                            ToolTip="{x:Static rs:Strings.SearchBySelectedPersonsToolTip}" />
                     </StackPanel>
 
-                    <StackPanel Orientation="Vertical">
-                        <StackPanel Margin="10,5" Orientation="Horizontal">
-                            <TextBlock
-                                Margin="3,0"
-                                VerticalAlignment="Center"
-                                Style="{StaticResource PageInnerTextBlock}"
-                                Text="{x:Static rs:Strings.SearchPersonAgeLabel}" />
-                            <TextBox
-                                Width="45"
-                                Margin="3,0"
-                                VerticalAlignment="Center"
-                                Style="{StaticResource PageInnerTextBox}"
-                                Text="{Binding SearchPersonAgeFrom, UpdateSourceTrigger=PropertyChanged}"
-                                ToolTip="{x:Static rs:Strings.SearchFromAgeYearsToolTip}" />
-                            <TextBlock
-                                Margin="3,0"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Style="{StaticResource PageInnerTextBlock}"
-                                Text="-" />
-                            <TextBox
-                                Width="45"
-                                Margin="3,0"
-                                VerticalAlignment="Center"
-                                Style="{StaticResource PageInnerTextBox}"
-                                Text="{Binding SearchPersonAgeTo, UpdateSourceTrigger=PropertyChanged}"
-                                ToolTip="{x:Static rs:Strings.SearchToAgeYearsToolTip}" />
-                            <Button
-                                Margin="3,0"
-                                Command="{Binding FindFilesByPersonAgeCommand}"
-                                Content="{x:Static rs:Strings.SearchButton}"
-                                IsEnabled="{Binding PersonAgeRangeValid}"
-                                Style="{StaticResource NormalButton}"
-                                ToolTip="{x:Static rs:Strings.SearchForFileWithPersonsOfTheSpecifiedAgeToolTip}" />
-                        </StackPanel>
+                    <StackPanel Margin="10,5" Orientation="Horizontal">
+                        <TextBlock
+                            Width="20"
+                            Margin="3,0"
+                            VerticalAlignment="Center"
+                            Style="{StaticResource PageInnerTextBlock}"
+                            Text="&#x1F3E0;"
+                            ToolTip="{x:Static rs:Strings.SearchLocationsToolTip}" />
+                        <ComboBox
+                            Width="100"
+                            Margin="3,0"
+                            VerticalAlignment="Center"
+                            DisplayMemberPath="Name"
+                            ItemsSource="{Binding Locations}"
+                            SelectedItem="{Binding SelectedLocationSearch}"
+                            Style="{StaticResource PageInnerComboBox}"
+                            ToolTip="{x:Static rs:Strings.SearchLocationsToolTip}" />
+                        <Button
+                            Margin="3,0"
+                            Command="{Binding FindFilesWithLocationCommand}"
+                            Content="{x:Static rs:Strings.SearchButton}"
+                            IsEnabled="{Binding SelectedLocationSearch, Converter={StaticResource ValueToBoolConverter}}"
+                            Style="{StaticResource NormalButton}"
+                            ToolTip="{x:Static rs:Strings.SearchByLocationToolTip}" />
+                    </StackPanel>
+
+                    <StackPanel Margin="10,5" Orientation="Horizontal">
+                        <TextBlock
+                            Width="20"
+                            Margin="3,0"
+                            VerticalAlignment="Center"
+                            Style="{StaticResource PageInnerTextBlock}"
+                            Text="&#x1F516;"
+                            ToolTip="{x:Static rs:Strings.SearchTagsToolTip}" />
+                        <ComboBox
+                            Width="100"
+                            Margin="3,0"
+                            VerticalAlignment="Center"
+                            DisplayMemberPath="Name"
+                            ItemsSource="{Binding Tags}"
+                            SelectedItem="{Binding SelectedTagSearch}"
+                            Style="{StaticResource PageInnerComboBox}"
+                            ToolTip="{x:Static rs:Strings.SearchTagsToolTip}" />
+                        <Button
+                            Margin="3,0"
+                            Command="{Binding FindFilesWithTagCommand}"
+                            Content="{x:Static rs:Strings.SearchButton}"
+                            IsEnabled="{Binding SelectedTagSearch, Converter={StaticResource ValueToBoolConverter}}"
+                            Style="{StaticResource NormalButton}"
+                            ToolTip="{x:Static rs:Strings.SearchByTagToolTip}" />
                     </StackPanel>
                 </WrapPanel>
             </TabItem>

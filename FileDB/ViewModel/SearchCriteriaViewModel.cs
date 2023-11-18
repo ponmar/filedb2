@@ -75,19 +75,6 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
     private string searchFileGpsRadius = "500";
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(PersonAgeRangeValid))]
-    private string? searchPersonAgeFrom;
-
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(PersonAgeRangeValid))]
-    private string? searchPersonAgeTo;
-
-    public bool PersonAgeRangeValid =>
-        int.TryParse(SearchPersonAgeFrom, out var from) &&
-        int.TryParse(SearchPersonAgeTo, out var to) &&
-        from >= 0 && from <= to;
-
-    [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CombineSearchResultPossible))]
     private string combineSearch1 = string.Empty;
 
@@ -409,53 +396,6 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
         if (SelectedTagSearch != null)
         {
             Files = dbAccessProvider.DbAccess.SearchFilesWithTags(new List<int>() { SelectedTagSearch.Id });
-            Events.Send<NewSearchResult>();
-        }
-    }
-
-    [RelayCommand]
-    private void FindFilesByPersonAge()
-    {
-        if (SearchPersonAgeFrom.HasContent())
-        {
-            if (!int.TryParse(SearchPersonAgeFrom, out var ageFrom))
-            {
-                dialogs.ShowErrorDialog("Invalid age format");
-                return;
-            }
-
-            int ageTo;
-            if (!SearchPersonAgeTo.HasContent())
-            {
-                ageTo = ageFrom;
-            }
-            else if (!int.TryParse(SearchPersonAgeTo, out ageTo))
-            {
-                dialogs.ShowErrorDialog("Invalid age format");
-                return;
-            }
-
-            var result = new List<FileModel>();
-            var personsWithAge = dbAccessProvider.DbAccess.GetPersons().Where(p => p.DateOfBirth != null);
-
-            foreach (var person in personsWithAge)
-            {
-                var dateOfBirth = DatabaseParsing.ParsePersonDateOfBirth(person.DateOfBirth!);
-                foreach (var file in dbAccessProvider.DbAccess.SearchFilesWithPersons(new List<int>() { person.Id }))
-                {
-                    var fileDatetime = DatabaseParsing.ParseFilesDatetime(file.Datetime);
-                    if (fileDatetime != null)
-                    {
-                        int personAgeInFile = DatabaseUtils.GetAgeInYears(fileDatetime.Value, dateOfBirth);
-                        if (personAgeInFile >= ageFrom && personAgeInFile <= ageTo)
-                        {
-                            result.Add(file);
-                        }
-                    }
-                }
-            }
-
-            Files = result;
             Events.Send<NewSearchResult>();
         }
     }
