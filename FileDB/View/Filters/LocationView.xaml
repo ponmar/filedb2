@@ -13,14 +13,14 @@
         <converters:FilterTypeToStringConverter x:Key="FilterTypeToStringConverter"/>
     </UserControl.Resources>
     <StackPanel Orientation="Horizontal">
-        <ComboBox Grid.Column="0" Margin="3" ItemsSource="{Binding FilterTypes}" SelectedItem="{Binding SelectedFilterType}" Width="100" ToolTip="Filter type" VerticalAlignment="Center">
+        <ComboBox Grid.Column="0" Margin="3" ItemsSource="{Binding FilterTypes}" SelectedItem="{Binding SelectedFilterType}" Width="100" ToolTip="Filter type" VerticalAlignment="Center" TextSearch.TextPath=".">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Path=., Converter={StaticResource FilterTypeToStringConverter}}"/>
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <ComboBox Grid.Column="0" Margin="3" ItemsSource="{Binding Locations}" SelectedItem="{Binding SelectedLocation}" Width="100" ToolTip="Person" VerticalAlignment="Center">
+        <ComboBox Grid.Column="0" Margin="3" ItemsSource="{Binding Locations}" SelectedItem="{Binding SelectedLocation}" Width="100" ToolTip="Person" VerticalAlignment="Center" TextSearch.TextPath="Name">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Name}"/>
