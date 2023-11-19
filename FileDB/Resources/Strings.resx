@@ -1272,4 +1272,7 @@
   <data name="FilterTypePosition" xml:space="preserve">
     <value>GPS position</value>
   </data>
+  <data name="FilterTypeNumPersons" xml:space="preserve">
+    <value>Number of persons</value>
+  </data>
 </root>

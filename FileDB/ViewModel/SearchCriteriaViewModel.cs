@@ -7,7 +7,6 @@ using FileDBShared.Model;
 using System.Linq;
 using TextCopy;
 using System.IO;
-using FileDBInterface.DbAccess;
 using FileDB.Extensions;
 using System.Collections.ObjectModel;
 using FileDB.Comparers;

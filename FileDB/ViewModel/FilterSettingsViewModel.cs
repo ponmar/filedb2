@@ -75,6 +75,12 @@ public partial class FilterSettingsViewModel : ObservableObject
     [ObservableProperty]
     private string radiusText = "500";
 
+    [ObservableProperty]
+    private string numPersonsMin = "1";
+
+    [ObservableProperty]
+    private string numPersonsMax = "1";
+
     private readonly IPersonsRepository personsRepository;
     private readonly ILocationsRepository locationsRepository;
     private readonly ITagsRepository tagsRepository;
@@ -143,6 +149,7 @@ public partial class FilterSettingsViewModel : ObservableObject
             FilterType.Location => new FilterLocation(SelectedLocation),
             FilterType.Tag => new FilterTag(SelectedTag),
             FilterType.Position => new FilterPosition(PositionText, RadiusText),
+            FilterType.NumPersons => new FilterNumberOfPersons(NumPersonsMin, NumPersonsMax),
             _ => throw new NotImplementedException(),
         };
     }

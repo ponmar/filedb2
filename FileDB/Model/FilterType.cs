@@ -18,6 +18,7 @@ public enum FilterType
     Location,
     Tag,
     Position,
+    NumPersons,
 }
 
 public static class FilterTypeExtensions
@@ -39,6 +40,7 @@ public static class FilterTypeExtensions
             FilterType.Location => Strings.FilterTypeLocation,
             FilterType.Tag => Strings.FilterTypeTag,
             FilterType.Position => Strings.FilterTypePosition,
+            FilterType.NumPersons => Strings.FilterTypeNumPersons,
             _ => throw new NotImplementedException(),
         };
     }
