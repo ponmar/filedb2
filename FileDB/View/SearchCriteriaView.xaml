@@ -58,39 +58,41 @@
                                         <ColumnDefinition Width="auto" />
                                     </Grid.ColumnDefinitions>
 
-                                    <filters:DateTimeView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.DateTime}}" />
-                                    <filters:NoMetaDataView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.NoMetaData}}" />
-                                    <filters:NoDateTimeView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.NoDateTime}}" />
-                                    <filters:TextView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Text}}" />
-                                    <filters:FileListView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.FileList}}" />
-                                    <filters:ExceptFileListView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.ExceptFileList}}" />
-                                    <filters:FileTypeView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.FileType}}" />
-                                    <filters:PersonView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Person}}" />
-                                    <filters:PersonAgeView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.PersonAge}}" />
-                                    <filters:PersonSexView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.PersonSex}}" />
-                                    <filters:LocationView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Location}}" />
-                                    <filters:TagView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Tag}}" />
-                                    <filters:PositionView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Position}}" />
-
                                     <Button
-                                        Grid.Column="1"
+                                        Grid.Column="0"
                                         Margin="3"
+                                        Width="25"
                                         Command="{Binding DataContext.RemoveFilterCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                         CommandParameter="{Binding}"
                                         Content="-"
                                         IsEnabled="{Binding DataContext.FilterCanBeRemoved, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                         Style="{StaticResource NormalButton}"
                                         ToolTip="Remove filter" />
+
+                                    <filters:DateTimeView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.DateTime}}" Grid.Column="1"/>
+                                    <filters:NoMetaDataView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.NoMetaData}}" Grid.Column="1"/>
+                                    <filters:NoDateTimeView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.NoDateTime}}" Grid.Column="1"/>
+                                    <filters:TextView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Text}}" Grid.Column="1"/>
+                                    <filters:FileListView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.FileList}}" Grid.Column="1"/>
+                                    <filters:ExceptFileListView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.ExceptFileList}}" Grid.Column="1"/>
+                                    <filters:FileTypeView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.FileType}}" Grid.Column="1"/>
+                                    <filters:PersonView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Person}}" Grid.Column="1"/>
+                                    <filters:PersonAgeView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.PersonAge}}" Grid.Column="1"/>
+                                    <filters:PersonSexView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.PersonSex}}" Grid.Column="1"/>
+                                    <filters:LocationView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Location}}" Grid.Column="1"/>
+                                    <filters:TagView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Tag}}" Grid.Column="1"/>
+                                    <filters:PositionView Visibility="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Position}}" Grid.Column="1"/>
                                 </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
 
-                    <StackPanel Grid.Row="1" Orientation="Horizontal">
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="5">
                         <Button
                             Margin="3"
                             Command="{Binding AddFilterCommand}"
                             Content="+"
+                            Width="25"
                             Style="{StaticResource NormalButton}"
                             ToolTip="Add filter" />
                         <Button
