@@ -1,3 +1,9 @@
+4.2:
+* Upgrade to .NET8
+* Add a search filter tab that simplifies combined searches
+* Parse datetime from filename used by Samsung GT-I9195 (date and time with a -1 postfix)
+* Parse date from filename format IMG-20151218-WA0004.jpg
+
 4.1:
 * Add PDF search result export selection
 * Add missing Swedish translations
