@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FileDB.View.Filters"
+             xmlns:rs="clr-namespace:FileDB.Resources"
              xmlns:converters="clr-namespace:FileDB.Converters"
              xmlns:viewmodel="clr-namespace:FileDB.ViewModel"
              d:DataContext="{d:DesignInstance Type=viewmodel:FilterSettingsViewModel}"
@@ -20,8 +21,8 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3" Text="{Binding NumPersonsMin}" Width="30" VerticalAlignment="Center" ToolTip="Min number of persons"/>
+        <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3" Text="{Binding NumPersonsMin}" Width="30" VerticalAlignment="Center" ToolTip="{x:Static rs:Strings.SearchFilterNumPersonsMin}"/>
         <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="-" VerticalAlignment="Center" />
-        <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3" Text="{Binding NumPersonsMax}" Width="30" VerticalAlignment="Center" ToolTip="Max number of persons"/>
+        <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3" Text="{Binding NumPersonsMax}" Width="30" VerticalAlignment="Center" ToolTip="{x:Static rs:Strings.SearchFilterNumPersonsMax}"/>
     </StackPanel>
 </UserControl>

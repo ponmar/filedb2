@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FileDB.View.Filters"
+             xmlns:rs="clr-namespace:FileDB.Resources"
              mc:Ignorable="d" 
              xmlns:converters="clr-namespace:FileDB.Converters"
              xmlns:viewmodel="clr-namespace:FileDB.ViewModel"
@@ -20,6 +21,6 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3" Text="{Binding ExceptFileListIds}" Width="100" VerticalAlignment="Center" ToolTip="File ids separated by semicolon"/>
+        <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3" Text="{Binding ExceptFileListIds}" Width="100" VerticalAlignment="Center" ToolTip="{x:Static rs:Strings.SearchFilterExceptFileListToolTip}"/>
     </StackPanel>
 </UserControl>

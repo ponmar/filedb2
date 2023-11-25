@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FileDB.View.Filters"
+             xmlns:rs="clr-namespace:FileDB.Resources"
              mc:Ignorable="d" 
              xmlns:converters="clr-namespace:FileDB.Converters"
              xmlns:viewmodel="clr-namespace:FileDB.ViewModel"
@@ -21,7 +22,7 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <ComboBox Grid.Column="0" Margin="3" ItemsSource="{Binding PersonSexValues}" SelectedItem="{Binding SelectedPersonSex}" Width="100" ToolTip="ISO/IEC 5218" VerticalAlignment="Center" TextSearch.TextPath=".">
+        <ComboBox Grid.Column="0" Margin="3" ItemsSource="{Binding PersonSexValues}" SelectedItem="{Binding SelectedPersonSex}" Width="100" ToolTip="{x:Static rs:Strings.SearchFilterPersonSexTooltip}" VerticalAlignment="Center" TextSearch.TextPath=".">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Path=., Converter={StaticResource SexToStringConverter}}" />

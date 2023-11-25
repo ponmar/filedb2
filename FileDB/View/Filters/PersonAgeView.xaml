@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FileDB.View.Filters"
+             xmlns:rs="clr-namespace:FileDB.Resources"
              mc:Ignorable="d" 
              xmlns:converters="clr-namespace:FileDB.Converters"
              xmlns:viewmodel="clr-namespace:FileDB.ViewModel"
@@ -20,8 +21,8 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3" Text="{Binding PersonAgeFrom}" Width="30" VerticalAlignment="Center" ToolTip="Age from [years]"/>
+        <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3" Text="{Binding PersonAgeFrom}" Width="30" VerticalAlignment="Center" ToolTip="{x:Static rs:Strings.SearchFilterPersonAgeFrom}"/>
         <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="-" VerticalAlignment="Center" />
-        <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3" Text="{Binding PersonAgeTo}" Width="30" VerticalAlignment="Center" ToolTip="Age to [years]"/>
+        <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3" Text="{Binding PersonAgeTo}" Width="30" VerticalAlignment="Center" ToolTip="{x:Static rs:Strings.SearchFilterPersonAgeTo}"/>
     </StackPanel>
 </UserControl>

@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FileDB.View.Filters"
+             xmlns:rs="clr-namespace:FileDB.Resources"
              mc:Ignorable="d" 
              xmlns:viewmodel="clr-namespace:FileDB.ViewModel"
              d:DataContext="{d:DesignInstance Type=viewmodel:FilterSettingsViewModel}"
@@ -20,7 +21,7 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3" Text="{Binding PositionText}" Width="150" VerticalAlignment="Center" ToolTip="LAT LON or Google Maps URL"/>
-        <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3" Text="{Binding RadiusText}" Width="50" VerticalAlignment="Center" ToolTip="Radius [m]"/>
+        <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3" Text="{Binding PositionText}" Width="150" VerticalAlignment="Center" ToolTip="{x:Static rs:Strings.SearchFilterPositionInputToolTip}"/>
+        <TextBox Style="{StaticResource PageInnerTextBox}" Margin="3" Text="{Binding RadiusText}" Width="50" VerticalAlignment="Center" ToolTip="{x:Static rs:Strings.SearchFilterPositionRadiusInputToolTip}"/>
     </StackPanel>
 </UserControl>

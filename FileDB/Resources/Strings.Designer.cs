@@ -2059,6 +2059,123 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to End.
+        /// </summary>
+        public static string SearchFilterDateTimeEnd {
+            get {
+                return ResourceManager.GetString("SearchFilterDateTimeEnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start.
+        /// </summary>
+        public static string SearchFilterDateTimeStart {
+            get {
+                return ResourceManager.GetString("SearchFilterDateTimeStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File ids separated by semicolon.
+        /// </summary>
+        public static string SearchFilterExceptFileListToolTip {
+            get {
+                return ResourceManager.GetString("SearchFilterExceptFileListToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File ids separated by semicolon.
+        /// </summary>
+        public static string SearchFilterFileListToolTip {
+            get {
+                return ResourceManager.GetString("SearchFilterFileListToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max number of persons (inclusive).
+        /// </summary>
+        public static string SearchFilterNumPersonsMax {
+            get {
+                return ResourceManager.GetString("SearchFilterNumPersonsMax", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Min number of persons (inclusive).
+        /// </summary>
+        public static string SearchFilterNumPersonsMin {
+            get {
+                return ResourceManager.GetString("SearchFilterNumPersonsMin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Age from [years].
+        /// </summary>
+        public static string SearchFilterPersonAgeFrom {
+            get {
+                return ResourceManager.GetString("SearchFilterPersonAgeFrom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Age to [years].
+        /// </summary>
+        public static string SearchFilterPersonAgeTo {
+            get {
+                return ResourceManager.GetString("SearchFilterPersonAgeTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ISO/IEC 5218.
+        /// </summary>
+        public static string SearchFilterPersonSexTooltip {
+            get {
+                return ResourceManager.GetString("SearchFilterPersonSexTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LAT LON or Google Maps URL.
+        /// </summary>
+        public static string SearchFilterPositionInputToolTip {
+            get {
+                return ResourceManager.GetString("SearchFilterPositionInputToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Radius [m].
+        /// </summary>
+        public static string SearchFilterPositionRadiusInputToolTip {
+            get {
+                return ResourceManager.GetString("SearchFilterPositionRadiusInputToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filters.
+        /// </summary>
+        public static string SearchFiltersLabel {
+            get {
+                return ResourceManager.GetString("SearchFiltersLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search pattern (case insensitive).
+        /// </summary>
+        public static string SearchFilterTextInputToolTip {
+            get {
+                return ResourceManager.GetString("SearchFilterTextInputToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search for files within selected directory.
         /// </summary>
         public static string SearchForFilesWithinSelectedDirectoryToolTip {

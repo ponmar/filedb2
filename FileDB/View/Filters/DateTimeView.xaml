@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:rs="clr-namespace:FileDB.Resources"
              xmlns:local="clr-namespace:FileDB.View.Filters"
              mc:Ignorable="d" 
              xmlns:converters="clr-namespace:FileDB.Converters"
@@ -27,7 +28,8 @@
             FirstDayOfWeek="Monday"
             IsTodayHighlighted="True"
             SelectedDate="{Binding DateTimeStart}"
-            Text="Start" />
+            Text="{x:Static rs:Strings.SearchFilterDateTimeStart}" />
+        <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="-" VerticalAlignment="Center" />
         <DatePicker
             Width="105"
             Margin="3"
@@ -35,6 +37,6 @@
             FirstDayOfWeek="Monday"
             IsTodayHighlighted="True"
             SelectedDate="{Binding DateTimeEnd}"
-            Text="End" />
+            Text="{x:Static rs:Strings.SearchFilterDateTimeEnd}" />
     </StackPanel>
 </UserControl>

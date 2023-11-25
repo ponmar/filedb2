@@ -1275,4 +1275,43 @@
   <data name="FilterTypeNumPersons" xml:space="preserve">
     <value>Antal personer</value>
   </data>
+  <data name="SearchFiltersLabel" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="SearchFilterDateTimeStart" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="SearchFilterDateTimeEnd" xml:space="preserve">
+    <value>Slut</value>
+  </data>
+  <data name="SearchFilterExceptFileListToolTip" xml:space="preserve">
+    <value>Fil-idn separerade med semikolon</value>
+  </data>
+  <data name="SearchFilterFileListToolTip" xml:space="preserve">
+    <value>Fil-idn separerade med semikolon</value>
+  </data>
+  <data name="SearchFilterNumPersonsMin" xml:space="preserve">
+    <value>Min-antal personer (inklusive)</value>
+  </data>
+  <data name="SearchFilterNumPersonsMax" xml:space="preserve">
+    <value>Max-antal personer (inklusive)</value>
+  </data>
+  <data name="SearchFilterPersonAgeFrom" xml:space="preserve">
+    <value>Ålder från [år]</value>
+  </data>
+  <data name="SearchFilterPersonAgeTo" xml:space="preserve">
+    <value>Ålder till [år]</value>
+  </data>
+  <data name="SearchFilterPersonSexTooltip" xml:space="preserve">
+    <value>ISO/IEC 5218</value>
+  </data>
+  <data name="SearchFilterPositionInputToolTip" xml:space="preserve">
+    <value>LAT LON alternativt Google Maps URL</value>
+  </data>
+  <data name="SearchFilterPositionRadiusInputToolTip" xml:space="preserve">
+    <value>Radie [m]</value>
+  </data>
+  <data name="SearchFilterTextInputToolTip" xml:space="preserve">
+    <value>Sökmönster (case insensitive)</value>
+  </data>
 </root>

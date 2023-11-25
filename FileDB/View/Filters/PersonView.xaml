@@ -20,7 +20,7 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <ComboBox Grid.Column="0" Margin="3" ItemsSource="{Binding Persons}" SelectedItem="{Binding SelectedPerson}" Width="100" ToolTip="Person" VerticalAlignment="Center" TextSearch.TextPath="Firstname">
+        <ComboBox Grid.Column="0" Margin="3" ItemsSource="{Binding Persons}" SelectedItem="{Binding SelectedPerson}" Width="100" VerticalAlignment="Center" TextSearch.TextPath="Firstname">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock>

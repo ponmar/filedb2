@@ -32,7 +32,7 @@
         <TabControl Margin="5" Style="{StaticResource PageTabControl}">
             <TabItem Style="{StaticResource PageTabItem}">
                 <TabItem.Header>
-                    <TextBlock Style="{StaticResource PageTabItemText}" Text="Filters" />
+                    <TextBlock Style="{StaticResource PageTabItemText}" Text="{x:Static rs:Strings.SearchFiltersLabel}" />
                 </TabItem.Header>
 
                 <Grid>
