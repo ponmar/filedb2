@@ -619,7 +619,11 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Date &amp;amp; time formats:&amp;#x0a;YYYY&amp;#x0a;YYYY-MM&amp;#x0a;YYYY-MM-DD&amp;#x0a;YYYY-MM-DDTHH:MM:SS.
+        ///   Looks up a localized string similar to Date and time formats:
+        ///YYYY
+        ///YYYY-MM
+        ///YYYY-MM-DD
+        ///YYYY-MM-DDTHH:MM:SS.
         /// </summary>
         public static string CategorizationDateAndTimeFormatToolTip {
             get {
@@ -628,7 +632,7 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to File date &amp;amp; time.
+        ///   Looks up a localized string similar to File date and time.
         /// </summary>
         public static string CategorizationFileDateAndTimeToolTip {
             get {
@@ -772,7 +776,7 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Set file date &amp;amp; time.
+        ///   Looks up a localized string similar to Set file date and time.
         /// </summary>
         public static string CategorizationSetFileDateAndTimeToolTip {
             get {

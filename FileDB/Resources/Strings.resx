@@ -1036,13 +1036,17 @@
     <value>File description</value>
   </data>
   <data name="CategorizationFileDateAndTimeToolTip" xml:space="preserve">
-    <value>File date &amp;amp; time</value>
+    <value>File date and time</value>
   </data>
   <data name="CategorizationDateAndTimeFormatToolTip" xml:space="preserve">
-    <value>Date &amp;amp; time formats:&amp;#x0a;YYYY&amp;#x0a;YYYY-MM&amp;#x0a;YYYY-MM-DD&amp;#x0a;YYYY-MM-DDTHH:MM:SS</value>
+    <value>Date and time formats:
+YYYY
+YYYY-MM
+YYYY-MM-DD
+YYYY-MM-DDTHH:MM:SS</value>
   </data>
   <data name="CategorizationSetFileDateAndTimeToolTip" xml:space="preserve">
-    <value>Set file date &amp;amp; time</value>
+    <value>Set file date and time</value>
   </data>
   <data name="CategorizationApplyMetaDataFromLastEditButton" xml:space="preserve">
     <value>Add meta-data from last edited file</value>
