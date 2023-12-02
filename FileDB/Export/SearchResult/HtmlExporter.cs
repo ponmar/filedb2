@@ -1,4 +1,5 @@
-﻿using FileDB.Model;
+﻿using FileDB.Extensions;
+using FileDB.Model;
 using FileDBShared.FileFormats;
 using FileDBShared.Model;
 using FileDBShared.Validators;
@@ -134,7 +135,7 @@ public class HtmlExporter : ISearchResultExporter
             .Replace("%NAME%", HttpUtility.HtmlEncode(data.Name))
             .Replace("%APPLICATION_NAME%", HttpUtility.HtmlEncode(Utils.ApplicationName))
             .Replace("%FILEDB_VERSION%", HttpUtility.HtmlEncode(data.FileDBVersion))
-            .Replace("%EXPORT_DATETIME%", HttpUtility.HtmlEncode(data.ExportDateTime.ToString("yyyy-MM-dd HH:mm")))
+            .Replace("%EXPORT_DATETIME%", HttpUtility.HtmlEncode(data.ExportDateTime.ToDateAndTime()))
             .Replace("%CONTENT%", content)
             .Replace("%APPLICATION_PROJECT_URL%", data.ApplicationProjectUrl);
 
@@ -151,6 +152,6 @@ public class HtmlExporter : ISearchResultExporter
         }
 
         // Note: when no time is available the string is used to avoid including time 00:00
-        return fileDatetime.Contains('T') ? datetime.Value.ToString("yyyy-MM-dd HH:mm") : fileDatetime;
+        return fileDatetime.Contains('T') ? datetime.Value.ToDateAndTime() : fileDatetime;
     }
 }

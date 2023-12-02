@@ -256,7 +256,7 @@ public partial class SearchViewModel : ObservableObject
         }
 
         // Note: when no time is available the string is used to avoid including time 00:00
-        var resultString = datetimeString!.Contains('T') ? datetime.Value.ToString("yyyy-MM-dd HH:mm") : datetimeString;
+        var resultString = datetimeString!.Contains('T') ? datetime.Value.ToDateAndTime() : datetimeString;
 
         var now = System.DateTime.Now;
         int yearsAgo = DatabaseUtils.GetAgeInYears(now, datetime.Value);

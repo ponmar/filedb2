@@ -34,7 +34,7 @@ public class PdfExporter : ISearchResultExporter
                 frontPage.Content().AlignCenter().AlignMiddle().Text(data.Name).SemiBold().FontSize(32).FontColor(Colors.Blue.Darken2);
                 frontPage.Footer().AlignCenter().AlignMiddle().Text(text =>
                 {
-                    text.Span($"{Utils.ApplicationName} {data.FileDBVersion} {data.ExportDateTime:yyyy-MM-dd HH:mm} ");
+                    text.Span($"{Utils.ApplicationName} {data.FileDBVersion} {data.ExportDateTime.ToDateAndTime()} ");
                     text.Hyperlink(data.ApplicationProjectUrl, data.ApplicationProjectUrl);
                 });
             });

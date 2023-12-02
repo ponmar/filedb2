@@ -349,11 +349,29 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to YYYY-MM-DD, YYYY-MM or YYYY.
+        /// </summary>
+        public static string AddPersonDateOfBirthToolTip {
+            get {
+                return ResourceManager.GetString("AddPersonDateOfBirthToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Deceased (optional):.
         /// </summary>
         public static string AddPersonDeceasedLabel {
             get {
                 return ResourceManager.GetString("AddPersonDeceasedLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to YYYY-MM-DD, YYYY-MM or YYYY.
+        /// </summary>
+        public static string AddPersonDeceasedToolTip {
+            get {
+                return ResourceManager.GetString("AddPersonDeceasedToolTip", resourceCulture);
             }
         }
         

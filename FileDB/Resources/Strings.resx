@@ -1318,4 +1318,10 @@ YYYY-MM-DDTHH:MM:SS</value>
   <data name="SearchFilterTextInputToolTip" xml:space="preserve">
     <value>Search pattern (case insensitive)</value>
   </data>
+  <data name="AddPersonDateOfBirthToolTip" xml:space="preserve">
+    <value>YYYY-MM-DD, YYYY-MM or YYYY</value>
+  </data>
+  <data name="AddPersonDeceasedToolTip" xml:space="preserve">
+    <value>YYYY-MM-DD, YYYY-MM or YYYY</value>
+  </data>
 </root>

@@ -250,7 +250,7 @@ public partial class FilesViewModel : ObservableObject
     {
         var path = filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(internalPath);
         var dateModified = fileSystem.File.GetLastWriteTime(path);
-        return dateModified.ToString("yyyy-MM-dd HH:mm");
+        return dateModified.ToDateAndTime();
     }
 
     public void SelectionChanged()

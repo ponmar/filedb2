@@ -45,10 +45,10 @@
                 <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource PageTextBox}" Width="150" Text="{Binding Description}"/>
 
                 <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="{x:Static rs:Strings.AddPersonDateOfBirthLabel}"/>
-                <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource PageTextBox}" Width="150" Text="{Binding DateOfBirth}" ToolTip="YYYY-MM-DD, YYYY-MM or YYYY"/>
+                <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource PageTextBox}" Width="150" Text="{Binding DateOfBirth}" ToolTip="{x:Static rs:Strings.AddPersonDateOfBirthToolTip}"/>
 
                 <TextBlock Grid.Row="5" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="{x:Static rs:Strings.AddPersonDeceasedLabel}"/>
-                <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource PageTextBox}" Width="150" Text="{Binding Deceased}" ToolTip="YYYY-MM-DD, YYYY-MM or YYYY"/>
+                <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource PageTextBox}" Width="150" Text="{Binding Deceased}" ToolTip="{x:Static rs:Strings.AddPersonDeceasedToolTip}"/>
 
                 <TextBlock Grid.Row="6" Grid.Column="0" Style="{StaticResource PageTextBlock}" Text="{x:Static rs:Strings.AddPersonProfilePictureFileIdLabel}"/>
                 <TextBlock Grid.Row="6" Grid.Column="1" Style="{StaticResource PageTextBlock}" Text="{Binding ProfilePictureFileId}"/>
