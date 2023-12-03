@@ -1,6 +1,5 @@
 ﻿using FileDB.Extensions;
 using FileDB.Model;
-using FileDB.ViewModel;
 using FileDBShared.FileFormats;
 using FileDBShared.Model;
 using QuestPDF.Fluent;
@@ -10,19 +9,8 @@ using System.Linq;
 
 namespace FileDB.Export.SearchResult;
 
-public class PdfExporter : ISearchResultExporter
+public class PdfExporter(IFileSystem fileSystem, IFilesystemAccessProvider filesystemAccessProvider, PageSize pageSize) : ISearchResultExporter
 {
-    private readonly IFileSystem fileSystem;
-    private readonly IFilesystemAccessProvider filesystemAccessProvider;
-    private readonly PageSize pageSize;
-
-    public PdfExporter(IFileSystem fileSystem, IFilesystemAccessProvider filesystemAccessProvider, PageSize pageSize)
-    {
-        this.fileSystem = fileSystem;
-        this.filesystemAccessProvider = filesystemAccessProvider;
-        this.pageSize = pageSize;
-    }
-
     public void Export(SearchResultExport data, string filename)
     {
         var document = Document.Create(document =>

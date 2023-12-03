@@ -1,5 +1,4 @@
 ﻿using FileDB.Extensions;
-using FileDB.Model;
 using FileDBInterface.DbAccess;
 using FileDBShared.Model;
 using System.Collections.Generic;

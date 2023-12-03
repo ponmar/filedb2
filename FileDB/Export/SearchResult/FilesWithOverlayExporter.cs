@@ -17,23 +17,12 @@ record TextLine(string Text, TextType Type);
 
 public enum DescriptionPlacement { Heading, Subtitle }
 
-public class FilesWithOverlayExporter : ISearchResultExporter
+public class FilesWithOverlayExporter(IFilesystemAccessProvider filesystemAccessProvider, DescriptionPlacement descriptionPlacement, IFileSystem fileSystem) : ISearchResultExporter
 {
     private const int EmptyLineHeight = 15;
     private const int BackgroundMargin = 20;
     private const int BackgroundPadding = 20;
     private readonly SolidBrush textBgBrush = new(Color.FromArgb(229, 37, 37, 38));
-
-    private readonly IFilesystemAccessProvider filesystemAccessProvider;
-    private readonly DescriptionPlacement descriptionPlacement;
-    private readonly IFileSystem fileSystem;
-
-    public FilesWithOverlayExporter(IFilesystemAccessProvider filesystemAccessProvider, DescriptionPlacement descriptionPlacement, IFileSystem fileSystem)
-    {
-        this.filesystemAccessProvider = filesystemAccessProvider;
-        this.descriptionPlacement = descriptionPlacement;
-        this.fileSystem = fileSystem;
-    }
 
     public void Export(SearchResultExport data, string path)
     {
