@@ -26,6 +26,7 @@ namespace FileDB
     public partial class App : Application
     {
         private const string ConfigFileExtension = ".FileDB";
+        private const string DatabaseFileExtension = ".db";
 
         private void Application_Startup(object sender, StartupEventArgs startupEventArgs)
         {
@@ -46,8 +47,13 @@ namespace FileDB
             }
 
             var configPath = startupEventArgs.Args.First();
+            if (!Path.IsPathFullyQualified(configPath))
+            {
+                configPath = Path.GetFullPath(configPath);
+            }
+
             var filesRootDirectory = Path.GetDirectoryName(configPath)!;
-            var databaseFilename = Path.GetFileNameWithoutExtension(configPath) + ".db";
+            var databaseFilename = Path.GetFileNameWithoutExtension(configPath) + DatabaseFileExtension;
             var databasePath = Path.Combine(filesRootDirectory, databaseFilename);
             var applicationFilePaths = new ApplicationFilePaths(filesRootDirectory, configPath, databasePath);
 
