@@ -170,16 +170,7 @@ public class SqLiteDbAccess : IDbAccess
     public IEnumerable<FileModel> SearchFilesWithMissingData()
     {
         using var connection = DatabaseSetup.CreateConnection(database);
-        var files = connection.Query<FileModel>($"select * from [files] where Description is null");
-        foreach (var file in files)
-        {
-            if (!FileHasPersons(file.Id) &&
-                !FileHasLocation(file.Id) &&
-                !FileHasTags(file.Id))
-            {
-                yield return file;
-            }
-        }
+        return connection.Query<FileModel>($"select * from [files] where Description is null and Id not in (select FileId from [filepersons]) and Id not in (select FileId from [filelocations]) and Id not in (select FileId from [filetags])");
     }
 
     public void InsertFile(string internalPath, string? description, IFilesystemAccess filesystemAccess, bool findMetadata)
@@ -343,12 +334,6 @@ public class SqLiteDbAccess : IDbAccess
         return connection.Query<PersonModel>("select * from [persons]");
     }
 
-    private bool FileHasPersons(int fileId)
-    {
-        using var connection = DatabaseSetup.CreateConnection(database);
-        return connection.ExecuteScalar<bool>("select count(1) from [filepersons] where FileId=@fileId", new { fileId });
-    }
-
     public IEnumerable<PersonModel> GetPersonsFromFile(int fileId)
     {
         using var connection = DatabaseSetup.CreateConnection(database);
@@ -439,12 +424,6 @@ public class SqLiteDbAccess : IDbAccess
         return connection.Query<LocationModel>("select * from [locations]");
     }
 
-    private bool FileHasLocation(int fileId)
-    {
-        using var connection = DatabaseSetup.CreateConnection(database);
-        return connection.ExecuteScalar<bool>("select count(1) from [filelocations] where FileId=@fileId", new { fileId });
-    }
-
     public IEnumerable<LocationModel> GetLocationsFromFile(int fileId)
     {
         using var connection = DatabaseSetup.CreateConnection(database);
@@ -527,12 +506,6 @@ public class SqLiteDbAccess : IDbAccess
     {
         using var connection = DatabaseSetup.CreateConnection(database);
         return connection.Query<TagModel>("select * from [tags]");
-    }
-
-    private bool FileHasTags(int fileId)
-    {
-        using var connection = DatabaseSetup.CreateConnection(database);
-        return connection.ExecuteScalar<bool>("select count(1) from [filetags] where FileId=@fileId", new { fileId });
     }
 
     public IEnumerable<TagModel> GetTagsFromFile(int fileId)
