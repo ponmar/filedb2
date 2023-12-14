@@ -15,6 +15,11 @@ public class NoDbAccess : IDbAccess
         return new List<FileModel>();
     }
 
+    public IEnumerable<string> GetDirectories()
+    {
+        return new List<string>();
+    }
+
     public int GetFileCount()
     {
         return 0;

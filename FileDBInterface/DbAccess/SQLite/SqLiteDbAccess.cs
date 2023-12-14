@@ -12,6 +12,7 @@ using log4net.Config;
 using FileDBInterface.Exceptions;
 using FileDBShared.Validators;
 using FileDBInterface.FilesystemAccess;
+using FileDBInterface.Extensions;
 
 namespace FileDBInterface.DbAccess.SQLite;
 
@@ -35,6 +36,13 @@ public class SqLiteDbAccess : IDbAccess
     {
         using var connection = DatabaseSetup.CreateConnection(database);
         return connection.Query<FileModel>("select * from [files]");
+    }
+
+    public IEnumerable<string> GetDirectories()
+    {
+        using var connection = DatabaseSetup.CreateConnection(database);
+        var files = connection.Query<string>("select Path from [files] where instr(Path, '/') > 0");
+        return files.Select(x => x.TextBeforeLast("/")).Distinct().Order();
     }
 
     public int GetFileCount()

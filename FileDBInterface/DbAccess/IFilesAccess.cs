@@ -8,6 +8,7 @@ namespace FileDBInterface.DbAccess;
 public interface IFilesAccess
 {
     public IEnumerable<FileModel> GetFiles();
+    public IEnumerable<string> GetDirectories();
     public int GetFileCount();
     public FileModel? GetFileById(int id);
     public FileModel? GetFileByPath(string path);
@@ -23,6 +24,7 @@ public interface IFilesAccess
     public IEnumerable<FileModel> SearchFiles(string criteria);
     public IEnumerable<FileModel> SearchFilesBySex(Sex sex);
     public IEnumerable<FileModel> SearchFilesByDate(DateTime start, DateTime end);
+    public IEnumerable<FileModel> SearchFilesWithoutDate();
     public IEnumerable<FileModel> SearchFilesByPath(string criteria);
     public IEnumerable<FileModel> SearchFilesByExtension(string extension);
     public IEnumerable<FileModel> SearchFilesRandom(int numFiles);

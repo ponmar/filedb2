@@ -55,23 +55,15 @@ namespace FileDB.ViewModel
             Folders.Clear();
             Folders.Add(root);
 
-            foreach (var file in dbAccessProvider.DbAccess.GetFiles())
+            foreach (var directoryPath in dbAccessProvider.DbAccess.GetDirectories())
             {
-                var directoryEndIndex = file.Path.LastIndexOf("/");
-                if (directoryEndIndex == -1)
-                {
-                    // This fils is in the root directory
-                    continue;
-                }
+                var pathParts = directoryPath.Split("/");
 
-                var directoryPath = file.Path.Substring(0, directoryEndIndex);
-                var directories = directoryPath.Split("/");
-
-                if (directories.Length > 0)
+                if (pathParts.Length > 0)
                 {
                     var currentFolder = root;
 
-                    foreach (var pathPart in directories)
+                    foreach (var pathPart in pathParts)
                     {
                         var subFolder = currentFolder.Folders.FirstOrDefault(x => x.Name == pathPart);
                         if (subFolder == null)
