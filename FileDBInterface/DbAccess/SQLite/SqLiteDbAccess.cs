@@ -45,9 +45,15 @@ public class SqLiteDbAccess : IDbAccess
 
     public IEnumerable<FileModel> SearchFilesFromIds(IEnumerable<int> fileIds)
     {
-        // TODO: dapper can not handle too many fileIds? Need to split into several queries?
         using var connection = DatabaseSetup.CreateConnection(database);
         var sql = "select * from [files] where Id in @ids";
+        return connection.Query<FileModel>(sql, new { ids = fileIds });
+    }
+
+    public IEnumerable<FileModel> SearchFilesExceptIds(IEnumerable<int> fileIds)
+    {
+        using var connection = DatabaseSetup.CreateConnection(database);
+        var sql = "select * from [files] where Id not in @ids";
         return connection.Query<FileModel>(sql, new { ids = fileIds });
     }
 

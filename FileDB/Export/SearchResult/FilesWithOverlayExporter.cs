@@ -37,7 +37,6 @@ public class FilesWithOverlayExporter(IFilesystemAccessProvider filesystemAccess
             var bitmap = LoadBitmap(file);
             if (bitmap != null)
             {
-                // TODO: read orientation from file of no meta-data in db?
                 if (file.Orientation != null)
                 {
                     // TODO: add support for flipped values

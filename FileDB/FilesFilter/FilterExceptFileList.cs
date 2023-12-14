@@ -13,7 +13,6 @@ public class FilterExceptFileList(string exceptFileIdsText) : IFilesFilter
     public IEnumerable<FileModel> Run(IDbAccess dbAccess)
     {
         var fileIds = Utils.CreateFileIds(exceptFileIdsText);
-        var allFiles = dbAccess.GetFiles();
-        return allFiles.Where(x => !fileIds.Contains(x.Id));
+        return dbAccess.SearchFilesExceptIds(fileIds);
     }
 }

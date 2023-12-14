@@ -19,6 +19,7 @@ public interface IFilesAccess
     public void UpdateFileOrientation(int id, int? orientation);
 
     public IEnumerable<FileModel> SearchFilesFromIds(IEnumerable<int> fileIds);
+    public IEnumerable<FileModel> SearchFilesExceptIds(IEnumerable<int> fileIds);
     public IEnumerable<FileModel> SearchFiles(string criteria);
     public IEnumerable<FileModel> SearchFilesBySex(Sex sex);
     public IEnumerable<FileModel> SearchFilesByDate(DateTime start, DateTime end);

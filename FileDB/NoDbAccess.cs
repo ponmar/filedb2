@@ -25,6 +25,11 @@ public class NoDbAccess : IDbAccess
         return new List<FileModel>();
     }
 
+    public IEnumerable<FileModel> SearchFilesExceptIds(IEnumerable<int> fileIds)
+    {
+        return new List<FileModel>();
+    }
+
     public IEnumerable<FileModel> SearchFiles(string criteria)
     {
         return new List<FileModel>();

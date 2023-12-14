@@ -17,7 +17,7 @@ public class FilterNumberOfPersons(string minText, string maxText) : IFilesFilte
         var min = int.Parse(minText);
         var max = int.Parse(maxText);
 
-        // TODO: create optimized db query
+        // TODO: create optimized db query 
         return dbAccess.GetFiles().Where(x =>
         {
             var numPersons = dbAccess.GetPersonsFromFile(x.Id).Count();
