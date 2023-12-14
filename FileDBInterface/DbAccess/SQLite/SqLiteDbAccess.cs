@@ -155,6 +155,12 @@ public class SqLiteDbAccess : IDbAccess
         }
     }
 
+    public IEnumerable<FileModel> SearchFilesWithoutDate()
+    {
+        using var connection = DatabaseSetup.CreateConnection(database);
+        return connection.Query<FileModel>($"select * from [files] where Datetime is null");
+    }
+
     public IEnumerable<FileModel> SearchFilesWithPersons(IEnumerable<int> personIds)
     {
         using var connection = DatabaseSetup.CreateConnection(database);

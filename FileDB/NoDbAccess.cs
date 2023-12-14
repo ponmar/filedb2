@@ -80,6 +80,11 @@ public class NoDbAccess : IDbAccess
         return new List<FileModel>();
     }
 
+    public IEnumerable<FileModel> SearchFilesWithoutDate()
+    {
+        return new List<FileModel>();
+    }
+
     public IEnumerable<FileModel> SearchFilesWithPersons(IEnumerable<int> personIds)
     {
         return new List<FileModel>();
