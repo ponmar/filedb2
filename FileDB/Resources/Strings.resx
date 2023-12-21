@@ -1324,4 +1324,25 @@ YYYY-MM-DDTHH:MM:SS</value>
   <data name="AddPersonDeceasedToolTip" xml:space="preserve">
     <value>YYYY-MM-DD, YYYY-MM or YYYY</value>
   </data>
+  <data name="SearchToggleText" xml:space="preserve">
+    <value>F{0}: Toggle '{1}'</value>
+  </data>
+  <data name="SearchImageLoadingError" xml:space="preserve">
+    <value>Image loading error:</value>
+  </data>
+  <data name="SearchFileTypeNotSupported" xml:space="preserve">
+    <value>File type not supported.</value>
+  </data>
+  <data name="SearchNoMatch" xml:space="preserve">
+    <value>No match</value>
+  </data>
+  <data name="SearchFileDateTimeThisYear" xml:space="preserve">
+    <value> (this year)</value>
+  </data>
+  <data name="SearchFileDateTimeYearAgo" xml:space="preserve">
+    <value> ({0} year ago)</value>
+  </data>
+  <data name="SearchFileDateTimeYearsAgo" xml:space="preserve">
+    <value> ({0} years ago)</value>
+  </data>
 </root>

@@ -37,7 +37,7 @@ public class UpdateHistoryItem
     public required string ShortItemName { get; init; }
     public required string ItemName { get; init; }
     public required int FunctionKey { get; init; }
-    public string ToggleText => $"F{FunctionKey}: Toggle '{ShortItemName}'";
+    public string ToggleText => string.Format(Strings.SearchToggleText, FunctionKey, ShortItemName);
 }
 
 public partial class SearchViewModel : ObservableObject
@@ -147,7 +147,7 @@ public partial class SearchViewModel : ObservableObject
             {
                 if (x.FilePath == absolutePath)
                 {
-                    FileLoadError = $"Image loading error:\n{x.Exception.Message}";
+                    FileLoadError = Strings.SearchImageLoadingError + $"\n{x.Exception.Message}";
                     image = null;
                     ImageSource = null;
                 }
@@ -222,7 +222,7 @@ public partial class SearchViewModel : ObservableObject
         }
         else
         {
-            FileLoadError = "File type not supported.";
+            FileLoadError = Strings.SearchFileTypeNotSupported;
         }
     }
 
@@ -238,7 +238,7 @@ public partial class SearchViewModel : ObservableObject
         Persons = string.Empty;
         Locations = string.Empty;
         Tags = string.Empty;
-        FileLoadError = "No match";
+        FileLoadError = Strings.SearchNoMatch;
 
         rotation = 0;
         absolutePath = string.Empty;
@@ -262,15 +262,15 @@ public partial class SearchViewModel : ObservableObject
         int yearsAgo = DatabaseUtils.GetAgeInYears(now, datetime.Value);
         if (yearsAgo == 0 && now.Year == datetime.Value.Year)
         {
-            resultString = $"{resultString} (this year)";
+            resultString += Strings.SearchFileDateTimeThisYear;
         }
         else if (yearsAgo <= 1)
         {
-            resultString = $"{resultString} ({yearsAgo} year ago)";
+            resultString += string.Format(Strings.SearchFileDateTimeYearAgo, yearsAgo);
         }
         else if (yearsAgo > 1)
         {
-            resultString = $"{resultString} ({yearsAgo} years ago)";
+            resultString += string.Format(Strings.SearchFileDateTimeYearsAgo, yearsAgo);
         }
         return resultString;
     }
