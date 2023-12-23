@@ -1318,4 +1318,31 @@
   <data name="SearchFilterTextInputToolTip" xml:space="preserve">
     <value>Sökmönster (case insensitive)</value>
   </data>
+  <data name="AddPersonDateOfBirthToolTip" xml:space="preserve">
+    <value>ÅÅÅÅ-MM-DD, ÅÅÅÅ-MM eller ÅÅÅÅ</value>
+  </data>
+  <data name="AddPersonDeceasedToolTip" xml:space="preserve">
+    <value>ÅÅÅÅ-MM-DD, ÅÅÅÅ-MM eller ÅÅÅÅ</value>
+  </data>
+  <data name="SearchToggleText" xml:space="preserve">
+    <value>F{0}: Växla '{1}'</value>
+  </data>
+  <data name="SearchImageLoadingError" xml:space="preserve">
+    <value>Bildladdningsfel:</value>
+  </data>
+  <data name="SearchFileTypeNotSupported" xml:space="preserve">
+    <value>Filtyp stöds ej.</value>
+  </data>
+  <data name="SearchNoMatch" xml:space="preserve">
+    <value>Ingen träff</value>
+  </data>
+  <data name="SearchFileDateTimeThisYear" xml:space="preserve">
+    <value> (detta år)</value>
+  </data>
+  <data name="SearchFileDateTimeYearAgo" xml:space="preserve">
+    <value> ({0} år sedan)</value>
+  </data>
+  <data name="SearchFileDateTimeYearsAgo" xml:space="preserve">
+    <value> ({0} år sedan)</value>
+  </data>
 </root>

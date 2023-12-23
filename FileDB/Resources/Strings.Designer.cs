@@ -2063,6 +2063,33 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to  (this year).
+        /// </summary>
+        public static string SearchFileDateTimeThisYear {
+            get {
+                return ResourceManager.GetString("SearchFileDateTimeThisYear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  ({0} year ago).
+        /// </summary>
+        public static string SearchFileDateTimeYearAgo {
+            get {
+                return ResourceManager.GetString("SearchFileDateTimeYearAgo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  ({0} years ago).
+        /// </summary>
+        public static string SearchFileDateTimeYearsAgo {
+            get {
+                return ResourceManager.GetString("SearchFileDateTimeYearsAgo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File list:.
         /// </summary>
         public static string SearchFileListLabel {
@@ -2077,6 +2104,15 @@ namespace FileDB.Resources {
         public static string SearchFileTypeLabel {
             get {
                 return ResourceManager.GetString("SearchFileTypeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File type not supported..
+        /// </summary>
+        public static string SearchFileTypeNotSupported {
+            get {
+                return ResourceManager.GetString("SearchFileTypeNotSupported", resourceCulture);
             }
         }
         
@@ -2261,6 +2297,15 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Image loading error:.
+        /// </summary>
+        public static string SearchImageLoadingError {
+            get {
+                return ResourceManager.GetString("SearchImageLoadingError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Intersection.
         /// </summary>
         public static string SearchIntersectionButton {
@@ -2338,6 +2383,15 @@ namespace FileDB.Resources {
         public static string SearchNewFilesButtonToolTip {
             get {
                 return ResourceManager.GetString("SearchNewFilesButtonToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No match.
+        /// </summary>
+        public static string SearchNoMatch {
+            get {
+                return ResourceManager.GetString("SearchNoMatch", resourceCulture);
             }
         }
         
@@ -2689,6 +2743,15 @@ namespace FileDB.Resources {
         public static string SearchToggleLargeTextButtonToolTip {
             get {
                 return ResourceManager.GetString("SearchToggleLargeTextButtonToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to F{0}: Toggle &apos;{1}&apos;.
+        /// </summary>
+        public static string SearchToggleText {
+            get {
+                return ResourceManager.GetString("SearchToggleText", resourceCulture);
             }
         }
         
