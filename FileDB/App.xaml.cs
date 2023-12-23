@@ -122,7 +122,7 @@ namespace FileDB
 
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
-            if (e.Exception.StackTrace != null)
+            if (e.Exception.StackTrace is not null)
             {
                 ClipboardService.SetText(e.Exception.StackTrace);
             }

@@ -18,7 +18,7 @@ public class FilterPersonAge(string ageFromText, string ageToText) : IFilesFilte
         var ageFrom = int.Parse(ageFromText);
 
         var result = new List<FileModel>();
-        var personsWithAge = dbAccess.GetPersons().Where(p => p.DateOfBirth != null);
+        var personsWithAge = dbAccess.GetPersons().Where(p => p.DateOfBirth is not null);
 
         foreach (var person in personsWithAge)
         {
@@ -26,7 +26,7 @@ public class FilterPersonAge(string ageFromText, string ageToText) : IFilesFilte
             foreach (var file in dbAccess.SearchFilesWithPersons(new List<int>() { person.Id }))
             {
                 var fileDatetime = DatabaseParsing.ParseFilesDatetime(file.Datetime);
-                if (fileDatetime != null)
+                if (fileDatetime is not null)
                 {
                     int personAgeInFile = DatabaseUtils.GetAgeInYears(fileDatetime.Value, dateOfBirth);
                     if (personAgeInFile >= ageFrom && personAgeInFile <= ageTo)

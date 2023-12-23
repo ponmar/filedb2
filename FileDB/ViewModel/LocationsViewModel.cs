@@ -21,7 +21,7 @@ public partial class LocationsViewModel : ObservableObject
     [NotifyPropertyChangedFor(nameof(SelectedLocationHasPosition))]
     private Location? selectedLocation;
 
-    public bool SelectedLocationHasPosition => SelectedLocation != null && SelectedLocation.Position.HasContent();
+    public bool SelectedLocationHasPosition => SelectedLocation is not null && SelectedLocation.Position.HasContent();
 
     private readonly IConfigProvider configProvider;
     private readonly IDbAccessProvider dbAccessProvider;
@@ -77,7 +77,7 @@ public partial class LocationsViewModel : ObservableObject
     private void ShowLocationOnMap()
     {
         var link = Utils.CreatePositionLink(SelectedLocation!.Position, configProvider.Config.LocationLink);
-        if (link != null)
+        if (link is not null)
         {
             Utils.OpenUriInBrowser(link);
         }

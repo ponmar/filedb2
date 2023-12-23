@@ -9,7 +9,7 @@ public class EnumerationToVisibilityConverter : System.Windows.Markup.MarkupExte
 {
     public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
     {
-        return value != null && ((IEnumerable)value).GetEnumerator().MoveNext() ? Visibility.Visible : Visibility.Collapsed;
+        return value is not null && ((IEnumerable)value).GetEnumerator().MoveNext() ? Visibility.Visible : Visibility.Collapsed;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

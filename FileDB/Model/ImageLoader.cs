@@ -32,16 +32,16 @@ public class ImageLoader : IImageLoader
 
     public void LoadImage(string filePath)
     {
-        if (ImageCache.TryGetValue(filePath, out var loadResult) && loadResult.Exception == null)
+        if (ImageCache.TryGetValue(filePath, out var loadResult) && loadResult.Exception is null)
         {
-            if (loadResult.Image != null)
+            if (loadResult.Image is not null)
             {
                 Events.Send(new ImageLoaded(filePath, loadResult.Image));
             }
             return;
         }
 
-        var loadedImages = ImageCache.Values.Where(x => x.Image != null).ToList();
+        var loadedImages = ImageCache.Values.Where(x => x.Image is not null).ToList();
         while (loadedImages.Any() && loadedImages.Count >= configProvider.Config.ImageMemoryCacheCount)
         {
             int randomIndex = random.Next(loadedImages.Count - 1);

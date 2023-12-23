@@ -95,17 +95,17 @@ public partial class RipViewModel : ObservableObject
     {
         allPersons.Clear();
 
-        foreach (var person in dbAccessProvider.DbAccess.GetPersons().Where(x => x.DateOfBirth != null && x.Deceased != null))
+        foreach (var person in dbAccessProvider.DbAccess.GetPersons().Where(x => x.DateOfBirth is not null && x.Deceased is not null))
         {
             string? profileFileIdPath = null;
-            if (person.ProfileFileId != null)
+            if (person.ProfileFileId is not null)
             {
                 var profileFile = dbAccessProvider.DbAccess.GetFileById(person.ProfileFileId.Value);
                 profileFileIdPath = filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(profileFile!.Path);
             }
 
             allPersons.Add(new DeceasedPerson(person, profileFileIdPath));
-            if (profileFileIdPath != null)
+            if (profileFileIdPath is not null)
             {
                 imageLoader.LoadImage(profileFileIdPath);
             }

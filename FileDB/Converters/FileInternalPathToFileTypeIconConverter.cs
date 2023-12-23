@@ -11,7 +11,7 @@ public class FileInternalPathToFileTypeIconConverter : IValueConverter
     {
         string internalPath = (string)value;
         var fileType = FileTypeUtils.GetFileType(internalPath);
-        if (fileType == null)
+        if (fileType is null)
         {
             return string.Empty;
         }

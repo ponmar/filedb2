@@ -11,7 +11,7 @@ public class ServiceLocator
 
     public static T Resolve<T>(string key, object? value)
     {
-        if (value == null)
+        if (value is null)
         {
             return Resolve<T>();
         }

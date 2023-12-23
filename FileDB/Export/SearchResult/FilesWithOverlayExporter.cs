@@ -35,9 +35,9 @@ public class FilesWithOverlayExporter(IFilesystemAccessProvider filesystemAccess
         foreach (var file in data.Files)
         {
             var bitmap = LoadBitmap(file);
-            if (bitmap != null)
+            if (bitmap is not null)
             {
-                if (file.Orientation != null)
+                if (file.Orientation is not null)
                 {
                     // TODO: add support for flipped values
                     switch (file.Orientation)
@@ -82,12 +82,12 @@ public class FilesWithOverlayExporter(IFilesystemAccessProvider filesystemAccess
         var textLines = new List<TextLine>();
 
         var pictureDateText = string.Empty;
-        if (file.Datetime != null)
+        if (file.Datetime is not null)
         {
             pictureDateText = $"{HtmlExporter.CreateExportedFileDatetime(file.Datetime)}";
         }
         var pictureDescription = string.Empty;
-        if (file.Description != null && descriptionPlacement == DescriptionPlacement.Heading)
+        if (file.Description is not null && descriptionPlacement == DescriptionPlacement.Heading)
         {
             if (pictureDateText != string.Empty)
             {
@@ -131,7 +131,7 @@ public class FilesWithOverlayExporter(IFilesystemAccessProvider filesystemAccess
     {
         var textLines = new List<TextLine>();
 
-        if (file.Description != null && descriptionPlacement == DescriptionPlacement.Subtitle)
+        if (file.Description is not null && descriptionPlacement == DescriptionPlacement.Subtitle)
         {
             var lines = file.Description.Split(FileModelValidator.DescriptionLineEnding);
             foreach (var line in lines)

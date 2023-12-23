@@ -30,13 +30,13 @@ public class PdfExporter(IFileSystem fileSystem, IFilesystemAccessProvider files
             foreach (var file in data.Files.Where(x => FileTypeUtils.GetFileType(x.OriginalPath) == FileType.Picture))
             {
                 var pictureDateText = string.Empty;
-                if (file.Datetime != null)
+                if (file.Datetime is not null)
                 {
                     pictureDateText = HtmlExporter.CreateExportedFileDatetime(file.Datetime);
                 }
 
                 var pictureDescription = string.Empty;
-                if (file.Description != null)
+                if (file.Description is not null)
                 {
                     if (pictureDateText.HasContent())
                     {

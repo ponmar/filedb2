@@ -176,15 +176,15 @@ public partial class FilesViewModel : ObservableObject
 
                     var importedFile = dbAccessProvider.DbAccess.GetFileByPath(fileToAdd.Path);
 
-                    if (importedFile != null)
+                    if (importedFile is not null)
                     {
                         importedFiles.Add(importedFile);
 
-                        if (importedFile.Position != null && configProvider.Config.FileToLocationMaxDistance > 0.5)
+                        if (importedFile.Position is not null && configProvider.Config.FileToLocationMaxDistance > 0.5)
                         {
                             var importedFilePos = DatabaseParsing.ParseFilesPosition(importedFile.Position)!.Value;
 
-                            foreach (var locationWithPosition in locations.Where(x => x.Position != null))
+                            foreach (var locationWithPosition in locations.Where(x => x.Position is not null))
                             {
                                 var locationPos = DatabaseParsing.ParseFilesPosition(locationWithPosition.Position)!.Value;
                                 var distance = DatabaseUtils.CalculateDistance(importedFilePos.lat, importedFilePos.lon, locationPos.lat, locationPos.lon);

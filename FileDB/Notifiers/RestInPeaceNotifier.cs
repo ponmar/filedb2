@@ -20,9 +20,9 @@ public class RestInPeaceNotifier : INotifier
         var today = DateTime.Today;
         List<Notification> notifications = [];
 
-        foreach (var person in persons.Where(x => x.DateOfBirth != null))
+        foreach (var person in persons.Where(x => x.DateOfBirth is not null))
         {
-            if (person.Deceased != null)
+            if (person.Deceased is not null)
             {
                 var deceased = DatabaseParsing.ParsePersonDeceasedDate(person.Deceased);
                 if (deceased.Month == today.Month &&

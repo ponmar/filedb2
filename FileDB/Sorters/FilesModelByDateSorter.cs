@@ -12,11 +12,11 @@ public class FileModelByDateSorter : IComparer<FileModel>
             // Note: covers same datetime and when both are null
             return x.Path.CompareTo(y.Path);
         }
-        else if (x.Datetime == null)
+        else if (x.Datetime is null)
         {
             return 1;
         }
-        else if (y.Datetime == null)
+        else if (y.Datetime is null)
         {
             return -1;
         }

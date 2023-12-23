@@ -70,13 +70,13 @@ public class HtmlExporter(IFileSystem fileSystem, IFilesystemAccessProvider file
             fileSystem.File.Copy(sourceFilePath, destFilePath);
 
             var pictureDateText = string.Empty;
-            if (file.Datetime != null)
+            if (file.Datetime is not null)
             {
                 pictureDateText = $"{CreateExportedFileDatetime(file.Datetime)}";
             }
 
             var pictureDescription = string.Empty;
-            if (file.Description != null)
+            if (file.Description is not null)
             {
                 if (pictureDateText != string.Empty)
                 {
@@ -137,7 +137,7 @@ public class HtmlExporter(IFileSystem fileSystem, IFilesystemAccessProvider file
     public static string? CreateExportedFileDatetime(string fileDatetime)
     {
         var datetime = DatabaseParsing.ParseFilesDatetime(fileDatetime);
-        if (datetime == null)
+        if (datetime is null)
         {
             return null;
         }

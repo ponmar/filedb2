@@ -14,16 +14,16 @@ public class LocationModelValidator : AbstractValidator<LocationModel>
             .NotNull().WithMessage("{PropertyName} missing")
             .MinimumLength(2).WithMessage("{PropertyName} is too short");
 
-        When(x => x.Description != null, () =>
+        When(x => x.Description is not null, () =>
         {
             RuleFor(x => x.Description)
                 .NotEmpty().WithMessage("{PropertyName} is empty instead of null");
         });
 
-        When(x => x.Position != null, () =>
+        When(x => x.Position is not null, () =>
         {
             RuleFor(x => x.Position)
-                .Must(x => DatabaseParsing.ParseFilesPosition(x) != null).WithMessage("{PropertyName} not in format: <latitude> <longitude>");
+                .Must(x => DatabaseParsing.ParseFilesPosition(x) is not null).WithMessage("{PropertyName} not in format: <latitude> <longitude>");
         });
     }
 }

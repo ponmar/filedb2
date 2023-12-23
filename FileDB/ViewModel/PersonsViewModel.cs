@@ -93,10 +93,10 @@ public partial class PersonsViewModel : ObservableObject
 
     private int GetPersonAge(PersonModel person)
     {
-        if (person.DateOfBirth != null)
+        if (person.DateOfBirth is not null)
         {
             var dateOfBirth = DatabaseParsing.ParsePersonDateOfBirth(person.DateOfBirth);
-            if (person.Deceased != null)
+            if (person.Deceased is not null)
             {
                 var deceased = DatabaseParsing.ParsePersonDeceasedDate(person.Deceased);
                 return DatabaseUtils.GetAgeInYears(deceased, dateOfBirth);

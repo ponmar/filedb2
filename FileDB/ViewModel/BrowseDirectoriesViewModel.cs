@@ -19,7 +19,7 @@ namespace FileDB.ViewModel
         public string Name { get; }
         public List<IFolder> Folders { get; } = [];
 
-        public string Path => parent != null ? parent.Path + "/" + Name : Name;
+        public string Path => parent is not null ? parent.Path + "/" + Name : Name;
 
         public Folder(string name, IFolder? parent = null)
         {
@@ -66,7 +66,7 @@ namespace FileDB.ViewModel
                     foreach (var pathPart in pathParts)
                     {
                         var subFolder = currentFolder.Folders.FirstOrDefault(x => x.Name == pathPart);
-                        if (subFolder == null)
+                        if (subFolder is null)
                         {
                             subFolder = new Folder(pathPart, currentFolder);
                             currentFolder.Folders.Add(subFolder);
@@ -85,7 +85,7 @@ namespace FileDB.ViewModel
         {
             Events.Send<CloseModalDialogRequest>();
 
-            if (SelectedFolder != null)
+            if (SelectedFolder is not null)
             {
                 var path = SelectedFolder.Path;
                 if (path.StartsWith(RootFolderName))

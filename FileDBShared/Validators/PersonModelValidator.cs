@@ -18,25 +18,25 @@ public class PersonModelValidator : AbstractValidator<PersonModel>
             .NotNull().WithMessage("{PropertyName} is null")
             .MinimumLength(2).WithMessage("{PropertyName} is too short");
 
-        When(x => x.Description != null, () =>
+        When(x => x.Description is not null, () =>
         {
             RuleFor(x => x.Description)
                 .NotEmpty().WithMessage("{PropertyName} is empty instead of null");
         });
 
-        When(x => x.DateOfBirth != null, () =>
+        When(x => x.DateOfBirth is not null, () =>
         {
             RuleFor(x => x.DateOfBirth!)
                 .Must(IsPersonDateOfBirth).WithMessage("{PropertyName} is not in format YYYY-MM-DD, YYYY-MM or YYYY");
         });
 
-        When(x => x.Deceased != null, () =>
+        When(x => x.Deceased is not null, () =>
         {
             RuleFor(x => x.Deceased!)
                 .Must(IsPersonDeceasedDate).WithMessage("{PropertyName} is not in format YYYY-MM-DD, YYYY-MM or YYYY");
         });
 
-        When(x => x.ProfileFileId != null, () =>
+        When(x => x.ProfileFileId is not null, () =>
         {
             RuleFor(x => x.ProfileFileId)
                 .Must(p => p!.Value >= 0).WithMessage("{PropertyName} must be greater than or equal to 0");

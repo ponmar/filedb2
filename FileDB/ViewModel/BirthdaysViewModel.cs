@@ -144,17 +144,17 @@ public partial class BirthdaysViewModel : ObservableObject
     {
         allPersons.Clear();
 
-        foreach (var person in personsRepository.Persons.Where(x => x.DateOfBirth != null && x.Deceased == null))
+        foreach (var person in personsRepository.Persons.Where(x => x.DateOfBirth is not null && x.Deceased is null))
         {
             string? profileFileIdPath = null;
-            if (person.ProfileFileId != null)
+            if (person.ProfileFileId is not null)
             {
                 var profileFile = dbAccessProvider.DbAccess.GetFileById(person.ProfileFileId.Value);
                 profileFileIdPath = filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(profileFile!.Path);
             }
 
             allPersons.Add(new PersonBirthday(person, profileFileIdPath));
-            if (profileFileIdPath != null)
+            if (profileFileIdPath is not null)
             {
                 imageLoader.LoadImage(profileFileIdPath);
             }

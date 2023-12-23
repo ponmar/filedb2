@@ -8,7 +8,7 @@ public class EnumerationHasContentConverter : System.Windows.Markup.MarkupExtens
 {
     public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
     {
-        return value != null && ((IEnumerable)value).GetEnumerator().MoveNext();
+        return value is not null && ((IEnumerable)value).GetEnumerator().MoveNext();
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

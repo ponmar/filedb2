@@ -31,7 +31,7 @@ public partial class MainViewModel : ObservableObject
         DownloadResult = DefaultDownloadResult;
     }
 
-    public bool DeviceIsSelected => SelectedDevice != null;
+    public bool DeviceIsSelected => SelectedDevice is not null;
 
     [ObservableProperty]
     private string tempDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "MediaFilesHelper");
@@ -62,7 +62,7 @@ public partial class MainViewModel : ObservableObject
     private void BrowseDestinationDirectory()
     {
         var selectedDir = Dialogs.BrowseExistingDirectory(TempDir, "Browse destination directory");
-        if (selectedDir != null)
+        if (selectedDir is not null)
         {
             TempDir = selectedDir;
         }
@@ -71,7 +71,7 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     private void DownloadFilesFromDevice()
     {
-        if (SelectedDevice == null)
+        if (SelectedDevice is null)
         {
             return;
         }

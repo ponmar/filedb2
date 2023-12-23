@@ -43,7 +43,7 @@ public partial class AddPersonViewModel : ObservableObject
 
     public PersonModel? AffectedPerson { get; private set; }
 
-    public bool CanSetProfilePicture => searchResultRepository.SelectedFile != null;
+    public bool CanSetProfilePicture => searchResultRepository.SelectedFile is not null;
 
     private readonly IDbAccessProvider dbAccessProvider;
     private readonly IDialogs dialogs;
@@ -66,7 +66,7 @@ public partial class AddPersonViewModel : ObservableObject
             Description = personModel.Description;
             DateOfBirth = personModel.DateOfBirth;
             Deceased = personModel.Deceased;
-            ProfilePictureFileId = personModel.ProfileFileId == null ? string.Empty : personModel.ProfileFileId.Value.ToString();
+            ProfilePictureFileId = personModel.ProfileFileId is null ? string.Empty : personModel.ProfileFileId.Value.ToString();
             SexSelection = personModel.Sex.ToString();
         }
     }
@@ -134,7 +134,7 @@ public partial class AddPersonViewModel : ObservableObject
     [RelayCommand]
     private void SetProfilePictureFromSearchResult()
     {
-        if (searchResultRepository.SelectedFile == null)
+        if (searchResultRepository.SelectedFile is null)
         {
             return;
         }

@@ -56,7 +56,7 @@ public partial class SearchViewModel : ObservableObject
 
     public int OverlayFontSize => LargeTextMode ? configProvider.Config.OverlayTextSizeLarge : configProvider.Config.OverlayTextSize;
 
-    public bool FileSelected => SelectedFile != null;
+    public bool FileSelected => SelectedFile is not null;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(FileSelected))]
@@ -176,7 +176,7 @@ public partial class SearchViewModel : ObservableObject
     [RelayCommand]
     private void CopyFileId()
     {
-        if (SelectedFile != null)
+        if (SelectedFile is not null)
         {
             ClipboardService.SetText(Utils.CreateFileList(new List<FileModel>() { SelectedFile }));
         }
@@ -185,7 +185,7 @@ public partial class SearchViewModel : ObservableObject
     [RelayCommand]
     private void RemoveFileFromCurrentSearchResult()
     {
-        if (SelectedFile != null)
+        if (SelectedFile is not null)
         {
             Events.Send(new RemoveFileFromSearchResult(SelectedFile));
         }
@@ -202,8 +202,8 @@ public partial class SearchViewModel : ObservableObject
         InternalPath = selection.Path;
         Description = selection.Description ?? string.Empty;
         DateTime = GetFileDateTimeString(selection.Datetime);
-        Position = selection.Position != null ? Utils.CreateShortFilePositionString(selection.Position) : string.Empty;
-        PositionLink = selection.Position != null ? Utils.CreatePositionUri(selection.Position, configProvider.Config.LocationLink) : null;
+        Position = selection.Position is not null ? Utils.CreateShortFilePositionString(selection.Position) : string.Empty;
+        PositionLink = selection.Position is not null ? Utils.CreatePositionUri(selection.Position, configProvider.Config.LocationLink) : null;
         Persons = GetFilePersonsString(selection);
         Locations = GetFileLocationsString();
         Tags = GetFileTagsString();
@@ -250,7 +250,7 @@ public partial class SearchViewModel : ObservableObject
     private string GetFileDateTimeString(string? datetimeString)
     {
         var datetime = DatabaseParsing.ParseFilesDatetime(datetimeString);
-        if (datetime == null)
+        if (datetime is null)
         {
             return string.Empty;
         }

@@ -12,7 +12,7 @@ public class FileInfo
 {
     public string FilePath { get; }
     public DateTime? DateTime { get; }
-    public DateOnly? Date => DateTime != null ? DateOnly.FromDateTime(DateTime.Value) : null;
+    public DateOnly? Date => DateTime is not null ? DateOnly.FromDateTime(DateTime.Value) : null;
     public FileMetadata Metadata { get; }
 
     public string? DestinationPath { get; set; }
@@ -44,7 +44,7 @@ public class MediaFileGrouper
         foreach (var filename in filenames)
         {
             var fileMetadata = filesystemAccess.ParseFileMetadata(filename);
-            if (fileMetadata != null)
+            if (fileMetadata is not null)
             {
                 result.Add(new FileInfo(filename, fileMetadata));
             }
@@ -55,7 +55,7 @@ public class MediaFileGrouper
 
     public void GroupImagesByDate(List<FileInfo> files)
     {
-        foreach (var file in files.Where(x => x.DateTime != null))
+        foreach (var file in files.Where(x => x.DateTime is not null))
         {
             var groupPath = GetFileGroupName(file);
             var numImagesInGroup = Directory.Exists(groupPath) ? Directory.GetFiles(groupPath).Count() : 0;
@@ -70,7 +70,7 @@ public class MediaFileGrouper
 
     public void MoveFiles(List<FileInfo> files)
     {
-        foreach (var file in files.Where(x => x.DestinationPath != null))
+        foreach (var file in files.Where(x => x.DestinationPath is not null))
         {
             if (!Directory.Exists(file.DestinationPath))
             {

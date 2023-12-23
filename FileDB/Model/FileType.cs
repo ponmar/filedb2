@@ -63,7 +63,7 @@ public static class FileTypeUtils
         }
 
         var fileExtension = Path.GetExtension(path);
-        if (fileExtension == null)
+        if (fileExtension is null)
         {
             return null;
         }

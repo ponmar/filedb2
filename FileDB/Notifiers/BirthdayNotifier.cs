@@ -24,9 +24,9 @@ public class BirthdayNotifier : INotifier
         var today = DateTime.Today;
         List<Notification> notifications = [];
 
-        foreach (var person in persons.Where(x => x.DateOfBirth != null))
+        foreach (var person in persons.Where(x => x.DateOfBirth is not null))
         {
-            var isDeceased = person.Deceased != null;
+            var isDeceased = person.Deceased is not null;
             var checkPerson =
                 (!isDeceased && birthdayNotificationFor == BirthdayNotificationFor.Alive) ||
                 (isDeceased && (birthdayNotificationFor == BirthdayNotificationFor.Deceased));
