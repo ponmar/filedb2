@@ -549,8 +549,7 @@ public partial class FileCategorizationViewModel : ObservableObject
 
         for (int i = 1; i <= 12; i++)
         {
-            var item = UpdateHistoryItems.FirstOrDefault(x => x.FunctionKey == i);
-            if (item is null)
+            if (!UpdateHistoryItems.Any(x => x.FunctionKey == i))
             {
                 UpdateHistoryItems.Insert(i - 1, new UpdateHistoryItem()
                 {
@@ -575,12 +574,10 @@ public partial class FileCategorizationViewModel : ObservableObject
         }
 
         var historyItem = UpdateHistoryItems.FirstOrDefault(x => x.FunctionKey == functionKey);
-        if (historyItem is null)
+        if (historyItem is not null)
         {
-            return;
+            ToggleFromHistoryItem(historyItem);
         }
-
-        ToggleFromHistoryItem(historyItem);
     }
 
     [RelayCommand]

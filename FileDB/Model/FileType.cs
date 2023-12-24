@@ -69,7 +69,6 @@ public static class FileTypeUtils
         }
 
         fileExtension = fileExtension.ToLower();
-        var fileTypes = Enum.GetValues<FileType>().Where(x => x.GetSupportedFileExtensions().Contains(fileExtension)).ToList();
-        return fileTypes.FirstOrDefault();
+        return Enum.GetValues<FileType>().FirstOrDefault(x => x.GetSupportedFileExtensions().Contains(fileExtension));
     }
 }
