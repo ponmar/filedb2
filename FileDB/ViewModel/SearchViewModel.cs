@@ -96,10 +96,6 @@ public partial class SearchViewModel : ObservableObject
     private BitmapImage? image = null;
     private int rotation = 0;
 
-    private IEnumerable<PersonModel> personList = new List<PersonModel>();
-    private IEnumerable<LocationModel> locationList = new List<LocationModel>();
-    private IEnumerable<TagModel> tagList = new List<TagModel>();
-
     private readonly IConfigProvider configProvider;
     private readonly IDbAccessProvider dbAccessProvider;
     private readonly IFilesystemAccessProvider filesystemAccessProvider;
@@ -195,20 +191,17 @@ public partial class SearchViewModel : ObservableObject
     {
         SelectedFile = selection;
 
-        personList = dbAccessProvider.DbAccess.GetPersonsFromFile(selection.Id);
-        locationList = dbAccessProvider.DbAccess.GetLocationsFromFile(selection.Id);
-        tagList = dbAccessProvider.DbAccess.GetTagsFromFile(selection.Id);
-
+        var fileOverlay = new FileTextOverlayCreator(dbAccessProvider.DbAccess, configProvider, selection).Create();
         InternalPath = selection.Path;
-        Description = selection.Description ?? string.Empty;
-        DateTime = GetFileDateTimeString(selection.Datetime);
-        Position = selection.Position != null ? Utils.CreateShortFilePositionString(selection.Position) : string.Empty;
-        PositionLink = selection.Position != null ? Utils.CreatePositionUri(selection.Position, configProvider.Config.LocationLink) : null;
-        Persons = GetFilePersonsString(selection);
-        Locations = GetFileLocationsString();
-        Tags = GetFileTagsString();
-        FileLoadError = string.Empty;
+        Description = fileOverlay.Description ?? string.Empty;
+        DateTime = fileOverlay.DateTime ?? string.Empty;
+        Position = fileOverlay.Position ?? string.Empty;
+        PositionLink = fileOverlay.PositionLink;
+        Persons = fileOverlay.Persons;
+        Locations = fileOverlay.Locations;
+        Tags = fileOverlay.Tags;
 
+        FileLoadError = string.Empty;
         image = null;
         ImageSource = null;
 
@@ -238,59 +231,13 @@ public partial class SearchViewModel : ObservableObject
         Persons = string.Empty;
         Locations = string.Empty;
         Tags = string.Empty;
-        FileLoadError = Strings.SearchNoMatch;
 
+        FileLoadError = Strings.SearchNoMatch;
         rotation = 0;
         absolutePath = string.Empty;
         image = null;
 
         ImageSource = null;
-    }
-
-    private string GetFileDateTimeString(string? datetimeString)
-    {
-        var datetime = DatabaseParsing.ParseFilesDatetime(datetimeString);
-        if (datetime == null)
-        {
-            return string.Empty;
-        }
-
-        // Note: when no time is available the string is used to avoid including time 00:00
-        var resultString = datetimeString!.Contains('T') ? datetime.Value.ToDateAndTime() : datetimeString;
-
-        var now = System.DateTime.Now;
-        int yearsAgo = DatabaseUtils.GetAgeInYears(now, datetime.Value);
-        if (yearsAgo == 0 && now.Year == datetime.Value.Year)
-        {
-            resultString += Strings.SearchFileDateTimeThisYear;
-        }
-        else if (yearsAgo <= 1)
-        {
-            resultString += string.Format(Strings.SearchFileDateTimeYearAgo, yearsAgo);
-        }
-        else if (yearsAgo > 1)
-        {
-            resultString += string.Format(Strings.SearchFileDateTimeYearsAgo, yearsAgo);
-        }
-        return resultString;
-    }
-
-    private string GetFilePersonsString(FileModel selection)
-    {
-        var personStrings = personList.Select(p => $"{p.Firstname} {p.Lastname}{Utils.GetPersonAgeInFileString(selection.Datetime, p.DateOfBirth)}");
-        return string.Join("\n", personStrings);
-    }
-
-    private string GetFileLocationsString()
-    {
-        var locationStrings = locationList.Select(l => l.Name);
-        return string.Join("\n", locationStrings);
-    }
-
-    private string GetFileTagsString()
-    {
-        var tagStrings = tagList.Select(t => t.Name);
-        return string.Join("\n", tagStrings);
     }
 
     [RelayCommand]
@@ -329,4 +276,76 @@ public partial class SearchViewModel : ObservableObject
 
     [RelayCommand]
     private void PrevDirectory() => Events.Send<SelectFileInPrevDirectory>();
+}
+
+public record FileOverlayText(
+    string Persons,
+    string Locations,
+    string Tags,
+    string? Description,
+    string? DateTime,
+    string? Position,
+    Uri? PositionLink);
+
+public class FileTextOverlayCreator(IDbAccess dbAccess, IConfigProvider configProvider, FileModel file)
+{
+    public FileOverlayText Create()
+    {
+        return new FileOverlayText(GetPersons(),
+            GetLocations(),
+            GetTags(),
+            file.Description,
+            GetFileDateTimeString(),
+            file.Position != null ? Utils.CreateShortFilePositionString(file.Position) : null,
+            file.Position != null ? Utils.CreatePositionUri(file.Position, configProvider.Config.LocationLink) : null);
+    }
+
+    private string GetPersons()
+    {
+        var persons = dbAccess.GetPersonsFromFile(file.Id);
+        var personStrings = persons.Select(p => $"{p.Firstname} {p.Lastname}{Utils.GetPersonAgeInFileString(file.Datetime, p.DateOfBirth)}");
+        return string.Join("\n", personStrings);
+    }
+
+    private string GetLocations()
+    {
+        var locations = dbAccess.GetLocationsFromFile(file.Id);
+        var locationStrings = locations.Select(l => l.Name);
+        return string.Join("\n", locationStrings);
+    }
+
+    private string GetTags()
+    {
+        var tags = dbAccess.GetTagsFromFile(file.Id);
+        var tagStrings = tags.Select(t => t.Name);
+        return string.Join("\n", tagStrings);
+    }
+
+    private string? GetFileDateTimeString()
+    {
+        var datetime = DatabaseParsing.ParseFilesDatetime(file.Datetime);
+        if (datetime == null)
+        {
+            return null;
+        }
+
+        // Note: when no time is available the string is used to avoid including time 00:00
+        var resultString = file.Datetime!.Contains('T') ? datetime.Value.ToDateAndTime() : file.Datetime;
+
+        var now = DateTime.Now;
+        int yearsAgo = DatabaseUtils.GetAgeInYears(now, datetime.Value);
+        if (yearsAgo == 0 && now.Year == datetime.Value.Year)
+        {
+            resultString += Strings.SearchFileDateTimeThisYear;
+        }
+        else if (yearsAgo <= 1)
+        {
+            resultString += string.Format(Strings.SearchFileDateTimeYearAgo, yearsAgo);
+        }
+        else if (yearsAgo > 1)
+        {
+            resultString += string.Format(Strings.SearchFileDateTimeYearsAgo, yearsAgo);
+        }
+        return resultString;
+    }
 }
