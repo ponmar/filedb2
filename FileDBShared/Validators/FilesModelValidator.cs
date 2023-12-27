@@ -23,10 +23,10 @@ public class FileModelValidator : AbstractValidator<FileModel>
         RuleFor(x => x.Orientation)
             .Must(ValidateOrientation).WithMessage("{PropertyName} invalid");
 
-        When(x => x.Position != null, () =>
+        When(x => x.Position is not null, () =>
         {
             RuleFor(x => x.Position)
-                .Must(x => DatabaseParsing.ParseFilesPosition(x) != null).WithMessage("{PropertyName} not in format: <latitude> <longitude>");
+                .Must(x => DatabaseParsing.ParseFilesPosition(x) is not null).WithMessage("{PropertyName} not in format: <latitude> <longitude>");
         });
     }
 
@@ -43,11 +43,11 @@ public class FileModelValidator : AbstractValidator<FileModel>
 
     public static bool ValidateDatetime(string? datetime)
     {
-        return datetime == null || DatabaseParsing.ParseFilesDatetime(datetime) != null;
+        return datetime is null || DatabaseParsing.ParseFilesDatetime(datetime) is not null;
     }
 
     public static bool ValidateOrientation(int? orientation)
     {
-        return orientation == null || (orientation >= 1 && orientation <= 8);
+        return orientation is null || (orientation >= 1 && orientation <= 8);
     }
 }

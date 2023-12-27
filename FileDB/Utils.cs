@@ -99,14 +99,14 @@ public static class Utils
 
     public static string GetPersonAgeInFileString(string? fileDatetimeStr, string? personDateOfBirthStr)
     {
-        DateTime? fileDatetime = fileDatetimeStr == null ? null : DatabaseParsing.ParseFilesDatetime(fileDatetimeStr);
-        if (fileDatetime == null)
+        DateTime? fileDatetime = fileDatetimeStr is null ? null : DatabaseParsing.ParseFilesDatetime(fileDatetimeStr);
+        if (fileDatetime is null)
         {
             return string.Empty;
         }
 
-        DateTime? personDateOfBirth = personDateOfBirthStr == null ? null : DatabaseParsing.ParsePersonDateOfBirth(personDateOfBirthStr);
-        if (personDateOfBirth == null)
+        DateTime? personDateOfBirth = personDateOfBirthStr is null ? null : DatabaseParsing.ParsePersonDateOfBirth(personDateOfBirthStr);
+        if (personDateOfBirth is null)
         {
             return string.Empty;
         }
@@ -140,7 +140,7 @@ public static class Utils
     public static Uri? CreatePositionUri(string position, string locationLinkConfig)
     {
         var link = CreatePositionLink(position, locationLinkConfig);
-        return link != null ? new Uri(link) : null;
+        return link is not null ? new Uri(link) : null;
     }
 
     public static string GetVersionString()

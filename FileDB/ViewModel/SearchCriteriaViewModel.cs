@@ -35,10 +35,10 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
 
     partial void OnSelectedLocationForPositionSearchChanged(LocationToUpdate? value)
     {
-        if (value != null)
+        if (value is not null)
         {
             var location = dbAccessProvider.DbAccess.GetLocationById(value.Id);
-            if (location.Position != null)
+            if (location.Position is not null)
             {
                 SearchFileGpsPosition = location.Position;
             }
@@ -61,7 +61,7 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
         if (value.HasContent())
         {
             var gpsPos = DatabaseParsing.ParseFilesPositionFromUrl(SearchFileGpsPositionUrl);
-            if (gpsPos != null)
+            if (gpsPos is not null)
             {
                 SearchFileGpsPosition = $"{gpsPos.Value.lat} {gpsPos.Value.lon}";
                 return;
@@ -107,7 +107,7 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
     [NotifyPropertyChangedFor(nameof(Person1And2Selected))]
     private PersonToUpdate? selectedPerson2Search;
 
-    public bool Person1And2Selected => SelectedPerson1Search != null && SelectedPerson2Search != null;
+    public bool Person1And2Selected => SelectedPerson1Search is not null && SelectedPerson2Search is not null;
 
     [ObservableProperty]
     private TagToUpdate? selectedTagSearch;
@@ -120,14 +120,14 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
 
     public bool FilterCanBeRemoved => FilterSettings.Count > 1;
 
-    public bool FileSelected => SelectedFile != null;
+    public bool FileSelected => SelectedFile is not null;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(FileSelected))]
     [NotifyPropertyChangedFor(nameof(CurrentFileHasPosition))]
     private FileModel? selectedFile;
 
-    public bool CurrentFileHasPosition => SelectedFile != null && SelectedFile.Position.HasContent();
+    public bool CurrentFileHasPosition => SelectedFile is not null && SelectedFile.Position.HasContent();
 
     public ObservableCollection<PersonToUpdate> Persons { get; } = [];
     public ObservableCollection<LocationToUpdate> Locations { get; } = [];
@@ -194,7 +194,7 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
         {
             var locationToUpdate = new LocationToUpdate(location.Id, location.Name, Utils.CreateShortText(location.Name, configProvider.Config.ShortItemNameMaxLength));
             Locations.Add(locationToUpdate);
-            if (location.Position != null)
+            if (location.Position is not null)
             {
                 LocationsWithPosition.Add(locationToUpdate);
             }
@@ -223,7 +223,7 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
     [RelayCommand]
     private void FindCurrentDirectoryFiles()
     {
-        if (SelectedFile == null)
+        if (SelectedFile is null)
         {
             dialogs.ShowErrorDialog("No file opened");
             return;
@@ -257,7 +257,7 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
     private void FindBrowsedFiles()
     {
         var selectedDir = dialogs.ShowBrowseDirectoriesDialog();
-        if (selectedDir != null)
+        if (selectedDir is not null)
         {
             Files = dbAccessProvider.DbAccess.SearchFilesByPath(selectedDir);
             Events.Send<NewSearchResult>();
@@ -267,7 +267,7 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
     [RelayCommand]
     private void SearchFilePositionFromCurrentFile()
     {
-        SearchFileGpsPosition = SelectedFile != null ? SelectedFile.Position : string.Empty;
+        SearchFileGpsPosition = SelectedFile is not null ? SelectedFile.Position : string.Empty;
     }
 
     [RelayCommand]
@@ -291,7 +291,7 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
         }
 
         var gpsPos = DatabaseParsing.ParseFilesPosition(SearchFileGpsPosition);
-        if (gpsPos == null)
+        if (gpsPos is null)
         {
             dialogs.ShowErrorDialog("Invalid GPS position");
             return;
@@ -310,7 +310,7 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
     [RelayCommand]
     private void FindFilesWithPerson()
     {
-        if (SelectedPersonSearch != null)
+        if (SelectedPersonSearch is not null)
         {
             Files = dbAccessProvider.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPersonSearch.Id });
             Events.Send<NewSearchResult>();
@@ -320,7 +320,7 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
     [RelayCommand]
     private void FindFilesWithPersonUnique()
     {
-        if (SelectedPersonSearch != null)
+        if (SelectedPersonSearch is not null)
         {
             var files = dbAccessProvider.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPersonSearch.Id });
             Files = files.Where(x => dbAccessProvider.DbAccess.GetPersonsFromFile(x.Id).Count() == 1);
@@ -331,7 +331,7 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
     [RelayCommand]
     private void FindFilesWithPersonGroup()
     {
-        if (SelectedPersonSearch != null)
+        if (SelectedPersonSearch is not null)
         {
             var files = dbAccessProvider.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPersonSearch.Id });
             Files = files.Where(x => dbAccessProvider.DbAccess.GetPersonsFromFile(x.Id).Count() > 1);
@@ -342,7 +342,7 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
     [RelayCommand]
     private void FindFilesWithPersons()
     {
-        if (SelectedPerson1Search != null && SelectedPerson2Search != null)
+        if (SelectedPerson1Search is not null && SelectedPerson2Search is not null)
         {
             Files = dbAccessProvider.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPerson1Search.Id, SelectedPerson2Search.Id });
             Events.Send<NewSearchResult>();
@@ -352,13 +352,13 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
     [RelayCommand]
     private void FindFilesWithPersonsUnique()
     {
-        if (SelectedPerson1Search != null && SelectedPerson2Search != null)
+        if (SelectedPerson1Search is not null && SelectedPerson2Search is not null)
         {
             var files = dbAccessProvider.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPerson1Search.Id });
             Files = files.Where(x =>
             {
                 var filePersons = dbAccessProvider.DbAccess.GetPersonsFromFile(x.Id).ToList();
-                return filePersons.Count() == 2 && filePersons.Any(y => y.Id == SelectedPerson2Search.Id);
+                return filePersons.Count == 2 && filePersons.Any(y => y.Id == SelectedPerson2Search.Id);
             });
             Events.Send<NewSearchResult>();
         }
@@ -367,13 +367,13 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
     [RelayCommand]
     private void FindFilesWithPersonsGroup()
     {
-        if (SelectedPerson1Search != null && SelectedPerson2Search != null)
+        if (SelectedPerson1Search is not null && SelectedPerson2Search is not null)
         {
             var files = dbAccessProvider.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPerson1Search.Id });
             Files = files.Where(x =>
             {
                 var filePersons = dbAccessProvider.DbAccess.GetPersonsFromFile(x.Id).ToList();
-                return filePersons.Count() > 2 && filePersons.Any(y => y.Id == SelectedPerson2Search.Id);
+                return filePersons.Count > 2 && filePersons.Any(y => y.Id == SelectedPerson2Search.Id);
             });
             Events.Send<NewSearchResult>();
         }
@@ -382,7 +382,7 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
     [RelayCommand]
     private void FindFilesWithLocation()
     {
-        if (SelectedLocationSearch != null)
+        if (SelectedLocationSearch is not null)
         {
             Files = dbAccessProvider.DbAccess.SearchFilesWithLocations(new List<int>() { SelectedLocationSearch.Id });
             Events.Send<NewSearchResult>();
@@ -392,7 +392,7 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
     [RelayCommand]
     private void FindFilesWithTag()
     {
-        if (SelectedTagSearch != null)
+        if (SelectedTagSearch is not null)
         {
             Files = dbAccessProvider.DbAccess.SearchFilesWithTags(new List<int>() { SelectedTagSearch.Id });
             Events.Send<NewSearchResult>();

@@ -7,7 +7,7 @@ public class FileModelByIdComparer : IEqualityComparer<FileModel>
 {
     public int GetHashCode(FileModel co)
     {
-        if (co == null)
+        if (co is null)
         {
             return 0;
         }

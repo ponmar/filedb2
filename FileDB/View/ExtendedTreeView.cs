@@ -13,7 +13,7 @@ public class ExtendedTreeView : TreeView
 
     void ___ICH(object sender, RoutedPropertyChangedEventArgs<object> e)
     {
-        if (SelectedItem != null)
+        if (SelectedItem is not null)
         {
             SetValue(SelectedItem_Property, SelectedItem);
         }

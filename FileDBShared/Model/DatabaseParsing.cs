@@ -30,7 +30,7 @@ public class DatabaseParsing
 
     public static DateTime? ParseFilesDatetime(string? datetimeStr)
     {
-        if (datetimeStr == null)
+        if (datetimeStr is null)
         {
             return null;
         }
@@ -90,7 +90,7 @@ public class DatabaseParsing
 
     public static (double lat, double lon)? ParseFilesPosition(string? positionString)
     {
-        if (positionString != null)
+        if (positionString is not null)
         {
             var parts = positionString.Split(" ");
             if (parts.Length == 2 &&

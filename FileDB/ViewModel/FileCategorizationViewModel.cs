@@ -18,7 +18,7 @@ public partial class FileCategorizationViewModel : ObservableObject
     [NotifyPropertyChangedFor(nameof(CanApplyMetaDataFromPrevEdit))]
     private FileModel? selectedFile;
 
-    public bool FileSelected => SelectedFile != null;
+    public bool FileSelected => SelectedFile is not null;
 
     [ObservableProperty]
     private string? newFileDescription;
@@ -41,13 +41,13 @@ public partial class FileCategorizationViewModel : ObservableObject
     private IEnumerable<TagModel> tagList = new List<TagModel>();
 
     public bool SelectedPersonCanBeAdded =>
-        SelectedFile != null &&
-        SelectedPersonToUpdate != null &&
+        SelectedFile is not null &&
+        SelectedPersonToUpdate is not null &&
         !personList.Any(x => x.Id == SelectedPersonToUpdate.Id);
 
     public bool SelectedPersonCanBeRemoved =>
-        SelectedFile != null &&
-        SelectedPersonToUpdate != null &&
+        SelectedFile is not null &&
+        SelectedPersonToUpdate is not null &&
         personList.Any(x => x.Id == SelectedPersonToUpdate.Id);
 
     [ObservableProperty]
@@ -56,13 +56,13 @@ public partial class FileCategorizationViewModel : ObservableObject
     public LocationToUpdate? selectedLocationToUpdate;
 
     public bool SelectedLocationCanBeAdded =>
-        SelectedFile != null &&
-        SelectedLocationToUpdate != null &&
+        SelectedFile is not null &&
+        SelectedLocationToUpdate is not null &&
         !locationList.Any(x => x.Id == SelectedLocationToUpdate.Id);
 
     public bool SelectedLocationCanBeRemoved =>
-        SelectedFile != null &&
-        SelectedLocationToUpdate != null &&
+        SelectedFile is not null &&
+        SelectedLocationToUpdate is not null &&
         locationList.Any(x => x.Id == SelectedLocationToUpdate.Id);
 
     [ObservableProperty]
@@ -71,13 +71,13 @@ public partial class FileCategorizationViewModel : ObservableObject
     private TagToUpdate? selectedTagToUpdate;
 
     public bool SelectedTagCanBeAdded =>
-        SelectedFile != null &&
-        SelectedTagToUpdate != null &&
+        SelectedFile is not null &&
+        SelectedTagToUpdate is not null &&
         !tagList.Any(x => x.Id == SelectedTagToUpdate.Id);
 
     public bool SelectedTagCanBeRemoved =>
-        SelectedFile != null &&
-        SelectedTagToUpdate != null &&
+        SelectedFile is not null &&
+        SelectedTagToUpdate is not null &&
         tagList.Any(x => x.Id == SelectedTagToUpdate.Id);
 
     public ObservableCollection<UpdateHistoryItem> UpdateHistoryItems { get; } = [];
@@ -88,7 +88,7 @@ public partial class FileCategorizationViewModel : ObservableObject
     [NotifyPropertyChangedFor(nameof(CanApplyMetaDataFromPrevEdit))]
     private int? prevEditedFileId = null;
 
-    public bool CanApplyMetaDataFromPrevEdit => SelectedFile != null && PrevEditedFileId != null;
+    public bool CanApplyMetaDataFromPrevEdit => SelectedFile is not null && PrevEditedFileId is not null;
 
     public ObservableCollection<PersonToUpdate> Persons { get; } = [];
     public ObservableCollection<LocationToUpdate> Locations { get; } = [];
@@ -204,7 +204,7 @@ public partial class FileCategorizationViewModel : ObservableObject
     [RelayCommand]
     private void SetFileDescription()
     {
-        if (SelectedFile != null)
+        if (SelectedFile is not null)
         {
             NewFileDescription = NewFileDescription?.Trim().ReplaceLineEndings(FileModelValidator.DescriptionLineEnding);
             var description = NewFileDescription.HasContent() ? NewFileDescription : null;
@@ -231,7 +231,7 @@ public partial class FileCategorizationViewModel : ObservableObject
     [RelayCommand]
     private void SetFileDateTime()
     {
-        if (SelectedFile != null)
+        if (SelectedFile is not null)
         {
             NewFileDateTime = NewFileDateTime?.Trim();
 
@@ -253,7 +253,7 @@ public partial class FileCategorizationViewModel : ObservableObject
     [RelayCommand]
     private void AddMetaDataFromPrevEditedFile()
     {
-        if (SelectedFile == null || PrevEditedFileId == null)
+        if (SelectedFile is null || PrevEditedFileId is null)
         {
             return;
         }
@@ -299,7 +299,7 @@ public partial class FileCategorizationViewModel : ObservableObject
     [RelayCommand]
     private void MarkPrevEditedFile()
     {
-        if (SelectedFile != null)
+        if (SelectedFile is not null)
         {
             PrevEditedFileId = SelectedFile.Id;
         }
@@ -319,7 +319,7 @@ public partial class FileCategorizationViewModel : ObservableObject
 
     private void RotateFile(RotationDirection imageRotationDirection)
     {
-        if (SelectedFile != null)
+        if (SelectedFile is not null)
         {
             int cameraNewDegrees = imageRotation;
             if (imageRotationDirection == RotationDirection.CounterClockwise)
@@ -350,7 +350,7 @@ public partial class FileCategorizationViewModel : ObservableObject
     [RelayCommand]
     private void UpdateFileOrientationFromMetaData()
     {
-        if (SelectedFile != null)
+        if (SelectedFile is not null)
         {
             if (dialogs.ShowConfirmDialog("Reload orientation from file meta-data?"))
             {
@@ -365,7 +365,7 @@ public partial class FileCategorizationViewModel : ObservableObject
     [RelayCommand]
     private void UpdateFileFromMetaData()
     {
-        if (SelectedFile != null)
+        if (SelectedFile is not null)
         {
             if (dialogs.ShowConfirmDialog("Reload date and GPS position from file meta-data?"))
             {
@@ -384,7 +384,7 @@ public partial class FileCategorizationViewModel : ObservableObject
     private void CreatePerson()
     {
         var newPerson = dialogs.ShowAddPersonDialog();
-        if (newPerson != null)
+        if (newPerson is not null)
         {
             AddFilePersonToCurrentFile(newPerson.Id);
         }
@@ -394,7 +394,7 @@ public partial class FileCategorizationViewModel : ObservableObject
     private void CreateLocation()
     {
         var newLocation = dialogs.ShowAddLocationDialog();
-        if (newLocation != null)
+        if (newLocation is not null)
         {
             AddFileLocationToCurrentFile(new LocationToUpdate(newLocation.Id, newLocation.Name, Utils.CreateShortText(newLocation.Name, configProvider.Config.ShortItemNameMaxLength)));
         }
@@ -404,7 +404,7 @@ public partial class FileCategorizationViewModel : ObservableObject
     private void CreateTag()
     {
         var newTag = dialogs.ShowAddTagDialog();
-        if (newTag != null)
+        if (newTag is not null)
         {
             AddFileTagToCurrentFile(new TagToUpdate(newTag.Id, newTag.Name, Utils.CreateShortText(newTag.Name, configProvider.Config.ShortItemNameMaxLength)));
         }
@@ -413,7 +413,7 @@ public partial class FileCategorizationViewModel : ObservableObject
     [RelayCommand]
     private void AddFilePerson()
     {
-        if (SelectedFile != null && SelectedPersonToUpdate != null)
+        if (SelectedFile is not null && SelectedPersonToUpdate is not null)
         {
             AddFilePersonToCurrentFile(SelectedPersonToUpdate.Id);
         }
@@ -423,11 +423,11 @@ public partial class FileCategorizationViewModel : ObservableObject
     {
         var person = dbAccessProvider.DbAccess.GetPersonById(personId);
 
-        if (SelectedFile!.Datetime != null)
+        if (SelectedFile!.Datetime is not null)
         {
             var fileDatetime = DatabaseParsing.ParseFilesDatetime(SelectedFile.Datetime);
 
-            if (person.DateOfBirth != null)
+            if (person.DateOfBirth is not null)
             {
                 var dateOfBirth = DatabaseParsing.ParsePersonDateOfBirth(person.DateOfBirth);
                 if (fileDatetime < dateOfBirth &&
@@ -437,7 +437,7 @@ public partial class FileCategorizationViewModel : ObservableObject
                 }
             }
 
-            if (person.Deceased != null)
+            if (person.Deceased is not null)
             {
                 var deceased = DatabaseParsing.ParsePersonDeceasedDate(person.Deceased);
                 if (fileDatetime > deceased &&
@@ -459,7 +459,7 @@ public partial class FileCategorizationViewModel : ObservableObject
     [RelayCommand]
     private void RemoveFilePerson()
     {
-        if (SelectedFile != null && SelectedPersonToUpdate != null)
+        if (SelectedFile is not null && SelectedPersonToUpdate is not null)
         {
             dbAccessProvider.DbAccess.DeleteFilePerson(SelectedFile.Id, SelectedPersonToUpdate.Id);
             AddUpdateHistoryItem(UpdateHistoryType.TogglePerson, SelectedPersonToUpdate.Id, SelectedPersonToUpdate.Name);
@@ -470,7 +470,7 @@ public partial class FileCategorizationViewModel : ObservableObject
     [RelayCommand]
     private void AddFileLocation()
     {
-        if (SelectedFile != null && SelectedLocationToUpdate != null)
+        if (SelectedFile is not null && SelectedLocationToUpdate is not null)
         {
             AddFileLocationToCurrentFile(SelectedLocationToUpdate);
         }
@@ -478,7 +478,7 @@ public partial class FileCategorizationViewModel : ObservableObject
 
     private void AddFileLocationToCurrentFile(LocationToUpdate location)
     {
-        if (SelectedFile != null)
+        if (SelectedFile is not null)
         {
             var fileId = SelectedFile.Id;
             if (!dbAccessProvider.DbAccess.GetLocationsFromFile(fileId).Any(l => l.Id == location.Id))
@@ -493,7 +493,7 @@ public partial class FileCategorizationViewModel : ObservableObject
     [RelayCommand]
     private void RemoveFileLocation()
     {
-        if (SelectedFile != null && SelectedLocationToUpdate != null)
+        if (SelectedFile is not null && SelectedLocationToUpdate is not null)
         {
             var fileId = SelectedFile.Id;
             dbAccessProvider.DbAccess.DeleteFileLocation(fileId, SelectedLocationToUpdate.Id);
@@ -505,7 +505,7 @@ public partial class FileCategorizationViewModel : ObservableObject
     [RelayCommand]
     private void AddFileTag()
     {
-        if (SelectedFile != null && SelectedTagToUpdate != null)
+        if (SelectedFile is not null && SelectedTagToUpdate is not null)
         {
             AddFileTagToCurrentFile(SelectedTagToUpdate);
         }
@@ -525,7 +525,7 @@ public partial class FileCategorizationViewModel : ObservableObject
     [RelayCommand]
     private void RemoveFileTag()
     {
-        if (SelectedFile != null && SelectedTagToUpdate != null)
+        if (SelectedFile is not null && SelectedTagToUpdate is not null)
         {
             var fileId = SelectedFile.Id;
             dbAccessProvider.DbAccess.DeleteFileTag(fileId, SelectedTagToUpdate.Id);
@@ -542,15 +542,14 @@ public partial class FileCategorizationViewModel : ObservableObject
         }
 
         var duplicatedItem = UpdateHistoryItems.FirstOrDefault(x => x.Type == type && x.ItemName == itemName);
-        if (duplicatedItem != null)
+        if (duplicatedItem is not null)
         {
             return;
         }
 
         for (int i = 1; i <= 12; i++)
         {
-            var item = UpdateHistoryItems.FirstOrDefault(x => x.FunctionKey == i);
-            if (item == null)
+            if (!UpdateHistoryItems.Any(x => x.FunctionKey == i))
             {
                 UpdateHistoryItems.Insert(i - 1, new UpdateHistoryItem()
                 {
@@ -569,24 +568,22 @@ public partial class FileCategorizationViewModel : ObservableObject
 
     private void FunctionKey(int functionKey)
     {
-        if (!ReadWriteMode || SelectedFile == null)
+        if (!ReadWriteMode || SelectedFile is null)
         {
             return;
         }
 
         var historyItem = UpdateHistoryItems.FirstOrDefault(x => x.FunctionKey == functionKey);
-        if (historyItem == null)
+        if (historyItem is not null)
         {
-            return;
+            ToggleFromHistoryItem(historyItem);
         }
-
-        ToggleFromHistoryItem(historyItem);
     }
 
     [RelayCommand]
     private void ToggleFromHistoryItem(UpdateHistoryItem historyItem)
     {
-        if (!ReadWriteMode || SelectedFile == null)
+        if (!ReadWriteMode || SelectedFile is null)
         {
             return;
         }

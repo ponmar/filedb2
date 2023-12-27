@@ -110,7 +110,7 @@ public class SqLiteDbAccess : IDbAccess
         foreach (var locationWithPosition in connection.Query<LocationModel>(sql))
         {
             var gpsPos = DatabaseParsing.ParseFilesPosition(locationWithPosition.Position);
-            if (gpsPos != null)
+            if (gpsPos is not null)
             {
                 if (DatabaseUtils.CalculateDistance(latitude, longitude, gpsPos.Value.lat, gpsPos.Value.lon) < radius)
                 {
@@ -128,7 +128,7 @@ public class SqLiteDbAccess : IDbAccess
         foreach (var fileWithPosition in connection.Query<FileModel>(sql))
         {
             var gpsPos = DatabaseParsing.ParseFilesPosition(fileWithPosition.Position);
-            if (gpsPos != null)
+            if (gpsPos is not null)
             {
                 if (DatabaseUtils.CalculateDistance(latitude, longitude, gpsPos.Value.lat, gpsPos.Value.lon) < radius)
                 {

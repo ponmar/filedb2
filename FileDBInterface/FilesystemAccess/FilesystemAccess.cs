@@ -45,7 +45,7 @@ public class FilesystemAccess : IFilesystemAccess
             var internalPath = ToInternalFilesPath(filename);
             if (PathIsApplicable(internalPath, blacklistedFilePathPatterns, whitelistedFilePathPatterns, includeHiddenDirectories) &&
                 // TODO: optimize by adding check if path exists
-                filesDbAccess.GetFileByPath(internalPath) == null)
+                filesDbAccess.GetFileByPath(internalPath) is null)
             {
                 yield return internalPath;
             }
@@ -61,7 +61,7 @@ public class FilesystemAccess : IFilesystemAccess
 
     private bool PathIsBlacklisted(string internalPath, IEnumerable<string> blacklistedFilePathPatterns)
     {
-        return blacklistedFilePathPatterns.FirstOrDefault(pattern => internalPath.IndexOf(pattern) != -1) != null;
+        return blacklistedFilePathPatterns.FirstOrDefault(pattern => internalPath.IndexOf(pattern) != -1) is not null;
     }
 
     private bool PathIsWhitelisted(string internalPath, IEnumerable<string> whitelistedFilePathPatterns)
@@ -70,7 +70,7 @@ public class FilesystemAccess : IFilesystemAccess
             return true;
 
         var pathLower = internalPath.ToLower();
-        return whitelistedFilePathPatterns.FirstOrDefault(pattern => pathLower.EndsWith(pattern)) != null;
+        return whitelistedFilePathPatterns.FirstOrDefault(pattern => pathLower.EndsWith(pattern)) is not null;
     }
 
     private bool PathIsVisible(string internalPath, bool includeHiddenDirectories)
@@ -135,18 +135,18 @@ public class FilesystemAccess : IFilesystemAccess
         {
             ParseFileExif(path, out var dateTaken, out var location, out orientation);
 
-            if (dateTaken != null)
+            if (dateTaken is not null)
             {
                 datetime = DatabaseParsing.DateTakenToFilesDatetime(dateTaken.Value);
             }
 
-            if (location != null)
+            if (location is not null)
             {
                 position = DatabaseParsing.ToFilesPosition(location.Latitude, location.Longitude);
             }
         }
 
-        if (datetime == null)
+        if (datetime is null)
         {
             datetime = DatabaseParsing.PathToFilesDatetime(path);
         }
@@ -202,10 +202,10 @@ public class FilesystemAccess : IFilesystemAccess
     {
         orientation = null;
         var ifd0Directory = directories.OfType<ExifIfd0Directory>().FirstOrDefault();
-        if (ifd0Directory != null)
+        if (ifd0Directory is not null)
         {
             orientation = ifd0Directory.TryGetInt32(ExifDirectoryBase.TagOrientation, out int value) ? value : null;
         }
-        return orientation != null;
+        return orientation is not null;
     }
 }

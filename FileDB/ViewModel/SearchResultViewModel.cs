@@ -47,7 +47,7 @@ public partial class SearchResultViewModel : ObservableObject
                 var updateViaHistorySelection = searchResult == SearchResultHistorySelection;
                 SearchResultHistorySelection = null;
 
-                if (searchResult != null)
+                if (searchResult is not null)
                 {
                     if (searchResult.Count > 0)
                     {
@@ -86,7 +86,7 @@ public partial class SearchResultViewModel : ObservableObject
 
     partial void OnSearchResultHistorySelectionChanged(SearchResult? value)
     {
-        if (value != null)
+        if (value is not null)
         {
             StopSlideshow();
             SearchResult = value;
@@ -121,11 +121,11 @@ public partial class SearchResultViewModel : ObservableObject
 
     public string CurrentFileInternalPath => HasNonEmptySearchResult ? SearchResult!.Files[SelectedFileIndex].Path : string.Empty;
 
-    public int SearchNumberOfHits => SearchResult != null ? SearchResult.Count : 0;
+    public int SearchNumberOfHits => SearchResult is not null ? SearchResult.Count : 0;
 
-    public bool HasSearchResult => SearchResult != null;
+    public bool HasSearchResult => SearchResult is not null;
 
-    public bool HasNonEmptySearchResult => SearchResult != null && SearchResult.Count > 0;
+    public bool HasNonEmptySearchResult => SearchResult is not null && SearchResult.Count > 0;
 
     [ObservableProperty]
     private bool speekActive;
@@ -169,7 +169,7 @@ public partial class SearchResultViewModel : ObservableObject
 
         this.RegisterForEvent<RemoveFileFromSearchResult>((x) =>
         {
-            if (SearchResult == null)
+            if (SearchResult is null)
             {
                 return;
             }
@@ -307,7 +307,7 @@ public partial class SearchResultViewModel : ObservableObject
     private void LastFile()
     {
         StopSlideshow();
-        if (searchResult != null)
+        if (searchResult is not null)
         {
             LoadFile(SearchResult!.Count - 1);
         }
@@ -329,7 +329,7 @@ public partial class SearchResultViewModel : ObservableObject
 
     private void StartSlideshow()
     {
-        if (SearchResult != null && SearchResult.Count > 1)
+        if (SearchResult is not null && SearchResult.Count > 1)
         {
             slideshowTimer.Start();
         }
@@ -385,7 +385,7 @@ public partial class SearchResultViewModel : ObservableObject
 
     private void LoadFile(int index)
     {
-        if (SearchResult != null &&
+        if (SearchResult is not null &&
             index >= 0 && index < SearchResult.Count)
         {
             SelectedFileIndex = index;
@@ -394,7 +394,7 @@ public partial class SearchResultViewModel : ObservableObject
 
             // TODO: make this a bool setting?
             // Note: reading of orientation from Exif is done here to get correct visualization for files added to database before orientation was parsed
-            if (selection.Orientation == null)
+            if (selection.Orientation is null)
             {
                 var fileAbsolutePath = filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(selection.Path);
                 selection.Orientation = filesystemAccessProvider.FilesystemAccess.ParseFileMetadata(fileAbsolutePath).Orientation;
@@ -436,9 +436,9 @@ public partial class SearchResultViewModel : ObservableObject
     }    
 
     public bool PrevFileAvailable => SelectedFileIndex > 0;
-    public bool NextFileAvailable => searchResult != null && SelectedFileIndex < searchResult.Count - 1;
-    public bool FirstFileAvailable => searchResult != null && SelectedFileIndex > 0;
-    public bool LastFileAvailable => searchResult != null && SelectedFileIndex < searchResult.Count - 1;
+    public bool NextFileAvailable => searchResult is not null && SelectedFileIndex < searchResult.Count - 1;
+    public bool FirstFileAvailable => searchResult is not null && SelectedFileIndex > 0;
+    public bool LastFileAvailable => searchResult is not null && SelectedFileIndex < searchResult.Count - 1;
     public bool PrevDirectoryAvailable => HasNonEmptySearchResult;
     public bool NextDirectoryAvailable => HasNonEmptySearchResult;
 

@@ -56,7 +56,7 @@ public partial class SearchViewModel : ObservableObject
 
     public int OverlayFontSize => LargeTextMode ? configProvider.Config.OverlayTextSizeLarge : configProvider.Config.OverlayTextSize;
 
-    public bool FileSelected => SelectedFile != null;
+    public bool FileSelected => SelectedFile is not null;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(FileSelected))]
@@ -172,7 +172,7 @@ public partial class SearchViewModel : ObservableObject
     [RelayCommand]
     private void CopyFileId()
     {
-        if (SelectedFile != null)
+        if (SelectedFile is not null)
         {
             ClipboardService.SetText(Utils.CreateFileList(new List<FileModel>() { SelectedFile }));
         }
@@ -181,7 +181,7 @@ public partial class SearchViewModel : ObservableObject
     [RelayCommand]
     private void RemoveFileFromCurrentSearchResult()
     {
-        if (SelectedFile != null)
+        if (SelectedFile is not null)
         {
             Events.Send(new RemoveFileFromSearchResult(SelectedFile));
         }
@@ -296,8 +296,8 @@ public class FileTextOverlayCreator(IDbAccess dbAccess, IConfigProvider configPr
             GetTags(),
             file.Description,
             GetFileDateTimeString(),
-            file.Position != null ? Utils.CreateShortFilePositionString(file.Position) : null,
-            file.Position != null ? Utils.CreatePositionUri(file.Position, configProvider.Config.LocationLink) : null);
+            file.Position is null ? null : Utils.CreateShortFilePositionString(file.Position),
+            file.Position is null ? null : Utils.CreatePositionUri(file.Position, configProvider.Config.LocationLink));
     }
 
     private string GetPersons()
@@ -324,7 +324,7 @@ public class FileTextOverlayCreator(IDbAccess dbAccess, IConfigProvider configPr
     private string? GetFileDateTimeString()
     {
         var datetime = DatabaseParsing.ParseFilesDatetime(file.Datetime);
-        if (datetime == null)
+        if (datetime is null)
         {
             return null;
         }

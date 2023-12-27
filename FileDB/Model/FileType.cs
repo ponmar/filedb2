@@ -63,13 +63,12 @@ public static class FileTypeUtils
         }
 
         var fileExtension = Path.GetExtension(path);
-        if (fileExtension == null)
+        if (fileExtension is null)
         {
             return null;
         }
 
         fileExtension = fileExtension.ToLower();
-        var fileTypes = Enum.GetValues<FileType>().Where(x => x.GetSupportedFileExtensions().Contains(fileExtension)).ToList();
-        return fileTypes.FirstOrDefault();
+        return Enum.GetValues<FileType>().FirstOrDefault(x => x.GetSupportedFileExtensions().Contains(fileExtension));
     }
 }

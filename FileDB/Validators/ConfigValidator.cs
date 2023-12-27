@@ -44,7 +44,7 @@ public class ConfigValidator : AbstractValidator<Config>
         RuleFor(c => c.ShortItemNameMaxLength)
             .InclusiveBetween(10, 100).WithMessage("Invalid short item name max length");
 
-        When(c => c.Language != null, () =>
+        When(c => c.Language is not null, () =>
         {
             RuleFor(c => c.Language)
                .Must(IsCulture!).WithMessage("Invalid language");
@@ -75,14 +75,9 @@ public class ConfigValidator : AbstractValidator<Config>
         }
     }
 
-    private bool IsValidIpAddress(string ipAddress)
-    {
-        return ipAddress != null && IPAddress.TryParse(ipAddress, out var _);
-    }
-
     private bool IsSemicolonSeparatedFilePatterns(string text)
     {
-        if (text == null)
+        if (text is null)
         {
             return false;
         }
