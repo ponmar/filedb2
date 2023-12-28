@@ -1,5 +1,6 @@
 ﻿using FileDB.Extensions;
 using FileDB.Model;
+using FileDB.ViewModel;
 using FileDBShared.FileFormats;
 using FileDBShared.Model;
 using QuestPDF.Fluent;
@@ -27,51 +28,46 @@ public class PdfExporter(IFileSystem fileSystem, IFilesystemAccessProvider files
                 });
             });
 
-            foreach (var file in data.Files.Where(x => FileTypeUtils.GetFileType(x.OriginalPath) == FileType.Picture))
+            var pictures = data.Files.Where(x => FileTypeUtils.GetFileType(x.OriginalPath) == FileType.Picture);
+            foreach (var picture in pictures)
             {
                 var pictureDateText = string.Empty;
-                if (file.Datetime is not null)
+                if (picture.Datetime is not null)
                 {
-                    pictureDateText = HtmlExporter.CreateExportedFileDatetime(file.Datetime);
+                    pictureDateText = HtmlExporter.CreateExportedFileDatetime(picture.Datetime);
                 }
 
                 var pictureDescription = string.Empty;
-                if (file.Description is not null)
+                if (picture.Description is not null)
                 {
                     if (pictureDateText.HasContent())
                     {
                         pictureDescription += ": ";
                     }
-                    pictureDescription += file.Description;
+                    pictureDescription += picture.Description;
                 }
 
                 var fileHeading = $"{pictureDateText}{pictureDescription}";
 
                 string? filePersons = null;
-                if (file.PersonIds.Count > 0)
+                if (picture.PersonIds.Count > 0)
                 {
-                    var persons = file.PersonIds.Select(x => data.Persons.First(y => y.Id == x));
-                    var personStrings = persons.Select(x => $"{x.Firstname} {x.Lastname}{Utils.GetPersonAgeInFileString(file.Datetime, x.DateOfBirth)}").ToList();
-                    personStrings.Sort();
-                    filePersons = string.Join(", ", personStrings);
+                    var persons = data.Persons.Where(x => picture.PersonIds.Contains(x.Id));
+                    filePersons = FileTextOverlayCreator.GetPersonsText(picture.Datetime, persons, ", ");
                 }
 
                 string? fileLocations = null;
-                if (file.LocationIds.Count > 0)
+                if (picture.LocationIds.Count > 0)
                 {
-                    var locations = file.LocationIds.Select(x => data.Locations.First(y => y.Id == x));
-                    var locationStrings = locations.Select(x => x.Name).ToList();
-                    locationStrings.Sort();
-                    fileLocations = string.Join(", ", locationStrings);
+                    var locations = data.Locations.Where(x => picture.LocationIds.Contains(x.Id));
+                    fileLocations = FileTextOverlayCreator.GetLocationsText(locations, ", ");
                 }
 
                 string? fileTags = null;
-                if (file.TagIds.Count > 0)
+                if (picture.TagIds.Count > 0)
                 {
-                    var tags = file.TagIds.Select(x => data.Tags.First(y => y.Id == x));
-                    var tagStrings = tags.Select(x => x.Name).ToList();
-                    tagStrings.Sort();
-                    fileTags = string.Join(", ", tagStrings);
+                    var tags = data.Tags.Where(x => picture.TagIds.Contains(x.Id));
+                    fileTags = FileTextOverlayCreator.GetTagsText(tags, ", ");
                 }
 
                 document.Page(filePage =>
@@ -95,12 +91,12 @@ public class PdfExporter(IFileSystem fileSystem, IFilesystemAccessProvider files
                         }
 
                         var item = column.Item();
-                        var degrees = DatabaseParsing.OrientationToDegrees(file.Orientation);
+                        var degrees = DatabaseParsing.OrientationToDegrees(picture.Orientation);
                         for (int i = 0; i < degrees / 90; i++)
                         {
                             item = item.RotateLeft();
                         }
-                        var sourceFilePath = filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(file.OriginalPath);
+                        var sourceFilePath = filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(picture.OriginalPath);
                         item.Image(sourceFilePath);
                     });
                     filePage.Footer().AlignCenter().Text(text =>

@@ -1,8 +1,10 @@
 ﻿using FileDB.Extensions;
 using FileDB.Model;
+using FileDB.ViewModel;
 using FileDBShared.FileFormats;
 using FileDBShared.Model;
 using FileDBShared.Validators;
+using SkiaSharp;
 using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
@@ -91,28 +93,22 @@ public class HtmlExporter(IFileSystem fileSystem, IFilesystemAccessProvider file
 
             if (file.PersonIds.Count > 0)
             {
-                var persons = file.PersonIds.Select(x => data.Persons.First(y => y.Id == x));
-                var personStrings = persons.Select(x => $"{x.Firstname} {x.Lastname}{Utils.GetPersonAgeInFileString(file.Datetime, x.DateOfBirth)}").ToList();
-                personStrings.Sort();
-                var personsStr = string.Join(", ", personStrings);
+                var persons = data.Persons.Where(x => file.PersonIds.Contains(x.Id));
+                var personsStr = FileTextOverlayCreator.GetPersonsText(file.Datetime, persons, ", ");
                 pictureText += $"<p>&#128578; {personsStr}</p>";
             }
 
             if (file.LocationIds.Count > 0)
             {
-                var locations = file.LocationIds.Select(x => data.Locations.First(y => y.Id == x));
-                var locationStrings = locations.Select(x => x.Name).ToList();
-                locationStrings.Sort();
-                var locationsStr = string.Join(", ", locationStrings);
+                var locations = data.Locations.Where(x => file.LocationIds.Contains(x.Id));
+                var locationsStr = FileTextOverlayCreator.GetLocationsText(locations, ", ");
                 pictureText += $"<p>&#127968; {locationsStr}</p>";
             }
 
             if (file.TagIds.Count > 0)
             {
-                var tags = file.TagIds.Select(x => data.Tags.First(y => y.Id == x));
-                var tagStrings = tags.Select(x => x.Name).ToList();
-                tagStrings.Sort();
-                var tagsStr = string.Join(", ", tagStrings);
+                var tags = data.Tags.Where(x => file.TagIds.Contains(x.Id));
+                var tagsStr = FileTextOverlayCreator.GetTagsText(tags, ", ");
                 pictureText += $"<p>&#128278; {tagsStr}</p>";
             }
 

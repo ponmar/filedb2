@@ -8,6 +8,9 @@ using FileDBShared.Validators;
 using FileDBShared.FileFormats;
 using FileDB.Model;
 using System.IO.Abstractions;
+using FileDB.Extensions;
+using FileDB.ViewModel;
+using SkiaSharp;
 
 namespace FileDB.Export.SearchResult;
 
@@ -84,7 +87,7 @@ public class FilesWithOverlayExporter(IFilesystemAccessProvider filesystemAccess
         var pictureDateText = string.Empty;
         if (file.Datetime is not null)
         {
-            pictureDateText = $"{HtmlExporter.CreateExportedFileDatetime(file.Datetime)}";
+            pictureDateText = HtmlExporter.CreateExportedFileDatetime(file.Datetime);
         }
         var pictureDescription = string.Empty;
         if (file.Description is not null && descriptionPlacement == DescriptionPlacement.Heading)
@@ -93,34 +96,31 @@ public class FilesWithOverlayExporter(IFilesystemAccessProvider filesystemAccess
             {
                 pictureDescription += ": ";
             }
-            pictureDescription += $"{file.Description}";
+            pictureDescription += file.Description;
         }
-        textLines.Add(new TextLine($@"{pictureDateText}{pictureDescription}", TextType.Heading));
+        if (pictureDateText.HasContent() || pictureDescription.HasContent())
+        {
+            textLines.Add(new TextLine($@"{pictureDateText}{pictureDescription}", TextType.Heading));
+        }
 
         if (file.PersonIds.Count > 0)
         {
-            textLines.Add(new(string.Empty, TextType.Normal));
-            var persons = file.PersonIds.Select(x => data.Persons.First(y => y.Id == x));
-            var personStrings = persons.Select(x => $"{x.Firstname} {x.Lastname}{Utils.GetPersonAgeInFileString(file.Datetime, x.DateOfBirth)}").ToList();
-            personStrings.Sort();
+            var persons = data.Persons.Where(x => file.PersonIds.Contains(x.Id));
+            var personStrings = FileTextOverlayCreator.GetPersonsTexts(file.Datetime, persons);
             textLines.AddRange(personStrings.Select(x => new TextLine(x, TextType.Normal)));
         }
 
         if (file.LocationIds.Count > 0)
         {
-            textLines.Add(new(string.Empty, TextType.Normal));
-            var locations = file.LocationIds.Select(x => data.Locations.First(y => y.Id == x));
-            var locationStrings = locations.Select(x => x.Name).ToList();
-            locationStrings.Sort();
+            var locations = data.Locations.Where(x => file.LocationIds.Contains(x.Id));
+            var locationStrings = FileTextOverlayCreator.GetLocationsTexts(locations);
             textLines.AddRange(locationStrings.Select(x => new TextLine(x, TextType.Normal)));
         }
 
         if (file.TagIds.Count > 0)
         {
-            textLines.Add(new(string.Empty, TextType.Normal));
-            var tags = file.TagIds.Select(x => data.Tags.First(y => y.Id == x));
-            var tagStrings = tags.Select(x => x.Name).ToList();
-            tagStrings.Sort();
+            var tags = data.Tags.Where(x => file.TagIds.Contains(x.Id));
+            var tagStrings = FileTextOverlayCreator.GetTagsTexts(tags);
             textLines.AddRange(tagStrings.Select(x => new TextLine(x, TextType.Normal)));
         }
 

@@ -191,15 +191,14 @@ public partial class SearchViewModel : ObservableObject
     {
         SelectedFile = selection;
 
-        var fileOverlay = new FileTextOverlayCreator(dbAccessProvider.DbAccess, configProvider, selection).Create();
         InternalPath = selection.Path;
-        Description = fileOverlay.Description ?? string.Empty;
-        DateTime = fileOverlay.DateTime ?? string.Empty;
-        Position = fileOverlay.Position ?? string.Empty;
-        PositionLink = fileOverlay.PositionLink;
-        Persons = fileOverlay.Persons;
-        Locations = fileOverlay.Locations;
-        Tags = fileOverlay.Tags;
+        Description = selection.Description ?? string.Empty;
+        DateTime = FileTextOverlayCreator.GetFileDateTimeText(selection) ?? string.Empty;
+        Position = FileTextOverlayCreator.GetShortPositionText(selection) ?? string.Empty;
+        PositionLink = FileTextOverlayCreator.GetPositionUri(configProvider, selection);
+        Persons = FileTextOverlayCreator.GetPersonsText(dbAccessProvider.DbAccess, selection, "\n");
+        Locations = FileTextOverlayCreator.GetLocationsText(dbAccessProvider.DbAccess, selection, "\n");
+        Tags = FileTextOverlayCreator.GetTagsText(dbAccessProvider.DbAccess, selection, "\n");
 
         FileLoadError = string.Empty;
         image = null;
@@ -278,50 +277,71 @@ public partial class SearchViewModel : ObservableObject
     private void PrevDirectory() => Events.Send<SelectFileInPrevDirectory>();
 }
 
-public record FileOverlayText(
-    string Persons,
-    string Locations,
-    string Tags,
-    string? Description,
-    string? DateTime,
-    string? Position,
-    Uri? PositionLink);
-
-public class FileTextOverlayCreator(IDbAccess dbAccess, IConfigProvider configProvider, FileModel file)
+public class FileTextOverlayCreator
 {
-    public FileOverlayText Create()
-    {
-        return new FileOverlayText(GetPersons(),
-            GetLocations(),
-            GetTags(),
-            file.Description,
-            GetFileDateTimeString(),
-            file.Position is null ? null : Utils.CreateShortFilePositionString(file.Position),
-            file.Position is null ? null : Utils.CreatePositionUri(file.Position, configProvider.Config.LocationLink));
-    }
-
-    private string GetPersons()
+    public static string GetPersonsText(IDbAccess dbAccess, FileModel file, string separator)
     {
         var persons = dbAccess.GetPersonsFromFile(file.Id);
-        var personStrings = persons.Select(p => $"{p.Firstname} {p.Lastname}{Utils.GetPersonAgeInFileString(file.Datetime, p.DateOfBirth)}");
-        return string.Join("\n", personStrings);
+        return GetPersonsText(file, persons, separator);
     }
 
-    private string GetLocations()
+    public static string GetPersonsText(FileModel file, IEnumerable<PersonModel> persons, string separator)
+    {
+        return GetPersonsText(file.Datetime, persons, separator);
+    }
+
+    public static string GetPersonsText(string? fileDateTime, IEnumerable<PersonModel> persons, string separator)
+    {
+        var personStrings = GetPersonsTexts(fileDateTime, persons);
+        return string.Join(separator, personStrings);
+    }
+
+    public static IEnumerable<string> GetPersonsTexts(string? fileDateTime, IEnumerable<PersonModel> persons)
+    {
+        var personStrings = persons.Select(p => $"{p.Firstname} {p.Lastname}{Utils.GetPersonAgeInFileString(fileDateTime, p.DateOfBirth)}").ToList();
+        personStrings.Sort();
+        return personStrings;
+    }
+
+    public static string GetLocationsText(IDbAccess dbAccess, FileModel file, string separator)
     {
         var locations = dbAccess.GetLocationsFromFile(file.Id);
-        var locationStrings = locations.Select(l => l.Name);
-        return string.Join("\n", locationStrings);
+        return GetLocationsText(locations, separator);
     }
 
-    private string GetTags()
+    public static string GetLocationsText(IEnumerable<LocationModel> locations, string separator)
+    {
+        var locationStrings = GetLocationsTexts(locations);
+        return string.Join(separator, locationStrings);
+    }
+
+    public static IEnumerable<string> GetLocationsTexts(IEnumerable<LocationModel> locations)
+    {
+        var locationStrings = locations.Select(l => l.Name).ToList();
+        locationStrings.Sort();
+        return locationStrings;
+    }
+
+    public static string GetTagsText(IDbAccess dbAccess, FileModel file, string separator)
     {
         var tags = dbAccess.GetTagsFromFile(file.Id);
-        var tagStrings = tags.Select(t => t.Name);
-        return string.Join("\n", tagStrings);
+        return GetTagsText(tags, separator);
     }
 
-    private string? GetFileDateTimeString()
+    public static string GetTagsText(IEnumerable<TagModel> tags, string separator)
+    {
+        var tagStrings = GetTagsTexts(tags);
+        return string.Join(separator, tagStrings);
+    }
+
+    public static IEnumerable<string> GetTagsTexts(IEnumerable<TagModel> tags)
+    {
+        var tagStrings = tags.Select(t => t.Name).ToList();
+        tagStrings.Sort();
+        return tagStrings;
+    }
+
+    public static string? GetFileDateTimeText(FileModel file)
     {
         var datetime = DatabaseParsing.ParseFilesDatetime(file.Datetime);
         if (datetime is null)
@@ -347,5 +367,15 @@ public class FileTextOverlayCreator(IDbAccess dbAccess, IConfigProvider configPr
             resultString += string.Format(Strings.SearchFileDateTimeYearsAgo, yearsAgo);
         }
         return resultString;
+    }
+
+    public static string? GetShortPositionText(FileModel file)
+    {
+        return file.Position is null ? null : Utils.CreateShortFilePositionString(file.Position);
+    }
+
+    public static Uri? GetPositionUri(IConfigProvider configProvider, FileModel file)
+    {
+        return file.Position is null ? null : Utils.CreatePositionUri(file.Position, configProvider.Config.LocationLink);
     }
 }
