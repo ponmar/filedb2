@@ -39,7 +39,6 @@ FileDB gives you the possibility to export the internal database and file search
 ### Prerequisites
 
 * A collection of files. Note that it is recommended to have a backup procedure for your file collection before running FileDB (although FileDB itself does not modify your files). A demo configuration and file collection is included for demo purposes.
-* .NET7 desktop runtime
 
 ### Downloads
 
