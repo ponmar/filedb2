@@ -10,7 +10,6 @@ using FileDB.Model;
 using System.IO.Abstractions;
 using FileDB.Extensions;
 using FileDB.ViewModel;
-using SkiaSharp;
 
 namespace FileDB.Export.SearchResult;
 

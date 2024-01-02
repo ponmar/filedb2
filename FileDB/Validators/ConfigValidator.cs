@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Globalization;
 using System.Linq;
-using System.Net;
 using FileDB.Configuration;
 using FileDB.Extensions;
 using FluentValidation;

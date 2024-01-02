@@ -4,7 +4,6 @@ using FileDB.ViewModel;
 using FileDBShared.FileFormats;
 using FileDBShared.Model;
 using FileDBShared.Validators;
-using SkiaSharp;
 using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
