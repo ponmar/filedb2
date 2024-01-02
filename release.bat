@@ -10,7 +10,7 @@ if not %ERRORLEVEL%==0 (
     echo "Clean solution failed" && exit /b 1
 )
 
-dotnet publish FileDB\FileDB.csproj -p:Version=%version%.0.0
+dotnet publish FileDB\FileDB.csproj -r win-x64 -p:Version=%version%.0.0 --self-contained true
 if not %ERRORLEVEL%==0 (
     echo "Build failed" && exit /b 1
 )
