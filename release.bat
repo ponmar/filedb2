@@ -10,12 +10,12 @@ if not %ERRORLEVEL%==0 (
     echo "Clean solution failed" && exit /b 1
 )
 
-dotnet build FileDB\FileDB.csproj -c Release /property:Version=%version%.0.0
+dotnet publish FileDB\FileDB.csproj -p:Version=%version%.0.0
 if not %ERRORLEVEL%==0 (
     echo "Build failed" && exit /b 1
 )
 
-set appDir=FileDB\bin\Release\net8.0-windows7.0
+set appDir=FileDB\bin\Release\net8.0-windows7.0\publish
 set zipDir=FileDB-%version%
 set releaseDir=release\%zipDir%
 set zipFilename=%zipDir%.zip
