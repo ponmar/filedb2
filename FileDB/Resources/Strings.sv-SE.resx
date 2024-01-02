@@ -490,7 +490,7 @@
     <value>HTML med filer och metadata</value>
   </data>
   <data name="ExportSearchResultFilesWithMetaDataLabel" xml:space="preserve">
-    <value>Filer med metadata</value>
+    <value>Bilder med metadata</value>
   </data>
   <data name="ExportSearchResultMetaDataJSONLabel" xml:space="preserve">
     <value>Metadata (JSON)</value>

@@ -109,7 +109,7 @@ namespace FileDB.ViewModel
             }
             if (ExportIncludesFilesWithMetaData)
             {
-                selections.Add(SearchResultExportType.FilesWithMetaData);
+                selections.Add(SearchResultExportType.PicturesWithMetaData);
             }
             if (ExportIncludesJson)
             {

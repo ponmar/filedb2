@@ -1010,7 +1010,7 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Files with meta-data.
+        ///   Looks up a localized string similar to Pictures with meta-data.
         /// </summary>
         public static string ExportSearchResultFilesWithMetaDataLabel {
             get {

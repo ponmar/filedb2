@@ -20,7 +20,7 @@ record TextLine(string Text, TextType Type);
 
 public enum DescriptionPlacement { Heading, Subtitle }
 
-public class FilesWithOverlayExporter(IFilesystemAccessProvider filesystemAccessProvider, DescriptionPlacement descriptionPlacement, IFileSystem fileSystem) : ISearchResultExporter
+public class PicturesWithMetadataExporter(IFilesystemAccessProvider filesystemAccessProvider, DescriptionPlacement descriptionPlacement, IFileSystem fileSystem) : ISearchResultExporter
 {
     private const int EmptyLineHeight = 15;
     private const int BackgroundMargin = 20;
@@ -35,15 +35,16 @@ public class FilesWithOverlayExporter(IFilesystemAccessProvider filesystemAccess
         }
 
         int index = 1;
-        foreach (var file in data.Files)
+        var pictures = data.Files.Where(x => FileTypeUtils.GetFileType(x.OriginalPath) == FileType.Picture);
+        foreach (var picture in pictures)
         {
-            var bitmap = LoadBitmap(file);
+            var bitmap = LoadBitmap(picture);
             if (bitmap is not null)
             {
-                if (file.Orientation is not null)
+                if (picture.Orientation is not null)
                 {
                     // TODO: add support for flipped values
-                    switch (file.Orientation)
+                    switch (picture.Orientation)
                     {
                         case 1:
                             // Do nothing
@@ -68,8 +69,8 @@ public class FilesWithOverlayExporter(IFilesystemAccessProvider filesystemAccess
                     }
                 }
 
-                var textLines = CreateTextLines(data, file);
-                var subtitleLines = CreateSubtitleTextLines(file);
+                var textLines = CreateTextLines(data, picture);
+                var subtitleLines = CreateSubtitleTextLines(picture);
                 AddTextToImage(textLines, subtitleLines, bitmap);
 
                 var destFilePath = Path.Combine(path, $"{index}.png");
