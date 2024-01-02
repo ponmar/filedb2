@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Linq;
+using System.Net.Cache;
 using System.Threading;
 using System.Windows.Media.Imaging;
 
@@ -80,7 +81,11 @@ public class SingleImageLoader
         try
         {
             var uri = new Uri(filePath, UriKind.Absolute);
-            loadResult.Image = new BitmapImage(uri);
+            loadResult.Image = new BitmapImage();
+            loadResult.Image.BeginInit();
+            loadResult.Image.UriSource = uri;
+            loadResult.Image.CacheOption = BitmapCacheOption.OnLoad;
+            loadResult.Image.EndInit();
             loadResult.Image.Freeze();
             Events.Send(new ImageLoaded(filePath, loadResult.Image));
         }
