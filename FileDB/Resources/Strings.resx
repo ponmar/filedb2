@@ -976,7 +976,7 @@
     <value>Rest in Peace {0}!</value>
   </data>
   <data name="StartupNotificationDemoConfigurationEnabled" xml:space="preserve">
-    <value>Demo configuration enabled. Have fun!</value>
+    <value>Demo configuration enabled. When you are ready, make a configuration for your files collection!</value>
   </data>
   <data name="StartupNotificationNoConfigurationFile" xml:space="preserve">
     <value>No local {0} configuration file exists. Loading demo configuration.</value>
