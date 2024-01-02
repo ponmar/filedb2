@@ -65,7 +65,7 @@ public class ConfigValidator : AbstractValidator<Config>
     {
         try
         {
-            new Uri(url);
+            _ = new Uri(url);
             return true;
         }
         catch (UriFormatException)

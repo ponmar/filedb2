@@ -148,8 +148,8 @@ public class PicturesWithMetadataExporter(IFilesystemAccessProvider filesystemAc
         try
         {
             var sourceFilePath = filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(file.OriginalPath);
-            // TODO: how to load bitmap from FileSystem?
-            return new Bitmap(sourceFilePath);
+            using var fileStream = filesystemAccessProvider.FilesystemAccess.FileSystem.File.Open(sourceFilePath, FileMode.Open);
+            return new Bitmap(fileStream);
         }
         catch
         {

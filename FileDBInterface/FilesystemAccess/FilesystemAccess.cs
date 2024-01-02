@@ -15,12 +15,12 @@ public class FilesystemAccess : IFilesystemAccess
 {
     private static readonly ILog log = LogManager.GetLogger(nameof(FilesystemAccess));
 
-    private readonly IFileSystem fileSystem;
+    public IFileSystem FileSystem { get; }
     private readonly string filesRootDirectory;
 
     public FilesystemAccess(IFileSystem fileSystem, string filesRootDirectory)
     {
-        this.fileSystem = fileSystem;
+        FileSystem = fileSystem;
         this.filesRootDirectory = filesRootDirectory;
 
         if (fileSystem.Directory.Exists(filesRootDirectory))
@@ -40,7 +40,7 @@ public class FilesystemAccess : IFilesystemAccess
             yield break;
         }
 
-        foreach (var filename in fileSystem.Directory.GetFiles(path, "*.*", SearchOption.AllDirectories))
+        foreach (var filename in FileSystem.Directory.GetFiles(path, "*.*", SearchOption.AllDirectories))
         {
             var internalPath = ToInternalFilesPath(filename);
             if (PathIsApplicable(internalPath, blacklistedFilePathPatterns, whitelistedFilePathPatterns, includeHiddenDirectories) &&
@@ -85,7 +85,7 @@ public class FilesystemAccess : IFilesystemAccess
 
     public IEnumerable<string> ListAllFilesystemDirectories()
     {
-        var dirs = fileSystem.Directory.GetDirectories(filesRootDirectory, "*.*", SearchOption.AllDirectories);
+        var dirs = FileSystem.Directory.GetDirectories(filesRootDirectory, "*.*", SearchOption.AllDirectories);
         return dirs.Select(p => ToInternalFilesPath(p));
     }
 
@@ -93,7 +93,7 @@ public class FilesystemAccess : IFilesystemAccess
     {
         foreach (var file in allFiles)
         {
-            if (!fileSystem.File.Exists(ToAbsolutePath(file.Path)))
+            if (!FileSystem.File.Exists(ToAbsolutePath(file.Path)))
             {
                 yield return file;
             }
