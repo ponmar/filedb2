@@ -37,36 +37,11 @@ public class PicturesWithMetadataExporter(IFilesystemAccessProvider filesystemAc
         var pictures = data.Files.Where(x => FileTypeUtils.GetFileType(x.OriginalPath) == FileType.Picture);
         foreach (var picture in pictures)
         {
-            var bitmap = LoadBitmap(picture);
-            if (bitmap is not null)
+            try
             {
-                if (picture.Orientation is not null)
-                {
-                    // TODO: add support for flipped values
-                    switch (picture.Orientation)
-                    {
-                        case 1:
-                            // Do nothing
-                            break;
-                        case 2:
-                            break;
-                        case 3:
-                            bitmap.RotateFlip(RotateFlipType.Rotate180FlipNone);
-                            break;
-                        case 4:
-                            break;
-                        case 5:
-                            break;
-                        case 6:
-                            bitmap.RotateFlip(RotateFlipType.Rotate270FlipNone);
-                            break;
-                        case 7:
-                            break;
-                        case 8:
-                            bitmap.RotateFlip(RotateFlipType.Rotate90FlipNone);
-                            break;
-                    }
-                }
+                var bitmap = LoadImage(picture);
+                var flipType = OrientationToFlipType(picture.Orientation);
+                bitmap.RotateFlip(flipType);
 
                 var textLines = CreateTextLines(data, picture);
                 var subtitleLines = CreateSubtitleTextLines(picture);
@@ -77,7 +52,27 @@ public class PicturesWithMetadataExporter(IFilesystemAccessProvider filesystemAc
 
                 index++;
             }
+            catch
+            {
+                // Ignore picture
+            }
         }
+    }
+
+    private static RotateFlipType OrientationToFlipType(int? orientation)
+    {
+        return orientation switch
+        {
+            1 => RotateFlipType.RotateNoneFlipNone,
+            2 => RotateFlipType.RotateNoneFlipNone, // Flip not supported
+            3 => RotateFlipType.Rotate180FlipNone,
+            4 => RotateFlipType.RotateNoneFlipNone, // Flip not supported
+            5 => RotateFlipType.RotateNoneFlipNone, // Flip not supported
+            6 => RotateFlipType.Rotate270FlipNone,
+            7 => RotateFlipType.RotateNoneFlipNone, // Flip not supported
+            8 => RotateFlipType.Rotate90FlipNone,
+            _ => RotateFlipType.RotateNoneFlipNone,
+        };
     }
 
     private List<TextLine> CreateTextLines(SearchResultExport data, ExportedFile file)
@@ -143,18 +138,11 @@ public class PicturesWithMetadataExporter(IFilesystemAccessProvider filesystemAc
         return textLines;
     }
 
-    private Bitmap? LoadBitmap(ExportedFile file)
+    private Bitmap LoadImage(ExportedFile file)
     {
-        try
-        {
-            var sourceFilePath = filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(file.OriginalPath);
-            using var fileStream = filesystemAccessProvider.FilesystemAccess.FileSystem.File.Open(sourceFilePath, FileMode.Open);
-            return new Bitmap(fileStream);
-        }
-        catch
-        {
-            return null;
-        }
+        var sourceFilePath = filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(file.OriginalPath);
+        using var fileStream = filesystemAccessProvider.FilesystemAccess.FileSystem.File.Open(sourceFilePath, FileMode.Open);
+        return new Bitmap(fileStream);
     }
 
     private void AddTextToImage(List<TextLine> textLines, List<TextLine> subtitleLines, Bitmap bitmap)
@@ -235,7 +223,7 @@ public class PicturesWithMetadataExporter(IFilesystemAccessProvider filesystemAc
 
     private void SaveBitmap(Bitmap bitmap, string path)
     {
-        // TODO: how to save bitmap to FileSystem?
-        bitmap.Save(path, ImageFormat.Png);
+        using var fileStream = fileSystem.FileStream.New(path, FileMode.CreateNew);
+        bitmap.Save(fileStream, ImageFormat.Png);
     }
 }
