@@ -59,28 +59,30 @@ public class FilesystemAccess : IFilesystemAccess
                 PathIsVisible(internalPath, includeHiddenDirectories);
     }
 
-    private bool PathIsBlacklisted(string internalPath, IEnumerable<string> blacklistedFilePathPatterns)
+    private static bool PathIsBlacklisted(string internalPath, IEnumerable<string> blacklistedFilePathPatterns)
     {
-        return blacklistedFilePathPatterns.FirstOrDefault(pattern => internalPath.IndexOf(pattern) != -1) is not null;
+        return blacklistedFilePathPatterns.FirstOrDefault(pattern => internalPath.Contains(pattern, StringComparison.CurrentCulture)) is not null;
     }
 
-    private bool PathIsWhitelisted(string internalPath, IEnumerable<string> whitelistedFilePathPatterns)
+    private static bool PathIsWhitelisted(string internalPath, IEnumerable<string> whitelistedFilePathPatterns)
     {
-        if (whitelistedFilePathPatterns.Count() == 0)
+        if (!whitelistedFilePathPatterns.Any())
+        {
             return true;
+        }
 
         var pathLower = internalPath.ToLower();
         return whitelistedFilePathPatterns.FirstOrDefault(pattern => pathLower.EndsWith(pattern)) is not null;
     }
 
-    private bool PathIsVisible(string internalPath, bool includeHiddenDirectories)
+    private static bool PathIsVisible(string internalPath, bool includeHiddenDirectories)
     {
         return includeHiddenDirectories || !PathIsHidden(internalPath);
     }
 
-    private bool PathIsHidden(string internalPath)
+    private static bool PathIsHidden(string internalPath)
     {
-        return internalPath.StartsWith('.') || internalPath.IndexOf("/.") != -1;
+        return internalPath.StartsWith('.') || internalPath.Contains("/.", StringComparison.CurrentCulture);
     }
 
     public IEnumerable<string> ListAllFilesystemDirectories()
@@ -110,17 +112,17 @@ public class FilesystemAccess : IFilesystemAccess
     {
         if (path.StartsWith(filesRootDirectory))
         {
-            path = path.Substring(filesRootDirectory.Length);
+            path = path[filesRootDirectory.Length..];
         }
         return FixInternalPath(path);
     }
 
-    private string FixInternalPath(string internalPath)
+    private static string FixInternalPath(string internalPath)
     {
         internalPath = internalPath.Replace('\\', '/');
         while (internalPath.StartsWith('/'))
         {
-            internalPath = internalPath.Substring(1);
+            internalPath = internalPath[1..];
         }
         return internalPath;
     }
@@ -154,7 +156,7 @@ public class FilesystemAccess : IFilesystemAccess
         return new FileMetadata(datetime, position, orientation);
     }
 
-    private bool FileTypeSupportsExif(string path)
+    private static bool FileTypeSupportsExif(string path)
     {
         var fileExtension = Path.GetExtension(path);
         return fileExtension switch

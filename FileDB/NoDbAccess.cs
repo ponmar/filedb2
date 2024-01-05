@@ -176,7 +176,7 @@ public class NoDbAccess : IDbAccess
         return 0;
     }
 
-    public IEnumerable<PersonModel> SearchPersons(string criteria)
+    public static IEnumerable<PersonModel> SearchPersons(string criteria)
     {
         return new List<PersonModel>();
     }
