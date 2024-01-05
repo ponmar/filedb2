@@ -1,28 +1,21 @@
-﻿using FileDBInterface.Exceptions;
-using System.Data.SQLite;
+﻿using System.Data.SQLite;
 using System.Data;
-using System.IO;
 using Dapper;
 
 namespace FileDBInterface.DbAccess;
 
 public static class DatabaseSetup
 {
-    public static void CreateDatabase(string database)
+    public static void CreateDatabase(string databasePath)
     {
-        if (File.Exists(database))
-        {
-            throw new DatabaseWrapperException($"Database already created: {database}");
-        }
-
-        SQLiteConnection.CreateFile(database);
-        using var connection = CreateConnection(database);
+        SQLiteConnection.CreateFile(databasePath);
+        using var connection = CreateConnection(databasePath);
         connection.Query(DatabaseCreationSql);
     }
 
-    internal static IDbConnection CreateConnection(string database)
+    internal static IDbConnection CreateConnection(string databasePath)
     {
-        var connectionString = $"Data Source={database};foreign keys = true";
+        var connectionString = $"Data Source={databasePath};foreign keys = true";
         return new SQLiteConnection(connectionString);
     }
 

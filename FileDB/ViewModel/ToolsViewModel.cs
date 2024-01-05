@@ -10,7 +10,6 @@ using FileDB.Export;
 using FileDB.Model;
 using FileDB.Resources;
 using FileDBInterface.DbAccess;
-using FileDBInterface.Exceptions;
 using FileDBShared.Model;
 using FileDBShared.Validators;
 using TextCopy;
@@ -73,7 +72,7 @@ public partial class ToolsViewModel : ObservableObject
                 dialogs.ShowInfoDialog(string.Format(Strings.ToolsCreateDatabaseCreated, databasePath));
                 Events.Send<CloseModalDialogRequest>();
             }
-            catch (DatabaseWrapperException e)
+            catch (Exception e)
             {
                 dialogs.ShowErrorDialog(e.Message);
             }

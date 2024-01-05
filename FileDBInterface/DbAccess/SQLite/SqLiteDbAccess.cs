@@ -28,6 +28,9 @@ public class SqLiteDbAccess : IDbAccess
         XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
 
         this.database = database;
+
+        var migrator = new DbMigrator(database);
+        migrator.Migrate();
     }
 
     #region Files

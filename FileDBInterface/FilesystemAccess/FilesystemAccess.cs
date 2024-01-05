@@ -172,8 +172,8 @@ public class FilesystemAccess : IFilesystemAccess
 
         try
         {
-            // TODO: read from stream from this.fileSystem
-            var directories = ImageMetadataReader.ReadMetadata(path);
+            using var fileStream = FileSystem.FileStream.New(path, FileMode.Open);
+            var directories = ImageMetadataReader.ReadMetadata(fileStream);
 
             var subIfdDirectory = directories.OfType<ExifSubIfdDirectory>().FirstOrDefault();
             dateTaken = subIfdDirectory?.GetDateTime(ExifDirectoryBase.TagDateTimeOriginal);

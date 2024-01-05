@@ -392,7 +392,7 @@ public partial class SearchResultViewModel : ObservableObject
             OnPropertyChanged(nameof(CurrentFileInternalPath));
             var selection = SearchResult.Files[SelectedFileIndex];
 
-            // TODO: make this a bool setting?
+            // TODO: remove support for null value for pictures by running an automatic database migration at startup (replace null values for pictures with value read from files)?
             // Note: reading of orientation from Exif is done here to get correct visualization for files added to database before orientation was parsed
             if (selection.Orientation is null)
             {
@@ -426,7 +426,7 @@ public partial class SearchResultViewModel : ObservableObject
             var selection = SearchResult!.Files[SelectedFileIndex];
             if (selection.Description is not null)
             {
-                speeker.Speek(selection.Description!);
+                speeker.Speek(selection.Description);
             }
             else
             {
