@@ -1345,4 +1345,10 @@
   <data name="SearchFileDateTimeYearsAgo" xml:space="preserve">
     <value> ({0} år sedan)</value>
   </data>
+  <data name="NotificationDatabaseMigration" xml:space="preserve">
+    <value>Databasen migrerades från version {0} till version {1}!</value>
+  </data>
+  <data name="NotificationDatabaseMigrationError" xml:space="preserve">
+    <value>Misslyckades att migrera databasen från version {0} till version {1}. Exception: {2}</value>
+  </data>
 </root>

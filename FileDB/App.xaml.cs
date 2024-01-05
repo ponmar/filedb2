@@ -103,11 +103,11 @@ namespace FileDB
             {
                 if (dbMigration.Exception is null)
                 {
-                    notifications.Add(new(NotificationType.Info, $"Database migrated from version {dbMigration.FromVersion} to version {dbMigration.ToVersion}!", DateTime.Now));
+                    notifications.Add(new(NotificationType.Info, string.Format(Strings.NotificationDatabaseMigration, dbMigration.FromVersion, dbMigration.ToVersion), DateTime.Now));
                 }
                 else
                 {
-                    notifications.Add(new(NotificationType.Error, $"Failed to migrate database from version {dbMigration.FromVersion} to version {dbMigration.ToVersion}. Exception: {dbMigration.Exception.Message}", DateTime.Now));
+                    notifications.Add(new(NotificationType.Error, string.Format(Strings.NotificationDatabaseMigrationError, dbMigration.FromVersion, dbMigration.ToVersion, dbMigration.Exception.Message), DateTime.Now));
                 }
             }
 

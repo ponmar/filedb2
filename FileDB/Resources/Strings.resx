@@ -1345,4 +1345,10 @@ YYYY-MM-DDTHH:MM:SS</value>
   <data name="SearchFileDateTimeYearsAgo" xml:space="preserve">
     <value> ({0} years ago)</value>
   </data>
+  <data name="NotificationDatabaseMigration" xml:space="preserve">
+    <value>Database migrated from version {0} to version {1}!</value>
+  </data>
+  <data name="NotificationDatabaseMigrationError" xml:space="preserve">
+    <value>Failed to migrate database from version {0} to version {1}. Exception: {2}</value>
+  </data>
 </root>

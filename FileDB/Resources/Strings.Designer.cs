@@ -1541,6 +1541,24 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Database migrated from version {0} to version {1}!.
+        /// </summary>
+        public static string NotificationDatabaseMigration {
+            get {
+                return ResourceManager.GetString("NotificationDatabaseMigration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to migrate database from version {0} to version {1}. Exception: {2}.
+        /// </summary>
+        public static string NotificationDatabaseMigrationError {
+            get {
+                return ResourceManager.GetString("NotificationDatabaseMigrationError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dismiss all.
         /// </summary>
         public static string NotificationsDismissAllButton {
