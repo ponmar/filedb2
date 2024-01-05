@@ -99,6 +99,18 @@ namespace FileDB
                 new SqLiteDbAccess(databasePath) :
                 new NoDbAccess();
 
+            foreach (var dbMigration in dbAccess.DbMigrations)
+            {
+                if (dbMigration.Exception is null)
+                {
+                    notifications.Add(new(NotificationType.Info, $"Database migrated from version {dbMigration.FromVersion} to version {dbMigration.ToVersion}!", DateTime.Now));
+                }
+                else
+                {
+                    notifications.Add(new(NotificationType.Error, $"Failed to migrate database from version {dbMigration.FromVersion} to version {dbMigration.ToVersion}. Exception: {dbMigration.Exception.Message}", DateTime.Now));
+                }
+            }
+
             var filesystemAccess = new FilesystemAccess(fileSystem, filesRootDirectory);
 
             var configUpdater = ServiceLocator.Resolve<IConfigUpdater>();

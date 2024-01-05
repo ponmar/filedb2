@@ -1,7 +1,10 @@
 ﻿using Dapper;
 using System;
+using System.Collections.Generic;
 
 namespace FileDBInterface.DbAccess.SQLite;
+
+public record DbMigrationResult(int FromVersion, int ToVersion, Exception? Exception = null);
 
 public class DbMigrator(string dbPath)
 {
@@ -10,12 +13,24 @@ public class DbMigrator(string dbPath)
 
     private readonly string dbPath = dbPath;
 
-    public void Migrate()
+    public List<DbMigrationResult> Migrate()
     {
+        var result = new List<DbMigrationResult>();
         for (var dbVersion = GetDatabaseVersion(); dbVersion < SupportedVersion; dbVersion++)
         {
-            MigrateIteration(dbVersion + 1);
+            var toVersion = dbVersion + 1;
+            try
+            {
+                MigrateIteration(toVersion);
+                result.Add(new(dbVersion, toVersion));
+            }
+            catch (Exception e)
+            {
+                result.Add(new(dbVersion, toVersion, e));
+                break;
+            }
         }
+        return result;
     }
 
     private int GetDatabaseVersion()

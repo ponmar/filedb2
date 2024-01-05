@@ -22,6 +22,8 @@ public class SqLiteDbAccess : IDbAccess
 
     private readonly string database;
 
+    public List<DbMigrationResult> DbMigrations { get; }
+
     public SqLiteDbAccess(string database)
     {
         var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
@@ -30,7 +32,7 @@ public class SqLiteDbAccess : IDbAccess
         this.database = database;
 
         var migrator = new DbMigrator(database);
-        migrator.Migrate();
+        DbMigrations = migrator.Migrate();
     }
 
     #region Files

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using FileDBInterface.DbAccess;
+using FileDBInterface.DbAccess.SQLite;
 using FileDBInterface.FilesystemAccess;
 using FileDBShared.Model;
 
@@ -9,6 +10,8 @@ namespace FileDB;
 public class NoDbAccess : IDbAccess
 {
     public string Database { get; set; } = string.Empty;
+
+    public List<DbMigrationResult> DbMigrations { get; } = [];
 
     public IEnumerable<FileModel> GetFiles()
     {
