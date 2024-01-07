@@ -158,6 +158,16 @@ public partial class FilesViewModel : ObservableObject
             return;
         }
 
+        try
+        {
+            new FileBackup(fileSystem, configProvider.FilePaths.DatabasePath).CreateBackup();
+        }
+        catch (Exception e)
+        {
+            dialogs.ShowErrorDialog("Unable to create database backup", e);
+            return;
+        }
+
         dialogs.ShowProgressDialog(progress =>
         {
             var locations = dbAccessProvider.DbAccess.GetLocations();
