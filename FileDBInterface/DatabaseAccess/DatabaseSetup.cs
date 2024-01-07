@@ -2,7 +2,7 @@
 using System.Data;
 using Dapper;
 
-namespace FileDBInterface.DbAccess;
+namespace FileDBInterface.DatabaseAccess;
 
 public static class DatabaseSetup
 {

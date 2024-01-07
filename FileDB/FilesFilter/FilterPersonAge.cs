@@ -1,4 +1,4 @@
-﻿using FileDBInterface.DbAccess;
+﻿using FileDBInterface.DatabaseAccess;
 using FileDBShared.Model;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +12,7 @@ public class FilterPersonAge(string ageFromText, string ageToText) : IFilesFilte
         int.TryParse(ageToText, out var ageTo) &&
         ageFrom >= 0 && ageFrom <= ageTo;
 
-    public IEnumerable<FileModel> Run(IDbAccess dbAccess)
+    public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
     {
         var ageTo = int.Parse(ageToText);
         var ageFrom = int.Parse(ageFromText);

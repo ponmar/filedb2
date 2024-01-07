@@ -1,17 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using FileDBInterface.DbAccess;
-using FileDBInterface.DbAccess.SQLite;
+using FileDBInterface.DatabaseAccess;
+using FileDBInterface.DatabaseAccess.SQLite;
 using FileDBInterface.FilesystemAccess;
 using FileDBShared.Model;
 
 namespace FileDB;
 
-public class NoDbAccess : IDbAccess
+public class NoDbAccess : IDatabaseAccess
 {
     public string Database { get; set; } = string.Empty;
 
-    public List<DbMigrationResult> DbMigrations { get; } = [];
+    public bool NeedsMigration => false;
+
+    public List<DatabaseMigrationResult> Migrate()
+    {
+        return [];
+    }
 
     public IEnumerable<FileModel> GetFiles()
     {

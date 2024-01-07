@@ -10,7 +10,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Extensions;
 using FileDB.Model;
-using FileDBInterface.DbAccess;
+using FileDBInterface.DatabaseAccess;
 using FileDBInterface.Exceptions;
 using FileDBShared.Model;
 using TextCopy;

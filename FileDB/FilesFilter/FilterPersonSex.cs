@@ -1,4 +1,4 @@
-﻿using FileDBInterface.DbAccess;
+﻿using FileDBInterface.DatabaseAccess;
 using FileDBShared.Model;
 using System.Collections.Generic;
 
@@ -8,7 +8,7 @@ public class FilterPersonSex(Sex personSex) : IFilesFilter
 {
     public bool CanRun() => true;
 
-    public IEnumerable<FileModel> Run(IDbAccess dbAccess)
+    public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
     {
         return dbAccess.SearchFilesBySex(personSex);
     }

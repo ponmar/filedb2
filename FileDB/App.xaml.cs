@@ -5,7 +5,7 @@ using FileDB.Configuration;
 using FileDB.Migrators;
 using FileDB.Notifiers;
 using FileDB.Validators;
-using FileDBInterface.DbAccess.SQLite;
+using FileDBInterface.DatabaseAccess.SQLite;
 using FileDBInterface.FilesystemAccess;
 using TextCopy;
 using System.Collections.Generic;
@@ -15,7 +15,7 @@ using FileDB.Resources;
 using System.Globalization;
 using System.IO;
 using FileDB.Extensions;
-using FileDBInterface.DbAccess;
+using FileDBInterface.DatabaseAccess;
 using QuestPDF.Infrastructure;
 
 namespace FileDB
@@ -95,19 +95,32 @@ namespace FileDB
                 notifications.Add(new(NotificationType.Info, Strings.StartupNotificationDemoConfigurationEnabled, DateTime.Now));
             }
 
-            IDbAccess dbAccess = fileSystem.File.Exists(databasePath) ?
+            IDatabaseAccess dbAccess = fileSystem.File.Exists(databasePath) ?
                 new SqLiteDbAccess(databasePath) :
                 new NoDbAccess();
 
-            foreach (var dbMigration in dbAccess.DbMigrations)
+            if (dbAccess.NeedsMigration)
             {
-                if (dbMigration.Exception is null)
+                try
                 {
-                    notifications.Add(new(NotificationType.Info, string.Format(Strings.NotificationDatabaseMigration, dbMigration.FromVersion, dbMigration.ToVersion), DateTime.Now));
+                    new FileBackup(fileSystem, applicationFilePaths.DatabasePath).CreateBackup();
+
+                    var results = dbAccess.Migrate();
+                    foreach (var dbMigration in results)
+                    {
+                        if (dbMigration.Exception is null)
+                        {
+                            notifications.Add(new(NotificationType.Info, string.Format(Strings.NotificationDatabaseMigration, dbMigration.FromVersion, dbMigration.ToVersion), DateTime.Now));
+                        }
+                        else
+                        {
+                            notifications.Add(new(NotificationType.Error, string.Format(Strings.NotificationDatabaseMigrationError, dbMigration.FromVersion, dbMigration.ToVersion, dbMigration.Exception.Message), DateTime.Now));
+                        }
+                    }
                 }
-                else
+                catch (Exception e)
                 {
-                    notifications.Add(new(NotificationType.Error, string.Format(Strings.NotificationDatabaseMigrationError, dbMigration.FromVersion, dbMigration.ToVersion, dbMigration.Exception.Message), DateTime.Now));
+                    dialogs.ShowErrorDialog("Unable to create database backup before database migration", e);                    
                 }
             }
 

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FileDBInterface.DbAccess;
+namespace FileDBInterface.DatabaseAccess;
 
 public static class DatabaseUtils
 {

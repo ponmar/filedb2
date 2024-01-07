@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Threading;
 using FileDB.Configuration;
 using FileDB.Notifiers;
-using FileDBInterface.DbAccess;
+using FileDBInterface.DatabaseAccess;
 using FileDBInterface.FilesystemAccess;
 
 namespace FileDB.Model;
@@ -22,7 +22,7 @@ public interface INotificationHandling
 
 public interface IDbAccessProvider
 {
-    IDbAccess DbAccess { get; }
+    IDatabaseAccess DbAccess { get; }
 }
 
 public interface IFilesystemAccessProvider
@@ -38,7 +38,7 @@ public interface IConfigProvider
 
 public interface IConfigUpdater
 {
-    void InitConfig(ApplicationFilePaths applicationFilePaths, Config config, IDbAccess dbAccess, IFilesystemAccess filesystemAccess);
+    void InitConfig(ApplicationFilePaths applicationFilePaths, Config config, IDatabaseAccess dbAccess, IFilesystemAccess filesystemAccess);
     void UpdateConfig(Config config);
 }
 
@@ -46,7 +46,7 @@ public record ApplicationFilePaths(string FilesRootDir, string ConfigPath, strin
 
 public class Model : INotificationHandling, INotificationsRepository, IConfigProvider, IConfigUpdater, IDbAccessProvider, IFilesystemAccessProvider
 {
-    public IDbAccess DbAccess { get; private set; } = new NoDbAccess();
+    public IDatabaseAccess DbAccess { get; private set; } = new NoDbAccess();
     public IFilesystemAccess FilesystemAccess { get; private set; }
     public INotifierFactory NotifierFactory { get; } = new NotifierFactory();
     public ApplicationFilePaths FilePaths { get; private set; }
@@ -106,7 +106,7 @@ public class Model : INotificationHandling, INotificationsRepository, IConfigPro
         }
     }
 
-    public void InitConfig(ApplicationFilePaths filePaths, Config config, IDbAccess dbAccess, IFilesystemAccess filesystemAccess)
+    public void InitConfig(ApplicationFilePaths filePaths, Config config, IDatabaseAccess dbAccess, IFilesystemAccess filesystemAccess)
     {
         FilePaths = filePaths;
         Config = config;

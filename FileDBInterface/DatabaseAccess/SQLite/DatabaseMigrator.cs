@@ -2,20 +2,20 @@
 using System;
 using System.Collections.Generic;
 
-namespace FileDBInterface.DbAccess.SQLite;
+namespace FileDBInterface.DatabaseAccess.SQLite;
 
-public record DbMigrationResult(int FromVersion, int ToVersion, Exception? Exception = null);
+public record DatabaseMigrationResult(int FromVersion, int ToVersion, Exception? Exception = null);
 
-public class DbMigrator(string dbPath)
+public class DatabaseMigrator(string dbPath)
 {
     // Note: add migration code below when the version is increased
     private const int SupportedVersion = 0;
 
-    private readonly string dbPath = dbPath;
+    public bool NeedsMigration => GetDatabaseVersion() < SupportedVersion;
 
-    public List<DbMigrationResult> Migrate()
+    public List<DatabaseMigrationResult> Migrate()
     {
-        var result = new List<DbMigrationResult>();
+        var result = new List<DatabaseMigrationResult>();
         for (var dbVersion = GetDatabaseVersion(); dbVersion < SupportedVersion; dbVersion++)
         {
             var toVersion = dbVersion + 1;

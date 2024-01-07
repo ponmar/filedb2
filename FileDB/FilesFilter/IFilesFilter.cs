@@ -1,4 +1,4 @@
-﻿using FileDBInterface.DbAccess;
+﻿using FileDBInterface.DatabaseAccess;
 using FileDBShared.Model;
 using System.Collections.Generic;
 
@@ -8,5 +8,5 @@ public interface IFilesFilter
 {
     public bool CanRun();
 
-    public IEnumerable<FileModel> Run(IDbAccess dbAccess);
+    public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess);
 }

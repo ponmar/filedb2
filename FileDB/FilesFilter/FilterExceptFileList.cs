@@ -1,5 +1,5 @@
 ﻿using FileDB.Extensions;
-using FileDBInterface.DbAccess;
+using FileDBInterface.DatabaseAccess;
 using FileDBShared.Model;
 using System.Collections.Generic;
 
@@ -9,7 +9,7 @@ public class FilterExceptFileList(string exceptFileIdsText) : IFilesFilter
 {
     public bool CanRun() => exceptFileIdsText.HasContent();
 
-    public IEnumerable<FileModel> Run(IDbAccess dbAccess)
+    public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
     {
         var fileIds = Utils.CreateFileIds(exceptFileIdsText);
         return dbAccess.SearchFilesExceptIds(fileIds);

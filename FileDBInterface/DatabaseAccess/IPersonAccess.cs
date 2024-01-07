@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using FileDBShared.Model;
 
-namespace FileDBInterface.DbAccess;
+namespace FileDBInterface.DatabaseAccess;
 
 public interface IPersonAccess
 {

@@ -1,6 +1,6 @@
 ﻿using FileDB.Configuration;
 using FileDB.Model;
-using FileDBInterface.DbAccess;
+using FileDBInterface.DatabaseAccess;
 using System.Collections.Generic;
 using System.IO.Abstractions;
 
@@ -8,13 +8,13 @@ namespace FileDB.Notifiers;
 
 public interface INotifierFactory
 {
-    List<INotifier> GetContinousNotifiers(Config config, IDbAccess dbAccess);
-    List<INotifier> GetStartupNotifiers(Config config, IDbAccess dbAccess);
+    List<INotifier> GetContinousNotifiers(Config config, IDatabaseAccess dbAccess);
+    List<INotifier> GetStartupNotifiers(Config config, IDatabaseAccess dbAccess);
 }
 
 public class NotifierFactory : INotifierFactory
 {
-    public List<INotifier> GetContinousNotifiers(Config config, IDbAccess dbAccess)
+    public List<INotifier> GetContinousNotifiers(Config config, IDatabaseAccess dbAccess)
     {
         var notifiers = new List<INotifier>();
         var persons = dbAccess.GetPersons();
@@ -37,7 +37,7 @@ public class NotifierFactory : INotifierFactory
         return notifiers;
     }
 
-    public List<INotifier> GetStartupNotifiers(Config config, IDbAccess dbAccess)
+    public List<INotifier> GetStartupNotifiers(Config config, IDatabaseAccess dbAccess)
     {
         var notifiers = new List<INotifier>();
 

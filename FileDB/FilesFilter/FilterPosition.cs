@@ -1,4 +1,4 @@
-﻿using FileDBInterface.DbAccess;
+﻿using FileDBInterface.DatabaseAccess;
 using FileDBShared.Model;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +24,7 @@ public class FilterPosition : IFilesFilter
 
     public bool CanRun() => lat is not null && lon is not null && radius > 0;
 
-    public IEnumerable<FileModel> Run(IDbAccess dbAccess)
+    public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
     {
         var result = dbAccess.SearchFilesNearGpsPosition(lat!.Value, lon!.Value, radius).ToList();
         var nearLocations = dbAccess.SearchLocationsNearGpsPosition(lat!.Value, lon!.Value, radius);

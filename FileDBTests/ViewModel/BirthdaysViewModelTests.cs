@@ -2,7 +2,7 @@
 using FileDB;
 using FileDB.Model;
 using FileDB.ViewModel;
-using FileDBInterface.DbAccess;
+using FileDBInterface.DatabaseAccess;
 using FileDBInterface.FilesystemAccess;
 using FileDBShared.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -16,7 +16,7 @@ public class BirthdaysViewModelTests
 {
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     private IConfigProvider fakeConfigRepo;
-    private IDbAccess fakeDbAccess;
+    private IDatabaseAccess fakeDbAccess;
     private IDbAccessProvider fakeDbAccessRepo;
     private IPersonsRepository fakePersonsRepo;
     private IFilesystemAccess fakeFilsystemAccess;
@@ -30,7 +30,7 @@ public class BirthdaysViewModelTests
         Bootstrapper.Reset();
 
         fakeConfigRepo = A.Fake<IConfigProvider>();
-        fakeDbAccess = A.Fake<IDbAccess>();
+        fakeDbAccess = A.Fake<IDatabaseAccess>();
         fakeDbAccessRepo = A.Fake<IDbAccessProvider>();
         fakeFilsystemAccess = A.Fake<IFilesystemAccess>();
         fakeFilsystemAccessRepo = A.Fake<IFilesystemAccessProvider>();

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FileDBShared.Model;
-using FileDBInterface.DbAccess;
+using FileDBInterface.DatabaseAccess;
 using FileDB.Model;
 using FileDB.Resources;
 using FileDB.Extensions;
@@ -11,7 +11,7 @@ namespace FileDB.ViewModel;
 
 public class FileTextOverlayCreator
 {
-    public static string GetPersonsText(IDbAccess dbAccess, FileModel file, string separator)
+    public static string GetPersonsText(IDatabaseAccess dbAccess, FileModel file, string separator)
     {
         var persons = dbAccess.GetPersonsFromFile(file.Id);
         return GetPersonsText(file, persons, separator);
@@ -35,7 +35,7 @@ public class FileTextOverlayCreator
         return personStrings;
     }
 
-    public static string GetLocationsText(IDbAccess dbAccess, FileModel file, string separator)
+    public static string GetLocationsText(IDatabaseAccess dbAccess, FileModel file, string separator)
     {
         var locations = dbAccess.GetLocationsFromFile(file.Id);
         return GetLocationsText(locations, separator);
@@ -54,7 +54,7 @@ public class FileTextOverlayCreator
         return locationStrings;
     }
 
-    public static string GetTagsText(IDbAccess dbAccess, FileModel file, string separator)
+    public static string GetTagsText(IDatabaseAccess dbAccess, FileModel file, string separator)
     {
         var tags = dbAccess.GetTagsFromFile(file.Id);
         return GetTagsText(tags, separator);

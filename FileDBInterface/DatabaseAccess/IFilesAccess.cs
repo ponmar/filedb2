@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using FileDBInterface.FilesystemAccess;
 using FileDBShared.Model;
 
-namespace FileDBInterface.DbAccess;
+namespace FileDBInterface.DatabaseAccess;
 
 public interface IFilesAccess
 {

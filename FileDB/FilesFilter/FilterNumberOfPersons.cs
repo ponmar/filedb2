@@ -1,4 +1,4 @@
-﻿using FileDBInterface.DbAccess;
+﻿using FileDBInterface.DatabaseAccess;
 using FileDBShared.Model;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +12,7 @@ public class FilterNumberOfPersons(string minText, string maxText) : IFilesFilte
         int.TryParse(maxText, out var max) &&
         min >= 0 && min <= max;
 
-    public IEnumerable<FileModel> Run(IDbAccess dbAccess)
+    public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
     {
         var min = int.Parse(minText);
         var max = int.Parse(maxText);

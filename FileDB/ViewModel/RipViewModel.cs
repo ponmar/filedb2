@@ -8,7 +8,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using FileDB.Comparers;
 using FileDB.Extensions;
 using FileDB.Model;
-using FileDBInterface.DbAccess;
+using FileDBInterface.DatabaseAccess;
 using FileDBShared.Model;
 
 namespace FileDB.ViewModel;

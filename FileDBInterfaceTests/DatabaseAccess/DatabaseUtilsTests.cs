@@ -1,10 +1,10 @@
 using System;
 using System.Data.SQLite;
 using Dapper;
-using FileDBInterface.DbAccess;
+using FileDBInterface.DatabaseAccess;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace FileDBInterfaceTests.DbAccess
+namespace FileDBInterfaceTests.DatabaseAccess
 {
     [TestClass]
     public class DatabaseUtilsTests

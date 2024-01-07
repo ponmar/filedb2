@@ -14,15 +14,17 @@ using FileDBShared.Validators;
 using FileDBInterface.FilesystemAccess;
 using FileDBInterface.Extensions;
 
-namespace FileDBInterface.DbAccess.SQLite;
+namespace FileDBInterface.DatabaseAccess.SQLite;
 
-public class SqLiteDbAccess : IDbAccess
+public class SqLiteDbAccess : IDatabaseAccess
 {
     private static readonly ILog log = LogManager.GetLogger(nameof(SqLiteDbAccess));
 
     private readonly string database;
 
-    public List<DbMigrationResult> DbMigrations { get; }
+    public bool NeedsMigration => migrator.NeedsMigration;
+
+    private readonly DatabaseMigrator migrator;
 
     public SqLiteDbAccess(string database)
     {
@@ -31,8 +33,12 @@ public class SqLiteDbAccess : IDbAccess
 
         this.database = database;
 
-        var migrator = new DbMigrator(database);
-        DbMigrations = migrator.Migrate();
+        migrator = new DatabaseMigrator(database);
+    }
+
+    public List<DatabaseMigrationResult> Migrate()
+    {
+        return migrator.Migrate();
     }
 
     #region Files

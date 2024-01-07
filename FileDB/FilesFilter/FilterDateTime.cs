@@ -1,4 +1,4 @@
-﻿using FileDBInterface.DbAccess;
+﻿using FileDBInterface.DatabaseAccess;
 using FileDBShared.Model;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ public class FilterDateTime(DateTime start, DateTime end) : IFilesFilter
 {
     public bool CanRun() => true;
 
-    public IEnumerable<FileModel> Run(IDbAccess dbAccess)
+    public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
     {
         return dbAccess.SearchFilesByDate(start.Date, end.Date);
     }
