@@ -45,11 +45,11 @@ public partial class AddPersonViewModel : ObservableObject
 
     public bool CanSetProfilePicture => searchResultRepository.SelectedFile is not null;
 
-    private readonly IDbAccessProvider dbAccessProvider;
+    private readonly IDatabaseAccessProvider dbAccessProvider;
     private readonly IDialogs dialogs;
     private readonly ISearchResultRepository searchResultRepository;
 
-    public AddPersonViewModel(IDbAccessProvider dbAccessProvider, IDialogs dialogs, ISearchResultRepository searchResultRepository, int? personId = null)
+    public AddPersonViewModel(IDatabaseAccessProvider dbAccessProvider, IDialogs dialogs, ISearchResultRepository searchResultRepository, int? personId = null)
     {
         this.dbAccessProvider = dbAccessProvider;
         this.dialogs = dialogs;

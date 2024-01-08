@@ -95,12 +95,12 @@ public partial class SearchViewModel : ObservableObject
     private int rotation = 0;
 
     private readonly IConfigProvider configProvider;
-    private readonly IDbAccessProvider dbAccessProvider;
+    private readonly IDatabaseAccessProvider dbAccessProvider;
     private readonly IFilesystemAccessProvider filesystemAccessProvider;
     private readonly IImageLoader imageLoader;
     private readonly IFileSystem fileSystem;
 
-    public SearchViewModel(IConfigProvider configProvider, IDbAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IImageLoader imageLoader, IFileSystem fileSystem)
+    public SearchViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IImageLoader imageLoader, IFileSystem fileSystem)
     {
         this.configProvider = configProvider;
         this.dbAccessProvider = dbAccessProvider;

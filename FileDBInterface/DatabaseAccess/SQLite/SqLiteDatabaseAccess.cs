@@ -16,9 +16,9 @@ using FileDBInterface.Extensions;
 
 namespace FileDBInterface.DatabaseAccess.SQLite;
 
-public class SqLiteDbAccess : IDatabaseAccess
+public class SqLiteDatabaseAccess : IDatabaseAccess
 {
-    private static readonly ILog log = LogManager.GetLogger(nameof(SqLiteDbAccess));
+    private static readonly ILog log = LogManager.GetLogger(nameof(SqLiteDatabaseAccess));
 
     private readonly string database;
 
@@ -26,7 +26,7 @@ public class SqLiteDbAccess : IDatabaseAccess
 
     private readonly DatabaseMigrator migrator;
 
-    public SqLiteDbAccess(string database)
+    public SqLiteDatabaseAccess(string database)
     {
         var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
         XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));

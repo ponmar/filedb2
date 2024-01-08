@@ -40,9 +40,9 @@ namespace FileDB.ViewModel
 
         public string? SelectedDirectoryPath { get; private set; }
 
-        private readonly IDbAccessProvider dbAccessProvider;
+        private readonly IDatabaseAccessProvider dbAccessProvider;
 
-        public BrowseDirectoriesViewModel(IDbAccessProvider dbAccessProvider)
+        public BrowseDirectoriesViewModel(IDatabaseAccessProvider dbAccessProvider)
         {
             this.dbAccessProvider = dbAccessProvider;
             ReloadFolders();

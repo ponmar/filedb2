@@ -17,7 +17,7 @@ public class BirthdaysViewModelTests
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     private IConfigProvider fakeConfigRepo;
     private IDatabaseAccess fakeDbAccess;
-    private IDbAccessProvider fakeDbAccessRepo;
+    private IDatabaseAccessProvider fakeDbAccessRepo;
     private IPersonsRepository fakePersonsRepo;
     private IFilesystemAccess fakeFilsystemAccess;
     private IFilesystemAccessProvider fakeFilsystemAccessRepo;
@@ -31,7 +31,7 @@ public class BirthdaysViewModelTests
 
         fakeConfigRepo = A.Fake<IConfigProvider>();
         fakeDbAccess = A.Fake<IDatabaseAccess>();
-        fakeDbAccessRepo = A.Fake<IDbAccessProvider>();
+        fakeDbAccessRepo = A.Fake<IDatabaseAccessProvider>();
         fakeFilsystemAccess = A.Fake<IFilesystemAccess>();
         fakeFilsystemAccessRepo = A.Fake<IFilesystemAccessProvider>();
         fakePersonsRepo = A.Fake<IPersonsRepository>();

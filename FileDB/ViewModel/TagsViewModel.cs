@@ -20,11 +20,11 @@ public partial class TagsViewModel : ObservableObject
     private Tag? selectedTag;
 
     private readonly IConfigProvider configProvider;
-    private readonly IDbAccessProvider dbAccessProvider;
+    private readonly IDatabaseAccessProvider dbAccessProvider;
     private readonly IDialogs dialogs;
     private readonly ITagsRepository tagsRepository;
 
-    public TagsViewModel(IConfigProvider configProvider, IDbAccessProvider dbAccessProvider, IDialogs dialogs, ITagsRepository tagsRepository)
+    public TagsViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IDialogs dialogs, ITagsRepository tagsRepository)
     {
         this.configProvider = configProvider;
         this.dbAccessProvider = dbAccessProvider;

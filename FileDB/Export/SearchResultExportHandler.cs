@@ -23,11 +23,11 @@ public enum SearchResultExportType
 
 public class SearchResultExportHandler
 {
-    private readonly IDbAccessProvider dbAccessProvider;
+    private readonly IDatabaseAccessProvider dbAccessProvider;
     private readonly IFilesystemAccessProvider filesystemAccessProvider;
     private readonly IFileSystem fileSystem;
 
-    public SearchResultExportHandler(IDbAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IFileSystem fileSystem)
+    public SearchResultExportHandler(IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IFileSystem fileSystem)
     {
         this.dbAccessProvider = dbAccessProvider;
         this.filesystemAccessProvider = filesystemAccessProvider;

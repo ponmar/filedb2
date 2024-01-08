@@ -24,11 +24,11 @@ public partial class LocationsViewModel : ObservableObject
     public bool SelectedLocationHasPosition => SelectedLocation is not null && SelectedLocation.Position.HasContent();
 
     private readonly IConfigProvider configProvider;
-    private readonly IDbAccessProvider dbAccessProvider;
+    private readonly IDatabaseAccessProvider dbAccessProvider;
     private readonly IDialogs dialogs;
     private readonly ILocationsRepository locationsRepository;
 
-    public LocationsViewModel(IConfigProvider configProvider, IDbAccessProvider dbAccessProvider, IDialogs dialogs, ILocationsRepository locationsRepository)
+    public LocationsViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IDialogs dialogs, ILocationsRepository locationsRepository)
     {
         this.configProvider = configProvider;
         this.dbAccessProvider = dbAccessProvider;

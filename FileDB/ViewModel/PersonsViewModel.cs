@@ -23,11 +23,11 @@ public partial class PersonsViewModel : ObservableObject
     private Person? selectedPerson;
 
     private readonly IConfigProvider configProvider;
-    private readonly IDbAccessProvider dbAccessProvider;
+    private readonly IDatabaseAccessProvider dbAccessProvider;
     private readonly IDialogs dialogs;
     private readonly IPersonsRepository personsRepository;
 
-    public PersonsViewModel(IConfigProvider configProvider, IDbAccessProvider dbAccessProvider, IDialogs dialogs, IPersonsRepository personsRepository)
+    public PersonsViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IDialogs dialogs, IPersonsRepository personsRepository)
     {
         this.configProvider = configProvider;
         this.dbAccessProvider = dbAccessProvider;

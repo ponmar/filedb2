@@ -24,7 +24,7 @@ public static class Bootstrapper
                 typeof(INotificationHandling),
                 typeof(INotificationsRepository),
                 typeof(IConfigProvider),
-                typeof(IDbAccessProvider),
+                typeof(IDatabaseAccessProvider),
                 typeof(IFilesystemAccessProvider),
                 typeof(IConfigUpdater))
                     .ImplementedBy<Model.Model>());

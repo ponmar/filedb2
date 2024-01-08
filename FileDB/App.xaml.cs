@@ -96,8 +96,8 @@ namespace FileDB
             }
 
             IDatabaseAccess dbAccess = fileSystem.File.Exists(databasePath) ?
-                new SqLiteDbAccess(databasePath) :
-                new NoDbAccess();
+                new SqLiteDatabaseAccess(databasePath) :
+                new NoDatabaseAccess();
 
             if (dbAccess.NeedsMigration)
             {

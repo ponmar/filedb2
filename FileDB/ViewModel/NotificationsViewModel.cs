@@ -16,12 +16,12 @@ public partial class NotificationsViewModel : ObservableObject
     private readonly DispatcherTimer notifierTimer = new();
 
     private readonly IConfigProvider configProvider;
-    private readonly IDbAccessProvider dbAccessProvider;
+    private readonly IDatabaseAccessProvider dbAccessProvider;
     private readonly INotifierFactory notifierFactory;
     private readonly INotificationHandling notificationHandling;
     private readonly INotificationsRepository notificationsRepository;
 
-    public NotificationsViewModel(IConfigProvider configProvider, IDbAccessProvider dbAccessProvider, INotifierFactory notifierFactory, INotificationHandling notificationHandling, INotificationsRepository notificationsRepository)
+    public NotificationsViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, INotifierFactory notifierFactory, INotificationHandling notificationHandling, INotificationsRepository notificationsRepository)
     {
         this.configProvider = configProvider;
         this.dbAccessProvider = dbAccessProvider;

@@ -62,11 +62,11 @@ public partial class RipViewModel : ObservableObject
 
     public ObservableCollection<DeceasedPerson> Persons { get; set; } = [];
 
-    private readonly IDbAccessProvider dbAccessProvider;
+    private readonly IDatabaseAccessProvider dbAccessProvider;
     private readonly IFilesystemAccessProvider filesystemAccessProvider;
     private readonly IImageLoader imageLoader;
 
-    public RipViewModel(IDbAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IImageLoader imageLoader)
+    public RipViewModel(IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IImageLoader imageLoader)
     {
         this.dbAccessProvider = dbAccessProvider;
         this.filesystemAccessProvider = filesystemAccessProvider;

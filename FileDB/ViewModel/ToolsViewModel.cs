@@ -38,12 +38,12 @@ public partial class ToolsViewModel : ObservableObject
     private string databaseExportDirectory = string.Empty;
 
     private readonly IConfigProvider configProvider;
-    private readonly IDbAccessProvider dbAccessProvider;
+    private readonly IDatabaseAccessProvider dbAccessProvider;
     private readonly IFilesystemAccessProvider filesystemAccessProvider;
     private readonly IDialogs dialogs;
     private readonly IFileSystem fileSystem;
 
-    public ToolsViewModel(IConfigProvider configProvider, IDbAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IDialogs dialogs, IFileSystem fileSystem)
+    public ToolsViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IDialogs dialogs, IFileSystem fileSystem)
     {
         this.configProvider = configProvider;
         this.dbAccessProvider = dbAccessProvider;

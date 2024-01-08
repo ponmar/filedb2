@@ -20,10 +20,10 @@ public partial class AddTagViewModel : ObservableObject
 
     public TagModel? AffectedTag { get; private set; }
 
-    private readonly IDbAccessProvider dbAccessProvider;
+    private readonly IDatabaseAccessProvider dbAccessProvider;
     private readonly IDialogs dialogs;
 
-    public AddTagViewModel(IDbAccessProvider dbAccessProvider, IDialogs dialogs, int? tagId = null)
+    public AddTagViewModel(IDatabaseAccessProvider dbAccessProvider, IDialogs dialogs, int? tagId = null)
     {
         this.dbAccessProvider = dbAccessProvider;
         this.dialogs = dialogs;

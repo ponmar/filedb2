@@ -21,7 +21,7 @@ public interface ITagsRepository
 
 public class DatabaseCache : IPersonsRepository, ILocationsRepository, ITagsRepository
 {
-    private readonly IDbAccessProvider dbAccessProvider;
+    private readonly IDatabaseAccessProvider dbAccessProvider;
 
     public IEnumerable<PersonModel> Persons => persons;
     public IEnumerable<LocationModel> Locations => locations;
@@ -31,7 +31,7 @@ public class DatabaseCache : IPersonsRepository, ILocationsRepository, ITagsRepo
     private readonly List<LocationModel> locations = [];
     private readonly List<TagModel> tags = [];
 
-    public DatabaseCache(IDbAccessProvider dbAccessProvider)
+    public DatabaseCache(IDatabaseAccessProvider dbAccessProvider)
     {
         this.dbAccessProvider = dbAccessProvider;
 

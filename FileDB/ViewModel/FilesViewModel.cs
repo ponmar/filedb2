@@ -54,12 +54,12 @@ public partial class FilesViewModel : ObservableObject
     private bool findFileMetadata = true;
 
     private IConfigProvider configProvider;
-    private readonly IDbAccessProvider dbAccessProvider;
+    private readonly IDatabaseAccessProvider dbAccessProvider;
     private readonly IFilesystemAccessProvider filesystemAccessProvider;
     private readonly IDialogs dialogs;
     private readonly IFileSystem fileSystem;
 
-    public FilesViewModel(IConfigProvider configProvider, IDbAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IDialogs dialogs, IFileSystem fileSystem)
+    public FilesViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IDialogs dialogs, IFileSystem fileSystem)
     {
         this.configProvider = configProvider;
         this.dbAccessProvider = dbAccessProvider;

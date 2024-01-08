@@ -107,11 +107,11 @@ public partial class BirthdaysViewModel : ObservableObject
     public ObservableCollection<PersonBirthday> Persons { get; } = [];
 
     private readonly IPersonsRepository personsRepository;
-    private readonly IDbAccessProvider dbAccessProvider;
+    private readonly IDatabaseAccessProvider dbAccessProvider;
     private readonly IFilesystemAccessProvider filesystemAccessProvider;
     private readonly IImageLoader imageLoader;
 
-    public BirthdaysViewModel(IPersonsRepository personsRepository, IFilesystemAccessProvider filesystemAccessProvider, IDbAccessProvider dbAccessProvider, IImageLoader imageLoader)
+    public BirthdaysViewModel(IPersonsRepository personsRepository, IFilesystemAccessProvider filesystemAccessProvider, IDatabaseAccessProvider dbAccessProvider, IImageLoader imageLoader)
     {
         this.personsRepository = personsRepository;
         this.filesystemAccessProvider = filesystemAccessProvider;

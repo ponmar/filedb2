@@ -136,12 +136,12 @@ public partial class SearchCriteriaViewModel : ObservableObject, ISearchResultRe
 
     private readonly IConfigProvider configProvider;
     private readonly IDialogs dialogs;
-    private readonly IDbAccessProvider dbAccessProvider;
+    private readonly IDatabaseAccessProvider dbAccessProvider;
     private readonly IPersonsRepository personsRepository;
     private readonly ILocationsRepository locationsRepository;
     private readonly ITagsRepository tagsRepository;
 
-    public SearchCriteriaViewModel(IConfigProvider configProvider, IDialogs dialogs, IDbAccessProvider dbAccessProvider, IPersonsRepository personsRepository, ILocationsRepository locationsRepository, ITagsRepository tagsRepository)
+    public SearchCriteriaViewModel(IConfigProvider configProvider, IDialogs dialogs, IDatabaseAccessProvider dbAccessProvider, IPersonsRepository personsRepository, ILocationsRepository locationsRepository, ITagsRepository tagsRepository)
     {
         this.configProvider = configProvider;
         this.dialogs = dialogs;

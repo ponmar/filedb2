@@ -25,12 +25,12 @@ public partial class AddLocationViewModel : ObservableObject
     [ObservableProperty]
     private string? position = string.Empty;
 
-    private readonly IDbAccessProvider dbAccessProvider;
+    private readonly IDatabaseAccessProvider dbAccessProvider;
     private readonly IDialogs dialogs;
 
     public LocationModel? AffectedLocation { get; private set; }
 
-    public AddLocationViewModel(IDbAccessProvider dbAccessProvider, IDialogs dialogs, int? locationId = null)
+    public AddLocationViewModel(IDatabaseAccessProvider dbAccessProvider, IDialogs dialogs, int? locationId = null)
     {
         this.dbAccessProvider = dbAccessProvider;
         this.dialogs = dialogs;

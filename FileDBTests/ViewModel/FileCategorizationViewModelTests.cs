@@ -13,7 +13,7 @@ public class FileCategorizationViewModelTests
 {
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     private IConfigProvider configProvider;
-    private IDbAccessProvider dbAccessProvider;
+    private IDatabaseAccessProvider dbAccessProvider;
     private IDialogs dialogs;
     private IFilesystemAccessProvider filesystemAccessProvider;
     private IPersonsRepository personsRepository;
@@ -31,7 +31,7 @@ public class FileCategorizationViewModelTests
     public void Init()
     {
         configProvider = A.Fake<IConfigProvider>();
-        dbAccessProvider = A.Fake<IDbAccessProvider>();
+        dbAccessProvider = A.Fake<IDatabaseAccessProvider>();
         dialogs = A.Fake<IDialogs>();
         filesystemAccessProvider = A.Fake<IFilesystemAccessProvider>();
         personsRepository = A.Fake<IPersonsRepository>();

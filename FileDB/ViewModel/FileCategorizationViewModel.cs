@@ -95,14 +95,14 @@ public partial class FileCategorizationViewModel : ObservableObject
     public ObservableCollection<TagToUpdate> Tags { get; } = [];
 
     private readonly IConfigProvider configProvider;
-    private readonly IDbAccessProvider dbAccessProvider;
+    private readonly IDatabaseAccessProvider dbAccessProvider;
     private readonly IDialogs dialogs;
     private readonly IFilesystemAccessProvider filesystemAccessProvider;
     private readonly IPersonsRepository personsRepository;
     private readonly ILocationsRepository locationsRepository;
     private readonly ITagsRepository tagsRepository;
 
-    public FileCategorizationViewModel(IConfigProvider configProvider, IDbAccessProvider dbAccessProvider, IDialogs dialogs, IFilesystemAccessProvider filesystemAccessProvider, IPersonsRepository personsRepository, ILocationsRepository locationsRepository, ITagsRepository tagsRepository)
+    public FileCategorizationViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IDialogs dialogs, IFilesystemAccessProvider filesystemAccessProvider, IPersonsRepository personsRepository, ILocationsRepository locationsRepository, ITagsRepository tagsRepository)
     {
         this.configProvider = configProvider;
         this.dbAccessProvider = dbAccessProvider;

@@ -60,11 +60,11 @@ namespace FileDB.ViewModel
         private bool exportIncludesPdf = true;
 
         private readonly IDialogs dialogs;
-        private readonly IDbAccessProvider dbAccessProvider;
+        private readonly IDatabaseAccessProvider dbAccessProvider;
         private readonly IFilesystemAccessProvider filesystemAccessProvider;
         private readonly IFileSystem fileSystem;
 
-        public ExportViewModel(IDialogs dialogs, IDbAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IFileSystem fileSystem)
+        public ExportViewModel(IDialogs dialogs, IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IFileSystem fileSystem)
         {
             this.dialogs = dialogs;
             this.dbAccessProvider = dbAccessProvider;

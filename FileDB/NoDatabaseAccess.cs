@@ -7,7 +7,7 @@ using FileDBShared.Model;
 
 namespace FileDB;
 
-public class NoDbAccess : IDatabaseAccess
+public class NoDatabaseAccess : IDatabaseAccess
 {
     public string Database { get; set; } = string.Empty;
 
