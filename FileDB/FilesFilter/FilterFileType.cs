@@ -1,11 +1,12 @@
-﻿using FileDB.Model;
+﻿using FileDBShared.Extensions;
 using FileDBInterface.DatabaseAccess;
+using FileDBShared.FileFormats;
 using FileDBShared.Model;
 using System.Collections.Generic;
 
 namespace FileDB.FilesFilter;
 
-public class FilterFileType(Model.FileType fileType) : IFilesFilter
+public class FilterFileType(FileType fileType) : IFilesFilter
 {
     public bool CanRun() => true;
 

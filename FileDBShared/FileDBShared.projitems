@@ -9,6 +9,7 @@
     <Import_RootNamespace>FileDBShared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\FileTypeExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FileFormats\Export.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\DatabaseParsing.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\FileModel.cs" />

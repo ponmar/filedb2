@@ -1,5 +1,6 @@
 ﻿using FileDB.Configuration;
 using FileDB.Extensions;
+using FileDBInterface.Extensions;
 using FileDBShared.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;

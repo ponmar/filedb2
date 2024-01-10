@@ -1351,4 +1351,7 @@ YYYY-MM-DDTHH:MM:SS</value>
   <data name="NotificationDatabaseMigrationError" xml:space="preserve">
     <value>Failed to migrate database from version {0} to version {1}. Exception: {2}</value>
   </data>
+  <data name="FileTypeUnknown" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
 </root>

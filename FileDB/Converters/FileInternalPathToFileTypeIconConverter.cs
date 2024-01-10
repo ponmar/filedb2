@@ -10,16 +10,10 @@ public class FileInternalPathToFileTypeIconConverter : IValueConverter
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         string internalPath = (string)value;
-        var fileType = FileTypeUtils.GetFileType(internalPath);
-        if (fileType is null)
-        {
-            return string.Empty;
-        }
-
-        return ((FileType)fileType).GetIcon();
+        return FileTypeUtils.GetFileType(internalPath);
     }
 
-    public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
         throw new NotSupportedException();
     }

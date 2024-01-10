@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Linq;
-using System.Net.Cache;
 using System.Threading;
 using System.Windows.Media.Imaging;
 

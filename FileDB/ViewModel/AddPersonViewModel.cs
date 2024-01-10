@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using FileDB.Extensions;
 using FileDB.Model;
 using FileDB.Resources;
 using FileDBInterface.Exceptions;
+using FileDBInterface.Extensions;
 using FileDBShared.Model;
 
 namespace FileDB.ViewModel;

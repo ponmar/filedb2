@@ -1,4 +1,6 @@
-﻿using FileDB.Model;
+﻿using FileDB.Extensions;
+using FileDB.Model;
+using FileDBShared.FileFormats;
 using System;
 using System.Globalization;
 using System.Windows.Data;

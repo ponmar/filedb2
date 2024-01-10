@@ -12,6 +12,7 @@ using FileDB.Extensions;
 using FileDB.Model;
 using FileDBInterface.DatabaseAccess;
 using FileDBInterface.Exceptions;
+using FileDBInterface.Extensions;
 using FileDBShared.Model;
 using TextCopy;
 

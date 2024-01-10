@@ -1,7 +1,7 @@
-﻿using FileDB.Extensions;
+﻿using FileDBInterface.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace FileDBTests.Configuration;
+namespace FileDBInterfaceTests.Extensions;
 
 [TestClass]
 public class StruingExtensionsTests

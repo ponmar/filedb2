@@ -10,6 +10,7 @@ using System.IO;
 using FileDB.Extensions;
 using System.Collections.ObjectModel;
 using FileDB.Comparers;
+using FileDBInterface.Extensions;
 
 namespace FileDB.ViewModel;
 

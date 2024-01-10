@@ -1,6 +1,7 @@
 ﻿using FileDB.Extensions;
 using FileDB.Model;
 using FileDB.ViewModel;
+using FileDBInterface.Extensions;
 using FileDBShared.FileFormats;
 using FileDBShared.Model;
 using QuestPDF.Fluent;
@@ -28,8 +29,7 @@ public class PdfExporter(IFileSystem fileSystem, IFilesystemAccessProvider files
                 });
             });
 
-            var pictures = data.Files.Where(x => FileTypeUtils.GetFileType(x.OriginalPath) == FileType.Picture);
-            foreach (var picture in pictures)
+            foreach (var picture in data.Files.Where(x => x.FileType == FileType.Picture))
             {
                 var pictureDateText = string.Empty;
                 if (picture.Datetime is not null)

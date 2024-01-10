@@ -1,9 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Export;
-using FileDB.Extensions;
 using FileDB.Model;
 using FileDB.Resources;
+using FileDBInterface.Extensions;
 using System;
 using System.Collections.Generic;
 using System.IO.Abstractions;

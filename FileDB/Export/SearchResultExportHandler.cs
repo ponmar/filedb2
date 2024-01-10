@@ -122,6 +122,7 @@ public class SearchResultExportHandler
                 file.Id,
                 exportedFilePath,
                 file.Path,
+                FileTypeUtils.GetFileType(file.Path),
                 file.Description,
                 file.Datetime,
                 file.Position,

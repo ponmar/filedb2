@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Linq;
 using FileDB.Configuration;
-using FileDB.Extensions;
+using FileDBInterface.Extensions;
 using FluentValidation;
 
 namespace FileDB.Validators;

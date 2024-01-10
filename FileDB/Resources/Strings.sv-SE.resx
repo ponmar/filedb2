@@ -1351,4 +1351,7 @@
   <data name="NotificationDatabaseMigrationError" xml:space="preserve">
     <value>Misslyckades att migrera databasen från version {0} till version {1}. Exception: {2}</value>
   </data>
+  <data name="FileTypeUnknown" xml:space="preserve">
+    <value>Okänd</value>
+  </data>
 </root>

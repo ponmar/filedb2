@@ -1316,6 +1316,15 @@ namespace FileDB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unknown.
+        /// </summary>
+        public static string FileTypeUnknown {
+            get {
+                return ResourceManager.GetString("FileTypeUnknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date (between).
         /// </summary>
         public static string FilterTypeDateTime {

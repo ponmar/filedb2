@@ -8,8 +8,8 @@ using FileDBShared.Validators;
 using FileDBShared.FileFormats;
 using FileDB.Model;
 using System.IO.Abstractions;
-using FileDB.Extensions;
 using FileDB.ViewModel;
+using FileDBInterface.Extensions;
 
 namespace FileDB.Export.SearchResult;
 
@@ -34,8 +34,7 @@ public class PicturesWithMetadataExporter(IFilesystemAccessProvider filesystemAc
         }
 
         int index = 1;
-        var pictures = data.Files.Where(x => FileTypeUtils.GetFileType(x.OriginalPath) == FileType.Picture);
-        foreach (var picture in pictures)
+        foreach (var picture in data.Files.Where(x => x.FileType == FileType.Picture))
         {
             try
             {

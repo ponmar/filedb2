@@ -2,6 +2,7 @@
 using FileDB.Extensions;
 using FileDB.FilesFilter;
 using FileDB.Model;
+using FileDBShared.FileFormats;
 using FileDBShared.Model;
 using System;
 using System.Collections.Generic;
@@ -32,7 +33,7 @@ public partial class FilterSettingsViewModel : ObservableObject
     [ObservableProperty]
     private string exceptFileListIds = string.Empty;
 
-    public static IEnumerable<FileType> FileTypes => Enum.GetValues<FileType>().OrderBy(x => x.ToFriendlyString());
+    public static IEnumerable<FileType> FileTypes => Enum.GetValues<FileType>().Where(x => x != FileType.Unknown).OrderBy(x => x.ToFriendlyString());
 
     [ObservableProperty]
     private FileType selectedFileType = FileTypes.First();

@@ -10,8 +10,9 @@ using CommunityToolkit.Mvvm.Input;
 using FileDB.Model;
 using System.Windows.Media;
 using FileDB.Resources;
-using FileDB.Extensions;
 using System.IO.Abstractions;
+using FileDBShared.FileFormats;
+using FileDBInterface.Extensions;
 
 namespace FileDB.ViewModel;
 

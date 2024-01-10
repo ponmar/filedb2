@@ -4,10 +4,20 @@ using System.Collections.Generic;
 
 namespace FileDBShared.FileFormats;
 
+public enum FileType
+{
+    Picture,
+    Movie,
+    Document,
+    Audio,
+    Unknown,
+}
+
 public record ExportedFile(
     int Id,
     string ExportedPath,
     string OriginalPath,
+    FileType FileType,
     string? Description,
     string? Datetime,
     string? Position,
