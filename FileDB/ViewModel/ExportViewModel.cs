@@ -24,7 +24,7 @@ namespace FileDB.ViewModel
         private string exportName = "My Files";
 
         [ObservableProperty]
-        private bool exportIncludesFiles = true;
+        private bool exportIncludesFiles = false;
 
         public bool ExportEnabled => ExportName.HasContent() && ExportFilesDestinationDirectory.HasContent();
 
@@ -37,10 +37,10 @@ namespace FileDB.ViewModel
         }
 
         [ObservableProperty]
-        private bool exportIncludesHtml = true;
+        private bool exportIncludesHtml = false;
 
         [ObservableProperty]
-        private bool exportIncludesM3u = true;
+        private bool exportIncludesM3u = false;
 
         partial void OnExportIncludesM3uChanged(bool value)
         {
@@ -51,13 +51,13 @@ namespace FileDB.ViewModel
         }
 
         [ObservableProperty]
-        private bool exportIncludesFilesWithMetaData = true;
+        private bool exportIncludesFilesWithMetaData = false;
 
         [ObservableProperty]
-        private bool exportIncludesJson = true;
+        private bool exportIncludesJson = false;
 
         [ObservableProperty]
-        private bool exportIncludesPdf = true;
+        private bool exportIncludesPdf = false;
 
         private readonly IDialogs dialogs;
         private readonly IDatabaseAccessProvider dbAccessProvider;
