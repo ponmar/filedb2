@@ -10,6 +10,7 @@ using FileDB.Model;
 using System.IO.Abstractions;
 using FileDB.ViewModel;
 using FileDBInterface.Extensions;
+using FileDB.Extensions;
 
 namespace FileDB.Export.SearchResult;
 
@@ -19,7 +20,26 @@ record TextLine(string Text, TextType Type);
 
 public enum DescriptionPlacement { Heading, Subtitle }
 
-public class PicturesWithMetadataExporter(IFilesystemAccessProvider filesystemAccessProvider, DescriptionPlacement descriptionPlacement, IFileSystem fileSystem) : ISearchResultExporter
+public class PicturesWithMetadataExporterFileExtensionAttribute : Attribute
+{
+    public string Extension { get; }
+
+    public PicturesWithMetadataExporterFileExtensionAttribute(string extension)
+    {
+        Extension = extension;
+    }
+}
+
+public enum PicturesWithMetadataExporterFileType
+{
+    [PicturesWithMetadataExporterFileExtension(".png")]
+    Png,
+    
+    [PicturesWithMetadataExporterFileExtension(".jpg")]
+    Jpeg,
+}
+
+public class PicturesWithMetadataExporter(IFilesystemAccessProvider filesystemAccessProvider, DescriptionPlacement descriptionPlacement, IFileSystem fileSystem, PicturesWithMetadataExporterFileType fileType) : ISearchResultExporter
 {
     private const int EmptyLineHeight = 15;
     private const int BackgroundMargin = 20;
@@ -46,7 +66,8 @@ public class PicturesWithMetadataExporter(IFilesystemAccessProvider filesystemAc
                 var subtitleLines = CreateSubtitleTextLines(picture);
                 AddTextToImage(textLines, subtitleLines, bitmap);
 
-                var destFilePath = Path.Combine(path, $"{index}.png");
+                var fileExt = fileType.GetAttribute<PicturesWithMetadataExporterFileExtensionAttribute>().Extension;
+                var destFilePath = Path.Combine(path, $"{index}{fileExt}");
                 SaveBitmap(bitmap, destFilePath);
 
                 index++;
