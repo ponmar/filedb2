@@ -10,7 +10,6 @@ using FileDB.Model;
 using System.IO.Abstractions;
 using FileDB.ViewModel;
 using FileDBInterface.Extensions;
-using FileDB.Extensions;
 
 namespace FileDB.Export.SearchResult;
 
@@ -20,22 +19,9 @@ record TextLine(string Text, TextType Type);
 
 public enum DescriptionPlacement { Heading, Subtitle }
 
-public class PicturesWithMetadataExporterFileExtensionAttribute : Attribute
-{
-    public string Extension { get; }
-
-    public PicturesWithMetadataExporterFileExtensionAttribute(string extension)
-    {
-        Extension = extension;
-    }
-}
-
 public enum PicturesWithMetadataExporterFileType
 {
-    [PicturesWithMetadataExporterFileExtension(".png")]
     Png,
-    
-    [PicturesWithMetadataExporterFileExtension(".jpg")]
     Jpeg,
 }
 
@@ -66,9 +52,22 @@ public class PicturesWithMetadataExporter(IFilesystemAccessProvider filesystemAc
                 var subtitleLines = CreateSubtitleTextLines(picture);
                 AddTextToImage(textLines, subtitleLines, bitmap);
 
-                var fileExt = fileType.GetAttribute<PicturesWithMetadataExporterFileExtensionAttribute>().Extension;
-                var destFilePath = Path.Combine(path, $"{index}{fileExt}");
-                SaveBitmap(bitmap, destFilePath);
+                var fileExtension = fileType switch
+                {
+                    PicturesWithMetadataExporterFileType.Jpeg => ".jpg",
+                    PicturesWithMetadataExporterFileType.Png => ".png",
+                    _ => throw new NotImplementedException(),
+                };
+
+                var imageFormat = fileType switch
+                {
+                    PicturesWithMetadataExporterFileType.Jpeg => ImageFormat.Jpeg,
+                    PicturesWithMetadataExporterFileType.Png => ImageFormat.Png,
+                    _ => throw new NotImplementedException(),
+                };
+
+                var destFilePath = Path.Combine(path, $"{index}{fileExtension}");
+                SaveBitmap(bitmap, destFilePath, imageFormat);
 
                 index++;
             }
@@ -241,9 +240,9 @@ public class PicturesWithMetadataExporter(IFilesystemAccessProvider filesystemAc
         }
     }
 
-    private void SaveBitmap(Bitmap bitmap, string path)
+    private void SaveBitmap(Bitmap bitmap, string path, ImageFormat imageFormat)
     {
         using var fileStream = fileSystem.FileStream.New(path, FileMode.CreateNew);
-        bitmap.Save(fileStream, ImageFormat.Png);
+        bitmap.Save(fileStream, imageFormat);
     }
 }

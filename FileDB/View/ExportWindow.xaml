@@ -46,7 +46,11 @@
                             <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{x:Static rs:Strings.ExportHTMLWithMetaDataAndSearchResultFilesLabel}"/>
                         </CheckBox>
                         <CheckBox Style="{StaticResource PageInnerCheckBox}" Margin="3" IsChecked="{Binding ExportIncludesFilesWithMetaData}">
-                            <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{x:Static rs:Strings.ExportSearchResultFilesWithMetaDataLabel}"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{x:Static rs:Strings.ExportSearchResultFilesWithMetaDataLabel}" VerticalAlignment="Center"/>
+                                <RadioButton Style="{StaticResource PageInnerRadioButton}" GroupName="PicturesWithMetadataTypeGroup" Margin="3" VerticalAlignment="Center" IsChecked="{Binding ExportFilesWithMetaDataJpeg}">JPEG</RadioButton>
+                                <RadioButton Style="{StaticResource PageInnerRadioButton}" GroupName="PicturesWithMetadataTypeGroup" Margin="3" VerticalAlignment="Center">PNG</RadioButton>
+                            </StackPanel>
                         </CheckBox>
                         <CheckBox Style="{StaticResource PageInnerCheckBox}" Margin="3" IsChecked="{Binding ExportIncludesJson}">
                             <TextBlock Style="{StaticResource PageInnerTextBlock}" Text="{x:Static rs:Strings.ExportSearchResultMetaDataJSONLabel}"/>

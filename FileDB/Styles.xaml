@@ -261,6 +261,10 @@
         -->
     </Style>
 
+    <Style x:Key="PageInnerRadioButton" TargetType="RadioButton">
+        <Setter Property="Foreground" Value="{StaticResource FgColor2}"/>
+    </Style>
+    
     <Style x:Key="PageInnerCheckBox" TargetType="CheckBox">
         <Setter Property="Template">
             <Setter.Value>

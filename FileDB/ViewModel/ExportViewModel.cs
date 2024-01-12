@@ -54,6 +54,9 @@ namespace FileDB.ViewModel
         private bool exportIncludesFilesWithMetaData = false;
 
         [ObservableProperty]
+        private bool exportFilesWithMetaDataJpeg = true;
+
+        [ObservableProperty]
         private bool exportIncludesJson = false;
 
         [ObservableProperty]
@@ -109,7 +112,7 @@ namespace FileDB.ViewModel
             }
             if (ExportIncludesFilesWithMetaData)
             {
-                selections.Add(SearchResultExportType.PicturesWithMetaData);
+                selections.Add(ExportFilesWithMetaDataJpeg ? SearchResultExportType.JpegPicturesWithMetaData : SearchResultExportType.PngPicturesWithMetaData);
             }
             if (ExportIncludesJson)
             {

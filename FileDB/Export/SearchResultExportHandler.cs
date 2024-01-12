@@ -16,7 +16,8 @@ public enum SearchResultExportType
     Files,
     Html,
     M3u,
-    PicturesWithMetaData,
+    JpegPicturesWithMetaData,
+    PngPicturesWithMetaData,
     Json,
     Pdf
 }
@@ -43,10 +44,12 @@ public class SearchResultExportHandler
             new FilesExporter().Export(data, destinationDirectory);
         }
 
-        if (exportTypes.Contains(SearchResultExportType.PicturesWithMetaData))
+        if (exportTypes.Contains(SearchResultExportType.JpegPicturesWithMetaData) ||
+            exportTypes.Contains(SearchResultExportType.PngPicturesWithMetaData))
         {
             var filesWithDataDirPath = Path.Combine(destinationDirectory, "PicturesWithMetadata");
-            var exporter = new PicturesWithMetadataExporter(filesystemAccessProvider, DescriptionPlacement.Subtitle, fileSystem, PicturesWithMetadataExporterFileType.Jpeg);
+            var pictureType = exportTypes.Contains(SearchResultExportType.JpegPicturesWithMetaData) ? PicturesWithMetadataExporterFileType.Jpeg : PicturesWithMetadataExporterFileType.Png;
+            var exporter = new PicturesWithMetadataExporter(filesystemAccessProvider, DescriptionPlacement.Subtitle, fileSystem, pictureType);
             exporter.Export(data, filesWithDataDirPath);
         }
 
