@@ -49,10 +49,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="Resources\Raw\DatabaseExport.json" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
 	  <PackageReference Include="FluentValidation" Version="11.9.0" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
