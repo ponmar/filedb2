@@ -6,6 +6,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Model;
 using FileDBInterface.DatabaseAccess;
+using FileDBShared;
 using FileDBShared.Model;
 
 namespace FileDB.ViewModel;
@@ -99,11 +100,11 @@ public partial class PersonsViewModel : ObservableObject
             if (person.Deceased is not null)
             {
                 var deceased = DatabaseParsing.ParsePersonDeceasedDate(person.Deceased);
-                return DatabaseUtils.GetAgeInYears(deceased, dateOfBirth);
+                return TimeUtils.GetAgeInYears(deceased, dateOfBirth);
             }
             else
             {
-                return DatabaseUtils.GetAgeInYears(DateTime.Now, dateOfBirth);
+                return TimeUtils.GetAgeInYears(DateTime.Now, dateOfBirth);
             }
         }
 

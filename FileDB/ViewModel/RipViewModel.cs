@@ -7,8 +7,8 @@ using System.Windows.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FileDB.Comparers;
 using FileDB.Model;
-using FileDBInterface.DatabaseAccess;
 using FileDBInterface.Extensions;
+using FileDBShared;
 using FileDBShared.Model;
 
 namespace FileDB.ViewModel;
@@ -32,7 +32,7 @@ public partial class DeceasedPerson : ObservableObject
     public string DateOfBirth => Person.DateOfBirth!;
     public string DeceasedStr => Person.Deceased!;
     public DateTime Deceased => DatabaseParsing.ParsePersonDeceasedDate(Person.Deceased!);
-    public int Age => DatabaseUtils.GetAgeInYears(Deceased, DatabaseParsing.ParsePersonDateOfBirth(Person.DateOfBirth!));
+    public int Age => TimeUtils.GetAgeInYears(Deceased, DatabaseParsing.ParsePersonDateOfBirth(Person.DateOfBirth!));
 
     public DeceasedPerson(PersonModel person, string? profilePictureAbsPath)
     {

@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using FileDBApp.Comparers;
 using FileDBApp.Services;
 using FileDBApp.View;
-using FileDBInterface.DbAccess;
+using FileDBShared;
 using FileDBShared.Model;
 using System.Collections.ObjectModel;
 
@@ -29,7 +29,7 @@ public class DeceasedPerson
 
         var dateOfBirth = DatabaseParsing.ParsePersonDateOfBirth(PersonModel.DateOfBirth);
         Deceased = DatabaseParsing.ParsePersonDeceasedDate(PersonModel.Deceased);
-        Age = DatabaseUtils.GetYearsAgo(Deceased, dateOfBirth);
+        Age = TimeUtils.GetYearsAgo(Deceased, dateOfBirth);
     }
 }
 

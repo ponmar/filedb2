@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Threading;
 using FileDBInterface.DatabaseAccess;
 using FileDBInterface.Extensions;
+using FileDBShared;
 using FileDBShared.Model;
 
 namespace FileDB;
@@ -111,7 +112,7 @@ public static class Utils
             return string.Empty;
         }
 
-        var age = DatabaseUtils.GetAgeInYears(fileDatetime.Value, personDateOfBirth.Value);
+        var age = TimeUtils.GetAgeInYears(fileDatetime.Value, personDateOfBirth.Value);
         return $" ({age})";
     }
 

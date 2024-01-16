@@ -8,6 +8,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using FileDB.Model;
 using FileDBInterface.DatabaseAccess;
 using FileDBInterface.Extensions;
+using FileDBShared;
 using FileDBShared.Model;
 
 namespace FileDB.ViewModel;
@@ -50,8 +51,8 @@ public partial class PersonBirthday : ObservableObject
 
         var dateOfBirth = DatabaseParsing.ParsePersonDateOfBirth(person.DateOfBirth!);
         Birthday = dateOfBirth.ToString("d MMMM");
-        DaysLeft = DatabaseUtils.GetDaysToNextBirthday(dateOfBirth);
-        Age = DatabaseUtils.GetAgeInYears(DateTime.Now, dateOfBirth);
+        DaysLeft = TimeUtils.GetDaysToNextBirthday(dateOfBirth);
+        Age = TimeUtils.GetAgeInYears(DateTime.Now, dateOfBirth);
 
         if (DaysLeft == 0)
         {

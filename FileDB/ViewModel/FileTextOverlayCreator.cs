@@ -6,6 +6,7 @@ using FileDBInterface.DatabaseAccess;
 using FileDB.Model;
 using FileDB.Resources;
 using FileDB.Extensions;
+using FileDBShared;
 
 namespace FileDB.ViewModel;
 
@@ -85,7 +86,7 @@ public class FileTextOverlayCreator
         var resultString = file.Datetime!.Contains('T') ? datetime.Value.ToDateAndTime() : file.Datetime;
 
         var now = DateTime.Now;
-        int yearsAgo = DatabaseUtils.GetAgeInYears(now, datetime.Value);
+        int yearsAgo = TimeUtils.GetAgeInYears(now, datetime.Value);
         if (yearsAgo == 0 && now.Year == datetime.Value.Year)
         {
             resultString += Strings.SearchFileDateTimeThisYear;

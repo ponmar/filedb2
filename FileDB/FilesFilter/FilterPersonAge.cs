@@ -1,4 +1,5 @@
 ﻿using FileDBInterface.DatabaseAccess;
+using FileDBShared;
 using FileDBShared.Model;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,7 @@ public class FilterPersonAge(string ageFromText, string ageToText) : IFilesFilte
                 var fileDatetime = DatabaseParsing.ParseFilesDatetime(file.Datetime);
                 if (fileDatetime is not null)
                 {
-                    int personAgeInFile = DatabaseUtils.GetAgeInYears(fileDatetime.Value, dateOfBirth);
+                    int personAgeInFile = TimeUtils.GetAgeInYears(fileDatetime.Value, dateOfBirth);
                     if (personAgeInFile >= ageFrom && personAgeInFile <= ageTo)
                     {
                         result.Add(file);
