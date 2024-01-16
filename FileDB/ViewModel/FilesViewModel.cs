@@ -13,6 +13,7 @@ using FileDB.Model;
 using FileDBInterface.DatabaseAccess;
 using FileDBInterface.Exceptions;
 using FileDBInterface.Extensions;
+using FileDBShared;
 using FileDBShared.Model;
 using TextCopy;
 
@@ -198,7 +199,7 @@ public partial class FilesViewModel : ObservableObject
                             foreach (var locationWithPosition in locations.Where(x => x.Position is not null))
                             {
                                 var locationPos = DatabaseParsing.ParseFilesPosition(locationWithPosition.Position)!.Value;
-                                var distance = DatabaseUtils.CalculateDistance(importedFilePos.lat, importedFilePos.lon, locationPos.lat, locationPos.lon);
+                                var distance = LatLonUtils.CalculateDistance(importedFilePos.lat, importedFilePos.lon, locationPos.lat, locationPos.lon);
                                 if (distance < configProvider.Config.FileToLocationMaxDistance)
                                 {
                                     dbAccessProvider.DbAccess.InsertFileLocation(importedFile.Id, locationWithPosition.Id);

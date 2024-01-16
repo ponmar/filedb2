@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace FileDBInterface.DatabaseAccess;
+namespace FileDBShared;
 
-public static class DatabaseUtils
+public static class LatLonUtils
 {
     public static double CalculateDistance(double point1Lat, double point1Lon, double point2Lat, double point2Long)
     {

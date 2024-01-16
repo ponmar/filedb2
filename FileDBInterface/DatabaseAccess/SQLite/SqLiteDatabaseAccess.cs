@@ -13,6 +13,7 @@ using FileDBInterface.Exceptions;
 using FileDBShared.Validators;
 using FileDBInterface.FilesystemAccess;
 using FileDBInterface.Extensions;
+using FileDBShared;
 
 namespace FileDBInterface.DatabaseAccess.SQLite;
 
@@ -123,7 +124,7 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
             var gpsPos = DatabaseParsing.ParseFilesPosition(locationWithPosition.Position);
             if (gpsPos is not null)
             {
-                if (DatabaseUtils.CalculateDistance(latitude, longitude, gpsPos.Value.lat, gpsPos.Value.lon) < radius)
+                if (LatLonUtils.CalculateDistance(latitude, longitude, gpsPos.Value.lat, gpsPos.Value.lon) < radius)
                 {
                     yield return locationWithPosition;
                 }
@@ -141,7 +142,7 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
             var gpsPos = DatabaseParsing.ParseFilesPosition(fileWithPosition.Position);
             if (gpsPos is not null)
             {
-                if (DatabaseUtils.CalculateDistance(latitude, longitude, gpsPos.Value.lat, gpsPos.Value.lon) < radius)
+                if (LatLonUtils.CalculateDistance(latitude, longitude, gpsPos.Value.lat, gpsPos.Value.lon) < radius)
                 {
                     yield return fileWithPosition;
                 }
