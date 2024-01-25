@@ -1,3 +1,12 @@
+4.3:
+* The release is now built for x64 and is self contained (no .NET pre-requisite)
+* Search result export for files with overlay supports JPEG file format
+* Create an automatic database backup before importing new files
+* New file and directory names for search result export
+* Improved performance for some database queries
+* Fix path handling for when a relative path was specified via command line argument
+* Fixes for some tooltips with special unicode characters
+
 4.2:
 * Upgrade to .NET8
 * Add a search filter tab that simplifies combined searches
