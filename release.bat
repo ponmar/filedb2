@@ -34,7 +34,6 @@ xcopy /s %appDir%\* %releaseDir%
 xcopy /s demo %releaseDir%\demo\
 xcopy CHANGES.txt %releaseDir%
 xcopy LICENSE.txt %releaseDir%
-xcopy UpgradeDatabase.py %releaseDir%
 
 cd release
 "C:\Program Files\7-Zip\7z.exe" a -tzip %zipFilename% %zipDir%
