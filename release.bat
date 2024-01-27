@@ -15,7 +15,7 @@ if not %ERRORLEVEL%==0 (
     echo "Build failed" && exit /b 1
 )
 
-set appDir=FileDB\bin\Release\net8.0-windows7.0\publish
+set appDir=FileDB\bin\Release\net8.0-windows7.0\win-x64\publish
 set zipDir=FileDB-%version%
 set releaseDir=release\%zipDir%
 set zipFilename=%zipDir%.zip
