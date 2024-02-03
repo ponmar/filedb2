@@ -1,6 +1,7 @@
-﻿namespace FileDBAvalonia.ViewModels;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-public partial class MainViewModel : ViewModelBase
+namespace FileDBAvalonia.ViewModels;
+
+public partial class MainViewModel : ObservableObject
 {
-    public string Greeting => "Welcome to Avalonia!";
 }
