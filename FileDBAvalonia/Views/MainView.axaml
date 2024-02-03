@@ -15,80 +15,80 @@
 
 	<Grid>
 		<TabControl TabStripPlacement="Left">
-			<TabItem>
+			<TabItem HorizontalContentAlignment="Center">
 				<TabItem.Header>
-					<TextBlock Text="&#x1F50D;" ToolTip.Tip="{x:Static lang:Strings.SearchTitle}"/>
+					<TextBlock Classes="TabIcon" Text="&#x1F50D;" ToolTip.Tip="{x:Static lang:Strings.SearchTitle}"/>
 				</TabItem.Header>
 				<!--Views:SearchView Margin="10 0 10 10"/-->
 			</TabItem>
 
-			<TabItem IsVisible="{Binding ReadWriteMode}">
+			<TabItem HorizontalContentAlignment="Center" IsVisible="{Binding ReadWriteMode}">
 				<TabItem.Header>
-					<TextBlock Text="&#x1F4C2;" ToolTip.Tip="{x:Static lang:Strings.FilesTitle}"/>
+					<TextBlock Classes="TabIcon" Text="&#x1F4C2;" ToolTip.Tip="{x:Static lang:Strings.FilesTitle}"/>
 				</TabItem.Header>
 				<!--Views:FilesView Margin="10 0 10 10"/-->
 			</TabItem>
 
-			<TabItem>
+			<TabItem HorizontalContentAlignment="Center">
 				<TabItem.Header>
-					<TextBlock Text="&#x1F382;" ToolTip.Tip="{x:Static lang:Strings.BirthdaysTitle}"/>
+					<TextBlock Classes="TabIcon" Text="&#x1F382;" ToolTip.Tip="{x:Static lang:Strings.BirthdaysTitle}"/>
 				</TabItem.Header>
 				<!--Views:BirthdaysView Margin="10 0 10 10"/-->
 			</TabItem>
 
-			<TabItem>
+			<TabItem HorizontalContentAlignment="Center">
 				<TabItem.Header>
-					<TextBlock Text="&#x271E;" ToolTip.Tip="{x:Static lang:Strings.RipTitle}"/>
+					<TextBlock Classes="TabIcon" Text="&#x271E;" ToolTip.Tip="{x:Static lang:Strings.RipTitle}"/>
 				</TabItem.Header>
 				<!--Views:RipView Margin="10 0 10 10"/-->
 			</TabItem>
 
-			<TabItem>
+			<TabItem HorizontalContentAlignment="Center">
 				<TabItem.Header>
-					<TextBlock Text="&#x1F642;" ToolTip.Tip="{x:Static lang:Strings.PersonsTitle}"/>
+					<TextBlock Classes="TabIcon" Text="&#x1F642;" ToolTip.Tip="{x:Static lang:Strings.PersonsTitle}"/>
 				</TabItem.Header>
 				<!--Views:PersonsView Margin="10 0 10 10"/-->
 			</TabItem>
 
-			<TabItem>
+			<TabItem HorizontalContentAlignment="Center">
 				<TabItem.Header>
-					<TextBlock Text="&#x1F3E0;" ToolTip.Tip="{x:Static lang:Strings.LocationsTitle}"/>
+					<TextBlock Classes="TabIcon" Text="&#x1F3E0;" ToolTip.Tip="{x:Static lang:Strings.LocationsTitle}"/>
 				</TabItem.Header>
 				<!--Views:LocationsView Margin="10 0 10 10"/-->
 			</TabItem>
 
-			<TabItem>
+			<TabItem HorizontalContentAlignment="Center">
 				<TabItem.Header>
-					<TextBlock Text="&#x1F516;" ToolTip.Tip="{x:Static lang:Strings.TagsTitle}"/>
+					<TextBlock Classes="TabIcon" Text="&#x1F516;" ToolTip.Tip="{x:Static lang:Strings.TagsTitle}"/>
 				</TabItem.Header>
 				<!--Views:TagsView Margin="10 0 10 10"/-->
 			</TabItem>
 
-			<TabItem>
+			<TabItem HorizontalContentAlignment="Center">
 				<TabItem.Header>
-					<TextBlock Text="&#x1F527;" ToolTip.Tip="{x:Static lang:Strings.SettingsTitle}"/>
+					<TextBlock Classes="TabIcon" Text="&#x1F527;" ToolTip.Tip="{x:Static lang:Strings.SettingsTitle}"/>
 				</TabItem.Header>
 				<!--Views:SettingsView Margin="10 0 10 10"/-->
 			</TabItem>
 
-			<TabItem IsVisible="{Binding ReadWriteMode}">
+			<TabItem HorizontalContentAlignment="Center" IsVisible="{Binding ReadWriteMode}">
 				<TabItem.Header>
-					<TextBlock Text="&#x2692;" ToolTip.Tip="{x:Static lang:Strings.ToolsTitle}"/>
+					<TextBlock Classes="TabIcon" Text="&#x2692;" ToolTip.Tip="{x:Static lang:Strings.ToolsTitle}"/>
 				</TabItem.Header>
 				<!--Views:ToolsView Margin="10 0 10 10"/-->
 			</TabItem>
 
-			<TabItem>
+			<TabItem HorizontalContentAlignment="Center">
 				<TabItem.Header>
-					<TextBlock Text="&#x1F6C8;" ToolTip.Tip="{x:Static lang:Strings.AboutTitle}"/>
+					<TextBlock Classes="TabIcon" Text="&#x1F6C8;" ToolTip.Tip="{x:Static lang:Strings.AboutTitle}"/>
 				</TabItem.Header>
 				<!--Views:AboutView Margin="10 0 10 10"/-->
 			</TabItem>
 
-			<TabItem>
+			<TabItem HorizontalContentAlignment="Center">
 				<TabItem.Header>
 					<Grid>
-						<TextBlock Text="&#x1F514;" ToolTip.Tip="{x:Static lang:Strings.NotificationsTitle}"/>
+						<TextBlock Classes="TabIcon" Text="&#x1F514;" ToolTip.Tip="{x:Static lang:Strings.NotificationsTitle}"/>
 						<!--
 						<Border Style="{StaticResource NotificationBadgeBg}" Background="{Binding HighlightedNotificationType, Converter={StaticResource NotificationTypeToColorConverter}}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Padding="6 1 6 1" Visibility="{Binding NumNotifications, Converter={StaticResource GreaterThanZeroToVisibilityConverter}}">
 							<TextBlock Text="{Binding NumNotifications}" Style="{StaticResource NotificationBadge}" />
@@ -99,9 +99,9 @@
 				<!--Views:NotificationsView Margin="10 0 10 10"/-->
 			</TabItem>
 
-			<TabItem>
+			<TabItem HorizontalContentAlignment="Center">
 				<TabItem.Header>
-					<TextBlock Text="&#x1F6AA;" ToolTip.Tip="{x:Static lang:Strings.ExitToolTip}"/>
+					<TextBlock Classes="TabIcon" Text="&#x1F6AA;" ToolTip.Tip="{x:Static lang:Strings.ExitToolTip}"/>
 				</TabItem.Header>
 			</TabItem>
 		</TabControl>
