@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:FileDBAvalonia.ViewModels"
 			 xmlns:lang="clr-namespace:FileDBAvalonia.Lang"
+			 xmlns:views="clr-namespace:FileDBAvalonia.Views;assembly=FileDBAvalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="FileDBAvalonia.Views.MainView"
              x:DataType="vm:MainViewModel">
@@ -82,7 +83,7 @@
 				<TabItem.Header>
 					<TextBlock Classes="TabIcon" Text="&#x1F6C8;" ToolTip.Tip="{x:Static lang:Strings.AboutTitle}"/>
 				</TabItem.Header>
-				<!--Views:AboutView Margin="10 0 10 10"/-->
+				<views:AboutView Margin="10 0 10 10"/>
 			</TabItem>
 
 			<TabItem HorizontalContentAlignment="Center">

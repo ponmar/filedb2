@@ -5,6 +5,7 @@ using Avalonia.Markup.Xaml;
 
 using FileDBAvalonia.ViewModels;
 using FileDBAvalonia.Views;
+using QuestPDF.Infrastructure;
 
 namespace FileDBAvalonia;
 
@@ -23,6 +24,9 @@ public partial class App : Application
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
+            QuestPDF.Settings.License = LicenseType.Community;
+            Bootstrapper.Bootstrap();
+
             desktop.MainWindow = new MainWindow
             {
                 DataContext = new MainViewModel()

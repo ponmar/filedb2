@@ -1,0 +1,157 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:lang="clr-namespace:FileDBAvalonia.Lang"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="FileDBAvalonia.Views.AboutView">
+	<DockPanel>
+		<TextBlock DockPanel.Dock="Top" Text="{x:Static lang:Strings.AboutTitle}"/>
+		<ScrollViewer>
+			<StackPanel Orientation="Vertical">
+				<TextBlock Text="{Binding AppName}"/>
+				<Border>
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto"/>
+							<ColumnDefinition Width="Auto"/>
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition/>
+							<RowDefinition/>
+							<RowDefinition/>
+							<RowDefinition/>
+						</Grid.RowDefinitions>
+
+						<TextBlock Grid.Row="0" Grid.Column="0" Text="{x:Static lang:Strings.AboutAppVersion}"/>
+						<TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Version}"/>
+
+						<TextBlock Grid.Row="1" Grid.Column="0" Text="{x:Static lang:Strings.AboutAppAuthor}"/>
+						<TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Author}"/>
+
+						<TextBlock Grid.Row="2" Grid.Column="0" Text="{x:Static lang:Strings.AboutAppProjectWebsite}"/>
+						<TextBlock Grid.Row="2" Grid.Column="1">
+							<!--
+							<Hyperlink NavigateUri="{Binding ProjectUrl}" RequestNavigate="OpenUri">
+								<TextBlock Text="{x:Static lang:Strings.AboutDownloadsClickToOpen}" ToolTip.Tip="{Binding ProjectUrl}"/>
+							</Hyperlink>
+							-->
+						</TextBlock>
+
+						<TextBlock Grid.Row="3" Grid.Column="0" Text="{x:Static lang:Strings.AboutDownloadsReleases}"/>
+						<TextBlock Grid.Row="3" Grid.Column="1">
+							<!--
+							<Hyperlink NavigateUri="{Binding DownloadLink}" RequestNavigate="OpenUri">
+								<TextBlock Text="{x:Static lang:Strings.AboutDownloadsClickToOpen}" ToolTip.Tip="{Binding DownloadLink}"/>
+							</Hyperlink>
+							-->
+						</TextBlock>
+					</Grid>
+				</Border>
+
+				<TextBlock Text="{x:Static lang:Strings.AboutGettingStartedTitle}"/>
+				<Border>
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="auto" />
+							<ColumnDefinition Width="*" />
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition/>
+							<RowDefinition/>
+							<RowDefinition/>
+							<RowDefinition/>
+							<RowDefinition/>
+						</Grid.RowDefinitions>
+						<TextBlock Grid.Row="0" Grid.Column="0" Text="1."/>
+						<TextBlock Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" Text="{x:Static lang:Strings.AboutGettingStarted1}"/>
+
+						<TextBlock Grid.Row="1" Grid.Column="0" Text="2."/>
+						<TextBlock Grid.Row="1" Grid.Column="1" TextWrapping="Wrap" Text="{x:Static lang:Strings.AboutGettingStarted2}"/>
+
+						<TextBlock Grid.Row="2" Grid.Column="0" Text="3."/>
+						<TextBlock Grid.Row="2" Grid.Column="1" TextWrapping="Wrap" Text="{x:Static lang:Strings.AboutGettingStarted3}"/>
+
+						<TextBlock Grid.Row="3" Grid.Column="0" Text="4."/>
+						<TextBlock Grid.Row="3" Grid.Column="1" TextWrapping="Wrap" Text="{x:Static lang:Strings.AboutGettingStarted4}"/>
+
+						<TextBlock Grid.Row="4" Grid.Column="0" Text="5."/>
+						<TextBlock Grid.Row="4" Grid.Column="1" TextWrapping="Wrap" Text="{x:Static lang:Strings.AboutGettingStarted5}"/>
+					</Grid>
+				</Border>
+
+				<TextBlock Text="{x:Static lang:Strings.AboutNotesTitle}"/>
+				<Border>
+					<StackPanel Orientation="Vertical">
+						<TextBlock TextWrapping="Wrap" Text="{x:Static lang:Strings.AboutNotes1}"/>
+						<TextBlock TextWrapping="Wrap" Text="{x:Static lang:Strings.AboutNotes2}"/>
+
+						<TreeView Margin="10" IsHitTestVisible="False">
+							<TreeViewItem Header="root" IsExpanded="True">
+								<TreeViewItem Header="2015" IsExpanded="True">
+									<TreeViewItem Header="2015-06-12 - Biking" IsExpanded="True">
+										<TreeViewItem Header="file1.jpg"/>
+										<TreeViewItem Header="file2.jpg"/>
+									</TreeViewItem>
+									<TreeViewItem Header="2015-07-13 - Birthday party" IsExpanded="True">
+										<TreeViewItem Header="somefile1.jpg"/>
+									</TreeViewItem>
+								</TreeViewItem>
+								<TreeViewItem Header="2016" IsExpanded="True">
+									<TreeViewItem Header="2016-01-05 - Something else" IsExpanded="True">
+										<TreeViewItem Header="anotherfile1.jpg"/>
+										<TreeViewItem Header="anotherfile2.jpg"/>
+									</TreeViewItem>
+								</TreeViewItem>
+							</TreeViewItem>
+						</TreeView>
+
+						<TextBlock TextWrapping="Wrap" Text="{x:Static lang:Strings.AboutNotes3}"/>
+					</StackPanel>
+				</Border>
+
+				<TextBlock Text="{x:Static lang:Strings.AboutCommandLineArgumentsTitle}"/>
+				<Border>
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="--demo"/>
+						<TextBlock TextWrapping="Wrap" Text="{x:Static lang:Strings.AboutCommandLineArgDemoText}"/>
+					</StackPanel>
+				</Border>
+
+				<TextBlock Text="{x:Static lang:Strings.AboutChangelogTitle}"/>
+				<Border>
+					<TextBlock Margin="20" Text="{Binding Changes}" TextWrapping="Wrap"/>
+				</Border>
+
+				<TextBlock Text="{x:Static lang:Strings.AboutLicenseTitle}"/>
+				<Border>
+					<TextBlock Margin="20" Text="{x:Static lang:Strings.AboutLicense}"/>
+				</Border>
+
+				<TextBlock Text="{x:Static lang:Strings.AboutNuGetPackageLicensesTitle}"/>
+				<Border>
+					<!--
+					<ListView ItemsSource="{Binding Licenses}" Grid.IsSharedSizeScope="True" Background="Transparent" BorderThickness="0" Margin="10">
+						<ListView.ItemTemplate>
+							<DataTemplate>
+								<Grid>
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="Auto" SharedSizeGroup="NameColumn"/>
+										<ColumnDefinition Width="Auto" SharedSizeGroup="VersionColumn"/>
+										<ColumnDefinition Width="Auto" SharedSizeGroup="LicenseTypeColumn"/>
+										<ColumnDefinition Width="Auto" SharedSizeGroup="LicenseLinkColumn"/>
+									</Grid.ColumnDefinitions>
+									<TextBlock Grid.Column="0" Text="{Binding PackageName}" Margin="3"/>
+									<TextBlock Grid.Column="1" Text="{Binding PackageVersion}" Margin="3"/>
+									<TextBlock Grid.Column="2" Text="{Binding LicenseType}" Margin="3"/>
+									<TextBlock Grid.Column="3" Text="{Binding PackageUrl}" Margin="3"/>
+								</Grid>
+							</DataTemplate>
+						</ListView.ItemTemplate>
+					</ListView>
+					-->
+				</Border>
+			</StackPanel>
+		</ScrollViewer>
+	</DockPanel>
+</UserControl>
