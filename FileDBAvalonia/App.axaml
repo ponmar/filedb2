@@ -11,5 +11,25 @@
 			<Setter Property="FontSize" Value="22" />
 			<Setter Property="Margin" Value="0"/>
 		</Style>
+
+		<Style Selector="TextBlock.PageHeader">
+			<Setter Property="FontSize" Value="24"/>
+			<Setter Property="Margin" Value="10"/>
+		</Style>
+
+		<Style Selector="TextBlock.PageSubHeader">
+			<Setter Property="FontSize" Value="18"/>
+			<Setter Property="Margin" Value="10"/>
+		</Style>
+
+		<Style Selector="Border.BorderGroup">
+			<Setter Property="BorderThickness" Value="1"/>
+			<Setter Property="BorderBrush" Value="Gray"/>
+			<Setter Property="CornerRadius" Value="5"/>
+		</Style>
+
+		<Style Selector="TextBlock.PageTextBox">
+			<Setter Property="Margin" Value="10"/>
+		</Style>
     </Application.Styles>
 </Application>

@@ -6,30 +6,19 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="FileDBAvalonia.Views.AboutView">
 	<DockPanel>
-		<TextBlock DockPanel.Dock="Top" Text="{x:Static lang:Strings.AboutTitle}"/>
+		<TextBlock DockPanel.Dock="Top" Text="{x:Static lang:Strings.AboutTitle}" Classes="PageHeader"/>
 		<ScrollViewer>
 			<StackPanel Orientation="Vertical">
-				<TextBlock Text="{Binding AppName}"/>
-				<Border>
-					<Grid>
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="Auto"/>
-							<ColumnDefinition Width="Auto"/>
-						</Grid.ColumnDefinitions>
-						<Grid.RowDefinitions>
-							<RowDefinition/>
-							<RowDefinition/>
-							<RowDefinition/>
-							<RowDefinition/>
-						</Grid.RowDefinitions>
+				<TextBlock Text="{Binding AppName}" Classes="PageSubHeader"/>
+				<Border Classes="BorderGroup">
+					<Grid ColumnDefinitions="auto,auto" RowDefinitions="auto,auto,auto,auto">
+						<TextBlock Grid.Row="0" Grid.Column="0" Classes="PageTextBox" Text="{x:Static lang:Strings.AboutAppVersion}"/>
+						<TextBlock Grid.Row="0" Grid.Column="1" Classes="PageTextBox" Text="{Binding Version}"/>
 
-						<TextBlock Grid.Row="0" Grid.Column="0" Text="{x:Static lang:Strings.AboutAppVersion}"/>
-						<TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Version}"/>
+						<TextBlock Grid.Row="1" Grid.Column="0" Classes="PageTextBox" Text="{x:Static lang:Strings.AboutAppAuthor}"/>
+						<TextBlock Grid.Row="1" Grid.Column="1" Classes="PageTextBox" Text="{Binding Author}"/>
 
-						<TextBlock Grid.Row="1" Grid.Column="0" Text="{x:Static lang:Strings.AboutAppAuthor}"/>
-						<TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Author}"/>
-
-						<TextBlock Grid.Row="2" Grid.Column="0" Text="{x:Static lang:Strings.AboutAppProjectWebsite}"/>
+						<TextBlock Grid.Row="2" Grid.Column="0" Classes="PageTextBox" Text="{x:Static lang:Strings.AboutAppProjectWebsite}"/>
 						<TextBlock Grid.Row="2" Grid.Column="1">
 							<!--
 							<Hyperlink NavigateUri="{Binding ProjectUrl}" RequestNavigate="OpenUri">
@@ -38,7 +27,7 @@
 							-->
 						</TextBlock>
 
-						<TextBlock Grid.Row="3" Grid.Column="0" Text="{x:Static lang:Strings.AboutDownloadsReleases}"/>
+						<TextBlock Grid.Row="3" Grid.Column="0" Classes="PageTextBox" Text="{x:Static lang:Strings.AboutDownloadsReleases}"/>
 						<TextBlock Grid.Row="3" Grid.Column="1">
 							<!--
 							<Hyperlink NavigateUri="{Binding DownloadLink}" RequestNavigate="OpenUri">
@@ -49,42 +38,31 @@
 					</Grid>
 				</Border>
 
-				<TextBlock Text="{x:Static lang:Strings.AboutGettingStartedTitle}"/>
-				<Border>
-					<Grid>
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="auto" />
-							<ColumnDefinition Width="*" />
-						</Grid.ColumnDefinitions>
-						<Grid.RowDefinitions>
-							<RowDefinition/>
-							<RowDefinition/>
-							<RowDefinition/>
-							<RowDefinition/>
-							<RowDefinition/>
-						</Grid.RowDefinitions>
-						<TextBlock Grid.Row="0" Grid.Column="0" Text="1."/>
-						<TextBlock Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" Text="{x:Static lang:Strings.AboutGettingStarted1}"/>
+				<TextBlock Text="{x:Static lang:Strings.AboutGettingStartedTitle}" Classes="PageSubHeader"/>
+				<Border Classes="BorderGroup">
+					<Grid ColumnDefinitions="auto,*" RowDefinitions="auto,auto,auto,auto,auto">
+						<TextBlock Grid.Row="0" Grid.Column="0" Classes="PageTextBox" Text="1."/>
+						<TextBlock Grid.Row="0" Grid.Column="1" Classes="PageTextBox" TextWrapping="Wrap" Text="{x:Static lang:Strings.AboutGettingStarted1}"/>
 
-						<TextBlock Grid.Row="1" Grid.Column="0" Text="2."/>
-						<TextBlock Grid.Row="1" Grid.Column="1" TextWrapping="Wrap" Text="{x:Static lang:Strings.AboutGettingStarted2}"/>
+						<TextBlock Grid.Row="1" Grid.Column="0" Classes="PageTextBox" Text="2."/>
+						<TextBlock Grid.Row="1" Grid.Column="1" Classes="PageTextBox" TextWrapping="Wrap" Text="{x:Static lang:Strings.AboutGettingStarted2}"/>
 
-						<TextBlock Grid.Row="2" Grid.Column="0" Text="3."/>
-						<TextBlock Grid.Row="2" Grid.Column="1" TextWrapping="Wrap" Text="{x:Static lang:Strings.AboutGettingStarted3}"/>
+						<TextBlock Grid.Row="2" Grid.Column="0" Classes="PageTextBox" Text="3."/>
+						<TextBlock Grid.Row="2" Grid.Column="1" Classes="PageTextBox" TextWrapping="Wrap" Text="{x:Static lang:Strings.AboutGettingStarted3}"/>
 
-						<TextBlock Grid.Row="3" Grid.Column="0" Text="4."/>
-						<TextBlock Grid.Row="3" Grid.Column="1" TextWrapping="Wrap" Text="{x:Static lang:Strings.AboutGettingStarted4}"/>
+						<TextBlock Grid.Row="3" Grid.Column="0" Classes="PageTextBox" Text="4."/>
+						<TextBlock Grid.Row="3" Grid.Column="1" Classes="PageTextBox" TextWrapping="Wrap" Text="{x:Static lang:Strings.AboutGettingStarted4}"/>
 
-						<TextBlock Grid.Row="4" Grid.Column="0" Text="5."/>
-						<TextBlock Grid.Row="4" Grid.Column="1" TextWrapping="Wrap" Text="{x:Static lang:Strings.AboutGettingStarted5}"/>
+						<TextBlock Grid.Row="4" Grid.Column="0" Classes="PageTextBox" Text="5."/>
+						<TextBlock Grid.Row="4" Grid.Column="1" Classes="PageTextBox" TextWrapping="Wrap" Text="{x:Static lang:Strings.AboutGettingStarted5}"/>
 					</Grid>
 				</Border>
 
-				<TextBlock Text="{x:Static lang:Strings.AboutNotesTitle}"/>
-				<Border>
+				<TextBlock Text="{x:Static lang:Strings.AboutNotesTitle}" Classes="PageSubHeader"/>
+				<Border Classes="BorderGroup">
 					<StackPanel Orientation="Vertical">
-						<TextBlock TextWrapping="Wrap" Text="{x:Static lang:Strings.AboutNotes1}"/>
-						<TextBlock TextWrapping="Wrap" Text="{x:Static lang:Strings.AboutNotes2}"/>
+						<TextBlock TextWrapping="Wrap" Classes="PageTextBox" Text="{x:Static lang:Strings.AboutNotes1}"/>
+						<TextBlock TextWrapping="Wrap" Classes="PageTextBox" Text="{x:Static lang:Strings.AboutNotes2}"/>
 
 						<TreeView Margin="10" IsHitTestVisible="False">
 							<TreeViewItem Header="root" IsExpanded="True">
@@ -106,30 +84,30 @@
 							</TreeViewItem>
 						</TreeView>
 
-						<TextBlock TextWrapping="Wrap" Text="{x:Static lang:Strings.AboutNotes3}"/>
+						<TextBlock Classes="PageTextBox" TextWrapping="Wrap" Text="{x:Static lang:Strings.AboutNotes3}"/>
 					</StackPanel>
 				</Border>
 
-				<TextBlock Text="{x:Static lang:Strings.AboutCommandLineArgumentsTitle}"/>
-				<Border>
+				<TextBlock Text="{x:Static lang:Strings.AboutCommandLineArgumentsTitle}" Classes="PageSubHeader"/>
+				<Border Classes="BorderGroup">
 					<StackPanel Orientation="Horizontal">
-						<TextBlock Text="--demo"/>
-						<TextBlock TextWrapping="Wrap" Text="{x:Static lang:Strings.AboutCommandLineArgDemoText}"/>
+						<TextBlock Classes="PageTextBox" Text="--demo"/>
+						<TextBlock Classes="PageTextBox" TextWrapping="Wrap" Text="{x:Static lang:Strings.AboutCommandLineArgDemoText}"/>
 					</StackPanel>
 				</Border>
 
-				<TextBlock Text="{x:Static lang:Strings.AboutChangelogTitle}"/>
-				<Border>
-					<TextBlock Margin="20" Text="{Binding Changes}" TextWrapping="Wrap"/>
+				<TextBlock Text="{x:Static lang:Strings.AboutChangelogTitle}" Classes="PageSubHeader"/>
+				<Border Classes="BorderGroup">
+					<TextBlock Classes="PageTextBox" Margin="20" Text="{Binding Changes}" TextWrapping="Wrap"/>
 				</Border>
 
-				<TextBlock Text="{x:Static lang:Strings.AboutLicenseTitle}"/>
-				<Border>
-					<TextBlock Margin="20" Text="{x:Static lang:Strings.AboutLicense}"/>
+				<TextBlock Text="{x:Static lang:Strings.AboutLicenseTitle}" Classes="PageSubHeader"/>
+				<Border Classes="BorderGroup">
+					<TextBlock Classes="PageTextBox" Margin="20" Text="{x:Static lang:Strings.AboutLicense}"/>
 				</Border>
 
-				<TextBlock Text="{x:Static lang:Strings.AboutNuGetPackageLicensesTitle}"/>
-				<Border>
+				<TextBlock Text="{x:Static lang:Strings.AboutNuGetPackageLicensesTitle}" Classes="PageSubHeader"/>
+				<Border Classes="BorderGroup">
 					<!--
 					<ListView ItemsSource="{Binding Licenses}" Grid.IsSharedSizeScope="True" Background="Transparent" BorderThickness="0" Margin="10">
 						<ListView.ItemTemplate>
