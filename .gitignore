@@ -455,3 +455,6 @@ $RECYCLE.BIN/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+# Visual studio project start settings (working directory absolute path that may differ between computers)
+*/Properties

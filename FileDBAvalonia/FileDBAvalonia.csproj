@@ -26,6 +26,7 @@
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.7" />
     <PackageReference Include="FluentValidation" Version="11.9.0" />
+    <PackageReference Include="MessageBox.Avalonia" Version="3.1.5.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="QuestPDF" Version="2023.12.4" />
     <PackageReference Include="System.Speech" Version="8.0.0" />

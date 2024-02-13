@@ -1,5 +1,7 @@
 ﻿using Castle.MicroKernel.Registration;
 using Castle.Windsor;
+using FileDBAvalonia.Dialogs;
+using FileDBAvalonia.Model;
 using FileDBAvalonia.ViewModels;
 using System.IO.Abstractions;
 
@@ -14,11 +16,7 @@ public static class Bootstrapper
         Container.Register(Component.For<IFileSystem>().ImplementedBy<FileSystem>());
 
         Container.Register(Component.For<AboutViewModel>().ImplementedBy<AboutViewModel>());
-        /*
-        Container.Register(Component.For<IDialogs>().ImplementedBy<Dialogs>());
-        Container.Register(Component.For<INotifierFactory>().ImplementedBy<NotifierFactory>());
-        Container.Register(Component.For<IImageLoader>().ImplementedBy<ImageLoader>());
-        Container.Register(Component.For<ISpeeker>().ImplementedBy<Speeker>());
+        Container.Register(Component.For<IDialogs>().ImplementedBy<Dialogs.Dialogs>());
 
         Container.Register(
             Component.For(
@@ -29,6 +27,11 @@ public static class Bootstrapper
                 typeof(IFilesystemAccessProvider),
                 typeof(IConfigUpdater))
                     .ImplementedBy<Model.Model>());
+
+        /*
+        Container.Register(Component.For<INotifierFactory>().ImplementedBy<NotifierFactory>());
+        Container.Register(Component.For<IImageLoader>().ImplementedBy<ImageLoader>());
+        Container.Register(Component.For<ISpeeker>().ImplementedBy<Speeker>());
 
         Container.Register(
             Component.For(
