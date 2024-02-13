@@ -97,7 +97,7 @@
 						-->
 					</Grid>
 				</TabItem.Header>
-				<!--Views:NotificationsView Margin="10 0 10 10"/-->
+				<views:NotificationsView Margin="10 0 10 10"/>
 			</TabItem>
 
 			<TabItem HorizontalContentAlignment="Center">

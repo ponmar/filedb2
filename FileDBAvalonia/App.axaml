@@ -12,6 +12,11 @@
 			<Setter Property="Margin" Value="0"/>
 		</Style>
 
+		<Style Selector="TextBlock.PageNotificationIcon">
+			<Setter Property="FontSize" Value="28" />
+			<Setter Property="Margin" Value="10"/>
+		</Style>
+
 		<Style Selector="TextBlock.PageHeader">
 			<Setter Property="FontSize" Value="24"/>
 			<Setter Property="Margin" Value="10"/>
@@ -31,5 +36,13 @@
 		<Style Selector="TextBlock.PageTextBox">
 			<Setter Property="Margin" Value="10"/>
 		</Style>
-    </Application.Styles>
+
+		<Style Selector="Button.PageButton">
+			<Setter Property="Margin" Value="10"/>
+		</Style>
+
+		<Style Selector="ItemsControl.PageItemsControls">
+			<Setter Property="Margin" Value="10"/>
+		</Style>		
+	</Application.Styles>
 </Application>

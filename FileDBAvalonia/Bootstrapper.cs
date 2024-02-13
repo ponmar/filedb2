@@ -2,6 +2,7 @@
 using Castle.Windsor;
 using FileDBAvalonia.Dialogs;
 using FileDBAvalonia.Model;
+using FileDBAvalonia.Notifiers;
 using FileDBAvalonia.ViewModels;
 using System.IO.Abstractions;
 
@@ -14,6 +15,8 @@ public static class Bootstrapper
     public static void Bootstrap()
     {
         Container.Register(Component.For<IFileSystem>().ImplementedBy<FileSystem>());
+
+        Container.Register(Component.For<INotifierFactory>().ImplementedBy<NotifierFactory>());
 
         Container.Register(Component.For<AboutViewModel>().ImplementedBy<AboutViewModel>());
         Container.Register(Component.For<IDialogs>().ImplementedBy<Dialogs.Dialogs>());
@@ -28,8 +31,10 @@ public static class Bootstrapper
                 typeof(IConfigUpdater))
                     .ImplementedBy<Model.Model>());
 
+        Container.Register(Component.For<NotificationsViewModel>().ImplementedBy<NotificationsViewModel>());
+
         /*
-        Container.Register(Component.For<INotifierFactory>().ImplementedBy<NotifierFactory>());
+        
         Container.Register(Component.For<IImageLoader>().ImplementedBy<ImageLoader>());
         Container.Register(Component.For<ISpeeker>().ImplementedBy<Speeker>());
 
@@ -44,7 +49,6 @@ public static class Bootstrapper
         Container.Register(Component.For<BirthdaysViewModel>().ImplementedBy<BirthdaysViewModel>());
         Container.Register(Component.For<FilesViewModel>().ImplementedBy<FilesViewModel>());
         Container.Register(Component.For<LocationsViewModel>().ImplementedBy<LocationsViewModel>());
-        Container.Register(Component.For<NotificationsViewModel>().ImplementedBy<NotificationsViewModel>());
         Container.Register(Component.For<PersonsViewModel>().ImplementedBy<PersonsViewModel>());
         Container.Register(Component.For<RipViewModel>().ImplementedBy<RipViewModel>());
         Container.Register(Component.For<SettingsViewModel>().ImplementedBy<SettingsViewModel>());
