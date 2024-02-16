@@ -48,21 +48,21 @@
 				<TabItem.Header>
 					<TextBlock Classes="TabIcon" Text="&#x1F642;" ToolTip.Tip="{x:Static lang:Strings.PersonsTitle}"/>
 				</TabItem.Header>
-				<!--Views:PersonsView Margin="10 0 10 10"/-->
+				<views:PersonsView Margin="10 0 10 10"/>
 			</TabItem>
 
 			<TabItem HorizontalContentAlignment="Center">
 				<TabItem.Header>
 					<TextBlock Classes="TabIcon" Text="&#x1F3E0;" ToolTip.Tip="{x:Static lang:Strings.LocationsTitle}"/>
 				</TabItem.Header>
-				<!--Views:LocationsView Margin="10 0 10 10"/-->
+				<views:LocationsView Margin="10 0 10 10"/>
 			</TabItem>
 
 			<TabItem HorizontalContentAlignment="Center">
 				<TabItem.Header>
 					<TextBlock Classes="TabIcon" Text="&#x1F516;" ToolTip.Tip="{x:Static lang:Strings.TagsTitle}"/>
 				</TabItem.Header>
-				<!--Views:TagsView Margin="10 0 10 10"/-->
+				<views:TagsView Margin="10 0 10 10"/>
 			</TabItem>
 
 			<TabItem HorizontalContentAlignment="Center">

@@ -5,6 +5,7 @@ using System.Linq;
 using MsBox.Avalonia;
 using System.Threading.Tasks;
 using MsBox.Avalonia.Enums;
+using FileDBShared.Model;
 
 namespace FileDBAvalonia.Dialogs;
 
@@ -125,9 +126,11 @@ public class Dialogs : IDialogs
 
         return null;
     }
+    */
 
     public PersonModel? ShowAddPersonDialog(int? personId = null)
     {
+        /*
         var window = new AddPersonWindow(personId)
         {
             Owner = Application.Current.MainWindow
@@ -135,10 +138,13 @@ public class Dialogs : IDialogs
         window.ShowDialog();
 
         return ((AddPersonViewModel)window.DataContext).AffectedPerson;
+        */
+        return null;
     }
 
     public LocationModel? ShowAddLocationDialog(int ?locationId = null)
     {
+        /*
         var window = new AddLocationWindow(locationId)
         {
             Owner = Application.Current.MainWindow
@@ -146,10 +152,13 @@ public class Dialogs : IDialogs
         window.ShowDialog();
 
         return ((AddLocationViewModel)window.DataContext).AffectedLocation;
+        */
+        return null;
     }
 
     public TagModel? ShowAddTagDialog(int? tagId = null)
     {
+        /*
         var window = new AddTagWindow(tagId)
         {
             Owner = Application.Current.MainWindow
@@ -157,8 +166,11 @@ public class Dialogs : IDialogs
         window.ShowDialog();
 
         return ((AddTagViewModel)window.DataContext).AffectedTag;
+        */
+        return null;
     }
 
+    /*
     public string? ShowBrowseDirectoriesDialog()
     {
         var window = new BrowseDirectoriesWindow
@@ -170,9 +182,7 @@ public class Dialogs : IDialogs
         var windowVm = (BrowseDirectoriesViewModel)window.DataContext;
         return windowVm.SelectedDirectoryPath;
     }
-    */
 
-    /*
     public void ShowExportDialog(SearchResult searchResult)
     {
         var window = new ExportWindow

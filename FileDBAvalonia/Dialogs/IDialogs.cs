@@ -1,4 +1,5 @@
-﻿using FluentValidation.Results;
+﻿using FileDBShared.Model;
+using FluentValidation.Results;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -19,10 +20,10 @@ public interface IDialogs
     string? BrowseExistingFileDialog(string initialDirectory, string filter);
     string? BrowseExistingDirectory(string initialDirectory, string title);
     string? SelectNewFileDialog(string title, string fileExtension, string filter);
+    */
     PersonModel? ShowAddPersonDialog(int? personId = null);
     LocationModel? ShowAddLocationDialog(int? locationId = null);
     TagModel? ShowAddTagDialog(int? tagId = null);
-    string? ShowBrowseDirectoriesDialog();
-    */
+    //string? ShowBrowseDirectoriesDialog();
     //void ShowExportDialog(SearchResult searchResult);
 }

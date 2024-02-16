@@ -1,0 +1,37 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:lang="clr-namespace:FileDBAvalonia.Lang"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="FileDBAvalonia.Views.TagsView">
+	<DockPanel>
+		<TextBlock DockPanel.Dock="Top" Text="{x:Static lang:Strings.TagsTitle}" Classes="PageHeader"/>
+		<ScrollViewer>
+			<Border Classes="BorderGroup" HorizontalAlignment="Left" VerticalAlignment="Top">
+				<StackPanel>
+					<StackPanel Orientation="Horizontal" IsVisible="{Binding ReadWriteMode}">
+						<Button Classes="Normal" Margin="10" Command="{Binding AddTagCommand}" Content="{x:Static lang:Strings.TagsAddButton}"/>
+						<Button Classes="Normal" Margin="10" Command="{Binding EditTagCommand}" IsEnabled="{Binding SelectedTag, Converter={x:Static ObjectConverters.IsNotNull}}" Content="{x:Static lang:Strings.TagEditButton}"/>
+						<Button Classes="Normal" Margin="10" Command="{Binding RemoveTagCommand}" IsEnabled="{Binding SelectedTag, Converter={x:Static ObjectConverters.IsNotNull}}" Content="{x:Static lang:Strings.TagsDeleteButton}"/>
+					</StackPanel>
+
+					<ListBox Margin="10" ItemsSource="{Binding Tags}" SelectionMode="Single" SelectedItem="{Binding SelectedTag}" Grid.IsSharedSizeScope="True">
+						<ListBox.ItemTemplate>
+							<DataTemplate>
+								<Grid>
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="auto" SharedSizeGroup="col1"/>
+										<ColumnDefinition Width="auto" SharedSizeGroup="col2"/>
+									</Grid.ColumnDefinitions>
+									<TextBlock Classes="PageTextBox" Grid.Column="0" Text="{Binding Id}" />
+									<TextBlock Classes="PageTextBox" Grid.Column="1" Text="{Binding Name}" />
+								</Grid>
+							</DataTemplate>
+						</ListBox.ItemTemplate>
+					</ListBox>
+				</StackPanel>
+			</Border>
+		</ScrollViewer>
+	</DockPanel>
+</UserControl>
