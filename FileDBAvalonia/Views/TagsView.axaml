@@ -10,11 +10,11 @@
 		<ScrollViewer>
 			<Border Classes="BorderGroup" HorizontalAlignment="Left" VerticalAlignment="Top">
 				<StackPanel>
-					<StackPanel Orientation="Horizontal" IsVisible="{Binding ReadWriteMode}">
+					<WrapPanel Orientation="Horizontal" IsVisible="{Binding ReadWriteMode}">
 						<Button Classes="Normal" Margin="10" Command="{Binding AddTagCommand}" Content="{x:Static lang:Strings.TagsAddButton}"/>
 						<Button Classes="Normal" Margin="10" Command="{Binding EditTagCommand}" IsEnabled="{Binding SelectedTag, Converter={x:Static ObjectConverters.IsNotNull}}" Content="{x:Static lang:Strings.TagEditButton}"/>
 						<Button Classes="Normal" Margin="10" Command="{Binding RemoveTagCommand}" IsEnabled="{Binding SelectedTag, Converter={x:Static ObjectConverters.IsNotNull}}" Content="{x:Static lang:Strings.TagsDeleteButton}"/>
-					</StackPanel>
+					</WrapPanel>
 
 					<ListBox Margin="10" ItemsSource="{Binding Tags}" SelectionMode="Single" SelectedItem="{Binding SelectedTag}" Grid.IsSharedSizeScope="True">
 						<ListBox.ItemTemplate>
@@ -25,7 +25,7 @@
 										<ColumnDefinition Width="auto" SharedSizeGroup="col2"/>
 									</Grid.ColumnDefinitions>
 									<TextBlock Classes="PageTextBox" Grid.Column="0" Text="{Binding Id}" />
-									<TextBlock Classes="PageTextBox" Grid.Column="1" Text="{Binding Name}" />
+									<TextBlock Classes="PageTextBox" Grid.Column="1" Text="{Binding Name}" TextWrapping="Wrap"/>
 								</Grid>
 							</DataTemplate>
 						</ListBox.ItemTemplate>

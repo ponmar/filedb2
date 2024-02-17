@@ -2,7 +2,41 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:lang="clr-namespace:FileDBAvalonia.Lang"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="FileDBAvalonia.Views.LocationsView">
-  Welcome to Avalonia!
+	<DockPanel>
+		<TextBlock DockPanel.Dock="Top" Text="{x:Static lang:Strings.LocationsTitle}" Classes="PageHeader"/>
+		<ScrollViewer>
+			<Border Classes="BorderGroup" HorizontalAlignment="Left" VerticalAlignment="Top">
+				<StackPanel>
+					<WrapPanel Orientation="Horizontal" IsVisible="{Binding ReadWriteMode}">
+						<Button Classes="Normal" Margin="10" Command="{Binding AddLocationCommand}" Content="{x:Static lang:Strings.LocationsAddButton}"/>
+						<Button Classes="Normal" Margin="10" Command="{Binding EditLocationCommand}" IsEnabled="{Binding SelectedLocation, Converter={x:Static ObjectConverters.IsNotNull}}" Content="{x:Static lang:Strings.LocationsEditButton}"/>
+						<Button Classes="Normal" Margin="10" Command="{Binding RemoveLocationCommand}" IsEnabled="{Binding SelectedLocation, Converter={x:Static ObjectConverters.IsNotNull}}" Content="{x:Static lang:Strings.LocationsDeleteButton}"/>
+						<Button Classes="Normal" Margin="10" Command="{Binding ShowLocationOnMapCommand}" IsEnabled="{Binding SelectedLocationHasPosition}" Content="{x:Static lang:Strings.LocationsShowOnMapButton}"/>
+					</WrapPanel>
+
+					<ListBox Margin="10" ItemsSource="{Binding Locations}" SelectionMode="Single" SelectedItem="{Binding SelectedLocation}" Grid.IsSharedSizeScope="True">
+						<ListBox.ItemTemplate>
+							<DataTemplate>
+								<Grid>
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="auto" SharedSizeGroup="col1"/>
+										<ColumnDefinition Width="auto" SharedSizeGroup="col2"/>
+										<ColumnDefinition Width="auto" SharedSizeGroup="col3"/>
+										<ColumnDefinition Width="auto" SharedSizeGroup="col4"/>
+									</Grid.ColumnDefinitions>
+									<TextBlock Classes="PageTextBox" Grid.Column="0" Text="{Binding Id}" />
+									<TextBlock Classes="PageTextBox" Grid.Column="1" Text="{Binding Name}" TextWrapping="Wrap" />
+									<TextBlock Classes="PageTextBox" Grid.Column="2" Text="{Binding Description}" TextWrapping="Wrap" />
+									<TextBlock Classes="PageTextBox" Grid.Column="3" Text="{Binding Position}" TextWrapping="Wrap" />
+								</Grid>
+							</DataTemplate>
+						</ListBox.ItemTemplate>
+					</ListBox>
+				</StackPanel>
+			</Border>
+		</ScrollViewer>
+	</DockPanel>
 </UserControl>
