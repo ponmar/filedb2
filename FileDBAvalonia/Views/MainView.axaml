@@ -5,6 +5,7 @@
              xmlns:vm="clr-namespace:FileDBAvalonia.ViewModels"
 			 xmlns:lang="clr-namespace:FileDBAvalonia.Lang"
 			 xmlns:views="clr-namespace:FileDBAvalonia.Views;assembly=FileDBAvalonia"
+			 xmlns:converters="clr-namespace:FileDBAvalonia.Converters"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="FileDBAvalonia.Views.MainView"
              x:DataType="vm:MainViewModel">
@@ -14,6 +15,10 @@
     <vm:MainViewModel />
   </Design.DataContext>
 
+	<UserControl.Resources>
+		<converters:NotificationTypeToColorConverter x:Key="NotificationTypeToColorConverter" />
+	</UserControl.Resources>
+	
 	<Grid>
 		<TabControl TabStripPlacement="Left">
 			<TabItem HorizontalContentAlignment="Center">
@@ -90,11 +95,9 @@
 				<TabItem.Header>
 					<Grid>
 						<TextBlock Classes="TabIcon" Text="&#x1F514;" ToolTip.Tip="{x:Static lang:Strings.NotificationsTitle}"/>
-						<!--
-						<Border Style="{StaticResource NotificationBadgeBg}" Background="{Binding HighlightedNotificationType, Converter={StaticResource NotificationTypeToColorConverter}}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Padding="6 1 6 1" Visibility="{Binding NumNotifications, Converter={StaticResource GreaterThanZeroToVisibilityConverter}}">
-							<TextBlock Text="{Binding NumNotifications}" Style="{StaticResource NotificationBadge}" />
+						<Border Background="{Binding HighlightedNotificationType, Converter={StaticResource NotificationTypeToColorConverter}}" HorizontalAlignment="Right" VerticalAlignment="Bottom" IsVisible="{Binding NumNotifications}" CornerRadius="4">
+							<TextBlock Margin="4" Text="{Binding NumNotifications}" Classes="NotificationBadge" />
 						</Border>
-						-->
 					</Grid>
 				</TabItem.Header>
 				<views:NotificationsView Margin="10 0 10 10"/>

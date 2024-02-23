@@ -27,6 +27,12 @@
 			<Setter Property="Margin" Value="10"/>
 		</Style>
 
+		<Style Selector="TextBlock.NotificationBadge">
+			<Setter Property="FontSize" Value="12"/>
+			<Setter Property="Foreground" Value="White"/>
+			<Setter Property="FontWeight" Value="Bold"/>
+		</Style>
+
 		<Style Selector="Border.BorderGroup">
 			<Setter Property="BorderThickness" Value="1"/>
 			<Setter Property="BorderBrush" Value="Gray"/>

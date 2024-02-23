@@ -148,14 +148,14 @@ public partial class App : Application
             // Only load views and viewmodels when this method did not called shutdown above
             desktop.MainWindow = new MainWindow
             {
-                DataContext = new MainViewModel()
+                DataContext = new MainViewModel(ServiceLocator.Resolve<IConfigProvider>(), ServiceLocator.Resolve<INotificationsRepository>())
             };
         }
         else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
         {
             singleViewPlatform.MainView = new MainView
             {
-                DataContext = new MainViewModel()
+                DataContext = new MainViewModel(ServiceLocator.Resolve<IConfigProvider>(), ServiceLocator.Resolve<INotificationsRepository>())
             };
         }
 
