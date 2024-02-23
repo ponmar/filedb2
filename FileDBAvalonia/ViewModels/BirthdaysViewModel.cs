@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Avalonia;
 using Avalonia.Media.Imaging;
+using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FileDBAvalonia.Model;
 using FileDBInterface.Extensions;
@@ -125,17 +127,17 @@ public partial class BirthdaysViewModel : ObservableObject
 
         this.RegisterForEvent<ImageLoaded>((x) =>
         {
-            /*
-            Application.Current.Dispatcher.Invoke(() =>
+            Dispatcher.UIThread.Invoke(() =>
             {
                 foreach (var personVm in allPersons.Where(p => p.ProfilePictureAbsPath == x.FilePath))
                 {
                     var profileFile = dbAccessProvider.DbAccess.GetFileById(personVm.Person.ProfileFileId!.Value);
                     int rotateDegrees = DatabaseParsing.OrientationToDegrees(profileFile!.Orientation ?? 0);
-                    personVm.ProfilePicture = ImageUtils.Rotate(x.Image, -rotateDegrees);
+                    // TODO: add rotation
+                    personVm.ProfilePicture = x.Image;
+                    //personVm.ProfilePicture = ImageUtils.Rotate(x.Image, -rotateDegrees);
                 }
             });
-            */
         });
 
         UpdatePersons();
