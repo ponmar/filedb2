@@ -1,0 +1,46 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 xmlns:lang="clr-namespace:FileDBAvalonia.Lang"
+             x:Class="FileDBAvalonia.Views.RipView">
+	<DockPanel>
+		<TextBlock DockPanel.Dock="Top" Text="{x:Static lang:Strings.RipTitle}" Classes="PageHeader"/>
+		<ScrollViewer>
+			<StackPanel Orientation="Vertical">
+				<StackPanel Orientation="Horizontal">
+					<TextBlock Text="{x:Static lang:Strings.RipFilterLabel}" Margin="10" VerticalAlignment="Center"/>
+					<TextBox Width="200" Text="{Binding FilterText}" VerticalAlignment="Center"/>
+				</StackPanel>
+				<ListBox Margin="10" IsVisible="{Binding Persons.Count}" ItemsSource="{Binding Persons}" SelectionMode="Single" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="Transparent">
+					<ListBox.ItemsPanel>
+						<ItemsPanelTemplate>
+							<WrapPanel />
+						</ItemsPanelTemplate>
+					</ListBox.ItemsPanel>
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<Border>
+								<StackPanel Orientation="Horizontal" Margin="5" Width="400">
+									<Image IsVisible="{Binding ProfilePicture, Converter={x:Static ObjectConverters.IsNotNull}}" Width="100" Height="100" Margin="5" Source="{Binding ProfilePicture}" VerticalAlignment="Center"/>
+									<StackPanel Orientation="Vertical" Margin="5" VerticalAlignment="Center">
+										<StackPanel Orientation="Horizontal">
+											<TextBlock Text="{Binding Name}" Margin="5"/>
+											<TextBlock Text="{Binding Age}" Margin="5"/>
+										</StackPanel>
+										<StackPanel Orientation="Horizontal">
+											<TextBlock Text="{Binding DateOfBirth}" Margin="5"/>
+											<TextBlock Text="-" Margin="5"/>
+											<TextBlock Text="{Binding DeceasedStr}" Margin="5"/>
+										</StackPanel>
+									</StackPanel>
+								</StackPanel>
+							</Border>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+				</ListBox>
+			</StackPanel>
+		</ScrollViewer>
+	</DockPanel>
+</UserControl>

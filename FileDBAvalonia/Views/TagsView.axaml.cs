@@ -1,14 +1,13 @@
 using Avalonia.Controls;
 using FileDBAvalonia.ViewModels;
 
-namespace FileDBAvalonia.Views
+namespace FileDBAvalonia.Views;
+
+public partial class TagsView : UserControl
 {
-    public partial class TagsView : UserControl
+    public TagsView()
     {
-        public TagsView()
-        {
-            InitializeComponent();
-            DataContext = ServiceLocator.Resolve<TagsViewModel>();
-        }
+        InitializeComponent();
+        DataContext = ServiceLocator.Resolve<TagsViewModel>();
     }
 }

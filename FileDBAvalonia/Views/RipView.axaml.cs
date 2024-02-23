@@ -3,11 +3,11 @@ using FileDBAvalonia.ViewModels;
 
 namespace FileDBAvalonia.Views;
 
-public partial class AboutView : UserControl
+public partial class RipView : UserControl
 {
-    public AboutView()
+    public RipView()
     {
         InitializeComponent();
-        DataContext = ServiceLocator.Resolve<AboutViewModel>();
+        DataContext = ServiceLocator.Resolve<RipViewModel>();
     }
 }

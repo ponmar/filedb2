@@ -34,14 +34,14 @@
 				<TabItem.Header>
 					<TextBlock Classes="TabIcon" Text="&#x1F382;" ToolTip.Tip="{x:Static lang:Strings.BirthdaysTitle}"/>
 				</TabItem.Header>
-				<!--Views:BirthdaysView Margin="10 0 10 10"/-->
+				<views:BirthdaysView Margin="10 0 10 10"/>
 			</TabItem>
 
 			<TabItem HorizontalContentAlignment="Center">
 				<TabItem.Header>
 					<TextBlock Classes="TabIcon" Text="&#x271E;" ToolTip.Tip="{x:Static lang:Strings.RipTitle}"/>
 				</TabItem.Header>
-				<!--Views:RipView Margin="10 0 10 10"/-->
+				<views:RipView Margin="10 0 10 10"/>
 			</TabItem>
 
 			<TabItem HorizontalContentAlignment="Center">

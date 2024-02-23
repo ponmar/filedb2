@@ -15,7 +15,6 @@ public static class Bootstrapper
     public static void Bootstrap()
     {
         Container.Register(Component.For<IFileSystem>().ImplementedBy<FileSystem>());
-
         Container.Register(Component.For<INotifierFactory>().ImplementedBy<NotifierFactory>());
 
         Container.Register(
@@ -44,15 +43,17 @@ public static class Bootstrapper
         Container.Register(Component.For<PersonsViewModel>().ImplementedBy<PersonsViewModel>());
         Container.Register(Component.For<TagsViewModel>().ImplementedBy<TagsViewModel>());
 
-        /*
-        
+        Container.Register(Component.For<BirthdaysViewModel>().ImplementedBy<BirthdaysViewModel>());
+        Container.Register(Component.For<RipViewModel>().ImplementedBy<RipViewModel>());
+
         Container.Register(Component.For<IImageLoader>().ImplementedBy<ImageLoader>());
+
+        /*
+       
         Container.Register(Component.For<ISpeeker>().ImplementedBy<Speeker>());
 
         Container.Register(Component.For<FilesViewModel>().ImplementedBy<FilesViewModel>());
         Container.Register(Component.For<MainViewModel>().ImplementedBy<MainViewModel>());
-        Container.Register(Component.For<BirthdaysViewModel>().ImplementedBy<BirthdaysViewModel>());
-        Container.Register(Component.For<RipViewModel>().ImplementedBy<RipViewModel>());
         Container.Register(Component.For<SettingsViewModel>().ImplementedBy<SettingsViewModel>());
         Container.Register(Component.For<ToolsViewModel>().ImplementedBy<ToolsViewModel>());
         Container.Register(Component.For<SearchViewModel>().ImplementedBy<SearchViewModel>());

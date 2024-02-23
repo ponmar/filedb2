@@ -1,14 +1,13 @@
 using Avalonia.Controls;
 using FileDBAvalonia.ViewModels;
 
-namespace FileDBAvalonia.Views
+namespace FileDBAvalonia.Views;
+
+public partial class NotificationsView : UserControl
 {
-    public partial class NotificationsView : UserControl
+    public NotificationsView()
     {
-        public NotificationsView()
-        {
-            InitializeComponent();
-            DataContext = ServiceLocator.Resolve<NotificationsViewModel>();
-        }
+        InitializeComponent();
+        DataContext = ServiceLocator.Resolve<NotificationsViewModel>();
     }
 }

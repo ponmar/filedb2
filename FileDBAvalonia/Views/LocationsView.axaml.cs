@@ -1,14 +1,13 @@
 using Avalonia.Controls;
 using FileDBAvalonia.ViewModels;
 
-namespace FileDBAvalonia.Views
+namespace FileDBAvalonia.Views;
+
+public partial class LocationsView : UserControl
 {
-    public partial class LocationsView : UserControl
+    public LocationsView()
     {
-        public LocationsView()
-        {
-            InitializeComponent();
-            DataContext = ServiceLocator.Resolve<LocationsViewModel>();
-        }
+        InitializeComponent();
+        DataContext = ServiceLocator.Resolve<LocationsViewModel>();
     }
 }
