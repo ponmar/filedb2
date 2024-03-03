@@ -8,7 +8,7 @@
 	<DockPanel>
 		<TextBlock DockPanel.Dock="Top" Text="{x:Static lang:Strings.PersonsTitle}" Classes="PageHeader"/>
 		<ScrollViewer>
-			<Border Classes="BorderGroup" HorizontalAlignment="Left" VerticalAlignment="Top">
+			<Border Classes="BorderGroup">
 				<StackPanel>
 					<WrapPanel Orientation="Horizontal" IsVisible="{Binding ReadWriteMode}">
 						<Button Classes="Normal" Margin="10" Command="{Binding AddPersonCommand}" Content="{x:Static lang:Strings.PersonsAddButton}"/>

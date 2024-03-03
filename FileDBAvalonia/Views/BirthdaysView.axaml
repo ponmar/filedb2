@@ -8,7 +8,7 @@
 	<DockPanel>
 		<TextBlock DockPanel.Dock="Top" Text="{x:Static lang:Strings.BirthdaysTitle}" Classes="PageHeader"/>
 		<ScrollViewer>
-			<Border Classes="BorderGroup" HorizontalAlignment="Left" VerticalAlignment="Top">
+			<Border Classes="BorderGroup">
 				<StackPanel Orientation="Vertical">
 					<StackPanel Orientation="Horizontal">
 						<TextBlock Text="{x:Static lang:Strings.BirthdaysFilterLabel}" Margin="10" VerticalAlignment="Center"/>
