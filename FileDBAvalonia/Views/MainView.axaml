@@ -81,7 +81,7 @@
 				<TabItem.Header>
 					<TextBlock Classes="TabIcon" Text="&#x2692;" ToolTip.Tip="{x:Static lang:Strings.ToolsTitle}"/>
 				</TabItem.Header>
-				<!--Views:ToolsView Margin="10 0 10 10"/-->
+				<views:ToolsView Margin="10 0 10 10"/>
 			</TabItem>
 
 			<TabItem HorizontalContentAlignment="Center">

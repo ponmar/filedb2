@@ -44,6 +44,7 @@ public static class Bootstrapper
         Container.Register(Component.For<TagsViewModel>().ImplementedBy<TagsViewModel>());
         Container.Register(Component.For<BirthdaysViewModel>().ImplementedBy<BirthdaysViewModel>());
         Container.Register(Component.For<RipViewModel>().ImplementedBy<RipViewModel>());
+        Container.Register(Component.For<ToolsViewModel>().ImplementedBy<ToolsViewModel>());
 
         Container.Register(Component.For<IImageLoader>().ImplementedBy<ImageLoader>());
 
@@ -53,7 +54,6 @@ public static class Bootstrapper
 
         Container.Register(Component.For<FilesViewModel>().ImplementedBy<FilesViewModel>());
         Container.Register(Component.For<MainViewModel>().ImplementedBy<MainViewModel>());
-        Container.Register(Component.For<ToolsViewModel>().ImplementedBy<ToolsViewModel>());
         Container.Register(Component.For<SearchViewModel>().ImplementedBy<SearchViewModel>());
         Container.Register(Component.For<SearchResultViewModel>().ImplementedBy<SearchResultViewModel>());
         Container.Register(Component.For<FileCategorizationViewModel>().ImplementedBy<FileCategorizationViewModel>());

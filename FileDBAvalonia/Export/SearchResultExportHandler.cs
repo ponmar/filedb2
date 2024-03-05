@@ -49,8 +49,9 @@ public class SearchResultExportHandler
         {
             var filesWithDataDirPath = Path.Combine(destinationDirectory, "PicturesWithMetadata");
             var pictureType = exportTypes.Contains(SearchResultExportType.JpegPicturesWithMetaData) ? PicturesWithMetadataExporterFileType.Jpeg : PicturesWithMetadataExporterFileType.Png;
-            var exporter = new PicturesWithMetadataExporter(filesystemAccessProvider, DescriptionPlacement.Subtitle, fileSystem, pictureType);
-            exporter.Export(data, filesWithDataDirPath);
+            // TODO
+            //var exporter = new PicturesWithMetadataExporter(filesystemAccessProvider, DescriptionPlacement.Subtitle, fileSystem, pictureType);
+            //exporter.Export(data, filesWithDataDirPath);
         }
 
         if (exportTypes.Contains(SearchResultExportType.Json))

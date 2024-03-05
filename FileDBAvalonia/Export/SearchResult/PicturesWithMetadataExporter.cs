@@ -25,6 +25,7 @@ public enum PicturesWithMetadataExporterFileType
     Jpeg,
 }
 
+/*
 public class PicturesWithMetadataExporter(IFilesystemAccessProvider filesystemAccessProvider, DescriptionPlacement descriptionPlacement, IFileSystem fileSystem, PicturesWithMetadataExporterFileType fileType) : ISearchResultExporter
 {
     private const int EmptyLineHeight = 15;
@@ -246,3 +247,4 @@ public class PicturesWithMetadataExporter(IFilesystemAccessProvider filesystemAc
         bitmap.Save(fileStream, imageFormat);
     }
 }
+*/

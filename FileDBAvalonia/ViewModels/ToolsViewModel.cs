@@ -223,8 +223,9 @@ public partial class ToolsViewModel : ObservableObject
     [RelayCommand]
     private void BrowseDatabaseExportDirectory()
     {
-        var initialPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-        DatabaseExportDirectory = dialogs.BrowseExistingDirectory(initialPath, "Select your destination directory") ?? string.Empty;
+        // TODO
+        //var initialPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        //DatabaseExportDirectory = dialogs.BrowseExistingDirectory(initialPath, "Select your destination directory") ?? string.Empty;
     }
 
     [RelayCommand]
