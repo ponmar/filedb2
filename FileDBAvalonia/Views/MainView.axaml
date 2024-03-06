@@ -32,7 +32,7 @@
 				<TabItem.Header>
 					<TextBlock Classes="TabIcon" Text="&#x1F4C2;" ToolTip.Tip="{x:Static lang:Strings.FilesTitle}"/>
 				</TabItem.Header>
-				<!--Views:FilesView Margin="10 0 10 10"/-->
+				<views:FilesView Margin="10 0 10 10"/>
 			</TabItem>
 
 			<TabItem HorizontalContentAlignment="Center">
