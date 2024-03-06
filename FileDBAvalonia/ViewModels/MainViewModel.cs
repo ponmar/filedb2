@@ -14,6 +14,17 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private NotificationType highlightedNotificationType;
 
+    [ObservableProperty]
+    private bool quitSelected;
+
+    partial void OnQuitSelectedChanged(bool value)
+    {
+        if (value)
+        {
+            Messenger.Send<Quit>();
+        }
+    }
+
     public string Title
     {
         get

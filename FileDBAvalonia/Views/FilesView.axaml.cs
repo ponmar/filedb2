@@ -1,4 +1,5 @@
 using Avalonia.Controls;
+using FileDBAvalonia.ViewModels;
 
 namespace FileDBAvalonia.Views
 {
@@ -7,6 +8,7 @@ namespace FileDBAvalonia.Views
         public FilesView()
         {
             InitializeComponent();
+            DataContext = ServiceLocator.Resolve<FilesViewModel>();
         }
     }
 }

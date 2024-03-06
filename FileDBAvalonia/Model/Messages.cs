@@ -8,6 +8,7 @@ namespace FileDBAvalonia.Model;
 public record ConfigUpdated();
 public record NotificationsUpdated;
 public record DateChanged;
+public record Quit;
 
 public record PersonEdited;
 public record LocationEdited;

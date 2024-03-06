@@ -25,7 +25,7 @@
 				<TabItem.Header>
 					<TextBlock Classes="TabIcon" Text="&#x1F50D;" ToolTip.Tip="{x:Static lang:Strings.SearchTitle}"/>
 				</TabItem.Header>
-				<!--Views:SearchView Margin="10 0 10 10"/-->
+				<views:SearchView Margin="10 0 10 10"/>
 			</TabItem>
 
 			<TabItem HorizontalContentAlignment="Center" IsVisible="{Binding ReadWriteMode}">
@@ -103,7 +103,7 @@
 				<views:NotificationsView Margin="10 0 10 10"/>
 			</TabItem>
 
-			<TabItem HorizontalContentAlignment="Center">
+			<TabItem HorizontalContentAlignment="Center" IsSelected="{Binding QuitSelected}">
 				<TabItem.Header>
 					<TextBlock Classes="TabIcon" Text="&#x1F6AA;" ToolTip.Tip="{x:Static lang:Strings.ExitToolTip}"/>
 				</TabItem.Header>
