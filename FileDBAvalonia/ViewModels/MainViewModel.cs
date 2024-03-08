@@ -43,12 +43,8 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private WindowState windowState;
 
-    private readonly WindowState defaultWindowState;
-
-    //[ObservableProperty]
-    //private WindowStyle windowStyle;
-
-    //private readonly WindowStyle defaultWindowStyle;
+    [ObservableProperty]
+    private bool fullscreen;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(Title))]
@@ -62,11 +58,11 @@ public partial class MainViewModel : ObservableObject
         this.configProvider = configProvider;
         this.notificationsRepository = notificationsRepository;
 
-        defaultWindowState = configProvider.Config.WindowMode == WindowMode.Normal ? WindowState.Normal : WindowState.Maximized;
-        //defaultWindowStyle = configProvider.Config.WindowMode == WindowMode.Fullscreen ? WindowStyle.None : WindowStyle.ThreeDBorderWindow;
+        var defaultWindowState = configProvider.Config.WindowMode == WindowMode.Normal ? WindowState.Normal : WindowState.Maximized;
+        var defaultFullscreen = configProvider.Config.WindowMode == WindowMode.Fullscreen;
 
-        windowState = defaultWindowState;
-        //windowStyle = defaultWindowStyle;
+        Fullscreen = defaultFullscreen;
+        WindowState = defaultWindowState;
 
         readWriteMode = !configProvider.Config.ReadOnly;
 
@@ -81,8 +77,8 @@ public partial class MainViewModel : ObservableObject
 
         this.RegisterForEvent<FullscreenBrowsingRequested>((x) =>
         {
-            //WindowState = x.Fullscreen ? WindowState.Maximized : defaultWindowState;
-            //WindowStyle = x.Fullscreen ? WindowStyle.None : defaultWindowStyle;
+            Fullscreen = x.Fullscreen;
+            WindowState = x.Fullscreen ? WindowState.Maximized : defaultWindowState;
         });
 
         this.RegisterForEvent<ConfigUpdated>((x) =>
@@ -94,6 +90,6 @@ public partial class MainViewModel : ObservableObject
 
     private NotificationType NotificationsToType()
     {
-        return notificationsRepository.Notifications.Count() > 0 ? notificationsRepository.Notifications.Max(x => x.Type) : Enum.GetValues<NotificationType>().First();
+        return notificationsRepository.Notifications.Any() ? notificationsRepository.Notifications.Max(x => x.Type) : Enum.GetValues<NotificationType>().First();
     }
 }
