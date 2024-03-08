@@ -44,7 +44,10 @@ public partial class MainViewModel : ObservableObject
     private WindowState windowState;
 
     [ObservableProperty]
-    private bool fullscreen;
+    private SystemDecorations systemDecorations;
+
+    [ObservableProperty]
+    private bool topmost;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(Title))]
@@ -59,10 +62,10 @@ public partial class MainViewModel : ObservableObject
         this.notificationsRepository = notificationsRepository;
 
         var defaultWindowState = configProvider.Config.WindowMode == WindowMode.Normal ? WindowState.Normal : WindowState.Maximized;
-        var defaultFullscreen = configProvider.Config.WindowMode == WindowMode.Fullscreen;
 
-        Fullscreen = defaultFullscreen;
-        WindowState = defaultWindowState;
+        SystemDecorations = configProvider.Config.WindowMode == WindowMode.Fullscreen ? SystemDecorations.None : SystemDecorations.Full;
+        WindowState = configProvider.Config.WindowMode == WindowMode.Normal ? WindowState.Normal : WindowState.Maximized;
+        Topmost = configProvider.Config.WindowMode == WindowMode.Fullscreen;
 
         readWriteMode = !configProvider.Config.ReadOnly;
 
@@ -77,8 +80,9 @@ public partial class MainViewModel : ObservableObject
 
         this.RegisterForEvent<FullscreenBrowsingRequested>((x) =>
         {
-            Fullscreen = x.Fullscreen;
+            SystemDecorations = x.Fullscreen ? SystemDecorations.None : SystemDecorations.Full;
             WindowState = x.Fullscreen ? WindowState.Maximized : defaultWindowState;
+            Topmost = x.Fullscreen;
         });
 
         this.RegisterForEvent<ConfigUpdated>((x) =>

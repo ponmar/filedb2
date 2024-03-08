@@ -8,7 +8,8 @@
         x:Class="FileDBAvalonia.Views.MainWindow"
         Icon="/Assets/icon.ico"
 		WindowState="{Binding WindowState}"
-		Topmost="{Binding Fullscreen}"
+		Topmost="{Binding Topmost}"
+		SystemDecorations="{Binding SystemDecorations}"
         Title="FileDBAvalonia">
-        <views:MainView />
+	<views:MainView />
 </Window>
