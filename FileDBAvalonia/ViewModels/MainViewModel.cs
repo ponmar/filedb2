@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
+using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
+using FileDBAvalonia.Configuration;
 using FileDBAvalonia.Model;
 using FileDBAvalonia.Notifiers;
 
@@ -38,10 +40,10 @@ public partial class MainViewModel : ObservableObject
         }
     }
 
-    //[ObservableProperty]
-    //private WindowState windowState;
+    [ObservableProperty]
+    private WindowState windowState;
 
-    //private readonly WindowState defaultWindowState;
+    private readonly WindowState defaultWindowState;
 
     //[ObservableProperty]
     //private WindowStyle windowStyle;
@@ -60,10 +62,10 @@ public partial class MainViewModel : ObservableObject
         this.configProvider = configProvider;
         this.notificationsRepository = notificationsRepository;
 
-        //defaultWindowState = configProvider.Config.WindowMode == WindowMode.Normal ? WindowState.Normal : WindowState.Maximized;
+        defaultWindowState = configProvider.Config.WindowMode == WindowMode.Normal ? WindowState.Normal : WindowState.Maximized;
         //defaultWindowStyle = configProvider.Config.WindowMode == WindowMode.Fullscreen ? WindowStyle.None : WindowStyle.ThreeDBorderWindow;
 
-        //windowState = defaultWindowState;
+        windowState = defaultWindowState;
         //windowStyle = defaultWindowStyle;
 
         readWriteMode = !configProvider.Config.ReadOnly;
