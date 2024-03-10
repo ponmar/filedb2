@@ -1,4 +1,5 @@
-﻿using FileDBAvalonia.Lang;
+﻿using Avalonia.Controls;
+using FileDBAvalonia.Lang;
 using System;
 
 namespace FileDBAvalonia.Configuration;
@@ -14,6 +15,17 @@ public static class WindowModeExtensions
             WindowMode.Normal => Strings.WindowModeNormal,
             WindowMode.Maximized => Strings.WindowModeMaximized,
             WindowMode.Fullscreen => Strings.WindowModeFullscreen,
+            _ => throw new NotImplementedException(),
+        };
+    }
+
+    public static WindowState ToWindowState(this WindowMode windowMode)
+    {
+        return windowMode switch
+        {
+            WindowMode.Normal => WindowState.Normal,
+            WindowMode.Maximized => WindowState.Maximized,
+            WindowMode.Fullscreen => WindowState.FullScreen,
             _ => throw new NotImplementedException(),
         };
     }

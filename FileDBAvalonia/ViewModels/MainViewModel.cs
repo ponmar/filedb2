@@ -41,19 +41,16 @@ public partial class MainViewModel : ObservableObject
     }
 
     [ObservableProperty]
-    private WindowState windowState;
+    [NotifyPropertyChangedFor(nameof(Title))]
+    private bool readWriteMode;
 
     [ObservableProperty]
     private SystemDecorations systemDecorations;
 
     [ObservableProperty]
-    private bool topmost;
+    private WindowState windowState;
 
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(Title))]
-    private bool readWriteMode;
-
-    private IConfigProvider configProvider;
+    private readonly IConfigProvider configProvider;
     private readonly INotificationsRepository notificationsRepository;
 
     public MainViewModel(IConfigProvider configProvider, INotificationsRepository notificationsRepository)
@@ -61,16 +58,13 @@ public partial class MainViewModel : ObservableObject
         this.configProvider = configProvider;
         this.notificationsRepository = notificationsRepository;
 
-        var defaultWindowState = configProvider.Config.WindowMode == WindowMode.Normal ? WindowState.Normal : WindowState.Maximized;
-
-        SystemDecorations = configProvider.Config.WindowMode == WindowMode.Fullscreen ? SystemDecorations.None : SystemDecorations.Full;
-        WindowState = configProvider.Config.WindowMode == WindowMode.Normal ? WindowState.Normal : WindowState.Maximized;
-        Topmost = configProvider.Config.WindowMode == WindowMode.Fullscreen;
-
         readWriteMode = !configProvider.Config.ReadOnly;
 
         NumNotifications = notificationsRepository.Notifications.Count();
         HighlightedNotificationType = NotificationsToType();
+
+        var defaultWindowMode = configProvider.Config.WindowMode;
+        ApplyWindowMode(configProvider.Config.WindowMode);
 
         this.RegisterForEvent<NotificationsUpdated>((x) =>
         {
@@ -78,18 +72,24 @@ public partial class MainViewModel : ObservableObject
             HighlightedNotificationType = NotificationsToType();
         });
 
-        this.RegisterForEvent<FullscreenBrowsingRequested>((x) =>
-        {
-            SystemDecorations = x.Fullscreen ? SystemDecorations.None : SystemDecorations.Full;
-            WindowState = x.Fullscreen ? WindowState.Maximized : defaultWindowState;
-            Topmost = x.Fullscreen;
-        });
-
         this.RegisterForEvent<ConfigUpdated>((x) =>
         {
             ReadWriteMode = !configProvider.Config.ReadOnly;
             OnPropertyChanged(nameof(Title));
+            ApplyWindowMode(configProvider.Config.WindowMode);
         });
+
+        this.RegisterForEvent<FullscreenBrowsingRequested>(x =>
+        {
+            var windowMode = x.Fullscreen ? WindowMode.Fullscreen : defaultWindowMode;
+            ApplyWindowMode(windowMode);
+        });
+    }
+
+    private void ApplyWindowMode(WindowMode windowMode)
+    {
+        SystemDecorations = windowMode == WindowMode.Fullscreen ? SystemDecorations.None : SystemDecorations.Full;
+        WindowState = windowMode.ToWindowState();
     }
 
     private NotificationType NotificationsToType()

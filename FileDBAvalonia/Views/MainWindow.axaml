@@ -7,9 +7,8 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="FileDBAvalonia.Views.MainWindow"
         Icon="/Assets/icon.ico"
+        Title="{Binding Title}"
 		WindowState="{Binding WindowState}"
-		Topmost="{Binding Topmost}"
-		SystemDecorations="{Binding SystemDecorations}"
-        Title="FileDBAvalonia">
+		SystemDecorations="{Binding SystemDecorations}">
 	<views:MainView />
 </Window>
