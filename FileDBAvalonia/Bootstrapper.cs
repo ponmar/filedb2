@@ -38,6 +38,7 @@ public static class Bootstrapper
                     .ImplementedBy<Model.Model>());
 
         Container.Register(Component.For<MainViewModel>().ImplementedBy<MainViewModel>());
+        Container.Register(Component.For<SearchViewModel>().ImplementedBy<SearchViewModel>());
         Container.Register(Component.For<NotificationsViewModel>().ImplementedBy<NotificationsViewModel>());
         Container.Register(Component.For<SettingsViewModel>().ImplementedBy<SettingsViewModel>());
         Container.Register(Component.For<LocationsViewModel>().ImplementedBy<LocationsViewModel>());
@@ -47,22 +48,20 @@ public static class Bootstrapper
         Container.Register(Component.For<RipViewModel>().ImplementedBy<RipViewModel>());
         Container.Register(Component.For<ToolsViewModel>().ImplementedBy<ToolsViewModel>());
         Container.Register(Component.For<FilesViewModel>().ImplementedBy<FilesViewModel>());
+        Container.Register(
+            Component.For(
+                typeof(CriteriaViewModel),
+                typeof(ISearchResultRepository))
+                    .ImplementedBy<CriteriaViewModel>());
 
         Container.Register(Component.For<IImageLoader>().ImplementedBy<ImageLoader>());
 
-        /*
-       
+
+        /*       
         Container.Register(Component.For<ISpeeker>().ImplementedBy<Speeker>());
 
-        Container.Register(Component.For<SearchViewModel>().ImplementedBy<SearchViewModel>());
         Container.Register(Component.For<SearchResultViewModel>().ImplementedBy<SearchResultViewModel>());
         Container.Register(Component.For<FileCategorizationViewModel>().ImplementedBy<FileCategorizationViewModel>());
-
-        Container.Register(
-            Component.For(
-                typeof(SearchCriteriaViewModel),
-                typeof(ISearchResultRepository))
-                    .ImplementedBy<SearchCriteriaViewModel>());        
 
         Container.Register(Component.For<AddLocationViewModel>().ImplementedBy<AddLocationViewModel>().LifestyleTransient());
         Container.Register(Component.For<AddPersonViewModel>().ImplementedBy<AddPersonViewModel>().LifestyleTransient());

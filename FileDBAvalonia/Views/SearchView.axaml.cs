@@ -1,12 +1,13 @@
 using Avalonia.Controls;
+using FileDBAvalonia.ViewModels;
 
-namespace FileDBAvalonia.Views
+namespace FileDBAvalonia.Views;
+
+public partial class SearchView : UserControl
 {
-    public partial class SearchView : UserControl
+    public SearchView()
     {
-        public SearchView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+        DataContext = ServiceLocator.Resolve<SearchViewModel>();
     }
 }
