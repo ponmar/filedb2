@@ -4,6 +4,7 @@ using FileDBAvalonia.Dialogs;
 using FileDBAvalonia.Model;
 using FileDBAvalonia.Notifiers;
 using FileDBAvalonia.ViewModels;
+using FileDBAvalonia.ViewModels.Search;
 using System.IO.Abstractions;
 
 namespace FileDBAvalonia;
@@ -16,6 +17,7 @@ public static class Bootstrapper
     {
         Container.Register(Component.For<IFileSystem>().ImplementedBy<FileSystem>());
         Container.Register(Component.For<INotifierFactory>().ImplementedBy<NotifierFactory>());
+        Container.Register(Component.For<ISpeeker>().ImplementedBy<Speeker>());
 
         Container.Register(
             Component.For(
@@ -37,6 +39,7 @@ public static class Bootstrapper
                 typeof(IConfigUpdater))
                     .ImplementedBy<Model.Model>());
 
+        Container.Register(Component.For<ResultViewModel>().ImplementedBy<ResultViewModel>());
         Container.Register(Component.For<MainViewModel>().ImplementedBy<MainViewModel>());
         Container.Register(Component.For<SearchViewModel>().ImplementedBy<SearchViewModel>());
         Container.Register(Component.For<NotificationsViewModel>().ImplementedBy<NotificationsViewModel>());
@@ -58,9 +61,6 @@ public static class Bootstrapper
 
 
         /*       
-        Container.Register(Component.For<ISpeeker>().ImplementedBy<Speeker>());
-
-        Container.Register(Component.For<SearchResultViewModel>().ImplementedBy<SearchResultViewModel>());
         Container.Register(Component.For<FileCategorizationViewModel>().ImplementedBy<FileCategorizationViewModel>());
 
         Container.Register(Component.For<AddLocationViewModel>().ImplementedBy<AddLocationViewModel>().LifestyleTransient());
