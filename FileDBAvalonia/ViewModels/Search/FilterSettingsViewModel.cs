@@ -19,10 +19,10 @@ public partial class FilterSettingsViewModel : ObservableObject
     private FilterType selectedFilterType = FilterTypes.First(x => x == FilterType.Person);
 
     [ObservableProperty]
-    private DateTime dateTimeStart = DateTime.Now;
+    private DateTimeOffset dateTimeStart = DateTime.Now;
 
     [ObservableProperty]
-    private DateTime dateTimeEnd = DateTime.Now;
+    private DateTimeOffset dateTimeEnd = DateTime.Now;
 
     [ObservableProperty]
     private string textFilterSearchPattern = string.Empty;
@@ -39,25 +39,25 @@ public partial class FilterSettingsViewModel : ObservableObject
     private FileType selectedFileType = FileTypes.First();
 
     [ObservableProperty]
-    private ObservableCollection<PersonModel> persons = [];
+    private ObservableCollection<PersonForSearch> persons = [];
 
     [ObservableProperty]
-    private PersonModel? selectedPerson;
+    private PersonForSearch? selectedPerson;
 
     [ObservableProperty]
-    private ObservableCollection<LocationModel> locations = [];
+    private ObservableCollection<LocationForSearch> locations = [];
 
     [ObservableProperty]
-    private ObservableCollection<LocationModel> locationsWithPosition = [];
+    private ObservableCollection<LocationForSearch> locationsWithPosition = [];
 
     [ObservableProperty]
-    private LocationModel? selectedLocation;
+    private LocationForSearch? selectedLocation;
 
     [ObservableProperty]
-    private ObservableCollection<TagModel> tags = [];
+    private ObservableCollection<TagForSearch> tags = [];
 
     [ObservableProperty]
-    private TagModel? selectedTag;
+    private TagForSearch? selectedTag;
 
     [ObservableProperty]
     private string personAgeFrom = string.Empty;
@@ -106,7 +106,7 @@ public partial class FilterSettingsViewModel : ObservableObject
         Persons.Clear();
         foreach (var person in personsRepository.Persons)
         {
-            Persons.Add(person);
+            Persons.Add(new(person.Id, $"{person.Firstname} {person.Lastname}"));
         }
     }
 
@@ -116,10 +116,10 @@ public partial class FilterSettingsViewModel : ObservableObject
         LocationsWithPosition.Clear();
         foreach (var location in locationsRepository.Locations)
         {
-            Locations.Add(location);
+            Locations.Add(new(location.Id, location.Name));
             if (location.Position is not null)
             {
-                LocationsWithPosition.Add(location);
+                LocationsWithPosition.Add(new(location.Id, location.Name));
             }
         }
     }
@@ -129,7 +129,7 @@ public partial class FilterSettingsViewModel : ObservableObject
         Tags.Clear();
         foreach (var tag in tagsRepository.Tags)
         {
-            Tags.Add(tag);
+            Tags.Add(new(tag.Id, tag.Name));
         }
     }
 

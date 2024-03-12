@@ -23,6 +23,21 @@ public interface ISearchResultRepository
     FileModel? SelectedFile { get; }
 }
 
+public record PersonForSearch(int Id, string Name)
+{
+    public override string ToString() => Name;
+}
+
+public record LocationForSearch(int Id, string Name)
+{
+    public override string ToString() => Name;
+}
+
+public record TagForSearch(int Id, string Name)
+{
+    public override string ToString() => Name;
+}
+
 public partial class CriteriaViewModel : ObservableObject, ISearchResultRepository
 {
     public IEnumerable<FileModel> Files { get; private set; } = [];
@@ -34,9 +49,9 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
     private string importedFileList = string.Empty;
 
     [ObservableProperty]
-    private LocationToUpdate? selectedLocationForPositionSearch;
+    private LocationForSearch? selectedLocationForPositionSearch;
 
-    partial void OnSelectedLocationForPositionSearchChanged(LocationToUpdate? value)
+    partial void OnSelectedLocationForPositionSearchChanged(LocationForSearch? value)
     {
         if (value is not null)
         {
@@ -100,23 +115,23 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
     public bool CombineSearchResultPossible => CombineSearch1.HasContent() && CombineSearch2.HasContent();
 
     [ObservableProperty]
-    private PersonToUpdate? selectedPersonSearch;
+    private PersonForSearch? selectedPersonSearch;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(Person1And2Selected))]
-    private PersonToUpdate? selectedPerson1Search;
+    private PersonForSearch? selectedPerson1Search;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(Person1And2Selected))]
-    private PersonToUpdate? selectedPerson2Search;
+    private PersonForSearch? selectedPerson2Search;
 
     public bool Person1And2Selected => SelectedPerson1Search is not null && SelectedPerson2Search is not null;
 
     [ObservableProperty]
-    private TagToUpdate? selectedTagSearch;
+    private TagForSearch? selectedTagSearch;
 
     [ObservableProperty]
-    private LocationToUpdate? selectedLocationSearch;
+    private LocationForSearch? selectedLocationSearch;
 
     [ObservableProperty]
     private ObservableCollection<FilterSettingsViewModel> filterSettings = [];
@@ -132,10 +147,10 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
 
     public bool CurrentFileHasPosition => SelectedFile is not null && SelectedFile.Position.HasContent();
 
-    public ObservableCollection<PersonToUpdate> Persons { get; } = [];
-    public ObservableCollection<LocationToUpdate> Locations { get; } = [];
-    public ObservableCollection<LocationToUpdate> LocationsWithPosition { get; } = [];
-    public ObservableCollection<TagToUpdate> Tags { get; } = [];
+    public ObservableCollection<PersonForSearch> Persons { get; } = [];
+    public ObservableCollection<LocationForSearch> Locations { get; } = [];
+    public ObservableCollection<LocationForSearch> LocationsWithPosition { get; } = [];
+    public ObservableCollection<TagForSearch> Tags { get; } = [];
 
     private readonly IConfigProvider configProvider;
     private readonly IDialogs dialogs;
@@ -182,7 +197,7 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
     private void ReloadPersons()
     {
         Persons.Clear();
-        foreach (var person in personsRepository.Persons.Select(p => new PersonToUpdate(p.Id, $"{p.Firstname} {p.Lastname}", Utils.CreateShortText($"{p.Firstname} {p.Lastname}", configProvider.Config.ShortItemNameMaxLength))))
+        foreach (var person in personsRepository.Persons.Select(p => new PersonForSearch(p.Id, $"{p.Firstname} {p.Lastname}")))
         {
             Persons.Add(person);
         }
@@ -195,7 +210,7 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
 
         foreach (var location in locationsRepository.Locations)
         {
-            var locationToUpdate = new LocationToUpdate(location.Id, location.Name, Utils.CreateShortText(location.Name, configProvider.Config.ShortItemNameMaxLength));
+            var locationToUpdate = new LocationForSearch(location.Id, location.Name);
             Locations.Add(locationToUpdate);
             if (location.Position is not null)
             {
@@ -207,7 +222,7 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
     private void ReloadTags()
     {
         Tags.Clear();
-        foreach (var tag in tagsRepository.Tags.Select(t => new TagToUpdate(t.Id, t.Name, Utils.CreateShortText(t.Name, configProvider.Config.ShortItemNameMaxLength))))
+        foreach (var tag in tagsRepository.Tags.Select(t => new TagForSearch(t.Id, t.Name)))
         {
             Tags.Add(tag);
         }
