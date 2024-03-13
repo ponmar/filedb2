@@ -12,7 +12,7 @@ using FileDBAvalonia.Model;
 using Avalonia.Media.Imaging;
 using Avalonia.Threading;
 
-namespace FileDBAvalonia.ViewModels;
+namespace FileDBAvalonia.ViewModels.Search;
 
 public enum RotationDirection { Clockwise, CounterClockwise }
 
@@ -37,7 +37,7 @@ public class UpdateHistoryItem
     public string ToggleText => string.Format(Strings.SearchToggleText, FunctionKey, ShortItemName);
 }
 
-public partial class SearchViewModel : ObservableObject
+public partial class FileViewModel : ObservableObject
 {
     [ObservableProperty]
     private bool maximize = false;
@@ -89,8 +89,10 @@ public partial class SearchViewModel : ObservableObject
     [ObservableProperty]
     private Bitmap? image = null;
 
+    [ObservableProperty]
+    private int imageRotation = 0;
+
     private string absolutePath = string.Empty;
-    private int rotation = 0;
 
     private readonly IConfigProvider configProvider;
     private readonly IDatabaseAccessProvider dbAccessProvider;
@@ -98,7 +100,7 @@ public partial class SearchViewModel : ObservableObject
     private readonly IImageLoader imageLoader;
     private readonly IFileSystem fileSystem;
 
-    public SearchViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IImageLoader imageLoader, IFileSystem fileSystem)
+    public FileViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IImageLoader imageLoader, IFileSystem fileSystem)
     {
         this.configProvider = configProvider;
         this.dbAccessProvider = dbAccessProvider;
@@ -128,8 +130,6 @@ public partial class SearchViewModel : ObservableObject
                 if (x.FilePath == absolutePath)
                 {
                     Image = x.Image;
-                    // TODO: rotate image
-                    //ImageSource = ImageUtils.Rotate(image, -rotation);
                 }
             });
         });
@@ -200,7 +200,7 @@ public partial class SearchViewModel : ObservableObject
         Image = null;
 
         absolutePath = filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(selection.Path);
-        rotation = DatabaseParsing.OrientationToDegrees(selection.Orientation ?? 0);
+        ImageRotation = DatabaseParsing.OrientationToDegrees(selection.Orientation ?? 0);
 
         var fileType = FileTypeUtils.GetFileType(selection.Path);
         if (fileType == FileType.Picture)
@@ -227,9 +227,9 @@ public partial class SearchViewModel : ObservableObject
         Tags = string.Empty;
 
         FileLoadError = Strings.SearchNoMatch;
-        rotation = 0;
-        absolutePath = string.Empty;
         Image = null;
+        ImageRotation = 0;
+        absolutePath = string.Empty;
     }
 
     [RelayCommand]

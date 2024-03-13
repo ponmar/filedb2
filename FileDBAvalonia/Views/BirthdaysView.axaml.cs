@@ -8,6 +8,9 @@ public partial class BirthdaysView : UserControl
     public BirthdaysView()
     {
         InitializeComponent();
-        DataContext = ServiceLocator.Resolve<BirthdaysViewModel>();
+        if (!Design.IsDesignMode)
+        {
+            DataContext = ServiceLocator.Resolve<BirthdaysViewModel>();
+        }
     }
 }

@@ -1,0 +1,138 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 xmlns:lang="clr-namespace:FileDBAvalonia.Lang"
+			 xmlns:converters="clr-namespace:FileDBAvalonia.Converters"
+			 xmlns:fileviews="clr-namespace:FileDBAvalonia.Views.Search.File"
+             x:Class="FileDBAvalonia.Views.Search.FileView">
+	<UserControl.Resources>
+		<converters:FileInternalPathToFileTypeIconConverter x:Key="FileInternalPathToFileTypeIconConverter"/>
+	</UserControl.Resources>
+	<Grid ColumnDefinitions="*" RowDefinitions="*">
+		<Border Classes="BorderGroup" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+			<Grid ColumnDefinitions="auto,*,auto" RowDefinitions="*,auto">
+				<!-- Image -->
+				<LayoutTransformControl VerticalAlignment="Center" HorizontalAlignment="Center"						Grid.Row="0"
+						Grid.RowSpan="2"
+						Grid.Column="0"
+						Grid.ColumnSpan="3">
+					<LayoutTransformControl.LayoutTransform>
+						<RotateTransform Angle="{Binding ImageRotation}"/>
+					</LayoutTransformControl.LayoutTransform>
+					<Image
+						IsVisible="{Binding Image, Converter={x:Static ObjectConverters.IsNotNull}}"
+						Source="{Binding Image}"
+						Stretch="Uniform"/>
+				</LayoutTransformControl>
+
+				<!-- File loading error -->
+				<StackPanel Grid.Row="0"
+					Grid.Column="1"
+					HorizontalAlignment="Center"
+					VerticalAlignment="Center" Orientation="Vertical"
+					IsVisible="{Binding FileLoadError, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+					<TextBlock
+						Text="{Binding InternalPath, Converter={StaticResource FileInternalPathToFileTypeIconConverter}}"
+						FontSize="64" />
+					<TextBlock
+						Text="{Binding FileLoadError}"
+						TextWrapping="Wrap" />
+				</StackPanel>
+
+				<!--  Left side area when not maximized  -->
+				<!-- TODO
+			<view:FileInfo
+				Grid.Row="0"
+				Grid.RowSpan="2"
+				Grid.Column="0"
+				Margin="10,22,0,0"
+				VerticalAlignment="Top"
+				Visibility="{Binding Maximize, Converter={StaticResource NegatedBooleanToVisibilityConverter}}" />
+			-->
+
+				<!--  Left side area when maximized  -->
+				<!-- TODO
+			<view:PresentationFileInfo
+				Grid.Row="0"
+				Grid.RowSpan="2"
+				Grid.Column="0"
+				Margin="10,22,0,0"
+				VerticalAlignment="Top"
+				Visibility="{Binding Maximize, Converter={StaticResource BoolToVis}}" />
+			-->
+
+				<!--  Right side: buttons and categorization -->
+				<StackPanel
+					Grid.Row="0"
+					Grid.RowSpan="2"
+					Grid.Column="2"
+					Margin="0,22,10,0"
+					Orientation="Vertical">
+					<StackPanel
+						Margin="0,0,0,10"
+						HorizontalAlignment="Right"
+						Orientation="Horizontal">
+						<Button
+							Margin="0,0,5,0"
+							Command="{Binding OpenFileLocationCommand}"
+							IsEnabled="{Binding FileSelected}"
+							ToolTip.Tip="{x:Static lang:Strings.SearchLocateButtonToolTip}"
+							IsVisible="{Binding !Maximize}" Content="{x:Static lang:Strings.SearchLocateButton}"/>
+						<Button
+							Margin="0,0,5,0"
+							Command="{Binding OpenFileWithDefaultAppCommand}"
+							IsEnabled="{Binding FileSelected}"
+							ToolTip.Tip="{x:Static lang:Strings.SearchOpenButtonToolTip}"
+							IsVisible="{Binding !Maximize}" Content="{x:Static lang:Strings.SearchOpenButton}"/>
+						<Button
+							Margin="0,0,5,0"
+							Command="{Binding CopyFileIdCommand}"
+							IsEnabled="{Binding FileSelected}"
+							ToolTip.Tip="{x:Static lang:Strings.SearchCopyButtonToolTip}"
+							IsVisible="{Binding !Maximize}" Content="{x:Static lang:Strings.SearchCopyButton}"/>
+						<Button
+							Margin="0,0,5,0"
+							Command="{Binding RemoveFileFromCurrentSearchResultCommand}"
+							IsEnabled="{Binding FileSelected}"
+							Content="{x:Static lang:Strings.SearchRemoveButton}" ToolTip.Tip="{x:Static lang:Strings.SearchRemoveButtonToolTip}"/>
+						<ToggleButton
+							Margin="0,0,5,0"
+							Content="&#x1F5DA;"
+							IsChecked="{Binding LargeTextMode}"
+							IsEnabled="{Binding FileSelected}"
+							ToolTip.Tip="{x:Static lang:Strings.SearchToggleLargeTextButtonToolTip}" />
+						<Button
+							Margin="0,0,5,0"
+							Command="{Binding OpenPresentationWindowCommand}"
+							Content="&#x1F5B5;+"
+							IsEnabled="{Binding FileSelected}"
+							ToolTip.Tip="{x:Static lang:Strings.SearchOpenPresentationWindowButtonToolTip}"
+							IsVisible="{Binding !Maximize}" />
+						<ToggleButton
+							Margin="0"
+							Content="&#x1F5B5;"
+							IsChecked="{Binding Maximize}"
+							IsEnabled="{Binding FileSelected}"
+							ToolTip.Tip="{x:Static lang:Strings.SearchMaximizeButtonToolTip}" />
+					</StackPanel>
+					<StackPanel	HorizontalAlignment="Right" Orientation="Horizontal" IsVisible="{Binding !Maximize}">
+						<fileviews:FileCategorizationHistory Margin="0,0,10,0" VerticalAlignment="Top" />
+						<fileviews:FileCategorization VerticalAlignment="Top" />
+					</StackPanel>
+				</StackPanel>
+
+				<!--  Subtitle when maximized  -->
+				<!-- TODO
+			<view:PresentationDescription
+				Grid.Row="1"
+				Grid.Column="0"
+				Grid.ColumnSpan="3"
+				HorizontalAlignment="Center"
+				Visibility="{Binding Maximize, Converter={StaticResource BoolToVis}}" />
+			-->
+			</Grid>
+		</Border>		
+	</Grid>
+</UserControl>

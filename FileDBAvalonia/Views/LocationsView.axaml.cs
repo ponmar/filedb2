@@ -8,6 +8,9 @@ public partial class LocationsView : UserControl
     public LocationsView()
     {
         InitializeComponent();
-        DataContext = ServiceLocator.Resolve<LocationsViewModel>();
+        if (!Design.IsDesignMode)
+        {
+            DataContext = ServiceLocator.Resolve<LocationsViewModel>();
+        }
     }
 }

@@ -7,11 +7,11 @@
 			 xmlns:converters="clr-namespace:FileDBAvalonia.Converters;assembly=FileDBAvalonia"
 			 xmlns:model="clr-namespace:FileDBAvalonia.Model;assembly=FileDBAvalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="FileDBAvalonia.Views.Search.Criteria">
+             x:Class="FileDBAvalonia.Views.Search.CriteriaView">
 	<UserControl.Resources>
 		<converters:FilterTypeToVisibilityConverter x:Key="FilterTypeToVisibilityConverter"/>
 	</UserControl.Resources>
-	<Border Classes="BorderGroup">
+	<Border Classes="BorderGroup" HorizontalAlignment="Stretch">
         <TabControl Margin="5">
             <TabItem Header="{x:Static lang:Strings.SearchFiltersLabel}">
                 <Grid ColumnDefinitions="*" RowDefinitions="auto,auto">

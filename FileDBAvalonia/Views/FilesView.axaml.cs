@@ -8,7 +8,10 @@ namespace FileDBAvalonia.Views
         public FilesView()
         {
             InitializeComponent();
-            DataContext = ServiceLocator.Resolve<FilesViewModel>();
+            if (!Design.IsDesignMode)
+            {
+                DataContext = ServiceLocator.Resolve<FilesViewModel>();
+            }
         }
     }
 }

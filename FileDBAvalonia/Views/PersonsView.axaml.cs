@@ -8,6 +8,9 @@ public partial class PersonsView : UserControl
     public PersonsView()
     {
         InitializeComponent();
-        DataContext = ServiceLocator.Resolve<PersonsViewModel>();
+        if (!Design.IsDesignMode)
+        {
+            DataContext = ServiceLocator.Resolve<PersonsViewModel>();
+        }
     }
 }

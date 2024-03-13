@@ -9,9 +9,9 @@
 	<DockPanel>
 		<TextBlock DockPanel.Dock="Top" Text="{x:Static lang:Strings.SearchTitle}" Classes="PageHeader"/>
 		<Grid ColumnDefinitions="*" RowDefinitions="auto,auto,*">
-			<searchviews:Criteria Grid.Row="0"/>
-			<searchviews:Result Grid.Row="1"/>
-			<searchviews:File Grid.Row="2"/>
+			<searchviews:CriteriaView Grid.Row="0"/>
+			<searchviews:ResultView Grid.Row="1" Margin="0 10 0 10"/>
+			<searchviews:FileView Grid.Row="2"/>
 		</Grid>
 	</DockPanel>
 </UserControl>

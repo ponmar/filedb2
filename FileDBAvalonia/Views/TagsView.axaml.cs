@@ -8,6 +8,9 @@ public partial class TagsView : UserControl
     public TagsView()
     {
         InitializeComponent();
-        DataContext = ServiceLocator.Resolve<TagsViewModel>();
+        if (!Design.IsDesignMode)
+        {
+            DataContext = ServiceLocator.Resolve<TagsViewModel>();
+        }
     }
 }

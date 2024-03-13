@@ -8,6 +8,9 @@ public partial class AboutView : UserControl
     public AboutView()
     {
         InitializeComponent();
-        DataContext = ServiceLocator.Resolve<AboutViewModel>();
+        if (!Design.IsDesignMode)
+        {
+            DataContext = ServiceLocator.Resolve<AboutViewModel>();
+        }
     }
 }

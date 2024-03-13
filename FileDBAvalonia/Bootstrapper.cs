@@ -39,9 +39,9 @@ public static class Bootstrapper
                 typeof(IConfigUpdater))
                     .ImplementedBy<Model.Model>());
 
-        Container.Register(Component.For<ResultViewModel>().ImplementedBy<ResultViewModel>());
         Container.Register(Component.For<MainViewModel>().ImplementedBy<MainViewModel>());
-        Container.Register(Component.For<SearchViewModel>().ImplementedBy<SearchViewModel>());
+        Container.Register(Component.For<ResultViewModel>().ImplementedBy<ResultViewModel>());
+        Container.Register(Component.For<FileViewModel>().ImplementedBy<FileViewModel>());
         Container.Register(Component.For<NotificationsViewModel>().ImplementedBy<NotificationsViewModel>());
         Container.Register(Component.For<SettingsViewModel>().ImplementedBy<SettingsViewModel>());
         Container.Register(Component.For<LocationsViewModel>().ImplementedBy<LocationsViewModel>());

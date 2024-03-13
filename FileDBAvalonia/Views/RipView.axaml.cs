@@ -8,6 +8,9 @@ public partial class RipView : UserControl
     public RipView()
     {
         InitializeComponent();
-        DataContext = ServiceLocator.Resolve<RipViewModel>();
+        if (!Design.IsDesignMode)
+        {
+            DataContext = ServiceLocator.Resolve<RipViewModel>();
+        }
     }
 }

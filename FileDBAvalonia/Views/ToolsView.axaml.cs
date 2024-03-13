@@ -8,7 +8,10 @@ namespace FileDBAvalonia.Views
         public ToolsView()
         {
             InitializeComponent();
-            DataContext = ServiceLocator.Resolve<ToolsViewModel>();
+            if (!Design.IsDesignMode)
+            {
+                DataContext = ServiceLocator.Resolve<ToolsViewModel>();
+            }
         }
     }
 }

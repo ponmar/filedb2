@@ -21,6 +21,9 @@ public partial class DeceasedPerson : ObservableObject
     private Bitmap? profilePicture = null;
 
     [ObservableProperty]
+    private int profilePictureRotation = 0;
+
+    [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(Name))]
     [NotifyPropertyChangedFor(nameof(DateOfBirth))]
     [NotifyPropertyChangedFor(nameof(DeceasedStr))]
@@ -82,10 +85,8 @@ public partial class RipViewModel : ObservableObject
                 foreach (var personVm in allPersons.Where(p => p.ProfilePictureAbsPath == x.FilePath))
                   {
                     var profileFile = dbAccessProvider.DbAccess.GetFileById(personVm.Person.ProfileFileId!.Value);
-                    int rotateDegrees = DatabaseParsing.OrientationToDegrees(profileFile!.Orientation ?? 0);
-                    // TODO: add rotation
+                    personVm.ProfilePictureRotation = DatabaseParsing.OrientationToDegrees(profileFile!.Orientation ?? 0);
                     personVm.ProfilePicture = x.Image;
-                    //personVm.ProfilePicture = ImageUtils.Rotate(x.Image, -rotateDegrees);
                 }
             });
         });

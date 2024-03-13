@@ -8,6 +8,9 @@ public partial class NotificationsView : UserControl
     public NotificationsView()
     {
         InitializeComponent();
-        DataContext = ServiceLocator.Resolve<NotificationsViewModel>();
+        if (!Design.IsDesignMode)
+        {
+            DataContext = ServiceLocator.Resolve<NotificationsViewModel>();
+        }
     }
 }

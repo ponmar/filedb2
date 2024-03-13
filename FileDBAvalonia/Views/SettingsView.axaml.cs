@@ -8,6 +8,9 @@ public partial class SettingsView : UserControl
     public SettingsView()
     {
         InitializeComponent();
-        DataContext = ServiceLocator.Resolve<SettingsViewModel>();
+        if (!Design.IsDesignMode)
+        {
+            DataContext = ServiceLocator.Resolve<SettingsViewModel>();
+        }
     }
 }

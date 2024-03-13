@@ -23,7 +23,12 @@
 						<ListBox.ItemTemplate>
 							<DataTemplate>
 								<StackPanel Orientation="Horizontal" Margin="5" Width="400">
-									<Image IsVisible="{Binding ProfilePicture, Converter={x:Static ObjectConverters.IsNotNull}}" Width="100" Height="100" Margin="5" Source="{Binding ProfilePicture}" VerticalAlignment="Center"/>
+									<LayoutTransformControl Margin="5">
+										<LayoutTransformControl.LayoutTransform>
+											<RotateTransform Angle="{Binding ProfilePictureRotation}"/>
+										</LayoutTransformControl.LayoutTransform>
+										<Image IsVisible="{Binding ProfilePicture, Converter={x:Static ObjectConverters.IsNotNull}}" Width="100" Height="100" Source="{Binding ProfilePicture}" VerticalAlignment="Center"/>	
+									</LayoutTransformControl>
 									<StackPanel Orientation="Vertical" VerticalAlignment="Center">
 										<StackPanel Orientation="Horizontal" Margin="5">
 											<TextBlock Text="{Binding Name}" Margin="5"/>
