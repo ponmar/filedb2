@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:lang="clr-namespace:FileDBAvalonia.Lang"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="FileDBAvalonia.Views.Search.File.FileCategorizationHistory">
+             x:Class="FileDBAvalonia.Views.Search.File.FileCategorizationHistoryView">
 	<Border IsVisible="{Binding ReadWriteMode}">
 		<Expander Header="{x:Static lang:Strings.CategorizationUpdateHistoryTitle}" Margin="5" IsExpanded="False">
 			<StackPanel>

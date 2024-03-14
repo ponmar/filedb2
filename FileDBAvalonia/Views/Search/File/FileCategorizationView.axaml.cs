@@ -3,9 +3,9 @@ using FileDBAvalonia.ViewModels.Search.File;
 
 namespace FileDBAvalonia.Views.Search.File
 {
-    public partial class FileCategorization : UserControl
+    public partial class FileCategorizationView : UserControl
     {
-        public FileCategorization()
+        public FileCategorizationView()
         {
             InitializeComponent();
             if (!Design.IsDesignMode)
