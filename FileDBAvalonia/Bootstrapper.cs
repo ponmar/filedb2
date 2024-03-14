@@ -5,6 +5,7 @@ using FileDBAvalonia.Model;
 using FileDBAvalonia.Notifiers;
 using FileDBAvalonia.ViewModels;
 using FileDBAvalonia.ViewModels.Search;
+using FileDBAvalonia.ViewModels.Search.File;
 using System.IO.Abstractions;
 
 namespace FileDBAvalonia;
@@ -56,13 +57,12 @@ public static class Bootstrapper
                 typeof(CriteriaViewModel),
                 typeof(ISearchResultRepository))
                     .ImplementedBy<CriteriaViewModel>());
+        Container.Register(Component.For<FileCategorizationViewModel>().ImplementedBy<FileCategorizationViewModel>());
 
         Container.Register(Component.For<IImageLoader>().ImplementedBy<ImageLoader>());
 
 
         /*       
-        Container.Register(Component.For<FileCategorizationViewModel>().ImplementedBy<FileCategorizationViewModel>());
-
         Container.Register(Component.For<AddLocationViewModel>().ImplementedBy<AddLocationViewModel>().LifestyleTransient());
         Container.Register(Component.For<AddPersonViewModel>().ImplementedBy<AddPersonViewModel>().LifestyleTransient());
         Container.Register(Component.For<AddTagViewModel>().ImplementedBy<AddTagViewModel>().LifestyleTransient());

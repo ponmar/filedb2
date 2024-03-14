@@ -27,16 +27,6 @@ public enum UpdateHistoryType
     ToggleTag,
 }
 
-public class UpdateHistoryItem
-{
-    public required UpdateHistoryType Type { get; init; }
-    public required int ItemId { get; init; }
-    public required string ShortItemName { get; init; }
-    public required string ItemName { get; init; }
-    public required int FunctionKey { get; init; }
-    public string ToggleText => string.Format(Strings.SearchToggleText, FunctionKey, ShortItemName);
-}
-
 public partial class FileViewModel : ObservableObject
 {
     [ObservableProperty]
@@ -247,12 +237,14 @@ public partial class FileViewModel : ObservableObject
         */
     }
 
+    /*
     [RelayCommand]
     private void FunctionKey(string parameter)
     {
         var functionKey = int.Parse(parameter);
         Messenger.Send(new CategorizationFunctionKeyPressed(functionKey));
     }
+    */
 
     [RelayCommand]
     private void PrevFile() => Messenger.Send<SelectPrevFile>();
