@@ -4,24 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:lang="clr-namespace:FileDBAvalonia.Lang"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="FileDBAvalonia.Views.Search.File.FileCategorization">
+             x:Class="FileDBAvalonia.Views.Search.File.FileCategorizationView">
 	<Border IsVisible="{Binding ReadWriteMode}">
 		<Expander Header="{x:Static lang:Strings.CategorizationUpdateTitle}" Margin="5" IsExpanded="False">
 			<StackPanel Orientation="Vertical">
-				<Grid>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="auto"/>
-						<ColumnDefinition Width="*"/>
-						<ColumnDefinition Width="auto"/>
-						<ColumnDefinition Width="auto"/>
-						<ColumnDefinition Width="auto"/>
-					</Grid.ColumnDefinitions>
-					<Grid.RowDefinitions>
-						<RowDefinition Height="auto"/>
-						<RowDefinition Height="auto"/>
-						<RowDefinition Height="auto"/>
-					</Grid.RowDefinitions>
-
+				<Grid ColumnDefinitions="auto,*,auto,auto,auto" RowDefinitions="auto,auto,auto">
 					<TextBlock Grid.Row="0" Grid.Column="0" Text="&#x1F642;" VerticalAlignment="Center" Margin="5" ToolTip.Tip="Person"/>
 					<ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Persons}" VerticalAlignment="Center" SelectedItem="{Binding SelectedPersonToUpdate}">
 						<ComboBox.ItemTemplate>
@@ -58,16 +45,7 @@
 					<Button Grid.Row="2" Grid.Column="3" Margin="5" Command="{Binding RemoveFileTagCommand}" IsEnabled="{Binding SelectedTagCanBeRemoved}" ToolTip.Tip="{x:Static lang:Strings.CategorizationRemoveSelectedTagFromFileToolTip}">-</Button>
 					<Button Grid.Row="2" Grid.Column="4" Margin="5" Command="{Binding CreateTagCommand}" ToolTip.Tip="{x:Static lang:Strings.CategorizationCreateANewTagAndAddItToCurrentFileToolTip}" Content="{x:Static lang:Strings.CategorizationNewButton}"/>
 				</Grid>
-				<Grid>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="auto"/>
-						<ColumnDefinition Width="*"/>
-						<ColumnDefinition Width="auto"/>
-					</Grid.ColumnDefinitions>
-					<Grid.RowDefinitions>
-						<RowDefinition Height="auto"/>
-						<RowDefinition Height="auto"/>
-					</Grid.RowDefinitions>
+				<Grid ColumnDefinitions="auto,*,auto" RowDefinitions="auto,auto">
 					<TextBlock Grid.Row="0" Grid.Column="0" Text="&#x1F4DD;" VerticalAlignment="Center" Margin="5" ToolTip.Tip="{x:Static lang:Strings.CategorizationFileDescriptionToolTip}"/>
 					<TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Text="{Binding NewFileDescription}" ToolTip.Tip="{x:Static lang:Strings.CategorizationFileDescriptionToolTip}" TextWrapping="Wrap" AcceptsReturn="True" MaxWidth="200"/>
 					<Button Grid.Row="0" Grid.Column="2" Margin="5" Command="{Binding SetFileDescriptionCommand}" IsEnabled="{Binding FileSelected}" ToolTip.Tip="{x:Static lang:Strings.CategorizationSetFileDescriptionToolTip}" Content="{x:Static lang:Strings.CategorizationSetButton}"/>
@@ -81,14 +59,7 @@
 					<Button Margin="5" HorizontalAlignment="Left" Command="{Binding AddMetaDataFromPrevEditedFileCommand}" IsEnabled="{Binding CanApplyMetaDataFromPrevEdit}" ToolTip.Tip="{x:Static lang:Strings.CategorizationApplyMetaDataFromLastEditToolTip}" Content="{x:Static lang:Strings.CategorizationApplyMetaDataFromLastEditButton}"/>
 					<Button Margin="5" HorizontalAlignment="Left" Command="{Binding MarkPrevEditedFileCommand}" IsEnabled="{Binding FileSelected}" ToolTip.Tip="{x:Static lang:Strings.CategorizationMarkButtonToolTip}" Content="{x:Static lang:Strings.CategorizationMarkButton}"/>
 				</StackPanel>
-				<Grid Margin="5">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="*"/>
-						<ColumnDefinition Width="auto"/>
-						<ColumnDefinition Width="auto"/>
-						<ColumnDefinition Width="auto"/>
-					</Grid.ColumnDefinitions>
-
+				<Grid Margin="5" ColumnDefinitions="*,auto,auto,auto">
 					<Button Grid.Column="0" HorizontalAlignment="Left" Command="{Binding UpdateFileFromMetaDataCommand}" IsEnabled="{Binding FileSelected}" ToolTip.Tip="{x:Static lang:Strings.CategorizationReloadFileDateTimeGPSPositionAndOrientationToolTip}" Content="{x:Static lang:Strings.CategorizationReloadMetaDataButton}"/>
 					<Button Grid.Column="1" Margin="5,0,0,0" ToolTip.Tip="{x:Static lang:Strings.CategorizationRotate90DegreesClockwiseToolTip}" Command="{Binding RotateFileClockwiseCommand}" IsEnabled="{Binding FileSelected}" Content="&#8635;"/>
 					<Button Grid.Column="2" Margin="5,0,0,0" ToolTip.Tip="{x:Static lang:Strings.CategorizationRotate90DegreesCounterClockwiseToolTip}" Command="{Binding RotateFileCounterClockwiseCommand}" IsEnabled="{Binding FileSelected}" Content="&#8634;"/>

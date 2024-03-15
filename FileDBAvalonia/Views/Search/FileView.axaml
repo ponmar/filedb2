@@ -42,26 +42,22 @@
 				</StackPanel>
 
 				<!--  Left side area when not maximized  -->
-				<!-- TODO
-			<view:FileInfo
-				Grid.Row="0"
-				Grid.RowSpan="2"
-				Grid.Column="0"
-				Margin="10,22,0,0"
-				VerticalAlignment="Top"
-				Visibility="{Binding Maximize, Converter={StaticResource NegatedBooleanToVisibilityConverter}}" />
-			-->
+				<fileviews:FileInfoView
+					Grid.Row="0"
+					Grid.RowSpan="2"
+					Grid.Column="0"
+					Margin="10,22,0,0"
+					VerticalAlignment="Top"
+					IsVisible="{Binding !Maximize}" />
 
 				<!--  Left side area when maximized  -->
-				<!-- TODO
-			<view:PresentationFileInfo
-				Grid.Row="0"
-				Grid.RowSpan="2"
-				Grid.Column="0"
-				Margin="10,22,0,0"
-				VerticalAlignment="Top"
-				Visibility="{Binding Maximize, Converter={StaticResource BoolToVis}}" />
-			-->
+				<fileviews:PresentationFileInfoView
+					Grid.Row="0"
+					Grid.RowSpan="2"
+					Grid.Column="0"
+					Margin="10,22,0,0"
+					VerticalAlignment="Top"
+					IsVisible="{Binding Maximize}" />
 
 				<!--  Right side: buttons and categorization -->
 				<StackPanel
@@ -118,20 +114,18 @@
 							ToolTip.Tip="{x:Static lang:Strings.SearchMaximizeButtonToolTip}" />
 					</StackPanel>
 					<StackPanel	HorizontalAlignment="Right" Orientation="Horizontal" IsVisible="{Binding !Maximize}">
-						<fileviews:FileCategorizationHistory Margin="0,0,10,0" VerticalAlignment="Top" />
-						<fileviews:FileCategorization VerticalAlignment="Top" />
+						<fileviews:FileCategorizationHistoryView Margin="0,0,10,0" VerticalAlignment="Top" />
+						<fileviews:FileCategorizationView VerticalAlignment="Top" />
 					</StackPanel>
 				</StackPanel>
 
 				<!--  Subtitle when maximized  -->
-				<!-- TODO
-			<view:PresentationDescription
-				Grid.Row="1"
-				Grid.Column="0"
-				Grid.ColumnSpan="3"
-				HorizontalAlignment="Center"
-				Visibility="{Binding Maximize, Converter={StaticResource BoolToVis}}" />
-			-->
+				<fileviews:PresentationFileDescriptionView
+					Grid.Row="1"
+					Grid.Column="0"
+					Grid.ColumnSpan="3"
+					HorizontalAlignment="Center"
+					IsVisible="{Binding Maximize}" />
 			</Grid>
 		</Border>		
 	</Grid>
