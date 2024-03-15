@@ -247,6 +247,11 @@ public partial class FileViewModel : ObservableObject
     */
 
     [RelayCommand]
+    private void OpenUrlInBrowser(string url)
+    {
+    }
+
+    [RelayCommand]
     private void PrevFile() => Messenger.Send<SelectPrevFile>();
 
     [RelayCommand]
