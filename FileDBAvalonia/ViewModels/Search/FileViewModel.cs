@@ -190,7 +190,7 @@ public partial class FileViewModel : ObservableObject
         Image = null;
 
         absolutePath = filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(selection.Path);
-        ImageRotation = DatabaseParsing.OrientationToDegrees(selection.Orientation ?? 0);
+        ImageRotation = -DatabaseParsing.OrientationToDegrees(selection.Orientation ?? 0);
 
         var fileType = FileTypeUtils.GetFileType(selection.Path);
         if (fileType == FileType.Picture)

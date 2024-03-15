@@ -50,9 +50,9 @@ public partial class FileCategorizationViewModel : ObservableObject
 
     private int imageRotation = 0;
 
-    private IEnumerable<PersonModel> personList = new List<PersonModel>();
-    private IEnumerable<LocationModel> locationList = new List<LocationModel>();
-    private IEnumerable<TagModel> tagList = new List<TagModel>();
+    private IEnumerable<PersonModel> personList = [];
+    private IEnumerable<LocationModel> locationList = [];
+    private IEnumerable<TagModel> tagList = [];
 
     public bool SelectedPersonCanBeAdded =>
         SelectedFile is not null &&
