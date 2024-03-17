@@ -41,19 +41,22 @@ public class FileBackup
         var fileExtension = Path.GetExtension(filePath);
         var backupFilesPattern = Path.GetFileNameWithoutExtension(filePath) + "_backup_*" + fileExtension;
 
-        foreach (var filePath in fileSystem.Directory.GetFiles(backupDir, backupFilesPattern))
+        if (fileSystem.Directory.Exists(backupDir))
         {
-            var filenameParts = filePath.Split("_");
-            if (filenameParts.Length >= 2)
+            foreach (var filePath in fileSystem.Directory.GetFiles(backupDir, backupFilesPattern))
             {
-                var timestampString = filenameParts[^1].Replace(fileExtension, "");
-                try
+                var filenameParts = filePath.Split("_");
+                if (filenameParts.Length >= 2)
                 {
-                    var timestamp = DateTime.ParseExact(timestampString, BackupFileTimestampFormat, null);
-                    backupFiles.Add(new BackupFile(filePath, timestamp));
-                }
-                catch (FormatException)
-                {
+                    var timestampString = filenameParts[^1].Replace(fileExtension, "");
+                    try
+                    {
+                        var timestamp = DateTime.ParseExact(timestampString, BackupFileTimestampFormat, null);
+                        backupFiles.Add(new BackupFile(filePath, timestamp));
+                    }
+                    catch (FormatException)
+                    {
+                    }
                 }
             }
         }
