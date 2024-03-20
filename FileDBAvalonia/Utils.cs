@@ -136,13 +136,6 @@ public static class Utils
 
         return locationLinkConfig!.Replace("LAT", positionParts[0]).Replace("LON", positionParts[1]);
     }
-
-    public static Uri? CreatePositionUri(string position, string locationLinkConfig)
-    {
-        var link = CreatePositionLink(position, locationLinkConfig);
-        return link is not null ? new Uri(link) : null;
-    }
-
     public static string GetVersionString()
     {
         var version = Assembly.GetEntryAssembly()!.GetName().Version!;

@@ -62,7 +62,7 @@ public partial class FileViewModel : ObservableObject
     private string position = string.Empty;
 
     [ObservableProperty]
-    private Uri? positionLink;
+    private string? positionLink;
 
     [ObservableProperty]
     private string persons = string.Empty;
@@ -247,7 +247,7 @@ public partial class FileViewModel : ObservableObject
     */
 
     [RelayCommand]
-    private void OpenUrlInBrowser(string url)
+    private void OpenUrlInBrowser()
     {
     }
 

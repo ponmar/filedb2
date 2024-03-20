@@ -107,8 +107,8 @@ public class FileTextOverlayCreator
         return file.Position is null ? null : Utils.CreateShortFilePositionString(file.Position);
     }
 
-    public static Uri? GetPositionUri(IConfigProvider configProvider, FileModel file)
+    public static string? GetPositionUri(IConfigProvider configProvider, FileModel file)
     {
-        return file.Position is null ? null : Utils.CreatePositionUri(file.Position, configProvider.Config.LocationLink);
+        return file.Position is null ? null : Utils.CreatePositionLink(file.Position, configProvider.Config.LocationLink);
     }
 }
