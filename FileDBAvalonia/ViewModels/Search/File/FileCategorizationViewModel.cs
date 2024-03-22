@@ -381,7 +381,7 @@ public partial class FileCategorizationViewModel : ObservableObject
     {
         if (SelectedFile is not null)
         {
-            if (await dialogs.ShowConfirmDialogAsync("Reload date and GPS position from file meta-data?"))
+            if (await dialogs.ShowConfirmDialogAsync("Reload date, GPS position and orientation from file meta-data?"))
             {
                 dbAccessProvider.DbAccess.UpdateFileFromMetaData(SelectedFile.Id, filesystemAccessProvider.FilesystemAccess);
 
