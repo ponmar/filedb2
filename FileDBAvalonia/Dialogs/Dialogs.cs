@@ -10,6 +10,7 @@ using FileDBAvalonia.Views.Dialogs;
 using System.ComponentModel;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
+using FileDBAvalonia.ViewModels;
 
 namespace FileDBAvalonia.Dialogs;
 
@@ -135,43 +136,37 @@ public class Dialogs : IDialogs
 
     public PersonModel? ShowAddPersonDialog(int? personId = null)
     {
-        /*
-        var window = new AddPersonWindow(personId)
+        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktopApp &&
+            desktopApp.MainWindow is not null)
         {
-            Owner = Application.Current.MainWindow
-        };
-        window.ShowDialog();
-
-        return ((AddPersonViewModel)window.DataContext).AffectedPerson;
-        */
+            var window = new AddPersonWindow(personId);
+            window.ShowDialog(desktopApp.MainWindow);
+            return ((AddPersonViewModel)window.DataContext!).AffectedPerson;
+        }
         return null;
     }
 
     public LocationModel? ShowAddLocationDialog(int ?locationId = null)
     {
-        /*
-        var window = new AddLocationWindow(locationId)
+        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktopApp &&
+            desktopApp.MainWindow is not null)
         {
-            Owner = Application.Current.MainWindow
-        };
-        window.ShowDialog();
-
-        return ((AddLocationViewModel)window.DataContext).AffectedLocation;
-        */
+            var window = new AddLocationWindow(locationId);
+            window.ShowDialog(desktopApp.MainWindow);
+            return ((AddLocationViewModel)window.DataContext!).AffectedLocation;
+        }
         return null;
     }
 
     public TagModel? ShowAddTagDialog(int? tagId = null)
     {
-        /*
-        var window = new AddTagWindow(tagId)
+        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktopApp &&
+            desktopApp.MainWindow is not null)
         {
-            Owner = Application.Current.MainWindow
-        };
-        window.ShowDialog();
-
-        return ((AddTagViewModel)window.DataContext).AffectedTag;
-        */
+            var window = new AddTagWindow(tagId);
+            window.ShowDialog(desktopApp.MainWindow);
+            return ((AddTagViewModel)window.DataContext!).AffectedTag;
+        }
         return null;
     }
 

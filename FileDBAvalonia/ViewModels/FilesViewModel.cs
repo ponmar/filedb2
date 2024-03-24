@@ -11,6 +11,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDBAvalonia.Dialogs;
 using FileDBAvalonia.Extensions;
+using FileDBAvalonia.Lang;
 using FileDBAvalonia.Model;
 using FileDBInterface.Exceptions;
 using FileDBInterface.Extensions;
@@ -112,7 +113,7 @@ public partial class FilesViewModel : ObservableObject
 
     public async Task ScanNewFilesAsync(string pathToScan)
     {
-        if (!await dialogs.ShowConfirmDialogAsync($"Find all files, not yet imported, from '{pathToScan}'?"))
+        if (!await dialogs.ShowConfirmDialogAsync($"Find all files, not yet imported, from '{pathToScan}'?\n\n{Strings.FilesWarningText}"))
         {
             return;
         }

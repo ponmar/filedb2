@@ -58,15 +58,13 @@ public static class Bootstrapper
                 typeof(ISearchResultRepository))
                     .ImplementedBy<CriteriaViewModel>());
         Container.Register(Component.For<FileCategorizationViewModel>().ImplementedBy<FileCategorizationViewModel>());
-
-        Container.Register(Component.For<IImageLoader>().ImplementedBy<ImageLoader>());
-
-
-        /*       
         Container.Register(Component.For<AddLocationViewModel>().ImplementedBy<AddLocationViewModel>().LifestyleTransient());
         Container.Register(Component.For<AddPersonViewModel>().ImplementedBy<AddPersonViewModel>().LifestyleTransient());
         Container.Register(Component.For<AddTagViewModel>().ImplementedBy<AddTagViewModel>().LifestyleTransient());
 
+        Container.Register(Component.For<IImageLoader>().ImplementedBy<ImageLoader>());
+
+        /*
         Container.Register(Component.For<BrowseDirectoriesViewModel>().ImplementedBy<BrowseDirectoriesViewModel>().LifestyleTransient());
         Container.Register(Component.For<ExportViewModel>().ImplementedBy<ExportViewModel>().LifestyleTransient());
         */

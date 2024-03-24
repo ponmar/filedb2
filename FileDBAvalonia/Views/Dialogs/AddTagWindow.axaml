@@ -1,0 +1,22 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:lang="clr-namespace:FileDBAvalonia.Lang"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="FileDBAvalonia.Views.Dialogs.AddTagWindow"
+        Title="{Binding Title}"
+		SizeToContent="WidthAndHeight"
+		CanResize="False"
+		WindowStartupLocation="CenterOwner">
+	<StackPanel Orientation="Vertical">
+		<Border Classes="BorderGroup">
+			<Grid ColumnDefinitions="auto,auto" RowDefinitions="auto">
+				<TextBlock Grid.Row="0" Grid.Column="0" Classes="PageTextBlock" Text="{x:Static lang:Strings.AddTagNameLabel}" VerticalAlignment="Center"/>
+				<TextBox Grid.Row="0" Grid.Column="1" Classes="PageTextBox" Width="300" Text="{Binding Name}" VerticalAlignment="Center"/>
+			</Grid>
+		</Border>
+
+		<Button Margin="10" HorizontalAlignment="Right" Command="{Binding SaveCommand}" Content="{x:Static lang:Strings.SaveButton}"/>
+	</StackPanel>
+</Window>

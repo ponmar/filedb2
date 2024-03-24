@@ -40,6 +40,10 @@
 			<Setter Property="FontWeight" Value="Bold"/>
 		</Style>
 
+		<Style Selector="ComboBox.PageComboBox">
+			<Setter Property="Margin" Value="10"/>
+		</Style>
+
 		<Style Selector="Border.BorderGroup">
 			<Setter Property="BorderThickness" Value="1"/>
 			<Setter Property="BorderBrush" Value="Gray"/>
@@ -48,7 +52,7 @@
 			<Setter Property="VerticalAlignment" Value="Top"/>
 		</Style>
 
-		<Style Selector="TextBlock.PageTextBox">
+		<Style Selector="TextBox.PageTextBox">
 			<Setter Property="Margin" Value="10"/>
 		</Style>
 

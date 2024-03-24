@@ -1,0 +1,41 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:lang="clr-namespace:FileDBAvalonia.Lang"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="FileDBAvalonia.Views.Dialogs.AddPersonWindow"
+        Title="{Binding Title}"
+		SizeToContent="WidthAndHeight"
+		CanResize="False"
+		WindowStartupLocation="CenterOwner">
+	<StackPanel Orientation="Vertical">
+		<Border Classes="BorderGroup">
+			<Grid ColumnDefinitions="auto,auto,auto" RowDefinitions="auto,auto,auto,auto,auto,auto,auto">
+				<TextBlock Grid.Row="0" Grid.Column="0" Classes="PageTextBlock" Text="{x:Static lang:Strings.AddPersonFirstnameLabel}" VerticalAlignment="Center"/>
+				<TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Classes="PageTextBox" Width="300" Text="{Binding Firstname}" VerticalAlignment="Center"/>
+
+				<TextBlock Grid.Row="1" Grid.Column="0" Classes="PageTextBlock" Text="{x:Static lang:Strings.AddPersonLastnameLabel}" VerticalAlignment="Center"/>
+				<TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Classes="PageTextBox" Width="300" Text="{Binding Lastname}" VerticalAlignment="Center"/>
+
+				<TextBlock Grid.Row="2" Grid.Column="0" Classes="PageTextBlock" Text="{x:Static lang:Strings.AddPersonSexLabel}" VerticalAlignment="Center"/>
+				<ComboBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Classes="PageComboBox" Width="300" ItemsSource="{Binding SexValues}" SelectedItem="{Binding SexSelection}" VerticalAlignment="Center"/>
+
+				<TextBlock Grid.Row="3" Grid.Column="0" Classes="PageTextBlock" Text="{x:Static lang:Strings.AddPersonDescriptionLabel}" VerticalAlignment="Center"/>
+				<TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Classes="PageTextBox" Width="300" Text="{Binding Description}" VerticalAlignment="Center"/>
+
+				<TextBlock Grid.Row="4" Grid.Column="0" Classes="PageTextBlock" Text="{x:Static lang:Strings.AddPersonDateOfBirthLabel}" VerticalAlignment="Center"/>
+				<TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Classes="PageTextBox" Width="300" Text="{Binding DateOfBirth}" ToolTip.Tip="{x:Static lang:Strings.AddPersonDateOfBirthToolTip}" VerticalAlignment="Center"/>
+
+				<TextBlock Grid.Row="5" Grid.Column="0" Classes="PageTextBlock" Text="{x:Static lang:Strings.AddPersonDeceasedLabel}" VerticalAlignment="Center"/>
+				<TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Classes="PageTextBox" Width="300" Text="{Binding Deceased}" ToolTip.Tip="{x:Static lang:Strings.AddPersonDeceasedToolTip}" VerticalAlignment="Center"/>
+
+				<TextBlock Grid.Row="6" Grid.Column="0" Classes="PageTextBlock" Text="{x:Static lang:Strings.AddPersonProfilePictureFileIdLabel}" VerticalAlignment="Center"/>
+				<TextBlock Grid.Row="6" Grid.Column="1" Classes="PageTextBlock" Text="{Binding ProfilePictureFileId}" VerticalAlignment="Center"/>
+				<Button Grid.Row="6" Grid.Column="2" Classes="PageButton" Content="{x:Static lang:Strings.AddPersonSetCurrentFileLabel}" ToolTip.Tip="{x:Static lang:Strings.AddPersonSetCurrentFileToolTip}" Command="{Binding SetProfilePictureFromSearchResultCommand}" IsEnabled="{Binding CanSetProfilePicture}" VerticalAlignment="Center"/>
+			</Grid>
+		</Border>
+
+		<Button Margin="10" Classes="PageButton" HorizontalAlignment="Right" Command="{Binding SaveCommand}" Content="{x:Static lang:Strings.SaveButton}"/>
+	</StackPanel>
+</Window>
