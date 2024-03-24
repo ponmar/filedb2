@@ -19,7 +19,7 @@
 				<Border Classes="BorderGroup">
 					<StackPanel Orientation="Vertical">
 						<Button Content="{x:Static lang:Strings.NotificationsDismissAllButton}" Command="{Binding ClearNotificationsCommand}" HorizontalAlignment="Left" IsEnabled="{Binding Notifications.Count}" Classes="PageButton"/>
-						<TextBlock Text="{x:Static lang:Strings.NotificationsNoNotificationsAvailable}" IsVisible="{Binding !Notifications.Count}" HorizontalAlignment="Left" Classes="PageTextBox"/>
+						<TextBlock Text="{x:Static lang:Strings.NotificationsNoNotificationsAvailable}" IsVisible="{Binding !Notifications.Count}" HorizontalAlignment="Left" Classes="PageTextBlock"/>
 						<ItemsControl IsVisible="{Binding Notifications.Count}" Background="Transparent" ItemsSource="{Binding Notifications}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.IsSharedSizeScope="True">
 							<ItemsControl.ItemTemplate>
 								<DataTemplate>
@@ -29,7 +29,7 @@
 											<ColumnDefinition Width="*" />
 										</Grid.ColumnDefinitions>
 										<TextBlock Grid.Column="0" Text="{Binding Type, Converter={StaticResource NotificationTypeToStringConverter}}" Foreground="{Binding Type, Converter={StaticResource NotificationTypeToColorConverter}}" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip.Tip="{Binding Type}" Classes="PageNotificationIcon"/>
-										<TextBlock Grid.Column="1" Text="{Binding Message}" VerticalAlignment="Center" TextWrapping="Wrap" Classes="PageTextBox"/>
+										<TextBlock Grid.Column="1" Text="{Binding Message}" VerticalAlignment="Center" TextWrapping="Wrap" Classes="PageTextBlock"/>
 									</Grid>
 								</DataTemplate>
 							</ItemsControl.ItemTemplate>

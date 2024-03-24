@@ -6,13 +6,12 @@ using System.IO.Abstractions;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
+using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDBAvalonia.Dialogs;
 using FileDBAvalonia.Extensions;
 using FileDBAvalonia.Model;
-using FileDBInterface.DatabaseAccess;
 using FileDBInterface.Exceptions;
 using FileDBInterface.Extensions;
 using FileDBShared;
@@ -26,8 +25,6 @@ public class NewFile
     public string Path { get; }
 
     public string DateModified { get; }
-
-    public bool IsSelected { get; set; } = false;
 
     public NewFile(string path, string dateModified)
     {
@@ -43,7 +40,7 @@ public partial class FilesViewModel : ObservableObject
 
     public ObservableCollection<NewFile> NewFiles { get; } = [];
 
-    public bool NewFilesSelected => NewFiles.Any(x => x.IsSelected);
+    public ObservableCollection<NewFile> SelectedFiles { get; } = [];
 
     [ObservableProperty]
     private string importResult = string.Empty;
@@ -123,45 +120,55 @@ public partial class FilesViewModel : ObservableObject
         NewFiles.Clear();
         ImportResult = string.Empty;
         ImportedFileList = string.Empty;
-        OnPropertyChanged(nameof(NewFilesSelected));
 
         var blacklistedFilePathPatterns = configProvider.Config.BlacklistedFilePathPatterns.Split(";");
         var whitelistedFilePathPatterns = configProvider.Config.WhitelistedFilePathPatterns.Split(";");
 
-        // TODO
-        /*
         dialogs.ShowProgressDialog(progress =>
         {
             progress.Report("Scanning...");
 
             foreach (var internalFilePath in filesystemAccessProvider.FilesystemAccess.ListNewFilesystemFiles(pathToScan, blacklistedFilePathPatterns, whitelistedFilePathPatterns, configProvider.Config.IncludeHiddenDirectories, dbAccessProvider.DbAccess))
             {
-                Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+                Dispatcher.UIThread.Invoke(() =>
                 {
                     NewFiles.Add(new NewFile(internalFilePath, GetDateModified(internalFilePath)));
-                }));
+                });
                 progress.Report($"Scanning... New files: {NewFiles.Count}");
             }
 
-            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+            Dispatcher.UIThread.Invoke(() =>
             {
-                OnPropertyChanged(nameof(NewFilesSelected));
                 OnPropertyChanged(nameof(NewFiles));
 
                 if (NewFiles.Count == 0)
                 {
-                    dialogs.ShowInfoDialog($"No new files found. Add your files to '{configProvider.FilePaths.FilesRootDir}'.");
+                    dialogs.ShowInfoDialogAsync($"No new files found. Add your files to '{configProvider.FilePaths.FilesRootDir}'.");
                 }
-            }));
+            });
         });
-        */
+    }
+
+    [RelayCommand]
+    private void SelectAll()
+    {
+        SelectedFiles.Clear();
+        foreach (var file in NewFiles)
+        {
+            SelectedFiles.Add(file);
+        }
+    }
+
+    [RelayCommand]
+    private void SelectNone()
+    {
+        SelectedFiles.Clear();
     }
 
     [RelayCommand]
     private async Task ImportNewFilesAsync()
     {
-        var filesToAdd = NewFiles.Where(x => x.IsSelected).ToList();
-        if (!await dialogs.ShowConfirmDialogAsync($"Add meta-data from {filesToAdd.Count} files?"))
+        if (!await dialogs.ShowConfirmDialogAsync($"Add meta-data from {SelectedFiles.Count} files?"))
         {
             return;
         }
@@ -176,8 +183,6 @@ public partial class FilesViewModel : ObservableObject
             return;
         }
 
-        // TODO
-        /*
         dialogs.ShowProgressDialog(progress =>
         {
             var locations = dbAccessProvider.DbAccess.GetLocations();
@@ -187,9 +192,9 @@ public partial class FilesViewModel : ObservableObject
                 List<FileModel> importedFiles = [];
 
                 var counter = 1;
-                foreach (var fileToAdd in filesToAdd)
+                foreach (var fileToAdd in SelectedFiles)
                 {
-                    progress.Report($"Adding file {counter} / {filesToAdd.Count}...");
+                    progress.Report($"Adding file {counter} / {SelectedFiles.Count}...");
                     Thread.Sleep(1000);
 
                     dbAccessProvider.DbAccess.InsertFile(fileToAdd.Path, null, filesystemAccessProvider.FilesystemAccess, FindFileMetadata);
@@ -219,29 +224,31 @@ public partial class FilesViewModel : ObservableObject
                     counter++;
                 }
 
-                Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+                Dispatcher.UIThread.Invoke(() =>
                 {
                     ImportedFileList = Utils.CreateFileList(importedFiles);
                     ImportResult = importedFiles.Count > 0 ? $"{importedFiles.Count} files added." : string.Empty;
 
-                    Events.Send(new FilesImported(importedFiles));
+                    Messenger.Send(new FilesImported(importedFiles));
 
-                    filesToAdd.ForEach(x => NewFiles.Remove(x));
-                    OnPropertyChanged(nameof(NewFilesSelected));
-                }));
+                    foreach (var selectedFile in SelectedFiles.ToList())
+                    {
+                        NewFiles.Remove(selectedFile);
+                    }
+                });
             }
             catch (DataValidationException e)
             {
-                Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+                Dispatcher.UIThread.Invoke(() =>
                 {
-                    dialogs.ShowErrorDialog(e.Message);
-
-                    filesToAdd.ForEach(x => NewFiles.Remove(x));
-                    OnPropertyChanged(nameof(NewFilesSelected));
-                }));
+                    dialogs.ShowErrorDialogAsync(e.Message);
+                    foreach (var selectedFile in SelectedFiles.ToList())
+                    {
+                        NewFiles.Remove(selectedFile);
+                    }
+                });
             }
         });
-        */
     }
 
     [RelayCommand]
@@ -272,10 +279,5 @@ public partial class FilesViewModel : ObservableObject
         var path = filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(internalPath);
         var dateModified = fileSystem.File.GetLastWriteTime(path);
         return dateModified.ToDateAndTime();
-    }
-
-    public void SelectionChanged()
-    {
-        OnPropertyChanged(nameof(NewFilesSelected));
     }
 }

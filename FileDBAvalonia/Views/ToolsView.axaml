@@ -13,7 +13,7 @@
 				<TextBlock Classes="PageSubHeader" Text="{x:Static lang:Strings.ToolsCreateDatabaseTitle}"/>
 				<Border Classes="BorderGroup">
 					<StackPanel Orientation="Vertical">
-						<TextBlock Classes="PageTextBox" TextWrapping="Wrap" Text="{x:Static lang:Strings.ToolsCreateDatabaseDescription}"/>
+						<TextBlock Classes="PageTextBlock" TextWrapping="Wrap" Text="{x:Static lang:Strings.ToolsCreateDatabaseDescription}"/>
 						<StackPanel Orientation="Vertical">
 							<Button Classes="Normal" Margin="10" Command="{Binding CreateDatabaseCommand}" HorizontalAlignment="Left" Content="{x:Static lang:Strings.ToolsRunButton}"/>
 						</StackPanel>
@@ -23,9 +23,9 @@
 				<TextBlock Classes="PageSubHeader" Text="{x:Static lang:Strings.ToolsDatabaseBackupTitle}"/>
 				<Border Classes="BorderGroup">
 					<StackPanel Orientation="Vertical">
-						<TextBlock Classes="PageTextBox" TextWrapping="Wrap" Text="This tool can be used to make a database backup within the files collection directory."/>
+						<TextBlock Classes="PageTextBlock" TextWrapping="Wrap" Text="This tool can be used to make a database backup within the files collection directory."/>
 						<Button Classes="Normal" Margin="10" Command="{Binding CreateDatabaseBackupCommand}" HorizontalAlignment="Left" Content="{x:Static lang:Strings.ToolsRunButton}"/>
-						<TextBlock Classes="PageTextBox" Text="{Binding BackupListHeader}"/>
+						<TextBlock Classes="PageTextBlock" Text="{Binding BackupListHeader}"/>
 						<ListBox IsVisible="{Binding BackupFiles.Count}" Margin="10" ItemsSource="{Binding BackupFiles}" HorizontalAlignment="Left" MaxHeight="150">
 							<ListBox.ItemTemplate>
 								<DataTemplate>
@@ -40,8 +40,8 @@
 								<ColumnDefinition Width="Auto"/>
 								<ColumnDefinition Width="*"/>
 							</Grid.ColumnDefinitions>
-							<TextBlock Classes="PageTextBox" Grid.Row="0" Grid.Column="0" Text="&#x26A0;" VerticalAlignment="Center"/>
-							<TextBlock Classes="PageTextBox" Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" Text="{x:Static lang:Strings.ToolsDatabaseBackupWarning1}"/>
+							<TextBlock Classes="PageTextBlock" Grid.Row="0" Grid.Column="0" Text="&#x26A0;" VerticalAlignment="Center"/>
+							<TextBlock Classes="PageTextBlock" Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" Text="{x:Static lang:Strings.ToolsDatabaseBackupWarning1}"/>
 						</Grid>
 					</StackPanel>
 				</Border>
@@ -49,9 +49,9 @@
 				<TextBlock Classes="PageSubHeader" Text="{x:Static lang:Strings.ToolsDatabaseExportTitle}"/>
 				<Border Classes="BorderGroup">
 					<StackPanel Orientation="Vertical">
-						<TextBlock Classes="PageTextBox" TextWrapping="Wrap" Text="{x:Static lang:Strings.ToolsDatabaseExportInfo}"/>
+						<TextBlock Classes="PageTextBlock" TextWrapping="Wrap" Text="{x:Static lang:Strings.ToolsDatabaseExportInfo}"/>
 						<StackPanel Orientation="Horizontal">
-							<TextBlock Classes="PageTextBox" Text="{x:Static lang:Strings.ToolsDatabaseExportDirectoryLabel}" VerticalAlignment="Center"/>
+							<TextBlock Classes="PageTextBlock" Text="{x:Static lang:Strings.ToolsDatabaseExportDirectoryLabel}" VerticalAlignment="Center"/>
 							<TextBox Width="250" Text="{Binding DatabaseExportDirectory}" VerticalAlignment="Center"/>
 							<Button Classes="Normal" Margin="10" Content="{x:Static lang:Strings.ToolsDatabaseExportDestinationDirectoryBrowseButton}" Command="{Binding BrowseDatabaseExportDirectoryCommand}" VerticalAlignment="Center"/>
 						</StackPanel>
@@ -62,7 +62,7 @@
 				<TextBlock Classes="PageSubHeader" Text="{x:Static lang:Strings.ToolsFilesCollectionFilteringTitle}"/>
 				<Border Classes="BorderGroup">
 					<StackPanel Orientation="Vertical">
-						<TextBlock Classes="PageTextBox" TextWrapping="Wrap" Text="{x:Static lang:Strings.ToolsFilesCollectionFilteringInfo}"/>
+						<TextBlock Classes="PageTextBlock" TextWrapping="Wrap" Text="{x:Static lang:Strings.ToolsFilesCollectionFilteringInfo}"/>
 						<StackPanel Orientation="Horizontal">
 							<Button Classes="Normal" Margin="10" Command="{Binding FindImportedNoLongerApplicableFilesCommand}" HorizontalAlignment="Left" Content="{x:Static lang:Strings.ToolsRunButton}"/>
 							<Button Classes="Normal" Margin="10" Command="{Binding CopyImportedNoLongerApplicableFilesListCommand}" IsEnabled="{Binding ImportedNoLongerApplicableFileList, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" HorizontalAlignment="Left" Content="{x:Static lang:Strings.ToolsFilesCollectionFilteringCopyButton}"/>
@@ -73,7 +73,7 @@
 				<TextBlock Classes="PageSubHeader" Text="{x:Static lang:Strings.ToolsDatabaseDataValidationTitle}"/>
 				<Border Classes="BorderGroup">
 					<StackPanel Orientation="Vertical">
-						<TextBlock Classes="PageTextBox" TextWrapping="Wrap" Text="{x:Static lang:Strings.ToolsDatabaseDataValidationInfo}"/>
+						<TextBlock Classes="PageTextBlock" TextWrapping="Wrap" Text="{x:Static lang:Strings.ToolsDatabaseDataValidationInfo}"/>
 						<StackPanel Orientation="Horizontal">
 							<Button Classes="Normal" Margin="10" Command="{Binding DatabaseValidationCommand}" HorizontalAlignment="Left" Content="{x:Static lang:Strings.ToolsRunButton}"/>
 							<Button Classes="Normal" Margin="10" Command="{Binding CopyInvalidFileListCommand}" IsEnabled="{Binding InvalidFileList, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" HorizontalAlignment="Left" Content="{x:Static lang:Strings.ToolsDatabaseDataValidationCopyButton}"/>
@@ -85,14 +85,14 @@
 				<TextBlock Classes="PageSubHeader" Text="{x:Static lang:Strings.ToolsFindMetaDataForMissingFilesTitle}"/>
 				<Border Classes="BorderGroup">
 					<StackPanel Orientation="Vertical">
-						<TextBlock Classes="PageTextBox" TextWrapping="Wrap" Text="{x:Static lang:Strings.ToolsFindMetaDataForMissingFilesInfo}"/>
+						<TextBlock Classes="PageTextBlock" TextWrapping="Wrap" Text="{x:Static lang:Strings.ToolsFindMetaDataForMissingFilesInfo}"/>
 						<Grid>
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="Auto"/>
 								<ColumnDefinition Width="*"/>
 							</Grid.ColumnDefinitions>
-							<TextBlock Classes="PageTextBox" Grid.Column="0" VerticalAlignment="Center">&#x26A0;</TextBlock>
-							<TextBlock Classes="PageTextBox" Grid.Column="1" TextWrapping="Wrap" Text="{x:Static lang:Strings.ToolsFindMetaDataForMissingFilesWarning}"/>
+							<TextBlock Classes="PageTextBlock" Grid.Column="0" VerticalAlignment="Center">&#x26A0;</TextBlock>
+							<TextBlock Classes="PageTextBlock" Grid.Column="1" TextWrapping="Wrap" Text="{x:Static lang:Strings.ToolsFindMetaDataForMissingFilesWarning}"/>
 						</Grid>
 						<StackPanel Orientation="Horizontal">
 							<Button Classes="Normal" Margin="10" Command="{Binding FileFinderCommand}" HorizontalAlignment="Left" Content="{x:Static lang:Strings.ToolsRunButton}"/>

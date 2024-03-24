@@ -2,7 +2,71 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+			 xmlns:lang="clr-namespace:FileDBAvalonia.Lang"
              x:Class="FileDBAvalonia.Views.FilesView">
-  Welcome to Avalonia!
+	<DockPanel>
+		<TextBlock DockPanel.Dock="Top" Text="{x:Static lang:Strings.FilesTitle}" Classes="PageHeader"/>
+		<ScrollViewer>
+			<StackPanel Orientation="Vertical">
+				<TextBlock Text="{x:Static lang:Strings.FilesAddMetaDataTitle}" Classes="PageSubHeader"/>
+				<Border Classes="BorderGroup">
+					<StackPanel Orientation="Vertical">
+						<TextBlock Text="{x:Static lang:Strings.FilesInfoText}" Classes="PageTextBlock"/>
+						<StackPanel Orientation="Horizontal">
+							<TextBlock Text="&#x26A0;" Classes="PageTextBlock"/>
+							<TextBlock Text="{x:Static lang:Strings.FilesWarningText}" Classes="PageTextBlock" TextWrapping="Wrap"/>
+						</StackPanel>
+						<WrapPanel Orientation="Horizontal">
+							<TextBlock Text="{x:Static lang:Strings.FilesFromFilesCollectionLabel}" VerticalAlignment="Center" Classes="PageTextBlock"/>
+							<Button Classes="PageButton" Command="{Binding ScanNewFilesCommand}" Content="{x:Static lang:Strings.FilesFindButton}"/>
+						</WrapPanel>
+						<WrapPanel Orientation="Horizontal">
+							<TextBlock Text="{x:Static lang:Strings.FilesFromFilesCollectionSubDirectoryLabel}" VerticalAlignment="Center" Classes="PageTextBlock"/>
+							<TextBox Width="250" Margin="5" Text="{Binding SubdirToScan}" VerticalContentAlignment="Center"/>
+							<Button Classes="PageButton" Command="{Binding BrowseSubDirectoryCommand}" Content="{x:Static lang:Strings.FilesBrowseButton}"/>
+							<Button Classes="PageButton" Command="{Binding ScanNewFilesInDirectoryCommand}" IsEnabled="{Binding SubdirToScan, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" Content="{x:Static lang:Strings.FilesFindButton}"/>
+						</WrapPanel>
+						<CheckBox IsChecked="{Binding FindFileMetadata}" Classes="PageCheckBox">
+							<TextBlock Classes="PageTextBlock" ToolTip.Tip="{x:Static lang:Strings.FilesIncludeMetaDataToolTip}" Text="{x:Static lang:Strings.FilesIncludeMetaDataLabel}"/>
+						</CheckBox>
+						<WrapPanel Orientation="Horizontal">
+							<Button Classes="PageButton" IsEnabled="{Binding NewFiles.Count}" Content="{x:Static lang:Strings.FilesSelectAllButton}" Command="{Binding SelectAllCommand}" />
+							<Button Classes="PageButton" IsEnabled="{Binding NewFiles.Count}}" Content="{x:Static lang:Strings.FilesDeselectAllButton}" Command="{Binding SelectNoneCommand}"/>
+							<Button Classes="PageButton" Command="{Binding ImportNewFilesCommand}" IsEnabled="{Binding SelectedFiles.Count}" Content="{x:Static lang:Strings.FilesAddMetaDataForSelectedFilesButton}"/>
+							<Button Classes="PageButton" Command="{Binding CopyImportedFileListCommand}" IsEnabled="{Binding ImportedFileList, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" Content="{x:Static lang:Strings.FilesCopyFileListForAddedFilesButton}"/>
+						</WrapPanel>
+						<TextBlock Classes="PageTextBlock" Text="{Binding ImportResult}" IsVisible="{Binding ImportResult, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+						<ListBox Margin="10" ItemsSource="{Binding NewFiles}" IsVisible="{Binding NewFiles.Count}" SelectionMode="Multiple" Grid.IsSharedSizeScope="True" SelectedItems="{Binding SelectedFiles}">
+							<ListBox.ItemTemplate>
+								<DataTemplate>
+									<Grid>
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="Auto" SharedSizeGroup="PathColumn"/>
+											<ColumnDefinition Width="Auto" SharedSizeGroup="DateModifiedColumn"/>
+										</Grid.ColumnDefinitions>
+										<Grid.RowDefinitions>
+											<RowDefinition Height="Auto"/>
+										</Grid.RowDefinitions>
+
+										<TextBlock Grid.Column="0" Text="{Binding Path}" Margin="0,0,50,0"/>
+										<TextBlock Grid.Column="1" Text="{Binding DateModified}" ToolTip.Tip="{x:Static lang:Strings.FilesFileDateModifiedToolTip}" Margin="0"/>
+									</Grid>
+								</DataTemplate>
+							</ListBox.ItemTemplate>
+						</ListBox>
+					</StackPanel>
+				</Border>
+
+				<TextBlock Text="{x:Static lang:Strings.FilesRemoveMetaDataTitle}" Classes="PageSubHeader"/>
+				<Border Classes="BorderGroup">
+					<StackPanel Orientation="Horizontal" Margin="15">
+						<TextBlock Classes="PageTextBlock" Text="{x:Static lang:Strings.FilesFileListLabel}" VerticalAlignment="Center"/>
+						<TextBox Classes="PageTextBox" Width="200" VerticalAlignment="Center" Text="{Binding RemoveFileList}"></TextBox>
+						<Button Classes="PageButton" Command="{Binding RemoveFileListMethodCommand}" Content="{x:Static lang:Strings.FilesRemoveButton}"  VerticalAlignment="Center" IsEnabled="{Binding RemoveFileList, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+					</StackPanel>
+				</Border>
+			</StackPanel>
+		</ScrollViewer>
+	</DockPanel>
 </UserControl>

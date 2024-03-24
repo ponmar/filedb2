@@ -6,6 +6,10 @@ using MsBox.Avalonia;
 using System.Threading.Tasks;
 using MsBox.Avalonia.Enums;
 using FileDBShared.Model;
+using FileDBAvalonia.Views.Dialogs;
+using System.ComponentModel;
+using Avalonia;
+using Avalonia.Controls.ApplicationLifetimes;
 
 namespace FileDBAvalonia.Dialogs;
 
@@ -51,26 +55,27 @@ public class Dialogs : IDialogs
         return result == ButtonResult.Yes;
     }
 
-    /*
     public void ShowProgressDialog(Action<IProgress<string>> work)
     {
-        var splash = new SplashWindow
+        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktopApp &&
+            desktopApp.MainWindow is not null)
         {
-            Owner = Application.Current.MainWindow
-        };
+            var splash = new SplashWindow();
 
-        splash.Loaded += (_, args) =>
-        {
-            var worker = new BackgroundWorker();
-            var progress = new Progress<string>(x => splash.Text.Text = x);
-            worker.DoWork += (s, workerArgs) => work(progress);
-            worker.RunWorkerCompleted += (s, workerArgs) => splash.Close();
-            worker.RunWorkerAsync();
-        };
+            splash.Loaded += (_, args) =>
+            {
+                var worker = new BackgroundWorker();
+                var progress = new Progress<string>(x => splash.Text.Text = x);
+                worker.DoWork += (s, workerArgs) => work(progress);
+                worker.RunWorkerCompleted += (s, workerArgs) => splash.Close();
+                worker.RunWorkerAsync();
+            };
 
-        splash.ShowDialog();
+            splash.ShowDialog(desktopApp.MainWindow);
+        }
     }
 
+    /*
     public string? BrowseExistingFileDialog(string initialDirectory, string filter)
     {
         var dialog = new Microsoft.Win32.OpenFileDialog()

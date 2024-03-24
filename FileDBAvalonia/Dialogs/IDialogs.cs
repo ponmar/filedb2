@@ -15,8 +15,8 @@ public interface IDialogs
     Task ShowErrorDialogAsync(IEnumerable<string> messages);
     Task ShowErrorDialogAsync(ValidationResult validationResult);
     Task<bool> ShowConfirmDialogAsync(string question);
-    /*
     void ShowProgressDialog(Action<IProgress<string>> work);
+    /*
     string? BrowseExistingFileDialog(string initialDirectory, string filter);
     string? BrowseExistingDirectory(string initialDirectory, string title);
     string? SelectNewFileDialog(string title, string fileExtension, string filter);

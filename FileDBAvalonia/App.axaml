@@ -30,6 +30,10 @@
 			<Setter Property="Margin" Value="10"/>
 		</Style>
 
+		<Style Selector="TextBlock.PageTextBlock">
+			<Setter Property="Margin" Value="10"/>
+		</Style>
+
 		<Style Selector="TextBlock.NotificationBadge">
 			<Setter Property="FontSize" Value="12"/>
 			<Setter Property="Foreground" Value="White"/>
