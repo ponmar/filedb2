@@ -21,7 +21,7 @@
 									<RowDefinition Height="Auto"/>
 								</Grid.RowDefinitions>
 								<Button Grid.Column="0" Margin="3" HorizontalAlignment="Left" Content="{Binding ToggleText}" ToolTip.Tip="{Binding ItemName}" Command="{Binding ElementName=HistoryItemsItemsControl, Path=DataContext.ToggleFromHistoryItemCommand}" CommandParameter="{Binding}" HotKey="{Binding HotKey}"/>
-								<Button Grid.Column="1" Command="{Binding ElementName=HistoryItemsItemsControl, Path=DataContext.RemoveHistoryItemCommand}" CommandParameter="{Binding}" VerticalAlignment="Center" Content="x" ToolTip.Tip="{x:Static lang:Strings.CategorizationRemoveItemFromUpdateHistory}"/>
+								<Button Grid.Column="1" Command="{Binding ElementName=HistoryItemsItemsControl, Path=DataContext.RemoveHistoryItemCommand}" CommandParameter="{Binding}" VerticalAlignment="Center" Content="&#128473;" ToolTip.Tip="{x:Static lang:Strings.CategorizationRemoveItemFromUpdateHistory}"/>
 							</Grid>
 						</DataTemplate>
 					</ItemsControl.ItemTemplate>

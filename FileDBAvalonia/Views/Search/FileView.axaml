@@ -75,24 +75,24 @@
 							Command="{Binding OpenFileLocationCommand}"
 							IsEnabled="{Binding FileSelected}"
 							ToolTip.Tip="{x:Static lang:Strings.SearchLocateButtonToolTip}"
-							IsVisible="{Binding !Maximize}" Content="{x:Static lang:Strings.SearchLocateButton}"/>
+							IsVisible="{Binding !Maximize}" Content="&#x2302;"/>
 						<Button
 							Margin="0,0,5,0"
 							Command="{Binding OpenFileWithDefaultAppCommand}"
 							IsEnabled="{Binding FileSelected}"
 							ToolTip.Tip="{x:Static lang:Strings.SearchOpenButtonToolTip}"
-							IsVisible="{Binding !Maximize}" Content="{x:Static lang:Strings.SearchOpenButton}"/>
+							IsVisible="{Binding !Maximize}" Content="&#9654;"/>
 						<Button
 							Margin="0,0,5,0"
 							Command="{Binding CopyFileIdCommand}"
 							IsEnabled="{Binding FileSelected}"
 							ToolTip.Tip="{x:Static lang:Strings.SearchCopyButtonToolTip}"
-							IsVisible="{Binding !Maximize}" Content="{x:Static lang:Strings.SearchCopyButton}"/>
+							IsVisible="{Binding !Maximize}" Content="&#x1f5d0;"/>
 						<Button
 							Margin="0,0,5,0"
 							Command="{Binding RemoveFileFromCurrentSearchResultCommand}"
 							IsEnabled="{Binding FileSelected}"
-							Content="{x:Static lang:Strings.SearchRemoveButton}" ToolTip.Tip="{x:Static lang:Strings.SearchRemoveButtonToolTip}"/>
+							Content="&#128473;" ToolTip.Tip="{x:Static lang:Strings.SearchRemoveButtonToolTip}"/>
 						<ToggleButton
 							Margin="0,0,5,0"
 							Content="&#x1F5DA;"
