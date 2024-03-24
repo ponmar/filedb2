@@ -43,7 +43,7 @@ namespace FileDBAvalonia.ViewModels.Dialogs
         private void ReloadDirectoryTree()
         {
             Directories.Clear();
-            var dirs = DirectoryTreeBuilder.Build(dbAccessProvider.DbAccess.GetDirectories());
+            var dirs = DirectoryTreeCreator.Build(dbAccessProvider.DbAccess.GetDirectories());
             dirs.ForEach(Directories.Add);
         }
 
@@ -59,7 +59,7 @@ namespace FileDBAvalonia.ViewModels.Dialogs
         }
     }
 
-    public class DirectoryTreeBuilder
+    public class DirectoryTreeCreator
     {
         public static List<Directory> Build(IEnumerable<string> directoryPaths)
         {
