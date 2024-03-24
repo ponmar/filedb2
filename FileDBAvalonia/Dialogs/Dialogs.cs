@@ -13,6 +13,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using FileDBAvalonia.ViewModels;
 using Avalonia.Controls;
 using Avalonia.Platform.Storage;
+using FileDBAvalonia.ViewModels.Search;
 
 namespace FileDBAvalonia.Dialogs;
 
@@ -103,35 +104,6 @@ public class Dialogs : IDialogs
         return files.Count > 0 ? files[0].Path.AbsolutePath : null;
     }
 
-    /*
-    public string? SelectNewFileDialog(string title, string fileExtension, string filter)
-    {
-        var dialog = new System.Windows.Forms.OpenFileDialog()
-        {
-            Title = title,
-            DefaultExt = fileExtension,
-            Filter = filter,
-            CheckFileExists = false,
-            CheckPathExists = true,
-        };
-
-        var result = dialog.ShowDialog();
-        if (result == System.Windows.Forms.DialogResult.OK)
-        {
-            if (dialog.FileName.EndsWith(fileExtension))
-            {
-                return dialog.FileName;
-            }
-            else
-            {
-                ShowErrorDialog($"File extension must be {fileExtension}");
-            }
-        }
-
-        return null;
-    }
-    */
-
     public PersonModel? ShowAddPersonDialog(int? personId = null)
     {
         if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktopApp &&
@@ -180,16 +152,17 @@ public class Dialogs : IDialogs
         var windowVm = (BrowseDirectoriesViewModel)window.DataContext;
         return windowVm.SelectedDirectoryPath;
     }
-
-    public void ShowExportDialog(SearchResult searchResult)
-    {
-        var window = new ExportWindow
-        {
-            Owner = Application.Current.MainWindow
-        };
-        var viewModel = (ExportViewModel)window.DataContext;
-        viewModel.SearchResult = searchResult;
-        window.ShowDialog();
-    }
     */
+
+    public void ShowExportSearchResultDialog(SearchResult searchResult)
+    {
+        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktopApp &&
+            desktopApp.MainWindow is not null)
+        {
+            var window = new ExportSearchResultWindow();
+            var viewModel = (ExportSearchResultViewModel)window.DataContext!;
+            viewModel.SearchResult = searchResult;
+            window.ShowDialog(desktopApp.MainWindow);
+        }
+    }
 }

@@ -375,8 +375,7 @@ public partial class ResultViewModel : ObservableObject
     [RelayCommand]
     private void ExportFileList()
     {
-        // TODO
-        //dialogs.ShowExportDialog(SearchResult!);
+        dialogs.ShowExportSearchResultDialog(SearchResult!);
     }
 
     [RelayCommand]

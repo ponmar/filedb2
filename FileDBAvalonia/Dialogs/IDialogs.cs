@@ -1,4 +1,5 @@
-﻿using FileDBShared.Model;
+﻿using FileDBAvalonia.ViewModels.Search;
+using FileDBShared.Model;
 using FluentValidation.Results;
 using System;
 using System.Collections.Generic;
@@ -16,12 +17,11 @@ public interface IDialogs
     Task ShowErrorDialogAsync(ValidationResult validationResult);
     Task<bool> ShowConfirmDialogAsync(string question);
     void ShowProgressDialog(Action<IProgress<string>> work);
-    //string? SelectNewFileDialog(string title, string fileExtension, string filter);
     Task<string?> ShowBrowseExistingDirectoryDialogAsync(string title);
     Task<string?> ShowBrowseExistingDirectoryDialogAsync(string title, string initialDirectory);
     PersonModel? ShowAddPersonDialog(int? personId = null);
     LocationModel? ShowAddLocationDialog(int? locationId = null);
     TagModel? ShowAddTagDialog(int? tagId = null);
     //string? ShowBrowseDirectoriesDialog();
-    //void ShowExportDialog(SearchResult searchResult);
+    void ShowExportSearchResultDialog(SearchResult searchResult);
 }

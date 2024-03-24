@@ -64,10 +64,9 @@ public static class Bootstrapper
 
         Container.Register(Component.For<IImageLoader>().ImplementedBy<ImageLoader>());
 
-        /*
-        Container.Register(Component.For<BrowseDirectoriesViewModel>().ImplementedBy<BrowseDirectoriesViewModel>().LifestyleTransient());
-        Container.Register(Component.For<ExportViewModel>().ImplementedBy<ExportViewModel>().LifestyleTransient());
-        */
+        Container.Register(Component.For<ExportSearchResultViewModel>().ImplementedBy<ExportSearchResultViewModel>().LifestyleTransient());
+
+        //Container.Register(Component.For<BrowseDirectoriesViewModel>().ImplementedBy<BrowseDirectoriesViewModel>().LifestyleTransient());
     }
 
     public static void Reset()
