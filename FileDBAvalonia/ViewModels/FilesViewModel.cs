@@ -78,10 +78,10 @@ public partial class FilesViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void BrowseSubDirectory()
+    private async Task BrowseSubDirectoryAsync()
     {
-        // TODO
-        //SubdirToScan = dialogs.BrowseExistingDirectory(configProvider.FilePaths.FilesRootDir, "Select a sub directory") ?? string.Empty;
+        var selectedDir = await dialogs.ShowBrowseExistingDirectoryDialogAsync("Select a sub directory", configProvider.FilePaths.FilesRootDir);
+        SubdirToScan = selectedDir ?? string.Empty;
     }
 
     [RelayCommand]

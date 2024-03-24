@@ -11,6 +11,8 @@ using System.ComponentModel;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using FileDBAvalonia.ViewModels;
+using Avalonia.Controls;
+using Avalonia.Platform.Storage;
 
 namespace FileDBAvalonia.Dialogs;
 
@@ -76,36 +78,32 @@ public class Dialogs : IDialogs
         }
     }
 
-    /*
-    public string? BrowseExistingFileDialog(string initialDirectory, string filter)
+    public async Task<string?> ShowBrowseExistingDirectoryDialogAsync(string title)
     {
-        var dialog = new Microsoft.Win32.OpenFileDialog()
-        {
-            Filter = filter,
-            InitialDirectory = initialDirectory,
-        };
-
-        return dialog.ShowDialog() == true ? dialog.FileName : null;
+        return await ShowBrowseExistingDirectoryDialogAsync(title, string.Empty);
     }
 
-    public string? BrowseExistingDirectory(string initialDirectory, string title)
+    public async Task<string?> ShowBrowseExistingDirectoryDialogAsync(string title, string initialDirectory)
     {
-        if (!initialDirectory.EndsWith(Path.DirectorySeparatorChar))
+        if (Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktopApp)
         {
-            initialDirectory += Path.DirectorySeparatorChar;
+            throw new NotSupportedException();
         }
 
-        using var dialog = new System.Windows.Forms.FolderBrowserDialog
-        {
-            Description = title,
-            UseDescriptionForTitle = true,
-            SelectedPath = initialDirectory,
-            ShowNewFolderButton = true
-        };
+        var topLevel = TopLevel.GetTopLevel(desktopApp.MainWindow);
+        var suggestedStartLocation = await topLevel.StorageProvider.TryGetFolderFromPathAsync(initialDirectory);
 
-        return dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK ? dialog.SelectedPath : null;
+        var files = await topLevel.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
+        {
+            Title = title,
+            SuggestedStartLocation = suggestedStartLocation,
+            AllowMultiple = false,
+        });
+
+        return files.Count > 0 ? files[0].Path.AbsolutePath : null;
     }
 
+    /*
     public string? SelectNewFileDialog(string title, string fileExtension, string filter)
     {
         var dialog = new System.Windows.Forms.OpenFileDialog()

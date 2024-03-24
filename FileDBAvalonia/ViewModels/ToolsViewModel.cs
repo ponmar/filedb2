@@ -221,11 +221,11 @@ public partial class ToolsViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void BrowseDatabaseExportDirectory()
+    private async Task BrowseDatabaseExportDirectoryAsync()
     {
-        // TODO
-        //var initialPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-        //DatabaseExportDirectory = dialogs.BrowseExistingDirectory(initialPath, "Select your destination directory") ?? string.Empty;
+        var initialPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        var selectedDir = await dialogs.ShowBrowseExistingDirectoryDialogAsync("Select your destination directory", initialPath);
+        DatabaseExportDirectory = selectedDir ?? string.Empty;
     }
 
     [RelayCommand]

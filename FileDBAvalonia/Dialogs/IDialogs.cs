@@ -16,11 +16,9 @@ public interface IDialogs
     Task ShowErrorDialogAsync(ValidationResult validationResult);
     Task<bool> ShowConfirmDialogAsync(string question);
     void ShowProgressDialog(Action<IProgress<string>> work);
-    /*
-    string? BrowseExistingFileDialog(string initialDirectory, string filter);
-    string? BrowseExistingDirectory(string initialDirectory, string title);
-    string? SelectNewFileDialog(string title, string fileExtension, string filter);
-    */
+    //string? SelectNewFileDialog(string title, string fileExtension, string filter);
+    Task<string?> ShowBrowseExistingDirectoryDialogAsync(string title);
+    Task<string?> ShowBrowseExistingDirectoryDialogAsync(string title, string initialDirectory);
     PersonModel? ShowAddPersonDialog(int? personId = null);
     LocationModel? ShowAddLocationDialog(int? locationId = null);
     TagModel? ShowAddTagDialog(int? tagId = null);
