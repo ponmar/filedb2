@@ -13,10 +13,6 @@
 				<Border Classes="BorderGroup">
 					<StackPanel Orientation="Vertical">
 						<TextBlock Text="{x:Static lang:Strings.FilesInfoText}" Classes="PageTextBlock"/>
-						<StackPanel Orientation="Horizontal">
-							<TextBlock Text="&#x26A0;" Classes="PageTextBlock"/>
-							<TextBlock Text="{x:Static lang:Strings.FilesWarningText}" Classes="PageTextBlock" TextWrapping="Wrap"/>
-						</StackPanel>
 						<WrapPanel Orientation="Horizontal">
 							<TextBlock Text="{x:Static lang:Strings.FilesFromFilesCollectionLabel}" VerticalAlignment="Center" Classes="PageTextBlock"/>
 							<Button Classes="PageButton" Command="{Binding ScanNewFilesCommand}" Content="{x:Static lang:Strings.FilesFindButton}"/>
