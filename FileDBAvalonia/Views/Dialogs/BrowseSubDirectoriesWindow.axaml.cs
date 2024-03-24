@@ -5,12 +5,12 @@ using FileDBAvalonia.ViewModels.Dialogs;
 
 namespace FileDBAvalonia.Views.Dialogs
 {
-    public partial class ExportSearchResultWindow : Window
+    public partial class BrowseSubDirectoriesWindow : Window
     {
-        public ExportSearchResultWindow()
+        public BrowseSubDirectoriesWindow()
         {
             InitializeComponent();
-            DataContext = ServiceLocator.Resolve<ExportSearchResultViewModel>();
+            DataContext = ServiceLocator.Resolve<BrowseSubDirectoriesViewModel>();
             this.RegisterForEvent<CloseModalDialogRequest>((x) => Close());
         }
     }

@@ -67,13 +67,13 @@ public partial class TagsViewModel : ObservableObject
     [RelayCommand]
     private void EditTag()
     {
-        dialogs.ShowAddTagDialog(SelectedTag!.Id);
+        dialogs.ShowAddTagDialogAsync(SelectedTag!.Id);
     }
 
     [RelayCommand]
     private void AddTag()
     {
-        dialogs.ShowAddTagDialog();
+        dialogs.ShowAddTagDialogAsync();
     }
 
     [RelayCommand]

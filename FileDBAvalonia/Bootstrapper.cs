@@ -4,6 +4,7 @@ using FileDBAvalonia.Dialogs;
 using FileDBAvalonia.Model;
 using FileDBAvalonia.Notifiers;
 using FileDBAvalonia.ViewModels;
+using FileDBAvalonia.ViewModels.Dialogs;
 using FileDBAvalonia.ViewModels.Search;
 using FileDBAvalonia.ViewModels.Search.File;
 using System.IO.Abstractions;
@@ -65,8 +66,7 @@ public static class Bootstrapper
         Container.Register(Component.For<IImageLoader>().ImplementedBy<ImageLoader>());
 
         Container.Register(Component.For<ExportSearchResultViewModel>().ImplementedBy<ExportSearchResultViewModel>().LifestyleTransient());
-
-        //Container.Register(Component.For<BrowseDirectoriesViewModel>().ImplementedBy<BrowseDirectoriesViewModel>().LifestyleTransient());
+        Container.Register(Component.For<BrowseSubDirectoriesViewModel>().ImplementedBy<BrowseSubDirectoriesViewModel>().LifestyleTransient());
     }
 
     public static void Reset()

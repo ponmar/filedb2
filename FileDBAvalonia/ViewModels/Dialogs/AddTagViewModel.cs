@@ -8,7 +8,7 @@ using FileDBShared.Model;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FileDBAvalonia.ViewModels;
+namespace FileDBAvalonia.ViewModels.Dialogs;
 
 public partial class AddTagViewModel : ObservableObject
 {

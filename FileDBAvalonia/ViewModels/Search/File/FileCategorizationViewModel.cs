@@ -397,7 +397,7 @@ public partial class FileCategorizationViewModel : ObservableObject
     [RelayCommand]
     private async Task CreatePersonAsync()
     {
-        var newPerson = dialogs.ShowAddPersonDialog();
+        var newPerson = dialogs.ShowAddPersonDialogAsync();
         if (newPerson is not null)
         {
             await AddFilePersonToCurrentFileAsync(newPerson.Id);
@@ -405,9 +405,9 @@ public partial class FileCategorizationViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void CreateLocation()
+    private async Task CreateLocationAsync()
     {
-        var newLocation = dialogs.ShowAddLocationDialog();
+        var newLocation = await dialogs.ShowAddLocationDialogAsync();
         if (newLocation is not null)
         {
             AddFileLocationToCurrentFile(new LocationToUpdate(newLocation.Id, newLocation.Name, Utils.CreateShortText(newLocation.Name, configProvider.Config.ShortItemNameMaxLength)));
@@ -415,9 +415,9 @@ public partial class FileCategorizationViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void CreateTag()
+    private async Task CreateTagAsync()
     {
-        var newTag = dialogs.ShowAddTagDialog();
+        var newTag = await dialogs.ShowAddTagDialogAsync();
         if (newTag is not null)
         {
             AddFileTagToCurrentFile(new TagToUpdate(newTag.Id, newTag.Name, Utils.CreateShortText(newTag.Name, configProvider.Config.ShortItemNameMaxLength)));

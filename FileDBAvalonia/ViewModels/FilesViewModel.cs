@@ -98,6 +98,7 @@ public partial class FilesViewModel : ObservableObject
             await dialogs.ShowErrorDialogAsync("No directory specified");
             return;
         }
+        // TODO: use IFileSystem
         if (!Directory.Exists(SubdirToScan))
         {
             await dialogs.ShowErrorDialogAsync("Specified directory does no exist");

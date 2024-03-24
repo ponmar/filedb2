@@ -1,7 +1,7 @@
 using Avalonia.Controls;
 using FileDBAvalonia.Model;
-using FileDBAvalonia.ViewModels;
 
+using FileDBAvalonia.ViewModels.Dialogs;
 namespace FileDBAvalonia.Views.Dialogs
 {
     public partial class AddLocationWindow : Window

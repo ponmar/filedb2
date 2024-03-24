@@ -70,13 +70,13 @@ public partial class PersonsViewModel : ObservableObject
     [RelayCommand]
     private void EditPerson()
     {
-        dialogs.ShowAddPersonDialog(SelectedPerson!.Id);
+        dialogs.ShowAddPersonDialogAsync(SelectedPerson!.Id);
     }
 
     [RelayCommand]
     private void AddPerson()
     {
-        dialogs.ShowAddPersonDialog();
+        dialogs.ShowAddPersonDialogAsync();
     }
 
     [RelayCommand]

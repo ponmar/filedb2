@@ -14,6 +14,7 @@ using FileDBAvalonia.ViewModels;
 using Avalonia.Controls;
 using Avalonia.Platform.Storage;
 using FileDBAvalonia.ViewModels.Search;
+using FileDBAvalonia.ViewModels.Dialogs;
 
 namespace FileDBAvalonia.Dialogs;
 
@@ -104,55 +105,55 @@ public class Dialogs : IDialogs
         return files.Count > 0 ? files[0].Path.AbsolutePath : null;
     }
 
-    public PersonModel? ShowAddPersonDialog(int? personId = null)
+    public async Task<PersonModel?> ShowAddPersonDialogAsync(int? personId = null)
     {
         if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktopApp &&
             desktopApp.MainWindow is not null)
         {
             var window = new AddPersonWindow(personId);
-            window.ShowDialog(desktopApp.MainWindow);
+            await window.ShowDialog(desktopApp.MainWindow);
             return ((AddPersonViewModel)window.DataContext!).AffectedPerson;
         }
         return null;
     }
 
-    public LocationModel? ShowAddLocationDialog(int ?locationId = null)
+    public async Task<LocationModel?> ShowAddLocationDialogAsync(int ?locationId = null)
     {
         if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktopApp &&
             desktopApp.MainWindow is not null)
         {
             var window = new AddLocationWindow(locationId);
-            window.ShowDialog(desktopApp.MainWindow);
+            await window.ShowDialog(desktopApp.MainWindow);
             return ((AddLocationViewModel)window.DataContext!).AffectedLocation;
         }
         return null;
     }
 
-    public TagModel? ShowAddTagDialog(int? tagId = null)
+    public async Task<TagModel?> ShowAddTagDialogAsync(int? tagId = null)
     {
         if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktopApp &&
             desktopApp.MainWindow is not null)
         {
             var window = new AddTagWindow(tagId);
-            window.ShowDialog(desktopApp.MainWindow);
+            await window.ShowDialog(desktopApp.MainWindow);
             return ((AddTagViewModel)window.DataContext!).AffectedTag;
         }
         return null;
     }
 
-    /*
-    public string? ShowBrowseDirectoriesDialog()
+    public async Task<string?> ShowBrowseDirectoriesDialogAsync()
     {
-        var window = new BrowseDirectoriesWindow
+        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktopApp &&
+            desktopApp.MainWindow is not null)
         {
-            Owner = Application.Current.MainWindow
-        };
-        window.ShowDialog();
+            var window = new BrowseSubDirectoriesWindow();
+            await window.ShowDialog(desktopApp.MainWindow);
 
-        var windowVm = (BrowseDirectoriesViewModel)window.DataContext;
-        return windowVm.SelectedDirectoryPath;
+            var windowVm = (BrowseSubDirectoriesViewModel)window.DataContext!;
+            return windowVm.SelectedDirectoryPath;
+        }
+        return null;
     }
-    */
 
     public void ShowExportSearchResultDialog(SearchResult searchResult)
     {

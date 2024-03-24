@@ -11,7 +11,7 @@ using FileDBInterface.Exceptions;
 using FileDBInterface.Extensions;
 using FileDBShared.Model;
 
-namespace FileDBAvalonia.ViewModels;
+namespace FileDBAvalonia.ViewModels.Dialogs;
 
 public partial class AddPersonViewModel : ObservableObject
 {

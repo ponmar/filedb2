@@ -272,17 +272,14 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
     }
 
     [RelayCommand]
-    private void FindBrowsedFiles()
+    private async Task FindBrowsedFilesAsync()
     {
-        // TODO
-        /*
-        var selectedDir = dialogs.ShowBrowseDirectoriesDialog();
+        var selectedDir = await dialogs.ShowBrowseDirectoriesDialogAsync();
         if (selectedDir is not null)
         {
             Files = dbAccessProvider.DbAccess.SearchFilesByPath(selectedDir);
             Messenger.Send<NewSearchResult>();
         }
-        */
     }
 
     [RelayCommand]

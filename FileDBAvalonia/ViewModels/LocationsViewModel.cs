@@ -69,13 +69,13 @@ public partial class LocationsViewModel : ObservableObject
     [RelayCommand]
     private void EditLocation()
     {
-        dialogs.ShowAddLocationDialog(SelectedLocation!.Id);
+        dialogs.ShowAddLocationDialogAsync(SelectedLocation!.Id);
     }
 
     [RelayCommand]
     private void AddLocation()
     {
-        dialogs.ShowAddLocationDialog();
+        dialogs.ShowAddLocationDialogAsync();
     }
 
     [RelayCommand]

@@ -12,7 +12,7 @@ using System.IO.Abstractions;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FileDBAvalonia.ViewModels
+namespace FileDBAvalonia.ViewModels.Dialogs
 {
     public partial class ExportSearchResultViewModel : ObservableObject
     {

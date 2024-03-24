@@ -19,9 +19,9 @@ public interface IDialogs
     void ShowProgressDialog(Action<IProgress<string>> work);
     Task<string?> ShowBrowseExistingDirectoryDialogAsync(string title);
     Task<string?> ShowBrowseExistingDirectoryDialogAsync(string title, string initialDirectory);
-    PersonModel? ShowAddPersonDialog(int? personId = null);
-    LocationModel? ShowAddLocationDialog(int? locationId = null);
-    TagModel? ShowAddTagDialog(int? tagId = null);
-    //string? ShowBrowseDirectoriesDialog();
+    Task<PersonModel?> ShowAddPersonDialogAsync(int? personId = null);
+    Task<LocationModel?> ShowAddLocationDialogAsync(int? locationId = null);
+    Task<TagModel?> ShowAddTagDialogAsync(int? tagId = null);
+    Task<string?> ShowBrowseDirectoriesDialogAsync();
     void ShowExportSearchResultDialog(SearchResult searchResult);
 }
