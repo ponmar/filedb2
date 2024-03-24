@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using FileDBAvalonia.Model;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace FileDBAvalonia.ViewModels.Dialogs
@@ -10,7 +11,7 @@ namespace FileDBAvalonia.ViewModels.Dialogs
     {
         private readonly Directory? parent;
         public string Name { get; }
-        public List<Directory> Directories { get; } = [];
+        public ObservableCollection<Directory> Directories { get; } = [];
 
         public string Path => parent is not null ? parent.Path + "/" + Name : Name;
 
@@ -69,8 +70,6 @@ namespace FileDBAvalonia.ViewModels.Dialogs
                     }
                 }
             }
-
-            OnPropertyChanged(nameof(Directories));
         }
 
         [RelayCommand]
