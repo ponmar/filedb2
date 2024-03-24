@@ -7,6 +7,7 @@
         Title="SplashWindow"
 		SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterOwner"
+		CanResize="False"
         MinHeight="150"
         MinWidth="400">
 	<Grid>
