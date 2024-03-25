@@ -1,15 +1,12 @@
 ﻿using FakeItEasy;
-using FileDB;
-using FileDB.Configuration;
-using FileDB.Model;
-using FileDB.Notifiers;
-using FileDB.ViewModel;
+using FileDBAvalonia;
+using FileDBAvalonia.Configuration;
+using FileDBAvalonia.Model;
+using FileDBAvalonia.Notifiers;
+using FileDBAvalonia.ViewModels;
 using FileDBInterface.DatabaseAccess;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
 
-namespace FileDBTests.ViewModel;
+namespace FileDBAvaloniaTests.ViewModels;
 
 [TestClass]
 public class NotificationsViewModelTests
@@ -65,7 +62,7 @@ public class NotificationsViewModelTests
     {
         var initialNotifications = SomeNotifications();
         A.CallTo(() => fakeNotificationsRepo.Notifications).Returns(initialNotifications);
-        
+
         viewModel = new NotificationsViewModel(fakeConfigRepo, fakeDbAccessRepo, fakeNotifierFactory, fakeNotificationHandling, fakeNotificationsRepo);
 
         Assert.AreEqual(initialNotifications.Count, viewModel.Notifications.Count);
@@ -78,9 +75,9 @@ public class NotificationsViewModelTests
         A.CallTo(() => fakeNotificationsRepo.Notifications).Returns(notifications);
 
         viewModel = new NotificationsViewModel(fakeConfigRepo, fakeDbAccessRepo, fakeNotifierFactory, fakeNotificationHandling, fakeNotificationsRepo);
-        
+
         notifications.AddRange(SomeNotifications());
-        Events.Send<NotificationsUpdated>();
+        Messenger.Send<NotificationsUpdated>();
 
         Assert.AreEqual(notifications.Count, viewModel.Notifications.Count);
     }

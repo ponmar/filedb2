@@ -1,9 +1,6 @@
-﻿using FileDB;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
-using System.Linq;
+﻿using FileDBAvalonia;
 
-namespace FileDBTests;
+namespace FileDBAvaloniaTests;
 
 public class EventRecorder
 {

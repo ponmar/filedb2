@@ -1,6 +1,6 @@
-﻿using FileDB.Configuration;
+﻿using FileDBAvalonia.Configuration;
 
-namespace FileDBTests;
+namespace FileDBAvaloniaTests;
 
 public class ConfigBuilder
 {

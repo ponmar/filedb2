@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-using FileDB;
-using FileDB.Sorters;
+﻿using FileDBAvalonia;
+using FileDBAvalonia.Sorters;
 using FileDBShared.Model;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace FileDBTests.Sorters;
+namespace FileDBAvaloniaTests.Sorters;
 
 [TestClass]
 public class TagModelByNameSorterTests

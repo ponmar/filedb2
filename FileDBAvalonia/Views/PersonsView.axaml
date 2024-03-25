@@ -11,9 +11,9 @@
 			<Border Classes="BorderGroup">
 				<StackPanel>
 					<WrapPanel Orientation="Horizontal" IsVisible="{Binding ReadWriteMode}">
-						<Button Classes="Normal" Margin="10" Command="{Binding AddPersonCommand}" Content="{x:Static lang:Strings.PersonsAddButton}"/>
-						<Button Classes="Normal" Margin="10" Command="{Binding EditPersonCommand}" IsEnabled="{Binding SelectedPerson, Converter={x:Static ObjectConverters.IsNotNull}}" Content="{x:Static lang:Strings.PersonsEditButton}"/>
-						<Button Classes="Normal" Margin="10" Command="{Binding RemovePersonCommand}" IsEnabled="{Binding SelectedPerson, Converter={x:Static ObjectConverters.IsNotNull}}" Content="{x:Static lang:Strings.PersonsDeleteButton}"/>
+						<Button Classes="Normal" Margin="10" Command="{Binding AddPersonCommand}" Content="+" ToolTip.Tip="{x:Static lang:Strings.PersonsAddButton}"/>
+						<Button Classes="Normal" Margin="10" Command="{Binding RemovePersonCommand}" IsEnabled="{Binding SelectedPerson, Converter={x:Static ObjectConverters.IsNotNull}}" Content="&#128465;" ToolTip.Tip="{x:Static lang:Strings.PersonsDeleteButton}"/>
+						<Button Classes="Normal" Margin="10" Command="{Binding EditPersonCommand}" IsEnabled="{Binding SelectedPerson, Converter={x:Static ObjectConverters.IsNotNull}}" Content="&#x1F589;" ToolTip.Tip="{x:Static lang:Strings.PersonsEditButton}"/>
 					</WrapPanel>
 
 					<ListBox Margin="10" ItemsSource="{Binding Persons}" SelectionMode="Single" SelectedItem="{Binding SelectedPerson}" Grid.IsSharedSizeScope="True">
