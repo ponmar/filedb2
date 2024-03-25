@@ -15,11 +15,12 @@ public static class Bootstrapper
 {
     public static WindsorContainer Container { get; private set; } = new WindsorContainer();
 
-    public static void Bootstrap()
+    private static void Bootstrap()
     {
         Container.Register(Component.For<IFileSystem>().ImplementedBy<FileSystem>());
         Container.Register(Component.For<INotifierFactory>().ImplementedBy<NotifierFactory>());
         Container.Register(Component.For<ISpeeker>().ImplementedBy<Speeker>());
+        Container.Register(Component.For<DateObserver>().ImplementedBy<DateObserver>());
 
         Container.Register(
             Component.For(
@@ -67,6 +68,11 @@ public static class Bootstrapper
 
         Container.Register(Component.For<ExportSearchResultViewModel>().ImplementedBy<ExportSearchResultViewModel>().LifestyleTransient());
         Container.Register(Component.For<BrowseSubDirectoriesViewModel>().ImplementedBy<BrowseSubDirectoriesViewModel>().LifestyleTransient());
+    }
+
+    public static void StartServices()
+    {
+        ServiceLocator.Resolve<DateObserver>();
     }
 
     public static void Reset()

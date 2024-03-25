@@ -51,8 +51,6 @@ public class Model : INotificationHandling, INotificationsRepository, IConfigPro
     public INotifierFactory NotifierFactory { get; } = new NotifierFactory();
     public ApplicationFilePaths FilePaths { get; private set; }
 
-    private DateTime date = DateTime.Now;
-
     public Config Config { get; private set; }
 
     public IEnumerable<Notification> Notifications => notifications;
@@ -62,23 +60,6 @@ public class Model : INotificationHandling, INotificationsRepository, IConfigPro
     public Model()
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     {
-        var dateCheckerTimer = new DispatcherTimer
-        {
-            Interval = TimeSpan.FromMinutes(1)
-        };
-        dateCheckerTimer.Tick += DateCheckerTimer_Tick;
-        dateCheckerTimer.Start();
-    }
-
-    private void DateCheckerTimer_Tick(object? sender, EventArgs e)
-    {
-        // TODO: move to a DateObserver class
-        var now = DateTime.Now;
-        if (date.Date != now.Date)
-        {
-            date = now;
-            Messenger.Send<DateChanged>();
-        }
     }
 
     public void AddNotification(Notification notification)
