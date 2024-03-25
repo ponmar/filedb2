@@ -92,6 +92,7 @@
 							Margin="0,0,5,0"
 							Command="{Binding RemoveFileFromCurrentSearchResultCommand}"
 							IsEnabled="{Binding FileSelected}"
+							IsVisible="{Binding !Maximize}"
 							Content="&#128473;" ToolTip.Tip="{x:Static lang:Strings.SearchRemoveButtonToolTip}"/>
 						<ToggleButton
 							Margin="0,0,5,0"
