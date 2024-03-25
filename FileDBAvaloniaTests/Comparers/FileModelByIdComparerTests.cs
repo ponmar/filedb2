@@ -1,9 +1,8 @@
-﻿using FileDB;
-using FileDB.Comparers;
+﻿using FileDBAvalonia;
+using FileDBAvalonia.Comparers;
 using FileDBShared.Model;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace FileDBTests.Comparers;
+namespace FileDBAvaloniaTests.Comparers;
 
 [TestClass]
 public class FileModelByIdComparerTests

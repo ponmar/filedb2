@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using FileDB;
+﻿using FileDBAvalonia;
 using FileDBShared.Model;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace FileDBTests;
+namespace FileDBAvaloniaTests;
 
 [TestClass]
 public class UtilsTests
@@ -81,13 +78,6 @@ public class UtilsTests
     {
         var result = Utils.CreatePositionLink("10.5 11.2", "https://example.com/LAT_LON");
         Assert.AreEqual("https://example.com/10.5_11.2", result);
-    }
-
-    [TestMethod]
-    public void CreatePositionUri()
-    {
-        var result = Utils.CreatePositionUri("10.5 11.2", "https://example.com/LAT_LON");
-        Assert.AreEqual(new Uri("https://example.com/10.5_11.2"), result);
     }
 
     [TestMethod]

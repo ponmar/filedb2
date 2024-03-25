@@ -1,9 +1,8 @@
-﻿using FileDB;
-using FileDB.Configuration;
-using FileDB.Migrators;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using FileDBAvalonia;
+using FileDBAvalonia.Configuration;
+using FileDBAvalonia.Migrators;
 
-namespace FileDBTests.Migrators;
+namespace FileDBAvaloniaTests.Migrators;
 
 [TestClass]
 public class ConfigMigratorTests

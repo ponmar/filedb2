@@ -1,11 +1,8 @@
-﻿using FileDB.Configuration;
-using FileDB.Extensions;
+﻿using FileDBAvalonia.Extensions;
 using FileDBInterface.Extensions;
 using FileDBShared.Model;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
-namespace FileDBTests.Extensions;
+namespace FileDBAvaloniaTests.Extensions;
 
 [TestClass]
 public class SexExtensionsTests

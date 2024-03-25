@@ -1,10 +1,7 @@
-﻿using FileDB.Configuration;
-using FileDB.Extensions;
+﻿using FileDBAvalonia.Configuration;
 using FileDBInterface.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
-namespace FileDBTests.Configuration;
+namespace FileDBAvaloniaTests.Configuration;
 
 [TestClass]
 public class SortMethodExtensionsTests

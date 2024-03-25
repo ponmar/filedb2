@@ -1,12 +1,11 @@
-﻿using FileDB.Model;
-using FileDB;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using FakeItEasy;
-using FileDB.ViewModel;
+﻿using FakeItEasy;
 using FileDBShared.Model;
-using System.Collections.Generic;
+using FileDBAvalonia.Model;
+using FileDBAvalonia.Dialogs;
+using FileDBAvalonia;
+using FileDBAvalonia.ViewModels.Search.File;
 
-namespace FileDBTests.ViewModel;
+namespace FileDBAvaloniaTests.ViewModels;
 
 [TestClass]
 public class FileCategorizationViewModelTests
@@ -109,7 +108,7 @@ public class FileCategorizationViewModelTests
         Assert.AreEqual(0, viewModel.Persons.Count);
 
         persons.Add(new() { Id = 1, Firstname = "Alice", Lastname = "Smith" });
-        Events.Send<PersonsUpdated>();
+        Messenger.Send<PersonsUpdated>();
 
         Assert.AreEqual(1, viewModel.Persons.Count);
     }
@@ -121,7 +120,7 @@ public class FileCategorizationViewModelTests
         Assert.AreEqual(0, viewModel.Locations.Count);
 
         locations.Add(new() { Id = 1, Name = "Home" });
-        Events.Send<LocationsUpdated>();
+        Messenger.Send<LocationsUpdated>();
 
         Assert.AreEqual(1, viewModel.Locations.Count);
     }
@@ -133,7 +132,7 @@ public class FileCategorizationViewModelTests
         Assert.AreEqual(0, viewModel.Tags.Count);
 
         tags.Add(new() { Id = 1, Name = "Favorites" });
-        Events.Send<TagsUpdated>();
+        Messenger.Send<TagsUpdated>();
 
         Assert.AreEqual(1, viewModel.Tags.Count);
     }
@@ -177,6 +176,6 @@ public class FileCategorizationViewModelTests
 
     private static void LoadAFile(int fileId = 1)
     {
-        Events.Send(new SelectSearchResultFile(new FileModel() { Id = fileId, Path = "file.jpg", }));
+        Messenger.Send(new SelectSearchResultFile(new FileModel() { Id = fileId, Path = "file.jpg", }));
     }
 }

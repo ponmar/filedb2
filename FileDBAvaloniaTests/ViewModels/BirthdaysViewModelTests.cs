@@ -1,15 +1,12 @@
 ﻿using FakeItEasy;
-using FileDB;
-using FileDB.Model;
-using FileDB.ViewModel;
+using FileDBAvalonia;
+using FileDBAvalonia.Model;
+using FileDBAvalonia.ViewModels;
 using FileDBInterface.DatabaseAccess;
 using FileDBInterface.FilesystemAccess;
 using FileDBShared.Model;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
-using System.Linq;
 
-namespace FileDBTests.ViewModel;
+namespace FileDBAvaloniaTests.ViewModels;
 
 [TestClass]
 public class BirthdaysViewModelTests
@@ -76,7 +73,7 @@ public class BirthdaysViewModelTests
         Assert.AreEqual(0, viewModel.Persons.Count);
 
         A.CallTo(() => fakePersonsRepo.Persons).Returns(SomePersons());
-        Events.Send<PersonsUpdated>();
+        Messenger.Send<PersonsUpdated>();
 
         Assert.AreEqual(2, viewModel.Persons.Count);
     }
@@ -91,7 +88,7 @@ public class BirthdaysViewModelTests
         Assert.AreEqual(0, viewModel.Persons.Count);
 
         A.CallTo(() => fakePersonsRepo.Persons).Returns(SomePersons());
-        Events.Send<DateChanged>();
+        Messenger.Send<DateChanged>();
 
         Assert.AreEqual(2, viewModel.Persons.Count);
     }
@@ -104,7 +101,7 @@ public class BirthdaysViewModelTests
         A.CallTo(() => fakeConfigRepo.Config).Returns(config);
 
         var viewModel = new BirthdaysViewModel(fakePersonsRepo, fakeFilsystemAccessRepo, fakeDbAccessRepo, fakeImageLoader);
-        
+
         viewModel.FilterText = "Al";
         Assert.AreEqual(1, viewModel.Persons.Count);
         Assert.AreEqual("Alice Andersson", viewModel.Persons.First().Name);

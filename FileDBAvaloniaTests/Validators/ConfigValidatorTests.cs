@@ -1,9 +1,8 @@
-﻿using FileDB;
-using FileDB.Validators;
+﻿using FileDBAvalonia;
+using FileDBAvalonia.Validators;
 using FluentValidation.TestHelper;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace FileDBTests.Validators;
+namespace FileDBAvaloniaTests.Validators;
 
 [TestClass]
 public class ConfigValidatorTests

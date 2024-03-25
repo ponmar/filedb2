@@ -1,8 +1,6 @@
-﻿using FileDB;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Linq;
+﻿using FileDBAvalonia;
 
-namespace FileDBTests;
+namespace FileDBAvaloniaTests;
 
 record Event();
 
@@ -24,11 +22,11 @@ public class EventsTests
     public void Send()
     {
         var event1 = new Event();
-        Events.Send(event1);
+        Messenger.Send(event1);
         recorder.AssertEventsRecorded<Event>(1);
 
         var event2 = new Event();
-        Events.Send(event2);
+        Messenger.Send(event2);
         recorder.AssertEventsRecorded<Event>(2);
 
         var recording = recorder.GetRecording<Event>().ToList();
@@ -39,10 +37,10 @@ public class EventsTests
     [TestMethod]
     public void Send_TypeArg()
     {
-        Events.Send<Event>();
+        Messenger.Send<Event>();
         recorder.AssertEventsRecorded<Event>(1);
 
-        Events.Send<Event>();
+        Messenger.Send<Event>();
         recorder.AssertEventsRecorded<Event>(2);
     }
 }
