@@ -24,4 +24,5 @@ public interface IDialogs
     Task<TagModel?> ShowAddTagDialogAsync(int? tagId = null);
     Task<string?> ShowBrowseDirectoriesDialogAsync();
     void ShowExportSearchResultDialog(SearchResult searchResult);
+    void ShowPresentationWindow(string title);
 }

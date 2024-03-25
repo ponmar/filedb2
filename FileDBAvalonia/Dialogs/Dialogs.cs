@@ -14,6 +14,7 @@ using Avalonia.Controls;
 using Avalonia.Platform.Storage;
 using FileDBAvalonia.ViewModels.Search;
 using FileDBAvalonia.ViewModels.Dialogs;
+using FileDBAvalonia.Views.Search.File;
 
 namespace FileDBAvalonia.Dialogs;
 
@@ -69,7 +70,7 @@ public class Dialogs : IDialogs
         }
     }
 
-    private static Window? GetParentWindow()
+    public static Window? GetParentWindow()
     {
         return Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktopApp ? desktopApp.MainWindow : null;
     }
@@ -184,5 +185,20 @@ public class Dialogs : IDialogs
             viewModel.SearchResult = searchResult;
             window.ShowDialog(parent);
         }
+    }
+
+    public void ShowPresentationWindow(string title)
+    {
+        var parent = GetParentWindow();
+        if (parent is null)
+        {
+            return;
+        }
+
+        var window = new PresentationWindow
+        {
+            Title = string.Format(title, Utils.ApplicationName, Utils.GetVersionString())
+        };
+        window.Show(parent);
     }
 }

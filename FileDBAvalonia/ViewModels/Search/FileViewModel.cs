@@ -11,6 +11,8 @@ using FileDBAvalonia.Lang;
 using FileDBAvalonia.Model;
 using Avalonia.Media.Imaging;
 using Avalonia.Threading;
+using FileDBAvalonia.Views.Search.File;
+using FileDBAvalonia.Dialogs;
 
 namespace FileDBAvalonia.ViewModels.Search;
 
@@ -89,14 +91,16 @@ public partial class FileViewModel : ObservableObject
     private readonly IFilesystemAccessProvider filesystemAccessProvider;
     private readonly IImageLoader imageLoader;
     private readonly IFileSystem fileSystem;
+    private readonly IDialogs dialogs;
 
-    public FileViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IImageLoader imageLoader, IFileSystem fileSystem)
+    public FileViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IImageLoader imageLoader, IFileSystem fileSystem, IDialogs dialogs)
     {
         this.configProvider = configProvider;
         this.dbAccessProvider = dbAccessProvider;
         this.filesystemAccessProvider = filesystemAccessProvider;
         this.imageLoader = imageLoader;
         this.fileSystem = fileSystem;
+        this.dialogs = dialogs;
 
         this.RegisterForEvent<ConfigUpdated>((x) =>
         {
@@ -225,16 +229,7 @@ public partial class FileViewModel : ObservableObject
     [RelayCommand]
     private void OpenPresentationWindow()
     {
-        // TODO
-        /*
-        var window = new PresentationWindow()
-        {
-            Owner = Application.Current.MainWindow,
-            Title = string.Format(Strings.PresentationWindowTitle, Utils.ApplicationName, Utils.GetVersionString()),
-        };
-
-        window.Show();
-        */
+        dialogs.ShowPresentationWindow(Strings.PresentationWindowTitle);
     }
 
     /*
