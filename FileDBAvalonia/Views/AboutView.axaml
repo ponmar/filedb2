@@ -108,9 +108,8 @@
 
 				<TextBlock Text="{x:Static lang:Strings.AboutNuGetPackageLicensesTitle}" Classes="PageSubHeader"/>
 				<Border Classes="BorderGroup">
-					<!--
-					<ListView ItemsSource="{Binding Licenses}" Grid.IsSharedSizeScope="True" Background="Transparent" BorderThickness="0" Margin="10">
-						<ListView.ItemTemplate>
+					<ListBox ItemsSource="{Binding Licenses}" Grid.IsSharedSizeScope="True" Background="Transparent" Margin="10">
+						<ListBox.ItemTemplate>
 							<DataTemplate>
 								<Grid>
 									<Grid.ColumnDefinitions>
@@ -125,9 +124,8 @@
 									<TextBlock Grid.Column="3" Text="{Binding PackageUrl}" Margin="3"/>
 								</Grid>
 							</DataTemplate>
-						</ListView.ItemTemplate>
-					</ListView>
-					-->
+						</ListBox.ItemTemplate>
+					</ListBox>
 				</Border>
 			</StackPanel>
 		</ScrollViewer>
