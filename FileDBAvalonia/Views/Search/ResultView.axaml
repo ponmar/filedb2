@@ -28,34 +28,34 @@
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 5 0 0">
 					<Button Command="{Binding PrevFileCommand}" IsEnabled="{Binding PrevFileAvailable}" ToolTip.Tip="{x:Static lang:Strings.SearchResultGoToPreviousToolTip}" Margin="3 3 3 3">&#x2B60;</Button>
 					<Button Command="{Binding NextFileCommand}" IsEnabled="{Binding NextFileAvailable}" ToolTip.Tip="{x:Static lang:Strings.SearchResultGoToNextToolTip}" Margin="3 3 3 3">&#x2B62;</Button>
+					
 					<Button Command="{Binding PrevDirectoryCommand}" IsEnabled="{Binding PrevDirectoryAvailable}" ToolTip.Tip="{x:Static lang:Strings.SearchResultGoToPreviousDirectoryToolTip}" Margin="20 3 3 3">&#x21C7;</Button>
 					<Button Command="{Binding NextDirectoryCommand}" IsEnabled="{Binding NextDirectoryAvailable}" ToolTip.Tip="{x:Static lang:Strings.SearchResultGoToNextDirectoryToolTip}" Margin="3 3 3 3">&#x21C9;</Button>
+					
 					<Button Command="{Binding FirstFileCommand}" IsEnabled="{Binding FirstFileAvailable}" ToolTip.Tip="{x:Static lang:Strings.SearchResultGoToFirstToolTip}" Margin="20 3 3 3">&#x21E4;</Button>
-					<Button Command="{Binding LastFileCommand}" IsEnabled="{Binding LastFileAvailable}" ToolTip.Tip="{x:Static lang:Strings.SearchResultGoToLastToolTip}" Margin="3 3 3 3">&#x21E5;</Button>
+					<Button Command="{Binding LastFileCommand}" IsEnabled="{Binding LastFileAvailable}" ToolTip.Tip="{x:Static lang:Strings.SearchResultGoToLastToolTip}" Margin="3">&#x21E5;</Button>
+					
 					<ToggleButton Command="{Binding ToggleSlideshowCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" IsChecked="{Binding SlideshowActive}" ToolTip.Tip="{x:Static lang:Strings.SearchResultToggleSlideshowToolTip}" Margin="20 3 3 3">&#x1F39E;</ToggleButton>
 					<ToggleButton IsEnabled="{Binding HasNonEmptySearchResult}" IsChecked="{Binding RandomActive}" ToolTip.Tip="{x:Static lang:Strings.SearchResultToggleSlideshowRandomToolTip}" Margin="3 3 3 3">&#x21AD;</ToggleButton>
 					<ToggleButton IsEnabled="{Binding HasNonEmptySearchResult}" IsChecked="{Binding RepeatActive}" ToolTip.Tip="{x:Static lang:Strings.SearchResultToggleSlideshowRepeatToolTip}" Margin="3 3 3 3">&#x21BB;</ToggleButton>
 					<ToggleButton IsEnabled="{Binding HasNonEmptySearchResult}" IsChecked="{Binding SpeekActive}" ToolTip.Tip="{x:Static lang:Strings.SearchResultToggleFileDescriptionSpeekToolTip}" Margin="3 3 3 3">&#x1F4AC;</ToggleButton>
+					
+					<Button Command="{Binding ExportFileListCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip.Tip="{x:Static lang:Strings.SearchResultExportButton}" Content="&#x21E9;" Margin="20 3 3 3"/>
+					<Button Command="{Binding CopyFileListCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" Margin="3" ToolTip.Tip="{x:Static lang:Strings.SearchResultCopyButtonToolTip}" Content="&#x1f5d0;"/>
+					<Button Command="{Binding ClearSearchCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" Margin="3" ToolTip.Tip="{x:Static lang:Strings.SearchResultCloseButtonToolTip}" HorizontalAlignment="Right" Content="&#128473;" />
 				</StackPanel>
-				<TextBlock Margin="0 3 0 0" HorizontalAlignment="Center" Text="{Binding CurrentFileInternalPath}"/>
+				<TextBlock Margin="0 3 0 0" HorizontalAlignment="Center" IsVisible="{Binding CurrentFileInternalPath, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" Text="{Binding CurrentFileInternalPath}"/>
 			</StackPanel>
 
-			<StackPanel Grid.Row="0" Grid.Column="2" Orientation="Vertical" VerticalAlignment="Center" Margin="10">
-				<StackPanel Orientation="Horizontal" Margin="0,5" HorizontalAlignment="Right">
-					<Button Command="{Binding ExportFileListCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip.Tip="{x:Static lang:Strings.SearchResultExportButtonToolTip}" Content="{x:Static lang:Strings.SearchResultExportButton}"/>
-					<Button Command="{Binding CopyFileListCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" Margin="5,0" ToolTip.Tip="{x:Static lang:Strings.SearchResultCopyButtonToolTip}" Content="&#x1f5d0;"/>
-					<Button Command="{Binding ClearSearchCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip.Tip="{x:Static lang:Strings.SearchResultCloseButtonToolTip}" HorizontalAlignment="Right" Content="&#128473;" />
-				</StackPanel>
-				<StackPanel Orientation="Horizontal" Margin="0,5">
-					<TextBlock VerticalAlignment="Center" Margin="0 0 5 0" Text="{x:Static lang:Strings.SearchResultSortByLabel}"/>
-					<ComboBox Width="125" ItemsSource="{Binding SortMethods}" SelectedValue="{Binding SelectedSortMethod}" VerticalAlignment="Center">
-						<ComboBox.ItemTemplate>
-							<DataTemplate>
-								<TextBlock Text="{Binding Path=.,Converter={StaticResource SortMethodToStringConverter}}"/>
-							</DataTemplate>
-						</ComboBox.ItemTemplate>
-					</ComboBox>
-				</StackPanel>
+			<StackPanel Grid.Row="0" Grid.Column="2" Orientation="Vertical" Margin="10" VerticalAlignment="Center">
+				<TextBlock VerticalAlignment="Center" Margin="0 0 0 5" Text="{x:Static lang:Strings.SearchResultSortByLabel}"/>
+				<ComboBox Width="125" ItemsSource="{Binding SortMethods}" SelectedValue="{Binding SelectedSortMethod}" VerticalAlignment="Center">
+					<ComboBox.ItemTemplate>
+						<DataTemplate>
+							<TextBlock Text="{Binding Path=.,Converter={StaticResource SortMethodToStringConverter}}"/>
+						</DataTemplate>
+					</ComboBox.ItemTemplate>
+				</ComboBox>
 			</StackPanel>
 		</Grid>
 	</Border>
