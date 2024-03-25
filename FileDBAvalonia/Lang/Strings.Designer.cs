@@ -2666,7 +2666,7 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search history:.
+        ///   Looks up a localized string similar to History:.
         /// </summary>
         public static string SearchResultHistoryLabel {
             get {

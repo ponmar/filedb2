@@ -634,7 +634,7 @@
     <value>Name</value>
   </data>
   <data name="SearchResultHistoryLabel" xml:space="preserve">
-    <value>Search history:</value>
+    <value>History:</value>
   </data>
   <data name="SearchResultExportButton" xml:space="preserve">
     <value>Export...</value>
