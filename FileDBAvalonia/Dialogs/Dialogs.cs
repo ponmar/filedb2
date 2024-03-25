@@ -10,7 +10,6 @@ using FileDBAvalonia.Views.Dialogs;
 using System.ComponentModel;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using FileDBAvalonia.ViewModels;
 using Avalonia.Controls;
 using Avalonia.Platform.Storage;
 using FileDBAvalonia.ViewModels.Search;
@@ -56,14 +55,29 @@ public class Dialogs : IDialogs
     public async Task<bool> ShowConfirmDialogAsync(string question)
     {
         var box = MessageBoxManager.GetMessageBoxStandard(Utils.ApplicationName, question, ButtonEnum.YesNo, Icon.Question);
-        var result = await box.ShowAsync();
-        return result == ButtonResult.Yes;
+        var parent = GetParentWindow();
+
+        if (parent is not null)
+        {
+            var result = await box.ShowWindowDialogAsync(parent);
+            return result == ButtonResult.Yes;
+        }
+        else
+        {
+            var result = await box.ShowAsync();
+            return result == ButtonResult.Yes;
+        }
+    }
+
+    private static Window? GetParentWindow()
+    {
+        return Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktopApp ? desktopApp.MainWindow : null;
     }
 
     public void ShowProgressDialog(Action<IProgress<string>> work)
     {
-        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktopApp &&
-            desktopApp.MainWindow is not null)
+        var parent = GetParentWindow();
+        if (parent is not null)
         {
             var splash = new SplashWindow();
 
@@ -76,7 +90,7 @@ public class Dialogs : IDialogs
                 worker.RunWorkerAsync();
             };
 
-            splash.ShowDialog(desktopApp.MainWindow);
+            splash.ShowDialog(parent);
         }
     }
 
@@ -87,12 +101,17 @@ public class Dialogs : IDialogs
 
     public async Task<string?> ShowBrowseExistingDirectoryDialogAsync(string title, string initialDirectory)
     {
-        if (Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktopApp)
+        var parent = GetParentWindow();
+        if (parent is null)
         {
             throw new NotSupportedException();
         }
 
-        var topLevel = TopLevel.GetTopLevel(desktopApp.MainWindow);
+        var topLevel = TopLevel.GetTopLevel(parent);
+        if (topLevel is null)
+        {
+            throw new NotSupportedException();
+        }
         var suggestedStartLocation = await topLevel.StorageProvider.TryGetFolderFromPathAsync(initialDirectory);
 
         var files = await topLevel.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
@@ -107,11 +126,11 @@ public class Dialogs : IDialogs
 
     public async Task<PersonModel?> ShowAddPersonDialogAsync(int? personId = null)
     {
-        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktopApp &&
-            desktopApp.MainWindow is not null)
+        var parent = GetParentWindow();
+        if (parent is not null)
         {
             var window = new AddPersonWindow(personId);
-            await window.ShowDialog(desktopApp.MainWindow);
+            await window.ShowDialog(parent);
             return ((AddPersonViewModel)window.DataContext!).AffectedPerson;
         }
         return null;
@@ -119,11 +138,11 @@ public class Dialogs : IDialogs
 
     public async Task<LocationModel?> ShowAddLocationDialogAsync(int ?locationId = null)
     {
-        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktopApp &&
-            desktopApp.MainWindow is not null)
+        var parent = GetParentWindow();
+        if (parent is not null)
         {
             var window = new AddLocationWindow(locationId);
-            await window.ShowDialog(desktopApp.MainWindow);
+            await window.ShowDialog(parent);
             return ((AddLocationViewModel)window.DataContext!).AffectedLocation;
         }
         return null;
@@ -131,11 +150,11 @@ public class Dialogs : IDialogs
 
     public async Task<TagModel?> ShowAddTagDialogAsync(int? tagId = null)
     {
-        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktopApp &&
-            desktopApp.MainWindow is not null)
+        var parent = GetParentWindow();
+        if (parent is not null)
         {
             var window = new AddTagWindow(tagId);
-            await window.ShowDialog(desktopApp.MainWindow);
+            await window.ShowDialog(parent);
             return ((AddTagViewModel)window.DataContext!).AffectedTag;
         }
         return null;
@@ -143,11 +162,11 @@ public class Dialogs : IDialogs
 
     public async Task<string?> ShowBrowseDirectoriesDialogAsync()
     {
-        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktopApp &&
-            desktopApp.MainWindow is not null)
+        var parent = GetParentWindow();
+        if (parent is not null)
         {
             var window = new BrowseSubDirectoriesWindow();
-            await window.ShowDialog(desktopApp.MainWindow);
+            await window.ShowDialog(parent);
 
             var windowVm = (BrowseSubDirectoriesViewModel)window.DataContext!;
             return windowVm.SelectedDirectoryPath;
@@ -157,13 +176,13 @@ public class Dialogs : IDialogs
 
     public void ShowExportSearchResultDialog(SearchResult searchResult)
     {
-        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktopApp &&
-            desktopApp.MainWindow is not null)
+        var parent = GetParentWindow();
+        if (parent is not null)
         {
             var window = new ExportSearchResultWindow();
             var viewModel = (ExportSearchResultViewModel)window.DataContext!;
             viewModel.SearchResult = searchResult;
-            window.ShowDialog(desktopApp.MainWindow);
+            window.ShowDialog(parent);
         }
     }
 }
