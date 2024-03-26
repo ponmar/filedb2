@@ -66,6 +66,16 @@
 
 		<Style Selector="ItemsControl.PageItemsControls">
 			<Setter Property="Margin" Value="10"/>
-		</Style>		
+		</Style>
+
+		<Style Selector="Button.NavigationButton">
+			<Setter Property="CornerRadius" Value="5"/>
+			<Setter Property="FontSize" Value="18"/>
+		</Style>
+
+		<Style Selector="ToggleButton.NavigationButton">
+			<Setter Property="CornerRadius" Value="5"/>
+			<Setter Property="FontSize" Value="18"/>
+		</Style>
 	</Application.Styles>
 </Application>

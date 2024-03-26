@@ -95,12 +95,14 @@
 							IsVisible="{Binding !Maximize}"
 							Content="&#128473;" ToolTip.Tip="{x:Static lang:Strings.SearchRemoveButtonToolTip}"/>
 						<ToggleButton
+							Classes="NavigationButton"
 							Margin="0,0,5,0"
 							Content="&#x1F5DA;"
 							IsChecked="{Binding LargeTextMode}"
 							IsEnabled="{Binding FileSelected}"
 							ToolTip.Tip="{x:Static lang:Strings.SearchToggleLargeTextButtonToolTip}" />
 						<Button
+							Classes="NavigationButton"
 							Margin="0,0,5,0"
 							Command="{Binding OpenPresentationWindowCommand}"
 							Content="&#x1F5B5;+"
@@ -108,6 +110,7 @@
 							ToolTip.Tip="{x:Static lang:Strings.SearchOpenPresentationWindowButtonToolTip}"
 							IsVisible="{Binding !Maximize}" />
 						<ToggleButton
+							Classes="NavigationButton"
 							Margin="0"
 							Content="&#x1F5B5;"
 							IsChecked="{Binding Maximize}"
