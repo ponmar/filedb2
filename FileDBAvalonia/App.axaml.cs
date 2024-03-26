@@ -155,10 +155,7 @@ public partial class App : Application
             notifications.ForEach(notificationsHandling.AddNotification);
 
             // Only load views and viewmodels when this method did not called shutdown above
-            desktop.MainWindow = new MainWindow
-            {
-                DataContext = new MainViewModel(ServiceLocator.Resolve<IConfigProvider>(), ServiceLocator.Resolve<INotificationsRepository>())
-            };
+            desktop.MainWindow = new MainWindow();
         }
         else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
         {

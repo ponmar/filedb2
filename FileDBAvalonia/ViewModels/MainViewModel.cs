@@ -50,6 +50,9 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private WindowState windowState;
 
+    [ObservableProperty]
+    private bool fullscreen;
+
     private readonly IConfigProvider configProvider;
     private readonly INotificationsRepository notificationsRepository;
 
@@ -90,6 +93,7 @@ public partial class MainViewModel : ObservableObject
     {
         SystemDecorations = windowMode == WindowMode.Fullscreen ? SystemDecorations.None : SystemDecorations.Full;
         WindowState = windowMode.ToWindowState();
+        Fullscreen = windowMode == WindowMode.Fullscreen;
     }
 
     private NotificationType NotificationsToType()
