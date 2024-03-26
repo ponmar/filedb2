@@ -342,8 +342,8 @@
   <data name="AboutChangelogTitle" xml:space="preserve">
     <value>Ändringslogg</value>
   </data>
-  <data name="AboutLicenseTitle" xml:space="preserve">
-    <value>Licens</value>
+  <data name="AboutLicenseLabel" xml:space="preserve">
+    <value>Licens:</value>
   </data>
   <data name="AboutNuGetPackageLicensesTitle" xml:space="preserve">
     <value>NuGet-paketlicenser</value>

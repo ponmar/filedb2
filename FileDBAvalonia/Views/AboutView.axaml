@@ -11,7 +11,7 @@
 			<StackPanel Orientation="Vertical">
 				<TextBlock Text="{Binding AppName}" Classes="PageSubHeader"/>
 				<Border Classes="BorderGroup">
-					<Grid ColumnDefinitions="auto,auto" RowDefinitions="auto,auto,auto,auto">
+					<Grid ColumnDefinitions="auto,auto" RowDefinitions="auto,auto,auto,auto,auto">
 						<TextBlock Grid.Row="0" Grid.Column="0" Classes="PageTextBlock" Text="{x:Static lang:Strings.AboutAppVersion}"/>
 						<TextBlock Grid.Row="0" Grid.Column="1" Classes="PageTextBlock" Text="{Binding Version}"/>
 
@@ -35,6 +35,9 @@
 							</Hyperlink>
 							-->
 						</TextBlock>
+						
+						<TextBlock Grid.Row="4" Grid.Column="0" Classes="PageTextBlock" Text="{x:Static lang:Strings.AboutLicenseLabel}"/>
+						<TextBlock Grid.Row="4" Grid.Column="1" Classes="PageTextBlock" Text="{x:Static lang:Strings.AboutLicense}"/>
 					</Grid>
 				</Border>
 
@@ -99,11 +102,6 @@
 				<TextBlock Text="{x:Static lang:Strings.AboutChangelogTitle}" Classes="PageSubHeader"/>
 				<Border Classes="BorderGroup">
 					<TextBlock Classes="PageTextBlock" Margin="20" Text="{Binding Changes}" TextWrapping="Wrap"/>
-				</Border>
-
-				<TextBlock Text="{x:Static lang:Strings.AboutLicenseTitle}" Classes="PageSubHeader"/>
-				<Border Classes="BorderGroup">
-					<TextBlock Classes="PageTextBlock" Margin="20" Text="{x:Static lang:Strings.AboutLicense}"/>
 				</Border>
 
 				<TextBlock Text="{x:Static lang:Strings.AboutNuGetPackageLicensesTitle}" Classes="PageSubHeader"/>

@@ -205,11 +205,11 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to License.
+        ///   Looks up a localized string similar to License:.
         /// </summary>
-        public static string AboutLicenseTitle {
+        public static string AboutLicenseLabel {
             get {
-                return ResourceManager.GetString("AboutLicenseTitle", resourceCulture);
+                return ResourceManager.GetString("AboutLicenseLabel", resourceCulture);
             }
         }
         
