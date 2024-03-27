@@ -1354,4 +1354,7 @@
   <data name="FileTypeUnknown" xml:space="preserve">
     <value>Okänd</value>
   </data>
+  <data name="SettingsThemeLabel" xml:space="preserve">
+    <value>Tema:</value>
+  </data>
 </root>

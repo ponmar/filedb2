@@ -26,6 +26,7 @@ public class ConfigBuilder
     public int OverlayTextSizeLarge { get; init; }
     public int ShortItemNameMaxLength { get; init; }
     public string? Language { get; init; }
+    public Theme Theme { get; init; }
 
     public Config Build()
     {
@@ -51,6 +52,7 @@ public class ConfigBuilder
             OverlayTextSize,
             OverlayTextSizeLarge,
             ShortItemNameMaxLength,
-            Language);
+            Language,
+            Theme);
     }
 }

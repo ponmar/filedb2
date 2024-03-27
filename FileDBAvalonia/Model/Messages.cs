@@ -1,4 +1,5 @@
 ﻿using Avalonia.Media.Imaging;
+using FileDBAvalonia.Configuration;
 using FileDBShared.Model;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ public record LocationsUpdated;
 public record TagsUpdated;
 public record CategorizationFunctionKeyPressed(int FunctionKey);
 
+public record SetTheme(Theme Theme);
 public record FullscreenBrowsingRequested(bool Fullscreen);
 
 public record NewSearchResult();

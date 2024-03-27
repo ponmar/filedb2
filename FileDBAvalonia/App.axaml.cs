@@ -2,6 +2,7 @@
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
+using Avalonia.Styling;
 using FileDBAvalonia.Configuration;
 using FileDBAvalonia.Dialogs;
 using FileDBAvalonia.Extensions;
@@ -46,6 +47,16 @@ public partial class App : Application
             {
                 desktopApp.Shutdown();
             }
+        });
+
+        this.RegisterForEvent<SetTheme>((x) =>
+        {
+            RequestedThemeVariant = x.Theme switch
+            {
+                Theme.Dark => ThemeVariant.Dark,
+                Theme.Light => ThemeVariant.Light,
+                Theme.Default or _ => ThemeVariant.Default,
+            };
         });
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
@@ -153,6 +164,8 @@ public partial class App : Application
 
             var notificationsHandling = ServiceLocator.Resolve<INotificationHandling>();
             notifications.ForEach(notificationsHandling.AddNotification);
+
+            Messenger.Send(new SetTheme(config.Theme));
 
             // Only load views and viewmodels when this method did not called shutdown above
             desktop.MainWindow = new MainWindow();

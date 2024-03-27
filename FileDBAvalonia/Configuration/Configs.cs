@@ -1,5 +1,7 @@
 ﻿namespace FileDBAvalonia.Configuration;
 
+public enum Theme { Default, Dark, Light }
+
 public record Config(
     int FileToLocationMaxDistance,
     string BlacklistedFilePathPatterns,
@@ -22,7 +24,8 @@ public record Config(
     int OverlayTextSize,
     int OverlayTextSizeLarge,
     int ShortItemNameMaxLength,
-    string? Language);
+    string? Language,
+    Theme Theme);
 
 public static class DefaultConfigs
 {
@@ -48,5 +51,6 @@ public static class DefaultConfigs
             OverlayTextSize: 14,
             OverlayTextSizeLarge: 24,
             ShortItemNameMaxLength: 15,
-            Language: null);
+            Language: null,
+            Theme: Theme.Default);
 }

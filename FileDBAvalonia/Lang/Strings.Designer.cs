@@ -3161,6 +3161,15 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Theme:.
+        /// </summary>
+        public static string SettingsThemeLabel {
+            get {
+                return ResourceManager.GetString("SettingsThemeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
         public static string SettingsTitle {

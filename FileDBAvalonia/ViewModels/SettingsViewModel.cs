@@ -153,6 +153,18 @@ public partial class SettingsViewModel : ObservableObject
 
     partial void OnShortItemNameMaxLengthChanged(int value) => IsDirty = true;
 
+    [ObservableProperty]
+    private List<Theme> themes = Enum.GetValues<Theme>().ToList();
+
+    [ObservableProperty]
+    private Theme theme;
+
+    partial void OnThemeChanged(Theme value)
+    {
+        IsDirty = true;
+        Messenger.Send(new SetTheme(value));
+    }
+
     [RelayCommand]
     private void SetDefaultSlideshowDelay()
     {
@@ -285,6 +297,12 @@ public partial class SettingsViewModel : ObservableObject
         SelectedLanguage = Languages.FirstOrDefault(x => x.Name == DefaultConfigs.Default.Language);
     }
 
+    [RelayCommand]
+    private void SetDefaultTheme()
+    {
+        Theme = DefaultConfigs.Default.Theme;
+    }
+
     private readonly IConfigProvider configProvider;
     private readonly IConfigUpdater configUpdater;
     private readonly IDialogs dialogs;
@@ -331,6 +349,7 @@ public partial class SettingsViewModel : ObservableObject
         OverlayTextSizeLarge = config.OverlayTextSizeLarge;
         ShortItemNameMaxLength = config.ShortItemNameMaxLength;
         SelectedLanguage = Languages.FirstOrDefault(x => x.Name == config.Language);
+        Theme = config.Theme;
 
         IsDirty = false;
     }
@@ -366,7 +385,8 @@ public partial class SettingsViewModel : ObservableObject
             OverlayTextSize,
             OverlayTextSizeLarge,
             ShortItemNameMaxLength,
-            SelectedLanguage?.Name == "en" ? null : SelectedLanguage?.Name);
+            SelectedLanguage?.Name == "en" ? null : SelectedLanguage?.Name,
+            Theme);
 
         var result = new ConfigValidator().Validate(configToSave);
         if (!result.IsValid)
