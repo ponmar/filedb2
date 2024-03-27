@@ -50,6 +50,13 @@
 			<Setter Property="VerticalAlignment" Value="Top"/>
 		</Style>
 
+		<Style Selector="Border.PresentationBorder">
+			<Setter Property="Background" Value="Gray"/>
+			<Setter Property="BorderThickness" Value="1"/>
+			<Setter Property="BorderBrush" Value="Gray"/>
+			<Setter Property="CornerRadius" Value="5"/>
+		</Style>
+
 		<Style Selector="TextBox.PageTextBox">
 			<Setter Property="Margin" Value="10"/>
 		</Style>
