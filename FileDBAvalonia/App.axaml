@@ -51,7 +51,8 @@
 		</Style>
 
 		<Style Selector="Border.PresentationBorder">
-			<Setter Property="Background" Value="Gray"/>
+			<Setter Property="Background" Value="Black"/>
+			<Setter Property="Opacity" Value="0.8"/>
 			<Setter Property="BorderThickness" Value="1"/>
 			<Setter Property="BorderBrush" Value="Gray"/>
 			<Setter Property="CornerRadius" Value="5"/>
