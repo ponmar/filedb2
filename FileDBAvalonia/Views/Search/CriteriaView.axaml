@@ -354,21 +354,21 @@
                         Margin="5"
                         VerticalAlignment="Center">
                         <Button
-                            Width="80"
+							Width="100"
                             Margin="3"
                             Command="{Binding CombineSearchIntersectionCommand}"
                             Content="{x:Static lang:Strings.SearchIntersectionButton}"
                             IsEnabled="{Binding CombineSearchResultPossible}"
                             ToolTip.Tip="{x:Static lang:Strings.SearchAllFilesFromSearch1ThatAlsoBelongToSearch2ToolTip}" />
-                        <Button
-                            Width="80"
+						<Button
+							Width="100"
                             Margin="3"
                             Command="{Binding CombineSearchUnionCommand}"
                             Content="{x:Static lang:Strings.SearchUnionButton}"
                             IsEnabled="{Binding CombineSearchResultPossible}"                            
                             ToolTip.Tip="{x:Static lang:Strings.SearchAllFilesFromSearch1And2ToolTip}" />
-                        <Button
-                            Width="80"
+						<Button
+							Width="100"
                             Margin="3"
                             Command="{Binding CombineSearchDifferenceCommand}"
                             Content="{x:Static lang:Strings.SearchDifferenceButton}"
