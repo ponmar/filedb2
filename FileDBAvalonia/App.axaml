@@ -6,8 +6,6 @@
     <Application.Styles>
         <FluentTheme />
 
-		<avalonia:HyperLinkStyle/>
-
 		<Style Selector="TextBlock.TabIcon">
 			<Setter Property="FontSize" Value="22" />
 			<Setter Property="Margin" Value="0"/>

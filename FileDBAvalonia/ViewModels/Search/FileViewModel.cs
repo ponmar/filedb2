@@ -11,7 +11,6 @@ using FileDBAvalonia.Lang;
 using FileDBAvalonia.Model;
 using Avalonia.Media.Imaging;
 using Avalonia.Threading;
-using FileDBAvalonia.Views.Search.File;
 using FileDBAvalonia.Dialogs;
 
 namespace FileDBAvalonia.ViewModels.Search;
@@ -232,19 +231,8 @@ public partial class FileViewModel : ObservableObject
         dialogs.ShowPresentationWindow(Strings.PresentationWindowTitle);
     }
 
-    /*
     [RelayCommand]
-    private void FunctionKey(string parameter)
-    {
-        var functionKey = int.Parse(parameter);
-        Messenger.Send(new CategorizationFunctionKeyPressed(functionKey));
-    }
-    */
-
-    [RelayCommand]
-    private void OpenUrlInBrowser()
-    {
-    }
+    private void OpenUrl(string url) => Utils.OpenUriInBrowser(url);
 
     [RelayCommand]
     private void PrevFile() => Messenger.Send<SelectPrevFile>();
