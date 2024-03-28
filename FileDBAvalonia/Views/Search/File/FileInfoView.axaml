@@ -23,7 +23,7 @@
 				<TextBlock FontSize="{Binding OverlayFontSize}" Text="&#x1F6F0;" ToolTip.Tip="{x:Static lang:Strings.FileInfoPositionToolTip}"/>
 				<StackPanel Orientation="Horizontal">
 					<TextBlock FontSize="{Binding OverlayFontSize}" IsVisible="{Binding Position, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" Text="{Binding Position}" VerticalAlignment="Center"/>
-					<Button Margin="3 0 0 0" IsVisible="{Binding PositionLink, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" Command="{Binding OpenUrlCommand}" CommandParameter="{Binding PositionLink}" Content="&#x1F4CC;" VerticalAlignment="Center"/>
+					<Button Margin="3 0 0 0" IsVisible="{Binding PositionLink, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" Command="{Binding OpenUrlCommand}" CommandParameter="{Binding PositionLink}" Content="&#x1F4CC;" VerticalAlignment="Center" ToolTip.Tip="{x:Static lang:Strings.LocationsShowOnMapButton}"/>
 				</StackPanel>
 			</StackPanel>
 
