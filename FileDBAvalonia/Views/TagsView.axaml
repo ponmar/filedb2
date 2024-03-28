@@ -10,10 +10,10 @@
 		<ScrollViewer>
 			<Border Classes="BorderGroup">
 				<StackPanel>
-					<WrapPanel Orientation="Horizontal" IsVisible="{Binding ReadWriteMode}">
-						<Button Classes="Normal" Margin="10" Command="{Binding AddTagCommand}" Content="+" ToolTip.Tip="{x:Static lang:Strings.TagsAddButton}"/>
-						<Button Classes="Normal" Margin="10" Command="{Binding RemoveTagCommand}" IsEnabled="{Binding SelectedTag, Converter={x:Static ObjectConverters.IsNotNull}}" Content="&#128465;" ToolTip.Tip="{x:Static lang:Strings.TagsDeleteButton}"/>
-						<Button Classes="Normal" Margin="10" Command="{Binding EditTagCommand}" IsEnabled="{Binding SelectedTag, Converter={x:Static ObjectConverters.IsNotNull}}" Content="&#x1F589;" ToolTip.Tip="{x:Static lang:Strings.TagEditButton}"/>
+					<WrapPanel Orientation="Horizontal" IsVisible="{Binding ReadWriteMode}" Margin="5">
+						<Button Classes="Normal" Margin="5" Command="{Binding AddTagCommand}" Content="+" ToolTip.Tip="{x:Static lang:Strings.TagsAddButton}"/>
+						<Button Classes="Normal" Margin="5" Command="{Binding RemoveTagCommand}" IsEnabled="{Binding SelectedTag, Converter={x:Static ObjectConverters.IsNotNull}}" Content="&#128465;" ToolTip.Tip="{x:Static lang:Strings.TagsDeleteButton}"/>
+						<Button Classes="Normal" Margin="5" Command="{Binding EditTagCommand}" IsEnabled="{Binding SelectedTag, Converter={x:Static ObjectConverters.IsNotNull}}" Content="&#x1F589;" ToolTip.Tip="{x:Static lang:Strings.TagEditButton}"/>
 					</WrapPanel>
 
 					<ListBox Margin="10" ItemsSource="{Binding Tags}" SelectionMode="Single" SelectedItem="{Binding SelectedTag}" Grid.IsSharedSizeScope="True">

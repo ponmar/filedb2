@@ -10,11 +10,11 @@
 		<ScrollViewer>
 			<Border Classes="BorderGroup">
 				<StackPanel>
-					<WrapPanel Orientation="Horizontal" IsVisible="{Binding ReadWriteMode}">
-						<Button Classes="Normal" Margin="10" Command="{Binding AddLocationCommand}" Content="+" ToolTip.Tip="{x:Static lang:Strings.LocationsAddButton}"/>
-						<Button Classes="Normal" Margin="10" Command="{Binding RemoveLocationCommand}" IsEnabled="{Binding SelectedLocation, Converter={x:Static ObjectConverters.IsNotNull}}" Content="&#128465;" ToolTip.Tip="{x:Static lang:Strings.LocationsDeleteButton}"/>
-						<Button Classes="Normal" Margin="10" Command="{Binding EditLocationCommand}" IsEnabled="{Binding SelectedLocation, Converter={x:Static ObjectConverters.IsNotNull}}" Content="&#x1F589;" ToolTip.Tip="{x:Static lang:Strings.LocationsEditButton}"/>
-						<Button Classes="Normal" Margin="10" Command="{Binding ShowLocationOnMapCommand}" IsEnabled="{Binding SelectedLocationHasPosition}" Content="&#x1F4CC;" ToolTip.Tip="{x:Static lang:Strings.LocationsShowOnMapButton}"/>
+					<WrapPanel Orientation="Horizontal" IsVisible="{Binding ReadWriteMode}" Margin="5">
+						<Button Classes="Normal" Margin="5" Command="{Binding AddLocationCommand}" Content="+" ToolTip.Tip="{x:Static lang:Strings.LocationsAddButton}"/>
+						<Button Classes="Normal" Margin="5" Command="{Binding RemoveLocationCommand}" IsEnabled="{Binding SelectedLocation, Converter={x:Static ObjectConverters.IsNotNull}}" Content="&#128465;" ToolTip.Tip="{x:Static lang:Strings.LocationsDeleteButton}"/>
+						<Button Classes="Normal" Margin="5" Command="{Binding EditLocationCommand}" IsEnabled="{Binding SelectedLocation, Converter={x:Static ObjectConverters.IsNotNull}}" Content="&#x1F589;" ToolTip.Tip="{x:Static lang:Strings.LocationsEditButton}"/>
+						<Button Classes="Normal" Margin="5" Command="{Binding ShowLocationOnMapCommand}" IsEnabled="{Binding SelectedLocationHasPosition}" Content="&#x1F4CC;" ToolTip.Tip="{x:Static lang:Strings.LocationsShowOnMapButton}"/>
 					</WrapPanel>
 
 					<ListBox Margin="10" ItemsSource="{Binding Locations}" SelectionMode="Single" SelectedItem="{Binding SelectedLocation}" Grid.IsSharedSizeScope="True">
