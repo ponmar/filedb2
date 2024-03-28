@@ -151,9 +151,9 @@ public partial class FileCategorizationViewModel : ObservableObject
             CloseFile();
         });
 
-        this.RegisterForEvent<CategorizationFunctionKeyPressed>((x) =>
+        this.RegisterForEvent<CategorizationFunctionKeyPressed>(async (x) =>
         {
-            FunctionKeyAsync(x.FunctionKey);
+            await FunctionKeyAsync(x.FunctionKey);
         });
     }
 

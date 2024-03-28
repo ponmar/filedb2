@@ -2,6 +2,7 @@
 using System.Linq;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using FileDBAvalonia.Configuration;
 using FileDBAvalonia.Model;
 using FileDBAvalonia.Notifiers;
@@ -99,5 +100,12 @@ public partial class MainViewModel : ObservableObject
     private NotificationType NotificationsToType()
     {
         return notificationsRepository.Notifications.Any() ? notificationsRepository.Notifications.Max(x => x.Type) : Enum.GetValues<NotificationType>().First();
+    }
+
+    [RelayCommand]
+    private void FunctionKeyPressed(string functionKeyStr)
+    {
+        var functionKey = int.Parse(functionKeyStr);
+        Messenger.Send(new CategorizationFunctionKeyPressed(functionKey));
     }
 }
