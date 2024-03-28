@@ -10,15 +10,15 @@
 		<converters:FilterTypeToStringConverter x:Key="FilterTypeToStringConverter"/>
 	</UserControl.Resources>
 	<StackPanel Orientation="Horizontal">
-		<ComboBox Margin="3" ItemsSource="{Binding FilterTypes}" SelectedItem="{Binding SelectedFilterType}" Width="100" ToolTip.Tip="Filter type" VerticalAlignment="Center">
+		<ComboBox Margin="0 0 3 0" ItemsSource="{Binding FilterTypes}" SelectedItem="{Binding SelectedFilterType}" Width="100" ToolTip.Tip="Filter type" VerticalAlignment="Center">
 			<ComboBox.ItemTemplate>
 				<DataTemplate>
 					<TextBlock Text="{Binding Path=., Converter={StaticResource FilterTypeToStringConverter}}"/>
 				</DataTemplate>
 			</ComboBox.ItemTemplate>
 		</ComboBox>
-		<TextBox Margin="3" Text="{Binding NumPersonsMin}" Width="30" VerticalAlignment="Center" ToolTip.Tip="{x:Static lang:Strings.SearchFilterNumPersonsMin}"/>
-		<TextBlock Text="-" VerticalAlignment="Center" />
-		<TextBox Margin="3" Text="{Binding NumPersonsMax}" Width="30" VerticalAlignment="Center" ToolTip.Tip="{x:Static lang:Strings.SearchFilterNumPersonsMax}"/>
+		<TextBox Margin="0 0 3 0" Text="{Binding NumPersonsMin}" Width="30" VerticalAlignment="Center" ToolTip.Tip="{x:Static lang:Strings.SearchFilterNumPersonsMin}"/>
+		<TextBlock Margin="0 0 3 0" Text="-" VerticalAlignment="Center" />
+		<TextBox Text="{Binding NumPersonsMax}" Width="30" VerticalAlignment="Center" ToolTip.Tip="{x:Static lang:Strings.SearchFilterNumPersonsMax}"/>
 	</StackPanel>
 </UserControl>

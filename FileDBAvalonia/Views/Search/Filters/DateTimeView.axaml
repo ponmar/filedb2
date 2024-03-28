@@ -10,7 +10,7 @@
 		<converters:FilterTypeToStringConverter x:Key="FilterTypeToStringConverter"/>
 	</UserControl.Resources>
 	<StackPanel Orientation="Horizontal">
-		<ComboBox Margin="3" ItemsSource="{Binding FilterTypes}" SelectedItem="{Binding SelectedFilterType}" Width="100" ToolTip.Tip="Filter type" VerticalAlignment="Center">
+		<ComboBox Margin="0 0 3 0" ItemsSource="{Binding FilterTypes}" SelectedItem="{Binding SelectedFilterType}" Width="100" ToolTip.Tip="Filter type" VerticalAlignment="Center">
 			<ComboBox.ItemTemplate>
 				<DataTemplate>
 					<TextBlock Text="{Binding Path=., Converter={StaticResource FilterTypeToStringConverter}}"/>
@@ -18,13 +18,12 @@
 			</ComboBox.ItemTemplate>
 		</ComboBox>
 		<DatePicker
-            Margin="3"
+            Margin="0 0 3 0"
             VerticalAlignment="Center"
             SelectedDate="{Binding DateTimeStart}"
             ToolTip.Tip="{x:Static lang:Strings.SearchFilterDateTimeStart}" />
-		<TextBlock Text="-" VerticalAlignment="Center" />
+		<TextBlock Margin="0 0 3 0" Text="-" VerticalAlignment="Center" />
 		<DatePicker
-            Margin="3"
             VerticalAlignment="Center"
             SelectedDate="{Binding DateTimeEnd}"
             ToolTip.Tip="{x:Static lang:Strings.SearchFilterDateTimeEnd}" />

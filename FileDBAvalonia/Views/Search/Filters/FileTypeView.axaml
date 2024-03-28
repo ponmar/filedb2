@@ -11,14 +11,14 @@
 		<converters:FileTypeToStringConverter x:Key="FileTypeToStringConverter"/>
 	</UserControl.Resources>
 	<StackPanel Orientation="Horizontal">
-		<ComboBox Margin="3" ItemsSource="{Binding FilterTypes}" SelectedItem="{Binding SelectedFilterType}" Width="100" ToolTip.Tip="Filter type" VerticalAlignment="Center">
+		<ComboBox Margin="0 0 3 0" ItemsSource="{Binding FilterTypes}" SelectedItem="{Binding SelectedFilterType}" Width="100" ToolTip.Tip="Filter type" VerticalAlignment="Center">
 			<ComboBox.ItemTemplate>
 				<DataTemplate>
 					<TextBlock Text="{Binding Path=., Converter={StaticResource FilterTypeToStringConverter}}"/>
 				</DataTemplate>
 			</ComboBox.ItemTemplate>
 		</ComboBox>
-		<ComboBox Margin="3" ItemsSource="{Binding FileTypes}" SelectedItem="{Binding SelectedFileType}" Width="100" ToolTip.Tip="File type" VerticalAlignment="Center">
+		<ComboBox ItemsSource="{Binding FileTypes}" SelectedItem="{Binding SelectedFileType}" Width="100" ToolTip.Tip="File type" VerticalAlignment="Center">
 			<ComboBox.ItemTemplate>
 				<DataTemplate>
 					<TextBlock Text="{Binding Path=., Converter={StaticResource FileTypeToStringConverter}}"/>
