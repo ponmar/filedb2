@@ -125,7 +125,7 @@ public class Dialogs : IDialogs
             AllowMultiple = false,
         });
 
-        return files.Count > 0 ? files[0].Path.AbsolutePath : null;
+        return files.Count > 0 ? files[0].Path.LocalPath : null;
     }
 
     public async Task<PersonModel?> ShowAddPersonDialogAsync(int? personId = null)

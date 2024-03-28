@@ -81,7 +81,10 @@ public partial class FilesViewModel : ObservableObject
     private async Task BrowseSubDirectoryAsync()
     {
         var selectedDir = await dialogs.ShowBrowseExistingDirectoryDialogAsync("Select a sub directory", configProvider.FilePaths.FilesRootDir);
-        SubdirToScan = selectedDir ?? string.Empty;
+        if (selectedDir is not null)
+        {
+            SubdirToScan = selectedDir;
+        }
     }
 
     [RelayCommand]
@@ -144,7 +147,7 @@ public partial class FilesViewModel : ObservableObject
 
                 if (NewFiles.Count == 0)
                 {
-                    await dialogs.ShowInfoDialogAsync($"No new files found. Add your files to '{configProvider.FilePaths.FilesRootDir}'.");
+                    await dialogs.ShowInfoDialogAsync($"No new files found.\n\nAdd new files to '{configProvider.FilePaths.FilesRootDir}'.");
                 }
             });
         });
