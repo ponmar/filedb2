@@ -10,7 +10,10 @@ namespace FileDBAvalonia.Views.Dialogs
         public ExportSearchResultWindow()
         {
             InitializeComponent();
-            DataContext = ServiceLocator.Resolve<ExportSearchResultViewModel>();
+            if (!Design.IsDesignMode)
+            {
+                DataContext = ServiceLocator.Resolve<ExportSearchResultViewModel>();
+            }
             this.RegisterForEvent<CloseModalDialogRequest>((x) => Close());
         }
     }

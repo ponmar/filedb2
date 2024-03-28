@@ -7,8 +7,7 @@
 			 xmlns:views="clr-namespace:FileDBAvalonia.Views;assembly=FileDBAvalonia"
 			 xmlns:converters="clr-namespace:FileDBAvalonia.Converters"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="FileDBAvalonia.Views.MainView"
-             x:DataType="vm:MainViewModel">
+             x:Class="FileDBAvalonia.Views.MainView">
 	<UserControl.Resources>
 		<converters:NotificationTypeToColorConverter x:Key="NotificationTypeToColorConverter" />
 	</UserControl.Resources>

@@ -8,6 +8,9 @@ public partial class SearchView : UserControl
     public SearchView()
     {
         InitializeComponent();
-        DataContext = ServiceLocator.Resolve<MainViewModel>();
+        if (!Design.IsDesignMode)
+        {
+            DataContext = ServiceLocator.Resolve<MainViewModel>();
+        }
     }
 }

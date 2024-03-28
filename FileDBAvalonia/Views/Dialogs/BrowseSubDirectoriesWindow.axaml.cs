@@ -10,7 +10,10 @@ namespace FileDBAvalonia.Views.Dialogs
         public BrowseSubDirectoriesWindow()
         {
             InitializeComponent();
-            DataContext = ServiceLocator.Resolve<BrowseSubDirectoriesViewModel>();
+            if (!Design.IsDesignMode)
+            {
+                DataContext = ServiceLocator.Resolve<BrowseSubDirectoriesViewModel>();
+            }
             this.RegisterForEvent<CloseModalDialogRequest>((x) => Close());
         }
     }
