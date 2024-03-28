@@ -27,10 +27,9 @@
                                     <Button
                                         Grid.Column="0"
                                         Margin="3"
-                                        Width="25"
                                         Command="{Binding DataContext.RemoveFilterCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                         CommandParameter="{Binding}"
-                                        Content="-"
+                                        Content="&#128473;"
                                         IsEnabled="{Binding DataContext.FilterCanBeRemoved, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                         ToolTip.Tip="Remove filter" />
 
@@ -58,7 +57,6 @@
                             Margin="3"
                             Command="{Binding AddFilterCommand}"
                             Content="+"
-                            Width="25"
                             ToolTip.Tip="Add filter" />
                         <Button
                             Margin="3"
