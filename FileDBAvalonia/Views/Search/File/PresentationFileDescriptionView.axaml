@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="FileDBAvalonia.Views.Search.File.PresentationFileDescriptionView">
-	<Border Classes="PresentationBorder" Margin="20 0 20 20" Padding="10" IsVisible="{Binding Description, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+	<Border Classes="PresentationBorder" Padding="10" IsVisible="{Binding Description, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
 		<TextBlock FontSize="{Binding OverlayFontSize}" Text="{Binding Description}" ToolTip.Tip="{Binding Description}" TextWrapping="Wrap"/>
 	</Border>
 </UserControl>

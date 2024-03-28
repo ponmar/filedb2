@@ -21,7 +21,7 @@
 		<KeyBinding Gesture="F12" Command="{Binding FunctionKeyPressedCommand}" CommandParameter="12"/>
 	</UserControl.KeyBindings>
 	<DockPanel>
-		<TextBlock DockPanel.Dock="Top" Text="{x:Static lang:Strings.SearchTitle}" Classes="PageHeader"/>
+		<TextBlock DockPanel.Dock="Top" Text="{x:Static lang:Strings.SearchTitle}" Classes="PageHeader" IsVisible="{Binding !Fullscreen}"/>
 		<Grid ColumnDefinitions="*" RowDefinitions="auto,auto,*">
 			<StackPanel Grid.Row="0" IsVisible="{Binding !Fullscreen}">
 				<searchviews:CriteriaView/>
