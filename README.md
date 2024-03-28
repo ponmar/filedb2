@@ -56,7 +56,7 @@ The release contains the following documentation:
 
 ### About
 
-The main application is a C# WPF application. Accessing the internal database and files are done via the FileDBInterface project. Dapper is used for all database access.
+The main application is a C# [Avalonia UI](https://avaloniaui.net/) desktop application. Accessing the internal database and files are done via the FileDBInterface project. Dapper is used for all database access.
 
 The app is based on .NET MAUI. It has been tested on Android and Windows.
 
@@ -66,8 +66,8 @@ The app is based on .NET MAUI. It has been tested on Android and Windows.
 2. Checkout wanted branch
 3. Open FileDB.sln in Visual Studio 2022
 4. Build solution
-5. Set FileDB project as startup project
-6. Start project. Note that a command line argument can be used to enable demo mode to avoid affecting the real database during development.
+5. Set the FileDBAvalonia project as startup project and set the path to the included Demo.FileDB file as command line argument
+6. Start the project
 
 ### Contribute
 
