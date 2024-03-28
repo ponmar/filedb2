@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using FileDBAvalonia.Extensions;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace FileDBAvalonia.ViewModels;
 
 public record LicenseFileFormatDto(string PackageName, string PackageVersion, string PackageUrl, string LicenseType);
 
-public class AboutViewModel : ObservableObject
+public partial class AboutViewModel : ObservableObject
 {
     private const string ChangesFilePath = "CHANGES.txt";
     private readonly string LicensesJsonFilePath = Path.Combine(AppContext.BaseDirectory, "Resources", "licenses.json");
@@ -35,4 +36,7 @@ public class AboutViewModel : ObservableObject
         var licenses = LicensesJsonFilePath.FromJson<List<LicenseFileFormatDto>>(fileSystem);
         licenses!.ForEach(x => Licenses.Add(x));
     }
+
+    [RelayCommand]
+    private void OpenUrl(string url) => Utils.OpenUriInBrowser(url);
 }

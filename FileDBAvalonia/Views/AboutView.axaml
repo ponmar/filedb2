@@ -18,23 +18,17 @@
 						<TextBlock Grid.Row="1" Grid.Column="0" Classes="PageTextBlock" Text="{x:Static lang:Strings.AboutAppAuthor}"/>
 						<TextBlock Grid.Row="1" Grid.Column="1" Classes="PageTextBlock" Text="{Binding Author}"/>
 
-						<TextBlock Grid.Row="2" Grid.Column="0" Classes="PageTextBlock" Text="{x:Static lang:Strings.AboutAppProjectWebsite}"/>
-						<TextBlock Grid.Row="2" Grid.Column="1">
-							<!--
-							<Hyperlink NavigateUri="{Binding ProjectUrl}" RequestNavigate="OpenUri">
-								<TextBlock Text="{x:Static lang:Strings.AboutDownloadsClickToOpen}" ToolTip.Tip="{Binding ProjectUrl}"/>
-							</Hyperlink>
-							-->
-						</TextBlock>
+						<TextBlock Grid.Row="2" Grid.Column="0" Classes="PageTextBlock" Text="{x:Static lang:Strings.AboutAppProjectWebsite}" VerticalAlignment="Center"/>
+						<StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+							<TextBlock Classes="PageTextBlock" Text="{Binding ProjectUrl}" VerticalAlignment="Center"/>
+							<Button Classes="PageButton" Content="Open" Command="{Binding OpenUrlCommand}" CommandParameter="{Binding ProjectUrl}" VerticalAlignment="Center"/>
+						</StackPanel>
 
-						<TextBlock Grid.Row="3" Grid.Column="0" Classes="PageTextBlock" Text="{x:Static lang:Strings.AboutDownloadsReleases}"/>
-						<TextBlock Grid.Row="3" Grid.Column="1">
-							<!--
-							<Hyperlink NavigateUri="{Binding DownloadLink}" RequestNavigate="OpenUri">
-								<TextBlock Text="{x:Static lang:Strings.AboutDownloadsClickToOpen}" ToolTip.Tip="{Binding DownloadLink}"/>
-							</Hyperlink>
-							-->
-						</TextBlock>
+						<TextBlock Grid.Row="3" Grid.Column="0" Classes="PageTextBlock" Text="{x:Static lang:Strings.AboutDownloadsReleases}" VerticalAlignment="Center"/>
+						<StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
+							<TextBlock Classes="PageTextBlock" Text="{Binding DownloadLink}" VerticalAlignment="Center"/>
+							<Button Classes="PageButton" Content="Open" Command="{Binding OpenUrlCommand}" CommandParameter="{Binding DownloadLink}" VerticalAlignment="Center"/>
+						</StackPanel>
 						
 						<TextBlock Grid.Row="4" Grid.Column="0" Classes="PageTextBlock" Text="{x:Static lang:Strings.AboutLicenseLabel}"/>
 						<TextBlock Grid.Row="4" Grid.Column="1" Classes="PageTextBlock" Text="{x:Static lang:Strings.AboutLicense}"/>
