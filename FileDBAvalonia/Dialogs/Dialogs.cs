@@ -23,19 +23,22 @@ public class Dialogs : IDialogs
     public async Task ShowInfoDialogAsync(string message)
     {
         var box = MessageBoxManager.GetMessageBoxStandard(Utils.ApplicationName, message, ButtonEnum.Ok, Icon.Info);
-        await box.ShowAsync();
+        var parent = GetParentWindow();
+        await box.ShowWindowDialogAsync(parent);
     }
 
     public async Task ShowWarningDialogAsync(string message)
     {
         var box = MessageBoxManager.GetMessageBoxStandard(Utils.ApplicationName, message, ButtonEnum.Ok, Icon.Warning);
-        await box.ShowAsync();
+        var parent = GetParentWindow();
+        await box.ShowWindowDialogAsync(parent);
     }
 
     public async Task ShowErrorDialogAsync(string message)
     {
         var box = MessageBoxManager.GetMessageBoxStandard(Utils.ApplicationName, message, ButtonEnum.Ok, Icon.Error);
-        await box.ShowAsync();
+        var parent = GetParentWindow();
+        await box.ShowWindowDialogAsync(parent);
     }
     
     public async Task ShowErrorDialogAsync(string message, Exception e)

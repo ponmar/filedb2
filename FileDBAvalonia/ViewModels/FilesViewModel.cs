@@ -138,13 +138,13 @@ public partial class FilesViewModel : ObservableObject
                 progress.Report($"Scanning... New files: {NewFiles.Count}");
             }
 
-            Dispatcher.UIThread.Invoke(() =>
+            Dispatcher.UIThread.Invoke(async () =>
             {
                 OnPropertyChanged(nameof(NewFiles));
 
                 if (NewFiles.Count == 0)
                 {
-                    dialogs.ShowInfoDialogAsync($"No new files found. Add your files to '{configProvider.FilePaths.FilesRootDir}'.");
+                    await dialogs.ShowInfoDialogAsync($"No new files found. Add your files to '{configProvider.FilePaths.FilesRootDir}'.");
                 }
             });
         });
