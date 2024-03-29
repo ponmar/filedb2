@@ -5,6 +5,7 @@ using System.Linq;
 using Avalonia.Media.Imaging;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using FileDBAvalonia.Extensions;
 using FileDBAvalonia.Model;
 using FileDBShared;
@@ -169,4 +170,7 @@ public partial class BirthdaysViewModel : ObservableObject
             Persons.Add(person);
         }
     }
+
+    [RelayCommand]
+    private void ClearFilterText() => FilterText = string.Empty;
 }

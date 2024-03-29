@@ -147,4 +147,7 @@ public partial class PersonsViewModel : ObservableObject
 
         return -1;
     }
+
+    [RelayCommand]
+    private void ClearFilterText() => FilterText = string.Empty;
 }

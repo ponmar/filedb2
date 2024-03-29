@@ -1,4 +1,5 @@
 ﻿using System;
+using FileDBInterface.Extensions;
 using FileDBShared.Model;
 
 namespace FileDBAvalonia.Extensions;
@@ -9,6 +10,7 @@ public static class TagModelExtensions
 
     public static bool MatchesTextFilter(this TagModel tagModel, string textFilter)
     {
-        return tagModel.Name.Contains(textFilter, stringComparison);
+        return !textFilter.HasContent() || 
+            tagModel.Name.Contains(textFilter, stringComparison);
     }
 }

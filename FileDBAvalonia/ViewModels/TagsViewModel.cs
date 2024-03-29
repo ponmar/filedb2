@@ -107,4 +107,7 @@ public partial class TagsViewModel : ObservableObject
             Tags.Add(tag);
         }
     }
+
+    [RelayCommand]
+    private void ClearFilterText() => FilterText = string.Empty;
 }

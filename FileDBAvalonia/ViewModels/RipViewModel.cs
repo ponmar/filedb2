@@ -5,6 +5,7 @@ using System.Linq;
 using Avalonia.Media.Imaging;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using FileDBAvalonia.Comparers;
 using FileDBAvalonia.Extensions;
 using FileDBAvalonia.Model;
@@ -121,4 +122,7 @@ public partial class RipViewModel : ObservableObject
             Persons.Add(person);
         }
     }
+
+    [RelayCommand]
+    private void ClearFilterText() => FilterText = string.Empty;
 }

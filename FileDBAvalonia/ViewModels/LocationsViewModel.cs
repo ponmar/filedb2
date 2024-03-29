@@ -119,4 +119,7 @@ public partial class LocationsViewModel : ObservableObject
             Locations.Add(tag);
         }
     }
+
+    [RelayCommand]
+    private void ClearFilterText() => FilterText = string.Empty;
 }
