@@ -11,6 +11,8 @@ using FileDBAvalonia.Model;
 using Avalonia.Media.Imaging;
 using Avalonia.Threading;
 using FileDBAvalonia.Dialogs;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace FileDBAvalonia.ViewModels.Search;
 
@@ -19,6 +21,8 @@ public enum RotationDirection { Clockwise, CounterClockwise }
 public record PersonToUpdate(int Id, string Name, string ShortName);
 public record LocationToUpdate(int Id, string Name, string ShortName);
 public record TagToUpdate(int Id, string Name, string ShortName);
+
+public record Location(string Name, string? MapUrl);
 
 public enum UpdateHistoryType
 {
@@ -67,8 +71,7 @@ public partial class FileViewModel : ObservableObject
     [ObservableProperty]
     private string persons = string.Empty;
 
-    [ObservableProperty]
-    private string locations = string.Empty;
+    public ObservableCollection<Location> Locations { get; } = [];
 
     [ObservableProperty]
     private string tags = string.Empty;
@@ -185,7 +188,8 @@ public partial class FileViewModel : ObservableObject
         Position = FileTextOverlayCreator.GetShortPositionText(selection) ?? string.Empty;
         PositionLink = FileTextOverlayCreator.GetPositionUri(configProvider, selection);
         Persons = FileTextOverlayCreator.GetPersonsText(dbAccessProvider.DbAccess, selection, "\n");
-        Locations = FileTextOverlayCreator.GetLocationsText(dbAccessProvider.DbAccess, selection, "\n");
+        Locations.Clear();
+        FileTextOverlayCreator.GetLocations(configProvider, dbAccessProvider.DbAccess, selection).ToList().ForEach(Locations.Add);
         Tags = FileTextOverlayCreator.GetTagsText(dbAccessProvider.DbAccess, selection, "\n");
 
         FileLoadError = string.Empty;
@@ -215,7 +219,7 @@ public partial class FileViewModel : ObservableObject
         Position = string.Empty;
         PositionLink = null;
         Persons = string.Empty;
-        Locations = string.Empty;
+        Locations.Clear();
         Tags = string.Empty;
 
         FileLoadError = Strings.SearchNoMatch;

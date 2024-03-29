@@ -7,6 +7,7 @@ using FileDBAvalonia.Model;
 using FileDBAvalonia.Extensions;
 using FileDBShared;
 using FileDBAvalonia.Lang;
+using FileDBAvalonia.ViewModels.Search;
 
 namespace FileDBAvalonia;
 
@@ -53,6 +54,17 @@ public class FileTextOverlayCreator
         var locationStrings = locations.Select(l => l.Name).ToList();
         locationStrings.Sort();
         return locationStrings;
+    }
+
+    public static IEnumerable<Location> GetLocations(IConfigProvider configProvider, IDatabaseAccess dbAccess, FileModel file)
+    {
+        var locations = dbAccess.GetLocationsFromFile(file.Id);
+        return GetLocations(configProvider, locations);
+    }
+
+    public static IEnumerable<Location> GetLocations(IConfigProvider configProvider, IEnumerable<LocationModel> locations)
+    {
+        return locations.OrderBy(x => x.Name).Select(x => new Location(x.Name, GetPositionUri(configProvider, x)));
     }
 
     public static string GetTagsText(IDatabaseAccess dbAccess, FileModel file, string separator)
@@ -110,5 +122,10 @@ public class FileTextOverlayCreator
     public static string? GetPositionUri(IConfigProvider configProvider, FileModel file)
     {
         return file.Position is null ? null : Utils.CreatePositionLink(file.Position, configProvider.Config.LocationLink);
+    }
+
+    public static string? GetPositionUri(IConfigProvider configProvider, LocationModel location)
+    {
+        return location.Position is null ? null : Utils.CreatePositionLink(location.Position, configProvider.Config.LocationLink);
     }
 }
