@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDBAvalonia.Dialogs;
+using FileDBAvalonia.Extensions;
 using FileDBAvalonia.Model;
+using FileDBShared.Model;
 
 namespace FileDBAvalonia.ViewModels;
-
-public record Tag(int Id, string Name);
 
 public partial class TagsViewModel : ObservableObject
 {
@@ -24,12 +24,12 @@ public partial class TagsViewModel : ObservableObject
     [ObservableProperty]
     private bool readWriteMode;
 
-    public ObservableCollection<Tag> Tags { get; } = [];
+    public ObservableCollection<TagModel> Tags { get; } = [];
 
-    private readonly List<Tag> allTags = [];
+    private readonly List<TagModel> allTags = [];
 
     [ObservableProperty]
-    private Tag? selectedTag;
+    private TagModel? selectedTag;
 
     private readonly IConfigProvider configProvider;
     private readonly IDatabaseAccessProvider dbAccessProvider;
@@ -66,7 +66,7 @@ public partial class TagsViewModel : ObservableObject
             return;
         }
 
-        var filesWithTag = dbAccessProvider.DbAccess.SearchFilesWithTags(new List<int>() { SelectedTag.Id }).ToList();
+        var filesWithTag = dbAccessProvider.DbAccess.SearchFilesWithTags([SelectedTag.Id]).ToList();
         if (filesWithTag.Count == 0 || await dialogs.ShowConfirmDialogAsync($"Tag is used in {filesWithTag.Count} files, remove anyway?"))
         {
             dbAccessProvider.DbAccess.DeleteTag(SelectedTag.Id);
@@ -87,7 +87,7 @@ public partial class TagsViewModel : ObservableObject
     }
 
     [RelayCommand]
-    public void TagSelection(Tag parameter)
+    public void TagSelection(TagModel parameter)
     {
         SelectedTag = parameter;
     }
@@ -95,17 +95,14 @@ public partial class TagsViewModel : ObservableObject
     private void ReloadTags()
     {
         allTags.Clear();
-        foreach (var tag in tagsRepository.Tags.Select(tm => new Tag(tm.Id, tm.Name)))
-        {
-            allTags.Add(tag);
-        }
+        allTags.AddRange(tagsRepository.Tags);
         FilterTags();
     }
 
     private void FilterTags()
     {
         Tags.Clear();
-        foreach (var tag in allTags.Where(x => x.Name.Contains(FilterText)))
+        foreach (var tag in allTags.Where(x => x.MatchesTextFilter(FilterText)))
         {
             Tags.Add(tag);
         }

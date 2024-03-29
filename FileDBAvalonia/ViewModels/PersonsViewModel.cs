@@ -6,13 +6,17 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDBAvalonia.Dialogs;
+using FileDBAvalonia.Extensions;
 using FileDBAvalonia.Model;
 using FileDBShared;
 using FileDBShared.Model;
 
 namespace FileDBAvalonia.ViewModels;
 
-public record Person(int Id, string Firstname, string Lastname, string? Description, string? DateOfBirth, string? Deceased, int Age, int? ProfileFileId, Sex Sex);
+public class PersonWithAge : PersonModel
+{
+    public int Age { get; set; }
+}
 
 public partial class PersonsViewModel : ObservableObject
 {
@@ -27,12 +31,12 @@ public partial class PersonsViewModel : ObservableObject
     [ObservableProperty]
     private bool readWriteMode;
 
-    public ObservableCollection<Person> Persons { get; } = [];
+    public ObservableCollection<PersonWithAge> Persons { get; } = [];
 
-    private readonly List<Person> allPersons = [];
+    private readonly List<PersonWithAge> allPersons = [];
 
     [ObservableProperty]
-    private Person? selectedPerson;
+    private PersonWithAge? selectedPerson;
 
     private readonly IConfigProvider configProvider;
     private readonly IDatabaseAccessProvider dbAccessProvider;
@@ -69,7 +73,7 @@ public partial class PersonsViewModel : ObservableObject
             return;
         }
 
-        var filesWithPerson = dbAccessProvider.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPerson.Id }).ToList();
+        var filesWithPerson = dbAccessProvider.DbAccess.SearchFilesWithPersons([SelectedPerson.Id]).ToList();
         if (filesWithPerson.Count == 0 || await dialogs.ShowConfirmDialogAsync($"Person is used in {filesWithPerson.Count} files, remove anyway?"))
         {
             dbAccessProvider.DbAccess.DeletePerson(SelectedPerson.Id);
@@ -90,7 +94,7 @@ public partial class PersonsViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void PersonSelection(Person parameter)
+    private void PersonSelection(PersonWithAge parameter)
     {
         SelectedPerson = parameter;
     }
@@ -98,10 +102,20 @@ public partial class PersonsViewModel : ObservableObject
     private void ReloadPersons()
     {
         allPersons.Clear();
-        var personVms = personsRepository.Persons.Select(pm => new Person(pm.Id, pm.Firstname, pm.Lastname, pm.Description, pm.DateOfBirth, pm.Deceased, GetPersonAge(pm), pm.ProfileFileId, pm.Sex));
-        foreach (var personVm in personVms)
+        var persons = personsRepository.Persons.Select(pm => new PersonWithAge
         {
-            allPersons.Add(personVm);
+            Id = pm.Id,
+            Firstname = pm.Firstname,
+            Lastname = pm.Lastname,
+            Description = pm.Description,
+            Deceased = pm.Deceased,
+            ProfileFileId = pm.ProfileFileId,
+            Sex = pm.Sex,
+            Age = GetPersonAge(pm),
+        });
+        foreach (var person in persons)
+        {
+            allPersons.Add(person);
         }
         FilterPersons();
     }
@@ -109,17 +123,13 @@ public partial class PersonsViewModel : ObservableObject
     private void FilterPersons()
     {
         Persons.Clear();
-        foreach (var tag in allPersons.Where(x =>
-            x.Firstname.Contains(FilterText) ||
-            x.Lastname.Contains(FilterText) ||
-            $"{x.Firstname} {x.Lastname}".Contains(FilterText) ||
-            (x.Description is not null && x.Description.Contains(FilterText))))
+        foreach (var tag in allPersons.Where(x => x.MatchesTextFilter(FilterText)))
         {
             Persons.Add(tag);
         }
     }
 
-    private int GetPersonAge(PersonModel person)
+    private static int GetPersonAge(PersonModel person)
     {
         if (person.DateOfBirth is not null)
         {

@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDBAvalonia.Dialogs;
+using FileDBAvalonia.Extensions;
 using FileDBAvalonia.Model;
 using FileDBInterface.Extensions;
+using FileDBShared.Model;
 
 namespace FileDBAvalonia.ViewModels;
-
-public record Location(int Id, string Name, string? Description, string? Position);
 
 public partial class LocationsViewModel : ObservableObject
 {
@@ -25,13 +25,13 @@ public partial class LocationsViewModel : ObservableObject
     [ObservableProperty]
     private bool readWriteMode;
 
-    public ObservableCollection<Location> Locations { get; } = [];
+    public ObservableCollection<LocationModel> Locations { get; } = [];
 
-    private readonly List<Location> allLocations = [];
+    private readonly List<LocationModel> allLocations = [];
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(SelectedLocationHasPosition))]
-    private Location? selectedLocation;
+    private LocationModel? selectedLocation;
 
     public bool SelectedLocationHasPosition => SelectedLocation is not null && SelectedLocation.Position.HasContent();
 
@@ -68,7 +68,7 @@ public partial class LocationsViewModel : ObservableObject
         }
 
         
-        var filesWithLocation = dbAccessProvider.DbAccess.SearchFilesWithLocations(new List<int>() { SelectedLocation.Id }).ToList();
+        var filesWithLocation = dbAccessProvider.DbAccess.SearchFilesWithLocations([SelectedLocation.Id]).ToList();
         if (filesWithLocation.Count == 0 || await dialogs.ShowConfirmDialogAsync($"Location is used in {filesWithLocation.Count} files, remove anyway?"))
         {
             dbAccessProvider.DbAccess.DeleteLocation(SelectedLocation.Id);
@@ -99,7 +99,7 @@ public partial class LocationsViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void LocationSelection(Location parameter)
+    private void LocationSelection(LocationModel parameter)
     {
         SelectedLocation = parameter;
     }
@@ -107,19 +107,14 @@ public partial class LocationsViewModel : ObservableObject
     private void ReloadLocations()
     {
         allLocations.Clear();
-        foreach (var location in locationsRepository.Locations.Select(lm => new Location(lm.Id, lm.Name, lm.Description, lm.Position)))
-        {
-            allLocations.Add(location);
-        }
+        allLocations.AddRange(locationsRepository.Locations);
         FilterLocations();
     }
 
     private void FilterLocations()
     {
         Locations.Clear();
-        foreach (var tag in allLocations.Where(
-            x => x.Name.Contains(FilterText) ||
-            (x.Description is not null && x.Description.Contains(FilterText))))
+        foreach (var tag in allLocations.Where(x => x.MatchesTextFilter(FilterText)))
         {
             Locations.Add(tag);
         }
