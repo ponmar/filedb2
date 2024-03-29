@@ -14,9 +14,19 @@ public record Tag(int Id, string Name);
 public partial class TagsViewModel : ObservableObject
 {
     [ObservableProperty]
+    private string filterText = string.Empty;
+
+    partial void OnFilterTextChanged(string value)
+    {
+        FilterTags();
+    }
+
+    [ObservableProperty]
     private bool readWriteMode;
 
     public ObservableCollection<Tag> Tags { get; } = [];
+
+    private readonly List<Tag> allTags = [];
 
     [ObservableProperty]
     private Tag? selectedTag;
@@ -84,8 +94,18 @@ public partial class TagsViewModel : ObservableObject
 
     private void ReloadTags()
     {
-        Tags.Clear();
+        allTags.Clear();
         foreach (var tag in tagsRepository.Tags.Select(tm => new Tag(tm.Id, tm.Name)))
+        {
+            allTags.Add(tag);
+        }
+        FilterTags();
+    }
+
+    private void FilterTags()
+    {
+        Tags.Clear();
+        foreach (var tag in allTags.Where(x => x.Name.Contains(FilterText)))
         {
             Tags.Add(tag);
         }

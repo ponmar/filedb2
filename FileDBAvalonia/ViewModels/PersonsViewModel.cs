@@ -17,9 +17,19 @@ public record Person(int Id, string Firstname, string Lastname, string? Descript
 public partial class PersonsViewModel : ObservableObject
 {
     [ObservableProperty]
+    private string filterText = string.Empty;
+
+    partial void OnFilterTextChanged(string value)
+    {
+        FilterPersons();
+    }
+
+    [ObservableProperty]
     private bool readWriteMode;
 
     public ObservableCollection<Person> Persons { get; } = [];
+
+    private readonly List<Person> allPersons = [];
 
     [ObservableProperty]
     private Person? selectedPerson;
@@ -87,11 +97,25 @@ public partial class PersonsViewModel : ObservableObject
 
     private void ReloadPersons()
     {
-        Persons.Clear();
+        allPersons.Clear();
         var personVms = personsRepository.Persons.Select(pm => new Person(pm.Id, pm.Firstname, pm.Lastname, pm.Description, pm.DateOfBirth, pm.Deceased, GetPersonAge(pm), pm.ProfileFileId, pm.Sex));
         foreach (var personVm in personVms)
         {
-            Persons.Add(personVm);
+            allPersons.Add(personVm);
+        }
+        FilterPersons();
+    }
+
+    private void FilterPersons()
+    {
+        Persons.Clear();
+        foreach (var tag in allPersons.Where(x =>
+            x.Firstname.Contains(FilterText) ||
+            x.Lastname.Contains(FilterText) ||
+            $"{x.Firstname} {x.Lastname}".Contains(FilterText) ||
+            (x.Description is not null && x.Description.Contains(FilterText))))
+        {
+            Persons.Add(tag);
         }
     }
 

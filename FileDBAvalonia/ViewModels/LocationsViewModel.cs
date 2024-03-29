@@ -15,9 +15,19 @@ public record Location(int Id, string Name, string? Description, string? Positio
 public partial class LocationsViewModel : ObservableObject
 {
     [ObservableProperty]
+    private string filterText = string.Empty;
+
+    partial void OnFilterTextChanged(string value)
+    {
+        FilterLocations();
+    }
+
+    [ObservableProperty]
     private bool readWriteMode;
 
     public ObservableCollection<Location> Locations { get; } = [];
+
+    private readonly List<Location> allLocations = [];
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(SelectedLocationHasPosition))]
@@ -96,10 +106,22 @@ public partial class LocationsViewModel : ObservableObject
 
     private void ReloadLocations()
     {
-        Locations.Clear();
+        allLocations.Clear();
         foreach (var location in locationsRepository.Locations.Select(lm => new Location(lm.Id, lm.Name, lm.Description, lm.Position)))
         {
-            Locations.Add(location);
+            allLocations.Add(location);
+        }
+        FilterLocations();
+    }
+
+    private void FilterLocations()
+    {
+        Locations.Clear();
+        foreach (var tag in allLocations.Where(
+            x => x.Name.Contains(FilterText) ||
+            (x.Description is not null && x.Description.Contains(FilterText))))
+        {
+            Locations.Add(tag);
         }
     }
 }
