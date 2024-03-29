@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Avalonia.Threading;
+﻿using System.Collections.Generic;
 using FileDBAvalonia.Configuration;
 using FileDBAvalonia.Notifiers;
 using FileDBInterface.DatabaseAccess;

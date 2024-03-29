@@ -1,6 +1,4 @@
-﻿using FileDBAvalonia;
-using FileDBAvalonia.Model;
-using FileDBAvalonia.Sorters;
+﻿using FileDBAvalonia.Sorters;
 using FileDBShared.Model;
 using System.Collections.Generic;
 

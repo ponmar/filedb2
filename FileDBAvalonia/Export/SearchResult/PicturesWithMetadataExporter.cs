@@ -1,17 +1,4 @@
-﻿using System.IO;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Collections.Generic;
-using System.Linq;
-using System;
-using FileDBShared.Validators;
-using FileDBShared.FileFormats;
-using System.IO.Abstractions;
-using FileDBAvalonia.ViewModels;
-using FileDBInterface.Extensions;
-using FileDBAvalonia.Model;
-
-namespace FileDBAvalonia.Export.SearchResult;
+﻿namespace FileDBAvalonia.Export.SearchResult;
 
 enum TextType { Normal, Heading }
 

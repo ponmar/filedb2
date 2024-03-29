@@ -1,6 +1,5 @@
 ﻿using FileDBAvalonia.Extensions;
 using FileDBAvalonia.Model;
-using FileDBAvalonia.ViewModels;
 using FileDBInterface.Extensions;
 using FileDBShared.FileFormats;
 using FileDBShared.Model;

@@ -1,5 +1,4 @@
 ﻿using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
@@ -12,7 +11,6 @@ using FileDBAvalonia.Migrators;
 using FileDBAvalonia.Model;
 using FileDBAvalonia.Notifiers;
 using FileDBAvalonia.Validators;
-using FileDBAvalonia.ViewModels;
 using FileDBAvalonia.Views;
 using FileDBInterface.DatabaseAccess;
 using FileDBInterface.DatabaseAccess.SQLite;

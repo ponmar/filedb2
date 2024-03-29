@@ -5,8 +5,8 @@ using System.Linq;
 using Avalonia.Media.Imaging;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
+using FileDBAvalonia.Extensions;
 using FileDBAvalonia.Model;
-using FileDBInterface.Extensions;
 using FileDBShared;
 using FileDBShared.Model;
 
@@ -72,13 +72,6 @@ public partial class PersonBirthday : ObservableObject
         {
             DaysLeftStr = string.Empty;
         }
-    }
-
-    public bool MatchesTextFilter(string textFilter)
-    {
-        return !textFilter.HasContent() ||
-            Name.Contains(textFilter, StringComparison.OrdinalIgnoreCase) ||
-            (Person.Description.HasContent() && Person.Description!.Contains(textFilter, StringComparison.OrdinalIgnoreCase));
     }
 }
 
@@ -171,7 +164,7 @@ public partial class BirthdaysViewModel : ObservableObject
     private void FilterPersons()
     {
         Persons.Clear();
-        foreach (var person in allPersons.Where(x => x.MatchesTextFilter(FilterText)))
+        foreach (var person in allPersons.Where(x => x.Person.MatchesTextFilter(FilterText)))
         {
             Persons.Add(person);
         }

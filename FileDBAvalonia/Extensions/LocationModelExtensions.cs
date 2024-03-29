@@ -1,12 +1,15 @@
-﻿using FileDBShared.Model;
+﻿using System;
+using FileDBShared.Model;
 
 namespace FileDBAvalonia.Extensions;
 
 public static class LocationModelExtensions
 {
+    private const StringComparison stringComparison = StringComparison.OrdinalIgnoreCase;
+
     public static bool MatchesTextFilter(this LocationModel tagModel, string textFilter)
     {
-        return tagModel.Name.Contains(textFilter) ||
-            (tagModel.Description is not null && tagModel.Description.Contains(textFilter));
+        return tagModel.Name.Contains(textFilter, stringComparison) ||
+            (tagModel.Description is not null && tagModel.Description.Contains(textFilter, stringComparison));
     }
 }
