@@ -235,23 +235,23 @@ public partial class FileViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void OpenUrl(string url) => Utils.OpenUriInBrowser(url);
+    private static void OpenUrl(string url) => Utils.OpenUriInBrowser(url);
 
     [RelayCommand]
-    private void PrevFile() => Messenger.Send<SelectPrevFile>();
+    private static void PrevFile() => Messenger.Send<SelectPrevFile>();
 
     [RelayCommand]
-    private void NextFile() => Messenger.Send<SelectNextFile>();
+    private static void NextFile() => Messenger.Send<SelectNextFile>();
 
     [RelayCommand]
-    private void FirstFile() => Messenger.Send<SelectFirstFile>();
+    private static void FirstFile() => Messenger.Send<SelectFirstFile>();
 
     [RelayCommand]
-    private void LastFile() => Messenger.Send<SelectLastFile>();
+    private static void LastFile() => Messenger.Send<SelectLastFile>();
 
     [RelayCommand]
-    private void NextDirectory() => Messenger.Send<SelectFileInNextDirectory>();
+    private static void NextDirectory() => Messenger.Send<SelectFileInNextDirectory>();
 
     [RelayCommand]
-    private void PrevDirectory() => Messenger.Send<SelectFileInPrevDirectory>();
+    private static void PrevDirectory() => Messenger.Send<SelectFileInPrevDirectory>();
 }
