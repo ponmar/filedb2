@@ -28,6 +28,7 @@ public partial class App : Application
 {
     private const string ConfigFileExtension = ".FileDB";
     private const string DatabaseFileExtension = ".db";
+    private const string DemoFilename = $"Demo{ConfigFileExtension}";
 
     public override void Initialize()
     {
@@ -122,7 +123,7 @@ public partial class App : Application
             }
 
             var notifications = new List<Notification>();
-            if (filesRootDirectory.EndsWith("demo"))
+            if (Path.GetFileName(configPath) == DemoFilename)
             {
                 notifications.Add(new(NotificationType.Info, Strings.StartupNotificationDemoConfigurationEnabled, DateTime.Now));
             }
