@@ -24,21 +24,42 @@ public class Dialogs : IDialogs
     {
         var box = MessageBoxManager.GetMessageBoxStandard(Utils.ApplicationName, message, ButtonEnum.Ok, Icon.Info);
         var parent = GetParentWindow();
-        await box.ShowWindowDialogAsync(parent);
+        if (parent is not null)
+        {
+            await box.ShowWindowDialogAsync(parent);
+        }
+        else
+        {
+            await box.ShowWindowAsync();
+        }
     }
 
     public async Task ShowWarningDialogAsync(string message)
     {
         var box = MessageBoxManager.GetMessageBoxStandard(Utils.ApplicationName, message, ButtonEnum.Ok, Icon.Warning);
         var parent = GetParentWindow();
-        await box.ShowWindowDialogAsync(parent);
+        if (parent is not null)
+        {
+            await box.ShowWindowDialogAsync(parent);
+        }
+        else
+        {
+            await box.ShowWindowAsync();
+        }
     }
 
     public async Task ShowErrorDialogAsync(string message)
     {
         var box = MessageBoxManager.GetMessageBoxStandard(Utils.ApplicationName, message, ButtonEnum.Ok, Icon.Error);
         var parent = GetParentWindow();
-        await box.ShowWindowDialogAsync(parent);
+        if (parent is not null)
+        {
+            await box.ShowWindowDialogAsync(parent);
+        }
+        else
+        {
+            await box.ShowWindowAsync();
+        }
     }
     
     public async Task ShowErrorDialogAsync(string message, Exception e)

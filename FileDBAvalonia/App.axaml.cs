@@ -29,6 +29,7 @@ public partial class App : Application
     private const string ConfigFileExtension = ".FileDB";
     private const string DatabaseFileExtension = ".db";
     private const string DemoFilename = $"Demo{ConfigFileExtension}";
+    private const string DemoPath = $"demo/{DemoFilename}";
 
     public override void Initialize()
     {
@@ -65,21 +66,29 @@ public partial class App : Application
             Bootstrapper.Reset();
             Bootstrapper.StartServices();
 
-            var args = desktop.Args;
-
             // Needed to fix sorting with Swedish characters right in comboboxes and datagrids
             //Utils.SetCulture(CultureInfo.GetCultureInfo("sv-SE"));
 
             var dialogs = ServiceLocator.Resolve<IDialogs>();
 
+            var fileSystem = ServiceLocator.Resolve<IFileSystem>();
+
+            string configPath;
             if (desktop.Args?.Length != 1)
             {
-                await dialogs.ShowErrorDialogAsync("No .FileDB file selected! Double click on your .FileDB file or specify its path via a command line argument.");
-                desktop.Shutdown(1);
-                return;
+                if (!fileSystem.File.Exists(DemoPath))
+                {
+                    await dialogs.ShowErrorDialogAsync("No .FileDB file selected! Double click on your .FileDB file or specify its path via a command line argument.");
+                    desktop.Shutdown(1);
+                    return;
+                }
+                configPath = DemoPath;
+            }
+            else
+            {
+                configPath = desktop.Args.First();
             }
 
-            var configPath = desktop.Args.First();
             if (!Path.IsPathFullyQualified(configPath))
             {
                 configPath = Path.GetFullPath(configPath);
@@ -96,8 +105,6 @@ public partial class App : Application
                 desktop.Shutdown(1);
                 return;
             }
-
-            var fileSystem = ServiceLocator.Resolve<IFileSystem>();
 
             Config config;
             if (fileSystem.File.Exists(configPath))
