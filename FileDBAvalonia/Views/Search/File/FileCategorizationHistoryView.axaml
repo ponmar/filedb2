@@ -11,7 +11,7 @@
 			<ItemsControl ItemsSource="{Binding UpdateHistoryItems}" IsVisible="{Binding FileSelected}" x:Name="HistoryItemsItemsControl">
 				<ItemsControl.ItemTemplate>
 					<DataTemplate>
-						<Grid>
+						<Grid Margin="0 3 0 3">
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="Auto" SharedSizeGroup="column1"/>
 								<ColumnDefinition Width="Auto" SharedSizeGroup="column2"/>
@@ -19,7 +19,7 @@
 							<Grid.RowDefinitions>
 								<RowDefinition Height="Auto"/>
 							</Grid.RowDefinitions>
-							<Button Grid.Column="0" Margin="3" HorizontalAlignment="Left" Content="{Binding ToggleText}" ToolTip.Tip="{Binding ItemName}" Command="{Binding ElementName=HistoryItemsItemsControl, Path=DataContext.ToggleFromHistoryItemCommand}" CommandParameter="{Binding}" HotKey="{Binding HotKey}"/>
+							<Button Grid.Column="0" Margin="0 0 3 0" HorizontalAlignment="Left" Content="{Binding ToggleText}" ToolTip.Tip="{Binding ItemName}" Command="{Binding ElementName=HistoryItemsItemsControl, Path=DataContext.ToggleFromHistoryItemCommand}" CommandParameter="{Binding}" HotKey="{Binding HotKey}"/>
 							<Button Grid.Column="1" Command="{Binding ElementName=HistoryItemsItemsControl, Path=DataContext.RemoveHistoryItemCommand}" CommandParameter="{Binding}" VerticalAlignment="Center" Content="&#128473;" ToolTip.Tip="{x:Static lang:Strings.CategorizationRemoveItemFromUpdateHistory}"/>
 						</Grid>
 					</DataTemplate>

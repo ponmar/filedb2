@@ -9,7 +9,7 @@
 		<StackPanel Orientation="Vertical">
 			<Grid ColumnDefinitions="auto,*,auto,auto,auto" RowDefinitions="auto,auto,auto">
 				<TextBlock Grid.Row="0" Grid.Column="0" Text="&#x1F642;" VerticalAlignment="Center" Margin="5" ToolTip.Tip="Person"/>
-				<ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Persons}" VerticalAlignment="Center" SelectedItem="{Binding SelectedPersonToUpdate}">
+				<ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Persons}" VerticalAlignment="Center" HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedPersonToUpdate}">
 					<ComboBox.ItemTemplate>
 						<DataTemplate>
 							<TextBlock Text="{Binding ShortName}" ToolTip.Tip="{Binding Name}"/>
@@ -21,7 +21,7 @@
 				<Button Grid.Row="0" Grid.Column="4" Margin="5" Command="{Binding CreatePersonCommand}" ToolTip.Tip="{x:Static lang:Strings.CategorizationCreateANewPersonAndAddItToCurrentFileToolTip}" Content="{x:Static lang:Strings.CategorizationNewButton}"/>
 
 				<TextBlock Grid.Row="1" Grid.Column="0" Text="&#x1F3E0;" VerticalAlignment="Center" Margin="5" ToolTip.Tip="Location"/>
-				<ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Locations}" VerticalAlignment="Center" SelectedItem="{Binding SelectedLocationToUpdate}">
+				<ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Locations}" VerticalAlignment="Center" HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedLocationToUpdate}">
 					<ComboBox.ItemTemplate>
 						<DataTemplate>
 							<TextBlock Text="{Binding ShortName}" ToolTip.Tip="{Binding Name}"/>
@@ -33,7 +33,7 @@
 				<Button Grid.Row="1" Grid.Column="4" Margin="5" Command="{Binding CreateLocationCommand}" ToolTip.Tip="{x:Static lang:Strings.CategorizationCreateANewLocationAndAddItToCurrentFileToolTip}" Content="{x:Static lang:Strings.CategorizationNewButton}"/>
 
 				<TextBlock Grid.Row="2" Grid.Column="0" Text="&#x1F516;" VerticalAlignment="Center" Margin="5" ToolTip.Tip="Tag"/>
-				<ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Tags}" VerticalAlignment="Center" SelectedItem="{Binding SelectedTagToUpdate}">
+				<ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Tags}" VerticalAlignment="Center" HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedTagToUpdate}">
 					<ComboBox.ItemTemplate>
 						<DataTemplate>
 							<TextBlock Text="{Binding ShortName}" ToolTip.Tip="{Binding Name}"/>
@@ -46,11 +46,11 @@
 			</Grid>
 			<Grid ColumnDefinitions="auto,*,auto" RowDefinitions="auto,auto">
 				<TextBlock Grid.Row="0" Grid.Column="0" Text="&#x1F4DD;" VerticalAlignment="Center" Margin="5" ToolTip.Tip="{x:Static lang:Strings.CategorizationFileDescriptionToolTip}"/>
-				<TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Text="{Binding NewFileDescription}" ToolTip.Tip="{x:Static lang:Strings.CategorizationFileDescriptionToolTip}" TextWrapping="Wrap" AcceptsReturn="True" MaxWidth="200"/>
+				<TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Text="{Binding NewFileDescription}" ToolTip.Tip="{x:Static lang:Strings.CategorizationFileDescriptionToolTip}" TextWrapping="Wrap" AcceptsReturn="True" MaxWidth="250"/>
 				<Button Grid.Row="0" Grid.Column="2" Margin="5" Command="{Binding SetFileDescriptionCommand}" IsEnabled="{Binding FileSelected}" ToolTip.Tip="{x:Static lang:Strings.CategorizationSetFileDescriptionToolTip}" Content="{x:Static lang:Strings.CategorizationSetButton}"/>
 
 				<TextBlock Grid.Row="1" Grid.Column="0" Text="&#x1F4C5;" VerticalAlignment="Center" Margin="5" ToolTip.Tip="{x:Static lang:Strings.CategorizationFileDateAndTimeToolTip}"/>
-				<TextBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Text="{Binding NewFileDateTime}" ToolTip.Tip="{x:Static lang:Strings.CategorizationDateAndTimeFormatToolTip}" MaxWidth="200"/>
+				<TextBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Text="{Binding NewFileDateTime}" ToolTip.Tip="{x:Static lang:Strings.CategorizationDateAndTimeFormatToolTip}" MaxWidth="250"/>
 				<Button Grid.Row="1" Grid.Column="2" Margin="5" Command="{Binding SetFileDateTimeCommand}" IsEnabled="{Binding FileSelected}" ToolTip.Tip="{x:Static lang:Strings.CategorizationSetFileDateAndTimeToolTip}" Content="{x:Static lang:Strings.CategorizationSetButton}"/>
 			</Grid>
 
