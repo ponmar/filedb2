@@ -88,8 +88,8 @@
 				<TextBlock Text="{x:Static lang:Strings.AboutCommandLineArgumentsTitle}" Classes="PageSubHeader"/>
 				<Border Classes="BorderGroup">
 					<StackPanel Orientation="Horizontal">
-						<TextBlock Classes="PageTextBlock" Text="--demo"/>
-						<TextBlock Classes="PageTextBlock" TextWrapping="Wrap" Text="{x:Static lang:Strings.AboutCommandLineArgDemoText}"/>
+						<TextBlock Classes="PageTextBlock" Text="{x:Static lang:Strings.AboutCommandLineArgPath}"/>
+						<TextBlock Classes="PageTextBlock" TextWrapping="Wrap" Text="{x:Static lang:Strings.AboutCommandLineArgPathText}"/>
 					</StackPanel>
 				</Border>
 

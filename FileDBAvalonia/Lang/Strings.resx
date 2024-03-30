@@ -372,8 +372,8 @@
   <data name="AboutNotes3" xml:space="preserve">
     <value>If you rename or delete files that has been imported to FileDB you need to remove the FileDB meta-data as well (and possibly add them again). A tool will be provided in the future that helps out with this procedure.</value>
   </data>
-  <data name="AboutCommandLineArgDemoText" xml:space="preserve">
-    <value>Enable demo configuration to play around with</value>
+  <data name="AboutCommandLineArgPathText" xml:space="preserve">
+    <value>Relative or absolute path to the file to open</value>
   </data>
   <data name="AboutDownloadsReleases" xml:space="preserve">
     <value>Official releases:</value>
@@ -1356,5 +1356,8 @@ YYYY-MM-DDTHH:MM:SS</value>
   </data>
   <data name="SettingsThemeLabel" xml:space="preserve">
     <value>Theme:</value>
+  </data>
+  <data name="AboutCommandLineArgPath" xml:space="preserve">
+    <value>FileDB file</value>
   </data>
 </root>

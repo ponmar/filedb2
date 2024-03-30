@@ -90,7 +90,7 @@ public partial class PersonsViewModel : ObservableObject
     [RelayCommand]
     private void AddPerson()
     {
-        dialogs.ShowAddPersonDialogAsync();
+        dialogs.ShowAddPersonDialogAsync(personName: FilterText);
     }
 
     [RelayCommand]

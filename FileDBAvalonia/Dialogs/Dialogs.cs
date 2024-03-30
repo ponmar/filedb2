@@ -149,36 +149,36 @@ public class Dialogs : IDialogs
         return files.Count > 0 ? files[0].Path.LocalPath : null;
     }
 
-    public async Task<PersonModel?> ShowAddPersonDialogAsync(int? personId = null)
+    public async Task<PersonModel?> ShowAddPersonDialogAsync(int? personId = null, string? personName = null)
     {
         var parent = GetParentWindow();
         if (parent is not null)
         {
-            var window = new AddPersonWindow(personId);
+            var window = new AddPersonWindow(personId, personName);
             await window.ShowDialog(parent);
             return ((AddPersonViewModel)window.DataContext!).AffectedPerson;
         }
         return null;
     }
 
-    public async Task<LocationModel?> ShowAddLocationDialogAsync(int ?locationId = null)
+    public async Task<LocationModel?> ShowAddLocationDialogAsync(int ?locationId = null, string? locationName = null)
     {
         var parent = GetParentWindow();
         if (parent is not null)
         {
-            var window = new AddLocationWindow(locationId);
+            var window = new AddLocationWindow(locationId, locationName);
             await window.ShowDialog(parent);
             return ((AddLocationViewModel)window.DataContext!).AffectedLocation;
         }
         return null;
     }
 
-    public async Task<TagModel?> ShowAddTagDialogAsync(int? tagId = null)
+    public async Task<TagModel?> ShowAddTagDialogAsync(int? tagId = null, string? tagName = null)
     {
         var parent = GetParentWindow();
         if (parent is not null)
         {
-            var window = new AddTagWindow(tagId);
+            var window = new AddTagWindow(tagId, tagName);
             await window.ShowDialog(parent);
             return ((AddTagViewModel)window.DataContext!).AffectedTag;
         }

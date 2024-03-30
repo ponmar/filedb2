@@ -83,7 +83,7 @@ public partial class TagsViewModel : ObservableObject
     [RelayCommand]
     private void AddTag()
     {
-        dialogs.ShowAddTagDialogAsync();
+        dialogs.ShowAddTagDialogAsync(tagName: FilterText);
     }
 
     [RelayCommand]

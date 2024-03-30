@@ -97,11 +97,20 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enable demo configuration to play around with.
+        ///   Looks up a localized string similar to FileDB file.
         /// </summary>
-        public static string AboutCommandLineArgDemoText {
+        public static string AboutCommandLineArgPath {
             get {
-                return ResourceManager.GetString("AboutCommandLineArgDemoText", resourceCulture);
+                return ResourceManager.GetString("AboutCommandLineArgPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Relative or absolute path to the file to open.
+        /// </summary>
+        public static string AboutCommandLineArgPathText {
+            get {
+                return ResourceManager.GetString("AboutCommandLineArgPathText", resourceCulture);
             }
         }
         

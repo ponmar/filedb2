@@ -16,10 +16,15 @@ namespace FileDBAvalonia.Views.Dialogs
             }
         }
 
-        public AddLocationWindow(int ?locationId = null)
+        public AddLocationWindow(int ?locationId = null, string? locationName = null)
         {
             InitializeComponent();
-            DataContext = ServiceLocator.Resolve<AddLocationViewModel>("locationId", locationId);
+            var vm = ServiceLocator.Resolve<AddLocationViewModel>("locationId", locationId); ;
+            DataContext = vm;
+            if (locationId is null && locationName is not null)
+            {
+                vm.Name = locationName;
+            }
             this.RegisterForEvent<CloseModalDialogRequest>((x) => Close());
         }
     }

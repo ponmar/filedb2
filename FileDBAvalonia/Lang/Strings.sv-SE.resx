@@ -372,8 +372,8 @@
   <data name="AboutNotes3" xml:space="preserve">
     <value>Om du byter namn på eller tar bort filer som har importerats till FileDB måste du också ta bort FileDB-metadata (och eventuellt lägga till dem igen). Ett verktyg kommer att tillhandahållas i framtiden som hjälper till med denna procedur.</value>
   </data>
-  <data name="AboutCommandLineArgDemoText" xml:space="preserve">
-    <value>Aktivera demokonfiguration att leka med</value>
+  <data name="AboutCommandLineArgPathText" xml:space="preserve">
+    <value>Relativ eller absolut sökväg för filen som ska öppnas</value>
   </data>
   <data name="AboutDownloadsReleases" xml:space="preserve">
     <value>Officiella lanseringar:</value>
@@ -1356,5 +1356,8 @@
   </data>
   <data name="SettingsThemeLabel" xml:space="preserve">
     <value>Tema:</value>
+  </data>
+  <data name="AboutCommandLineArgPath" xml:space="preserve">
+    <value>FileDB-fil</value>
   </data>
 </root>

@@ -85,7 +85,7 @@ public partial class LocationsViewModel : ObservableObject
     [RelayCommand]
     private void AddLocation()
     {
-        dialogs.ShowAddLocationDialogAsync();
+        dialogs.ShowAddLocationDialogAsync(locationName: FilterText);
     }
 
     [RelayCommand]
