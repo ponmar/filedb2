@@ -28,7 +28,7 @@
 										<LayoutTransformControl.LayoutTransform>
 											<RotateTransform Angle="{Binding ProfilePictureRotation}"/>
 										</LayoutTransformControl.LayoutTransform>
-										<Image IsVisible="{Binding ProfilePicture, Converter={x:Static ObjectConverters.IsNotNull}}" Width="100" Height="100" Source="{Binding ProfilePicture}" VerticalAlignment="Center"/>
+										<Image RenderOptions.BitmapInterpolationMode="HighQuality" IsVisible="{Binding ProfilePicture, Converter={x:Static ObjectConverters.IsNotNull}}" Width="100" Height="100" Source="{Binding ProfilePicture}" VerticalAlignment="Center"/>
 									</LayoutTransformControl>
 										
 									<StackPanel Orientation="Vertical" Margin="5" VerticalAlignment="Center">

@@ -17,6 +17,7 @@
 				<RotateTransform Angle="{Binding ImageRotation}"/>
 			</LayoutTransformControl.LayoutTransform>
 			<Image
+				RenderOptions.BitmapInterpolationMode="HighQuality"
 				IsVisible="{Binding Image, Converter={x:Static ObjectConverters.IsNotNull}}"
 				Source="{Binding Image}"
 				Stretch="Uniform"/>
