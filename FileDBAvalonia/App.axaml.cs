@@ -11,6 +11,7 @@ using FileDBAvalonia.Migrators;
 using FileDBAvalonia.Model;
 using FileDBAvalonia.Notifiers;
 using FileDBAvalonia.Validators;
+using FileDBAvalonia.ViewModels;
 using FileDBAvalonia.Views;
 using FileDBInterface.DatabaseAccess;
 using FileDBInterface.DatabaseAccess.SQLite;
@@ -28,7 +29,7 @@ public partial class App : Application
 {
     private const string ConfigFileExtension = ".FileDB";
     private const string DatabaseFileExtension = ".db";
-    private const string DemoFilename = $"Demo{ConfigFileExtension}";
+    public const string DemoFilename = $"Demo{ConfigFileExtension}";
     private const string DemoPath = $"demo/{DemoFilename}";
 
     public override void Initialize()
@@ -129,15 +130,11 @@ public partial class App : Application
                 return;
             }
 
-            var notifications = new List<Notification>();
-            if (Path.GetFileName(configPath) == DemoFilename)
-            {
-                notifications.Add(new(NotificationType.Info, Strings.StartupNotificationDemoConfigurationEnabled, DateTime.Now));
-            }
-
             IDatabaseAccess dbAccess = fileSystem.File.Exists(databasePath) ?
                 new SqLiteDatabaseAccess(databasePath) :
                 new NoDatabaseAccess();
+
+            var notifications = new List<Notification>();
 
             if (dbAccess.NeedsMigration)
             {
@@ -169,17 +166,32 @@ public partial class App : Application
             var configUpdater = ServiceLocator.Resolve<IConfigUpdater>();
             configUpdater.InitConfig(applicationFilePaths, config, dbAccess, filesystemAccess);
 
+            Messenger.Send(new SetTheme(config.Theme));
+
             var notificationsHandling = ServiceLocator.Resolve<INotificationHandling>();
             notifications.ForEach(notificationsHandling.AddNotification);
 
-            Messenger.Send(new SetTheme(config.Theme));
-
             // Only load views and viewmodels when this method did not called shutdown above
             desktop.MainWindow = new MainWindow();
+
+            ServiceLocator.Resolve<SettingsViewModel>().IsDirty = false;
+
+            notificationsHandling.DismissNotification(Strings.SettingsUnsavedSettingsNotification);
+            this.RegisterForEvent<ConfigEdited>(x =>
+            {
+                if (x.HasChanges)
+                {
+                    notificationsHandling.AddNotification(new(NotificationType.Info, Strings.SettingsUnsavedSettingsNotification, DateTime.Now));
+                }
+                else
+                {
+                    notificationsHandling.DismissNotification(Strings.SettingsUnsavedSettingsNotification);
+                }
+            });
         }
         else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
         {
-            singleViewPlatform.MainView = new MainView();
+            throw new NotSupportedException();
         }
 
         base.OnFrameworkInitializationCompleted();

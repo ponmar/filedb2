@@ -24,14 +24,7 @@ public partial class SettingsViewModel : ObservableObject
 
     partial void OnIsDirtyChanged(bool value)
     {
-        if (value)
-        {
-            notificationHandling.AddNotification(new(NotificationType.Info, Strings.SettingsUnsavedSettingsNotification, DateTime.Now));
-        }
-        else
-        {
-            notificationHandling.DismissNotification(Strings.SettingsUnsavedSettingsNotification);
-        }
+        Messenger.Send(new ConfigEdited(value));
     }
 
     [ObservableProperty]

@@ -52,6 +52,8 @@ public class NotifierFactory : INotifierFactory
             ServiceLocator.Resolve<IConfigProvider>().FilePaths,
             ServiceLocator.Resolve<IFileSystem>()));
 
+        notifiers.Add(new DemoNotifier(ServiceLocator.Resolve<IConfigProvider>()));
+
         return notifiers;
     }
 }

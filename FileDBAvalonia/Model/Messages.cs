@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 namespace FileDBAvalonia.Model;
 
+public record ConfigEdited(bool HasChanges);
 public record ConfigUpdated();
 public record NotificationsUpdated;
 public record DateChanged;
