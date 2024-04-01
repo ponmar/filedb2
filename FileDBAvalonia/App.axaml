@@ -11,6 +11,12 @@
 			<Setter Property="Margin" Value="0"/>
 		</Style>
 
+		<Style Selector="TextBlock.WarningIcon">
+			<Setter Property="FontSize" Value="22" />
+			<Setter Property="Foreground" Value="Orange"/>
+			<Setter Property="Text" Value="&#x26A0;"/>
+		</Style>		
+
 		<Style Selector="TextBlock.PageNotificationIcon">
 			<Setter Property="FontSize" Value="28" />
 			<Setter Property="Margin" Value="10"/>
