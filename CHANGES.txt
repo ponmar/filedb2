@@ -1,3 +1,14 @@
+4.4:
+* Port the desktop application from WPF (Windows only) to Avalonia UI (portable)
+* Add theme setting (default/dark/light)
+* File view: Add map link buttons for locations with GPS position
+* Add text filter to birthday and RIP page
+* Text filter content is used to set initial values when creating items
+* Opening FileDB without command line arguments loads the included demo
+* Use unicode icons on more buttons
+* Layout changes
+* Disabled search result export to JPG/PNG (not yet ported to Avalonia)
+
 4.3:
 * The release is now built for x64 and is self contained (no .NET pre-requisite)
 * Search result export for files with overlay supports JPEG file format
