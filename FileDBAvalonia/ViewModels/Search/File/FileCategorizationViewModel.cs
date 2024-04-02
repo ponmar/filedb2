@@ -14,6 +14,27 @@ using System.Threading.Tasks;
 
 namespace FileDBAvalonia.ViewModels.Search.File;
 
+
+public record PersonToToggle(int Id, string Name, string ShortName)
+{
+    // Note: overridden for combobox text search
+    public override string ToString() => ShortName;
+}
+
+public record LocationToToggle(int Id, string Name, string ShortName)
+{
+    // Note: overridden for combobox text search
+    public override string ToString() => ShortName;
+}
+
+public record TagToToggle(int Id, string Name, string ShortName)
+{
+    // Note: overridden for combobox text search
+    public override string ToString() => ShortName;
+}
+
+public enum RotationDirection { Clockwise, CounterClockwise }
+
 public class UpdateHistoryItem
 {
     public required UpdateHistoryType Type { get; init; }
@@ -46,7 +67,7 @@ public partial class FileCategorizationViewModel : ObservableObject
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(SelectedPersonCanBeAdded))]
     [NotifyPropertyChangedFor(nameof(SelectedPersonCanBeRemoved))]
-    private PersonToUpdate? selectedPersonToUpdate;
+    private PersonToToggle? selectedPersonToUpdate;
 
     private int imageRotation = 0;
 
@@ -67,7 +88,7 @@ public partial class FileCategorizationViewModel : ObservableObject
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(SelectedLocationCanBeAdded))]
     [NotifyPropertyChangedFor(nameof(SelectedLocationCanBeRemoved))]
-    public LocationToUpdate? selectedLocationToUpdate;
+    public LocationToToggle? selectedLocationToUpdate;
 
     public bool SelectedLocationCanBeAdded =>
         SelectedFile is not null &&
@@ -82,7 +103,7 @@ public partial class FileCategorizationViewModel : ObservableObject
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(SelectedTagCanBeAdded))]
     [NotifyPropertyChangedFor(nameof(SelectedTagCanBeRemoved))]
-    private TagToUpdate? selectedTagToUpdate;
+    private TagToToggle? selectedTagToUpdate;
 
     public bool SelectedTagCanBeAdded =>
         SelectedFile is not null &&
@@ -104,9 +125,9 @@ public partial class FileCategorizationViewModel : ObservableObject
 
     public bool CanApplyMetaDataFromPrevEdit => SelectedFile is not null && PrevEditedFileId is not null;
 
-    public ObservableCollection<PersonToUpdate> Persons { get; } = [];
-    public ObservableCollection<LocationToUpdate> Locations { get; } = [];
-    public ObservableCollection<TagToUpdate> Tags { get; } = [];
+    public ObservableCollection<PersonToToggle> Persons { get; } = [];
+    public ObservableCollection<LocationToToggle> Locations { get; } = [];
+    public ObservableCollection<TagToToggle> Tags { get; } = [];
 
     private readonly IConfigProvider configProvider;
     private readonly IDatabaseAccessProvider dbAccessProvider;
@@ -162,7 +183,7 @@ public partial class FileCategorizationViewModel : ObservableObject
         Persons.Clear();
         foreach (var p in personsRepository.Persons)
         {
-            Persons.Add(new PersonToUpdate(p.Id, $"{p.Firstname} {p.Lastname}", Utils.CreateShortText($"{p.Firstname} {p.Lastname}", configProvider.Config.ShortItemNameMaxLength)));
+            Persons.Add(new PersonToToggle(p.Id, $"{p.Firstname} {p.Lastname}", Utils.CreateShortText($"{p.Firstname} {p.Lastname}", configProvider.Config.ShortItemNameMaxLength)));
         }
     }
 
@@ -171,7 +192,7 @@ public partial class FileCategorizationViewModel : ObservableObject
         Locations.Clear();
         foreach (var location in locationsRepository.Locations)
         {
-            var locationToUpdate = new LocationToUpdate(location.Id, location.Name, Utils.CreateShortText(location.Name, configProvider.Config.ShortItemNameMaxLength));
+            var locationToUpdate = new LocationToToggle(location.Id, location.Name, Utils.CreateShortText(location.Name, configProvider.Config.ShortItemNameMaxLength));
             Locations.Add(locationToUpdate);
         }
     }
@@ -179,7 +200,7 @@ public partial class FileCategorizationViewModel : ObservableObject
     private void ReloadTags()
     {
         Tags.Clear();
-        foreach (var tag in tagsRepository.Tags.Select(t => new TagToUpdate(t.Id, t.Name, Utils.CreateShortText(t.Name, configProvider.Config.ShortItemNameMaxLength))))
+        foreach (var tag in tagsRepository.Tags.Select(t => new TagToToggle(t.Id, t.Name, Utils.CreateShortText(t.Name, configProvider.Config.ShortItemNameMaxLength))))
         {
             Tags.Add(tag);
         }
@@ -410,7 +431,7 @@ public partial class FileCategorizationViewModel : ObservableObject
         var newLocation = await dialogs.ShowAddLocationDialogAsync();
         if (newLocation is not null && SelectedFile is not null)
         {
-            AddFileLocationToCurrentFile(new LocationToUpdate(newLocation.Id, newLocation.Name, Utils.CreateShortText(newLocation.Name, configProvider.Config.ShortItemNameMaxLength)));
+            AddFileLocationToCurrentFile(new LocationToToggle(newLocation.Id, newLocation.Name, Utils.CreateShortText(newLocation.Name, configProvider.Config.ShortItemNameMaxLength)));
         }
     }
 
@@ -420,7 +441,7 @@ public partial class FileCategorizationViewModel : ObservableObject
         var newTag = await dialogs.ShowAddTagDialogAsync();
         if (newTag is not null && SelectedFile is not null)
         {
-            AddFileTagToCurrentFile(new TagToUpdate(newTag.Id, newTag.Name, Utils.CreateShortText(newTag.Name, configProvider.Config.ShortItemNameMaxLength)));
+            AddFileTagToCurrentFile(new TagToToggle(newTag.Id, newTag.Name, Utils.CreateShortText(newTag.Name, configProvider.Config.ShortItemNameMaxLength)));
         }
     }
 
@@ -490,7 +511,7 @@ public partial class FileCategorizationViewModel : ObservableObject
         }
     }
 
-    private void AddFileLocationToCurrentFile(LocationToUpdate location)
+    private void AddFileLocationToCurrentFile(LocationToToggle location)
     {
         if (SelectedFile is not null)
         {
@@ -525,7 +546,7 @@ public partial class FileCategorizationViewModel : ObservableObject
         }
     }
 
-    private void AddFileTagToCurrentFile(TagToUpdate tag)
+    private void AddFileTagToCurrentFile(TagToToggle tag)
     {
         var fileId = SelectedFile!.Id;
         if (!dbAccessProvider.DbAccess.GetTagsFromFile(fileId).Any(t => t.Id == tag.Id))

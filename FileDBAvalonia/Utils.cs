@@ -136,6 +136,7 @@ public static class Utils
 
         return locationLinkConfig!.Replace("LAT", positionParts[0]).Replace("LON", positionParts[1]);
     }
+
     public static string GetVersionString()
     {
         var version = Assembly.GetEntryAssembly()!.GetName().Version!;

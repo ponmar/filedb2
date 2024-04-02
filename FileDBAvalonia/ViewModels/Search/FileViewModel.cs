@@ -16,12 +16,6 @@ using System.Linq;
 
 namespace FileDBAvalonia.ViewModels.Search;
 
-public enum RotationDirection { Clockwise, CounterClockwise }
-
-public record PersonToUpdate(int Id, string Name, string ShortName);
-public record LocationToUpdate(int Id, string Name, string ShortName);
-public record TagToUpdate(int Id, string Name, string ShortName);
-
 public record Location(string Name, string? MapUrl);
 
 public enum UpdateHistoryType
@@ -165,7 +159,7 @@ public partial class FileViewModel : ObservableObject
     {
         if (SelectedFile is not null)
         {
-            ClipboardService.SetText(Utils.CreateFileList(new List<FileModel>() { SelectedFile }));
+            ClipboardService.SetText(Utils.CreateFileList([ SelectedFile ]));
         }
     }
 
