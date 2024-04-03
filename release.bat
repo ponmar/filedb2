@@ -16,7 +16,7 @@ if not %ERRORLEVEL%==0 (
 )
 
 set appDir=FileDBAvalonia.Desktop\bin\Release\net8.0\win-x64\publish
-set zipDir=FileDBAvalonia-%version%
+set zipDir=FileDB-%version%
 set releaseDir=release\%zipDir%
 set zipFilename=%zipDir%.zip
 
