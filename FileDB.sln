@@ -5,8 +5,6 @@ VisualStudioVersion = 17.3.32505.426
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileDBInterface", "FileDBInterface\FileDBInterface.csproj", "{5DC42461-67F8-450C-BBDD-E85AC2FD5C30}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileDB", "FileDB\FileDB.csproj", "{AD7348A5-8874-44CD-977E-DF2FB0E5CE00}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileDBInterfaceTests", "FileDBInterfaceTests\FileDBInterfaceTests.csproj", "{1D49EFF7-00AC-4171-8D20-A0975BC044E6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repo", "Repo", "{85037002-FF8E-4BCD-9B1B-C22F8FE64F5D}"
@@ -42,10 +40,6 @@ Global
 		{5DC42461-67F8-450C-BBDD-E85AC2FD5C30}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5DC42461-67F8-450C-BBDD-E85AC2FD5C30}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5DC42461-67F8-450C-BBDD-E85AC2FD5C30}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AD7348A5-8874-44CD-977E-DF2FB0E5CE00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AD7348A5-8874-44CD-977E-DF2FB0E5CE00}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AD7348A5-8874-44CD-977E-DF2FB0E5CE00}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AD7348A5-8874-44CD-977E-DF2FB0E5CE00}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1D49EFF7-00AC-4171-8D20-A0975BC044E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1D49EFF7-00AC-4171-8D20-A0975BC044E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D49EFF7-00AC-4171-8D20-A0975BC044E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -80,8 +74,8 @@ Global
 		{1F2DF197-6AC3-4CED-8A9F-ABF1AE3FA13E} = {5137B3DC-331D-42AB-963B-070292CE70A8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_MoveToResources = {"Items":[{"Extensions":".cs,.vb","Patterns":"$File.$Key|$File.$Key|StringResourceKey.$Key|$Namespace.StringResourceKey.$Key|nameof($File.$Key), ResourceType = typeof($File)|ErrorMessageResourceType = typeof($File), ErrorMessageResourceName = nameof($File.$Key)"},{"Extensions":".cshtml,.vbhtml","Patterns":"@$Namespace.$File.$Key|@$File.$Key|@StringResourceKey.$Key|@$Namespace.StringResourceKey.$Key"},{"Extensions":".cpp,.c,.hxx,.h","Patterns":"$File::$Key"},{"Extensions":".aspx,.ascx","Patterns":"<%$ Resources:$File,$Key %>|<%= $File.$Key %>|<%= $Namespace.$File.$Key %>"},{"Extensions":".xaml","Patterns":"\"{x:Static rs:$File.$Key}\""},{"Extensions":".ts","Patterns":"resources.$Key"},{"Extensions":".html","Patterns":"{{ resources.$Key }}"}]}
 		SolutionGuid = {08E00FB7-E14F-46E8-95BF-67CC9B9F40CA}
+		RESX_MoveToResources = {"Items":[{"Extensions":".cs,.vb","Patterns":"$File.$Key|$File.$Key|StringResourceKey.$Key|$Namespace.StringResourceKey.$Key|nameof($File.$Key), ResourceType = typeof($File)|ErrorMessageResourceType = typeof($File), ErrorMessageResourceName = nameof($File.$Key)"},{"Extensions":".cshtml,.vbhtml","Patterns":"@$Namespace.$File.$Key|@$File.$Key|@StringResourceKey.$Key|@$Namespace.StringResourceKey.$Key"},{"Extensions":".cpp,.c,.hxx,.h","Patterns":"$File::$Key"},{"Extensions":".aspx,.ascx","Patterns":"<%$ Resources:$File,$Key %>|<%= $File.$Key %>|<%= $Namespace.$File.$Key %>"},{"Extensions":".xaml","Patterns":"\"{x:Static rs:$File.$Key}\""},{"Extensions":".ts","Patterns":"resources.$Key"},{"Extensions":".html","Patterns":"{{ resources.$Key }}"}]}
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		FileDBShared\FileDBShared.projitems*{5dc42461-67f8-450c-bbdd-e85ac2fd5c30}*SharedItemsImports = 5
