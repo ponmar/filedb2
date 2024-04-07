@@ -1363,4 +1363,10 @@ YYYY-MM-DDTHH:MM:SS</value>
   <data name="TextFilterCaseSensitive" xml:space="preserve">
     <value>Case sensitive</value>
   </data>
+  <data name="SearchCombineSearchCurrent" xml:space="preserve">
+    <value>Current</value>
+  </data>
+  <data name="SearchCombineSearchCurrentToolTip" xml:space="preserve">
+    <value>Use current search result</value>
+  </data>
 </root>

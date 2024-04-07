@@ -40,7 +40,16 @@ public record TagForSearch(int Id, string Name)
 
 public partial class CriteriaViewModel : ObservableObject, ISearchResultRepository
 {
-    public IEnumerable<FileModel> Files { get; private set; } = [];
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(HasFiles))]
+    private IEnumerable<FileModel> files = [];
+
+    partial void OnFilesChanged(IEnumerable<FileModel> value)
+    {
+        Messenger.Send<NewSearchResult>();
+    }
+
+    public bool HasFiles => Files.Any();
 
     [ObservableProperty]
     private string numRandomFiles = "10";
@@ -234,7 +243,6 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
         if (int.TryParse(NumRandomFiles, out var value))
         {
             Files = dbAccessProvider.DbAccess.SearchFilesRandom(value);
-            Messenger.Send<NewSearchResult>();
         }
     }
 
@@ -250,14 +258,12 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
         var path = SelectedFile.Path;
         var dir = Path.GetDirectoryName(path)!.Replace('\\', '/');
         Files = dbAccessProvider.DbAccess.SearchFilesByPath(dir);
-        Messenger.Send<NewSearchResult>();
     }
 
     [RelayCommand]
     private void FindAllFiles()
     {
         Files = dbAccessProvider.DbAccess.GetFiles();
-        Messenger.Send<NewSearchResult>();
     }
 
     [RelayCommand]
@@ -267,7 +273,6 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
         {
             var fileIds = Utils.CreateFileIds(ImportedFileList);
             Files = dbAccessProvider.DbAccess.SearchFilesFromIds(fileIds);
-            Messenger.Send<NewSearchResult>();
         }
     }
 
@@ -278,7 +283,6 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
         if (selectedDir is not null)
         {
             Files = dbAccessProvider.DbAccess.SearchFilesByPath(selectedDir);
-            Messenger.Send<NewSearchResult>();
         }
     }
 
@@ -322,7 +326,6 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
         nearFiles.AddRange(dbAccessProvider.DbAccess.SearchFilesWithLocations(nearLocations.Select(x => x.Id)));
 
         Files = nearFiles;
-        Messenger.Send<NewSearchResult>();
     }
 
     [RelayCommand]
@@ -331,7 +334,6 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
         if (SelectedPersonSearch is not null)
         {
             Files = dbAccessProvider.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPersonSearch.Id });
-            Messenger.Send<NewSearchResult>();
         }
     }
 
@@ -342,7 +344,6 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
         {
             var files = dbAccessProvider.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPersonSearch.Id });
             Files = files.Where(x => dbAccessProvider.DbAccess.GetPersonsFromFile(x.Id).Count() == 1);
-            Messenger.Send<NewSearchResult>();
         }
     }
 
@@ -353,7 +354,6 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
         {
             var files = dbAccessProvider.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPersonSearch.Id });
             Files = files.Where(x => dbAccessProvider.DbAccess.GetPersonsFromFile(x.Id).Count() > 1);
-            Messenger.Send<NewSearchResult>();
         }
     }
 
@@ -363,7 +363,6 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
         if (SelectedPerson1Search is not null && SelectedPerson2Search is not null)
         {
             Files = dbAccessProvider.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPerson1Search.Id, SelectedPerson2Search.Id });
-            Messenger.Send<NewSearchResult>();
         }
     }
 
@@ -378,7 +377,6 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
                 var filePersons = dbAccessProvider.DbAccess.GetPersonsFromFile(x.Id).ToList();
                 return filePersons.Count == 2 && filePersons.Any(y => y.Id == SelectedPerson2Search.Id);
             });
-            Messenger.Send<NewSearchResult>();
         }
     }
 
@@ -393,7 +391,6 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
                 var filePersons = dbAccessProvider.DbAccess.GetPersonsFromFile(x.Id).ToList();
                 return filePersons.Count > 2 && filePersons.Any(y => y.Id == SelectedPerson2Search.Id);
             });
-            Messenger.Send<NewSearchResult>();
         }
     }
 
@@ -403,7 +400,6 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
         if (SelectedLocationSearch is not null)
         {
             Files = dbAccessProvider.DbAccess.SearchFilesWithLocations(new List<int>() { SelectedLocationSearch.Id });
-            Messenger.Send<NewSearchResult>();
         }
     }
 
@@ -412,9 +408,20 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
     {
         if (SelectedTagSearch is not null)
         {
-            Files = dbAccessProvider.DbAccess.SearchFilesWithTags(new List<int>() { SelectedTagSearch.Id });
-            Messenger.Send<NewSearchResult>();
+            Files = dbAccessProvider.DbAccess.SearchFilesWithTags([SelectedTagSearch.Id]);
         }
+    }
+
+    [RelayCommand]
+    private void SetCombineSearch1()
+    {
+        CombineSearch1 = Utils.CreateFileList(Files);
+    }
+
+    [RelayCommand]
+    private void SetCombineSearch2()
+    {
+        CombineSearch2 = Utils.CreateFileList(Files);
     }
 
     [RelayCommand]
@@ -457,7 +464,6 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
     {
         var fileIds = Utils.CreateFileIds(CombineSearchResult);
         Files = dbAccessProvider.DbAccess.SearchFilesFromIds(fileIds);
-        Messenger.Send<NewSearchResult>();
     }
 
     [RelayCommand]
@@ -500,6 +506,5 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
         }
 
         Files = result;
-        Messenger.Send<NewSearchResult>();
     }
 }

@@ -1363,4 +1363,10 @@
   <data name="TextFilterCaseSensitive" xml:space="preserve">
     <value>Skiftlägeskänslig</value>
   </data>
+  <data name="SearchCombineSearchCurrent" xml:space="preserve">
+    <value>Nuvarande</value>
+  </data>
+  <data name="SearchCombineSearchCurrentToolTip" xml:space="preserve">
+    <value>Använd nuvarande sökresultat</value>
+  </data>
 </root>

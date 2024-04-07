@@ -328,6 +328,7 @@
                             VerticalAlignment="Center"
                             Text="{Binding CombineSearch1}"
                             ToolTip.Tip="fileId1;fileId2;..." />
+						<Button Content="{x:Static lang:Strings.SearchCombineSearchCurrent}" ToolTip.Tip="{x:Static lang:Strings.SearchCombineSearchCurrentToolTip}" Command="{Binding SetCombineSearch1Command}" IsEnabled="{Binding HasFiles}" />
                     </StackPanel>
 
                     <StackPanel
@@ -346,7 +347,8 @@
                             VerticalAlignment="Center"
                             Text="{Binding CombineSearch2}"
                             ToolTip.Tip="fileId1;fileId2;..." />
-                    </StackPanel>
+						<Button Content="{x:Static lang:Strings.SearchCombineSearchCurrent}" ToolTip.Tip="{x:Static lang:Strings.SearchCombineSearchCurrentToolTip}" Command="{Binding SetCombineSearch2Command}" IsEnabled="{Binding HasFiles}"/>
+					</StackPanel>
 
                     <StackPanel
                         Grid.Row="1"
@@ -396,16 +398,17 @@
                         <Button
                             Margin="3"
                             VerticalAlignment="Center"
-                            Command="{Binding CombineSearchResultCopyCommand}"
-                            Content="{x:Static lang:Strings.SearchCopyButton}"
-                            IsEnabled="{Binding CombineSearchResult, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
-                        <Button
-                            Margin="3"
-                            VerticalAlignment="Center"
                             Command="{Binding CombineSearchResultShowCommand}"
                             Content="{x:Static lang:Strings.SearchOpenButton}"
                             IsEnabled="{Binding CombineSearchResult, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
-                    </StackPanel>
+						<Button
+                            Margin="3"
+                            VerticalAlignment="Center"
+                            Command="{Binding CombineSearchResultCopyCommand}"
+							Content="&#x1f5d0;"
+                            ToolTip.Tip="{x:Static lang:Strings.SearchCopyButton}"
+                            IsEnabled="{Binding CombineSearchResult, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+					</StackPanel>
                 </Grid>
             </TabItem>
         </TabControl>

@@ -2054,6 +2054,24 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Current.
+        /// </summary>
+        public static string SearchCombineSearchCurrent {
+            get {
+                return ResourceManager.GetString("SearchCombineSearchCurrent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use current search result.
+        /// </summary>
+        public static string SearchCombineSearchCurrentToolTip {
+            get {
+                return ResourceManager.GetString("SearchCombineSearchCurrentToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Complement.
         /// </summary>
         public static string SearchComplementButton {
