@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using FileDBShared.Model;
+﻿using FileDBShared.Model;
 using TextCopy;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -159,7 +158,7 @@ public partial class FileViewModel : ObservableObject
     {
         if (SelectedFile is not null)
         {
-            ClipboardService.SetText(Utils.CreateFileList([ SelectedFile ]));
+            ClipboardService.SetText(Utils.CreateFileList([SelectedFile]));
         }
     }
 

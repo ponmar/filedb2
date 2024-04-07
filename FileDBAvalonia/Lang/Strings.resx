@@ -658,22 +658,22 @@
     <value>Sort by:</value>
   </data>
   <data name="SearchResultGoToPreviousToolTip" xml:space="preserve">
-    <value>Go to previous (left)</value>
+    <value>Go to previous (page up)</value>
   </data>
   <data name="SearchResultGoToNextToolTip" xml:space="preserve">
-    <value>Go to next (right)</value>
+    <value>Go to next (page down)</value>
   </data>
   <data name="SearchResultGoToPreviousDirectoryToolTip" xml:space="preserve">
-    <value>Go to previous directory (page up)</value>
+    <value>Go to previous directory (ctrl + page up)</value>
   </data>
   <data name="SearchResultGoToNextDirectoryToolTip" xml:space="preserve">
-    <value>Go to next directory (page down)</value>
+    <value>Go to next directory (ctrl + page down)</value>
   </data>
   <data name="SearchResultGoToFirstToolTip" xml:space="preserve">
-    <value>Go to first</value>
+    <value>Go to first (home)</value>
   </data>
   <data name="SearchResultGoToLastToolTip" xml:space="preserve">
-    <value>Go to last</value>
+    <value>Go to last (end)</value>
   </data>
   <data name="SearchResultToggleSlideshowToolTip" xml:space="preserve">
     <value>Toggle slideshow</value>

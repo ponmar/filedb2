@@ -103,27 +103,9 @@ public partial class MainViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void FunctionKeyPressed(string functionKeyStr)
+    private static void FunctionKeyPressed(string functionKeyStr)
     {
         var functionKey = int.Parse(functionKeyStr);
         Messenger.Send(new CategorizationFunctionKeyPressed(functionKey));
     }
-
-    [RelayCommand]
-    private void PrevFile() => Messenger.Send<SelectPrevFile>();
-
-    [RelayCommand]
-    private void NextFile() => Messenger.Send<SelectNextFile>();
-
-    [RelayCommand]
-    private void FirstFile() => Messenger.Send<SelectFirstFile>();
-
-    [RelayCommand]
-    private void LastFile() => Messenger.Send<SelectLastFile>();
-
-    [RelayCommand]
-    private void NextDirectory() => Messenger.Send<SelectFileInNextDirectory>();
-
-    [RelayCommand]
-    private void PrevDirectory() => Messenger.Send<SelectFileInPrevDirectory>();
 }

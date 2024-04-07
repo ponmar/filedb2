@@ -19,13 +19,6 @@
 		<KeyBinding Gesture="F10" Command="{Binding FunctionKeyPressedCommand}" CommandParameter="10"/>
 		<KeyBinding Gesture="F11" Command="{Binding FunctionKeyPressedCommand}" CommandParameter="11"/>
 		<KeyBinding Gesture="F12" Command="{Binding FunctionKeyPressedCommand}" CommandParameter="12"/>
-
-		<KeyBinding Gesture="Left" Command="{Binding PrevFileCommand}" />
-		<KeyBinding Gesture="Right" Command="{Binding NextFileCommand}" />
-		<KeyBinding Gesture="Home" Command="{Binding FirstFileCommand}" />
-		<KeyBinding Gesture="End" Command="{Binding LastFileCommand}" />
-		<KeyBinding Gesture="PageDown" Command="{Binding NextDirectoryCommand}" />
-		<KeyBinding Gesture="PageUp" Command="{Binding PrevDirectoryCommand}" />
 	</UserControl.KeyBindings>
 	<DockPanel>
 		<TextBlock DockPanel.Dock="Top" Text="{x:Static lang:Strings.SearchTitle}" Classes="PageHeader" IsVisible="{Binding !Fullscreen}"/>

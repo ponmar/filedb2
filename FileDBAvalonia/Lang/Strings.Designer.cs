@@ -2621,7 +2621,7 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Go to first.
+        ///   Looks up a localized string similar to Go to first (home).
         /// </summary>
         public static string SearchResultGoToFirstToolTip {
             get {
@@ -2630,7 +2630,7 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Go to last.
+        ///   Looks up a localized string similar to Go to last (end).
         /// </summary>
         public static string SearchResultGoToLastToolTip {
             get {
@@ -2639,7 +2639,7 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Go to next directory (page down).
+        ///   Looks up a localized string similar to Go to next directory (ctrl + page down).
         /// </summary>
         public static string SearchResultGoToNextDirectoryToolTip {
             get {
@@ -2648,7 +2648,7 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Go to next (right).
+        ///   Looks up a localized string similar to Go to next (page down).
         /// </summary>
         public static string SearchResultGoToNextToolTip {
             get {
@@ -2657,7 +2657,7 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Go to previous directory (page up).
+        ///   Looks up a localized string similar to Go to previous directory (ctrl + page up).
         /// </summary>
         public static string SearchResultGoToPreviousDirectoryToolTip {
             get {
@@ -2666,7 +2666,7 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Go to previous (left).
+        ///   Looks up a localized string similar to Go to previous (page up).
         /// </summary>
         public static string SearchResultGoToPreviousToolTip {
             get {

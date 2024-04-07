@@ -658,16 +658,16 @@
     <value>Sortera efter:</value>
   </data>
   <data name="SearchResultGoToPreviousToolTip" xml:space="preserve">
-    <value>Gå till föregående (vänster)</value>
+    <value>Gå till föregående (page up)</value>
   </data>
   <data name="SearchResultGoToNextToolTip" xml:space="preserve">
-    <value>Gå till nästa (höger)</value>
+    <value>Gå till nästa (page down)</value>
   </data>
   <data name="SearchResultGoToPreviousDirectoryToolTip" xml:space="preserve">
-    <value>Gå till föregående katalog (page up)</value>
+    <value>Gå till föregående katalog (ctrl + page up)</value>
   </data>
   <data name="SearchResultGoToNextDirectoryToolTip" xml:space="preserve">
-    <value>Gå till nästa katalog (page down)</value>
+    <value>Gå till nästa katalog (ctrl + page down)</value>
   </data>
   <data name="SearchResultGoToFirstToolTip" xml:space="preserve">
     <value>Gå till första</value>
