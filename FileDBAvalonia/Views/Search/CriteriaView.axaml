@@ -311,10 +311,8 @@
                 </WrapPanel>
             </TabItem>
             <TabItem Header="{x:Static lang:Strings.SearchCombineLabel}">
-                <Grid ColumnDefinitions="auto,auto,auto,auto" RowDefinitions="auto">
+                <WrapPanel Orientation="Horizontal">
                     <StackPanel
-                        Grid.Row="0"
-                        Grid.Column="0"
                         Margin="5"
                         VerticalAlignment="Center"
                         Orientation="Horizontal">
@@ -332,8 +330,6 @@
                     </StackPanel>
 
                     <StackPanel
-                        Grid.Row="0"
-                        Grid.Column="1"
                         Margin="5"
                         VerticalAlignment="Center"
                         Orientation="Horizontal">
@@ -351,8 +347,6 @@
 					</StackPanel>
 
                     <StackPanel
-                        Grid.Row="1"
-                        Grid.Column="2"
                         Margin="5"
                         VerticalAlignment="Center">
                         <Button
@@ -379,8 +373,6 @@
                     </StackPanel>
 
                     <StackPanel
-                        Grid.Row="0"
-                        Grid.Column="3"
                         Margin="5"
                         VerticalAlignment="Center"
                         Orientation="Horizontal">
@@ -409,7 +401,7 @@
                             ToolTip.Tip="{x:Static lang:Strings.SearchCopyButton}"
                             IsEnabled="{Binding CombineSearchResult, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
 					</StackPanel>
-                </Grid>
+                </WrapPanel>
             </TabItem>
         </TabControl>
     </Border>
