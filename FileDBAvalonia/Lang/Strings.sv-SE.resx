@@ -1316,7 +1316,7 @@
     <value>Radie [m]</value>
   </data>
   <data name="SearchFilterTextInputToolTip" xml:space="preserve">
-    <value>Sökmönster (case insensitive)</value>
+    <value>Sökmönster</value>
   </data>
   <data name="AddPersonDateOfBirthToolTip" xml:space="preserve">
     <value>ÅÅÅÅ-MM-DD, ÅÅÅÅ-MM eller ÅÅÅÅ</value>
@@ -1359,5 +1359,8 @@
   </data>
   <data name="AboutCommandLineArgPath" xml:space="preserve">
     <value>FileDB-fil</value>
+  </data>
+  <data name="TextFilterCaseSensitive" xml:space="preserve">
+    <value>Skiftlägeskänslig</value>
   </data>
 </root>

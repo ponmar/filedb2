@@ -1316,7 +1316,7 @@ YYYY-MM-DDTHH:MM:SS</value>
     <value>Radius [m]</value>
   </data>
   <data name="SearchFilterTextInputToolTip" xml:space="preserve">
-    <value>Search pattern (case insensitive)</value>
+    <value>Search pattern</value>
   </data>
   <data name="AddPersonDateOfBirthToolTip" xml:space="preserve">
     <value>YYYY-MM-DD, YYYY-MM or YYYY</value>
@@ -1359,5 +1359,8 @@ YYYY-MM-DDTHH:MM:SS</value>
   </data>
   <data name="AboutCommandLineArgPath" xml:space="preserve">
     <value>FileDB file</value>
+  </data>
+  <data name="TextFilterCaseSensitive" xml:space="preserve">
+    <value>Case sensitive</value>
   </data>
 </root>

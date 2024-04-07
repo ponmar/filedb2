@@ -28,6 +28,9 @@ public partial class FilterSettingsViewModel : ObservableObject
     private string textFilterSearchPattern = string.Empty;
 
     [ObservableProperty]
+    private bool textFilterCaseSensitive = false;
+
+    [ObservableProperty]
     private string fileListIds = string.Empty;
 
     [ObservableProperty]
@@ -140,7 +143,7 @@ public partial class FilterSettingsViewModel : ObservableObject
             FilterType.DateTime => new FilterDateTime(FirstDateTime, SecondDateTime),
             FilterType.NoDateTime => new FilterWithoutDateTime(),
             FilterType.NoMetaData => new FilterWithoutMetaData(),
-            FilterType.Text => new FilterText(TextFilterSearchPattern),
+            FilterType.Text => new FilterText(TextFilterSearchPattern, TextFilterCaseSensitive),
             FilterType.FileList => new FilterFileList(FileListIds),
             FilterType.ExceptFileList => new FilterExceptFileList(ExceptFileListIds),
             FilterType.FileType => new FilterFileType(SelectedFileType),

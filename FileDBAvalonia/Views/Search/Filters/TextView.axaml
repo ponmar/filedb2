@@ -17,6 +17,7 @@
 				</DataTemplate>
 			</ComboBox.ItemTemplate>
 		</ComboBox>
-		<TextBox Text="{Binding TextFilterSearchPattern}" Width="100" ToolTip.Tip="{x:Static lang:Strings.SearchFilterTextInputToolTip}" VerticalAlignment="Center"/>
+		<TextBox Margin="0 0 3 0" Text="{Binding TextFilterSearchPattern}" Width="100" ToolTip.Tip="{x:Static lang:Strings.SearchFilterTextInputToolTip}" VerticalAlignment="Center"/>
+		<CheckBox IsChecked="{Binding TextFilterCaseSensitive}" Content="{x:Static lang:Strings.TextFilterCaseSensitive}"/>
 	</StackPanel>
 </UserControl>

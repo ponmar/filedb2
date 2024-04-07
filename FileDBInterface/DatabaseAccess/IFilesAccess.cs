@@ -21,7 +21,7 @@ public interface IFilesAccess
 
     public IEnumerable<FileModel> SearchFilesFromIds(IEnumerable<int> fileIds);
     public IEnumerable<FileModel> SearchFilesExceptIds(IEnumerable<int> fileIds);
-    public IEnumerable<FileModel> SearchFiles(string criteria);
+    public IEnumerable<FileModel> SearchFiles(string criteria, bool caseSensitive);
     public IEnumerable<FileModel> SearchFilesBySex(Sex sex);
     public IEnumerable<FileModel> SearchFilesByDate(DateTime start, DateTime end);
     public IEnumerable<FileModel> SearchFilesWithoutDate();

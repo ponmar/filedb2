@@ -2261,7 +2261,7 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search pattern (case insensitive).
+        ///   Looks up a localized string similar to Search pattern.
         /// </summary>
         public static string SearchFilterTextInputToolTip {
             get {
@@ -3373,6 +3373,15 @@ namespace FileDBAvalonia.Lang {
         public static string TagsTitle {
             get {
                 return ResourceManager.GetString("TagsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Case sensitive.
+        /// </summary>
+        public static string TextFilterCaseSensitive {
+            get {
+                return ResourceManager.GetString("TextFilterCaseSensitive", resourceCulture);
             }
         }
         

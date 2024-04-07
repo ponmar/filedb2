@@ -77,12 +77,17 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
         return connection.Query<FileModel>(sql, new { ids = fileIds });
     }
 
-    public IEnumerable<FileModel> SearchFiles(string criteria)
+    public IEnumerable<FileModel> SearchFiles(string criteria, bool caseSensitive)
     {
         // Note: 'like' is case insensitive
         using var connection = DatabaseSetup.CreateConnection(database);
         var sql = "select * from [files] where (Path like @criteria or Description like @criteria)";
-        return connection.Query<FileModel>(sql, new { criteria = $"%{criteria}%" });
+        var result = connection.Query<FileModel>(sql, new { criteria = $"%{criteria}%" });
+        if (caseSensitive)
+        {
+            return result.Where(x => x.Path.Contains(criteria) || x.Description is not null && x.Description.Contains(criteria));
+        }
+        return result;
     }
 
     public IEnumerable<FileModel> SearchFilesBySex(Sex sex)

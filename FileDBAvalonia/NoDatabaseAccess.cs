@@ -20,12 +20,12 @@ public class NoDatabaseAccess : IDatabaseAccess
 
     public IEnumerable<FileModel> GetFiles()
     {
-        return new List<FileModel>();
+        return [];
     }
 
     public IEnumerable<string> GetDirectories()
     {
-        return new List<string>();
+        return [];
     }
 
     public int GetFileCount()
@@ -35,47 +35,47 @@ public class NoDatabaseAccess : IDatabaseAccess
 
     public IEnumerable<FileModel> SearchFilesFromIds(IEnumerable<int> fileIds)
     {
-        return new List<FileModel>();
+        return [];
     }
 
     public IEnumerable<FileModel> SearchFilesExceptIds(IEnumerable<int> fileIds)
     {
-        return new List<FileModel>();
+        return [];
     }
 
-    public IEnumerable<FileModel> SearchFiles(string criteria)
+    public IEnumerable<FileModel> SearchFiles(string criteria, bool caseSensitive)
     {
-        return new List<FileModel>();
+        return [];
     }
 
     public IEnumerable<FileModel> SearchFilesBySex(Sex sex)
     {
-        return new List<FileModel>();
+        return [];
     }
 
     public IEnumerable<FileModel> SearchFilesByPath(string criteria)
     {
-        return new List<FileModel>();
+        return [];
     }
 
     public IEnumerable<FileModel> SearchFilesByExtension(string extension)
     {
-        return new List<FileModel>();
+        return [];
     }
 
     public IEnumerable<FileModel> SearchFilesRandom(int numFiles)
     {
-        return new List<FileModel>();
+        return [];
     }
 
     public IEnumerable<LocationModel> SearchLocationsNearGpsPosition(double latitude, double longitude, double radius)
     {
-        return new List<LocationModel>();
+        return [];
     }
 
     public IEnumerable<FileModel> SearchFilesNearGpsPosition(double latitude, double longitude, double radius)
     {
-        return new List<FileModel>();
+        return [];
     }
 
     public FileModel GetFileById(int id)
@@ -90,32 +90,32 @@ public class NoDatabaseAccess : IDatabaseAccess
 
     public IEnumerable<FileModel> SearchFilesByDate(DateTime start, DateTime end)
     {
-        return new List<FileModel>();
+        return [];
     }
 
     public IEnumerable<FileModel> SearchFilesWithoutDate()
     {
-        return new List<FileModel>();
+        return [];
     }
 
     public IEnumerable<FileModel> SearchFilesWithPersons(IEnumerable<int> personIds)
     {
-        return new List<FileModel>();
+        return [];
     }
 
     public IEnumerable<FileModel> SearchFilesWithLocations(IEnumerable<int> locationIds)
     {
-        return new List<FileModel>();
+        return [];
     }
 
     public IEnumerable<FileModel> SearchFilesWithTags(IEnumerable<int> tagIds)
     {
-        return new List<FileModel>();
+        return [];
     }
 
     public IEnumerable<FileModel> SearchFilesWithMissingData()
     {
-        return new List<FileModel>();
+        return [];
     }
 
     public void InsertFile(string internalPath, string? description, IFilesystemAccess fileSystemAccess, bool findMetadata)
@@ -168,12 +168,12 @@ public class NoDatabaseAccess : IDatabaseAccess
 
     public IEnumerable<PersonModel> GetPersons()
     {
-        return new List<PersonModel>();
+        return [];
     }
 
     public IEnumerable<PersonModel> GetPersonsFromFile(int fileId)
     {
-        return new List<PersonModel>();
+        return [];
     }
 
     public int GetPersonCount()
@@ -183,7 +183,7 @@ public class NoDatabaseAccess : IDatabaseAccess
 
     public static IEnumerable<PersonModel> SearchPersons(string criteria)
     {
-        return new List<PersonModel>();
+        return [];
     }
 
     public PersonModel GetPersonById(int id)
@@ -210,12 +210,12 @@ public class NoDatabaseAccess : IDatabaseAccess
 
     public IEnumerable<LocationModel> GetLocations()
     {
-        return new List<LocationModel>();
+        return [];
     }
 
     public IEnumerable<LocationModel> GetLocationsFromFile(int fileId)
     {
-        return new List<LocationModel>();
+        return [];
     }
 
     public int GetLocationCount()
@@ -247,12 +247,12 @@ public class NoDatabaseAccess : IDatabaseAccess
 
     public IEnumerable<TagModel> GetTags()
     {
-        return new List<TagModel>();
+        return [];
     }
 
     public IEnumerable<TagModel> GetTagsFromFile(int fileId)
     {
-        return new List<TagModel>();
+        return [];
     }
 
     public int GetTagCount()
