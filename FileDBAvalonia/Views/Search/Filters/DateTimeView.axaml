@@ -20,12 +20,12 @@
 		<DatePicker
             Margin="0 0 3 0"
             VerticalAlignment="Center"
-            SelectedDate="{Binding DateTimeStart}"
+            SelectedDate="{Binding FirstDateTime}"
             ToolTip.Tip="{x:Static lang:Strings.SearchFilterDateTimeStart}" />
 		<TextBlock Margin="0 0 3 0" Text="-" VerticalAlignment="Center" />
 		<DatePicker
             VerticalAlignment="Center"
-            SelectedDate="{Binding DateTimeEnd}"
+            SelectedDate="{Binding SecondDateTime}"
             ToolTip.Tip="{x:Static lang:Strings.SearchFilterDateTimeEnd}" />
 	</StackPanel>
 </UserControl>

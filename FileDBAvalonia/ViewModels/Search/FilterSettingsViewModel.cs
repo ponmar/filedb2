@@ -19,10 +19,10 @@ public partial class FilterSettingsViewModel : ObservableObject
     private FilterType selectedFilterType = FilterTypes.First(x => x == FilterType.Person);
 
     [ObservableProperty]
-    private DateTimeOffset dateTimeStart = DateTime.Now;
+    private DateTimeOffset firstDateTime = DateTime.Now;
 
     [ObservableProperty]
-    private DateTimeOffset dateTimeEnd = DateTime.Now;
+    private DateTimeOffset secondDateTime = DateTime.Now;
 
     [ObservableProperty]
     private string textFilterSearchPattern = string.Empty;
@@ -137,7 +137,7 @@ public partial class FilterSettingsViewModel : ObservableObject
     {
         return SelectedFilterType switch
         {
-            FilterType.DateTime => new FilterDateTime(DateTimeStart, DateTimeEnd),
+            FilterType.DateTime => new FilterDateTime(FirstDateTime, SecondDateTime),
             FilterType.NoDateTime => new FilterWithoutDateTime(),
             FilterType.NoMetaData => new FilterWithoutMetaData(),
             FilterType.Text => new FilterText(TextFilterSearchPattern),

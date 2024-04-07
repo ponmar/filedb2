@@ -5,12 +5,14 @@ using System.Collections.Generic;
 
 namespace FileDBAvalonia.FilesFilter;
 
-public class FilterDateTime(DateTimeOffset start, DateTimeOffset end) : IFilesFilter
+public class FilterDateTime(DateTimeOffset first, DateTimeOffset second) : IFilesFilter
 {
     public bool CanRun() => true;
 
     public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
     {
+        var start = first < second ? first : second;
+        var end = first < second ? second : first;
         return dbAccess.SearchFilesByDate(start.Date, end.Date);
     }
 }
