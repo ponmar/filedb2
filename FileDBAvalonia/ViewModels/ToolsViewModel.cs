@@ -14,7 +14,6 @@ using FileDBAvalonia.Model;
 using FileDBInterface.DatabaseAccess;
 using FileDBShared.Model;
 using FileDBShared.Validators;
-using TextCopy;
 
 namespace FileDBAvalonia.ViewModels;
 
@@ -44,14 +43,16 @@ public partial class ToolsViewModel : ObservableObject
     private readonly IFilesystemAccessProvider filesystemAccessProvider;
     private readonly IDialogs dialogs;
     private readonly IFileSystem fileSystem;
+    private readonly IClipboardService clipboardService;
 
-    public ToolsViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IDialogs dialogs, IFileSystem fileSystem)
+    public ToolsViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IDialogs dialogs, IFileSystem fileSystem, IClipboardService clipboardService)
     {
         this.configProvider = configProvider;
         this.dbAccessProvider = dbAccessProvider;
         this.filesystemAccessProvider = filesystemAccessProvider;
         this.dialogs = dialogs;
         this.fileSystem = fileSystem;
+        this.clipboardService = clipboardService;
         ScanBackupFiles();
     }
 
@@ -128,7 +129,7 @@ public partial class ToolsViewModel : ObservableObject
     [RelayCommand]
     private void CopyImportedNoLongerApplicableFilesList()
     {
-        ClipboardService.SetText(ImportedNoLongerApplicableFileList);
+        clipboardService.SetTextAsync(ImportedNoLongerApplicableFileList);
     }
 
     [RelayCommand]
@@ -199,7 +200,7 @@ public partial class ToolsViewModel : ObservableObject
     [RelayCommand]
     private async Task CopyInvalidFileListAsync()
     {
-        ClipboardService.SetText(InvalidFileList);
+        await clipboardService.SetTextAsync(InvalidFileList);
         await dialogs.ShowInfoDialogAsync(Strings.ToolsFileListCopiedToClipboard);
     }
 
@@ -216,7 +217,7 @@ public partial class ToolsViewModel : ObservableObject
     [RelayCommand]
     private async Task CopyFileFinderResultAsync()
     {
-        ClipboardService.SetText(MissingFilesList);
+        await clipboardService.SetTextAsync(MissingFilesList);
         await dialogs.ShowInfoDialogAsync(Strings.ToolsFileListCopiedToClipboard);
     }
 

@@ -21,6 +21,7 @@ public static class Bootstrapper
         Container.Register(Component.For<INotifierFactory>().ImplementedBy<NotifierFactory>());
         Container.Register(Component.For<ISpeeker>().ImplementedBy<Speeker>());
         Container.Register(Component.For<DateObserver>().ImplementedBy<DateObserver>());
+        Container.Register(Component.For<IClipboardService>().ImplementedBy<ClipboardService>());
 
         Container.Register(
             Component.For(
