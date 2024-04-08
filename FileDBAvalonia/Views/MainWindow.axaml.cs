@@ -1,4 +1,5 @@
-﻿using Avalonia.Controls;
+﻿using Avalonia;
+using Avalonia.Controls;
 using FileDBAvalonia.ViewModels;
 
 namespace FileDBAvalonia.Views;
@@ -12,5 +13,10 @@ public partial class MainWindow : Window
         {
             DataContext = ServiceLocator.Resolve<MainViewModel>();
         }
+
+#if DEBUG
+        // Open the developer tools window with F12
+        this.AttachDevTools();
+#endif
     }
 }
