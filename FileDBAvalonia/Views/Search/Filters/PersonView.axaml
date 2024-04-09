@@ -17,6 +17,6 @@
 				</DataTemplate>
 			</ComboBox.ItemTemplate>
 		</ComboBox>
-		<ComboBox ItemsSource="{Binding Persons}" SelectedItem="{Binding SelectedPerson}" Width="100" VerticalAlignment="Center"/>
+		<ComboBox ItemsSource="{Binding Persons}" SelectedItem="{Binding SelectedPerson}" VerticalAlignment="Center"/>
 	</StackPanel>
 </UserControl>
