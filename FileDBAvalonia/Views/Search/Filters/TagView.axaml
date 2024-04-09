@@ -17,6 +17,7 @@
 				</DataTemplate>
 			</ComboBox.ItemTemplate>
 		</ComboBox>
-		<ComboBox ItemsSource="{Binding Tags}" SelectedItem="{Binding SelectedTag}" VerticalAlignment="Center"/>
+		<ComboBox Margin="0 0 3 0" ItemsSource="{Binding Tags}" SelectedItem="{Binding SelectedTag}" VerticalAlignment="Center"/>
+		<CheckBox Content="!" IsChecked="{Binding Negate}" ToolTip.Tip="{x:Static lang:Strings.FilterNegateTooltip}"/>
 	</StackPanel>
 </UserControl>

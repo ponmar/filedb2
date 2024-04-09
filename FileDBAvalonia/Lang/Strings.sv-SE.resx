@@ -1369,4 +1369,7 @@
   <data name="SearchCombineSearchCurrentToolTip" xml:space="preserve">
     <value>Använd nuvarande sökresultat</value>
   </data>
+  <data name="FilterNegateTooltip" xml:space="preserve">
+    <value>Negera markering</value>
+  </data>
 </root>

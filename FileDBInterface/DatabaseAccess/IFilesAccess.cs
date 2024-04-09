@@ -30,8 +30,11 @@ public interface IFilesAccess
     public IEnumerable<FileModel> SearchFilesRandom(int numFiles);
     public IEnumerable<FileModel> SearchFilesNearGpsPosition(double latitude, double longitude, double radius);
     public IEnumerable<FileModel> SearchFilesWithPersons(IEnumerable<int> personIds);
+    public IEnumerable<FileModel> SearchFilesWithoutPersons(IEnumerable<int> personIds);
     public IEnumerable<FileModel> SearchFilesWithLocations(IEnumerable<int> locationIds);
+    public IEnumerable<FileModel> SearchFilesWithoutLocations(IEnumerable<int> locationIds);
     public IEnumerable<FileModel> SearchFilesWithTags(IEnumerable<int> tagIds);
+    public IEnumerable<FileModel> SearchFilesWithoutTags(IEnumerable<int> tagIds);
     public IEnumerable<FileModel> SearchFilesWithMissingData();
 
     public void InsertFilePerson(int fileId, int personId);

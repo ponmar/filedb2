@@ -1334,6 +1334,15 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Negate selection.
+        /// </summary>
+        public static string FilterNegateTooltip {
+            get {
+                return ResourceManager.GetString("FilterNegateTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date (between).
         /// </summary>
         public static string FilterTypeDateTime {

@@ -192,16 +192,34 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
         return connection.Query<FileModel>($"select * from [files] inner join filepersons on files.Id = filepersons.FileId where filepersons.PersonId in ({string.Join(',', personIds)})");
     }
 
+    public IEnumerable<FileModel> SearchFilesWithoutPersons(IEnumerable<int> personIds)
+    {
+        using var connection = DatabaseSetup.CreateConnection(database);
+        return connection.Query<FileModel>($"select * from [files] inner join filepersons on files.Id = filepersons.FileId where filepersons.PersonId not in ({string.Join(',', personIds)})");
+    }
+
     public IEnumerable<FileModel> SearchFilesWithLocations(IEnumerable<int> locationIds)
     {
         using var connection = DatabaseSetup.CreateConnection(database);
         return connection.Query<FileModel>($"select * from [files] inner join filelocations on files.Id = filelocations.FileId where filelocations.LocationId in ({string.Join(',', locationIds)})");
     }
 
+    public IEnumerable<FileModel> SearchFilesWithoutLocations(IEnumerable<int> locationIds)
+    {
+        using var connection = DatabaseSetup.CreateConnection(database);
+        return connection.Query<FileModel>($"select * from [files] inner join filelocations on files.Id = filelocations.FileId where filelocations.LocationId not in ({string.Join(',', locationIds)})");
+    }
+
     public IEnumerable<FileModel> SearchFilesWithTags(IEnumerable<int> tagIds)
     {
         using var connection = DatabaseSetup.CreateConnection(database);
         return connection.Query<FileModel>($"select * from [files] inner join filetags on files.Id = filetags.FileId where filetags.TagId in ({string.Join(',', tagIds)})");
+    }
+
+    public IEnumerable<FileModel> SearchFilesWithoutTags(IEnumerable<int> tagIds)
+    {
+        using var connection = DatabaseSetup.CreateConnection(database);
+        return connection.Query<FileModel>($"select * from [files] inner join filetags on files.Id = filetags.FileId where filetags.TagId not in ({string.Join(',', tagIds)})");
     }
 
     public IEnumerable<FileModel> SearchFilesWithMissingData()

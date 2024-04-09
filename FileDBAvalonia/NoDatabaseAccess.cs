@@ -103,12 +103,27 @@ public class NoDatabaseAccess : IDatabaseAccess
         return [];
     }
 
+    public IEnumerable<FileModel> SearchFilesWithoutPersons(IEnumerable<int> personIds)
+    {
+        return [];
+    }
+
     public IEnumerable<FileModel> SearchFilesWithLocations(IEnumerable<int> locationIds)
     {
         return [];
     }
 
+    public IEnumerable<FileModel> SearchFilesWithoutLocations(IEnumerable<int> locationIds)
+    {
+        return [];
+    }
+
     public IEnumerable<FileModel> SearchFilesWithTags(IEnumerable<int> tagIds)
+    {
+        return [];
+    }
+
+    public IEnumerable<FileModel> SearchFilesWithoutTags(IEnumerable<int> tagIds)
     {
         return [];
     }

@@ -1369,4 +1369,7 @@ YYYY-MM-DDTHH:MM:SS</value>
   <data name="SearchCombineSearchCurrentToolTip" xml:space="preserve">
     <value>Use current search result</value>
   </data>
+  <data name="FilterNegateTooltip" xml:space="preserve">
+    <value>Negate selection</value>
+  </data>
 </root>
