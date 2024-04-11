@@ -1387,4 +1387,7 @@
   <data name="SeasonWinter" xml:space="preserve">
     <value>Vinter</value>
   </data>
+  <data name="FilterTypeAnnualDate" xml:space="preserve">
+    <value>Datum (årligen mellan)</value>
+  </data>
 </root>

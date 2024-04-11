@@ -98,6 +98,11 @@ public class NoDatabaseAccess : IDatabaseAccess
         return [];
     }
 
+    public IEnumerable<FileModel> SearchFilesByAnnualDate(int startMonth, int startDay, int endMonth, int endDay)
+    {
+        return [];
+    }
+
     public IEnumerable<FileModel> SearchFilesWithoutDate()
     {
         return [];

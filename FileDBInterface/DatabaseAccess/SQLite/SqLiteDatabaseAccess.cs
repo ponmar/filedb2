@@ -14,6 +14,7 @@ using FileDBInterface.Extensions;
 using FileDBShared.Validators;
 using FileDBInterface.FilesystemAccess;
 using FileDBShared;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace FileDBInterface.DatabaseAccess.SQLite;
 
@@ -188,6 +189,19 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
         {
             var fileDatetime = DatabaseParsing.ParseFilesDatetime(fileWithDate.Datetime);
             if (fileDatetime?.GetApproximatedSeason() == season)
+            {
+                yield return fileWithDate;
+            }
+        }
+    }
+
+    public IEnumerable<FileModel> SearchFilesByAnnualDate(int startMonth, int startDay, int endMonth, int endDay)
+    {
+        using var connection = DatabaseSetup.CreateConnection(database);
+        foreach (var fileWithDate in connection.Query<FileModel>($"select * from [files] where Datetime is not null"))
+        {
+            var fileDatetime = DatabaseParsing.ParseFilesDatetime(fileWithDate.Datetime);
+            if (fileDatetime is not null && fileDatetime.Value.IsMonthAndDayInRange(startMonth, startDay, endMonth, endDay))
             {
                 yield return fileWithDate;
             }

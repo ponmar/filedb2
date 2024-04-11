@@ -20,6 +20,7 @@ public enum FilterType
     Position,
     NumPersons,
     Season,
+    AnnualDate,
 }
 
 public static class FilterTypeExtensions
@@ -43,6 +44,7 @@ public static class FilterTypeExtensions
             FilterType.Position => Strings.FilterTypePosition,
             FilterType.NumPersons => Strings.FilterTypeNumPersons,
             FilterType.Season => Strings.FilterTypeSeason,
+            FilterType.AnnualDate => Strings.FilterTypeAnnualDate,
             _ => throw new NotImplementedException(),
         };
     }

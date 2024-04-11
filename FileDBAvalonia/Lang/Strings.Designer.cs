@@ -1343,6 +1343,15 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Date (annual between).
+        /// </summary>
+        public static string FilterTypeAnnualDate {
+            get {
+                return ResourceManager.GetString("FilterTypeAnnualDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date (between).
         /// </summary>
         public static string FilterTypeDateTime {

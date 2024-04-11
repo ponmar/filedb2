@@ -1387,4 +1387,7 @@ YYYY-MM-DDTHH:MM:SS</value>
   <data name="SeasonWinter" xml:space="preserve">
     <value>Winter</value>
   </data>
+  <data name="FilterTypeAnnualDate" xml:space="preserve">
+    <value>Date (annual between)</value>
+  </data>
 </root>

@@ -14,7 +14,7 @@ namespace FileDBAvalonia.ViewModels.Search;
 
 public partial class FilterSettingsViewModel : ObservableObject
 {
-    public static IEnumerable<FilterType> FilterTypes => Enum.GetValues<FilterType>().OrderBy(x => x.ToFriendlyString(), StringComparer.Ordinal);
+    public static IEnumerable<FilterType> FilterTypes { get; } = Enum.GetValues<FilterType>().OrderBy(x => x.ToFriendlyString(), StringComparer.Ordinal);
 
     [ObservableProperty]
     private FilterType selectedFilterType = FilterTypes.First(x => x == FilterType.Text);
@@ -37,12 +37,12 @@ public partial class FilterSettingsViewModel : ObservableObject
     [ObservableProperty]
     private string exceptFileListIds = string.Empty;
 
-    public static IEnumerable<FileType> FileTypes => Enum.GetValues<FileType>().Where(x => x != FileType.Unknown).OrderBy(x => x.ToFriendlyString());
+    public static IEnumerable<FileType> FileTypes { get; } = Enum.GetValues<FileType>().Where(x => x != FileType.Unknown).OrderBy(x => x.ToFriendlyString());
 
     [ObservableProperty]
     private FileType selectedFileType = FileTypes.First();
 
-    public static IEnumerable<Season> Seasons => Enum.GetValues<Season>();
+    public static IEnumerable<Season> Seasons { get; } = Enum.GetValues<Season>();
 
     [ObservableProperty]
     private Season selectedSeason = Seasons.First();
@@ -74,7 +74,7 @@ public partial class FilterSettingsViewModel : ObservableObject
     [ObservableProperty]
     private string personAgeTo = string.Empty;
 
-    public static IEnumerable<Sex> PersonSexValues => Enum.GetValues<Sex>().OrderBy(x => x.ToFriendlyString());
+    public static IEnumerable<Sex> PersonSexValues { get; } = Enum.GetValues<Sex>().OrderBy(x => x.ToFriendlyString());
 
     [ObservableProperty]
     private Sex selectedPersonSex = PersonSexValues.First();
@@ -90,6 +90,22 @@ public partial class FilterSettingsViewModel : ObservableObject
 
     [ObservableProperty]
     private string numPersonsMax = "1";
+
+    public static IEnumerable<int> Months { get; } = Enumerable.Range(1, 12);
+
+    public static IEnumerable<int> Days { get; } = Enumerable.Range(1, 31);
+
+    [ObservableProperty]
+    private int selectedAnnualMonthStart = Months.First();
+
+    [ObservableProperty]
+    private int selectedAnnualMonthEnd = Months.First();
+
+    [ObservableProperty]
+    private int selectedAnnualDayStart = Days.First();
+
+    [ObservableProperty]
+    private int selectedAnnualDayEnd = Days.First();
 
     [ObservableProperty]
     private bool negate;
@@ -164,6 +180,7 @@ public partial class FilterSettingsViewModel : ObservableObject
             FilterType.Position => new FilterPosition(PositionText, RadiusText),
             FilterType.NumPersons => new FilterNumberOfPersons(NumPersonsMin, NumPersonsMax),
             FilterType.Season => new FilterSeason(SelectedSeason),
+            FilterType.AnnualDate => new FilterAnnualDate(SelectedAnnualMonthStart, SelectedAnnualDayStart, SelectedAnnualMonthEnd, SelectedAnnualDayEnd),
             _ => throw new NotImplementedException(),
         };
     }
