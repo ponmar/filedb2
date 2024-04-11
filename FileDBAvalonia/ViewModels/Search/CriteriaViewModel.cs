@@ -160,7 +160,6 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
     public ObservableCollection<LocationForSearch> LocationsWithPosition { get; } = [];
     public ObservableCollection<TagForSearch> Tags { get; } = [];
 
-    private readonly IConfigProvider configProvider;
     private readonly IDialogs dialogs;
     private readonly IDatabaseAccessProvider dbAccessProvider;
     private readonly IPersonsRepository personsRepository;
@@ -168,9 +167,8 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
     private readonly ITagsRepository tagsRepository;
     private readonly IClipboardService clipboardService;
 
-    public CriteriaViewModel(IConfigProvider configProvider, IDialogs dialogs, IDatabaseAccessProvider dbAccessProvider, IPersonsRepository personsRepository, ILocationsRepository locationsRepository, ITagsRepository tagsRepository, IClipboardService clipboardService)
+    public CriteriaViewModel(IDialogs dialogs, IDatabaseAccessProvider dbAccessProvider, IPersonsRepository personsRepository, ILocationsRepository locationsRepository, ITagsRepository tagsRepository, IClipboardService clipboardService)
     {
-        this.configProvider = configProvider;
         this.dialogs = dialogs;
         this.dbAccessProvider = dbAccessProvider;
         this.personsRepository = personsRepository;
@@ -334,7 +332,7 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
     {
         if (SelectedPersonSearch is not null)
         {
-            Files = dbAccessProvider.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPersonSearch.Id });
+            Files = dbAccessProvider.DbAccess.SearchFilesWithPersons([SelectedPersonSearch.Id]);
         }
     }
 
@@ -343,7 +341,7 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
     {
         if (SelectedPersonSearch is not null)
         {
-            var files = dbAccessProvider.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPersonSearch.Id });
+            var files = dbAccessProvider.DbAccess.SearchFilesWithPersons([SelectedPersonSearch.Id]);
             Files = files.Where(x => dbAccessProvider.DbAccess.GetPersonsFromFile(x.Id).Count() == 1);
         }
     }
@@ -353,7 +351,7 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
     {
         if (SelectedPersonSearch is not null)
         {
-            var files = dbAccessProvider.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPersonSearch.Id });
+            var files = dbAccessProvider.DbAccess.SearchFilesWithPersons([SelectedPersonSearch.Id]);
             Files = files.Where(x => dbAccessProvider.DbAccess.GetPersonsFromFile(x.Id).Count() > 1);
         }
     }
@@ -363,7 +361,7 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
     {
         if (SelectedPerson1Search is not null && SelectedPerson2Search is not null)
         {
-            Files = dbAccessProvider.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPerson1Search.Id, SelectedPerson2Search.Id });
+            Files = dbAccessProvider.DbAccess.SearchFilesWithPersons([SelectedPerson1Search.Id, SelectedPerson2Search.Id]);
         }
     }
 
@@ -372,7 +370,7 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
     {
         if (SelectedPerson1Search is not null && SelectedPerson2Search is not null)
         {
-            var files = dbAccessProvider.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPerson1Search.Id });
+            var files = dbAccessProvider.DbAccess.SearchFilesWithPersons([SelectedPerson1Search.Id]);
             Files = files.Where(x =>
             {
                 var filePersons = dbAccessProvider.DbAccess.GetPersonsFromFile(x.Id).ToList();
@@ -386,7 +384,7 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
     {
         if (SelectedPerson1Search is not null && SelectedPerson2Search is not null)
         {
-            var files = dbAccessProvider.DbAccess.SearchFilesWithPersons(new List<int>() { SelectedPerson1Search.Id });
+            var files = dbAccessProvider.DbAccess.SearchFilesWithPersons([SelectedPerson1Search.Id]);
             Files = files.Where(x =>
             {
                 var filePersons = dbAccessProvider.DbAccess.GetPersonsFromFile(x.Id).ToList();
@@ -400,7 +398,7 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
     {
         if (SelectedLocationSearch is not null)
         {
-            Files = dbAccessProvider.DbAccess.SearchFilesWithLocations(new List<int>() { SelectedLocationSearch.Id });
+            Files = dbAccessProvider.DbAccess.SearchFilesWithLocations([SelectedLocationSearch.Id]);
         }
     }
 

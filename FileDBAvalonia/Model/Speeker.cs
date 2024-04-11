@@ -8,6 +8,9 @@ public interface ISpeeker
     void CancelSpeek();
 }
 
+#if OS_WINDOWS
+
+[System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>")]
 public class Speeker : ISpeeker
 {
     private readonly SpeechSynthesizer synth = new();
@@ -26,3 +29,18 @@ public class Speeker : ISpeeker
         synth.SpeakAsyncCancelAll();
     }
 }
+
+#else
+
+public class Speeker : ISpeeker
+{
+    public void Speek(params string[] texts)
+    {
+    }
+
+    public void CancelSpeek()
+    {
+    }
+}
+
+#endif
