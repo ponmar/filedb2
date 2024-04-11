@@ -93,6 +93,11 @@ public class NoDatabaseAccess : IDatabaseAccess
         return [];
     }
 
+    public IEnumerable<FileModel> SearchFilesBySeason(Season season)
+    {
+        return [];
+    }
+
     public IEnumerable<FileModel> SearchFilesWithoutDate()
     {
         return [];

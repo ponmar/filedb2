@@ -1369,4 +1369,19 @@
   <data name="SearchCombineSearchCurrentToolTip" xml:space="preserve">
     <value>Använd nuvarande sökresultat</value>
   </data>
+  <data name="FilterTypeSeason" xml:space="preserve">
+    <value>Årstid</value>
+  </data>
+  <data name="SeasonSpring" xml:space="preserve">
+    <value>Vår</value>
+  </data>
+  <data name="SeasonSummer" xml:space="preserve">
+    <value>Sommar</value>
+  </data>
+  <data name="SeasonAutumn" xml:space="preserve">
+    <value>Höst</value>
+  </data>
+  <data name="SeasonWinter" xml:space="preserve">
+    <value>Vinter</value>
+  </data>
 </root>

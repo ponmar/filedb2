@@ -1442,6 +1442,15 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Season.
+        /// </summary>
+        public static string FilterTypeSeason {
+            get {
+                return ResourceManager.GetString("FilterTypeSeason", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tag.
         /// </summary>
         public static string FilterTypeTag {
@@ -2824,6 +2833,42 @@ namespace FileDBAvalonia.Lang {
         public static string SearchUniqueButton {
             get {
                 return ResourceManager.GetString("SearchUniqueButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Autumn.
+        /// </summary>
+        public static string SeasonAutumn {
+            get {
+                return ResourceManager.GetString("SeasonAutumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spring.
+        /// </summary>
+        public static string SeasonSpring {
+            get {
+                return ResourceManager.GetString("SeasonSpring", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Summer.
+        /// </summary>
+        public static string SeasonSummer {
+            get {
+                return ResourceManager.GetString("SeasonSummer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Winter.
+        /// </summary>
+        public static string SeasonWinter {
+            get {
+                return ResourceManager.GetString("SeasonWinter", resourceCulture);
             }
         }
         

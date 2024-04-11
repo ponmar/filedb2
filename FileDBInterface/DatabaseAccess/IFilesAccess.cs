@@ -5,6 +5,14 @@ using FileDBShared.Model;
 
 namespace FileDBInterface.DatabaseAccess;
 
+public enum Season
+{
+    Spring,
+    Summer,
+    Autumn,
+    Winter,
+}
+
 public interface IFilesAccess
 {
     public IEnumerable<FileModel> GetFiles();
@@ -24,6 +32,7 @@ public interface IFilesAccess
     public IEnumerable<FileModel> SearchFiles(string criteria, bool caseSensitive);
     public IEnumerable<FileModel> SearchFilesBySex(Sex sex);
     public IEnumerable<FileModel> SearchFilesByDate(DateTime start, DateTime end);
+    public IEnumerable<FileModel> SearchFilesBySeason(Season season);
     public IEnumerable<FileModel> SearchFilesWithoutDate();
     public IEnumerable<FileModel> SearchFilesByPath(string criteria);
     public IEnumerable<FileModel> SearchFilesByExtension(string extension);

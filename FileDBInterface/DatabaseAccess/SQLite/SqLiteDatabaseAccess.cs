@@ -10,9 +10,9 @@ using log4net;
 using System.Reflection;
 using log4net.Config;
 using FileDBInterface.Exceptions;
+using FileDBInterface.Extensions;
 using FileDBShared.Validators;
 using FileDBInterface.FilesystemAccess;
-using FileDBInterface.Extensions;
 using FileDBShared;
 
 namespace FileDBInterface.DatabaseAccess.SQLite;
@@ -172,8 +172,22 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
         using var connection = DatabaseSetup.CreateConnection(database);
         foreach (var fileWithDate in connection.Query<FileModel>($"select * from [files] where Datetime is not null"))
         {
-            if (DateTime.TryParse(fileWithDate.Datetime, out var fileDatetime) &&
+            var fileDatetime = DatabaseParsing.ParseFilesDatetime(fileWithDate.Datetime);
+            if (fileDatetime is not null &&
                 fileDatetime >= start && fileDatetime <= end)
+            {
+                yield return fileWithDate;
+            }
+        }
+    }
+
+    public IEnumerable<FileModel> SearchFilesBySeason(Season season)
+    {
+        using var connection = DatabaseSetup.CreateConnection(database);
+        foreach (var fileWithDate in connection.Query<FileModel>($"select * from [files] where Datetime is not null"))
+        {
+            var fileDatetime = DatabaseParsing.ParseFilesDatetime(fileWithDate.Datetime);
+            if (fileDatetime?.GetApproximatedSeason() == season)
             {
                 yield return fileWithDate;
             }

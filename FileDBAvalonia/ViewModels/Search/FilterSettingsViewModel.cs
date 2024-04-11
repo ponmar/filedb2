@@ -2,6 +2,7 @@
 using FileDBAvalonia.Extensions;
 using FileDBAvalonia.FilesFilter;
 using FileDBAvalonia.Model;
+using FileDBInterface.DatabaseAccess;
 using FileDBShared.FileFormats;
 using FileDBShared.Model;
 using System;
@@ -13,7 +14,7 @@ namespace FileDBAvalonia.ViewModels.Search;
 
 public partial class FilterSettingsViewModel : ObservableObject
 {
-    public static IEnumerable<FilterType> FilterTypes => Enum.GetValues<FilterType>().OrderBy(x => x.ToFriendlyString());
+    public static IEnumerable<FilterType> FilterTypes => Enum.GetValues<FilterType>().OrderBy(x => x.ToFriendlyString(), StringComparer.Ordinal);
 
     [ObservableProperty]
     private FilterType selectedFilterType = FilterTypes.First(x => x == FilterType.Text);
@@ -40,6 +41,11 @@ public partial class FilterSettingsViewModel : ObservableObject
 
     [ObservableProperty]
     private FileType selectedFileType = FileTypes.First();
+
+    public static IEnumerable<Season> Seasons => Enum.GetValues<Season>();
+
+    [ObservableProperty]
+    private Season selectedSeason = Seasons.First();
 
     [ObservableProperty]
     private ObservableCollection<PersonForSearch> persons = [];
@@ -154,6 +160,7 @@ public partial class FilterSettingsViewModel : ObservableObject
             FilterType.Tag => new FilterTag(SelectedTag),
             FilterType.Position => new FilterPosition(PositionText, RadiusText),
             FilterType.NumPersons => new FilterNumberOfPersons(NumPersonsMin, NumPersonsMax),
+            FilterType.Season => new FilterSeason(SelectedSeason),
             _ => throw new NotImplementedException(),
         };
     }

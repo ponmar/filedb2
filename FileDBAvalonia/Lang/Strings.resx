@@ -1369,4 +1369,19 @@ YYYY-MM-DDTHH:MM:SS</value>
   <data name="SearchCombineSearchCurrentToolTip" xml:space="preserve">
     <value>Use current search result</value>
   </data>
+  <data name="FilterTypeSeason" xml:space="preserve">
+    <value>Season</value>
+  </data>
+  <data name="SeasonSpring" xml:space="preserve">
+    <value>Spring</value>
+  </data>
+  <data name="SeasonSummer" xml:space="preserve">
+    <value>Summer</value>
+  </data>
+  <data name="SeasonAutumn" xml:space="preserve">
+    <value>Autumn</value>
+  </data>
+  <data name="SeasonWinter" xml:space="preserve">
+    <value>Winter</value>
+  </data>
 </root>
