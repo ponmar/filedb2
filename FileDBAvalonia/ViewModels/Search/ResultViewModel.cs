@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using TextCopy;
 using FileDBShared.Model;
 using System.Linq;
 using FileDBAvalonia.Model;
@@ -32,6 +31,7 @@ public partial class ResultViewModel : ObservableObject
     private readonly IFilesystemAccessProvider filesystemAccessProvider;
     private readonly IImageLoader imageLoader;
     private readonly ISpeeker speeker;
+    private readonly IClipboardService clipboardService;
 
     private readonly Random random = new();
     private readonly DispatcherTimer slideshowTimer = new();
@@ -143,7 +143,7 @@ public partial class ResultViewModel : ObservableObject
         }
     }
 
-    public ResultViewModel(IConfigProvider configProvider, IDialogs dialogs, ISearchResultRepository searchResultRepository, IFilesystemAccessProvider filesystemAccessProvider, IImageLoader imageLoader, ISpeeker speeker)
+    public ResultViewModel(IConfigProvider configProvider, IDialogs dialogs, ISearchResultRepository searchResultRepository, IFilesystemAccessProvider filesystemAccessProvider, IImageLoader imageLoader, ISpeeker speeker, IClipboardService clipboardService)
     {
         this.configProvider = configProvider;
         this.dialogs = dialogs;
@@ -151,6 +151,7 @@ public partial class ResultViewModel : ObservableObject
         this.filesystemAccessProvider = filesystemAccessProvider;
         this.imageLoader = imageLoader;
         this.speeker = speeker;
+        this.clipboardService = clipboardService;
 
         slideshowTimer.Tick += SlideshowTimer_Tick;
         slideshowTimer.Interval = TimeSpan.FromSeconds(configProvider.Config.SlideshowDelay);
@@ -381,7 +382,7 @@ public partial class ResultViewModel : ObservableObject
     [RelayCommand]
     private void CopyFileList()
     {
-        ClipboardService.SetText(Utils.CreateFileList(SearchResult!.Files));
+        clipboardService.SetTextAsync(Utils.CreateFileList(SearchResult!.Files));
     }
 
     private void LoadFile(int index)

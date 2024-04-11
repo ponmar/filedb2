@@ -10,13 +10,14 @@
 		<converters:FilterTypeToStringConverter x:Key="FilterTypeToStringConverter"/>
 	</UserControl.Resources>
 	<StackPanel Orientation="Horizontal">
-		<ComboBox Margin="0 0 3 0" ItemsSource="{Binding FilterTypes}" SelectedItem="{Binding SelectedFilterType}" Width="100" ToolTip.Tip="Filter type" VerticalAlignment="Center">
+		<ComboBox Margin="0 0 3 0" ItemsSource="{Binding FilterTypes}" SelectedItem="{Binding SelectedFilterType}" ToolTip.Tip="Filter type" VerticalAlignment="Center">
 			<ComboBox.ItemTemplate>
 				<DataTemplate>
 					<TextBlock Text="{Binding Path=., Converter={StaticResource FilterTypeToStringConverter}}"/>
 				</DataTemplate>
 			</ComboBox.ItemTemplate>
 		</ComboBox>
-		<ComboBox ItemsSource="{Binding Tags}" SelectedItem="{Binding SelectedTag}" Width="100" VerticalAlignment="Center"/>
+		<ComboBox Margin="0 0 3 0" ItemsSource="{Binding Tags}" SelectedItem="{Binding SelectedTag}" VerticalAlignment="Center"/>
+		<CheckBox Content="!" IsChecked="{Binding Negate}" ToolTip.Tip="{x:Static lang:Strings.FilterNegateTooltip}"/>
 	</StackPanel>
 </UserControl>

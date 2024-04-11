@@ -1,5 +1,4 @@
 ﻿using FileDBShared.Model;
-using TextCopy;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.IO.Abstractions;
@@ -86,8 +85,9 @@ public partial class FileViewModel : ObservableObject
     private readonly IImageLoader imageLoader;
     private readonly IFileSystem fileSystem;
     private readonly IDialogs dialogs;
+    private readonly IClipboardService clipboardService;
 
-    public FileViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IImageLoader imageLoader, IFileSystem fileSystem, IDialogs dialogs)
+    public FileViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IImageLoader imageLoader, IFileSystem fileSystem, IDialogs dialogs, IClipboardService clipboardService)
     {
         this.configProvider = configProvider;
         this.dbAccessProvider = dbAccessProvider;
@@ -95,6 +95,7 @@ public partial class FileViewModel : ObservableObject
         this.imageLoader = imageLoader;
         this.fileSystem = fileSystem;
         this.dialogs = dialogs;
+        this.clipboardService = clipboardService;
 
         this.RegisterForEvent<ConfigUpdated>((x) =>
         {
@@ -158,7 +159,7 @@ public partial class FileViewModel : ObservableObject
     {
         if (SelectedFile is not null)
         {
-            ClipboardService.SetText(Utils.CreateFileList([SelectedFile]));
+            clipboardService.SetTextAsync(Utils.CreateFileList([SelectedFile]));
         }
     }
 

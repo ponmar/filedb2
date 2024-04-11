@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System;
 using FileDBShared.Model;
 using System.Linq;
-using TextCopy;
 using System.IO;
 using System.Collections.ObjectModel;
 using FileDBInterface.Extensions;
@@ -20,7 +19,7 @@ public interface ISearchResultRepository
 {
     IEnumerable<FileModel> Files { get; }
 
-    FileModel? SelectedFile { get; }
+    FileModel? SelectedFile { get; } // TODO: how does repo users know that the selected file has been changed?
 }
 
 public record PersonForSearch(int Id, string Name)
@@ -167,8 +166,9 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
     private readonly IPersonsRepository personsRepository;
     private readonly ILocationsRepository locationsRepository;
     private readonly ITagsRepository tagsRepository;
+    private readonly IClipboardService clipboardService;
 
-    public CriteriaViewModel(IConfigProvider configProvider, IDialogs dialogs, IDatabaseAccessProvider dbAccessProvider, IPersonsRepository personsRepository, ILocationsRepository locationsRepository, ITagsRepository tagsRepository)
+    public CriteriaViewModel(IConfigProvider configProvider, IDialogs dialogs, IDatabaseAccessProvider dbAccessProvider, IPersonsRepository personsRepository, ILocationsRepository locationsRepository, ITagsRepository tagsRepository, IClipboardService clipboardService)
     {
         this.configProvider = configProvider;
         this.dialogs = dialogs;
@@ -176,6 +176,7 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
         this.personsRepository = personsRepository;
         this.locationsRepository = locationsRepository;
         this.tagsRepository = tagsRepository;
+        this.clipboardService = clipboardService;
 
         filterSettings.Add(new(personsRepository, locationsRepository, tagsRepository));
 
@@ -456,7 +457,7 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
     [RelayCommand]
     private void CombineSearchResultCopy()
     {
-        ClipboardService.SetText(CombineSearchResult);
+        clipboardService.SetTextAsync(CombineSearchResult);
     }
 
     [RelayCommand]

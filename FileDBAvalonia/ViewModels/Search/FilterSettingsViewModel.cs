@@ -91,6 +91,9 @@ public partial class FilterSettingsViewModel : ObservableObject
     [ObservableProperty]
     private string numPersonsMax = "1";
 
+    [ObservableProperty]
+    private bool negate;
+
     private readonly IPersonsRepository personsRepository;
     private readonly ILocationsRepository locationsRepository;
     private readonly ITagsRepository tagsRepository;
@@ -153,11 +156,11 @@ public partial class FilterSettingsViewModel : ObservableObject
             FilterType.FileList => new FilterFileList(FileListIds),
             FilterType.ExceptFileList => new FilterExceptFileList(ExceptFileListIds),
             FilterType.FileType => new FilterFileType(SelectedFileType),
-            FilterType.Person => new FilterPerson(SelectedPerson),
+            FilterType.Person => Negate ? new FilterWithoutPerson(SelectedPerson) : new FilterPerson(SelectedPerson),
             FilterType.PersonAge => new FilterPersonAge(PersonAgeFrom, PersonAgeTo),
             FilterType.PersonSex => new FilterPersonSex(SelectedPersonSex),
-            FilterType.Location => new FilterLocation(SelectedLocation),
-            FilterType.Tag => new FilterTag(SelectedTag),
+            FilterType.Location => Negate ? new FilterWithoutLocation(SelectedLocation) : new FilterLocation(SelectedLocation),
+            FilterType.Tag => Negate ? new FilterWithoutTag(SelectedTag) : new FilterTag(SelectedTag),
             FilterType.Position => new FilterPosition(PositionText, RadiusText),
             FilterType.NumPersons => new FilterNumberOfPersons(NumPersonsMin, NumPersonsMax),
             FilterType.Season => new FilterSeason(SelectedSeason),

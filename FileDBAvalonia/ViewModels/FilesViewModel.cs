@@ -16,7 +16,6 @@ using FileDBInterface.Exceptions;
 using FileDBInterface.Extensions;
 using FileDBShared;
 using FileDBShared.Model;
-using TextCopy;
 
 namespace FileDBAvalonia.ViewModels;
 
@@ -54,19 +53,21 @@ public partial class FilesViewModel : ObservableObject
     [ObservableProperty]
     private bool findFileMetadata = true;
 
-    private IConfigProvider configProvider;
+    private readonly IConfigProvider configProvider;
     private readonly IDatabaseAccessProvider dbAccessProvider;
     private readonly IFilesystemAccessProvider filesystemAccessProvider;
     private readonly IDialogs dialogs;
     private readonly IFileSystem fileSystem;
+    private readonly IClipboardService clipboardService;
 
-    public FilesViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IDialogs dialogs, IFileSystem fileSystem)
+    public FilesViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IDialogs dialogs, IFileSystem fileSystem, IClipboardService clipboardService)
     {
         this.configProvider = configProvider;
         this.dbAccessProvider = dbAccessProvider;
         this.filesystemAccessProvider = filesystemAccessProvider;
         this.dialogs = dialogs;
         this.fileSystem = fileSystem;
+        this.clipboardService = clipboardService;
 
         subdirToScan = configProvider.FilePaths.FilesRootDir;
 
@@ -257,7 +258,7 @@ public partial class FilesViewModel : ObservableObject
     [RelayCommand]
     private void CopyImportedFileList()
     {
-        ClipboardService.SetText(ImportedFileList);
+        clipboardService.SetTextAsync(ImportedFileList);
     }
 
     [RelayCommand]
