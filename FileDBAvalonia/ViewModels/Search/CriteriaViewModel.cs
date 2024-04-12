@@ -208,7 +208,7 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
             FilterType.PersonAge => new PersonAgeViewModel(),
             FilterType.PersonSex => new PersonSexViewModel(),
             FilterType.Location => new LocationViewModel(locationsRepository),
-            FilterType.Position => new PositionViewModel(),
+            FilterType.Position => new PositionViewModel(locationsRepository, dbAccessProvider),
             FilterType.Season => new SeasonViewModel(),
             FilterType.NumPersons => new NumPersonsViewModel(),
             FilterType.Tag => new TagViewModel(tagsRepository),

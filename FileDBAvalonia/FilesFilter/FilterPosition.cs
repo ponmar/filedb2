@@ -19,7 +19,7 @@ public class FilterPosition : IFilesFilter
         lat = gpsPos?.lat;
         lon = gpsPos?.lon;
 
-        double.TryParse(radiusText, out radius);
+        _ = double.TryParse(radiusText, out radius);
     }
 
     public bool CanRun() => lat is not null && lon is not null && radius > 0;
