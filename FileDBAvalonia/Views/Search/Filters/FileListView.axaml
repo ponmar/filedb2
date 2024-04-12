@@ -17,6 +17,7 @@
 				</DataTemplate>
 			</ComboBox.ItemTemplate>
 		</ComboBox>
-		<TextBox Text="{Binding FileListIds}" Width="100" VerticalAlignment="Center" ToolTip.Tip="{x:Static lang:Strings.SearchFilterFileListToolTip}"/>
+		<TextBox Margin="0 0 3 0" Text="{Binding FileListIds}" Width="100" VerticalAlignment="Center" ToolTip.Tip="{x:Static lang:Strings.SearchFilterFileListToolTip}"/>
+		<CheckBox Content="!" IsChecked="{Binding Negate}" ToolTip.Tip="{x:Static lang:Strings.FilterNegateTooltip}"/>
 	</StackPanel>
 </UserControl>

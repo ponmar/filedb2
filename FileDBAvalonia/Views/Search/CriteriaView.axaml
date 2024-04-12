@@ -37,7 +37,6 @@
                                     <filters:NoDateTimeView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.NoDateTime}}"/>
                                     <filters:TextView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Text}}"/>
                                     <filters:FileListView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.FileList}}"/>
-                                    <filters:ExceptFileListView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.ExceptFileList}}"/>
                                     <filters:FileTypeView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.FileType}}"/>
 									<filters:PersonView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Person}}"/>
                                     <filters:PersonAgeView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.PersonAge}}"/>
@@ -112,128 +111,7 @@
                     </StackPanel>
                 </WrapPanel>
             </TabItem>
-            <TabItem Header="{x:Static lang:Strings.SearchCategoriesLabel}">
-                <WrapPanel Orientation="Horizontal">
-                    <StackPanel Margin="10,5" Orientation="Horizontal">
-                        <TextBlock
-                            Width="20"
-                            Margin="3,0"
-                            VerticalAlignment="Center"
-                            Text="&#x1F642;"
-                            ToolTip.Tip="{x:Static lang:Strings.SearchPersonsToolTip}" />
-                        <ComboBox
-                            Width="100"
-                            Margin="3,0"
-                            VerticalAlignment="Center"
-                            ItemsSource="{Binding Persons}"
-                            SelectedItem="{Binding SelectedPersonSearch}"
-                            ToolTip.Tip="{x:Static lang:Strings.SearchPersonsToolTip}" />
-                        <Button
-                            Margin="3,0"
-                            Command="{Binding FindFilesWithPersonUniqueCommand}"
-                            Content="{x:Static lang:Strings.SearchUniqueButton}"
-                            IsEnabled="{Binding SelectedPersonSearch, Converter={x:Static ObjectConverters.IsNotNull}}"
-                            ToolTip.Tip="{x:Static lang:Strings.SearchByOnlySelectedPersonToolTip}" />
-                        <Button
-                            Margin="3,0"
-                            Command="{Binding FindFilesWithPersonGroupCommand}"
-                            Content="{x:Static lang:Strings.SearchGroupButton}"
-                            IsEnabled="{Binding SelectedPersonSearch, Converter={x:Static ObjectConverters.IsNotNull}}"
-                            ToolTip.Tip="{x:Static lang:Strings.SearchBySelectedPersonAndOthersToolTip}" />
-                        <Button
-                            Margin="3,0"
-                            Command="{Binding FindFilesWithPersonCommand}"
-                            Content="{x:Static lang:Strings.SearchAnyButton}"
-                            IsEnabled="{Binding SelectedPersonSearch, Converter={x:Static ObjectConverters.IsNotNull}}"
-                            ToolTip.Tip="{x:Static lang:Strings.SearchBySelectedPersonToolTip}" />
-                    </StackPanel>
-
-                    <StackPanel Margin="10,5" Orientation="Horizontal">
-                        <TextBlock
-                            Width="20"
-                            Margin="3,0"
-                            VerticalAlignment="Center"
-                            Text="&#x1F642;"
-                            ToolTip.Tip="{x:Static lang:Strings.SearchPersonsToolTip}" />
-                        <ComboBox
-                            Width="100"
-                            Margin="3,0"
-                            VerticalAlignment="Center"
-                            ItemsSource="{Binding Persons}"
-                            SelectedItem="{Binding SelectedPerson1Search}"
-                            ToolTip.Tip="{x:Static lang:Strings.SearchPerson1ToolTip}" />
-                        <ComboBox
-                            Width="100"
-                            Margin="3,0"
-                            VerticalAlignment="Center"
-                            ItemsSource="{Binding Persons}"
-                            SelectedItem="{Binding SelectedPerson2Search}"
-                            ToolTip.Tip="{x:Static lang:Strings.SearchPerson2ToolTip}" />
-                        <Button
-                            Margin="3,0"
-                            Command="{Binding FindFilesWithPersonsUniqueCommand}"
-                            Content="{x:Static lang:Strings.SearchUniqueButton}"
-                            IsEnabled="{Binding Person1And2Selected}"
-                            ToolTip.Tip="{x:Static lang:Strings.SearchByOnlySelectedPersonsToolTip}" />
-                        <Button
-                            Margin="3,0"
-                            Command="{Binding FindFilesWithPersonsGroupCommand}"
-                            Content="{x:Static lang:Strings.SearchGroupButton}"
-                            IsEnabled="{Binding Person1And2Selected}"
-                            ToolTip.Tip="{x:Static lang:Strings.SearchBySelectedPersonsAndOthersToolTip}" />
-                        <Button
-                            Margin="3,0"
-                            Command="{Binding FindFilesWithPersonsCommand}"
-                            Content="{x:Static lang:Strings.SearchAnyButton}"
-                            IsEnabled="{Binding Person1And2Selected}"
-                            ToolTip.Tip="{x:Static lang:Strings.SearchBySelectedPersonsToolTip}" />
-                    </StackPanel>
-
-                    <StackPanel Margin="10,5" Orientation="Horizontal">
-                        <TextBlock
-                            Width="20"
-                            Margin="3,0"
-                            VerticalAlignment="Center"
-                            Text="&#x1F3E0;"
-                            ToolTip.Tip="{x:Static lang:Strings.SearchLocationsToolTip}" />
-                        <ComboBox
-                            Width="100"
-                            Margin="3,0"
-                            VerticalAlignment="Center"
-                            ItemsSource="{Binding Locations}"
-                            SelectedItem="{Binding SelectedLocationSearch}"
-                            ToolTip.Tip="{x:Static lang:Strings.SearchLocationsToolTip}" />
-                        <Button
-                            Margin="3,0"
-                            Command="{Binding FindFilesWithLocationCommand}"
-                            Content="{x:Static lang:Strings.SearchButton}"
-                            IsEnabled="{Binding SelectedLocationSearch, Converter={x:Static ObjectConverters.IsNotNull}}"
-                            ToolTip.Tip="{x:Static lang:Strings.SearchByLocationToolTip}" />
-                    </StackPanel>
-
-                    <StackPanel Margin="10,5" Orientation="Horizontal">
-                        <TextBlock
-                            Width="20"
-                            Margin="3,0"
-                            VerticalAlignment="Center"
-                            Text="&#x1F516;"
-                            ToolTip.Tip="{x:Static lang:Strings.SearchTagsToolTip}" />
-                        <ComboBox
-                            Width="100"
-                            Margin="3,0"
-                            VerticalAlignment="Center"
-                            ItemsSource="{Binding Tags}"
-                            SelectedItem="{Binding SelectedTagSearch}"
-                            ToolTip.Tip="{x:Static lang:Strings.SearchTagsToolTip}" />
-                        <Button
-                            Margin="3,0"
-                            Command="{Binding FindFilesWithTagCommand}"
-                            Content="{x:Static lang:Strings.SearchButton}"
-                            IsEnabled="{Binding SelectedTagSearch, Converter={x:Static ObjectConverters.IsNotNull}}"
-                            ToolTip.Tip="{x:Static lang:Strings.SearchByTagToolTip}" />
-                    </StackPanel>
-                </WrapPanel>
-            </TabItem>
+            
             <TabItem Header="{x:Static lang:Strings.SearchPositionLabel}">
                 <WrapPanel Orientation="Horizontal">
                     <Grid Margin="10,5" ColumnDefinitions="auto,150,auto" RowDefinitions="auto,auto,auto">

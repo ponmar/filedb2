@@ -1,4 +1,4 @@
-﻿using FileDBAvalonia.ViewModels;
+﻿using FileDBAvalonia.ViewModels.Search.Filters;
 using FileDBInterface.DatabaseAccess;
 using FileDBShared.Model;
 using System.Collections.Generic;

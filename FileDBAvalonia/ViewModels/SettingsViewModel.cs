@@ -10,9 +10,7 @@ using CommunityToolkit.Mvvm.Input;
 using FileDBAvalonia.Configuration;
 using FileDBAvalonia.Dialogs;
 using FileDBAvalonia.Extensions;
-using FileDBAvalonia.Lang;
 using FileDBAvalonia.Model;
-using FileDBAvalonia.Notifiers;
 using FileDBAvalonia.Validators;
 
 namespace FileDBAvalonia.ViewModels;

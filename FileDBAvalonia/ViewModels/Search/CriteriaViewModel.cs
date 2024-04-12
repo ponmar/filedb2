@@ -10,8 +10,8 @@ using FileDBInterface.Extensions;
 using FileDBAvalonia.Model;
 using FileDBAvalonia.Dialogs;
 using System.Threading.Tasks;
-using FileDBAvalonia.ViewModels.Search;
 using FileDBAvalonia.Comparers;
+using FileDBAvalonia.ViewModels.Search.Filters;
 
 namespace FileDBAvalonia.ViewModels;
 
@@ -20,21 +20,6 @@ public interface ISearchResultRepository
     IEnumerable<FileModel> Files { get; }
 
     FileModel? SelectedFile { get; } // TODO: how does repo users know that the selected file has been changed?
-}
-
-public record PersonForSearch(int Id, string Name)
-{
-    public override string ToString() => Name;
-}
-
-public record LocationForSearch(int Id, string Name)
-{
-    public override string ToString() => Name;
-}
-
-public record TagForSearch(int Id, string Name)
-{
-    public override string ToString() => Name;
 }
 
 public partial class CriteriaViewModel : ObservableObject, ISearchResultRepository
@@ -142,7 +127,7 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
     private LocationForSearch? selectedLocationSearch;
 
     [ObservableProperty]
-    private ObservableCollection<FilterSettingsViewModel> filterSettings = [];
+    private ObservableCollection<IFilterViewModel> filterSettings = [];
 
     public bool FilterCanBeRemoved => FilterSettings.Count > 1;
 
@@ -176,30 +161,59 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
         this.tagsRepository = tagsRepository;
         this.clipboardService = clipboardService;
 
-        filterSettings.Add(new(personsRepository, locationsRepository, tagsRepository));
+        filterSettings.Add(CreateDefaultFilter());
 
         ReloadPersons();
         ReloadLocations();
         ReloadTags();
 
-        this.RegisterForEvent<PersonsUpdated>((x) => ReloadPersons());
-        this.RegisterForEvent<LocationsUpdated>((x) => ReloadLocations());
-        this.RegisterForEvent<TagsUpdated>((x) => ReloadTags());
+        this.RegisterForEvent<PersonsUpdated>(x => ReloadPersons());
+        this.RegisterForEvent<LocationsUpdated>(x => ReloadLocations());
+        this.RegisterForEvent<TagsUpdated>(x => ReloadTags());
 
-        this.RegisterForEvent<FilesImported>((x) =>
+        this.RegisterForEvent<FilesImported>(x =>
         {
             ImportedFileList = Utils.CreateFileList(x.Files);
         });
 
-        this.RegisterForEvent<SelectSearchResultFile>((x) =>
+        this.RegisterForEvent<SelectSearchResultFile>(x =>
         {
             SelectedFile = x.File;
         });
 
-        this.RegisterForEvent<CloseSearchResultFile>((x) =>
+        this.RegisterForEvent<CloseSearchResultFile>(x =>
         {
             SelectedFile = null;
         });
+
+        this.RegisterForEvent<SearchFilterSelectionChanged>(x =>
+        {
+            var filterIndex = filterSettings.IndexOf(x.CurrentFilter);
+            filterSettings[filterIndex] = CreateFilterFromType(x.NewFilterType);
+        });
+    }
+
+    private IFilterViewModel CreateFilterFromType(FilterType filterType)
+    {
+        return filterType switch
+        {
+            FilterType.AnnualDate => new AnnualDateViewModel(),
+            FilterType.Date => new DateViewModel(),
+            FilterType.NoMetaData => new NoMetaDataViewModel(),
+            FilterType.NoDateTime => new NoDateTimeViewModel(),
+            FilterType.Text => new TextViewModel(),
+            FilterType.FileList => new FileListViewModel(),
+            FilterType.FileType => new FileTypeViewModel(),
+            FilterType.Person => new PersonViewModel(personsRepository),
+            FilterType.PersonAge => new PersonAgeViewModel(),
+            FilterType.PersonSex => new PersonSexViewModel(),
+            FilterType.Location => new LocationViewModel(locationsRepository),
+            FilterType.Position => new PositionViewModel(),
+            FilterType.Season => new SeasonViewModel(),
+            FilterType.NumPersons => new NumPersonsViewModel(),
+            FilterType.Tag => new TagViewModel(tagsRepository),
+            _ => throw new NotImplementedException(),
+        };
     }
 
     private void ReloadPersons()
@@ -328,90 +342,6 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
     }
 
     [RelayCommand]
-    private void FindFilesWithPerson()
-    {
-        if (SelectedPersonSearch is not null)
-        {
-            Files = dbAccessProvider.DbAccess.SearchFilesWithPersons([SelectedPersonSearch.Id]);
-        }
-    }
-
-    [RelayCommand]
-    private void FindFilesWithPersonUnique()
-    {
-        if (SelectedPersonSearch is not null)
-        {
-            var files = dbAccessProvider.DbAccess.SearchFilesWithPersons([SelectedPersonSearch.Id]);
-            Files = files.Where(x => dbAccessProvider.DbAccess.GetPersonsFromFile(x.Id).Count() == 1);
-        }
-    }
-
-    [RelayCommand]
-    private void FindFilesWithPersonGroup()
-    {
-        if (SelectedPersonSearch is not null)
-        {
-            var files = dbAccessProvider.DbAccess.SearchFilesWithPersons([SelectedPersonSearch.Id]);
-            Files = files.Where(x => dbAccessProvider.DbAccess.GetPersonsFromFile(x.Id).Count() > 1);
-        }
-    }
-
-    [RelayCommand]
-    private void FindFilesWithPersons()
-    {
-        if (SelectedPerson1Search is not null && SelectedPerson2Search is not null)
-        {
-            Files = dbAccessProvider.DbAccess.SearchFilesWithPersons([SelectedPerson1Search.Id, SelectedPerson2Search.Id]);
-        }
-    }
-
-    [RelayCommand]
-    private void FindFilesWithPersonsUnique()
-    {
-        if (SelectedPerson1Search is not null && SelectedPerson2Search is not null)
-        {
-            var files = dbAccessProvider.DbAccess.SearchFilesWithPersons([SelectedPerson1Search.Id]);
-            Files = files.Where(x =>
-            {
-                var filePersons = dbAccessProvider.DbAccess.GetPersonsFromFile(x.Id).ToList();
-                return filePersons.Count == 2 && filePersons.Any(y => y.Id == SelectedPerson2Search.Id);
-            });
-        }
-    }
-
-    [RelayCommand]
-    private void FindFilesWithPersonsGroup()
-    {
-        if (SelectedPerson1Search is not null && SelectedPerson2Search is not null)
-        {
-            var files = dbAccessProvider.DbAccess.SearchFilesWithPersons([SelectedPerson1Search.Id]);
-            Files = files.Where(x =>
-            {
-                var filePersons = dbAccessProvider.DbAccess.GetPersonsFromFile(x.Id).ToList();
-                return filePersons.Count > 2 && filePersons.Any(y => y.Id == SelectedPerson2Search.Id);
-            });
-        }
-    }
-
-    [RelayCommand]
-    private void FindFilesWithLocation()
-    {
-        if (SelectedLocationSearch is not null)
-        {
-            Files = dbAccessProvider.DbAccess.SearchFilesWithLocations([SelectedLocationSearch.Id]);
-        }
-    }
-
-    [RelayCommand]
-    private void FindFilesWithTag()
-    {
-        if (SelectedTagSearch is not null)
-        {
-            Files = dbAccessProvider.DbAccess.SearchFilesWithTags([SelectedTagSearch.Id]);
-        }
-    }
-
-    [RelayCommand]
     private void SetCombineSearch1()
     {
         CombineSearch1 = Utils.CreateFileList(Files);
@@ -468,12 +398,14 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
     [RelayCommand]
     private void AddFilter()
     {
-        FilterSettings.Add(new FilterSettingsViewModel(personsRepository, locationsRepository, tagsRepository));
+        FilterSettings.Add(CreateDefaultFilter());
         OnPropertyChanged(nameof(FilterCanBeRemoved));
     }
 
+    private static IFilterViewModel CreateDefaultFilter() => new TextViewModel();
+
     [RelayCommand]
-    private void RemoveFilter(FilterSettingsViewModel vm)
+    private void RemoveFilter(IFilterViewModel vm)
     {
         FilterSettings.Remove(vm);
         OnPropertyChanged(nameof(FilterCanBeRemoved));

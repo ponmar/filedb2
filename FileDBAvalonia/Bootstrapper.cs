@@ -69,6 +69,9 @@ public static class Bootstrapper
 
         Container.Register(Component.For<ExportSearchResultViewModel>().ImplementedBy<ExportSearchResultViewModel>().LifestyleTransient());
         Container.Register(Component.For<BrowseSubDirectoriesViewModel>().ImplementedBy<BrowseSubDirectoriesViewModel>().LifestyleTransient());
+
+        //Container.Register(Component.For<DateViewModel>().ImplementedBy<DateViewModel>().LifestyleTransient());
+        //Container.Register(Component.For<AnnualDateViewModel>().ImplementedBy<AnnualDateViewModel>().LifestyleTransient());
     }
 
     public static void StartServices()
