@@ -34,6 +34,7 @@ public interface IFilesAccess
     public IEnumerable<FileModel> SearchFilesByDate(DateTime start, DateTime end);
     public IEnumerable<FileModel> SearchFilesBySeason(Season season);
     public IEnumerable<FileModel> SearchFilesByAnnualDate(int startMonth, int startDay, int endMonth, int endDay);
+    public IEnumerable<FileModel> SearchFilesByAnnualDate(int month, int day);
     public IEnumerable<FileModel> SearchFilesWithoutDate();
     public IEnumerable<FileModel> SearchFilesByPath(string criteria);
     public IEnumerable<FileModel> SearchFilesByExtension(string extension);
