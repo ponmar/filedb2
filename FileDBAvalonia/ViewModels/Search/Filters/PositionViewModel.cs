@@ -1,8 +1,8 @@
 ﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using FileDBAvalonia.FilesFilter;
 using FileDBAvalonia.Model;
-using FileDBShared.Model;
 
 namespace FileDBAvalonia.ViewModels.Search.Filters;
 
@@ -28,6 +28,9 @@ public partial class PositionViewModel : AbstractFilterViewModel
         }
     }
 
+    [ObservableProperty]
+    private bool currentFileHasPosition; // TODO: update value
+
     private readonly ILocationsRepository locationsRepository;
     private readonly IDatabaseAccessProvider databaseAccessProvider;
 
@@ -50,6 +53,12 @@ public partial class PositionViewModel : AbstractFilterViewModel
                 LocationsWithPosition.Add(locationToUpdate);
             }
         }
+    }
+
+    [RelayCommand]
+    private void UsePositionFromCurrentFile()
+    {
+        // TODO
     }
 
     protected override IFilesFilter DoCreate() => new FilterPosition(PositionText, RadiusText);
