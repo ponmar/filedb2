@@ -33,13 +33,16 @@ public partial class PositionViewModel : AbstractFilterViewModel
 
     private readonly ILocationsRepository locationsRepository;
     private readonly IDatabaseAccessProvider databaseAccessProvider;
+    private readonly IFileSelector fileSelector;
 
-    public PositionViewModel(ILocationsRepository locationsRepository, IDatabaseAccessProvider databaseAccessProvider) : base(FilterType.Position)
+    public PositionViewModel(ILocationsRepository locationsRepository, IDatabaseAccessProvider databaseAccessProvider, IFileSelector fileSelector) : base(FilterType.Position)
     {
         this.locationsRepository = locationsRepository;
         this.databaseAccessProvider = databaseAccessProvider;
+        this.fileSelector = fileSelector;
         ReloadLocations();
         this.RegisterForEvent<LocationsUpdated>(x => ReloadLocations());
+        this.RegisterForEvent<FileSelectionChanged>(x => CurrentFileHasPosition = fileSelector.SelectedFile?.Position is not null);
     }
 
     private void ReloadLocations()
@@ -58,7 +61,15 @@ public partial class PositionViewModel : AbstractFilterViewModel
     [RelayCommand]
     private void UsePositionFromCurrentFile()
     {
-        // TODO
+        var filePosition = fileSelector.SelectedFile?.Position;
+        if (filePosition is not null)
+        {
+            PositionText = filePosition;
+        }
+        else
+        {
+            // TODO: take position from file location if available?
+        }
     }
 
     protected override IFilesFilter DoCreate() => new FilterPosition(PositionText, RadiusText);

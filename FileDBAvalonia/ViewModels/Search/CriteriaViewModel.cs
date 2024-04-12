@@ -12,17 +12,11 @@ using FileDBAvalonia.Dialogs;
 using System.Threading.Tasks;
 using FileDBAvalonia.Comparers;
 using FileDBAvalonia.ViewModels.Search.Filters;
+using FileDBAvalonia.ViewModels.Search;
 
 namespace FileDBAvalonia.ViewModels;
 
-public interface ISearchResultRepository
-{
-    IEnumerable<FileModel> Files { get; }
-
-    FileModel? SelectedFile { get; } // TODO: how does repo users know that the selected file has been changed?
-}
-
-public partial class CriteriaViewModel : ObservableObject, ISearchResultRepository
+public partial class CriteriaViewModel : ObservableObject
 {
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(HasFiles))]
@@ -30,7 +24,7 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
 
     partial void OnFilesChanged(IEnumerable<FileModel> value)
     {
-        Messenger.Send<NewSearchResult>();
+        Messenger.Send(new TransferSearchResult(value));
     }
 
     public bool HasFiles => Files.Any();
@@ -151,8 +145,9 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
     private readonly ILocationsRepository locationsRepository;
     private readonly ITagsRepository tagsRepository;
     private readonly IClipboardService clipboardService;
+    private readonly IFileSelector fileSelector;
 
-    public CriteriaViewModel(IDialogs dialogs, IDatabaseAccessProvider dbAccessProvider, IPersonsRepository personsRepository, ILocationsRepository locationsRepository, ITagsRepository tagsRepository, IClipboardService clipboardService)
+    public CriteriaViewModel(IDialogs dialogs, IDatabaseAccessProvider dbAccessProvider, IPersonsRepository personsRepository, ILocationsRepository locationsRepository, ITagsRepository tagsRepository, IClipboardService clipboardService, IFileSelector fileSelector)
     {
         this.dialogs = dialogs;
         this.dbAccessProvider = dbAccessProvider;
@@ -160,6 +155,7 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
         this.locationsRepository = locationsRepository;
         this.tagsRepository = tagsRepository;
         this.clipboardService = clipboardService;
+        this.fileSelector = fileSelector;
 
         filterSettings.Add(CreateDefaultFilter());
 
@@ -176,14 +172,9 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
             ImportedFileList = Utils.CreateFileList(x.Files);
         });
 
-        this.RegisterForEvent<SelectSearchResultFile>(x =>
+        this.RegisterForEvent<FileSelectionChanged>(x =>
         {
-            SelectedFile = x.File;
-        });
-
-        this.RegisterForEvent<CloseSearchResultFile>(x =>
-        {
-            SelectedFile = null;
+            SelectedFile = fileSelector.SelectedFile;
         });
 
         this.RegisterForEvent<SearchFilterSelectionChanged>(x =>
@@ -208,7 +199,7 @@ public partial class CriteriaViewModel : ObservableObject, ISearchResultReposito
             FilterType.PersonAge => new PersonAgeViewModel(),
             FilterType.PersonSex => new PersonSexViewModel(),
             FilterType.Location => new LocationViewModel(locationsRepository),
-            FilterType.Position => new PositionViewModel(locationsRepository, dbAccessProvider),
+            FilterType.Position => new PositionViewModel(locationsRepository, dbAccessProvider, fileSelector),
             FilterType.Season => new SeasonViewModel(),
             FilterType.NumPersons => new NumPersonsViewModel(),
             FilterType.Tag => new TagViewModel(tagsRepository),

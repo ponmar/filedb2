@@ -44,7 +44,11 @@ public static class Bootstrapper
                     .ImplementedBy<Model.Model>());
 
         Container.Register(Component.For<MainViewModel>().ImplementedBy<MainViewModel>());
-        Container.Register(Component.For<ResultViewModel>().ImplementedBy<ResultViewModel>());
+        Container.Register(Component.For(
+            typeof(ResultViewModel),
+            typeof(ISearchResultRepository),
+            typeof(IFileSelector))
+                .ImplementedBy<ResultViewModel>());
         Container.Register(Component.For<FileViewModel>().ImplementedBy<FileViewModel>());
         Container.Register(Component.For<NotificationsViewModel>().ImplementedBy<NotificationsViewModel>());
         Container.Register(Component.For<SettingsViewModel>().ImplementedBy<SettingsViewModel>());
@@ -55,11 +59,7 @@ public static class Bootstrapper
         Container.Register(Component.For<RipViewModel>().ImplementedBy<RipViewModel>());
         Container.Register(Component.For<ToolsViewModel>().ImplementedBy<ToolsViewModel>());
         Container.Register(Component.For<FilesViewModel>().ImplementedBy<FilesViewModel>());
-        Container.Register(
-            Component.For(
-                typeof(CriteriaViewModel),
-                typeof(ISearchResultRepository))
-                    .ImplementedBy<CriteriaViewModel>());
+        Container.Register(Component.For<CriteriaViewModel>().ImplementedBy<CriteriaViewModel>());
         Container.Register(Component.For<FileCategorizationViewModel>().ImplementedBy<FileCategorizationViewModel>());
         Container.Register(Component.For<AddLocationViewModel>().ImplementedBy<AddLocationViewModel>().LifestyleTransient());
         Container.Register(Component.For<AddPersonViewModel>().ImplementedBy<AddPersonViewModel>().LifestyleTransient());

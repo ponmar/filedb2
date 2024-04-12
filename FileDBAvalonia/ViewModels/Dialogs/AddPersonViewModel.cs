@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.Input;
 using FileDBAvalonia.Dialogs;
 using FileDBAvalonia.Lang;
 using FileDBAvalonia.Model;
+using FileDBAvalonia.ViewModels.Search;
 using FileDBInterface.Exceptions;
 using FileDBInterface.Extensions;
 using FileDBShared.Model;
@@ -45,17 +46,17 @@ public partial class AddPersonViewModel : ObservableObject
 
     public PersonModel? AffectedPerson { get; private set; }
 
-    public bool CanSetProfilePicture => searchResultRepository.SelectedFile is not null;
+    public bool CanSetProfilePicture => fileSelector.SelectedFile is not null;
 
     private readonly IDatabaseAccessProvider dbAccessProvider;
     private readonly IDialogs dialogs;
-    private readonly ISearchResultRepository searchResultRepository;
+    private readonly IFileSelector fileSelector;
 
-    public AddPersonViewModel(IDatabaseAccessProvider dbAccessProvider, IDialogs dialogs, ISearchResultRepository searchResultRepository, int? personId = null)
+    public AddPersonViewModel(IDatabaseAccessProvider dbAccessProvider, IDialogs dialogs, IFileSelector fileSelector, int? personId = null)
     {
         this.dbAccessProvider = dbAccessProvider;
         this.dialogs = dialogs;
-        this.searchResultRepository = searchResultRepository;
+        this.fileSelector = fileSelector;
         this.personId = personId;
 
         title = personId.HasValue ? Strings.AddPersonEditTitle : Strings.AddPersonAddTitle;
@@ -136,11 +137,11 @@ public partial class AddPersonViewModel : ObservableObject
     [RelayCommand]
     private void SetProfilePictureFromSearchResult()
     {
-        if (searchResultRepository.SelectedFile is null)
+        if (fileSelector.SelectedFile is null)
         {
             return;
         }
 
-        ProfilePictureFileId = searchResultRepository.SelectedFile.Id.ToString();
+        ProfilePictureFileId = fileSelector.SelectedFile.Id.ToString();
     }
 }

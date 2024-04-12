@@ -23,11 +23,20 @@ public class SearchResult
     public int Count => Files.Count;
 }
 
-public partial class ResultViewModel : ObservableObject
+public interface ISearchResultRepository
+{
+    IEnumerable<FileModel> Files { get; }
+}
+
+public interface IFileSelector
+{
+    FileModel? SelectedFile { get; }
+}
+
+public partial class ResultViewModel : ObservableObject, ISearchResultRepository, IFileSelector
 {
     private readonly IConfigProvider configProvider;
     private readonly IDialogs dialogs;
-    private readonly ISearchResultRepository searchResultRepository;
     private readonly IFilesystemAccessProvider filesystemAccessProvider;
     private readonly IImageLoader imageLoader;
     private readonly ISpeeker speeker;
@@ -35,6 +44,10 @@ public partial class ResultViewModel : ObservableObject
 
     private readonly Random random = new();
     private readonly DispatcherTimer slideshowTimer = new();
+
+    public IEnumerable<FileModel> Files => SearchResult is null ? Enumerable.Empty<FileModel>() : SearchResult.Files;
+
+    public FileModel? SelectedFile => SelectedFileIndex == -1 ? null : SearchResult!.Files[SelectedFileIndex];
 
     private SearchResult? SearchResult
     {
@@ -63,13 +76,13 @@ public partial class ResultViewModel : ObservableObject
                     else
                     {
                         SelectedFileIndex = -1;
-                        Messenger.Send<CloseSearchResultFile>();
+                        Messenger.Send<FileSelectionChanged>();
                     }
                 }
                 else
                 {
                     SelectedFileIndex = -1;
-                    Messenger.Send<CloseSearchResultFile>();
+                    Messenger.Send<FileSelectionChanged>();
                 }
 
                 FireSearchResultUpdatedEvents();
@@ -143,11 +156,10 @@ public partial class ResultViewModel : ObservableObject
         }
     }
 
-    public ResultViewModel(IConfigProvider configProvider, IDialogs dialogs, ISearchResultRepository searchResultRepository, IFilesystemAccessProvider filesystemAccessProvider, IImageLoader imageLoader, ISpeeker speeker, IClipboardService clipboardService)
+    public ResultViewModel(IConfigProvider configProvider, IDialogs dialogs, IFilesystemAccessProvider filesystemAccessProvider, IImageLoader imageLoader, ISpeeker speeker, IClipboardService clipboardService)
     {
         this.configProvider = configProvider;
         this.dialogs = dialogs;
-        this.searchResultRepository = searchResultRepository;
         this.filesystemAccessProvider = filesystemAccessProvider;
         this.imageLoader = imageLoader;
         this.speeker = speeker;
@@ -163,10 +175,10 @@ public partial class ResultViewModel : ObservableObject
             slideshowTimer.Interval = TimeSpan.FromSeconds(configProvider.Config.SlideshowDelay);
         });
 
-        this.RegisterForEvent<NewSearchResult>((x) =>
+        this.RegisterForEvent<TransferSearchResult>(x =>
         {
             StopSlideshow();
-            SearchResult = new SearchResult() { Files = this.searchResultRepository.Files.ToList() };
+            SearchResult = new SearchResult() { Files = x.Files.ToList() };
         });
 
         this.RegisterForEvent<RemoveFileFromSearchResult>((x) =>
@@ -402,7 +414,7 @@ public partial class ResultViewModel : ObservableObject
                 selection.Orientation = filesystemAccessProvider.FilesystemAccess.ParseFileMetadata(fileAbsolutePath).Orientation;
             }
 
-            Messenger.Send(new SelectSearchResultFile(selection));
+            Messenger.Send<FileSelectionChanged>();
 
             var numImagesToLoad = Math.Max(1, configProvider.Config.NumImagesToPreload);
             for (int preloadIndex = index + 1; preloadIndex <= index + numImagesToLoad; preloadIndex++)

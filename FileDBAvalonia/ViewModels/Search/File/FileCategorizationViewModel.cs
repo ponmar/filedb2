@@ -136,8 +136,9 @@ public partial class FileCategorizationViewModel : ObservableObject
     private readonly IPersonsRepository personsRepository;
     private readonly ILocationsRepository locationsRepository;
     private readonly ITagsRepository tagsRepository;
+    private readonly IFileSelector fileSelector;
 
-    public FileCategorizationViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IDialogs dialogs, IFilesystemAccessProvider filesystemAccessProvider, IPersonsRepository personsRepository, ILocationsRepository locationsRepository, ITagsRepository tagsRepository)
+    public FileCategorizationViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IDialogs dialogs, IFilesystemAccessProvider filesystemAccessProvider, IPersonsRepository personsRepository, ILocationsRepository locationsRepository, ITagsRepository tagsRepository, IFileSelector fileSelector)
     {
         this.configProvider = configProvider;
         this.dbAccessProvider = dbAccessProvider;
@@ -146,6 +147,7 @@ public partial class FileCategorizationViewModel : ObservableObject
         this.personsRepository = personsRepository;
         this.locationsRepository = locationsRepository;
         this.tagsRepository = tagsRepository;
+        this.fileSelector = fileSelector;
 
         ReadWriteMode = !configProvider.Config.ReadOnly;
 
@@ -162,14 +164,16 @@ public partial class FileCategorizationViewModel : ObservableObject
             ReadWriteMode = !configProvider.Config.ReadOnly;
         });
 
-        this.RegisterForEvent<SelectSearchResultFile>((x) =>
+        this.RegisterForEvent<FileSelectionChanged>((x) =>
         {
-            LoadFile(x.File);
-        });
-
-        this.RegisterForEvent<CloseSearchResultFile>((x) =>
-        {
-            CloseFile();
+            if (fileSelector.SelectedFile is null)
+            {
+                CloseFile();
+            }
+            else
+            {
+                LoadFile(fileSelector.SelectedFile);
+            }
         });
 
         this.RegisterForEvent<CategorizationFunctionKeyPressed>(async (x) =>

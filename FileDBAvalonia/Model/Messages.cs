@@ -28,9 +28,8 @@ public record SearchFilterSelectionChanged(IFilterViewModel CurrentFilter, Filte
 public record SetTheme(Theme Theme);
 public record FullscreenBrowsingRequested(bool Fullscreen);
 
-public record NewSearchResult();
-public record SelectSearchResultFile(FileModel File);
-public record CloseSearchResultFile();
+public record TransferSearchResult(IEnumerable<FileModel> Files);
+public record FileSelectionChanged();
 public record RemoveFileFromSearchResult(FileModel File);
 
 public record SelectPrevFile;

@@ -4,6 +4,7 @@ using FileDBAvalonia.Model;
 using FileDBAvalonia.Dialogs;
 using FileDBAvalonia;
 using FileDBAvalonia.ViewModels.Search.File;
+using FileDBAvalonia.ViewModels.Search;
 
 namespace FileDBAvaloniaTests.ViewModels;
 
@@ -18,6 +19,7 @@ public class FileCategorizationViewModelTests
     private IPersonsRepository personsRepository;
     private ILocationsRepository locationsRepository;
     private ITagsRepository tagsRepository;
+    private IFileSelector fileSelector;
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
     private readonly List<PersonModel> persons = [];
@@ -36,6 +38,7 @@ public class FileCategorizationViewModelTests
         personsRepository = A.Fake<IPersonsRepository>();
         locationsRepository = A.Fake<ILocationsRepository>();
         tagsRepository = A.Fake<ITagsRepository>();
+        fileSelector = A.Fake<IFileSelector>();
 
         persons.Clear();
         locations.Clear();
@@ -157,7 +160,7 @@ public class FileCategorizationViewModelTests
 
     private FileCategorizationViewModel CreateViewModel()
     {
-        return new FileCategorizationViewModel(configProvider, dbAccessProvider, dialogs, filesystemAccessProvider, personsRepository, locationsRepository, tagsRepository);
+        return new FileCategorizationViewModel(configProvider, dbAccessProvider, dialogs, filesystemAccessProvider, personsRepository, locationsRepository, tagsRepository, fileSelector);
     }
 
     private void PopulateRepositories()
@@ -174,8 +177,9 @@ public class FileCategorizationViewModelTests
         tags.Add(new() { Id = 1, Name = "Favorites" });
     }
 
-    private static void LoadAFile(int fileId = 1)
+    private void LoadAFile(int fileId = 1)
     {
-        Messenger.Send(new SelectSearchResultFile(new FileModel() { Id = fileId, Path = "file.jpg", }));
+        A.CallTo(() => fileSelector.SelectedFile).Returns(new FileModel() { Id = fileId, Path = "file.jpg", });
+        Messenger.Send<FileSelectionChanged>();
     }
 }

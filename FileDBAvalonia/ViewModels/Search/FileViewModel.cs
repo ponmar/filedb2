@@ -86,8 +86,9 @@ public partial class FileViewModel : ObservableObject
     private readonly IFileSystem fileSystem;
     private readonly IDialogs dialogs;
     private readonly IClipboardService clipboardService;
+    private readonly IFileSelector fileSelector;
 
-    public FileViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IImageLoader imageLoader, IFileSystem fileSystem, IDialogs dialogs, IClipboardService clipboardService)
+    public FileViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IImageLoader imageLoader, IFileSystem fileSystem, IDialogs dialogs, IClipboardService clipboardService, IFileSelector fileSelector)
     {
         this.configProvider = configProvider;
         this.dbAccessProvider = dbAccessProvider;
@@ -96,20 +97,23 @@ public partial class FileViewModel : ObservableObject
         this.fileSystem = fileSystem;
         this.dialogs = dialogs;
         this.clipboardService = clipboardService;
+        this.fileSelector = fileSelector;
 
         this.RegisterForEvent<ConfigUpdated>((x) =>
         {
             OnPropertyChanged(nameof(LargeTextMode));
         });
 
-        this.RegisterForEvent<SelectSearchResultFile>((x) =>
+        this.RegisterForEvent<FileSelectionChanged>((x) =>
         {
-            LoadFile(x.File);
-        });
-
-        this.RegisterForEvent<CloseSearchResultFile>((x) =>
-        {
-            CloseFile();
+            if (fileSelector.SelectedFile is null)
+            {
+                CloseFile();
+            }
+            else
+            {
+                LoadFile(fileSelector.SelectedFile);
+            }
         });
 
         this.RegisterForEvent<ImageLoaded>((x) =>
