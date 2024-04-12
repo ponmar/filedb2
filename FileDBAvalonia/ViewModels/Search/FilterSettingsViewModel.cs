@@ -20,6 +20,9 @@ public partial class FilterSettingsViewModel : ObservableObject
     private FilterType selectedFilterType = FilterTypes.First(x => x == FilterType.Text);
 
     [ObservableProperty]
+    private bool dateIsRange = false;
+
+    [ObservableProperty]
     private DateTimeOffset firstDateTime = DateTime.Now;
 
     [ObservableProperty]
@@ -90,6 +93,9 @@ public partial class FilterSettingsViewModel : ObservableObject
 
     [ObservableProperty]
     private string numPersonsMax = "1";
+
+    [ObservableProperty]
+    private bool annualDateIsRange = false;
 
     public static IEnumerable<int> Months { get; } = Enumerable.Range(1, 12);
 
@@ -165,7 +171,7 @@ public partial class FilterSettingsViewModel : ObservableObject
     {
         return SelectedFilterType switch
         {
-            FilterType.DateTime => new FilterDateTime(FirstDateTime, SecondDateTime),
+            FilterType.Date => DateIsRange ? new FilterDateRange(FirstDateTime, SecondDateTime) : new FilterDate(FirstDateTime),
             FilterType.NoDateTime => new FilterWithoutDateTime(),
             FilterType.NoMetaData => new FilterWithoutMetaData(),
             FilterType.Text => new FilterText(TextFilterSearchPattern, TextFilterCaseSensitive),
@@ -180,7 +186,7 @@ public partial class FilterSettingsViewModel : ObservableObject
             FilterType.Position => new FilterPosition(PositionText, RadiusText),
             FilterType.NumPersons => new FilterNumberOfPersons(NumPersonsMin, NumPersonsMax),
             FilterType.Season => new FilterSeason(SelectedSeason),
-            FilterType.AnnualDate => new FilterAnnualDate(SelectedAnnualMonthStart, SelectedAnnualDayStart, SelectedAnnualMonthEnd, SelectedAnnualDayEnd),
+            FilterType.AnnualDate => AnnualDateIsRange ? new FilterAnnualDateRange(SelectedAnnualMonthStart, SelectedAnnualDayStart, SelectedAnnualMonthEnd, SelectedAnnualDayEnd) : new FilterAnnualDate(SelectedAnnualMonthStart, SelectedAnnualDayStart),
             _ => throw new NotImplementedException(),
         };
     }

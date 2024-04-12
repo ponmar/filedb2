@@ -32,7 +32,7 @@
                                         IsEnabled="{Binding DataContext.FilterCanBeRemoved, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                         ToolTip.Tip="Remove filter" />
 
-                                    <filters:DateTimeView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.DateTime}}"/>
+                                    <filters:DateView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Date}}"/>
                                     <filters:NoMetaDataView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.NoMetaData}}"/>
                                     <filters:NoDateTimeView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.NoDateTime}}"/>
                                     <filters:TextView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Text}}"/>

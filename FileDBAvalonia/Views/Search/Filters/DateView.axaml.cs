@@ -2,9 +2,9 @@ using Avalonia.Controls;
 
 namespace FileDBAvalonia.Views.Search.Filters
 {
-    public partial class DateTimeView : UserControl
+    public partial class DateView : UserControl
     {
-        public DateTimeView()
+        public DateView()
         {
             InitializeComponent();
         }

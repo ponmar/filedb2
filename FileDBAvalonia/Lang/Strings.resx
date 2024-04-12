@@ -1271,7 +1271,7 @@ YYYY-MM-DDTHH:MM:SS</value>
     <value>Person sex</value>
   </data>
   <data name="FilterTypeDateTime" xml:space="preserve">
-    <value>Date (between)</value>
+    <value>Date</value>
   </data>
   <data name="FilterTypePosition" xml:space="preserve">
     <value>GPS position</value>
@@ -1388,6 +1388,9 @@ YYYY-MM-DDTHH:MM:SS</value>
     <value>Winter</value>
   </data>
   <data name="FilterTypeAnnualDate" xml:space="preserve">
-    <value>Date (annual between)</value>
+    <value>Date (annual)</value>
+  </data>
+  <data name="SearchFilterRange" xml:space="preserve">
+    <value>Range</value>
   </data>
 </root>

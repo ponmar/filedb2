@@ -5,7 +5,7 @@ namespace FileDBAvalonia.Model;
 
 public enum FilterType
 {
-    DateTime,
+    Date,
     NoMetaData,
     NoDateTime,
     Text,
@@ -29,7 +29,7 @@ public static class FilterTypeExtensions
     {
         return filterType switch
         {
-            FilterType.DateTime => Strings.FilterTypeDateTime,
+            FilterType.Date => Strings.FilterTypeDateTime,
             FilterType.NoMetaData => Strings.FilterTypeNoMetaData,
             FilterType.NoDateTime => Strings.FilterTypeNoDateTime,
             FilterType.Text => Strings.FilterTypeText,

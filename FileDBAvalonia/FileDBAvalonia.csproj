@@ -54,6 +54,9 @@
     <Compile Update="Views\Search\Filters\AnnualDateView.axaml.cs">
       <DependentUpon>AnnualDateView.axaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\Search\Filters\DateView.axaml.cs">
+      <DependentUpon>DateView.axaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\Search\Filters\SeasonView.axaml.cs">
       <DependentUpon>SeasonView.axaml</DependentUpon>
     </Compile>

@@ -1271,7 +1271,7 @@
     <value>Persons kön</value>
   </data>
   <data name="FilterTypeDateTime" xml:space="preserve">
-    <value>Datum (mellan)</value>
+    <value>Datum</value>
   </data>
   <data name="FilterTypePosition" xml:space="preserve">
     <value>GPS-position</value>
@@ -1388,6 +1388,9 @@
     <value>Vinter</value>
   </data>
   <data name="FilterTypeAnnualDate" xml:space="preserve">
-    <value>Datum (årligen mellan)</value>
+    <value>Datum (årligen)</value>
+  </data>
+  <data name="SearchFilterRange" xml:space="preserve">
+    <value>Omfång</value>
   </data>
 </root>

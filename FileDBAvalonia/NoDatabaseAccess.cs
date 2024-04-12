@@ -88,6 +88,11 @@ public class NoDatabaseAccess : IDatabaseAccess
         return null;
     }
 
+    public IEnumerable<FileModel> SearchFilesByDate(DateTime date)
+    {
+        return [];
+    }
+
     public IEnumerable<FileModel> SearchFilesByDate(DateTime start, DateTime end)
     {
         return [];

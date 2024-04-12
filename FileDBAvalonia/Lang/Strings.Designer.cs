@@ -1343,7 +1343,7 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Date (annual between).
+        ///   Looks up a localized string similar to Date (annual).
         /// </summary>
         public static string FilterTypeAnnualDate {
             get {
@@ -1352,7 +1352,7 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Date (between).
+        ///   Looks up a localized string similar to Date.
         /// </summary>
         public static string FilterTypeDateTime {
             get {
@@ -2293,6 +2293,15 @@ namespace FileDBAvalonia.Lang {
         public static string SearchFilterPositionRadiusInputToolTip {
             get {
                 return ResourceManager.GetString("SearchFilterPositionRadiusInputToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Range.
+        /// </summary>
+        public static string SearchFilterRange {
+            get {
+                return ResourceManager.GetString("SearchFilterRange", resourceCulture);
             }
         }
         
