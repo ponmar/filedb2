@@ -1,24 +1,59 @@
 ﻿using System;
 using FileDBAvalonia.Lang;
+using FileDBAvalonia.ViewModels.Search.Filters;
 
 namespace FileDBAvalonia.Model;
 
+public class FilterTypeViewModelAttribute(Type viewModelType) : Attribute
+{
+    public Type ViewModelType { get; } = viewModelType;
+}
+
 public enum FilterType
 {
+    [FilterTypeViewModel(typeof(DateViewModel))]
     Date,
+
+    [FilterTypeViewModel(typeof(NoMetaDataViewModel))]
     NoMetaData,
+
+    [FilterTypeViewModel(typeof(NoDateTimeViewModel))]
     NoDateTime,
+
+    [FilterTypeViewModel(typeof(TextViewModel))]
     Text,
+
+    [FilterTypeViewModel(typeof(FileListViewModel))]
     FileList,
+
+    [FilterTypeViewModel(typeof(FileTypeViewModel))]
     FileType,
+
+    [FilterTypeViewModel(typeof(PersonViewModel))]
     Person,
+
+    [FilterTypeViewModel(typeof(PersonAgeViewModel))]
     PersonAge,
+
+    [FilterTypeViewModel(typeof(PersonSexViewModel))]
     PersonSex,
+
+    [FilterTypeViewModel(typeof(LocationViewModel))]
     Location,
+
+    [FilterTypeViewModel(typeof(TagViewModel))]
     Tag,
+
+    [FilterTypeViewModel(typeof(PositionViewModel))]
     Position,
+
+    [FilterTypeViewModel(typeof(NumPersonsViewModel))]
     NumPersons,
+
+    [FilterTypeViewModel(typeof(SeasonViewModel))]
     Season,
+
+    [FilterTypeViewModel(typeof(AnnualDateViewModel))]
     AnnualDate,
 }
 

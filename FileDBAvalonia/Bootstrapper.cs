@@ -7,6 +7,8 @@ using FileDBAvalonia.ViewModels;
 using FileDBAvalonia.ViewModels.Dialogs;
 using FileDBAvalonia.ViewModels.Search;
 using FileDBAvalonia.ViewModels.Search.File;
+using FileDBAvalonia.ViewModels.Search.Filters;
+using Microsoft.CodeAnalysis;
 using System.IO.Abstractions;
 
 namespace FileDBAvalonia;
@@ -70,8 +72,22 @@ public static class Bootstrapper
         Container.Register(Component.For<ExportSearchResultViewModel>().ImplementedBy<ExportSearchResultViewModel>().LifestyleTransient());
         Container.Register(Component.For<BrowseSubDirectoriesViewModel>().ImplementedBy<BrowseSubDirectoriesViewModel>().LifestyleTransient());
 
-        //Container.Register(Component.For<DateViewModel>().ImplementedBy<DateViewModel>().LifestyleTransient());
-        //Container.Register(Component.For<AnnualDateViewModel>().ImplementedBy<AnnualDateViewModel>().LifestyleTransient());
+        Container.Register(Component.For<FilterSelectionViewModel>().ImplementedBy<FilterSelectionViewModel>().LifestyleTransient());
+        Container.Register(Component.For<AnnualDateViewModel>().ImplementedBy<AnnualDateViewModel>().LifestyleTransient());
+        Container.Register(Component.For<DateViewModel>().ImplementedBy<DateViewModel>().LifestyleTransient());
+        Container.Register(Component.For<NoMetaDataViewModel>().ImplementedBy<NoMetaDataViewModel>().LifestyleTransient());
+        Container.Register(Component.For<NoDateTimeViewModel>().ImplementedBy<NoDateTimeViewModel>().LifestyleTransient());
+        Container.Register(Component.For<TextViewModel>().ImplementedBy<TextViewModel>().LifestyleTransient());
+        Container.Register(Component.For<FileListViewModel>().ImplementedBy<FileListViewModel>().LifestyleTransient());
+        Container.Register(Component.For<FileTypeViewModel>().ImplementedBy<FileTypeViewModel>().LifestyleTransient());
+        Container.Register(Component.For<PersonViewModel>().ImplementedBy<PersonViewModel>().LifestyleTransient());
+        Container.Register(Component.For<PersonAgeViewModel>().ImplementedBy<PersonAgeViewModel>().LifestyleTransient());
+        Container.Register(Component.For<PersonSexViewModel>().ImplementedBy<PersonSexViewModel>().LifestyleTransient());
+        Container.Register(Component.For<LocationViewModel>().ImplementedBy<LocationViewModel>().LifestyleTransient());
+        Container.Register(Component.For<PositionViewModel>().ImplementedBy<PositionViewModel>().LifestyleTransient());
+        Container.Register(Component.For<SeasonViewModel>().ImplementedBy<SeasonViewModel>().LifestyleTransient());
+        Container.Register(Component.For<NumPersonsViewModel>().ImplementedBy<NumPersonsViewModel>().LifestyleTransient());
+        Container.Register(Component.For<TagViewModel>().ImplementedBy<TagViewModel>().LifestyleTransient());
     }
 
     public static void StartServices()

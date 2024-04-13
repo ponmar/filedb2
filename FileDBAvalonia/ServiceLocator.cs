@@ -1,9 +1,15 @@
-﻿using Castle.MicroKernel;
+﻿using System;
+using Castle.MicroKernel;
 
 namespace FileDBAvalonia;
 
 public class ServiceLocator
 {
+    public static object Resolve(Type type)
+    {
+        return Bootstrapper.Container.Resolve(type);
+    }
+
     public static T Resolve<T>()
     {
         return Bootstrapper.Container.Resolve<T>();

@@ -63,25 +63,17 @@ public partial class CriteriaViewModel : ObservableObject
         
     private readonly IDialogs dialogs;
     private readonly IDatabaseAccessProvider dbAccessProvider;
-    private readonly IPersonsRepository personsRepository;
-    private readonly ILocationsRepository locationsRepository;
-    private readonly ITagsRepository tagsRepository;
     private readonly IClipboardService clipboardService;
-    private readonly IFileSelector fileSelector;
     private readonly ISearchResultRepository searchResultRepository;
 
-    public CriteriaViewModel(IDialogs dialogs, IDatabaseAccessProvider dbAccessProvider, IPersonsRepository personsRepository, ILocationsRepository locationsRepository, ITagsRepository tagsRepository, IClipboardService clipboardService, IFileSelector fileSelector, ISearchResultRepository searchResultRepository)
+    public CriteriaViewModel(IDialogs dialogs, IDatabaseAccessProvider dbAccessProvider, IClipboardService clipboardService, ISearchResultRepository searchResultRepository, IFileSelector fileSelector)
     {
         this.dialogs = dialogs;
         this.dbAccessProvider = dbAccessProvider;
-        this.personsRepository = personsRepository;
-        this.locationsRepository = locationsRepository;
-        this.tagsRepository = tagsRepository;
         this.clipboardService = clipboardService;
-        this.fileSelector = fileSelector;
         this.searchResultRepository = searchResultRepository;
 
-        filterSettings.Add(CreateDefaultFilter());
+        filterSettings.Add(ServiceLocator.Resolve<FilterSelectionViewModel>());
 
         this.RegisterForEvent<FilesAdded>(x =>
         {
@@ -202,12 +194,9 @@ public partial class CriteriaViewModel : ObservableObject
     [RelayCommand]
     private void AddFilter()
     {
-        FilterSettings.Add(CreateDefaultFilter());
+        FilterSettings.Add(ServiceLocator.Resolve<FilterSelectionViewModel>());
         OnPropertyChanged(nameof(FilterCanBeRemoved));
     }
-
-    private FilterSelectionViewModel CreateDefaultFilter() =>
-        new FilterSelectionViewModel(dbAccessProvider, personsRepository, locationsRepository, tagsRepository, fileSelector);
 
     [RelayCommand]
     private void RemoveFilter(FilterSelectionViewModel vm)
