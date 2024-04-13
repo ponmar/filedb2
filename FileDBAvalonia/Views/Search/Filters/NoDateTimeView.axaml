@@ -6,16 +6,4 @@
 			 xmlns:converters="clr-namespace:FileDBAvalonia.Converters"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="FileDBAvalonia.Views.Search.Filters.NoDateTimeView">
-	<UserControl.Resources>
-		<converters:FilterTypeToStringConverter x:Key="FilterTypeToStringConverter"/>
-	</UserControl.Resources>
-	<StackPanel Orientation="Horizontal">
-		<ComboBox ItemsSource="{Binding FilterTypes}" SelectedItem="{Binding SelectedFilterType}" ToolTip.Tip="Filter type" VerticalAlignment="Center">
-			<ComboBox.ItemTemplate>
-				<DataTemplate>
-					<TextBlock Text="{Binding Path=., Converter={StaticResource FilterTypeToStringConverter}}"/>
-				</DataTemplate>
-			</ComboBox.ItemTemplate>
-		</ComboBox>
-	</StackPanel>
 </UserControl>

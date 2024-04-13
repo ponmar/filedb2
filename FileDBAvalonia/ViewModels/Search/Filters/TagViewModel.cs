@@ -10,7 +10,7 @@ public record TagForSearch(int Id, string Name)
     public override string ToString() => Name;
 }
 
-public partial class TagViewModel : AbstractFilterViewModel
+public partial class TagViewModel : ObservableObject, IFilterViewModel
 {
     [ObservableProperty]
     private ObservableCollection<TagForSearch> tags = [];
@@ -23,7 +23,7 @@ public partial class TagViewModel : AbstractFilterViewModel
 
     private readonly ITagsRepository tagsRepository;
 
-    public TagViewModel(ITagsRepository tagsRepository) : base(FilterType.Tag)
+    public TagViewModel(ITagsRepository tagsRepository)
     {
         this.tagsRepository = tagsRepository;
         ReloadTags();
@@ -39,6 +39,6 @@ public partial class TagViewModel : AbstractFilterViewModel
         }
     }
 
-    protected override IFilesFilter DoCreate() =>
+    public IFilesFilter CreateFilter() =>
         Negate ? new FilterWithoutTag(SelectedTag) : new FilterTag(SelectedTag);
 }

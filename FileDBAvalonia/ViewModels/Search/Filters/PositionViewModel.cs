@@ -6,7 +6,7 @@ using FileDBAvalonia.Model;
 
 namespace FileDBAvalonia.ViewModels.Search.Filters;
 
-public partial class PositionViewModel : AbstractFilterViewModel
+public partial class PositionViewModel : ObservableObject, IFilterViewModel
 {
     [ObservableProperty]
     private string positionText = string.Empty;
@@ -35,7 +35,7 @@ public partial class PositionViewModel : AbstractFilterViewModel
     private readonly IDatabaseAccessProvider databaseAccessProvider;
     private readonly IFileSelector fileSelector;
 
-    public PositionViewModel(ILocationsRepository locationsRepository, IDatabaseAccessProvider databaseAccessProvider, IFileSelector fileSelector) : base(FilterType.Position)
+    public PositionViewModel(ILocationsRepository locationsRepository, IDatabaseAccessProvider databaseAccessProvider, IFileSelector fileSelector)
     {
         this.locationsRepository = locationsRepository;
         this.databaseAccessProvider = databaseAccessProvider;
@@ -72,5 +72,5 @@ public partial class PositionViewModel : AbstractFilterViewModel
         }
     }
 
-    protected override IFilesFilter DoCreate() => new FilterPosition(PositionText, RadiusText);
+    public IFilesFilter CreateFilter() => new FilterPosition(PositionText, RadiusText);
 }

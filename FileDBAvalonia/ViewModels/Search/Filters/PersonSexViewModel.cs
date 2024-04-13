@@ -9,16 +9,12 @@ using FileDBShared.Model;
 
 namespace FileDBAvalonia.ViewModels.Search.Filters;
 
-public partial class PersonSexViewModel : AbstractFilterViewModel
+public partial class PersonSexViewModel : ObservableObject, IFilterViewModel
 {
     public static IEnumerable<Sex> PersonSexValues { get; } = Enum.GetValues<Sex>().OrderBy(x => x.ToFriendlyString());
 
     [ObservableProperty]
     private Sex selectedPersonSex = PersonSexValues.First();
 
-    public PersonSexViewModel() : base(FilterType.PersonSex)
-    {
-    }
-
-    protected override IFilesFilter DoCreate() => new FilterPersonSex(SelectedPersonSex);
+    public IFilesFilter CreateFilter() => new FilterPersonSex(SelectedPersonSex);
 }

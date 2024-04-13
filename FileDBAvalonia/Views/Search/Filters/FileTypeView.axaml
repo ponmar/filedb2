@@ -7,17 +7,9 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="FileDBAvalonia.Views.Search.Filters.FileTypeView">
 	<UserControl.Resources>
-		<converters:FilterTypeToStringConverter x:Key="FilterTypeToStringConverter"/>
 		<converters:FileTypeToStringConverter x:Key="FileTypeToStringConverter"/>
 	</UserControl.Resources>
-	<StackPanel Orientation="Horizontal">
-		<ComboBox Margin="0 0 3 0" ItemsSource="{Binding FilterTypes}" SelectedItem="{Binding SelectedFilterType}" ToolTip.Tip="Filter type" VerticalAlignment="Center">
-			<ComboBox.ItemTemplate>
-				<DataTemplate>
-					<TextBlock Text="{Binding Path=., Converter={StaticResource FilterTypeToStringConverter}}"/>
-				</DataTemplate>
-			</ComboBox.ItemTemplate>
-		</ComboBox>
+	<StackPanel Orientation="Horizontal" DataContext="{Binding FilterViewModel}">
 		<ComboBox ItemsSource="{Binding FileTypes}" SelectedItem="{Binding SelectedFileType}" ToolTip.Tip="File type" VerticalAlignment="Center">
 			<ComboBox.ItemTemplate>
 				<DataTemplate>

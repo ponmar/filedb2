@@ -10,7 +10,7 @@ public record LocationForSearch(int Id, string Name)
     public override string ToString() => Name;
 }
 
-public partial class LocationViewModel : AbstractFilterViewModel
+public partial class LocationViewModel : ObservableObject, IFilterViewModel
 {
     [ObservableProperty]
     private ObservableCollection<LocationForSearch> locations = [];
@@ -26,7 +26,7 @@ public partial class LocationViewModel : AbstractFilterViewModel
 
     private readonly ILocationsRepository locationsRepository;
 
-    public LocationViewModel(ILocationsRepository locationsRepository) : base(FilterType.Location)
+    public LocationViewModel(ILocationsRepository locationsRepository)
     {
         this.locationsRepository = locationsRepository;
         ReloadLocations();
@@ -47,6 +47,6 @@ public partial class LocationViewModel : AbstractFilterViewModel
         }
     }
 
-    protected override IFilesFilter DoCreate() =>
+    public IFilesFilter CreateFilter() =>
         Negate ? new FilterWithoutLocation(SelectedLocation) : new FilterLocation(SelectedLocation);
 }

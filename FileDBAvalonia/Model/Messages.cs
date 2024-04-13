@@ -1,6 +1,5 @@
 ﻿using Avalonia.Media.Imaging;
 using FileDBAvalonia.Configuration;
-using FileDBAvalonia.ViewModels.Search.Filters;
 using FileDBShared.Model;
 using System;
 using System.Collections.Generic;
@@ -22,8 +21,6 @@ public record PersonsUpdated;
 public record LocationsUpdated;
 public record TagsUpdated;
 public record CategorizationFunctionKeyPressed(int FunctionKey);
-
-public record SearchFilterSelectionChanged(IFilterViewModel CurrentFilter, FilterType NewFilterType);
 
 public record SetTheme(Theme Theme);
 public record FullscreenBrowsingRequested(bool Fullscreen);

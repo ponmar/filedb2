@@ -1,11 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using FileDBAvalonia.FilesFilter;
-using FileDBAvalonia.Model;
 using System;
 
 namespace FileDBAvalonia.ViewModels.Search.Filters;
 
-public partial class DateViewModel : AbstractFilterViewModel
+public partial class DateViewModel : ObservableObject, IFilterViewModel
 {
     [ObservableProperty]
     private bool dateIsRange = false;
@@ -16,11 +15,7 @@ public partial class DateViewModel : AbstractFilterViewModel
     [ObservableProperty]
     private DateTimeOffset secondDateTime = DateTime.Now;
 
-    public DateViewModel() : base(FilterType.Date)
-    {
-    }
-
-    protected override IFilesFilter DoCreate()
+    public IFilesFilter CreateFilter()
     {
         return DateIsRange ?
             new FilterDateRange(FirstDateTime, SecondDateTime) :

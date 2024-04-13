@@ -1,0 +1,41 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:filters="clr-namespace:FileDBAvalonia.Views.Search.Filters;assembly=FileDBAvalonia"
+			 xmlns:converters="clr-namespace:FileDBAvalonia.Converters;assembly=FileDBAvalonia"
+			 xmlns:model="clr-namespace:FileDBAvalonia.Model;assembly=FileDBAvalonia"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="FileDBAvalonia.Views.Search.FilterSelectionView">
+	<UserControl.Resources>
+		<converters:FilterTypeToVisibilityConverter x:Key="FilterTypeToVisibilityConverter"/>
+		<converters:FilterTypeToStringConverter x:Key="FilterTypeToStringConverter"/>
+	</UserControl.Resources>
+	<StackPanel Orientation="Horizontal">
+		<ComboBox Margin="0 0 3 0" ItemsSource="{Binding FilterTypes}" SelectedItem="{Binding SelectedFilterType}" ToolTip.Tip="Filter type" VerticalAlignment="Center">
+			<ComboBox.ItemTemplate>
+				<DataTemplate>
+					<TextBlock Text="{Binding Path=., Converter={StaticResource FilterTypeToStringConverter}}"/>
+				</DataTemplate>
+			</ComboBox.ItemTemplate>
+		</ComboBox>
+
+		<Grid>
+			<filters:DateView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Date}}"/>
+			<filters:NoMetaDataView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.NoMetaData}}"/>
+			<filters:NoDateTimeView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.NoDateTime}}"/>
+			<filters:TextView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Text}}"/>
+			<filters:FileListView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.FileList}}"/>
+			<filters:FileTypeView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.FileType}}"/>
+			<filters:PersonView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Person}}"/>
+			<filters:PersonAgeView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.PersonAge}}"/>
+			<filters:PersonSexView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.PersonSex}}"/>
+			<filters:LocationView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Location}}"/>
+			<filters:TagView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Tag}}"/>
+			<filters:PositionView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Position}}"/>
+			<filters:NumPersonsView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.NumPersons}}"/>
+			<filters:SeasonView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Season}}"/>
+			<filters:AnnualDateView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.AnnualDate}}"/>
+		</Grid>
+	</StackPanel>
+</UserControl>

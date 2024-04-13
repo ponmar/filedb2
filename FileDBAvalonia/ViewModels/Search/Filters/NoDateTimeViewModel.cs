@@ -1,13 +1,9 @@
-﻿using FileDBAvalonia.FilesFilter;
-using FileDBAvalonia.Model;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using FileDBAvalonia.FilesFilter;
 
 namespace FileDBAvalonia.ViewModels.Search.Filters;
 
-public partial class NoDateTimeViewModel : AbstractFilterViewModel
+public partial class NoDateTimeViewModel : ObservableObject, IFilterViewModel
 {
-    public NoDateTimeViewModel() : base(FilterType.NoDateTime)
-    {
-    }
-
-    protected override IFilesFilter DoCreate() => new FilterWithoutDateTime();
+    public IFilesFilter CreateFilter() => new FilterWithoutDateTime();
 }

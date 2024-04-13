@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.Generic;
-using System;
 using FileDBShared.Model;
 using System.Linq;
 using System.IO;
@@ -11,7 +10,6 @@ using FileDBAvalonia.Model;
 using FileDBAvalonia.Dialogs;
 using System.Threading.Tasks;
 using FileDBAvalonia.Comparers;
-using FileDBAvalonia.ViewModels.Search.Filters;
 using FileDBAvalonia.ViewModels.Search;
 
 namespace FileDBAvalonia.ViewModels;
@@ -48,7 +46,7 @@ public partial class CriteriaViewModel : ObservableObject
     public bool CombineSearchResultPossible => CombineSearch1.HasContent() && CombineSearch2.HasContent();
 
     [ObservableProperty]
-    private ObservableCollection<IFilterViewModel> filterSettings = [];
+    private ObservableCollection<FilterSelectionViewModel> filterSettings = [];
 
     public bool FilterCanBeRemoved => FilterSettings.Count > 1;
 
@@ -94,35 +92,6 @@ public partial class CriteriaViewModel : ObservableObject
         {
             SelectedFile = fileSelector.SelectedFile;
         });
-
-        this.RegisterForEvent<SearchFilterSelectionChanged>(x =>
-        {
-            var filterIndex = filterSettings.IndexOf(x.CurrentFilter);
-            filterSettings[filterIndex] = CreateFilterFromType(x.NewFilterType);
-        });
-    }
-
-    private IFilterViewModel CreateFilterFromType(FilterType filterType)
-    {
-        return filterType switch
-        {
-            FilterType.AnnualDate => new AnnualDateViewModel(),
-            FilterType.Date => new DateViewModel(),
-            FilterType.NoMetaData => new NoMetaDataViewModel(),
-            FilterType.NoDateTime => new NoDateTimeViewModel(),
-            FilterType.Text => new TextViewModel(),
-            FilterType.FileList => new FileListViewModel(),
-            FilterType.FileType => new FileTypeViewModel(),
-            FilterType.Person => new PersonViewModel(personsRepository),
-            FilterType.PersonAge => new PersonAgeViewModel(),
-            FilterType.PersonSex => new PersonSexViewModel(),
-            FilterType.Location => new LocationViewModel(locationsRepository),
-            FilterType.Position => new PositionViewModel(locationsRepository, dbAccessProvider, fileSelector),
-            FilterType.Season => new SeasonViewModel(),
-            FilterType.NumPersons => new NumPersonsViewModel(),
-            FilterType.Tag => new TagViewModel(tagsRepository),
-            _ => throw new NotImplementedException(),
-        };
     }
 
     private static void Send(IEnumerable<FileModel> files) => Messenger.Send(new TransferSearchResult(files));
@@ -237,10 +206,11 @@ public partial class CriteriaViewModel : ObservableObject
         OnPropertyChanged(nameof(FilterCanBeRemoved));
     }
 
-    private static IFilterViewModel CreateDefaultFilter() => new TextViewModel();
+    private FilterSelectionViewModel CreateDefaultFilter() =>
+        new FilterSelectionViewModel(dbAccessProvider, personsRepository, locationsRepository, tagsRepository, fileSelector);
 
     [RelayCommand]
-    private void RemoveFilter(IFilterViewModel vm)
+    private void RemoveFilter(FilterSelectionViewModel vm)
     {
         FilterSettings.Remove(vm);
         OnPropertyChanged(nameof(FilterCanBeRemoved));
@@ -250,7 +220,7 @@ public partial class CriteriaViewModel : ObservableObject
     private async Task FindFilesFromFiltersAsync()
     {
         var fileModelComparer = new FileModelByIdComparer();
-        var filters = FilterSettings.Select(x => (viewModel: x, filter: x.Create())).ToList();
+        var filters = FilterSettings.Select(x => (viewModel: x, filter: x.FilterViewModel.CreateFilter())).ToList();
         var filtersWithInvalidSettings = filters.Where(x => !x.filter.CanRun());
         if (filtersWithInvalidSettings.Any())
         {

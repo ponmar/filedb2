@@ -7,17 +7,9 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="FileDBAvalonia.Views.Search.Filters.PersonSexView">
 	<UserControl.Resources>
-		<converters:FilterTypeToStringConverter x:Key="FilterTypeToStringConverter"/>
 		<converters:SexToStringConverter x:Key="SexToStringConverter"/>
 	</UserControl.Resources>
-	<StackPanel Orientation="Horizontal">
-		<ComboBox Margin="0 0 3 0" ItemsSource="{Binding FilterTypes}" SelectedItem="{Binding SelectedFilterType}" ToolTip.Tip="Filter type" VerticalAlignment="Center">
-			<ComboBox.ItemTemplate>
-				<DataTemplate>
-					<TextBlock Text="{Binding Path=., Converter={StaticResource FilterTypeToStringConverter}}"/>
-				</DataTemplate>
-			</ComboBox.ItemTemplate>
-		</ComboBox>
+	<StackPanel Orientation="Horizontal" DataContext="{Binding FilterViewModel}">
 		<ComboBox Grid.Column="0" ItemsSource="{Binding PersonSexValues}" SelectedItem="{Binding SelectedPersonSex}" ToolTip.Tip="{x:Static lang:Strings.SearchFilterPersonSexTooltip}" VerticalAlignment="Center">
 			<ComboBox.ItemTemplate>
 				<DataTemplate>

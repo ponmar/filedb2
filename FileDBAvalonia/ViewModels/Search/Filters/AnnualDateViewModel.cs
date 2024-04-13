@@ -1,12 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using FileDBAvalonia.FilesFilter;
-using FileDBAvalonia.Model;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace FileDBAvalonia.ViewModels.Search.Filters;
 
-public partial class AnnualDateViewModel : AbstractFilterViewModel
+public partial class AnnualDateViewModel : ObservableObject, IFilterViewModel
 {
     [ObservableProperty]
     private bool annualDateIsRange = false;
@@ -27,11 +26,7 @@ public partial class AnnualDateViewModel : AbstractFilterViewModel
     [ObservableProperty]
     private int selectedAnnualDayEnd = Days.First();
 
-    public AnnualDateViewModel() : base(FilterType.AnnualDate)
-    {
-    }
-
-    protected override IFilesFilter DoCreate()
+    public IFilesFilter CreateFilter()
     {
         return AnnualDateIsRange ?
             new FilterAnnualDateRange(SelectedAnnualMonthStart, SelectedAnnualDayStart, SelectedAnnualMonthEnd, SelectedAnnualDayEnd) :

@@ -7,17 +7,9 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="FileDBAvalonia.Views.Search.Filters.AnnualDateView">
 	<UserControl.Resources>
-		<converters:FilterTypeToStringConverter x:Key="FilterTypeToStringConverter"/>
 		<converters:NumberToMonthConverter x:Key="NumberToMonthConverter"/>
 	</UserControl.Resources>
-	<StackPanel Orientation="Horizontal">
-		<ComboBox Margin="0 0 3 0" ItemsSource="{Binding FilterTypes}" SelectedItem="{Binding SelectedFilterType}" ToolTip.Tip="Filter type" VerticalAlignment="Center">
-			<ComboBox.ItemTemplate>
-				<DataTemplate>
-					<TextBlock Text="{Binding Path=., Converter={StaticResource FilterTypeToStringConverter}}"/>
-				</DataTemplate>
-			</ComboBox.ItemTemplate>
-		</ComboBox>
+	<StackPanel Orientation="Horizontal" DataContext="{Binding FilterViewModel}">
 		<CheckBox Margin="0 0 3 0" Content="{x:Static lang:Strings.SearchFilterRange}" IsChecked="{Binding AnnualDateIsRange}"/>
 		<ComboBox Margin="0 0 3 0" ItemsSource="{Binding Days}" SelectedItem="{Binding SelectedAnnualDayStart}" VerticalAlignment="Center"/>
 		<ComboBox Margin="0 0 3 0" ItemsSource="{Binding Months}" SelectedItem="{Binding SelectedAnnualMonthStart}" VerticalAlignment="Center">

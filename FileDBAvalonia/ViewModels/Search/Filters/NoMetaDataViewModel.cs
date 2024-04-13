@@ -1,13 +1,9 @@
-﻿using FileDBAvalonia.FilesFilter;
-using FileDBAvalonia.Model;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using FileDBAvalonia.FilesFilter;
 
 namespace FileDBAvalonia.ViewModels.Search.Filters;
 
-public partial class NoMetaDataViewModel : AbstractFilterViewModel
+public partial class NoMetaDataViewModel : ObservableObject, IFilterViewModel
 {
-    public NoMetaDataViewModel() : base(FilterType.NoMetaData)
-    {
-    }
-
-    protected override IFilesFilter DoCreate() => new FilterWithoutMetaData();
+    public IFilesFilter CreateFilter() => new FilterWithoutMetaData();
 }

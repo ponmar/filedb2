@@ -10,7 +10,7 @@ public record PersonForSearch(int Id, string Name)
     public override string ToString() => Name;
 }
 
-public partial class PersonViewModel : AbstractFilterViewModel
+public partial class PersonViewModel : ObservableObject, IFilterViewModel
 {
     [ObservableProperty]
     private ObservableCollection<PersonForSearch> persons = [];
@@ -23,7 +23,7 @@ public partial class PersonViewModel : AbstractFilterViewModel
 
     private readonly IPersonsRepository personsRepository;
 
-    public PersonViewModel(IPersonsRepository personsRepository) : base(FilterType.Person)
+    public PersonViewModel(IPersonsRepository personsRepository)
     {
         this.personsRepository = personsRepository;
         ReloadPersons();
@@ -39,6 +39,6 @@ public partial class PersonViewModel : AbstractFilterViewModel
         }
     }
 
-    protected override IFilesFilter DoCreate() =>
+    public IFilesFilter CreateFilter() =>
         Negate ? new FilterWithoutPerson(SelectedPerson) : new FilterPerson(SelectedPerson);
 }

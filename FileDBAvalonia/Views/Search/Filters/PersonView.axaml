@@ -6,17 +6,7 @@
 			 xmlns:converters="clr-namespace:FileDBAvalonia.Converters"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="FileDBAvalonia.Views.Search.Filters.PersonView">
-	<UserControl.Resources>
-		<converters:FilterTypeToStringConverter x:Key="FilterTypeToStringConverter"/>
-	</UserControl.Resources>
-	<StackPanel Orientation="Horizontal">
-		<ComboBox Margin="0 0 3 0" ItemsSource="{Binding FilterTypes}" SelectedItem="{Binding SelectedFilterType}" ToolTip.Tip="Filter type" VerticalAlignment="Center">
-			<ComboBox.ItemTemplate>
-				<DataTemplate>
-					<TextBlock Text="{Binding Path=., Converter={StaticResource FilterTypeToStringConverter}}"/>
-				</DataTemplate>
-			</ComboBox.ItemTemplate>
-		</ComboBox>
+	<StackPanel Orientation="Horizontal" DataContext="{Binding FilterViewModel}">
 		<ComboBox Margin="0 0 3 0" ItemsSource="{Binding Persons}" SelectedItem="{Binding SelectedPerson}" VerticalAlignment="Center"/>
 		<CheckBox Content="!" IsChecked="{Binding Negate}" ToolTip.Tip="{x:Static lang:Strings.FilterNegateTooltip}"/>
 	</StackPanel>
