@@ -1,11 +1,11 @@
 using FileDBAvalonia.ViewModels.Dialogs;
+using Xunit;
 
 namespace FileDBAvaloniaTests.ViewModels.Dialogs;
 
-[TestClass]
 public class DirectoryTreeCreatorTests
 {
-    [TestMethod]
+    [Fact]
     public void Build()
     {
         // Arrange
@@ -19,17 +19,17 @@ public class DirectoryTreeCreatorTests
         var dirs = DirectoryTreeCreator.Build(dirPaths);
 
         // Assert
-        Assert.AreEqual(2, dirs.Count);
+        Assert.Equal(2, dirs.Count);
 
-        Assert.AreEqual("0", dirs[0].Name);
-        Assert.AreEqual("1", dirs[1].Name);
+        Assert.Equal("0", dirs[0].Name);
+        Assert.Equal("1", dirs[1].Name);
 
-        Assert.AreEqual(0, dirs[0].Directories.Count);
-        Assert.AreEqual(1, dirs[1].Directories.Count);
-        Assert.AreEqual("2", dirs[1].Directories[0].Name);
+        Assert.Empty(dirs[0].Directories);
+        Assert.Single(dirs[1].Directories);
+        Assert.Equal("2", dirs[1].Directories[0].Name);
 
-        Assert.AreEqual(1, dirs[1].Directories[0].Directories.Count);
-        Assert.AreEqual("3", dirs[1].Directories[0].Directories[0].Name);
-        Assert.AreEqual(0, dirs[1].Directories[0].Directories[0].Directories.Count);
+        Assert.Single(dirs[1].Directories[0].Directories);
+        Assert.Equal("3", dirs[1].Directories[0].Directories[0].Name);
+        Assert.Empty(dirs[1].Directories[0].Directories[0].Directories);
     }
 }

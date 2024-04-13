@@ -5,13 +5,13 @@ using FileDBAvalonia.Model;
 using FileDBAvalonia.Notifiers;
 using FileDBAvalonia.ViewModels;
 using FileDBInterface.DatabaseAccess;
+using Xunit;
 
 namespace FileDBAvaloniaTests.ViewModels;
 
-[TestClass]
-public class NotificationsViewModelTests
+[Collection("Sequential")]
+public class NotificationsViewModelTests : IDisposable
 {
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     private Config config;
     private IConfigProvider fakeConfigRepo;
     private IDatabaseAccessProvider fakeDbAccessRepo;
@@ -20,11 +20,9 @@ public class NotificationsViewModelTests
     private INotificationHandling fakeNotificationHandling;
     private INotificationsRepository fakeNotificationsRepo;
 
-    private NotificationsViewModel viewModel;
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+    private NotificationsViewModel? viewModel;
 
-    [TestInitialize]
-    public void Initialize()
+    public NotificationsViewModelTests()
     {
         Bootstrapper.Reset();
 
@@ -43,21 +41,20 @@ public class NotificationsViewModelTests
         A.CallTo(() => fakeNotifierFactory.GetStartupNotifiers(A<Config>._, A<IDatabaseAccess>._)).Returns([]);
     }
 
-    [TestCleanup]
-    public void Cleanup()
+    public void Dispose()
     {
-        viewModel.Close();
+        viewModel?.Close();
     }
 
-    [TestMethod]
+    [Fact]
     public void Constructor_NoNotifications()
     {
         viewModel = new NotificationsViewModel(fakeConfigRepo, fakeDbAccessRepo, fakeNotifierFactory, fakeNotificationHandling, fakeNotificationsRepo);
 
-        Assert.AreEqual(0, viewModel.Notifications.Count);
+        Assert.Empty(viewModel.Notifications);
     }
 
-    [TestMethod]
+    [Fact]
     public void Constructor_SomeNotifications()
     {
         var initialNotifications = SomeNotifications();
@@ -65,10 +62,10 @@ public class NotificationsViewModelTests
 
         viewModel = new NotificationsViewModel(fakeConfigRepo, fakeDbAccessRepo, fakeNotifierFactory, fakeNotificationHandling, fakeNotificationsRepo);
 
-        Assert.AreEqual(initialNotifications.Count, viewModel.Notifications.Count);
+        Assert.Equal(initialNotifications.Count, viewModel.Notifications.Count);
     }
 
-    [TestMethod]
+    [Fact]
     public void NotificationsUpdated()
     {
         var notifications = SomeNotifications();
@@ -79,7 +76,7 @@ public class NotificationsViewModelTests
         notifications.AddRange(SomeNotifications());
         Messenger.Send<NotificationsUpdated>();
 
-        Assert.AreEqual(notifications.Count, viewModel.Notifications.Count);
+        Assert.Equal(notifications.Count, viewModel.Notifications.Count);
     }
 
     private static List<Notification> SomeNotifications()

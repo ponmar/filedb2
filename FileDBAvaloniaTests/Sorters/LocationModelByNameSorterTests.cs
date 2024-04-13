@@ -1,23 +1,22 @@
 ﻿using FileDBAvalonia;
 using FileDBAvalonia.Sorters;
 using FileDBShared.Model;
+using Xunit;
 
 namespace FileDBAvaloniaTests.Sorters;
 
-[TestClass]
+[Collection("Sequential")]
 public class LocationModelByNameSorterTests
 {
-    private LocationModelByNameSorter sorter = new();
+    private LocationModelByNameSorter sorter;
 
-    [TestInitialize]
-    public void Initialize()
+    public LocationModelByNameSorterTests()
     {
         Bootstrapper.Reset();
-
         sorter = new();
     }
 
-    [TestMethod]
+    [Fact]
     public void Compare()
     {
         var items = new List<LocationModel>()
@@ -29,8 +28,8 @@ public class LocationModelByNameSorterTests
 
         items.Sort(sorter);
 
-        Assert.AreEqual(0, items[0].Id);
-        Assert.AreEqual(1, items[1].Id);
-        Assert.AreEqual(2, items[2].Id);
+        Assert.Equal(0, items[0].Id);
+        Assert.Equal(1, items[1].Id);
+        Assert.Equal(2, items[2].Id);
     }
 }

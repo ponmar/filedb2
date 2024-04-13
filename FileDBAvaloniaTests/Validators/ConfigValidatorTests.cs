@@ -1,23 +1,22 @@
 ﻿using FileDBAvalonia;
 using FileDBAvalonia.Validators;
 using FluentValidation.TestHelper;
+using Xunit;
 
 namespace FileDBAvaloniaTests.Validators;
 
-[TestClass]
+[Collection("Sequential")]
 public class ConfigValidatorTests
 {
-    private ConfigValidator validator = new();
+    private ConfigValidator validator;
 
-    [TestInitialize]
-    public void Initialize()
+    public ConfigValidatorTests()
     {
         Bootstrapper.Reset();
-
         validator = new();
     }
 
-    [TestMethod]
+    [Fact]
     public void Validate_FileToLocationMaxDistanceNegative_Error()
     {
         var config = new ConfigBuilder() { FileToLocationMaxDistance = -1 }.Build();
@@ -25,7 +24,7 @@ public class ConfigValidatorTests
         result.ShouldHaveValidationErrorFor(x => x.FileToLocationMaxDistance);
     }
 
-    [TestMethod]
+    [Fact]
     public void Validate_BlacklistedFilePathPatternsEmpty_Error()
     {
         var config = new ConfigBuilder() { BlacklistedFilePathPatterns = "" }.Build();
@@ -33,7 +32,7 @@ public class ConfigValidatorTests
         result.ShouldHaveValidationErrorFor(x => x.BlacklistedFilePathPatterns);
     }
 
-    [TestMethod]
+    [Fact]
     public void Validate_WhitelistedFilePathPatternsEmpty_Error()
     {
         var config = new ConfigBuilder() { WhitelistedFilePathPatterns = "" }.Build();
@@ -41,7 +40,7 @@ public class ConfigValidatorTests
         result.ShouldHaveValidationErrorFor(x => x.WhitelistedFilePathPatterns);
     }
 
-    [TestMethod]
+    [Fact]
     public void Validate_SlideShowDelayTooSmall_Error()
     {
         var config = new ConfigBuilder() { SlideshowDelay = 0 }.Build();
@@ -49,7 +48,7 @@ public class ConfigValidatorTests
         result.ShouldHaveValidationErrorFor(x => x.SlideshowDelay);
     }
 
-    [TestMethod]
+    [Fact]
     public void Validate_SearchHistorySizeTooSmall_Error()
     {
         var config = new ConfigBuilder() { SearchHistorySize = -1 }.Build();
@@ -57,7 +56,7 @@ public class ConfigValidatorTests
         result.ShouldHaveValidationErrorFor(x => x.SearchHistorySize);
     }
 
-    [TestMethod]
+    [Fact]
     public void Validate_SearchHistorySizeTooBig_Error()
     {
         var config = new ConfigBuilder() { SearchHistorySize = 11 }.Build();
@@ -65,7 +64,7 @@ public class ConfigValidatorTests
         result.ShouldHaveValidationErrorFor(x => x.SearchHistorySize);
     }
 
-    [TestMethod]
+    [Fact]
     public void Validate_LocationLinkWithoutLatitude_Error()
     {
         var config = new ConfigBuilder() { LocationLink = "http://localhost/LON/" }.Build();
@@ -73,7 +72,7 @@ public class ConfigValidatorTests
         result.ShouldHaveValidationErrorFor(x => x.LocationLink);
     }
 
-    [TestMethod]
+    [Fact]
     public void Validate_LocationLinkWithoutLongitude_Error()
     {
         var config = new ConfigBuilder() { LocationLink = "http://localhost/LAT/" }.Build();
@@ -81,7 +80,7 @@ public class ConfigValidatorTests
         result.ShouldHaveValidationErrorFor(x => x.LocationLink);
     }
 
-    [TestMethod]
+    [Fact]
     public void Validate_OverlayTextSizeTooSmall_Error()
     {
         var config = new ConfigBuilder() { OverlayTextSize = 5 }.Build();
@@ -89,7 +88,7 @@ public class ConfigValidatorTests
         result.ShouldHaveValidationErrorFor(x => x.OverlayTextSize);
     }
 
-    [TestMethod]
+    [Fact]
     public void Validate_OverlayTextSizeTooBig_Error()
     {
         var config = new ConfigBuilder() { OverlayTextSize = 101 }.Build();
@@ -97,7 +96,7 @@ public class ConfigValidatorTests
         result.ShouldHaveValidationErrorFor(x => x.OverlayTextSize);
     }
 
-    [TestMethod]
+    [Fact]
     public void Validate_OverlayTextSizeLargeTooSmall_Error()
     {
         var config = new ConfigBuilder() { OverlayTextSizeLarge = 5 }.Build();
@@ -105,7 +104,7 @@ public class ConfigValidatorTests
         result.ShouldHaveValidationErrorFor(x => x.OverlayTextSizeLarge);
     }
 
-    [TestMethod]
+    [Fact]
     public void Validate_OverlayTextSizeLargeTooBig_Error()
     {
         var config = new ConfigBuilder() { OverlayTextSizeLarge = 101 }.Build();
@@ -113,7 +112,7 @@ public class ConfigValidatorTests
         result.ShouldHaveValidationErrorFor(x => x.OverlayTextSizeLarge);
     }
 
-    [TestMethod]
+    [Fact]
     public void Validate_ShortItemNameMaxLengthTooSmall_Error()
     {
         var config = new ConfigBuilder() { ShortItemNameMaxLength = 9 }.Build();
@@ -121,7 +120,7 @@ public class ConfigValidatorTests
         result.ShouldHaveValidationErrorFor(x => x.ShortItemNameMaxLength);
     }
 
-    [TestMethod]
+    [Fact]
     public void Validate_ShortItemNameMaxLengthTooBig_Error()
     {
         var config = new ConfigBuilder() { ShortItemNameMaxLength = 101 }.Build();
@@ -129,7 +128,7 @@ public class ConfigValidatorTests
         result.ShouldHaveValidationErrorFor(x => x.ShortItemNameMaxLength);
     }
 
-    [TestMethod]
+    [Fact]
     public void Validate_LanguageValid_Success()
     {
         var config = new ConfigBuilder() { Language = "sv-SE" }.Build();
@@ -137,7 +136,7 @@ public class ConfigValidatorTests
         result.ShouldNotHaveValidationErrorFor(x => x.Language);
     }
 
-    [TestMethod]
+    [Fact]
     public void Validate_LanguageNull_Success()
     {
         var config = new ConfigBuilder() { Language = null }.Build();
@@ -145,7 +144,7 @@ public class ConfigValidatorTests
         result.ShouldNotHaveValidationErrorFor(x => x.Language);
     }
 
-    [TestMethod]
+    [Fact]
     public void Validate_LanguageInvalid_Error()
     {
         var config = new ConfigBuilder() { Language = "invalid-culture" }.Build();

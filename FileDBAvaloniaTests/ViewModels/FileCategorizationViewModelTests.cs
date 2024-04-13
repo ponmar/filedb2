@@ -5,13 +5,13 @@ using FileDBAvalonia.Dialogs;
 using FileDBAvalonia;
 using FileDBAvalonia.ViewModels.Search.File;
 using FileDBAvalonia.ViewModels.Search;
+using Xunit;
 
 namespace FileDBAvaloniaTests.ViewModels;
 
-[TestClass]
+[Collection("Sequential")]
 public class FileCategorizationViewModelTests
 {
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     private IConfigProvider configProvider;
     private IDatabaseAccessProvider dbAccessProvider;
     private IDialogs dialogs;
@@ -20,7 +20,6 @@ public class FileCategorizationViewModelTests
     private ILocationsRepository locationsRepository;
     private ITagsRepository tagsRepository;
     private IFileSelector fileSelector;
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
     private readonly List<PersonModel> persons = [];
     private readonly List<LocationModel> locations = [];
@@ -28,9 +27,10 @@ public class FileCategorizationViewModelTests
 
     private readonly EventRecorder eventRecorder = new();
 
-    [TestInitialize]
-    public void Init()
+    public FileCategorizationViewModelTests()
     {
+        Bootstrapper.Reset();
+
         configProvider = A.Fake<IConfigProvider>();
         dbAccessProvider = A.Fake<IDatabaseAccessProvider>();
         dialogs = A.Fake<IDialogs>();
@@ -52,95 +52,95 @@ public class FileCategorizationViewModelTests
         eventRecorder.Record<FileEdited>();
     }
 
-    [TestMethod]
+    [Fact]
     public void Constructor_ReposEmpty()
     {
         var viewModel = CreateViewModel();
 
-        Assert.AreEqual(0, viewModel.Persons.Count);
-        Assert.AreEqual(0, viewModel.Locations.Count);
-        Assert.AreEqual(0, viewModel.Tags.Count);
+        Assert.Empty(viewModel.Persons);
+        Assert.Empty(viewModel.Locations);
+        Assert.Empty(viewModel.Tags);
 
-        Assert.AreEqual(0, viewModel.UpdateHistoryItems.Count);
-        Assert.IsNull(viewModel.PrevEditedFileId);
+        Assert.Empty(viewModel.UpdateHistoryItems);
+        Assert.Null(viewModel.PrevEditedFileId);
 
-        Assert.IsFalse(viewModel.SelectedPersonCanBeAdded);
-        Assert.IsFalse(viewModel.SelectedPersonCanBeRemoved);
+        Assert.False(viewModel.SelectedPersonCanBeAdded);
+        Assert.False(viewModel.SelectedPersonCanBeRemoved);
 
-        Assert.IsFalse(viewModel.SelectedLocationCanBeAdded);
-        Assert.IsFalse(viewModel.SelectedLocationCanBeRemoved);
+        Assert.False(viewModel.SelectedLocationCanBeAdded);
+        Assert.False(viewModel.SelectedLocationCanBeRemoved);
 
-        Assert.IsFalse(viewModel.SelectedTagCanBeAdded);
-        Assert.IsFalse(viewModel.SelectedTagCanBeRemoved);
+        Assert.False(viewModel.SelectedTagCanBeAdded);
+        Assert.False(viewModel.SelectedTagCanBeRemoved);
     }
 
-    [TestMethod]
+    [Fact]
     public void Constructor_ReposFilled()
     {
         PopulateRepositories();
         var viewModel = CreateViewModel();
 
-        Assert.AreEqual(2, viewModel.Persons.Count);
-        Assert.AreEqual(2, viewModel.Locations.Count);
-        Assert.AreEqual(1, viewModel.Tags.Count);
+        Assert.Equal(2, viewModel.Persons.Count);
+        Assert.Equal(2, viewModel.Locations.Count);
+        Assert.Single(viewModel.Tags);
 
-        Assert.AreEqual(0, viewModel.UpdateHistoryItems.Count);
-        Assert.IsNull(viewModel.PrevEditedFileId);
+        Assert.Empty(viewModel.UpdateHistoryItems);
+        Assert.Null(viewModel.PrevEditedFileId);
 
-        Assert.IsFalse(viewModel.SelectedPersonCanBeAdded);
-        Assert.IsFalse(viewModel.SelectedPersonCanBeRemoved);
+        Assert.False(viewModel.SelectedPersonCanBeAdded);
+        Assert.False(viewModel.SelectedPersonCanBeRemoved);
 
-        Assert.IsFalse(viewModel.SelectedLocationCanBeAdded);
-        Assert.IsFalse(viewModel.SelectedLocationCanBeRemoved);
+        Assert.False(viewModel.SelectedLocationCanBeAdded);
+        Assert.False(viewModel.SelectedLocationCanBeRemoved);
 
-        Assert.IsFalse(viewModel.SelectedTagCanBeAdded);
-        Assert.IsFalse(viewModel.SelectedTagCanBeRemoved);
+        Assert.False(viewModel.SelectedTagCanBeAdded);
+        Assert.False(viewModel.SelectedTagCanBeRemoved);
     }
 
-    [TestMethod]
+    [Fact]
     public void SelectSearchResultFile()
     {
         var viewModel = CreateViewModel();
         LoadAFile();
     }
 
-    [TestMethod]
+    [Fact]
     public void PersonUpdated()
     {
         var viewModel = CreateViewModel();
-        Assert.AreEqual(0, viewModel.Persons.Count);
+        Assert.Empty(viewModel.Persons);
 
         persons.Add(new() { Id = 1, Firstname = "Alice", Lastname = "Smith" });
         Messenger.Send<PersonsUpdated>();
 
-        Assert.AreEqual(1, viewModel.Persons.Count);
+        Assert.Single(viewModel.Persons);
     }
 
-    [TestMethod]
+    [Fact]
     public void LocationsUpdated()
     {
         var viewModel = CreateViewModel();
-        Assert.AreEqual(0, viewModel.Locations.Count);
+        Assert.Empty(viewModel.Locations);
 
         locations.Add(new() { Id = 1, Name = "Home" });
         Messenger.Send<LocationsUpdated>();
 
-        Assert.AreEqual(1, viewModel.Locations.Count);
+        Assert.Single(viewModel.Locations);
     }
 
-    [TestMethod]
+    [Fact]
     public void TagsUpdated()
     {
         var viewModel = CreateViewModel();
-        Assert.AreEqual(0, viewModel.Tags.Count);
+        Assert.Empty(viewModel.Tags);
 
         tags.Add(new() { Id = 1, Name = "Favorites" });
         Messenger.Send<TagsUpdated>();
 
-        Assert.AreEqual(1, viewModel.Tags.Count);
+        Assert.Single(viewModel.Tags);
     }
 
-    [TestMethod]
+    [Fact]
     public void SetFileDescription()
     {
         var viewModel = CreateViewModel();
@@ -154,8 +154,8 @@ public class FileCategorizationViewModelTests
 
         A.CallTo(() => dbAccessProvider.DbAccess.UpdateFileDescription(editedFileId, newDescription)).MustHaveHappened();
         eventRecorder.AssertEventRecorded<FileEdited>();
-        Assert.AreEqual(editedFileId, viewModel.PrevEditedFileId);
-        Assert.AreEqual(0, viewModel.UpdateHistoryItems.Count);
+        Assert.Equal(editedFileId, viewModel.PrevEditedFileId);
+        Assert.Empty(viewModel.UpdateHistoryItems);
     }
 
     private FileCategorizationViewModel CreateViewModel()

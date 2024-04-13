@@ -1,4 +1,5 @@
 ﻿using FileDBAvalonia;
+using Xunit;
 
 namespace FileDBAvaloniaTests;
 
@@ -29,13 +30,13 @@ public class EventRecorder
     public IEnumerable<T> AssertEventsRecorded<T>(int numEvents)
     {
         var matchingEvents = events.OfType<T>();
-        Assert.AreEqual(numEvents, events.Count);
+        Assert.Equal(numEvents, events.Count);
         return matchingEvents;
     }
 
     public void AssertNoEventsRecorded()
     {
-        Assert.IsTrue(!events.Any());
+        Assert.Empty(events);
     }
 }
 

@@ -5,13 +5,13 @@ using FileDBAvalonia.ViewModels;
 using FileDBInterface.DatabaseAccess;
 using FileDBInterface.FilesystemAccess;
 using FileDBShared.Model;
+using Xunit;
 
 namespace FileDBAvaloniaTests.ViewModels;
 
-[TestClass]
+[Collection("Sequential")]
 public class BirthdaysViewModelTests
 {
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     private IConfigProvider fakeConfigRepo;
     private IDatabaseAccess fakeDbAccess;
     private IDatabaseAccessProvider fakeDbAccessRepo;
@@ -19,10 +19,8 @@ public class BirthdaysViewModelTests
     private IFilesystemAccess fakeFilsystemAccess;
     private IFilesystemAccessProvider fakeFilsystemAccessRepo;
     private IImageLoader fakeImageLoader;
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
-    [TestInitialize]
-    public void Initialize()
+    public BirthdaysViewModelTests()
     {
         Bootstrapper.Reset();
 
@@ -38,7 +36,7 @@ public class BirthdaysViewModelTests
         A.CallTo(() => fakeFilsystemAccessRepo.FilesystemAccess).Returns(fakeFilsystemAccess);
     }
 
-    [TestMethod]
+    [Fact]
     public void Constructor_NoPersons()
     {
         var config = new ConfigBuilder().Build();
@@ -46,11 +44,11 @@ public class BirthdaysViewModelTests
 
         var viewModel = new BirthdaysViewModel(fakePersonsRepo, fakeFilsystemAccessRepo, fakeDbAccessRepo, fakeImageLoader);
 
-        Assert.AreEqual(0, viewModel.Persons.Count);
-        Assert.AreEqual("", viewModel.FilterText);
+        Assert.Empty(viewModel.Persons);
+        Assert.Equal("", viewModel.FilterText);
     }
 
-    [TestMethod]
+    [Fact]
     public void Constructor_SomePersons()
     {
         A.CallTo(() => fakePersonsRepo.Persons).Returns(SomePersons());
@@ -60,40 +58,40 @@ public class BirthdaysViewModelTests
 
         var viewModel = new BirthdaysViewModel(fakePersonsRepo, fakeFilsystemAccessRepo, fakeDbAccessRepo, fakeImageLoader);
 
-        Assert.AreEqual(2, viewModel.Persons.Count);
+        Assert.Equal(2, viewModel.Persons.Count);
     }
 
-    [TestMethod]
+    [Fact]
     public void PersonsUpdated()
     {
         var config = new ConfigBuilder().Build();
         A.CallTo(() => fakeConfigRepo.Config).Returns(config);
 
         var viewModel = new BirthdaysViewModel(fakePersonsRepo, fakeFilsystemAccessRepo, fakeDbAccessRepo, fakeImageLoader);
-        Assert.AreEqual(0, viewModel.Persons.Count);
+        Assert.Empty(viewModel.Persons);
 
         A.CallTo(() => fakePersonsRepo.Persons).Returns(SomePersons());
         Messenger.Send<PersonsUpdated>();
 
-        Assert.AreEqual(2, viewModel.Persons.Count);
+        Assert.Equal(2, viewModel.Persons.Count);
     }
 
-    [TestMethod]
+    [Fact]
     public void DateChanged()
     {
         var config = new ConfigBuilder().Build();
         A.CallTo(() => fakeConfigRepo.Config).Returns(config);
 
         var viewModel = new BirthdaysViewModel(fakePersonsRepo, fakeFilsystemAccessRepo, fakeDbAccessRepo, fakeImageLoader);
-        Assert.AreEqual(0, viewModel.Persons.Count);
+        Assert.Empty(viewModel.Persons);
 
         A.CallTo(() => fakePersonsRepo.Persons).Returns(SomePersons());
         Messenger.Send<DateChanged>();
 
-        Assert.AreEqual(2, viewModel.Persons.Count);
+        Assert.Equal(2, viewModel.Persons.Count);
     }
 
-    [TestMethod]
+    [Fact]
     public void FilterText()
     {
         A.CallTo(() => fakePersonsRepo.Persons).Returns(SomePersons());
@@ -103,15 +101,15 @@ public class BirthdaysViewModelTests
         var viewModel = new BirthdaysViewModel(fakePersonsRepo, fakeFilsystemAccessRepo, fakeDbAccessRepo, fakeImageLoader);
 
         viewModel.FilterText = "Al";
-        Assert.AreEqual(1, viewModel.Persons.Count);
-        Assert.AreEqual("Alice Andersson", viewModel.Persons.First().Name);
+        Assert.Single(viewModel.Persons);
+        Assert.Equal("Alice Andersson", viewModel.Persons.First().Name);
 
         viewModel.FilterText = "Bo";
-        Assert.AreEqual(1, viewModel.Persons.Count);
-        Assert.AreEqual("Bob Andersson", viewModel.Persons.First().Name);
+        Assert.Single(viewModel.Persons);
+        Assert.Equal("Bob Andersson", viewModel.Persons.First().Name);
 
         viewModel.FilterText = "";
-        Assert.AreEqual(2, viewModel.Persons.Count);
+        Assert.Equal(2, viewModel.Persons.Count);
     }
 
     private static List<PersonModel> SomePersons()

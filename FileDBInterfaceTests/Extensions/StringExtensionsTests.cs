@@ -1,16 +1,15 @@
 ﻿using FileDBInterface.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace FileDBInterfaceTests.Extensions;
 
-[TestClass]
 public class StruingExtensionsTests
 {
-    [TestMethod]
+    [Fact]
     public void HasContent()
     {
-        Assert.IsFalse((null as string).HasContent());
-        Assert.IsFalse("".HasContent());
-        Assert.IsTrue("A".HasContent());
+        Assert.False((null as string).HasContent());
+        Assert.False("".HasContent());
+        Assert.True("A".HasContent());
     }
 }

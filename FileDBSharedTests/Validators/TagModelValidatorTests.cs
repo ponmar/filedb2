@@ -1,21 +1,15 @@
 ﻿using FileDBShared.Model;
 using FileDBShared.Validators;
 using FluentValidation.TestHelper;
+using Xunit;
 
 namespace FileDBSharedTests.Validators;
 
-[TestClass]
 public class TagModelValidatorTests
 {
     private TagModelValidator validator = new();
 
-    [TestInitialize]
-    public void Initialize()
-    {
-        validator = new();
-    }
-
-    [TestMethod]
+    [Fact]
     public void Validate_Valid()
     {
         var model = new TagModel() { Id = 1, Name = "name" };
@@ -23,7 +17,7 @@ public class TagModelValidatorTests
         result.ShouldNotHaveAnyValidationErrors();
     }
 
-    [TestMethod]
+    [Fact]
     public void Validate_IdIsNegative_Error()
     {
         var model = new TagModel() { Id = -1, Name = "name" };
@@ -31,7 +25,7 @@ public class TagModelValidatorTests
         result.ShouldHaveValidationErrorFor(x => x.Id);
     }
 
-    [TestMethod]
+    [Fact]
     public void Validate_NameIsEmpty_Error()
     {
         var model = new TagModel() { Id = 1, Name = string.Empty };
@@ -39,7 +33,7 @@ public class TagModelValidatorTests
         result.ShouldHaveValidationErrorFor(x => x.Name);
     }
 
-    [TestMethod]
+    [Fact]
     public void Validate_NameIsTooShort_Error()
     {
         var model = new TagModel() { Id = 1, Name = "x" };

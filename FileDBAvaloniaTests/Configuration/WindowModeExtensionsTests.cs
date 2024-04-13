@@ -1,17 +1,17 @@
 ﻿using FileDBAvalonia.Configuration;
 using FileDBInterface.Extensions;
+using Xunit;
 
 namespace FileDBAvaloniaTests.Configuration;
 
-[TestClass]
 public class WindowModeExtensionsTests
 {
-    [TestMethod]
+    [Fact]
     public void ToFriendlyString()
     {
         foreach (var value in Enum.GetValues<WindowMode>())
         {
-            Assert.IsTrue(value.ToFriendlyString().HasContent());
+            Assert.True(value.ToFriendlyString().HasContent());
         }
     }
 }

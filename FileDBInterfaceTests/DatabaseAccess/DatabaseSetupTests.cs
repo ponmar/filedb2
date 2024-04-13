@@ -1,14 +1,13 @@
 ﻿using Dapper;
 using FileDBInterface.DatabaseAccess;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Data.SQLite;
+using Xunit;
 
 namespace FileDBInterfaceTests.DatabaseAccess;
 
-[TestClass]
 public class DatabaseSetupTests
 {
-    [TestMethod]
+    [Fact]
     public void DatabaseCreationSql_NoSyntaxError()
     {
         using var connection = new SQLiteConnection("Data Source=:memory:");

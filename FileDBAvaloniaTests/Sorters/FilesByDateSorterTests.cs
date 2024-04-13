@@ -1,23 +1,22 @@
 ﻿using FileDBAvalonia;
 using FileDBAvalonia.Sorters;
 using FileDBShared.Model;
+using Xunit;
 
 namespace FileDBAvaloniaTests.Sorters;
 
-[TestClass]
+[Collection("Sequential")]
 public class FilesByDateSorterTests
 {
-    private FileModelByDateSorter sorter = new();
+    private FileModelByDateSorter sorter;
 
-    [TestInitialize]
-    public void Initialize()
+    public FilesByDateSorterTests()
     {
         Bootstrapper.Reset();
-
         sorter = new();
     }
 
-    [TestMethod]
+    [Fact]
     public void Compare()
     {
         var items = new List<FileModel>()
@@ -31,10 +30,10 @@ public class FilesByDateSorterTests
 
         items.Sort(sorter);
 
-        Assert.AreEqual(0, items[0].Id);
-        Assert.AreEqual(1, items[1].Id);
-        Assert.AreEqual(2, items[2].Id);
-        Assert.AreEqual(3, items[3].Id);
-        Assert.AreEqual(4, items[4].Id);
+        Assert.Equal(0, items[0].Id);
+        Assert.Equal(1, items[1].Id);
+        Assert.Equal(2, items[2].Id);
+        Assert.Equal(3, items[3].Id);
+        Assert.Equal(4, items[4].Id);
     }
 }

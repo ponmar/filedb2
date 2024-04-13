@@ -1,24 +1,25 @@
 ﻿using FileDBAvalonia;
+using Xunit;
 
 namespace FileDBAvaloniaTests;
 
 record Event();
 
-[TestClass]
+[Collection("Sequential")]
 public class EventsTests
 {
-    private readonly EventRecorder recorder = new();
+    private readonly EventRecorder recorder;
 
-    [TestInitialize]
-    public void Init()
+    public EventsTests()
     {
         Bootstrapper.Reset();
 
+        recorder = new();
         recorder.Reset();
         recorder.Record<Event>();
     }
 
-    [TestMethod]
+    [Fact]
     public void Send()
     {
         var event1 = new Event();
@@ -30,11 +31,11 @@ public class EventsTests
         recorder.AssertEventsRecorded<Event>(2);
 
         var recording = recorder.GetRecording<Event>().ToList();
-        Assert.AreSame(event1, recording[0]);
-        Assert.AreSame(event2, recording[1]);
+        Assert.Same(event1, recording[0]);
+        Assert.Same(event2, recording[1]);
     }
 
-    [TestMethod]
+    [Fact]
     public void Send_TypeArg()
     {
         Messenger.Send<Event>();

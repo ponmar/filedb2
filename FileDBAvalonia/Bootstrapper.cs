@@ -8,14 +8,13 @@ using FileDBAvalonia.ViewModels.Dialogs;
 using FileDBAvalonia.ViewModels.Search;
 using FileDBAvalonia.ViewModels.Search.File;
 using FileDBAvalonia.ViewModels.Search.Filters;
-using Microsoft.CodeAnalysis;
 using System.IO.Abstractions;
 
 namespace FileDBAvalonia;
 
 public static class Bootstrapper
 {
-    public static WindsorContainer Container { get; private set; } = new WindsorContainer();
+    public static WindsorContainer Container { get; private set; } = new();
 
     private static void Bootstrap()
     {
@@ -97,6 +96,7 @@ public static class Bootstrapper
 
     public static void Reset()
     {
+        Container?.Dispose();
         Container = new WindsorContainer();
         Bootstrap();
     }

@@ -1,30 +1,29 @@
 ﻿using FileDBAvalonia;
 using FileDBAvalonia.Configuration;
 using FileDBAvalonia.Migrators;
+using Xunit;
 
 namespace FileDBAvaloniaTests.Migrators;
 
-[TestClass]
+[Collection("Sequential")]
 public class ConfigMigratorTests
 {
-    private ConfigMigrator migrator = new();
+    private ConfigMigrator migrator;
 
-    [TestInitialize]
-    public void Initialize()
+    public ConfigMigratorTests()
     {
         Bootstrapper.Reset();
-
         migrator = new();
     }
 
-    [TestMethod]
+    [Fact]
     public void Migrate()
     {
         var configWithDefaultValues = new ConfigBuilder().Build();
 
         var migratedConfig = migrator.Migrate(configWithDefaultValues, DefaultConfigs.Default);
 
-        Assert.AreEqual(14, migratedConfig.OverlayTextSize);
-        Assert.AreEqual(24, migratedConfig.OverlayTextSizeLarge);
+        Assert.Equal(14, migratedConfig.OverlayTextSize);
+        Assert.Equal(24, migratedConfig.OverlayTextSizeLarge);
     }
 }

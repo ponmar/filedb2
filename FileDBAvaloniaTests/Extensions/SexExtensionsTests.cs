@@ -1,18 +1,18 @@
 ﻿using FileDBAvalonia.Extensions;
 using FileDBInterface.Extensions;
 using FileDBShared.Model;
+using Xunit;
 
 namespace FileDBAvaloniaTests.Extensions;
 
-[TestClass]
 public class SexExtensionsTests
 {
-    [TestMethod]
+    [Fact]
     public void ToFriendlyString()
     {
         foreach (var value in Enum.GetValues<Sex>())
         {
-            Assert.IsTrue(value.ToFriendlyString().HasContent());
+            Assert.True(value.ToFriendlyString().HasContent());
         }
     }
 }

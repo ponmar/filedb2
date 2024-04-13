@@ -1,21 +1,15 @@
 ﻿using FileDBShared.Model;
 using FileDBShared.Validators;
 using FluentValidation.TestHelper;
+using Xunit;
 
 namespace FileDBSharedTests.Validators;
 
-[TestClass]
 public class PersonModelValidatorTests
 {
     private PersonModelValidator validator = new();
 
-    [TestInitialize]
-    public void Initialize()
-    {
-        validator = new();
-    }
-
-    [TestMethod]
+    [Fact]
     public void Validate_NoOptionalData_Valid()
     {
         var model = new PersonModel()
@@ -33,7 +27,7 @@ public class PersonModelValidatorTests
         result.ShouldNotHaveAnyValidationErrors();
     }
 
-    [TestMethod]
+    [Fact]
     public void Validate_AllData_Valid()
     {
         var model = new PersonModel()
@@ -51,7 +45,7 @@ public class PersonModelValidatorTests
         result.ShouldNotHaveAnyValidationErrors();
     }
 
-    [TestMethod]
+    [Fact]
     public void Validate_IdIsNegative_Error()
     {
         var model = new PersonModel()
@@ -69,7 +63,7 @@ public class PersonModelValidatorTests
         result.ShouldHaveValidationErrorFor(x => x.Id);
     }
 
-    [TestMethod]
+    [Fact]
     public void Validate_FirstnameIsEmpty_Error()
     {
         var model = new PersonModel()
@@ -87,7 +81,7 @@ public class PersonModelValidatorTests
         result.ShouldHaveValidationErrorFor(x => x.Firstname);
     }
 
-    [TestMethod]
+    [Fact]
     public void Validate_LastnameIsEmpty_Error()
     {
         var model = new PersonModel()
@@ -105,7 +99,7 @@ public class PersonModelValidatorTests
         result.ShouldHaveValidationErrorFor(x => x.Lastname);
     }
 
-    [TestMethod]
+    [Fact]
     public void Validate_FirstnameIsTooShort_Error()
     {
         var model = new PersonModel()
@@ -123,7 +117,7 @@ public class PersonModelValidatorTests
         result.ShouldHaveValidationErrorFor(x => x.Firstname);
     }
 
-    [TestMethod]
+    [Fact]
     public void Validate_LastnameIsTooShort_Error()
     {
         var model = new PersonModel()
@@ -141,7 +135,7 @@ public class PersonModelValidatorTests
         result.ShouldHaveValidationErrorFor(x => x.Lastname);
     }
 
-    [TestMethod]
+    [Fact]
     public void Validate_DescriptionIsEmpty_Error()
     {
         var model = new PersonModel()
@@ -159,7 +153,7 @@ public class PersonModelValidatorTests
         result.ShouldHaveValidationErrorFor(x => x.Description);
     }
 
-    [TestMethod]
+    [Fact]
     public void Validate_DateOfBirthInvalid_Error()
     {
         var model = new PersonModel()
@@ -177,7 +171,7 @@ public class PersonModelValidatorTests
         result.ShouldHaveValidationErrorFor(x => x.DateOfBirth);
     }
 
-    [TestMethod]
+    [Fact]
     public void Validate_DeceasedInvalid_Error()
     {
         var model = new PersonModel()
@@ -195,7 +189,7 @@ public class PersonModelValidatorTests
         result.ShouldHaveValidationErrorFor(x => x.Deceased);
     }
 
-    [TestMethod]
+    [Fact]
     public void Validate_ProfileFileIdInvalid_Error()
     {
         var model = new PersonModel()

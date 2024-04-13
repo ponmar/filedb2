@@ -1,14 +1,13 @@
 using FileDBShared;
+using Xunit;
 
-namespace FileDBSharedTests
+namespace FileDBSharedTests;
+
+public class DatabaseUtilsTests
 {
-    [TestClass]
-    public class DatabaseUtilsTests
+    [Fact]
+    public void CalculateDistance()
     {
-        [TestMethod]
-        public void CalculateDistance()
-        {
-            Assert.AreEqual(103.97482585426138, LatLonUtils.CalculateDistance(58.72018309972223, 14.577619799999999, 58.7211136, 14.5774585));
-        }
+        Assert.Equal(103.97482585426138, LatLonUtils.CalculateDistance(58.72018309972223, 14.577619799999999, 58.7211136, 14.5774585));
     }
 }

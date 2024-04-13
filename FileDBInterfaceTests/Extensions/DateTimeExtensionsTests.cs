@@ -1,22 +1,21 @@
 ﻿using System;
 using FileDBInterface.DatabaseAccess;
 using FileDBInterface.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace FileDBInterfaceTests.Extensions;
 
-[TestClass]
 public class DateTimeExtensionsTests
 {
-    [DataRow(3, 19, Season.Spring)]
-    [DataRow(6, 19, Season.Spring)]
-    [DataRow(6, 20, Season.Summer)]
-    [DataRow(9, 21, Season.Summer)]
-    [DataRow(9, 22, Season.Autumn)]
-    [DataRow(12, 20, Season.Autumn)]
-    [DataRow(12, 21, Season.Winter)]
-    [DataRow(3, 18, Season.Winter)]
-    [TestMethod]
+    [Theory]
+    [InlineData(3, 19, Season.Spring)]
+    [InlineData(6, 19, Season.Spring)]
+    [InlineData(6, 20, Season.Summer)]
+    [InlineData(9, 21, Season.Summer)]
+    [InlineData(9, 22, Season.Autumn)]
+    [InlineData(12, 20, Season.Autumn)]
+    [InlineData(12, 21, Season.Winter)]
+    [InlineData(3, 18, Season.Winter)]
     public void GetApproximatedSeason(int month, int day, Season expectedSeason)
     {
         // Arrange
@@ -26,6 +25,6 @@ public class DateTimeExtensionsTests
         var season = date.GetApproximatedSeason();
 
         // Assert
-        Assert.AreEqual(expectedSeason, season);
+        Assert.Equal(expectedSeason, season);
     }
 }
