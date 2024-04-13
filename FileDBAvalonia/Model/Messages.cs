@@ -29,6 +29,7 @@ public record SetTheme(Theme Theme);
 public record FullscreenBrowsingRequested(bool Fullscreen);
 
 public record TransferSearchResult(IEnumerable<FileModel> Files);
+public record SearchResultRepositoryUpdated();
 public record FileSelectionChanged();
 public record RemoveFileFromSearchResult(FileModel File);
 
@@ -42,6 +43,6 @@ public record SelectFileInPrevDirectory;
 public record ImageLoaded(string FilePath, Bitmap Image);
 public record ImageLoadError(string FilePath, Exception Exception);
 
-public record FilesImported(List<FileModel> Files);
+public record FilesAdded(List<FileModel> Files);
 
 public record CloseModalDialogRequest;

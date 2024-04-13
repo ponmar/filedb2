@@ -19,64 +19,10 @@ namespace FileDBAvalonia.ViewModels;
 public partial class CriteriaViewModel : ObservableObject
 {
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(HasFiles))]
-    private IEnumerable<FileModel> files = [];
-
-    partial void OnFilesChanged(IEnumerable<FileModel> value)
-    {
-        Messenger.Send(new TransferSearchResult(value));
-    }
-
-    public bool HasFiles => Files.Any();
-
-    [ObservableProperty]
     private string numRandomFiles = "10";
 
     [ObservableProperty]
-    private string importedFileList = string.Empty;
-
-    [ObservableProperty]
-    private LocationForSearch? selectedLocationForPositionSearch;
-
-    partial void OnSelectedLocationForPositionSearchChanged(LocationForSearch? value)
-    {
-        if (value is not null)
-        {
-            var location = dbAccessProvider.DbAccess.GetLocationById(value.Id);
-            if (location.Position is not null)
-            {
-                SearchFileGpsPosition = location.Position;
-            }
-            else
-            {
-                SearchFileGpsPosition = string.Empty;
-                dialogs.ShowInfoDialogAsync("This location has no GPS position set.");
-            }
-        }
-    }
-
-    [ObservableProperty]
-    private string? searchFileGpsPosition;
-
-    [ObservableProperty]
-    private string? searchFileGpsPositionUrl;
-
-    partial void OnSearchFileGpsPositionUrlChanged(string? value)
-    {
-        if (value.HasContent())
-        {
-            var gpsPos = DatabaseParsing.ParseFilesPositionFromUrl(SearchFileGpsPositionUrl);
-            if (gpsPos is not null)
-            {
-                SearchFileGpsPosition = $"{gpsPos.Value.lat} {gpsPos.Value.lon}";
-                return;
-            }
-        }
-        SearchFileGpsPosition = string.Empty;
-    }
-
-    [ObservableProperty]
-    private string searchFileGpsRadius = "500";
+    private string addedFiles = string.Empty;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CombineSearchResultPossible))]
@@ -102,43 +48,21 @@ public partial class CriteriaViewModel : ObservableObject
     public bool CombineSearchResultPossible => CombineSearch1.HasContent() && CombineSearch2.HasContent();
 
     [ObservableProperty]
-    private PersonForSearch? selectedPersonSearch;
-
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(Person1And2Selected))]
-    private PersonForSearch? selectedPerson1Search;
-
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(Person1And2Selected))]
-    private PersonForSearch? selectedPerson2Search;
-
-    public bool Person1And2Selected => SelectedPerson1Search is not null && SelectedPerson2Search is not null;
-
-    [ObservableProperty]
-    private TagForSearch? selectedTagSearch;
-
-    [ObservableProperty]
-    private LocationForSearch? selectedLocationSearch;
-
-    [ObservableProperty]
     private ObservableCollection<IFilterViewModel> filterSettings = [];
 
     public bool FilterCanBeRemoved => FilterSettings.Count > 1;
 
-    public bool FileSelected => SelectedFile is not null;
-
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(FileSelected))]
-    [NotifyPropertyChangedFor(nameof(CurrentFileHasPosition))]
     private FileModel? selectedFile;
 
-    public bool CurrentFileHasPosition => SelectedFile is not null && SelectedFile.Position.HasContent();
+    partial void OnSelectedFileChanged(FileModel? value)
+    {
+        HasFiles = value is not null;
+    }
 
-    public ObservableCollection<PersonForSearch> Persons { get; } = [];
-    public ObservableCollection<LocationForSearch> Locations { get; } = [];
-    public ObservableCollection<LocationForSearch> LocationsWithPosition { get; } = [];
-    public ObservableCollection<TagForSearch> Tags { get; } = [];
-
+    [ObservableProperty]
+    public bool hasFiles;
+        
     private readonly IDialogs dialogs;
     private readonly IDatabaseAccessProvider dbAccessProvider;
     private readonly IPersonsRepository personsRepository;
@@ -146,8 +70,9 @@ public partial class CriteriaViewModel : ObservableObject
     private readonly ITagsRepository tagsRepository;
     private readonly IClipboardService clipboardService;
     private readonly IFileSelector fileSelector;
+    private readonly ISearchResultRepository searchResultRepository;
 
-    public CriteriaViewModel(IDialogs dialogs, IDatabaseAccessProvider dbAccessProvider, IPersonsRepository personsRepository, ILocationsRepository locationsRepository, ITagsRepository tagsRepository, IClipboardService clipboardService, IFileSelector fileSelector)
+    public CriteriaViewModel(IDialogs dialogs, IDatabaseAccessProvider dbAccessProvider, IPersonsRepository personsRepository, ILocationsRepository locationsRepository, ITagsRepository tagsRepository, IClipboardService clipboardService, IFileSelector fileSelector, ISearchResultRepository searchResultRepository)
     {
         this.dialogs = dialogs;
         this.dbAccessProvider = dbAccessProvider;
@@ -156,20 +81,13 @@ public partial class CriteriaViewModel : ObservableObject
         this.tagsRepository = tagsRepository;
         this.clipboardService = clipboardService;
         this.fileSelector = fileSelector;
+        this.searchResultRepository = searchResultRepository;
 
         filterSettings.Add(CreateDefaultFilter());
 
-        ReloadPersons();
-        ReloadLocations();
-        ReloadTags();
-
-        this.RegisterForEvent<PersonsUpdated>(x => ReloadPersons());
-        this.RegisterForEvent<LocationsUpdated>(x => ReloadLocations());
-        this.RegisterForEvent<TagsUpdated>(x => ReloadTags());
-
-        this.RegisterForEvent<FilesImported>(x =>
+        this.RegisterForEvent<FilesAdded>(x =>
         {
-            ImportedFileList = Utils.CreateFileList(x.Files);
+            AddedFiles = Utils.CreateFileList(x.Files);
         });
 
         this.RegisterForEvent<FileSelectionChanged>(x =>
@@ -207,46 +125,14 @@ public partial class CriteriaViewModel : ObservableObject
         };
     }
 
-    private void ReloadPersons()
-    {
-        Persons.Clear();
-        foreach (var person in personsRepository.Persons.Select(p => new PersonForSearch(p.Id, $"{p.Firstname} {p.Lastname}")))
-        {
-            Persons.Add(person);
-        }
-    }
-
-    private void ReloadLocations()
-    {
-        Locations.Clear();
-        LocationsWithPosition.Clear();
-
-        foreach (var location in locationsRepository.Locations)
-        {
-            var locationToUpdate = new LocationForSearch(location.Id, location.Name);
-            Locations.Add(locationToUpdate);
-            if (location.Position is not null)
-            {
-                LocationsWithPosition.Add(locationToUpdate);
-            }
-        }
-    }
-
-    private void ReloadTags()
-    {
-        Tags.Clear();
-        foreach (var tag in tagsRepository.Tags.Select(t => new TagForSearch(t.Id, t.Name)))
-        {
-            Tags.Add(tag);
-        }
-    }
+    private static void Send(IEnumerable<FileModel> files) => Messenger.Send(new TransferSearchResult(files));
 
     [RelayCommand]
     private void FindRandomFiles()
     {
         if (int.TryParse(NumRandomFiles, out var value))
         {
-            Files = dbAccessProvider.DbAccess.SearchFilesRandom(value);
+            Send(dbAccessProvider.DbAccess.SearchFilesRandom(value));
         }
     }
 
@@ -261,22 +147,22 @@ public partial class CriteriaViewModel : ObservableObject
 
         var path = SelectedFile.Path;
         var dir = Path.GetDirectoryName(path)!.Replace('\\', '/');
-        Files = dbAccessProvider.DbAccess.SearchFilesByPath(dir);
+        Send(dbAccessProvider.DbAccess.SearchFilesByPath(dir));
     }
 
     [RelayCommand]
     private void FindAllFiles()
     {
-        Files = dbAccessProvider.DbAccess.GetFiles();
+        Send(dbAccessProvider.DbAccess.GetFiles());
     }
 
     [RelayCommand]
-    private void FindImportedFiles()
+    private void FindAddedFiles()
     {
-        if (ImportedFileList.HasContent())
+        if (AddedFiles.HasContent())
         {
-            var fileIds = Utils.CreateFileIds(ImportedFileList);
-            Files = dbAccessProvider.DbAccess.SearchFilesFromIds(fileIds);
+            var fileIds = Utils.CreateFileIds(AddedFiles);
+            Send(dbAccessProvider.DbAccess.SearchFilesFromIds(fileIds));
         }
     }
 
@@ -286,62 +172,20 @@ public partial class CriteriaViewModel : ObservableObject
         var selectedDir = await dialogs.ShowBrowseDirectoriesDialogAsync();
         if (selectedDir is not null)
         {
-            Files = dbAccessProvider.DbAccess.SearchFilesByPath(selectedDir);
+            Send(dbAccessProvider.DbAccess.SearchFilesByPath(selectedDir));
         }
-    }
-
-    [RelayCommand]
-    private void SearchFilePositionFromCurrentFile()
-    {
-        SearchFileGpsPosition = SelectedFile is not null ? SelectedFile.Position : string.Empty;
-    }
-
-    [RelayCommand]
-    private async Task FindFilesByGpsPositionAsync()
-    {
-        if (!SearchFileGpsPosition.HasContent())
-        {
-            await dialogs.ShowErrorDialogAsync("No position specified");
-            return;
-        }
-
-        if (!SearchFileGpsRadius.HasContent())
-        {
-            await dialogs.ShowErrorDialogAsync("No radius specified");
-            return;
-        }
-        if (!double.TryParse(SearchFileGpsRadius, out var radius) || radius < 1)
-        {
-            await dialogs.ShowErrorDialogAsync("Invalid radius");
-            return;
-        }
-
-        var gpsPos = DatabaseParsing.ParseFilesPosition(SearchFileGpsPosition);
-        if (gpsPos is null)
-        {
-            await dialogs.ShowErrorDialogAsync("Invalid GPS position");
-            return;
-        }
-
-        var nearFiles = dbAccessProvider.DbAccess.SearchFilesNearGpsPosition(gpsPos.Value.lat, gpsPos.Value.lon, radius).ToList();
-
-        // TODO: checkbox for selecting if this should be included?
-        var nearLocations = dbAccessProvider.DbAccess.SearchLocationsNearGpsPosition(gpsPos.Value.lat, gpsPos.Value.lon, radius);
-        nearFiles.AddRange(dbAccessProvider.DbAccess.SearchFilesWithLocations(nearLocations.Select(x => x.Id)));
-
-        Files = nearFiles;
     }
 
     [RelayCommand]
     private void SetCombineSearch1()
     {
-        CombineSearch1 = Utils.CreateFileList(Files);
+        CombineSearch1 = Utils.CreateFileList(searchResultRepository.Files);
     }
 
     [RelayCommand]
     private void SetCombineSearch2()
     {
-        CombineSearch2 = Utils.CreateFileList(Files);
+        CombineSearch2 = Utils.CreateFileList(searchResultRepository.Files);
     }
 
     [RelayCommand]
@@ -383,7 +227,7 @@ public partial class CriteriaViewModel : ObservableObject
     private void CombineSearchResultShow()
     {
         var fileIds = Utils.CreateFileIds(CombineSearchResult);
-        Files = dbAccessProvider.DbAccess.SearchFilesFromIds(fileIds);
+        Send(dbAccessProvider.DbAccess.SearchFilesFromIds(fileIds));
     }
 
     [RelayCommand]
@@ -427,6 +271,6 @@ public partial class CriteriaViewModel : ObservableObject
             }
         }
 
-        Files = result;
+        Send(result);
     }
 }

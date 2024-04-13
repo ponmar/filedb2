@@ -193,7 +193,7 @@ public partial class FilesViewModel : ObservableObject
 
             try
             {
-                List<FileModel> importedFiles = [];
+                List<FileModel> addedFiles = [];
 
                 var counter = 1;
                 foreach (var fileToAdd in SelectedFiles)
@@ -207,7 +207,7 @@ public partial class FilesViewModel : ObservableObject
 
                     if (importedFile is not null)
                     {
-                        importedFiles.Add(importedFile);
+                        addedFiles.Add(importedFile);
 
                         if (importedFile.Position is not null && configProvider.Config.FileToLocationMaxDistance > 0.5)
                         {
@@ -230,10 +230,10 @@ public partial class FilesViewModel : ObservableObject
 
                 Dispatcher.UIThread.Invoke(() =>
                 {
-                    ImportedFileList = Utils.CreateFileList(importedFiles);
-                    ImportResult = importedFiles.Count > 0 ? $"{importedFiles.Count} files added." : string.Empty;
+                    ImportedFileList = Utils.CreateFileList(addedFiles);
+                    ImportResult = addedFiles.Count > 0 ? $"{addedFiles.Count} files added." : string.Empty;
 
-                    Messenger.Send(new FilesImported(importedFiles));
+                    Messenger.Send(new FilesAdded(addedFiles));
 
                     foreach (var selectedFile in SelectedFiles.ToList())
                     {

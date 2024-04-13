@@ -29,7 +29,7 @@ public partial class PositionViewModel : AbstractFilterViewModel
     }
 
     [ObservableProperty]
-    private bool currentFileHasPosition; // TODO: update value
+    private bool currentFileHasPosition;
 
     private readonly ILocationsRepository locationsRepository;
     private readonly IDatabaseAccessProvider databaseAccessProvider;

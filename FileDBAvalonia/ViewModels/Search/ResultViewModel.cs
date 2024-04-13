@@ -462,6 +462,7 @@ public partial class ResultViewModel : ObservableObject, ISearchResultRepository
         OnPropertyChanged(nameof(HasNonEmptySearchResult));
         OnPropertyChanged(nameof(SearchNumberOfHits));
         FireBrowsingEnabledEvents();
+        Messenger.Send<SearchResultRepositoryUpdated>();
     }
 
     private void FireBrowsingEnabledEvents()

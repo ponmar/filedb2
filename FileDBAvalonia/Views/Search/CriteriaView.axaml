@@ -76,9 +76,9 @@
                     <Button
                         Margin="5"
                         VerticalAlignment="Center"
-                        Command="{Binding FindImportedFilesCommand}"
+                        Command="{Binding FindAddedFilesCommand}"
                         Content="{x:Static lang:Strings.SearchNewFilesButton}"
-                        IsEnabled="{Binding ImportedFileList, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                        IsEnabled="{Binding AddedFiles, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                         ToolTip.Tip="{x:Static lang:Strings.SearchNewFilesButtonToolTip}" />
                     <Button
                         Margin="5"
