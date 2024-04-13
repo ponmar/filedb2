@@ -75,7 +75,7 @@
                         HorizontalAlignment="Left"
                         Command="{Binding FindCurrentDirectoryFilesCommand}"
                         Content="{x:Static lang:Strings.SearchAllFromCurrentDirectoryButton}"
-                        IsEnabled="{Binding FileSelected}"
+                        IsEnabled="{Binding SelectedFile, Converter={x:Static ObjectConverters.IsNotNull}}"
                         ToolTip.Tip="{x:Static lang:Strings.SearchAllFilesWithinCurrentFileDirectoryToolTip}" />
 
                     <StackPanel Margin="10,5" Orientation="Horizontal">
