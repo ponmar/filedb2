@@ -44,7 +44,7 @@ public partial class FilterSelectionViewModel : ObservableObject
     {
         return filterType switch
         {
-            FilterType.AnnualDate => new AnnualDateViewModel(),
+            FilterType.AnnualDate => new AnnualDateViewModel(fileSelector),
             FilterType.Date => new DateViewModel(),
             FilterType.NoMetaData => new NoMetaDataViewModel(),
             FilterType.NoDateTime => new NoDateTimeViewModel(),

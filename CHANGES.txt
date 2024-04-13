@@ -1,6 +1,6 @@
 4.5:
 * Add season search filter
-* Add annual search date filter
+* Add annual date search filter
 * Add negate checkbox to some search filters
 * Position and Criteria search tabs replaced with search filters
 * Combine search tab: add buttons for using the current search result
