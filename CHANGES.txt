@@ -1,3 +1,12 @@
+4.5:
+* Add season search filter
+* Add annual search date filter
+* Add negate checkbox to some search filters
+* Position and Criteria search tabs replaced with search filters
+* Combine search tab: add buttons for using the current search result
+* Filter layout and refactoring improvements
+* Fix keyboard shortcuts to not interfere with text input (left and right no longer used)
+
 4.4:
 * Port the desktop application from WPF (Windows only) to Avalonia UI (portable)
 * Add theme setting (default/dark/light)
