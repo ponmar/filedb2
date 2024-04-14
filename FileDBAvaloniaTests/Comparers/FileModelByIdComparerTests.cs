@@ -1,18 +1,11 @@
-﻿using FileDBAvalonia;
-using FileDBAvalonia.Comparers;
+﻿using FileDBAvalonia.Comparers;
 using FileDBShared.Model;
 using Xunit;
 
 namespace FileDBAvaloniaTests.Comparers;
 
-[Collection("Sequential")]
 public class FileModelByIdComparerTests
 {
-    public FileModelByIdComparerTests()
-    {
-        Bootstrapper.Reset();
-    }
-
     [Fact]
     public void Equals_DifferentInstancesSameId_AreEqual()
     {

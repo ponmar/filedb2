@@ -1,21 +1,11 @@
-﻿using FileDBAvalonia;
-using FileDBAvalonia.Sorters;
+﻿using FileDBAvalonia.Sorters;
 using FileDBShared.Model;
 using Xunit;
 
 namespace FileDBAvaloniaTests.Sorters;
 
-[Collection("Sequential")]
 public class PersonModelByNameSorterTests
 {
-    private PersonModelByNameSorter sorter;
-
-    public PersonModelByNameSorterTests()
-    {
-        Bootstrapper.Reset();
-        sorter = new();
-    }
-
     [Fact]
     public void Compare()
     {
@@ -26,6 +16,7 @@ public class PersonModelByNameSorterTests
             new PersonModel() { Id = 1, Firstname = "A", Lastname = "B" },
         };
 
+        var sorter = new PersonModelByNameSorter();
         items.Sort(sorter);
 
         Assert.Equal(0, items[0].Id);

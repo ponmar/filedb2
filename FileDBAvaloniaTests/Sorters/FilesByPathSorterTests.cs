@@ -1,21 +1,11 @@
-﻿using FileDBAvalonia;
-using FileDBAvalonia.Sorters;
+﻿using FileDBAvalonia.Sorters;
 using FileDBShared.Model;
 using Xunit;
 
 namespace FileDBAvaloniaTests.Sorters;
 
-[Collection("Sequential")]
 public class FilesByPathSorterTests
 {
-    private FileModelByPathSorter sorter;
-
-    public FilesByPathSorterTests()
-    {
-        Bootstrapper.Reset();
-        sorter = new();
-    }
-
     [Fact]
     public void Compare()
     {
@@ -26,6 +16,7 @@ public class FilesByPathSorterTests
             new FileModel() { Id = 1, Path = "bbb" },
         };
 
+        var sorter = new FileModelByPathSorter();
         items.Sort(sorter);
 
         Assert.Equal(0, items[0].Id);

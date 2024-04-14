@@ -5,14 +5,12 @@ using Xunit;
 
 namespace FileDBAvaloniaTests.Migrators;
 
-[Collection("Sequential")]
 public class ConfigMigratorTests
 {
     private ConfigMigrator migrator;
 
     public ConfigMigratorTests()
     {
-        Bootstrapper.Reset();
         migrator = new();
     }
 

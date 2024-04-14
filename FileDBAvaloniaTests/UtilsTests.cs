@@ -4,14 +4,8 @@ using Xunit;
 
 namespace FileDBAvaloniaTests;
 
-[Collection("Sequential")]
 public class UtilsTests
 {
-    public UtilsTests()
-    {
-        Bootstrapper.Reset();
-    }
-
     [Fact]
     public void CreateFileList_NoFiles_EmptyString()
     {

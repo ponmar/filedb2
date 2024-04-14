@@ -8,14 +8,6 @@ namespace FileDBAvaloniaTests.Sorters;
 [Collection("Sequential")]
 public class TagModelByNameSorterTests
 {
-    private TagModelByNameSorter sorter;
-
-    public TagModelByNameSorterTests()
-    {
-        Bootstrapper.Reset();
-        sorter = new();
-    }
-
     [Fact]
     public void Compare()
     {
@@ -26,6 +18,7 @@ public class TagModelByNameSorterTests
             new TagModel() { Id = 1, Name = "bbb" },
         };
 
+        var sorter = new TagModelByNameSorter();
         items.Sort(sorter);
 
         Assert.Equal(0, items[0].Id);

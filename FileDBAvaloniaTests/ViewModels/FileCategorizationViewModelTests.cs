@@ -9,17 +9,16 @@ using Xunit;
 
 namespace FileDBAvaloniaTests.ViewModels;
 
-[Collection("Sequential")]
 public class FileCategorizationViewModelTests
 {
-    private IConfigProvider configProvider;
-    private IDatabaseAccessProvider dbAccessProvider;
-    private IDialogs dialogs;
-    private IFilesystemAccessProvider filesystemAccessProvider;
-    private IPersonsRepository personsRepository;
-    private ILocationsRepository locationsRepository;
-    private ITagsRepository tagsRepository;
-    private IFileSelector fileSelector;
+    private readonly IConfigProvider configProvider = A.Fake<IConfigProvider>();
+    private readonly IDatabaseAccessProvider dbAccessProvider = A.Fake<IDatabaseAccessProvider>();
+    private readonly IDialogs dialogs = A.Fake<IDialogs>();
+    private readonly IFilesystemAccessProvider filesystemAccessProvider = A.Fake<IFilesystemAccessProvider>();
+    private readonly IPersonsRepository personsRepository = A.Fake<IPersonsRepository>();
+    private readonly ILocationsRepository locationsRepository = A.Fake<ILocationsRepository>();
+    private readonly ITagsRepository tagsRepository = A.Fake<ITagsRepository>();
+    private readonly IFileSelector fileSelector = A.Fake<IFileSelector>();
 
     private readonly List<PersonModel> persons = [];
     private readonly List<LocationModel> locations = [];
@@ -29,17 +28,6 @@ public class FileCategorizationViewModelTests
 
     public FileCategorizationViewModelTests()
     {
-        Bootstrapper.Reset();
-
-        configProvider = A.Fake<IConfigProvider>();
-        dbAccessProvider = A.Fake<IDatabaseAccessProvider>();
-        dialogs = A.Fake<IDialogs>();
-        filesystemAccessProvider = A.Fake<IFilesystemAccessProvider>();
-        personsRepository = A.Fake<IPersonsRepository>();
-        locationsRepository = A.Fake<ILocationsRepository>();
-        tagsRepository = A.Fake<ITagsRepository>();
-        fileSelector = A.Fake<IFileSelector>();
-
         persons.Clear();
         locations.Clear();
         tags.Clear();

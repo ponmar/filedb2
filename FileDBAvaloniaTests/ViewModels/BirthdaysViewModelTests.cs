@@ -9,29 +9,18 @@ using Xunit;
 
 namespace FileDBAvaloniaTests.ViewModels;
 
-[Collection("Sequential")]
 public class BirthdaysViewModelTests
 {
-    private IConfigProvider fakeConfigRepo;
-    private IDatabaseAccess fakeDbAccess;
-    private IDatabaseAccessProvider fakeDbAccessRepo;
-    private IPersonsRepository fakePersonsRepo;
-    private IFilesystemAccess fakeFilsystemAccess;
-    private IFilesystemAccessProvider fakeFilsystemAccessRepo;
-    private IImageLoader fakeImageLoader;
+    private readonly IConfigProvider fakeConfigRepo = A.Fake<IConfigProvider>();
+    private readonly IDatabaseAccess fakeDbAccess = A.Fake<IDatabaseAccess>();
+    private readonly IDatabaseAccessProvider fakeDbAccessRepo = A.Fake<IDatabaseAccessProvider>();
+    private readonly IPersonsRepository fakePersonsRepo = A.Fake<IPersonsRepository>();
+    private readonly IFilesystemAccess fakeFilsystemAccess = A.Fake<IFilesystemAccess>();
+    private readonly IFilesystemAccessProvider fakeFilsystemAccessRepo = A.Fake<IFilesystemAccessProvider>();
+    private readonly IImageLoader fakeImageLoader = A.Fake<IImageLoader>();
 
     public BirthdaysViewModelTests()
     {
-        Bootstrapper.Reset();
-
-        fakeConfigRepo = A.Fake<IConfigProvider>();
-        fakeDbAccess = A.Fake<IDatabaseAccess>();
-        fakeDbAccessRepo = A.Fake<IDatabaseAccessProvider>();
-        fakeFilsystemAccess = A.Fake<IFilesystemAccess>();
-        fakeFilsystemAccessRepo = A.Fake<IFilesystemAccessProvider>();
-        fakePersonsRepo = A.Fake<IPersonsRepository>();
-        fakeImageLoader = A.Fake<IImageLoader>();
-
         A.CallTo(() => fakeDbAccessRepo.DbAccess).Returns(fakeDbAccess);
         A.CallTo(() => fakeFilsystemAccessRepo.FilesystemAccess).Returns(fakeFilsystemAccess);
     }

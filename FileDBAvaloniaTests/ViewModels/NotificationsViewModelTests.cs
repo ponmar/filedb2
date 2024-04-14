@@ -9,32 +9,20 @@ using Xunit;
 
 namespace FileDBAvaloniaTests.ViewModels;
 
-[Collection("Sequential")]
 public class NotificationsViewModelTests : IDisposable
 {
-    private Config config;
-    private IConfigProvider fakeConfigRepo;
-    private IDatabaseAccessProvider fakeDbAccessRepo;
-    private IDatabaseAccess fakeDbAccess;
-    private INotifierFactory fakeNotifierFactory;
-    private INotificationHandling fakeNotificationHandling;
-    private INotificationsRepository fakeNotificationsRepo;
+    private readonly Config config = new ConfigBuilder().Build();
+    private readonly IConfigProvider fakeConfigRepo = A.Fake<IConfigProvider>();
+    private readonly IDatabaseAccessProvider fakeDbAccessRepo = A.Fake<IDatabaseAccessProvider>();
+    private readonly IDatabaseAccess fakeDbAccess = A.Fake<IDatabaseAccess>();
+    private readonly INotifierFactory fakeNotifierFactory = A.Fake<INotifierFactory>();
+    private readonly INotificationHandling fakeNotificationHandling = A.Fake<INotificationHandling>();
+    private readonly INotificationsRepository fakeNotificationsRepo = A.Fake<INotificationsRepository>();
 
     private NotificationsViewModel? viewModel;
 
     public NotificationsViewModelTests()
     {
-        Bootstrapper.Reset();
-
-        config = new ConfigBuilder().Build();
-
-        fakeConfigRepo = A.Fake<IConfigProvider>();
-        fakeDbAccessRepo = A.Fake<IDatabaseAccessProvider>();
-        fakeDbAccess = A.Fake<IDatabaseAccess>();
-        fakeNotifierFactory = A.Fake<INotifierFactory>();
-        fakeNotificationHandling = A.Fake<INotificationHandling>();
-        fakeNotificationsRepo = A.Fake<INotificationsRepository>();
-
         A.CallTo(() => fakeConfigRepo.Config).Returns(config);
         A.CallTo(() => fakeDbAccessRepo.DbAccess).Returns(fakeDbAccess);
         A.CallTo(() => fakeNotifierFactory.GetContinousNotifiers(A<Config>._, A<IDatabaseAccess>._)).Returns([]);

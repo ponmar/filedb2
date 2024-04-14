@@ -1,18 +1,15 @@
-﻿using FileDBAvalonia;
-using FileDBAvalonia.Validators;
+﻿using FileDBAvalonia.Validators;
 using FluentValidation.TestHelper;
 using Xunit;
 
 namespace FileDBAvaloniaTests.Validators;
 
-[Collection("Sequential")]
 public class ConfigValidatorTests
 {
     private ConfigValidator validator;
 
     public ConfigValidatorTests()
     {
-        Bootstrapper.Reset();
         validator = new();
     }
 

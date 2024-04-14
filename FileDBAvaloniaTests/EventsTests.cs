@@ -5,15 +5,12 @@ namespace FileDBAvaloniaTests;
 
 record Event();
 
-[Collection("Sequential")]
 public class EventsTests
 {
     private readonly EventRecorder recorder;
 
     public EventsTests()
     {
-        Bootstrapper.Reset();
-
         recorder = new();
         recorder.Reset();
         recorder.Record<Event>();

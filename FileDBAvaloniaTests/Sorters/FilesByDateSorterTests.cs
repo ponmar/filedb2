@@ -1,21 +1,11 @@
-﻿using FileDBAvalonia;
-using FileDBAvalonia.Sorters;
+﻿using FileDBAvalonia.Sorters;
 using FileDBShared.Model;
 using Xunit;
 
 namespace FileDBAvaloniaTests.Sorters;
 
-[Collection("Sequential")]
 public class FilesByDateSorterTests
 {
-    private FileModelByDateSorter sorter;
-
-    public FilesByDateSorterTests()
-    {
-        Bootstrapper.Reset();
-        sorter = new();
-    }
-
     [Fact]
     public void Compare()
     {
@@ -28,6 +18,7 @@ public class FilesByDateSorterTests
             new FileModel() { Id = 4, Path = "b", Datetime = null },
         };
 
+        var sorter = new FileModelByDateSorter();
         items.Sort(sorter);
 
         Assert.Equal(0, items[0].Id);
