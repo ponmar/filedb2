@@ -1241,7 +1241,7 @@
     <value>Utan metadata</value>
   </data>
   <data name="FilterTypeNoDateTime" xml:space="preserve">
-    <value>Datum/tid (saknas)</value>
+    <value>Utan datum och tid</value>
   </data>
   <data name="FilterTypeText" xml:space="preserve">
     <value>Text</value>

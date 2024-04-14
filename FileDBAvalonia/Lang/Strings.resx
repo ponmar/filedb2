@@ -1241,7 +1241,7 @@ YYYY-MM-DDTHH:MM:SS</value>
     <value>No meta-data</value>
   </data>
   <data name="FilterTypeNoDateTime" xml:space="preserve">
-    <value>Date/time (missing)</value>
+    <value>No date and time</value>
   </data>
   <data name="FilterTypeText" xml:space="preserve">
     <value>Text</value>

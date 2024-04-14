@@ -1397,7 +1397,7 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Date/time (missing).
+        ///   Looks up a localized string similar to No date and time.
         /// </summary>
         public static string FilterTypeNoDateTime {
             get {
