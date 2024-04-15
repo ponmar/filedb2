@@ -174,7 +174,7 @@ public class FilesystemAccess : IFilesystemAccess
 
         try
         {
-            using var fileStream = FileSystem.FileStream.New(path, FileMode.Open);
+            using var fileStream = FileSystem.FileStream.New(path, FileMode.Open, FileAccess.Read);
             var directories = ImageMetadataReader.ReadMetadata(fileStream);
 
             var subIfdDirectory = directories.OfType<ExifSubIfdDirectory>().FirstOrDefault();
