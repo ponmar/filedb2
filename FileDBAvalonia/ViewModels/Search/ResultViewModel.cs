@@ -404,15 +404,6 @@ public partial class ResultViewModel : ObservableObject, ISearchResultRepository
         {
             SelectedFileIndex = index;
             OnPropertyChanged(nameof(CurrentFileInternalPath));
-            var selection = SearchResult.Files[SelectedFileIndex];
-
-            // TODO: remove support for null value for pictures by running an automatic database migration at startup (replace null values for pictures with value read from files)?
-            // Note: reading of orientation from Exif is done here to get correct visualization for files added to database before orientation was parsed
-            if (selection.Orientation is null)
-            {
-                var fileAbsolutePath = filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(selection.Path);
-                selection.Orientation = filesystemAccessProvider.FilesystemAccess.ParseFileMetadata(fileAbsolutePath).Orientation;
-            }
 
             Messenger.Send<FileSelectionChanged>();
 
