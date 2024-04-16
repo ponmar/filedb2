@@ -1393,4 +1393,7 @@
   <data name="SearchFilterRange" xml:space="preserve">
     <value>Omfång</value>
   </data>
+  <data name="FilterTypeTime" xml:space="preserve">
+    <value>Tid</value>
+  </data>
 </root>

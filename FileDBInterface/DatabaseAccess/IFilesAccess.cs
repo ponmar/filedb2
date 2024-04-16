@@ -15,50 +15,51 @@ public enum Season
 
 public interface IFilesAccess
 {
-    public IEnumerable<FileModel> GetFiles();
-    public IEnumerable<string> GetDirectories();
-    public int GetFileCount();
-    public FileModel? GetFileById(int id);
-    public FileModel? GetFileByPath(string path);
-    public void InsertFile(string internalPath, string? description, IFilesystemAccess filesystemAccess, bool findMetadata);
-    public void DeleteFile(int id);
-    public void UpdateFileFromMetaData(int id, IFilesystemAccess filesystemAccess);
-    public void UpdateFileDescription(int id, string? description);
-    public void UpdateFileDatetime(int id, string? datetime);
-    public void UpdateFileOrientation(int id, int? orientation);
+    IEnumerable<FileModel> GetFiles();
+    IEnumerable<string> GetDirectories();
+    int GetFileCount();
+    FileModel? GetFileById(int id);
+    FileModel? GetFileByPath(string path);
+    void InsertFile(string internalPath, string? description, IFilesystemAccess filesystemAccess, bool findMetadata);
+    void DeleteFile(int id);
+    void UpdateFileFromMetaData(int id, IFilesystemAccess filesystemAccess);
+    void UpdateFileDescription(int id, string? description);
+    void UpdateFileDatetime(int id, string? datetime);
+    void UpdateFileOrientation(int id, int? orientation);
 
-    public IEnumerable<FileModel> SearchFilesFromIds(IEnumerable<int> fileIds);
-    public IEnumerable<FileModel> SearchFilesExceptIds(IEnumerable<int> fileIds);
-    public IEnumerable<FileModel> SearchFiles(string criteria, bool caseSensitive);
-    public IEnumerable<FileModel> SearchFilesBySex(Sex sex);
-    public IEnumerable<FileModel> SearchFilesByDate(DateTime date);
-    public IEnumerable<FileModel> SearchFilesByDate(DateTime start, DateTime end);
-    public IEnumerable<FileModel> SearchFilesBySeason(Season season);
-    public IEnumerable<FileModel> SearchFilesByAnnualDate(int startMonth, int startDay, int endMonth, int endDay);
-    public IEnumerable<FileModel> SearchFilesByAnnualDate(int month, int day);
-    public IEnumerable<FileModel> SearchFilesWithoutDate();
-    public IEnumerable<FileModel> SearchFilesByPath(string criteria);
-    public IEnumerable<FileModel> SearchFilesByExtension(string extension);
-    public IEnumerable<FileModel> SearchFilesRandom(int numFiles);
-    public IEnumerable<FileModel> SearchFilesNearGpsPosition(double latitude, double longitude, double radius);
-    public IEnumerable<FileModel> SearchFilesWithPersons(IEnumerable<int> personIds);
-    public IEnumerable<FileModel> SearchFilesWithoutPersons(IEnumerable<int> personIds);
-    public IEnumerable<FileModel> SearchFilesWithLocations(IEnumerable<int> locationIds);
-    public IEnumerable<FileModel> SearchFilesWithoutLocations(IEnumerable<int> locationIds);
-    public IEnumerable<FileModel> SearchFilesWithTags(IEnumerable<int> tagIds);
-    public IEnumerable<FileModel> SearchFilesWithoutTags(IEnumerable<int> tagIds);
-    public IEnumerable<FileModel> SearchFilesWithMissingData();
+    IEnumerable<FileModel> SearchFilesFromIds(IEnumerable<int> fileIds);
+    IEnumerable<FileModel> SearchFilesExceptIds(IEnumerable<int> fileIds);
+    IEnumerable<FileModel> SearchFiles(string criteria, bool caseSensitive);
+    IEnumerable<FileModel> SearchFilesBySex(Sex sex);
+    IEnumerable<FileModel> SearchFilesByTime(TimeOnly start, TimeOnly end);
+    IEnumerable<FileModel> SearchFilesByDate(DateTime date);
+    IEnumerable<FileModel> SearchFilesByDate(DateTime start, DateTime end);
+    IEnumerable<FileModel> SearchFilesBySeason(Season season);
+    IEnumerable<FileModel> SearchFilesByAnnualDate(int startMonth, int startDay, int endMonth, int endDay);
+    IEnumerable<FileModel> SearchFilesByAnnualDate(int month, int day);
+    IEnumerable<FileModel> SearchFilesWithoutDate();
+    IEnumerable<FileModel> SearchFilesByPath(string criteria);
+    IEnumerable<FileModel> SearchFilesByExtension(string extension);
+    IEnumerable<FileModel> SearchFilesRandom(int numFiles);
+    IEnumerable<FileModel> SearchFilesNearGpsPosition(double latitude, double longitude, double radius);
+    IEnumerable<FileModel> SearchFilesWithPersons(IEnumerable<int> personIds);
+    IEnumerable<FileModel> SearchFilesWithoutPersons(IEnumerable<int> personIds);
+    IEnumerable<FileModel> SearchFilesWithLocations(IEnumerable<int> locationIds);
+    IEnumerable<FileModel> SearchFilesWithoutLocations(IEnumerable<int> locationIds);
+    IEnumerable<FileModel> SearchFilesWithTags(IEnumerable<int> tagIds);
+    IEnumerable<FileModel> SearchFilesWithoutTags(IEnumerable<int> tagIds);
+    IEnumerable<FileModel> SearchFilesWithMissingData();
 
-    public void InsertFilePerson(int fileId, int personId);
-    public void DeleteFilePerson(int fileId, int personId);
+    void InsertFilePerson(int fileId, int personId);
+    void DeleteFilePerson(int fileId, int personId);
 
-    public void InsertFileLocation(int fileId, int locationId);
-    public void DeleteFileLocation(int fileId, int locationId);
+    void InsertFileLocation(int fileId, int locationId);
+    void DeleteFileLocation(int fileId, int locationId);
 
-    public void InsertFileTag(int fileId, int tagId);
-    public void DeleteFileTag(int fileId, int tagId);
+    void InsertFileTag(int fileId, int tagId);
+    void DeleteFileTag(int fileId, int tagId);
 
-    public IEnumerable<PersonModel> GetPersonsFromFile(int fileId);
-    public IEnumerable<LocationModel> GetLocationsFromFile(int fileId);
-    public IEnumerable<TagModel> GetTagsFromFile(int fileId);
+    IEnumerable<PersonModel> GetPersonsFromFile(int fileId);
+    IEnumerable<LocationModel> GetLocationsFromFile(int fileId);
+    IEnumerable<TagModel> GetTagsFromFile(int fileId);
 }

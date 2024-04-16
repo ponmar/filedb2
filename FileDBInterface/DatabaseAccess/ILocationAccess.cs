@@ -5,12 +5,12 @@ namespace FileDBInterface.DatabaseAccess;
 
 public interface ILocationAccess
 {
-    public IEnumerable<LocationModel> GetLocations();
-    public LocationModel GetLocationById(int id);
-    public bool HasLocationId(int id);
-    public int GetLocationCount();
-    public IEnumerable<LocationModel> SearchLocationsNearGpsPosition(double latitude, double longitude, double radius);
-    public void InsertLocation(LocationModel location);
-    public void UpdateLocation(LocationModel location);
-    public void DeleteLocation(int id);
+    IEnumerable<LocationModel> GetLocations();
+    LocationModel GetLocationById(int id);
+    bool HasLocationId(int id);
+    int GetLocationCount();
+    IEnumerable<LocationModel> SearchLocationsNearGpsPosition(double latitude, double longitude, double radius);
+    void InsertLocation(LocationModel location);
+    void UpdateLocation(LocationModel location);
+    void DeleteLocation(int id);
 }

@@ -87,6 +87,7 @@ public static class Bootstrapper
         Container.Register(Component.For<SeasonViewModel>().ImplementedBy<SeasonViewModel>().LifestyleTransient());
         Container.Register(Component.For<NumPersonsViewModel>().ImplementedBy<NumPersonsViewModel>().LifestyleTransient());
         Container.Register(Component.For<TagViewModel>().ImplementedBy<TagViewModel>().LifestyleTransient());
+        Container.Register(Component.For<TimeViewModel>().ImplementedBy<TimeViewModel>().LifestyleTransient());
     }
 
     public static void StartServices()

@@ -1487,6 +1487,15 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Time.
+        /// </summary>
+        public static string FilterTypeTime {
+            get {
+                return ResourceManager.GetString("FilterTypeTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add....
         /// </summary>
         public static string LocationsAddButton {
