@@ -37,7 +37,7 @@
 								</DataTemplate>
 							</ComboBox.ItemTemplate>
 						</ComboBox>
-						<Button Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Classes="PageButton" Command="{Binding SetDefaultWindowModeCommand}" ToolTip.Tip="{x:Static lang:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static lang:Strings.SettingsDefaultButton}" IsEnabled="{Binding !WindowModeDelayIsDefault}"/>
+						<Button Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Classes="PageButton" Command="{Binding SetDefaultWindowModeCommand}" ToolTip.Tip="{x:Static lang:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static lang:Strings.SettingsDefaultButton}" IsEnabled="{Binding !WindowModeIsDefault}"/>
 
 						<TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static lang:Strings.SettingsLanguageLabel}" Classes="PageTextBlock"/>
 						<ComboBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" ItemsSource="{Binding Languages}" SelectedValue="{Binding SelectedLanguage}"/>
