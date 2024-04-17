@@ -170,16 +170,12 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
     public IEnumerable<FileModel> SearchFilesByTime(TimeOnly start, TimeOnly end)
     {
         using var connection = DatabaseSetup.CreateConnection(database);
-        foreach (var fileWithDate in connection.Query<FileModel>($"select * from [files] where Datetime is not null"))
+        foreach (var fileWithDate in connection.Query<FileModel>($"select * from [files] where Datetime like '%T%'"))
         {
-            var fileDatetime = DatabaseParsing.ParseFilesDatetime(fileWithDate.Datetime);
-            if (fileDatetime is not null)
+            var fileTime = DatabaseParsing.ParseFileTime(fileWithDate.Datetime);
+            if (fileTime is not null && fileTime >= start && fileTime <= end)
             {
-                var fileTime = TimeOnly.FromDateTime(fileDatetime.Value);
-                if (fileTime >= start && fileTime <= end)
-                {
-                    yield return fileWithDate;
-                }
+                yield return fileWithDate;
             }
         }
     }

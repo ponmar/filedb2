@@ -28,6 +28,28 @@ public class DatabaseParsing
         return ParsePersonDate(dateStr);
     }
 
+    public static TimeOnly? ParseFileTime(string? datetimeStr)
+    {
+        if (datetimeStr is null)
+        {
+            return null;
+        }
+
+        var parts = datetimeStr.Split('T');
+        if (parts.Length != 2)
+        {
+            return null;
+        }
+
+        var timeStr = parts[1];
+        if (TimeOnly.TryParseExact(timeStr, "HH:mm:ss", out var result))
+        {
+            return result;
+        }
+
+        return null;
+    }
+
     public static DateTime? ParseFilesDatetime(string? datetimeStr)
     {
         if (datetimeStr is null)
