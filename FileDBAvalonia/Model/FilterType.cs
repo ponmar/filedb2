@@ -55,6 +55,9 @@ public enum FilterType
 
     [FilterTypeViewModel(typeof(AnnualDateViewModel))]
     AnnualDate,
+
+    [FilterTypeViewModel(typeof(TimeViewModel))]
+    Time,
 }
 
 public static class FilterTypeExtensions
@@ -78,6 +81,7 @@ public static class FilterTypeExtensions
             FilterType.NumPersons => Strings.FilterTypeNumPersons,
             FilterType.Season => Strings.FilterTypeSeason,
             FilterType.AnnualDate => Strings.FilterTypeAnnualDate,
+            FilterType.Time => Strings.FilterTypeTime,
             _ => throw new NotImplementedException(),
         };
     }

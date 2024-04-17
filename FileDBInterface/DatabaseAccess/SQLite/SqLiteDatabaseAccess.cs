@@ -167,6 +167,23 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
         return connection.QueryFirstOrDefault<FileModel>("select * from [files] where Path = @path", new { path });
     }
 
+    public IEnumerable<FileModel> SearchFilesByTime(TimeOnly start, TimeOnly end)
+    {
+        using var connection = DatabaseSetup.CreateConnection(database);
+        foreach (var fileWithDate in connection.Query<FileModel>($"select * from [files] where Datetime is not null"))
+        {
+            var fileDatetime = DatabaseParsing.ParseFilesDatetime(fileWithDate.Datetime);
+            if (fileDatetime is not null)
+            {
+                var fileTime = TimeOnly.FromDateTime(fileDatetime.Value);
+                if (fileTime >= start && fileTime <= end)
+                {
+                    yield return fileWithDate;
+                }
+            }
+        }
+    }
+
     public IEnumerable<FileModel> SearchFilesByDate(DateTime date)
     {
         using var connection = DatabaseSetup.CreateConnection(database);

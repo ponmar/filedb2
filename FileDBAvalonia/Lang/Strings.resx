@@ -1393,4 +1393,7 @@ YYYY-MM-DDTHH:MM:SS</value>
   <data name="SearchFilterRange" xml:space="preserve">
     <value>Range</value>
   </data>
+  <data name="FilterTypeTime" xml:space="preserve">
+    <value>Time</value>
+  </data>
 </root>

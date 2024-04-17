@@ -5,12 +5,12 @@ namespace FileDBInterface.DatabaseAccess;
 
 public interface IPersonAccess
 {
-    public IEnumerable<PersonModel> GetPersons();
-    public int GetPersonCount();
-    public PersonModel GetPersonById(int id);
-    public bool HasPersonId(int id);
-    public void InsertPerson(PersonModel person);
-    public void UpdatePerson(PersonModel person);
-    public void DeletePerson(int id);
+    IEnumerable<PersonModel> GetPersons();
+    int GetPersonCount();
+    PersonModel GetPersonById(int id);
+    bool HasPersonId(int id);
+    void InsertPerson(PersonModel person);
+    void UpdatePerson(PersonModel person);
+    void DeletePerson(int id);
 
 }
