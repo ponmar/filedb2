@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO.Abstractions;
 using System.Linq;
@@ -17,137 +16,194 @@ namespace FileDBAvalonia.ViewModels;
 
 public partial class SettingsViewModel : ObservableObject
 {
+    public static IEnumerable<SortMethod> SortMethods { get; } = Enum.GetValues<SortMethod>();
+    public static IEnumerable<WindowMode> WindowModes { get; } = Enum.GetValues<WindowMode>();
+    public static IEnumerable<Theme> Themes { get; } = Enum.GetValues<Theme>();
+    public static IEnumerable<CultureInfo> Languages { get; } = [CultureInfo.GetCultureInfo("en"), CultureInfo.GetCultureInfo("sv-SE")];
+
     [ObservableProperty]
     private bool isDirty;
 
-    partial void OnIsDirtyChanged(bool value)
-    {
-        Messenger.Send(new ConfigEdited(value));
-    }
+    partial void OnIsDirtyChanged(bool value) => Messenger.Send(new ConfigEdited(value));
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(SlideshowDelayIsDefault))]
     private int slideshowDelay;
 
     partial void OnSlideshowDelayChanged(int value) => IsDirty = true;
 
+    public bool SlideshowDelayIsDefault => SlideshowDelay == DefaultConfigs.Default.SlideshowDelay;
+
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(SearchHistorySizeIsDefault))]
     private int searchHistorySize;
 
     partial void OnSearchHistorySizeChanged(int value) => IsDirty = true;
 
+    public bool SearchHistorySizeIsDefault => SearchHistorySize == DefaultConfigs.Default.SearchHistorySize;
+
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(DefaultSortMethodIsDefault))]
     private SortMethod defaultSortMethod;
 
     partial void OnDefaultSortMethodChanged(SortMethod value) => IsDirty = true;
 
-    [ObservableProperty]
-    private List<SortMethod> sortMethods = Enum.GetValues<SortMethod>().ToList();
+    public bool DefaultSortMethodIsDefault => DefaultSortMethod == DefaultConfigs.Default.DefaultSortMethod;
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(KeepSelectionAfterSortIsDefault))]
     private bool keepSelectionAfterSort;
 
     partial void OnKeepSelectionAfterSortChanged(bool value) => IsDirty = true;
 
+    public bool KeepSelectionAfterSortIsDefault => KeepSelectionAfterSort == DefaultConfigs.Default.KeepSelectionAfterSort;
+
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(IncludeHiddenDirectoriesIsDefault))]
     private bool includeHiddenDirectories;
 
     partial void OnIncludeHiddenDirectoriesChanged(bool value) => IsDirty = true;
 
+    public bool IncludeHiddenDirectoriesIsDefault => IncludeHiddenDirectories == DefaultConfigs.Default.IncludeHiddenDirectories;
+
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(BlacklistedFilePathPatternsIsDefault))]
     private string blacklistedFilePathPatterns = string.Empty;
 
     partial void OnBlacklistedFilePathPatternsChanged(string value) => IsDirty = true;
 
+    public bool BlacklistedFilePathPatternsIsDefault => BlacklistedFilePathPatterns == DefaultConfigs.Default.BlacklistedFilePathPatterns;
+
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(WhitelistedFilePathPatternsIsDefault))]
     private string whitelistedFilePathPatterns = string.Empty;
 
     partial void OnWhitelistedFilePathPatternsChanged(string value) => IsDirty = true;
 
+    public bool WhitelistedFilePathPatternsIsDefault => WhitelistedFilePathPatterns == DefaultConfigs.Default.WhitelistedFilePathPatterns;
+
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(ReadOnlyIsDefault))]
     private bool readOnly;
 
     partial void OnReadOnlyChanged(bool value) => IsDirty = true;
 
+    public bool ReadOnlyIsDefault => ReadOnly == DefaultConfigs.Default.ReadOnly;
+
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(BackupReminderIsDefault))]
     private bool backupReminder;
 
     partial void OnBackupReminderChanged(bool value) => IsDirty = true;
 
+    public bool BackupReminderIsDefault => BackupReminder == DefaultConfigs.Default.BackupReminder;
+
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(BirthdayReminderIsDefault))]
     private bool birthdayReminder;
 
     partial void OnBirthdayReminderChanged(bool value) => IsDirty = true;
 
+    public bool BirthdayReminderIsDefault => BirthdayReminder == DefaultConfigs.Default.BirthdayReminder;
+
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(BirthdayReminderForDeceasedIsDefault))]
     private bool birthdayReminderForDeceased;
 
     partial void OnBirthdayReminderForDeceasedChanged(bool value) => IsDirty = true;
 
+    public bool BirthdayReminderForDeceasedIsDefault => BirthdayReminderForDeceased == DefaultConfigs.Default.BirthdayReminderForDeceased;
+
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(RipReminderIsDefault))]
     private bool ripReminder;
 
     partial void OnRipReminderChanged(bool value) => IsDirty = true;
 
+    public bool RipReminderIsDefault => RipReminder == DefaultConfigs.Default.RipReminder;
+
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(MissingFilesRootDirNotificationIsDefault))]
     private bool missingFilesRootDirNotification;
 
     partial void OnMissingFilesRootDirNotificationChanged(bool value) => IsDirty = true;
 
+    public bool MissingFilesRootDirNotificationIsDefault => MissingFilesRootDirNotification == DefaultConfigs.Default.MissingFilesRootDirNotification;
+
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(LocationLinkIsDefault))]
     private string locationLink = string.Empty;
 
     partial void OnLocationLinkChanged(string value) => IsDirty = true;
 
+    public bool LocationLinkIsDefault => LocationLink == DefaultConfigs.Default.LocationLink;
+
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(FileToLocationMaxDistanceIsDefault))]
     private int fileToLocationMaxDistance;
 
     partial void OnFileToLocationMaxDistanceChanged(int value) => IsDirty = true;
 
+    public bool FileToLocationMaxDistanceIsDefault => FileToLocationMaxDistance == DefaultConfigs.Default.FileToLocationMaxDistance;
+
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(WindowModeIsDefault))]
     private WindowMode windowMode;
 
     partial void OnWindowModeChanged(WindowMode value) => IsDirty = true;
 
-    [ObservableProperty]
-    private ObservableCollection<CultureInfo> languages = [];
+    public bool WindowModeIsDefault => WindowMode == DefaultConfigs.Default.WindowMode;
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(SelectedLanguageIsDefault))]
     private CultureInfo? selectedLanguage;
 
     partial void OnSelectedLanguageChanged(CultureInfo? value) => IsDirty = true;
 
-    [ObservableProperty]
-    public List<WindowMode> windowModes = Enum.GetValues<WindowMode>().ToList();
+    public bool SelectedLanguageIsDefault => SelectedLanguage?.Name == DefaultConfigs.Default.Language;
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(ImageMemoryCacheCountIsDefault))]
     private int imageMemoryCacheCount;
 
     partial void OnImageMemoryCacheCountChanged(int value) => IsDirty = true;
 
+    public bool ImageMemoryCacheCountIsDefault => ImageMemoryCacheCount == DefaultConfigs.Default.ImageMemoryCacheCount;
+
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(NumImagesToPreloadIsDefault))]
     private int numImagesToPreload;
 
     partial void OnNumImagesToPreloadChanged(int value) => IsDirty = true;
 
+    public bool NumImagesToPreloadIsDefault => NumImagesToPreload == DefaultConfigs.Default.NumImagesToPreload;
+
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(OverlayTextSizeIsDefault))]
     private int overlayTextSize;
 
     partial void OnOverlayTextSizeChanged(int value) => IsDirty = true;
 
+    public bool OverlayTextSizeIsDefault => OverlayTextSize == DefaultConfigs.Default.OverlayTextSize;
+
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(OverlayTextSizeLargeIsDefault))]
     private int overlayTextSizeLarge;
 
     partial void OnOverlayTextSizeLargeChanged(int value) => IsDirty = true;
 
+    public bool OverlayTextSizeLargeIsDefault => OverlayTextSizeLarge == DefaultConfigs.Default.OverlayTextSizeLarge;
+
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(ShortItemNameMaxLengthIsDefault))]
     private int shortItemNameMaxLength;
 
     partial void OnShortItemNameMaxLengthChanged(int value) => IsDirty = true;
 
-    [ObservableProperty]
-    private List<Theme> themes = Enum.GetValues<Theme>().ToList();
+    public bool ShortItemNameMaxLengthIsDefault => ShortItemNameMaxLength == DefaultConfigs.Default.ShortItemNameMaxLength;
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(ThemeIsDefault))]
     private Theme theme;
 
     partial void OnThemeChanged(Theme value)
@@ -156,160 +212,88 @@ public partial class SettingsViewModel : ObservableObject
         Messenger.Send(new SetTheme(value));
     }
 
-    [RelayCommand]
-    private void SetDefaultSlideshowDelay()
-    {
-        SlideshowDelay = DefaultConfigs.Default.SlideshowDelay;
-    }
+    public bool ThemeIsDefault => Theme == DefaultConfigs.Default.Theme;
 
     [RelayCommand]
-    private void SetDefaultBackupReminder()
-    {
-        BackupReminder = DefaultConfigs.Default.BackupReminder;
-    }
+    private void SetDefaultSlideshowDelay() => SlideshowDelay = DefaultConfigs.Default.SlideshowDelay;
 
     [RelayCommand]
-    private void SetDefaultSearchHistorySize()
-    {
-        SearchHistorySize = DefaultConfigs.Default.SearchHistorySize;
-    }
+    private void SetDefaultBackupReminder() => BackupReminder = DefaultConfigs.Default.BackupReminder;
 
     [RelayCommand]
-    private void SetDefaultDefaultSortMethod()
-    {
-        DefaultSortMethod = DefaultConfigs.Default.DefaultSortMethod;
-    }
+    private void SetDefaultSearchHistorySize() => SearchHistorySize = DefaultConfigs.Default.SearchHistorySize;
 
     [RelayCommand]
-    private void SetDefaultKeepSelectionAfterSort()
-    {
-        KeepSelectionAfterSort = DefaultConfigs.Default.KeepSelectionAfterSort;
-    }
+    private void SetDefaultDefaultSortMethod() => DefaultSortMethod = DefaultConfigs.Default.DefaultSortMethod;
 
     [RelayCommand]
-    private void SetDefaultBlacklistedFilePathPatterns()
-    {
-        BlacklistedFilePathPatterns = DefaultConfigs.Default.BlacklistedFilePathPatterns;
-    }
+    private void SetDefaultKeepSelectionAfterSort() => KeepSelectionAfterSort = DefaultConfigs.Default.KeepSelectionAfterSort;
 
     [RelayCommand]
-    private void SetDefaultWhitelistedFilePathPatterns()
-    {
-        WhitelistedFilePathPatterns = DefaultConfigs.Default.WhitelistedFilePathPatterns;
-    }
+    private void SetDefaultBlacklistedFilePathPatterns() => BlacklistedFilePathPatterns = DefaultConfigs.Default.BlacklistedFilePathPatterns;
 
     [RelayCommand]
-    private void SetDefaultIncludeHiddenDirectories()
-    {
-        IncludeHiddenDirectories = DefaultConfigs.Default.IncludeHiddenDirectories;
-    }
+    private void SetDefaultWhitelistedFilePathPatterns() => WhitelistedFilePathPatterns = DefaultConfigs.Default.WhitelistedFilePathPatterns;
 
     [RelayCommand]
-    private void SetDefaultReadOnly()
-    {
-        ReadOnly = DefaultConfigs.Default.ReadOnly;
-    }
+    private void SetDefaultIncludeHiddenDirectories() => IncludeHiddenDirectories = DefaultConfigs.Default.IncludeHiddenDirectories;
 
     [RelayCommand]
-    private void SetDefaultImageMemoryCacheCount()
-    {
-        ImageMemoryCacheCount = DefaultConfigs.Default.ImageMemoryCacheCount;
-    }
+    private void SetDefaultReadOnly() => ReadOnly = DefaultConfigs.Default.ReadOnly;
 
     [RelayCommand]
-    private void SetDefaultNumImagesToPreload()
-    {
-        NumImagesToPreload = DefaultConfigs.Default.NumImagesToPreload;
-    }
+    private void SetDefaultImageMemoryCacheCount() => ImageMemoryCacheCount = DefaultConfigs.Default.ImageMemoryCacheCount;
 
     [RelayCommand]
-    private void SetDefaultBirthdayReminder()
-    {
-        BirthdayReminder = DefaultConfigs.Default.BirthdayReminder;
-    }
+    private void SetDefaultNumImagesToPreload() => NumImagesToPreload = DefaultConfigs.Default.NumImagesToPreload;
 
     [RelayCommand]
-    private void SetDefaultBirthdayReminderForDeceased()
-    {
-        BirthdayReminderForDeceased = DefaultConfigs.Default.BirthdayReminderForDeceased;
-    }
+    private void SetDefaultBirthdayReminder() => BirthdayReminder = DefaultConfigs.Default.BirthdayReminder;
 
     [RelayCommand]
-    private void SetDefaultRipReminder()
-    {
-        RipReminder = DefaultConfigs.Default.RipReminder;
-    }
+    private void SetDefaultBirthdayReminderForDeceased() => BirthdayReminderForDeceased = DefaultConfigs.Default.BirthdayReminderForDeceased;
 
     [RelayCommand]
-    private void SetDefaultMissingFilesRootDirNotification()
-    {
-        MissingFilesRootDirNotification = DefaultConfigs.Default.MissingFilesRootDirNotification;
-    }
+    private void SetDefaultRipReminder() => RipReminder = DefaultConfigs.Default.RipReminder;
 
     [RelayCommand]
-    private void SetDefaultLocationLink()
-    {
-        LocationLink = DefaultConfigs.Default.LocationLink;
-    }
+    private void SetDefaultMissingFilesRootDirNotification() => MissingFilesRootDirNotification = DefaultConfigs.Default.MissingFilesRootDirNotification;
 
     [RelayCommand]
-    private void SetDefaultFileToLocationMaxDistance()
-    {
-        FileToLocationMaxDistance = DefaultConfigs.Default.FileToLocationMaxDistance;
-    }
+    private void SetDefaultLocationLink() => LocationLink = DefaultConfigs.Default.LocationLink;
 
     [RelayCommand]
-    private void SetDefaultWindowMode()
-    {
-        WindowMode = DefaultConfigs.Default.WindowMode;
-    }
+    private void SetDefaultFileToLocationMaxDistance() => FileToLocationMaxDistance = DefaultConfigs.Default.FileToLocationMaxDistance;
 
     [RelayCommand]
-    private void SetDefaultOverlayTextSize()
-    {
-        OverlayTextSize = DefaultConfigs.Default.OverlayTextSize;
-    }
+    private void SetDefaultWindowMode() => WindowMode = DefaultConfigs.Default.WindowMode;
 
     [RelayCommand]
-    private void SetDefaultOverlayTextSizeLarge()
-    {
-        OverlayTextSizeLarge = DefaultConfigs.Default.OverlayTextSizeLarge;
-    }
+    private void SetDefaultOverlayTextSize() => OverlayTextSize = DefaultConfigs.Default.OverlayTextSize;
 
     [RelayCommand]
-    private void SetDefaultShortItemNameMaxLength()
-    {
-        ShortItemNameMaxLength = DefaultConfigs.Default.ShortItemNameMaxLength;
-    }
+    private void SetDefaultOverlayTextSizeLarge() => OverlayTextSizeLarge = DefaultConfigs.Default.OverlayTextSizeLarge;
 
     [RelayCommand]
-    private void SetDefaultLanguage()
-    {
-        SelectedLanguage = Languages.FirstOrDefault(x => x.Name == DefaultConfigs.Default.Language);
-    }
+    private void SetDefaultShortItemNameMaxLength() => ShortItemNameMaxLength = DefaultConfigs.Default.ShortItemNameMaxLength;
 
     [RelayCommand]
-    private void SetDefaultTheme()
-    {
-        Theme = DefaultConfigs.Default.Theme;
-    }
+    private void SetDefaultLanguage() => SelectedLanguage = Languages.FirstOrDefault(x => x.Name == DefaultConfigs.Default.Language);
+
+    [RelayCommand]
+    private void SetDefaultTheme() => Theme = DefaultConfigs.Default.Theme;
 
     private readonly IConfigProvider configProvider;
     private readonly IConfigUpdater configUpdater;
     private readonly IDialogs dialogs;
     private readonly IFileSystem fileSystem;
-    private readonly INotificationHandling notificationHandling;
 
-    public SettingsViewModel(IConfigProvider configProvider, IConfigUpdater configUpdater, IDialogs dialogs, IFileSystem fileSystem, INotificationHandling notificationHandling)
+    public SettingsViewModel(IConfigProvider configProvider, IConfigUpdater configUpdater, IDialogs dialogs, IFileSystem fileSystem)
     {
         this.configProvider = configProvider;
         this.configUpdater = configUpdater;
         this.dialogs = dialogs;
         this.fileSystem = fileSystem;
-        this.notificationHandling = notificationHandling;
-
-        languages.Add(CultureInfo.GetCultureInfo("en"));
-        languages.Add(CultureInfo.GetCultureInfo("sv-SE"));
 
         UpdateFromConfiguration();
     }
