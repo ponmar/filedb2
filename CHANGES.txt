@@ -1,3 +1,10 @@
+4.6:
+* Add time search filter
+* Settings tab: enable default buttons only when a non-default setting is used
+* Annual date filter sets initial date to current file date when available
+* Remove reading of picture orientation when it is set to null in database
+* Fix for reading file on read-only mode when parsing meta-data (Exif)
+
 4.5:
 * Add season search filter
 * Add annual date search filter
