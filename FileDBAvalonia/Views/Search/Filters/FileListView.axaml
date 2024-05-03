@@ -8,6 +8,6 @@
              x:Class="FileDBAvalonia.Views.Search.Filters.FileListView">
 	<StackPanel Orientation="Horizontal" DataContext="{Binding FilterViewModel}">
 		<TextBox Margin="0 0 3 0" Text="{Binding FileListIds}" Width="100" VerticalAlignment="Center" ToolTip.Tip="{x:Static lang:Strings.SearchFilterFileListToolTip}"/>
-		<CheckBox Content="!" IsChecked="{Binding Negate}" ToolTip.Tip="{x:Static lang:Strings.FilterNegateTooltip}"/>
+		<ToggleButton Content="!" IsChecked="{Binding Negate}" ToolTip.Tip="{x:Static lang:Strings.FilterNegateTooltip}"/>
 	</StackPanel>
 </UserControl>

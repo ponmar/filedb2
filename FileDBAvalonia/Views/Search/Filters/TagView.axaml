@@ -8,6 +8,6 @@
              x:Class="FileDBAvalonia.Views.Search.Filters.TagView">
 	<StackPanel Orientation="Horizontal" DataContext="{Binding FilterViewModel}">
 		<ComboBox Margin="0 0 3 0" ItemsSource="{Binding Tags}" SelectedItem="{Binding SelectedTag}" VerticalAlignment="Center"/>
-		<CheckBox Content="!" IsChecked="{Binding Negate}" ToolTip.Tip="{x:Static lang:Strings.FilterNegateTooltip}"/>
+		<ToggleButton Content="!" IsChecked="{Binding Negate}" ToolTip.Tip="{x:Static lang:Strings.FilterNegateTooltip}"/>
 	</StackPanel>
 </UserControl>
