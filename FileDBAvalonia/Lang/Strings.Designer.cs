@@ -3485,6 +3485,33 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Include files with matching locations.
+        /// </summary>
+        public static string TextFilterIncludeLocations {
+            get {
+                return ResourceManager.GetString("TextFilterIncludeLocations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Include files with matching persons.
+        /// </summary>
+        public static string TextFilterIncludePersons {
+            get {
+                return ResourceManager.GetString("TextFilterIncludePersons", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Include files with matching tags.
+        /// </summary>
+        public static string TextFilterIncludeTags {
+            get {
+                return ResourceManager.GetString("TextFilterIncludeTags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Not executed..
         /// </summary>
         public static string ToolNotExecuted {

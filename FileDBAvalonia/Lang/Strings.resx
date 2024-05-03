@@ -1396,4 +1396,13 @@ YYYY-MM-DDTHH:MM:SS</value>
   <data name="FilterTypeTime" xml:space="preserve">
     <value>Time</value>
   </data>
+  <data name="TextFilterIncludeTags" xml:space="preserve">
+    <value>Include files with matching tags</value>
+  </data>
+  <data name="TextFilterIncludePersons" xml:space="preserve">
+    <value>Include files with matching persons</value>
+  </data>
+  <data name="TextFilterIncludeLocations" xml:space="preserve">
+    <value>Include files with matching locations</value>
+  </data>
 </root>

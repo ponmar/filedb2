@@ -11,5 +11,14 @@ public partial class TextViewModel : ObservableObject, IFilterViewModel
     [ObservableProperty]
     private bool textFilterCaseSensitive = false;
 
-    public IFilesFilter CreateFilter() => new FilterText(TextFilterSearchPattern, TextFilterCaseSensitive);
+    [ObservableProperty]
+    private bool textFilterPersons;
+
+    [ObservableProperty]
+    private bool textFilterLocations;
+
+    [ObservableProperty]
+    private bool textFilterTags;
+
+    public IFilesFilter CreateFilter() => new FilterText(TextFilterSearchPattern, TextFilterCaseSensitive, TextFilterPersons, TextFilterLocations, TextFilterTags);
 }

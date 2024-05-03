@@ -1396,4 +1396,13 @@
   <data name="FilterTypeTime" xml:space="preserve">
     <value>Tid</value>
   </data>
+  <data name="TextFilterIncludeTags" xml:space="preserve">
+    <value>Inkludera filer med matchande etiketter</value>
+  </data>
+  <data name="TextFilterIncludePersons" xml:space="preserve">
+    <value>Inkludera filer med matchande personer</value>
+  </data>
+  <data name="TextFilterIncludeLocations" xml:space="preserve">
+    <value>Inkludera filer med matchande platser</value>
+  </data>
 </root>

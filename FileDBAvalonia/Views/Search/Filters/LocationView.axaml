@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:lang="clr-namespace:FileDBAvalonia.Lang"
 			 xmlns:converters="clr-namespace:FileDBAvalonia.Converters"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d"
              x:Class="FileDBAvalonia.Views.Search.Filters.LocationView">
 	<StackPanel Orientation="Horizontal" DataContext="{Binding FilterViewModel}">
 		<ComboBox Margin="0 0 3 0" Grid.Column="0" ItemsSource="{Binding Locations}" SelectedItem="{Binding SelectedLocation}" VerticalAlignment="Center"/>
