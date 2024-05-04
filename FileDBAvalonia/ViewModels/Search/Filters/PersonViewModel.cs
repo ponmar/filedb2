@@ -2,6 +2,7 @@
 using FileDBAvalonia.FilesFilter;
 using FileDBAvalonia.Model;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace FileDBAvalonia.ViewModels.Search.Filters;
 
@@ -22,12 +23,30 @@ public partial class PersonViewModel : ObservableObject, IFilterViewModel
     private bool negate;
 
     private readonly IPersonsRepository personsRepository;
+    private readonly IFileSelector fileSelector;
+    private readonly IDatabaseAccessProvider databaseAccessProvider;
 
-    public PersonViewModel(IPersonsRepository personsRepository)
+    public PersonViewModel(IPersonsRepository personsRepository, IFileSelector fileSelector, IDatabaseAccessProvider databaseAccessProvider)
     {
         this.personsRepository = personsRepository;
+        this.fileSelector = fileSelector;
+        this.databaseAccessProvider = databaseAccessProvider;
         ReloadPersons();
         this.RegisterForEvent<PersonsUpdated>((x) => ReloadPersons());
+        TrySelectPersonFromSelectedFile();
+    }
+
+    private void TrySelectPersonFromSelectedFile()
+    {
+        if (fileSelector.SelectedFile is not null)
+        {
+            var personsInFile = databaseAccessProvider.DbAccess.GetPersonsFromFile(fileSelector.SelectedFile.Id);
+            if (personsInFile.Any())
+            {
+                var firstPersonFromFile = personsInFile.First();
+                SelectedPerson = Persons.First(x => x.Id == firstPersonFromFile.Id);
+            }
+        }
     }
 
     private void ReloadPersons()

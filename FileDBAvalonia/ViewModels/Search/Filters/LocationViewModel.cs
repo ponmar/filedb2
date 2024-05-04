@@ -1,7 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using FileDBAvalonia.FilesFilter;
 using FileDBAvalonia.Model;
+using FileDBInterface.DatabaseAccess;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace FileDBAvalonia.ViewModels.Search.Filters;
 
@@ -25,12 +27,30 @@ public partial class LocationViewModel : ObservableObject, IFilterViewModel
     private bool negate;
 
     private readonly ILocationsRepository locationsRepository;
+    private readonly IFileSelector fileSelector;
+    private readonly IDatabaseAccessProvider databaseAccessProvider;
 
-    public LocationViewModel(ILocationsRepository locationsRepository)
+    public LocationViewModel(ILocationsRepository locationsRepository, IFileSelector fileSelector, IDatabaseAccessProvider databaseAccessProvider)
     {
         this.locationsRepository = locationsRepository;
+        this.fileSelector = fileSelector;
+        this.databaseAccessProvider = databaseAccessProvider;
         ReloadLocations();
         this.RegisterForEvent<LocationsUpdated>((x) => ReloadLocations());
+        TrySelectLocationFromSelectedFile();
+    }
+
+    private void TrySelectLocationFromSelectedFile()
+    {
+        if (fileSelector.SelectedFile is not null)
+        {
+            var locationsInFile = databaseAccessProvider.DbAccess.GetLocationsFromFile(fileSelector.SelectedFile.Id);
+            if (locationsInFile.Any())
+            {
+                var firstLocationFromFile = locationsInFile.First();
+                SelectedLocation = Locations.First(x => x.Id == firstLocationFromFile.Id);
+            }
+        }
     }
 
     private void ReloadLocations()
