@@ -48,5 +48,5 @@ public partial class LocationViewModel : ObservableObject, IFilterViewModel
     }
 
     public IFilesFilter CreateFilter() =>
-        Negate ? new FilterWithoutLocation(SelectedLocation) : new FilterLocation(SelectedLocation);
+        Negate ? new WithoutLocationFilter(SelectedLocation) : new LocationFilter(SelectedLocation);
 }

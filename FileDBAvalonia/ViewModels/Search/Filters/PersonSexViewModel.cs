@@ -16,5 +16,5 @@ public partial class PersonSexViewModel : ObservableObject, IFilterViewModel
     [ObservableProperty]
     private Sex selectedPersonSex = PersonSexValues.First();
 
-    public IFilesFilter CreateFilter() => new FilterPersonSex(SelectedPersonSex);
+    public IFilesFilter CreateFilter() => new PersonSexFilter(SelectedPersonSex);
 }

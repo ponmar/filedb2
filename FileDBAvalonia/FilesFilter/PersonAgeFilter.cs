@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace FileDBAvalonia.FilesFilter;
 
-public class FilterPersonAge(string ageFromText, string ageToText) : IFilesFilter
+public class PersonAgeFilter(string ageFromText, string ageToText) : IFilesFilter
 {
     public bool CanRun() => 
         int.TryParse(ageFromText, out var ageFrom) &&

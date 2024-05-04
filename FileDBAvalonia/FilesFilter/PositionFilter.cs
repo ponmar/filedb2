@@ -5,13 +5,13 @@ using System.Linq;
 
 namespace FileDBAvalonia.FilesFilter;
 
-public class FilterPosition : IFilesFilter
+public class PositionFilter : IFilesFilter
 {
     private readonly double? lat;
     private readonly double? lon;
     private readonly double radius;
 
-    public FilterPosition(string positionText, string radiusText)
+    public PositionFilter(string positionText, string radiusText)
     {
         var gpsPos = DatabaseParsing.ParseFilesPositionFromUrl(positionText);
         gpsPos ??= DatabaseParsing.ParseFilesPosition(positionText);

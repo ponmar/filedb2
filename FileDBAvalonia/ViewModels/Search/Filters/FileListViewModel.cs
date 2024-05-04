@@ -12,5 +12,5 @@ public partial class FileListViewModel : ObservableObject, IFilterViewModel
     private bool negate;
 
     public IFilesFilter CreateFilter() =>
-        Negate ? new FilterExceptFileList(FileListIds) : new FilterFileList(FileListIds);
+        Negate ? new ExceptFileListFilter(FileListIds) : new FileListFilter(FileListIds);
 }

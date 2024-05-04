@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace FileDBAvalonia.FilesFilter;
 
-public class FilterNumberOfPersons(string minText, string maxText) : IFilesFilter
+public class NumberOfPersonsFilter(string minText, string maxText) : IFilesFilter
 {
     public bool CanRun() => 
         int.TryParse(minText, out var min) &&

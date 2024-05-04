@@ -16,5 +16,5 @@ public partial class FileTypeViewModel : ObservableObject, IFilterViewModel
     [ObservableProperty]
     private FileType selectedFileType = FileTypes.First();
 
-    public IFilesFilter CreateFilter() => new FilterFileType(SelectedFileType);
+    public IFilesFilter CreateFilter() => new FileTypeFilter(SelectedFileType);
 }

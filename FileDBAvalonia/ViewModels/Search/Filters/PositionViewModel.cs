@@ -72,5 +72,5 @@ public partial class PositionViewModel : ObservableObject, IFilterViewModel
         }
     }
 
-    public IFilesFilter CreateFilter() => new FilterPosition(PositionText, RadiusText);
+    public IFilesFilter CreateFilter() => new PositionFilter(PositionText, RadiusText);
 }

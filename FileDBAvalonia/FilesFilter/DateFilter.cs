@@ -1,15 +1,16 @@
 ﻿using FileDBInterface.DatabaseAccess;
 using FileDBShared.Model;
+using System;
 using System.Collections.Generic;
 
 namespace FileDBAvalonia.FilesFilter;
 
-public class FilterSeason(Season? season) : IFilesFilter
+public class DateFilter(DateTimeOffset date) : IFilesFilter
 {
-    public bool CanRun() => season is not null;
+    public bool CanRun() => true;
 
     public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
     {
-        return dbAccess.SearchFilesBySeason(season!.Value);
+        return dbAccess.SearchFilesByDate(date.Date);
     }
 }

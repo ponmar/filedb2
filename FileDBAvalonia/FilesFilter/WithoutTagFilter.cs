@@ -5,12 +5,12 @@ using System.Collections.Generic;
 
 namespace FileDBAvalonia.FilesFilter;
 
-public class FilterLocation(LocationForSearch? location) : IFilesFilter
+public class WithoutTagFilter(TagForSearch? tag) : IFilesFilter
 {
-    public bool CanRun() => location is not null;
+    public bool CanRun() => tag is not null;
 
     public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
     {
-        return dbAccess.SearchFilesWithLocations([location!.Id]);
+        return dbAccess.SearchFilesWithoutTags([tag!.Id]);
     }
 }

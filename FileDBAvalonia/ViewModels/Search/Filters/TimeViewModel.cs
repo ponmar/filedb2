@@ -25,6 +25,6 @@ public partial class TimeViewModel : ObservableObject, IFilterViewModel
 
     public IFilesFilter CreateFilter()
     {
-        return new FilterTime(TimeOnly.FromTimeSpan(StartTime), TimeOnly.FromTimeSpan(EndTime));
+        return new TimeFilter(TimeOnly.FromTimeSpan(StartTime), TimeOnly.FromTimeSpan(EndTime));
     }
 }

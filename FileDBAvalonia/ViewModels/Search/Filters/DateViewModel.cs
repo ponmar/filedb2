@@ -18,7 +18,7 @@ public partial class DateViewModel : ObservableObject, IFilterViewModel
     public IFilesFilter CreateFilter()
     {
         return DateIsRange ?
-            new FilterDateRange(FirstDateTime, SecondDateTime) :
-            new FilterDate(FirstDateTime);
+            new DateRangeFilter(FirstDateTime, SecondDateTime) :
+            new DateFilter(FirstDateTime);
     }
 }

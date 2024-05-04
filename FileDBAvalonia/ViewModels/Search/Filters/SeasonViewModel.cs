@@ -14,5 +14,5 @@ public partial class SeasonViewModel : ObservableObject, IFilterViewModel
     [ObservableProperty]
     private Season selectedSeason = Seasons.First();
 
-    public IFilesFilter CreateFilter() => new FilterSeason(SelectedSeason);
+    public IFilesFilter CreateFilter() => new SeasonFilter(SelectedSeason);
 }

@@ -21,11 +21,11 @@ public partial class TagViewModel : ObservableObject, IFilterViewModel
     [ObservableProperty]
     private bool negate;
 
-    private readonly ITagsRepository tagsRepository;
+    private readonly ITagsRepository tagsRepo;
 
-    public TagViewModel(ITagsRepository tagsRepository)
+    public TagViewModel(ITagsRepository tagsRepo)
     {
-        this.tagsRepository = tagsRepository;
+        this.tagsRepo = tagsRepo;
         ReloadTags();
         this.RegisterForEvent<TagsUpdated>((x) => ReloadTags());
     }
@@ -33,12 +33,12 @@ public partial class TagViewModel : ObservableObject, IFilterViewModel
     private void ReloadTags()
     {
         Tags.Clear();
-        foreach (var tag in tagsRepository.Tags)
+        foreach (var tag in tagsRepo.Tags)
         {
             Tags.Add(new(tag.Id, tag.Name));
         }
     }
 
     public IFilesFilter CreateFilter() =>
-        Negate ? new FilterWithoutTag(SelectedTag) : new FilterTag(SelectedTag);
+        Negate ? new WithoutTagFilter(SelectedTag) : new TagFilter(SelectedTag);
 }

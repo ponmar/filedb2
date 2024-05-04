@@ -11,5 +11,5 @@ public partial class NumPersonsViewModel : ObservableObject, IFilterViewModel
     [ObservableProperty]
     private string numPersonsMax = "1";
 
-    public IFilesFilter CreateFilter() => new FilterNumberOfPersons(NumPersonsMin, NumPersonsMax);
+    public IFilesFilter CreateFilter() => new NumberOfPersonsFilter(NumPersonsMin, NumPersonsMax);
 }

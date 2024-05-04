@@ -40,5 +40,5 @@ public partial class PersonViewModel : ObservableObject, IFilterViewModel
     }
 
     public IFilesFilter CreateFilter() =>
-        Negate ? new FilterWithoutPerson(SelectedPerson) : new FilterPerson(SelectedPerson);
+        Negate ? new WithoutPersonFilter(SelectedPerson) : new PersonFilter(SelectedPerson);
 }

@@ -5,5 +5,5 @@ namespace FileDBAvalonia.ViewModels.Search.Filters;
 
 public partial class NoDateTimeViewModel : ObservableObject, IFilterViewModel
 {
-    public IFilesFilter CreateFilter() => new FilterWithoutDateTime();
+    public IFilesFilter CreateFilter() => new WithoutDateTimeFilter();
 }

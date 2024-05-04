@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace FileDBAvalonia.FilesFilter;
 
-public class FilterWithoutLocation(LocationForSearch? location) : IFilesFilter
+public class WithoutLocationFilter(LocationForSearch? location) : IFilesFilter
 {
     public bool CanRun() => location is not null;
 

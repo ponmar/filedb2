@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace FileDBAvalonia.FilesFilter;
 
-public class FilterDateRange(DateTimeOffset first, DateTimeOffset second) : IFilesFilter
+public class DateRangeFilter(DateTimeOffset first, DateTimeOffset second) : IFilesFilter
 {
     public bool CanRun() => true;
 

@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace FileDBAvalonia.FilesFilter;
 
-public class FilterText(string searchPattern, bool caseSensitive, bool includePersons, bool includeLocations, bool includeTags) : IFilesFilter
+public class TextFilter(string searchPattern, bool caseSensitive, bool includePersons, bool includeLocations, bool includeTags) : IFilesFilter
 {
     public bool CanRun() => searchPattern.HasContent();
 

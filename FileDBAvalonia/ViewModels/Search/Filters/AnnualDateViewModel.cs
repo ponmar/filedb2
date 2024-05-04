@@ -43,7 +43,7 @@ public partial class AnnualDateViewModel : ObservableObject, IFilterViewModel
     public IFilesFilter CreateFilter()
     {
         return AnnualDateIsRange ?
-            new FilterAnnualDateRange(SelectedAnnualMonthStart, SelectedAnnualDayStart, SelectedAnnualMonthEnd, SelectedAnnualDayEnd) :
-            new FilterAnnualDate(SelectedAnnualMonthStart, SelectedAnnualDayStart);
+            new AnnualDateRangeFilter(SelectedAnnualMonthStart, SelectedAnnualDayStart, SelectedAnnualMonthEnd, SelectedAnnualDayEnd) :
+            new AnnualDateFilter(SelectedAnnualMonthStart, SelectedAnnualDayStart);
     }
 }

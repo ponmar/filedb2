@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace FileDBAvalonia.FilesFilter;
 
-public class FilterExceptFileList(string exceptFileIdsText) : IFilesFilter
+public class ExceptFileListFilter(string exceptFileIdsText) : IFilesFilter
 {
     public bool CanRun() => exceptFileIdsText.HasContent();
 

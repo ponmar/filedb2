@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace FileDBAvalonia.FilesFilter;
 
-public class FilterAnnualDate(int month, int day) : IFilesFilter
+public class AnnualDateFilter(int month, int day) : IFilesFilter
 {
     public bool CanRun() => true;
 

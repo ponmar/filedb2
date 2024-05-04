@@ -11,5 +11,5 @@ public partial class PersonAgeViewModel : ObservableObject, IFilterViewModel
     [ObservableProperty]
     private string personAgeTo = string.Empty;
 
-    public IFilesFilter CreateFilter() => new FilterPersonAge(PersonAgeFrom, PersonAgeTo);
+    public IFilesFilter CreateFilter() => new PersonAgeFilter(PersonAgeFrom, PersonAgeTo);
 }

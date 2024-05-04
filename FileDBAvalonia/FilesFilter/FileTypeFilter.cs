@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace FileDBAvalonia.FilesFilter;
 
-public class FilterFileType(FileType fileType) : IFilesFilter
+public class FileTypeFilter(FileType fileType) : IFilesFilter
 {
     public bool CanRun() => true;
 
