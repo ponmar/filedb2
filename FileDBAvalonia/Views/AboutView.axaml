@@ -37,7 +37,7 @@
 
 				<TextBlock Text="{x:Static lang:Strings.AboutGettingStartedTitle}" Classes="PageSubHeader"/>
 				<Border Classes="BorderGroup">
-					<Grid ColumnDefinitions="auto,*" RowDefinitions="auto,auto,auto,auto,auto">
+					<Grid ColumnDefinitions="auto,*" RowDefinitions="auto,auto,auto,auto,auto,auto">
 						<TextBlock Grid.Row="0" Grid.Column="0" Classes="PageTextBlock" Text="1."/>
 						<TextBlock Grid.Row="0" Grid.Column="1" Classes="PageTextBlock" TextWrapping="Wrap" Text="{x:Static lang:Strings.AboutGettingStarted1}"/>
 
@@ -52,6 +52,9 @@
 
 						<TextBlock Grid.Row="4" Grid.Column="0" Classes="PageTextBlock" Text="5."/>
 						<TextBlock Grid.Row="4" Grid.Column="1" Classes="PageTextBlock" TextWrapping="Wrap" Text="{x:Static lang:Strings.AboutGettingStarted5}"/>
+
+						<TextBlock Grid.Row="5" Grid.Column="0" Classes="PageTextBlock" Text="6."/>
+						<TextBlock Grid.Row="5" Grid.Column="1" Classes="PageTextBlock" TextWrapping="Wrap" Text="{x:Static lang:Strings.AboutGettingStarted6}"/>
 					</Grid>
 				</Border>
 

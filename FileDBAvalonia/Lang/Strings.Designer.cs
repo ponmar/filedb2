@@ -151,7 +151,7 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Play around with the included demo files collection..
+        ///   Looks up a localized string similar to Play around with the included demo files collection.
         /// </summary>
         public static string AboutGettingStarted1 {
             get {
@@ -169,7 +169,7 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create a database for your files collection and adjust your settings.
+        ///   Looks up a localized string similar to Create an empty file in your files collection root directory and name it &apos;MyFiles.FileDB&apos;. Open the file with the FileDB application..
         /// </summary>
         public static string AboutGettingStarted3 {
             get {
@@ -178,7 +178,7 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tag persons, locations and tags.
+        ///   Looks up a localized string similar to Create a database for your files collection and adjust your settings (see Tools tab).
         /// </summary>
         public static string AboutGettingStarted4 {
             get {
@@ -187,11 +187,20 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Find your wanted pictures and run slideshows!.
+        ///   Looks up a localized string similar to Tag persons, locations and tags.
         /// </summary>
         public static string AboutGettingStarted5 {
             get {
                 return ResourceManager.GetString("AboutGettingStarted5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find your wanted pictures and run slideshows!.
+        /// </summary>
+        public static string AboutGettingStarted6 {
+            get {
+                return ResourceManager.GetString("AboutGettingStarted6", resourceCulture);
             }
         }
         
@@ -250,7 +259,7 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Notes About Your Files Collection.
+        ///   Looks up a localized string similar to Guidelines for your Files Collection.
         /// </summary>
         public static string AboutNotesTitle {
             get {

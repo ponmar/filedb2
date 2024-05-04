@@ -331,7 +331,7 @@
     <value>Getting Started</value>
   </data>
   <data name="AboutNotesTitle" xml:space="preserve">
-    <value>Notes About Your Files Collection</value>
+    <value>Guidelines for your Files Collection</value>
   </data>
   <data name="AboutCommandLineArgumentsTitle" xml:space="preserve">
     <value>Command Line Arguments</value>
@@ -349,18 +349,18 @@
     <value>NuGet Package Licenses</value>
   </data>
   <data name="AboutGettingStarted1" xml:space="preserve">
-    <value>Play around with the included demo files collection.</value>
+    <value>Play around with the included demo files collection</value>
   </data>
   <data name="AboutGettingStarted2" xml:space="preserve">
     <value>Cleanup your files collection (see guideline below)</value>
   </data>
-  <data name="AboutGettingStarted3" xml:space="preserve">
-    <value>Create a database for your files collection and adjust your settings</value>
-  </data>
   <data name="AboutGettingStarted4" xml:space="preserve">
-    <value>Tag persons, locations and tags</value>
+    <value>Create a database for your files collection and adjust your settings (see Tools tab)</value>
   </data>
   <data name="AboutGettingStarted5" xml:space="preserve">
+    <value>Tag persons, locations and tags</value>
+  </data>
+  <data name="AboutGettingStarted6" xml:space="preserve">
     <value>Find your wanted pictures and run slideshows!</value>
   </data>
   <data name="AboutNotes1" xml:space="preserve">
@@ -1404,5 +1404,8 @@ YYYY-MM-DDTHH:MM:SS</value>
   </data>
   <data name="TextFilterIncludeLocations" xml:space="preserve">
     <value>Include files with matching locations</value>
+  </data>
+  <data name="AboutGettingStarted3" xml:space="preserve">
+    <value>Create an empty file in your files collection root directory and name it 'MyFiles.FileDB'. Open the file with the FileDB application.</value>
   </data>
 </root>
