@@ -1,4 +1,5 @@
-﻿using FileDBInterface.DatabaseAccess;
+﻿using FileDBAvalonia.Comparers;
+using FileDBInterface.DatabaseAccess;
 using FileDBInterface.Extensions;
 using FileDBShared.Model;
 using System;
@@ -11,33 +12,38 @@ public class FilterText(string searchPattern, bool caseSensitive, bool includePe
 {
     public bool CanRun() => searchPattern.HasContent();
 
+    private static readonly FileModelByIdComparer fileModelComparer = new();
+
     public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
     {
-        var result = dbAccess.SearchFiles(searchPattern, caseSensitive).ToList();
+        var files = dbAccess.SearchFiles(searchPattern, caseSensitive).ToList();
         
         var stringComparison = caseSensitive ? StringComparison.CurrentCulture : StringComparison.CurrentCultureIgnoreCase;
 
+        IEnumerable<FileModel> filesWithPersons = [];
         if (includePersons)
         {
             var machingPersons = dbAccess.GetPersons().Where(x => $"{x.Firstname} {x.Lastname}".Contains(searchPattern, stringComparison)).Select(x => x.Id);
-            var filesWithPersons = dbAccess.SearchFilesWithPersons(machingPersons);
-            result.AddRange(filesWithPersons);
+            filesWithPersons = dbAccess.SearchFilesWithPersons(machingPersons);
         }
 
+        IEnumerable<FileModel> filesWithLocations = [];
         if (includeLocations)
         {
             var machingLocations = dbAccess.GetLocations().Where(x => x.Name.Contains(searchPattern, stringComparison)).Select(x => x.Id);
-            var filesWithLocations = dbAccess.SearchFilesWithLocations(machingLocations);
-            result.AddRange(filesWithLocations);
+            filesWithLocations = dbAccess.SearchFilesWithLocations(machingLocations);
         }
 
+        IEnumerable<FileModel> filesWithTags = [];
         if (includeTags)
         {
             var machingTags = dbAccess.GetTags().Where(x => x.Name.Contains(searchPattern, stringComparison)).Select(x => x.Id);
-            var filesWithTags = dbAccess.SearchFilesWithTags(machingTags);
-            result.AddRange(filesWithTags);
+            filesWithTags = dbAccess.SearchFilesWithTags(machingTags);
         }
 
-        return result;
+        return files
+            .Union(filesWithPersons, fileModelComparer)
+            .Union(filesWithLocations, fileModelComparer)
+            .Union(filesWithTags, fileModelComparer);
     }
 }
