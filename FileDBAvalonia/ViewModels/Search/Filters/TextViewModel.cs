@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using FileDBAvalonia.FilesFilter;
+using FileDBAvalonia.Model;
 
 namespace FileDBAvalonia.ViewModels.Search.Filters;
 
@@ -20,5 +21,18 @@ public partial class TextViewModel : ObservableObject, IFilterViewModel
     [ObservableProperty]
     private bool textFilterTags;
 
-    public IFilesFilter CreateFilter() => new TextFilter(TextFilterSearchPattern, TextFilterCaseSensitive, TextFilterPersons, TextFilterLocations, TextFilterTags);
+    private readonly IPersonsRepository personsRepository;
+    private readonly ILocationsRepository locationsRepository;
+    private readonly ITagsRepository tagsRepository;
+
+    public TextViewModel(IPersonsRepository personsRepository, ILocationsRepository locationsRepository, ITagsRepository tagsRepository)
+    {
+        this.personsRepository = personsRepository;
+        this.locationsRepository = locationsRepository;
+        this.tagsRepository = tagsRepository;
+    }
+
+    public IFilesFilter CreateFilter() => new TextFilter(
+        TextFilterSearchPattern, TextFilterCaseSensitive, TextFilterPersons, TextFilterLocations, TextFilterTags,
+        personsRepository, locationsRepository, tagsRepository);
 }

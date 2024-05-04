@@ -1,4 +1,5 @@
 ﻿using FileDBAvalonia.Comparers;
+using FileDBAvalonia.Model;
 using FileDBInterface.DatabaseAccess;
 using FileDBInterface.Extensions;
 using FileDBShared.Model;
@@ -8,7 +9,7 @@ using System.Linq;
 
 namespace FileDBAvalonia.FilesFilter;
 
-public class TextFilter(string searchPattern, bool caseSensitive, bool includePersons, bool includeLocations, bool includeTags) : IFilesFilter
+public class TextFilter(string searchPattern, bool caseSensitive, bool includePersons, bool includeLocations, bool includeTags, IPersonsRepository personsRepo, ILocationsRepository locationsRepo, ITagsRepository tagsRepo) : IFilesFilter
 {
     public bool CanRun() => searchPattern.HasContent();
 
@@ -23,21 +24,21 @@ public class TextFilter(string searchPattern, bool caseSensitive, bool includePe
         IEnumerable<FileModel> filesWithPersons = [];
         if (includePersons)
         {
-            var machingPersons = dbAccess.GetPersons().Where(x => $"{x.Firstname} {x.Lastname}".Contains(searchPattern, stringComparison)).Select(x => x.Id);
+            var machingPersons = personsRepo.Persons.Where(x => $"{x.Firstname} {x.Lastname}".Contains(searchPattern, stringComparison)).Select(x => x.Id);
             filesWithPersons = dbAccess.SearchFilesWithPersons(machingPersons);
         }
 
         IEnumerable<FileModel> filesWithLocations = [];
         if (includeLocations)
         {
-            var machingLocations = dbAccess.GetLocations().Where(x => x.Name.Contains(searchPattern, stringComparison)).Select(x => x.Id);
+            var machingLocations = locationsRepo.Locations.Where(x => x.Name.Contains(searchPattern, stringComparison)).Select(x => x.Id);
             filesWithLocations = dbAccess.SearchFilesWithLocations(machingLocations);
         }
 
         IEnumerable<FileModel> filesWithTags = [];
         if (includeTags)
         {
-            var machingTags = dbAccess.GetTags().Where(x => x.Name.Contains(searchPattern, stringComparison)).Select(x => x.Id);
+            var machingTags = tagsRepo.Tags.Where(x => x.Name.Contains(searchPattern, stringComparison)).Select(x => x.Id);
             filesWithTags = dbAccess.SearchFilesWithTags(machingTags);
         }
 
