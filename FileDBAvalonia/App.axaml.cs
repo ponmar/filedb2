@@ -111,11 +111,13 @@ public partial class App : Application
             if (fileSystem.File.Exists(configPath))
             {
                 config = configPath.FromJson<Config>(fileSystem);
-                config = new ConfigMigrator().Migrate(config, DefaultConfigs.Default);
+
+                // Config is null for an empty json file
+                config = config is null ? DefaultConfigs.Default :
+                    new ConfigMigrator().Migrate(config, DefaultConfigs.Default);
             }
             else
             {
-                // Note: new config is stored when manually saved
                 config = DefaultConfigs.Default;
             }
 
