@@ -24,14 +24,14 @@ public class TextFilter(string searchPattern, bool caseSensitive, bool includePe
         IEnumerable<FileModel> filesWithPersons = [];
         if (includePersons)
         {
-            var machingPersons = personsRepo.Persons.Where(x => $"{x.Firstname} {x.Lastname}".Contains(searchPattern, stringComparison)).Select(x => x.Id);
+            var machingPersons = personsRepo.Persons.Where(x => $"{x.Firstname} {x.Lastname}".Contains(searchPattern, stringComparison) || (x.Description is not null && x.Description.Contains(searchPattern, stringComparison))).Select(x => x.Id);
             filesWithPersons = dbAccess.SearchFilesWithPersons(machingPersons);
         }
 
         IEnumerable<FileModel> filesWithLocations = [];
         if (includeLocations)
         {
-            var machingLocations = locationsRepo.Locations.Where(x => x.Name.Contains(searchPattern, stringComparison)).Select(x => x.Id);
+            var machingLocations = locationsRepo.Locations.Where(x => x.Name.Contains(searchPattern, stringComparison) || (x.Description is not null && x.Description.Contains(searchPattern, stringComparison))).Select(x => x.Id);
             filesWithLocations = dbAccess.SearchFilesWithLocations(machingLocations);
         }
 
