@@ -1408,4 +1408,13 @@ YYYY-MM-DDTHH:MM:SS</value>
   <data name="AboutGettingStarted3" xml:space="preserve">
     <value>Create an empty file in your files collection root directory and name it 'MyFiles.FileDB'. Open the file with the FileDB application.</value>
   </data>
+  <data name="ThemeDefault" xml:space="preserve">
+    <value>Default</value>
+  </data>
+  <data name="ThemeDark" xml:space="preserve">
+    <value>Dark</value>
+  </data>
+  <data name="ThemeLight" xml:space="preserve">
+    <value>Light</value>
+  </data>
 </root>

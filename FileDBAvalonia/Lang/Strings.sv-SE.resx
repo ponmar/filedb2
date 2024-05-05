@@ -1408,4 +1408,13 @@
   <data name="AboutGettingStarted3" xml:space="preserve">
     <value>Skapa en tom fil i rot-katalogen för din filsamling och namnge den 'MyFiles.FileDB'. Öppna den med FileDB-programmet.</value>
   </data>
+  <data name="ThemeDefault" xml:space="preserve">
+    <value>Standard</value>
+  </data>
+  <data name="ThemeDark" xml:space="preserve">
+    <value>Mörkt</value>
+  </data>
+  <data name="ThemeLight" xml:space="preserve">
+    <value>Ljust</value>
+  </data>
 </root>
