@@ -117,17 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="SearchTextLabel" xml:space="preserve">
-    <value>Text:</value>
-  </data>
-  <data name="SearchTextToolTip" xml:space="preserve">
-    <value>Search criteria for text (matches file path/description)</value>
-  </data>
   <data name="SearchButton" xml:space="preserve">
     <value>Search</value>
-  </data>
-  <data name="SearchFileTypeLabel" xml:space="preserve">
-    <value>File type:</value>
   </data>
   <data name="SearchBrowseButton" xml:space="preserve">
     <value>Browse...</value>
@@ -135,29 +126,14 @@
   <data name="SearchNewFilesButton" xml:space="preserve">
     <value>New files</value>
   </data>
-  <data name="SearchAllWithoutMetaDataButton" xml:space="preserve">
-    <value>All without meta-data</value>
-  </data>
   <data name="SearchAllFilesButton" xml:space="preserve">
     <value>All files</value>
   </data>
   <data name="SearchAllFromCurrentDirectoryButton" xml:space="preserve">
     <value>All from current directory</value>
   </data>
-  <data name="SearchUniqueButton" xml:space="preserve">
-    <value>Unique</value>
-  </data>
-  <data name="SearchGroupButton" xml:space="preserve">
-    <value>Group</value>
-  </data>
-  <data name="SearchAnyButton" xml:space="preserve">
-    <value>Any</value>
-  </data>
   <data name="SearchFromCurrentFileButton" xml:space="preserve">
     <value>From current file</value>
-  </data>
-  <data name="SearchComplementButton" xml:space="preserve">
-    <value>Complement</value>
   </data>
   <data name="SearchForFilesWithinSelectedDirectoryToolTip" xml:space="preserve">
     <value>Search for files within selected directory</value>
@@ -171,80 +147,8 @@
   <data name="SearchNewFilesButtonToolTip" xml:space="preserve">
     <value>Search for newly added files meta-data</value>
   </data>
-  <data name="SeachFilesByTypeToolTip" xml:space="preserve">
-    <value>Seach files by type</value>
-  </data>
-  <data name="SeachFilesBetweenDatesToolTip" xml:space="preserve">
-    <value>Seach files between dates</value>
-  </data>
   <data name="SearchRandomFilesToolTip" xml:space="preserve">
     <value>Search random files</value>
-  </data>
-  <data name="SearchPersonsToolTip" xml:space="preserve">
-    <value>Persons</value>
-  </data>
-  <data name="SearchByOnlySelectedPersonToolTip" xml:space="preserve">
-    <value>Search by only selected person</value>
-  </data>
-  <data name="SearchBySelectedPersonAndOthersToolTip" xml:space="preserve">
-    <value>Search by selected person and others</value>
-  </data>
-  <data name="SearchBySelectedPersonToolTip" xml:space="preserve">
-    <value>Search by selected person</value>
-  </data>
-  <data name="SearchPerson1ToolTip" xml:space="preserve">
-    <value>Person #1</value>
-  </data>
-  <data name="SearchPerson2ToolTip" xml:space="preserve">
-    <value>Person #2</value>
-  </data>
-  <data name="SearchByOnlySelectedPersonsToolTip" xml:space="preserve">
-    <value>Search by only selected persons</value>
-  </data>
-  <data name="SearchBySelectedPersonsAndOthersToolTip" xml:space="preserve">
-    <value>Search by selected persons and others</value>
-  </data>
-  <data name="SearchBySelectedPersonsToolTip" xml:space="preserve">
-    <value>Search by selected persons</value>
-  </data>
-  <data name="SearchLocationsToolTip" xml:space="preserve">
-    <value>Locations</value>
-  </data>
-  <data name="SearchByLocationToolTip" xml:space="preserve">
-    <value>Search by location</value>
-  </data>
-  <data name="SearchTagsToolTip" xml:space="preserve">
-    <value>Tags</value>
-  </data>
-  <data name="SearchByTagToolTip" xml:space="preserve">
-    <value>Search by tag</value>
-  </data>
-  <data name="SearchFromAgeYearsToolTip" xml:space="preserve">
-    <value>From age (years)</value>
-  </data>
-  <data name="SearchToAgeYearsToolTip" xml:space="preserve">
-    <value>To age (years)</value>
-  </data>
-  <data name="SearchForFileWithPersonsOfTheSpecifiedAgeToolTip" xml:space="preserve">
-    <value>Search for file with persons of the specified age</value>
-  </data>
-  <data name="SearchBySexToolTip" xml:space="preserve">
-    <value>Search by sex (ISO/IEC 5218)</value>
-  </data>
-  <data name="SearchFormatLATLONToolTip" xml:space="preserve">
-    <value>Format: LAT LON</value>
-  </data>
-  <data name="SearchRadiusInMetersToolTip" xml:space="preserve">
-    <value>Radius in meters</value>
-  </data>
-  <data name="SeachFilesInSpecifiedAreaToolTip" xml:space="preserve">
-    <value>Seach files in specified area</value>
-  </data>
-  <data name="SearchByFileListToolTip" xml:space="preserve">
-    <value>Search by file list</value>
-  </data>
-  <data name="SearchAllFilesExceptWhatWasSpecifiedToolTip" xml:space="preserve">
-    <value>Search all files except what was specified</value>
   </data>
   <data name="SearchAllFilesFromSearch1ThatAlsoBelongToSearch2ToolTip" xml:space="preserve">
     <value>All files from search 1 that also belong to search 2</value>
@@ -273,41 +177,8 @@
   <data name="SearchBasicLabel" xml:space="preserve">
     <value>Basic</value>
   </data>
-  <data name="SearchFileDateLabel" xml:space="preserve">
-    <value>File date:</value>
-  </data>
   <data name="SearchRandomFilesLabel" xml:space="preserve">
     <value>Random files:</value>
-  </data>
-  <data name="SearchCategoriesLabel" xml:space="preserve">
-    <value>Categories</value>
-  </data>
-  <data name="SearchPersonAgeLabel" xml:space="preserve">
-    <value>Person age:</value>
-  </data>
-  <data name="SearchPersonSexLabel" xml:space="preserve">
-    <value>Person sex:</value>
-  </data>
-  <data name="SearchPositionLabel" xml:space="preserve">
-    <value>Position</value>
-  </data>
-  <data name="SearchLocationWithGPSPositionLabel" xml:space="preserve">
-    <value>Location (with GPS position):</value>
-  </data>
-  <data name="SearchGoogleMapsURLLabel" xml:space="preserve">
-    <value>Google Maps URL:</value>
-  </data>
-  <data name="SearchLatitudeLongitudeLabel" xml:space="preserve">
-    <value>Latitude longitude:</value>
-  </data>
-  <data name="SearchRadiusLabel" xml:space="preserve">
-    <value>Radius [m]:</value>
-  </data>
-  <data name="SearchAdvancedLabel" xml:space="preserve">
-    <value>Advanced</value>
-  </data>
-  <data name="SearchFileListLabel" xml:space="preserve">
-    <value>File list:</value>
   </data>
   <data name="SearchCombineLabel" xml:space="preserve">
     <value>Combine</value>
@@ -324,9 +195,6 @@
   <data name="AboutTitle" xml:space="preserve">
     <value>About</value>
   </data>
-  <data name="AboutVersionTitle" xml:space="preserve">
-    <value>Version</value>
-  </data>
   <data name="AboutGettingStartedTitle" xml:space="preserve">
     <value>Getting Started</value>
   </data>
@@ -335,9 +203,6 @@
   </data>
   <data name="AboutCommandLineArgumentsTitle" xml:space="preserve">
     <value>Command Line Arguments</value>
-  </data>
-  <data name="AboutDownloadsTitle" xml:space="preserve">
-    <value>Downloads</value>
   </data>
   <data name="AboutChangelogTitle" xml:space="preserve">
     <value>Changelog</value>
@@ -377,9 +242,6 @@
   </data>
   <data name="AboutDownloadsReleases" xml:space="preserve">
     <value>Official releases:</value>
-  </data>
-  <data name="AboutDownloadsClickToOpen" xml:space="preserve">
-    <value>Click to open</value>
   </data>
   <data name="AboutLicense" xml:space="preserve">
     <value>MIT (see LICENSE.txt)</value>
@@ -432,17 +294,8 @@
   <data name="BirthdaysTitle" xml:space="preserve">
     <value>Birthdays</value>
   </data>
-  <data name="BirthdaysFilterLabel" xml:space="preserve">
-    <value>Filter:</value>
-  </data>
   <data name="RipTitle" xml:space="preserve">
     <value>Rest in Peace</value>
-  </data>
-  <data name="RipFilterLabel" xml:space="preserve">
-    <value>Filter:</value>
-  </data>
-  <data name="BrowseDirectoriesTitle" xml:space="preserve">
-    <value>Browse...</value>
   </data>
   <data name="BrowseDirectoriesSelectYourDirectoryLabel" xml:space="preserve">
     <value>Select your directory:</value>
@@ -452,18 +305,6 @@
   </data>
   <data name="BrowseDirectoriesSelectToolTip" xml:space="preserve">
     <value>Search for files within selected directory</value>
-  </data>
-  <data name="CreateDatabaseTitle" xml:space="preserve">
-    <value>Create Database</value>
-  </data>
-  <data name="CreateDatabasePathLabel" xml:space="preserve">
-    <value>Path to .db file:</value>
-  </data>
-  <data name="CreateDatabaseBrowseButton" xml:space="preserve">
-    <value>Browse...</value>
-  </data>
-  <data name="CreateDatabaseCreateButton" xml:space="preserve">
-    <value>Create</value>
   </data>
   <data name="ExportTitle" xml:space="preserve">
     <value>Export Search Result</value>
@@ -561,9 +402,6 @@
   <data name="NotificationsNoNotificationsAvailable" xml:space="preserve">
     <value>No notifications available.</value>
   </data>
-  <data name="SearchLocateButton" xml:space="preserve">
-    <value>Locate</value>
-  </data>
   <data name="SearchLocateButtonToolTip" xml:space="preserve">
     <value>Locate file in Explorer</value>
   </data>
@@ -572,9 +410,6 @@
   </data>
   <data name="SearchCopyButtonToolTip" xml:space="preserve">
     <value>Copy file id</value>
-  </data>
-  <data name="SearchRemoveButton" xml:space="preserve">
-    <value>X</value>
   </data>
   <data name="SearchRemoveButtonToolTip" xml:space="preserve">
     <value>Remove file from search result</value>
@@ -588,71 +423,17 @@
   <data name="SearchMaximizeButtonToolTip" xml:space="preserve">
     <value>Maximize</value>
   </data>
-  <data name="PersonsIdTitle" xml:space="preserve">
-    <value>Id</value>
-  </data>
-  <data name="PersonsFirstnameTitle" xml:space="preserve">
-    <value>Firstname</value>
-  </data>
-  <data name="PersonsLastnameTitle" xml:space="preserve">
-    <value>Lastname</value>
-  </data>
-  <data name="PersonsDescriptionTitle" xml:space="preserve">
-    <value>Description</value>
-  </data>
-  <data name="PersonsDateOfBirthTitle" xml:space="preserve">
-    <value>Date of Birth</value>
-  </data>
-  <data name="PersonsDeceasedTitle" xml:space="preserve">
-    <value>Deceased</value>
-  </data>
-  <data name="PersonsAgeTitle" xml:space="preserve">
-    <value>Age</value>
-  </data>
-  <data name="PersonsProfileFileIDTitle" xml:space="preserve">
-    <value>Profile File ID</value>
-  </data>
-  <data name="PersonsSexTitle" xml:space="preserve">
-    <value>Sex</value>
-  </data>
-  <data name="LocationsIdTitle" xml:space="preserve">
-    <value>Id</value>
-  </data>
-  <data name="LocationsNameTitle" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="LocationsDescriptionTitle" xml:space="preserve">
-    <value>Description</value>
-  </data>
-  <data name="LocationsPositionTitle" xml:space="preserve">
-    <value>Position</value>
-  </data>
-  <data name="TagsIdTitle" xml:space="preserve">
-    <value>Id</value>
-  </data>
-  <data name="TagsNameTitle" xml:space="preserve">
-    <value>Name</value>
-  </data>
   <data name="SearchResultHistoryLabel" xml:space="preserve">
     <value>History:</value>
   </data>
   <data name="SearchResultExportButton" xml:space="preserve">
     <value>Export...</value>
   </data>
-  <data name="SearchResultExportButtonToolTip" xml:space="preserve">
-    <value>Copy search result file list</value>
-  </data>
-  <data name="SearchResultCopyButton" xml:space="preserve">
-    <value>Copy</value>
-  </data>
   <data name="SearchResultCopyButtonToolTip" xml:space="preserve">
     <value>Copy search result file list</value>
   </data>
   <data name="SearchResultCloseButtonToolTip" xml:space="preserve">
     <value>Close search result</value>
-  </data>
-  <data name="SearchResultCloseButton" xml:space="preserve">
-    <value>X</value>
   </data>
   <data name="SearchResultSortByLabel" xml:space="preserve">
     <value>Sort by:</value>
@@ -755,15 +536,6 @@
   </data>
   <data name="SettingsPerformanceHeading" xml:space="preserve">
     <value>Performance</value>
-  </data>
-  <data name="SettingsConfigurationNameLabel" xml:space="preserve">
-    <value>Configuration name:</value>
-  </data>
-  <data name="SettingsDatabaseLabel" xml:space="preserve">
-    <value>Database:</value>
-  </data>
-  <data name="SettingsFilesRootDirectoryLabel" xml:space="preserve">
-    <value>Files root directory:</value>
   </data>
   <data name="SettingsWindowModeLabel" xml:space="preserve">
     <value>Window mode:</value>
@@ -876,9 +648,6 @@
   <data name="ToolsDatabaseBackupWarning1" xml:space="preserve">
     <value>Database recovery must be done manually if needed. Backup of your files collection, settings and database to external media should be done continuously!</value>
   </data>
-  <data name="ToolsDatabaseBackupOpenDatabaseBackupDirectoryButton" xml:space="preserve">
-    <value>Open database backup directory</value>
-  </data>
   <data name="ToolsDatabaseExportInfo" xml:space="preserve">
     <value>This tool can be used to export the complete database to JSON format to be used by 3rd party applications.</value>
   </data>
@@ -969,20 +738,11 @@
   <data name="BirthdayNotifierHappyBirthday" xml:space="preserve">
     <value>Happy Birthday {0}!</value>
   </data>
-  <data name="MissingFilesRootDirNotifierFilesRootDirectoryIsMissing" xml:space="preserve">
-    <value>Files root directory is missing: {0}</value>
-  </data>
   <data name="RestInPeaceNotifierRestInPeace" xml:space="preserve">
     <value>Rest in Peace {0}!</value>
   </data>
   <data name="StartupNotificationDemoConfigurationEnabled" xml:space="preserve">
     <value>Demo configuration enabled. When you are ready, make a configuration for your files collection!</value>
-  </data>
-  <data name="StartupNotificationNoConfigurationFile" xml:space="preserve">
-    <value>No local {0} configuration file exists. Loading demo configuration.</value>
-  </data>
-  <data name="StartupNotificationConfigurationNotValid" xml:space="preserve">
-    <value>Configuration not valid</value>
   </data>
   <data name="CategorizationUpdateHistoryTitle" xml:space="preserve">
     <value>Update History</value>
@@ -1119,9 +879,6 @@ YYYY-MM-DDTHH:MM:SS</value>
   </data>
   <data name="CategorizationMarkButtonToolTip" xml:space="preserve">
     <value>Mark this file to be used as last edited file</value>
-  </data>
-  <data name="ToolNotExecuted" xml:space="preserve">
-    <value>Not executed.</value>
   </data>
   <data name="ToolsCreateDatabaseTitle" xml:space="preserve">
     <value>Create Database</value>
@@ -1261,9 +1018,6 @@ YYYY-MM-DDTHH:MM:SS</value>
   <data name="FilterTypeTag" xml:space="preserve">
     <value>Tag</value>
   </data>
-  <data name="FilterTypeExceptFileList" xml:space="preserve">
-    <value>File list (except)</value>
-  </data>
   <data name="FilterTypePersonAge" xml:space="preserve">
     <value>Person age</value>
   </data>
@@ -1287,9 +1041,6 @@ YYYY-MM-DDTHH:MM:SS</value>
   </data>
   <data name="SearchFilterDateTimeEnd" xml:space="preserve">
     <value>End</value>
-  </data>
-  <data name="SearchFilterExceptFileListToolTip" xml:space="preserve">
-    <value>File ids separated by semicolon</value>
   </data>
   <data name="SearchFilterFileListToolTip" xml:space="preserve">
     <value>File ids separated by semicolon</value>

@@ -124,29 +124,11 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Click to open.
-        /// </summary>
-        public static string AboutDownloadsClickToOpen {
-            get {
-                return ResourceManager.GetString("AboutDownloadsClickToOpen", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Official releases:.
         /// </summary>
         public static string AboutDownloadsReleases {
             get {
                 return ResourceManager.GetString("AboutDownloadsReleases", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Downloads.
-        /// </summary>
-        public static string AboutDownloadsTitle {
-            get {
-                return ResourceManager.GetString("AboutDownloadsTitle", resourceCulture);
             }
         }
         
@@ -282,15 +264,6 @@ namespace FileDBAvalonia.Lang {
         public static string AboutTitle {
             get {
                 return ResourceManager.GetString("AboutTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Version.
-        /// </summary>
-        public static string AboutVersionTitle {
-            get {
-                return ResourceManager.GetString("AboutVersionTitle", resourceCulture);
             }
         }
         
@@ -529,15 +502,6 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Filter:.
-        /// </summary>
-        public static string BirthdaysFilterLabel {
-            get {
-                return ResourceManager.GetString("BirthdaysFilterLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Birthdays.
         /// </summary>
         public static string BirthdaysTitle {
@@ -570,15 +534,6 @@ namespace FileDBAvalonia.Lang {
         public static string BrowseDirectoriesSelectYourDirectoryLabel {
             get {
                 return ResourceManager.GetString("BrowseDirectoriesSelectYourDirectoryLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Browse....
-        /// </summary>
-        public static string BrowseDirectoriesTitle {
-            get {
-                return ResourceManager.GetString("BrowseDirectoriesTitle", resourceCulture);
             }
         }
         
@@ -844,42 +799,6 @@ namespace FileDBAvalonia.Lang {
         public static string CategorizationUpdateTitle {
             get {
                 return ResourceManager.GetString("CategorizationUpdateTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Browse....
-        /// </summary>
-        public static string CreateDatabaseBrowseButton {
-            get {
-                return ResourceManager.GetString("CreateDatabaseBrowseButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Create.
-        /// </summary>
-        public static string CreateDatabaseCreateButton {
-            get {
-                return ResourceManager.GetString("CreateDatabaseCreateButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Path to .db file:.
-        /// </summary>
-        public static string CreateDatabasePathLabel {
-            get {
-                return ResourceManager.GetString("CreateDatabasePathLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Create Database.
-        /// </summary>
-        public static string CreateDatabaseTitle {
-            get {
-                return ResourceManager.GetString("CreateDatabaseTitle", resourceCulture);
             }
         }
         
@@ -1370,15 +1289,6 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to File list (except).
-        /// </summary>
-        public static string FilterTypeExceptFileList {
-            get {
-                return ResourceManager.GetString("FilterTypeExceptFileList", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to File list.
         /// </summary>
         public static string FilterTypeFileList {
@@ -1523,47 +1433,11 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Description.
-        /// </summary>
-        public static string LocationsDescriptionTitle {
-            get {
-                return ResourceManager.GetString("LocationsDescriptionTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Edit selected....
         /// </summary>
         public static string LocationsEditButton {
             get {
                 return ResourceManager.GetString("LocationsEditButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Id.
-        /// </summary>
-        public static string LocationsIdTitle {
-            get {
-                return ResourceManager.GetString("LocationsIdTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Name.
-        /// </summary>
-        public static string LocationsNameTitle {
-            get {
-                return ResourceManager.GetString("LocationsNameTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Position.
-        /// </summary>
-        public static string LocationsPositionTitle {
-            get {
-                return ResourceManager.GetString("LocationsPositionTitle", resourceCulture);
             }
         }
         
@@ -1582,15 +1456,6 @@ namespace FileDBAvalonia.Lang {
         public static string LocationsTitle {
             get {
                 return ResourceManager.GetString("LocationsTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Files root directory is missing: {0}.
-        /// </summary>
-        public static string MissingFilesRootDirNotifierFilesRootDirectoryIsMissing {
-            get {
-                return ResourceManager.GetString("MissingFilesRootDirNotifierFilesRootDirectoryIsMissing", resourceCulture);
             }
         }
         
@@ -1658,33 +1523,6 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Age.
-        /// </summary>
-        public static string PersonsAgeTitle {
-            get {
-                return ResourceManager.GetString("PersonsAgeTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Date of Birth.
-        /// </summary>
-        public static string PersonsDateOfBirthTitle {
-            get {
-                return ResourceManager.GetString("PersonsDateOfBirthTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Deceased.
-        /// </summary>
-        public static string PersonsDeceasedTitle {
-            get {
-                return ResourceManager.GetString("PersonsDeceasedTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Delete selected....
         /// </summary>
         public static string PersonsDeleteButton {
@@ -1694,65 +1532,11 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Description.
-        /// </summary>
-        public static string PersonsDescriptionTitle {
-            get {
-                return ResourceManager.GetString("PersonsDescriptionTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Edit selected....
         /// </summary>
         public static string PersonsEditButton {
             get {
                 return ResourceManager.GetString("PersonsEditButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Firstname.
-        /// </summary>
-        public static string PersonsFirstnameTitle {
-            get {
-                return ResourceManager.GetString("PersonsFirstnameTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Id.
-        /// </summary>
-        public static string PersonsIdTitle {
-            get {
-                return ResourceManager.GetString("PersonsIdTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Lastname.
-        /// </summary>
-        public static string PersonsLastnameTitle {
-            get {
-                return ResourceManager.GetString("PersonsLastnameTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Profile File ID.
-        /// </summary>
-        public static string PersonsProfileFileIDTitle {
-            get {
-                return ResourceManager.GetString("PersonsProfileFileIDTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sex.
-        /// </summary>
-        public static string PersonsSexTitle {
-            get {
-                return ResourceManager.GetString("PersonsSexTitle", resourceCulture);
             }
         }
         
@@ -1784,15 +1568,6 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Filter:.
-        /// </summary>
-        public static string RipFilterLabel {
-            get {
-                return ResourceManager.GetString("RipFilterLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Rest in Peace.
         /// </summary>
         public static string RipTitle {
@@ -1811,56 +1586,11 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Seach files between dates.
-        /// </summary>
-        public static string SeachFilesBetweenDatesToolTip {
-            get {
-                return ResourceManager.GetString("SeachFilesBetweenDatesToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Seach files by type.
-        /// </summary>
-        public static string SeachFilesByTypeToolTip {
-            get {
-                return ResourceManager.GetString("SeachFilesByTypeToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Seach files in specified area.
-        /// </summary>
-        public static string SeachFilesInSpecifiedAreaToolTip {
-            get {
-                return ResourceManager.GetString("SeachFilesInSpecifiedAreaToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Advanced.
-        /// </summary>
-        public static string SearchAdvancedLabel {
-            get {
-                return ResourceManager.GetString("SearchAdvancedLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to All files.
         /// </summary>
         public static string SearchAllFilesButton {
             get {
                 return ResourceManager.GetString("SearchAllFilesButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Search all files except what was specified.
-        /// </summary>
-        public static string SearchAllFilesExceptWhatWasSpecifiedToolTip {
-            get {
-                return ResourceManager.GetString("SearchAllFilesExceptWhatWasSpecifiedToolTip", resourceCulture);
             }
         }
         
@@ -1919,24 +1649,6 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to All without meta-data.
-        /// </summary>
-        public static string SearchAllWithoutMetaDataButton {
-            get {
-                return ResourceManager.GetString("SearchAllWithoutMetaDataButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Any.
-        /// </summary>
-        public static string SearchAnyButton {
-            get {
-                return ResourceManager.GetString("SearchAnyButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Basic.
         /// </summary>
         public static string SearchBasicLabel {
@@ -1960,105 +1672,6 @@ namespace FileDBAvalonia.Lang {
         public static string SearchButton {
             get {
                 return ResourceManager.GetString("SearchButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Search by file list.
-        /// </summary>
-        public static string SearchByFileListToolTip {
-            get {
-                return ResourceManager.GetString("SearchByFileListToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Search by location.
-        /// </summary>
-        public static string SearchByLocationToolTip {
-            get {
-                return ResourceManager.GetString("SearchByLocationToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Search by only selected persons.
-        /// </summary>
-        public static string SearchByOnlySelectedPersonsToolTip {
-            get {
-                return ResourceManager.GetString("SearchByOnlySelectedPersonsToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Search by only selected person.
-        /// </summary>
-        public static string SearchByOnlySelectedPersonToolTip {
-            get {
-                return ResourceManager.GetString("SearchByOnlySelectedPersonToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Search by selected person and others.
-        /// </summary>
-        public static string SearchBySelectedPersonAndOthersToolTip {
-            get {
-                return ResourceManager.GetString("SearchBySelectedPersonAndOthersToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Search by selected persons and others.
-        /// </summary>
-        public static string SearchBySelectedPersonsAndOthersToolTip {
-            get {
-                return ResourceManager.GetString("SearchBySelectedPersonsAndOthersToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Search by selected persons.
-        /// </summary>
-        public static string SearchBySelectedPersonsToolTip {
-            get {
-                return ResourceManager.GetString("SearchBySelectedPersonsToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Search by selected person.
-        /// </summary>
-        public static string SearchBySelectedPersonToolTip {
-            get {
-                return ResourceManager.GetString("SearchBySelectedPersonToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Search by sex (ISO/IEC 5218).
-        /// </summary>
-        public static string SearchBySexToolTip {
-            get {
-                return ResourceManager.GetString("SearchBySexToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Search by tag.
-        /// </summary>
-        public static string SearchByTagToolTip {
-            get {
-                return ResourceManager.GetString("SearchByTagToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Categories.
-        /// </summary>
-        public static string SearchCategoriesLabel {
-            get {
-                return ResourceManager.GetString("SearchCategoriesLabel", resourceCulture);
             }
         }
         
@@ -2117,15 +1730,6 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Complement.
-        /// </summary>
-        public static string SearchComplementButton {
-            get {
-                return ResourceManager.GetString("SearchComplementButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Copy.
         /// </summary>
         public static string SearchCopyButton {
@@ -2149,15 +1753,6 @@ namespace FileDBAvalonia.Lang {
         public static string SearchDifferenceButton {
             get {
                 return ResourceManager.GetString("SearchDifferenceButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to File date:.
-        /// </summary>
-        public static string SearchFileDateLabel {
-            get {
-                return ResourceManager.GetString("SearchFileDateLabel", resourceCulture);
             }
         }
         
@@ -2189,24 +1784,6 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to File list:.
-        /// </summary>
-        public static string SearchFileListLabel {
-            get {
-                return ResourceManager.GetString("SearchFileListLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to File type:.
-        /// </summary>
-        public static string SearchFileTypeLabel {
-            get {
-                return ResourceManager.GetString("SearchFileTypeLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to File type not supported..
         /// </summary>
         public static string SearchFileTypeNotSupported {
@@ -2230,15 +1807,6 @@ namespace FileDBAvalonia.Lang {
         public static string SearchFilterDateTimeStart {
             get {
                 return ResourceManager.GetString("SearchFilterDateTimeStart", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to File ids separated by semicolon.
-        /// </summary>
-        public static string SearchFilterExceptFileListToolTip {
-            get {
-                return ResourceManager.GetString("SearchFilterExceptFileListToolTip", resourceCulture);
             }
         }
         
@@ -2351,56 +1919,11 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search for file with persons of the specified age.
-        /// </summary>
-        public static string SearchForFileWithPersonsOfTheSpecifiedAgeToolTip {
-            get {
-                return ResourceManager.GetString("SearchForFileWithPersonsOfTheSpecifiedAgeToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Format: LAT LON.
-        /// </summary>
-        public static string SearchFormatLATLONToolTip {
-            get {
-                return ResourceManager.GetString("SearchFormatLATLONToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to From age (years).
-        /// </summary>
-        public static string SearchFromAgeYearsToolTip {
-            get {
-                return ResourceManager.GetString("SearchFromAgeYearsToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to From current file.
         /// </summary>
         public static string SearchFromCurrentFileButton {
             get {
                 return ResourceManager.GetString("SearchFromCurrentFileButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Google Maps URL:.
-        /// </summary>
-        public static string SearchGoogleMapsURLLabel {
-            get {
-                return ResourceManager.GetString("SearchGoogleMapsURLLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Group.
-        /// </summary>
-        public static string SearchGroupButton {
-            get {
-                return ResourceManager.GetString("SearchGroupButton", resourceCulture);
             }
         }
         
@@ -2423,47 +1946,11 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Latitude longitude:.
-        /// </summary>
-        public static string SearchLatitudeLongitudeLabel {
-            get {
-                return ResourceManager.GetString("SearchLatitudeLongitudeLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Locate.
-        /// </summary>
-        public static string SearchLocateButton {
-            get {
-                return ResourceManager.GetString("SearchLocateButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Locate file in Explorer.
         /// </summary>
         public static string SearchLocateButtonToolTip {
             get {
                 return ResourceManager.GetString("SearchLocateButtonToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Locations.
-        /// </summary>
-        public static string SearchLocationsToolTip {
-            get {
-                return ResourceManager.GetString("SearchLocationsToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Location (with GPS position):.
-        /// </summary>
-        public static string SearchLocationWithGPSPositionLabel {
-            get {
-                return ResourceManager.GetString("SearchLocationWithGPSPositionLabel", resourceCulture);
             }
         }
         
@@ -2531,78 +2018,6 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Person #1.
-        /// </summary>
-        public static string SearchPerson1ToolTip {
-            get {
-                return ResourceManager.GetString("SearchPerson1ToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Person #2.
-        /// </summary>
-        public static string SearchPerson2ToolTip {
-            get {
-                return ResourceManager.GetString("SearchPerson2ToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Person age:.
-        /// </summary>
-        public static string SearchPersonAgeLabel {
-            get {
-                return ResourceManager.GetString("SearchPersonAgeLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Person sex:.
-        /// </summary>
-        public static string SearchPersonSexLabel {
-            get {
-                return ResourceManager.GetString("SearchPersonSexLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Persons.
-        /// </summary>
-        public static string SearchPersonsToolTip {
-            get {
-                return ResourceManager.GetString("SearchPersonsToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Position.
-        /// </summary>
-        public static string SearchPositionLabel {
-            get {
-                return ResourceManager.GetString("SearchPositionLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Radius in meters.
-        /// </summary>
-        public static string SearchRadiusInMetersToolTip {
-            get {
-                return ResourceManager.GetString("SearchRadiusInMetersToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Radius [m]:.
-        /// </summary>
-        public static string SearchRadiusLabel {
-            get {
-                return ResourceManager.GetString("SearchRadiusLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Random files:.
         /// </summary>
         public static string SearchRandomFilesLabel {
@@ -2621,15 +2036,6 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to X.
-        /// </summary>
-        public static string SearchRemoveButton {
-            get {
-                return ResourceManager.GetString("SearchRemoveButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Remove file from search result.
         /// </summary>
         public static string SearchRemoveButtonToolTip {
@@ -2639,29 +2045,11 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to X.
-        /// </summary>
-        public static string SearchResultCloseButton {
-            get {
-                return ResourceManager.GetString("SearchResultCloseButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Close search result.
         /// </summary>
         public static string SearchResultCloseButtonToolTip {
             get {
                 return ResourceManager.GetString("SearchResultCloseButtonToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Copy.
-        /// </summary>
-        public static string SearchResultCopyButton {
-            get {
-                return ResourceManager.GetString("SearchResultCopyButton", resourceCulture);
             }
         }
         
@@ -2680,15 +2068,6 @@ namespace FileDBAvalonia.Lang {
         public static string SearchResultExportButton {
             get {
                 return ResourceManager.GetString("SearchResultExportButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Copy search result file list.
-        /// </summary>
-        public static string SearchResultExportButtonToolTip {
-            get {
-                return ResourceManager.GetString("SearchResultExportButtonToolTip", resourceCulture);
             }
         }
         
@@ -2801,47 +2180,11 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tags.
-        /// </summary>
-        public static string SearchTagsToolTip {
-            get {
-                return ResourceManager.GetString("SearchTagsToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Text:.
-        /// </summary>
-        public static string SearchTextLabel {
-            get {
-                return ResourceManager.GetString("SearchTextLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Search criteria for text (matches file path/description).
-        /// </summary>
-        public static string SearchTextToolTip {
-            get {
-                return ResourceManager.GetString("SearchTextToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Search.
         /// </summary>
         public static string SearchTitle {
             get {
                 return ResourceManager.GetString("SearchTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to To age (years).
-        /// </summary>
-        public static string SearchToAgeYearsToolTip {
-            get {
-                return ResourceManager.GetString("SearchToAgeYearsToolTip", resourceCulture);
             }
         }
         
@@ -2869,15 +2212,6 @@ namespace FileDBAvalonia.Lang {
         public static string SearchUnionButton {
             get {
                 return ResourceManager.GetString("SearchUnionButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Unique.
-        /// </summary>
-        public static string SearchUniqueButton {
-            get {
-                return ResourceManager.GetString("SearchUniqueButton", resourceCulture);
             }
         }
         
@@ -2972,24 +2306,6 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Configuration name:.
-        /// </summary>
-        public static string SettingsConfigurationNameLabel {
-            get {
-                return ResourceManager.GetString("SettingsConfigurationNameLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Database:.
-        /// </summary>
-        public static string SettingsDatabaseLabel {
-            get {
-                return ResourceManager.GetString("SettingsDatabaseLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Default.
         /// </summary>
         public static string SettingsDefaultButton {
@@ -3013,15 +2329,6 @@ namespace FileDBAvalonia.Lang {
         public static string SettingsDefaultSortMethodLabel {
             get {
                 return ResourceManager.GetString("SettingsDefaultSortMethodLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Files root directory:.
-        /// </summary>
-        public static string SettingsFilesRootDirectoryLabel {
-            get {
-                return ResourceManager.GetString("SettingsFilesRootDirectoryLabel", resourceCulture);
             }
         }
         
@@ -3404,29 +2711,11 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Configuration not valid.
-        /// </summary>
-        public static string StartupNotificationConfigurationNotValid {
-            get {
-                return ResourceManager.GetString("StartupNotificationConfigurationNotValid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Demo configuration enabled. When you are ready, make a configuration for your files collection!.
         /// </summary>
         public static string StartupNotificationDemoConfigurationEnabled {
             get {
                 return ResourceManager.GetString("StartupNotificationDemoConfigurationEnabled", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No local {0} configuration file exists. Loading demo configuration..
-        /// </summary>
-        public static string StartupNotificationNoConfigurationFile {
-            get {
-                return ResourceManager.GetString("StartupNotificationNoConfigurationFile", resourceCulture);
             }
         }
         
@@ -3454,24 +2743,6 @@ namespace FileDBAvalonia.Lang {
         public static string TagsDeleteButton {
             get {
                 return ResourceManager.GetString("TagsDeleteButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Id.
-        /// </summary>
-        public static string TagsIdTitle {
-            get {
-                return ResourceManager.GetString("TagsIdTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Name.
-        /// </summary>
-        public static string TagsNameTitle {
-            get {
-                return ResourceManager.GetString("TagsNameTitle", resourceCulture);
             }
         }
         
@@ -3544,15 +2815,6 @@ namespace FileDBAvalonia.Lang {
         public static string ThemeLight {
             get {
                 return ResourceManager.GetString("ThemeLight", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Not executed..
-        /// </summary>
-        public static string ToolNotExecuted {
-            get {
-                return ResourceManager.GetString("ToolNotExecuted", resourceCulture);
             }
         }
         
@@ -3643,15 +2905,6 @@ namespace FileDBAvalonia.Lang {
         public static string ToolsDatabaseBackupNoFilesFound {
             get {
                 return ResourceManager.GetString("ToolsDatabaseBackupNoFilesFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Open database backup directory.
-        /// </summary>
-        public static string ToolsDatabaseBackupOpenDatabaseBackupDirectoryButton {
-            get {
-                return ResourceManager.GetString("ToolsDatabaseBackupOpenDatabaseBackupDirectoryButton", resourceCulture);
             }
         }
         
