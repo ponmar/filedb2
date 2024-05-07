@@ -19,7 +19,7 @@ namespace FileDBAvalonia.Views.Dialogs
         public AddTagWindow(int? tagId = null, string? tagName = null)
         {
             InitializeComponent();
-            var vm = ServiceLocator.Resolve<AddTagViewModel>("tagId", tagId); ;
+            var vm = ServiceLocator.Resolve<AddTagViewModel>("tagId", tagId);
             DataContext = vm;
             if (tagId is null && tagName is not null)
             {

@@ -19,7 +19,7 @@ namespace FileDBAvalonia.Views.Dialogs
         public AddPersonWindow(int? personId = null, string? personName = null)
         {
             InitializeComponent();
-            var vm = ServiceLocator.Resolve<AddPersonViewModel>("personId", personId); ;
+            var vm = ServiceLocator.Resolve<AddPersonViewModel>("personId", personId);
             DataContext = vm;
             if (personId is null && personName is not null)
             {

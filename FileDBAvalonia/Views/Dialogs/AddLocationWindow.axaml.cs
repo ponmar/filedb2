@@ -19,7 +19,7 @@ namespace FileDBAvalonia.Views.Dialogs
         public AddLocationWindow(int ?locationId = null, string? locationName = null)
         {
             InitializeComponent();
-            var vm = ServiceLocator.Resolve<AddLocationViewModel>("locationId", locationId); ;
+            var vm = ServiceLocator.Resolve<AddLocationViewModel>("locationId", locationId);
             DataContext = vm;
             if (locationId is null && locationName is not null)
             {
