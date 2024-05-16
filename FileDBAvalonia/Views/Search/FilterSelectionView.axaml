@@ -10,8 +10,17 @@
 	<UserControl.Resources>
 		<converters:FilterTypeToVisibilityConverter x:Key="FilterTypeToVisibilityConverter"/>
 		<converters:FilterTypeToStringConverter x:Key="FilterTypeToStringConverter"/>
+		<converters:CombineMethodToStringConverter x:Key="CombineMethodToStringConverter"/>
 	</UserControl.Resources>
 	<StackPanel Orientation="Horizontal">
+		<ComboBox IsVisible="{Binding !IsFirstFilter}" Margin="0 0 3 0" ItemsSource="{Binding CombineMethods}" SelectedItem="{Binding SelectedCombineMethod}" ToolTip.Tip="Filter type" VerticalAlignment="Center">
+			<ComboBox.ItemTemplate>
+				<DataTemplate>
+					<TextBlock Text="{Binding Path=., Converter={StaticResource CombineMethodToStringConverter}}"/>
+				</DataTemplate>
+			</ComboBox.ItemTemplate>
+		</ComboBox>
+
 		<ComboBox Margin="0 0 3 0" ItemsSource="{Binding FilterTypes}" SelectedItem="{Binding SelectedFilterType}" ToolTip.Tip="Filter type" VerticalAlignment="Center">
 			<ComboBox.ItemTemplate>
 				<DataTemplate>

@@ -11,6 +11,7 @@ using FileDBAvalonia.Dialogs;
 using System.Threading.Tasks;
 using FileDBAvalonia.Comparers;
 using FileDBAvalonia.ViewModels.Search;
+using System;
 
 namespace FileDBAvalonia.ViewModels;
 
@@ -73,7 +74,9 @@ public partial class CriteriaViewModel : ObservableObject
         this.clipboardService = clipboardService;
         this.searchResultRepository = searchResultRepository;
 
-        filterSettings.Add(ServiceLocator.Resolve<FilterSelectionViewModel>());
+        var vm = ServiceLocator.Resolve<FilterSelectionViewModel>();
+        vm.IsFirstFilter = true;
+        filterSettings.Add(vm);
 
         this.RegisterForEvent<FilesAdded>(x =>
         {
@@ -194,7 +197,9 @@ public partial class CriteriaViewModel : ObservableObject
     [RelayCommand]
     private void AddFilter()
     {
-        FilterSettings.Add(ServiceLocator.Resolve<FilterSelectionViewModel>());
+        var vm = ServiceLocator.Resolve<FilterSelectionViewModel>();
+        vm.IsFirstFilter = FilterSettings.Count == 0;
+        FilterSettings.Add(vm);
         OnPropertyChanged(nameof(FilterCanBeRemoved));
     }
 
@@ -202,6 +207,10 @@ public partial class CriteriaViewModel : ObservableObject
     private void RemoveFilter(FilterSelectionViewModel vm)
     {
         FilterSettings.Remove(vm);
+        foreach (var filter in FilterSettings)
+        {
+            filter.IsFirstFilter = FilterSettings.IndexOf(filter) == 0;
+        }
         OnPropertyChanged(nameof(FilterCanBeRemoved));
     }
 
@@ -218,15 +227,24 @@ public partial class CriteriaViewModel : ObservableObject
         }
 
         var result = Enumerable.Empty<FileModel>();
-        foreach (var filter in filters.Select(x => x.filter))
+        foreach (var filterSettings in filters)
         {
+            var filter = filterSettings.filter;
             var files = filter.Run(dbAccessProvider.DbAccess);
-            result = filter == filters.First().filter ? files : result.Intersect(files, fileModelComparer);
 
-            if (!result.Any())
+            if (filter == filters.First().filter)
             {
-                // No need to continue with db queries because the next intersection will throw them away
-                break;
+                result = files;
+            }
+            else
+            {
+                result = filterSettings.viewModel.SelectedCombineMethod switch
+                {
+                    CombineMethod.And => result.Intersect(files, fileModelComparer),
+                    CombineMethod.Or => result.Union(files, fileModelComparer),
+                    CombineMethod.Xor => result.Except(files, fileModelComparer).Union(files.Except(result, fileModelComparer), fileModelComparer),
+                    _ => throw new NotImplementedException(),
+                };
             }
         }
 

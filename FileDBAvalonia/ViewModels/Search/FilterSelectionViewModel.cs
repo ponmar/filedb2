@@ -8,6 +8,22 @@ using FileDBAvalonia.ViewModels.Search.Filters;
 
 namespace FileDBAvalonia.ViewModels.Search;
 
+public enum CombineMethod { And, Or, Xor }
+
+public static class CombineMethodExtensions
+{
+    public static string ToFriendlyString(this CombineMethod combineMethod)
+    {
+        return combineMethod switch
+        {
+            CombineMethod.And => "AND",
+            CombineMethod.Or => "OR",
+            CombineMethod.Xor => "XOR",
+            _ => throw new NotImplementedException(),
+        };
+    }
+}
+
 public partial class FilterSelectionViewModel : ObservableObject
 {
     public static IEnumerable<FilterType> FilterTypes { get; } = Enum.GetValues<FilterType>().OrderBy(x => x.ToFriendlyString(), StringComparer.Ordinal);
@@ -15,10 +31,18 @@ public partial class FilterSelectionViewModel : ObservableObject
     [ObservableProperty]
     private FilterType selectedFilterType;
 
+    public static IEnumerable<CombineMethod> CombineMethods { get; } = Enum.GetValues<CombineMethod>();
+
+    [ObservableProperty]
+    private CombineMethod selectedCombineMethod;
+
     partial void OnSelectedFilterTypeChanged(FilterType value)
     {
         FilterViewModel = CreateFilterFromType(value);
     }
+
+    [ObservableProperty]
+    private bool isFirstFilter;
 
     [ObservableProperty]
     private IFilterViewModel filterViewModel;
