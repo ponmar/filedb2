@@ -7,7 +7,7 @@ using CommunityToolkit.Mvvm.Input;
 using FileDBAvalonia.Dialogs;
 using FileDBAvalonia.Extensions;
 using FileDBAvalonia.Model;
-using FileDBShared.Model;
+using FileDBInterface.Model;
 
 namespace FileDBAvalonia.ViewModels;
 

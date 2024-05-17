@@ -8,8 +8,8 @@ using CommunityToolkit.Mvvm.Input;
 using FileDBAvalonia.Dialogs;
 using FileDBAvalonia.Extensions;
 using FileDBAvalonia.Model;
-using FileDBShared;
-using FileDBShared.Model;
+using FileDBInterface.Model;
+using FileDBInterface.Utils;
 
 namespace FileDBAvalonia.ViewModels;
 

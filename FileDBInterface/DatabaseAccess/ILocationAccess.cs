@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using FileDBShared.Model;
+using FileDBInterface.Model;
 
 namespace FileDBInterface.DatabaseAccess;
 

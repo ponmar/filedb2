@@ -5,7 +5,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using FileDBAvalonia.Extensions;
 using FileDBAvalonia.FilesFilter;
 using FileDBAvalonia.Model;
-using FileDBShared.Model;
+using FileDBInterface.Model;
 
 namespace FileDBAvalonia.ViewModels.Search.Filters;
 

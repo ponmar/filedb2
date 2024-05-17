@@ -1,6 +1,6 @@
 ﻿using System;
 using FileDBInterface.Extensions;
-using FileDBShared.Model;
+using FileDBInterface.Model;
 
 namespace FileDBAvalonia.Extensions;
 

@@ -1,5 +1,5 @@
 ﻿using FileDBAvalonia;
-using FileDBShared.Model;
+using FileDBInterface.Model;
 using Xunit;
 
 namespace FileDBAvaloniaTests;

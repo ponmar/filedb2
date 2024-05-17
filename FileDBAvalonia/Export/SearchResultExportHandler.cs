@@ -1,7 +1,7 @@
 ﻿using FileDBAvalonia.Export.SearchResult;
 using FileDBAvalonia.Model;
-using FileDBShared.FileFormats;
-using FileDBShared.Model;
+using FileDBInterface.FileFormats;
+using FileDBInterface.Model;
 using QuestPDF.Helpers;
 using System;
 using System.Collections.Generic;

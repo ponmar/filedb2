@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using FileDBInterface.DatabaseAccess;
 using FileDBInterface.DatabaseAccess.SQLite;
 using FileDBInterface.FilesystemAccess;
-using FileDBShared.Model;
+using FileDBInterface.Model;
 
 namespace FileDBAvalonia;
 

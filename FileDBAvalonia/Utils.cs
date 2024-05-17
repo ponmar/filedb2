@@ -6,8 +6,8 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using FileDBInterface.Extensions;
-using FileDBShared;
-using FileDBShared.Model;
+using FileDBInterface.Model;
+using FileDBInterface.Utils;
 
 namespace FileDBAvalonia;
 

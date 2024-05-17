@@ -8,7 +8,7 @@ using FileDBAvalonia.Dialogs;
 using FileDBAvalonia.Extensions;
 using FileDBAvalonia.Model;
 using FileDBInterface.Extensions;
-using FileDBShared.Model;
+using FileDBInterface.Model;
 
 namespace FileDBAvalonia.ViewModels;
 

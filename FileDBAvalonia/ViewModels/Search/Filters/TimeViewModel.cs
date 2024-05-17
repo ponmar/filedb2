@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using FileDBAvalonia.FilesFilter;
-using FileDBShared.Model;
+using FileDBInterface.Model;
 using System;
 
 namespace FileDBAvalonia.ViewModels.Search.Filters;

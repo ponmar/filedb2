@@ -1,6 +1,6 @@
 ﻿using FileDBAvalonia.ViewModels.Search.Filters;
 using FileDBInterface.DatabaseAccess;
-using FileDBShared.Model;
+using FileDBInterface.Model;
 using System.Collections.Generic;
 
 namespace FileDBAvalonia.FilesFilter;

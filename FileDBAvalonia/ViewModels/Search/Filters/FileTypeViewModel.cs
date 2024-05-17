@@ -3,7 +3,7 @@ using System;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FileDBAvalonia.FilesFilter;
 using FileDBAvalonia.Model;
-using FileDBShared.FileFormats;
+using FileDBInterface.FileFormats;
 using System.Linq;
 using FileDBAvalonia.Extensions;
 

@@ -1,6 +1,6 @@
 ﻿using Avalonia.Data.Converters;
 using FileDBAvalonia.Extensions;
-using FileDBShared.Model;
+using FileDBInterface.Model;
 using System;
 using System.Globalization;
 

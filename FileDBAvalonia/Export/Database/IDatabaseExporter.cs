@@ -1,4 +1,4 @@
-﻿using FileDBShared.FileFormats;
+﻿using FileDBInterface.FileFormats;
 
 namespace FileDBAvalonia.Export.Database;
 

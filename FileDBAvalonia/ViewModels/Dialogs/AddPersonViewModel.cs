@@ -10,7 +10,7 @@ using FileDBAvalonia.Model;
 using FileDBAvalonia.ViewModels.Search;
 using FileDBInterface.Exceptions;
 using FileDBInterface.Extensions;
-using FileDBShared.Model;
+using FileDBInterface.Model;
 
 namespace FileDBAvalonia.ViewModels.Dialogs;
 

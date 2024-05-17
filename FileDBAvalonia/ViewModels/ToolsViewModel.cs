@@ -12,8 +12,8 @@ using FileDBAvalonia.Export;
 using FileDBAvalonia.Lang;
 using FileDBAvalonia.Model;
 using FileDBInterface.DatabaseAccess;
-using FileDBShared.Model;
-using FileDBShared.Validators;
+using FileDBInterface.Model;
+using FileDBInterface.Validators;
 
 namespace FileDBAvalonia.ViewModels;
 

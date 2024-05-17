@@ -8,20 +8,4 @@
   <PropertyGroup Label="Configuration">
     <Import_RootNamespace>FileDBShared</Import_RootNamespace>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)Extensions\FileTypeExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)FileFormats\Export.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)LatLonUtils.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Model\DatabaseParsing.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Model\FileModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Model\LocationModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Model\PersonModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Model\Sex.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Model\TagModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)TimeUtils.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Validators\FilesModelValidator.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Validators\LocationModelValidator.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Validators\PersonModelValidator.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Validators\TagModelValidator.cs" />
-  </ItemGroup>
 </Project>

@@ -1,8 +1,8 @@
 ﻿using FileDBAvalonia.Extensions;
 using FileDBAvalonia.Model;
-using FileDBShared.FileFormats;
-using FileDBShared.Model;
-using FileDBShared.Validators;
+using FileDBInterface.FileFormats;
+using FileDBInterface.Model;
+using FileDBInterface.Validators;
 using System.IO;
 using System.IO.Abstractions;
 using System.Linq;

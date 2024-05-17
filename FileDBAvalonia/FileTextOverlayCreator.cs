@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using FileDBShared.Model;
+using FileDBInterface.Model;
 using FileDBInterface.DatabaseAccess;
 using FileDBAvalonia.Model;
 using FileDBAvalonia.Extensions;
-using FileDBShared;
 using FileDBAvalonia.Lang;
 using FileDBAvalonia.ViewModels.Search;
+using FileDBInterface.Utils;
 
 namespace FileDBAvalonia;
 

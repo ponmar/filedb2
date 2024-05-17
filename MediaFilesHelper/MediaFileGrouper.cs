@@ -1,5 +1,5 @@
 ﻿using FileDBInterface.FilesystemAccess;
-using FileDBShared.Model;
+using FileDBInterface.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;

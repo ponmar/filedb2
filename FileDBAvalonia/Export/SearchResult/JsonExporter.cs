@@ -1,5 +1,5 @@
 ﻿using FileDBAvalonia.Extensions;
-using FileDBShared.FileFormats;
+using FileDBInterface.FileFormats;
 using System.IO.Abstractions;
 
 namespace FileDBAvalonia.Export.SearchResult;

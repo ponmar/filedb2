@@ -1,6 +1,5 @@
 ﻿using FileDBInterface.Extensions;
-using FileDBShared.Extensions;
-using FileDBShared.FileFormats;
+using FileDBInterface.FileFormats;
 using System;
 using System.IO;
 using System.Linq;

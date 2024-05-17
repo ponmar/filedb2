@@ -1,6 +1,6 @@
 ﻿using FileDBAvalonia.Export.Database;
-using FileDBShared.FileFormats;
-using FileDBShared.Model;
+using FileDBInterface.FileFormats;
+using FileDBInterface.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;

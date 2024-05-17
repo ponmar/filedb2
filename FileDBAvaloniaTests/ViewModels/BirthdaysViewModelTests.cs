@@ -4,7 +4,7 @@ using FileDBAvalonia.Model;
 using FileDBAvalonia.ViewModels;
 using FileDBInterface.DatabaseAccess;
 using FileDBInterface.FilesystemAccess;
-using FileDBShared.Model;
+using FileDBInterface.Model;
 using Xunit;
 
 namespace FileDBAvaloniaTests.ViewModels;

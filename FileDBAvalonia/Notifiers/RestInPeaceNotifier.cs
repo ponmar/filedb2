@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FileDBAvalonia.Lang;
-using FileDBShared.Model;
+using FileDBInterface.Model;
 
 namespace FileDBAvalonia.Notifiers;
 

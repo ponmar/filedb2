@@ -1,8 +1,8 @@
-﻿using FileDBShared.Model;
+﻿using FileDBInterface.Model;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.IO.Abstractions;
-using FileDBShared.FileFormats;
+using FileDBInterface.FileFormats;
 using FileDBInterface.Extensions;
 using FileDBAvalonia.Lang;
 using FileDBAvalonia.Model;

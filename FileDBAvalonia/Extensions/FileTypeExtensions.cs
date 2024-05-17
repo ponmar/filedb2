@@ -1,5 +1,5 @@
 ﻿using FileDBAvalonia.Lang;
-using FileDBShared.FileFormats;
+using FileDBInterface.FileFormats;
 using System;
 
 namespace FileDBAvalonia.Extensions;

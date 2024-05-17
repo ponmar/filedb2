@@ -1,8 +1,8 @@
 ﻿using FileDBAvalonia.Extensions;
 using FileDBAvalonia.Model;
 using FileDBInterface.Extensions;
-using FileDBShared.FileFormats;
-using FileDBShared.Model;
+using FileDBInterface.FileFormats;
+using FileDBInterface.Model;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using System.IO.Abstractions;

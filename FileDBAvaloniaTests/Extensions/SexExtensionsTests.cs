@@ -1,6 +1,6 @@
 ﻿using FileDBAvalonia.Extensions;
 using FileDBInterface.Extensions;
-using FileDBShared.Model;
+using FileDBInterface.Model;
 using Xunit;
 
 namespace FileDBAvaloniaTests.Extensions;

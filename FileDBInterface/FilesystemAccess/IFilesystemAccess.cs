@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO.Abstractions;
 using FileDBInterface.DatabaseAccess;
-using FileDBShared.Model;
+using FileDBInterface.Model;
 
 namespace FileDBInterface.FilesystemAccess;
 

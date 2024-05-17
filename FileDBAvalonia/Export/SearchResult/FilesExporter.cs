@@ -1,5 +1,5 @@
 ﻿using FileDBAvalonia.Model;
-using FileDBShared.FileFormats;
+using FileDBInterface.FileFormats;
 using System.IO;
 using System.IO.Abstractions;
 

@@ -14,8 +14,8 @@ using FileDBAvalonia.Lang;
 using FileDBAvalonia.Model;
 using FileDBInterface.Exceptions;
 using FileDBInterface.Extensions;
-using FileDBShared;
-using FileDBShared.Model;
+using FileDBInterface.Model;
+using FileDBInterface.Utils;
 
 namespace FileDBAvalonia.ViewModels;
 

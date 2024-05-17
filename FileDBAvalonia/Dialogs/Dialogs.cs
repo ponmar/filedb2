@@ -5,7 +5,6 @@ using System.Linq;
 using MsBox.Avalonia;
 using System.Threading.Tasks;
 using MsBox.Avalonia.Enums;
-using FileDBShared.Model;
 using FileDBAvalonia.Views.Dialogs;
 using System.ComponentModel;
 using Avalonia;
@@ -15,6 +14,7 @@ using Avalonia.Platform.Storage;
 using FileDBAvalonia.ViewModels.Search;
 using FileDBAvalonia.ViewModels.Dialogs;
 using FileDBAvalonia.Views.Search.File;
+using FileDBInterface.Model;
 
 namespace FileDBAvalonia.Dialogs;
 

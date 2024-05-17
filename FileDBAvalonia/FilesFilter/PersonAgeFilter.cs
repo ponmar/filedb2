@@ -1,6 +1,6 @@
 ﻿using FileDBInterface.DatabaseAccess;
-using FileDBShared;
-using FileDBShared.Model;
+using FileDBInterface.Model;
+using FileDBInterface.Utils;
 using System.Collections.Generic;
 using System.Linq;
 

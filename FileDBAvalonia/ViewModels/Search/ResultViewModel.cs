@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using FileDBShared.Model;
+using FileDBInterface.Model;
 using System.Linq;
 using FileDBAvalonia.Model;
 using FileDBAvalonia.Dialogs;

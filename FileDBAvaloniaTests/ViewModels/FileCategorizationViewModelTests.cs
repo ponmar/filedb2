@@ -1,5 +1,5 @@
 ﻿using FakeItEasy;
-using FileDBShared.Model;
+using FileDBInterface.Model;
 using FileDBAvalonia.Model;
 using FileDBAvalonia.Dialogs;
 using FileDBAvalonia;

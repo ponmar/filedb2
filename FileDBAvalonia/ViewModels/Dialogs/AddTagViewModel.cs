@@ -4,7 +4,7 @@ using FileDBAvalonia.Dialogs;
 using FileDBAvalonia.Lang;
 using FileDBAvalonia.Model;
 using FileDBInterface.Exceptions;
-using FileDBShared.Model;
+using FileDBInterface.Model;
 using System.Linq;
 using System.Threading.Tasks;
 

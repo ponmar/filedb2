@@ -1,7 +1,7 @@
-﻿using FileDBShared.Extensions;
+﻿using FileDBInterface.Extensions;
 using FileDBInterface.DatabaseAccess;
-using FileDBShared.FileFormats;
-using FileDBShared.Model;
+using FileDBInterface.FileFormats;
+using FileDBInterface.Model;
 using System.Collections.Generic;
 
 namespace FileDBAvalonia.FilesFilter;

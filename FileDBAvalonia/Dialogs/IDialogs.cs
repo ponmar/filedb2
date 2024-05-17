@@ -1,5 +1,5 @@
 ﻿using FileDBAvalonia.ViewModels.Search;
-using FileDBShared.Model;
+using FileDBInterface.Model;
 using FluentValidation.Results;
 using System;
 using System.Collections.Generic;
