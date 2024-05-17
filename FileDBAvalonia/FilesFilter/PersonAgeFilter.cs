@@ -24,7 +24,7 @@ public class PersonAgeFilter(string ageFromText, string ageToText) : IFilesFilte
         foreach (var person in personsWithAge)
         {
             var dateOfBirth = DatabaseParsing.ParsePersonDateOfBirth(person.DateOfBirth!);
-            foreach (var file in dbAccess.SearchFilesWithPersons(new List<int>() { person.Id }))
+            foreach (var file in dbAccess.SearchFilesWithPersons([person.Id]))
             {
                 var fileDatetime = DatabaseParsing.ParseFilesDatetime(file.Datetime);
                 if (fileDatetime is not null)

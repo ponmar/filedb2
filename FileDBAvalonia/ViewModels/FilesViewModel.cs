@@ -211,12 +211,12 @@ public partial class FilesViewModel : ObservableObject
 
                         if (importedFile.Position is not null && configProvider.Config.FileToLocationMaxDistance > 0.5)
                         {
-                            var importedFilePos = DatabaseParsing.ParseFilesPosition(importedFile.Position)!.Value;
+                            var (lat, lon) = DatabaseParsing.ParseFilesPosition(importedFile.Position)!.Value;
 
                             foreach (var locationWithPosition in locations.Where(x => x.Position is not null))
                             {
                                 var locationPos = DatabaseParsing.ParseFilesPosition(locationWithPosition.Position)!.Value;
-                                var distance = LatLonUtils.CalculateDistance(importedFilePos.lat, importedFilePos.lon, locationPos.lat, locationPos.lon);
+                                var distance = LatLonUtils.CalculateDistance(lat, lon, locationPos.lat, locationPos.lon);
                                 if (distance < configProvider.Config.FileToLocationMaxDistance)
                                 {
                                     dbAccessProvider.DbAccess.InsertFileLocation(importedFile.Id, locationWithPosition.Id);
