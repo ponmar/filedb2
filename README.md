@@ -4,7 +4,7 @@
 
 This is a project for storing, maintaining and presenting meta-data (persons, locations and tags) for files. A typical use case is to make a picture and video collection searchable and for running slideshows with extra information.
 
-FileDB provides a main application, a MAUI based app and ways for exporting data to 3rd party applications.
+FileDB provides a desktop application and ways for exporting data to 3rd party applications.
 
 FileDB pros:
 
@@ -25,10 +25,6 @@ The FileDB main application is the GUI towards the internal database that stores
 The application uses one configuration file that, for example, points out the file collection root directory.
 
 A demo configuration with some images and meta-data is available to show case the FileDB potential.
-
-### App
-
-An app is being developed for visualizing exported FileDB data.
 
 ### 3rd Party Software Integrations
 
@@ -57,8 +53,6 @@ The release contains the following documentation:
 ### About
 
 The main application is a C# [Avalonia UI](https://avaloniaui.net/) desktop application. Accessing the internal database and files are done via the FileDBInterface project. Dapper is used for all database access.
-
-The app is based on .NET MAUI. It has been tested on Android and Windows.
 
 ### Building from Source
 
