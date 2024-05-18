@@ -6,6 +6,7 @@
 		xmlns:lang="clr-namespace:FileDBAvalonia.Lang"
         x:Class="FileDBAvalonia.Views.Dialogs.BrowseSubDirectoriesWindow"
         Title="BrowseSubDirectoriesWindow"
+		Icon="/Assets/icon.ico"
 		SizeToContent="WidthAndHeight"
 		CanResize="False"
 		WindowStartupLocation="CenterOwner">

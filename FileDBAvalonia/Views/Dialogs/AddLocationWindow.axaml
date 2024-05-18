@@ -6,6 +6,7 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="FileDBAvalonia.Views.Dialogs.AddLocationWindow"
         Title="{Binding Title}"
+		Icon="/Assets/icon.ico"
 		SizeToContent="WidthAndHeight"
 		CanResize="False"
 		WindowStartupLocation="CenterOwner">
