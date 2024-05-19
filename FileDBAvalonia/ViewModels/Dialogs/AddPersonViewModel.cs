@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Avalonia.Media.Imaging;
+using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDBAvalonia.Dialogs;
@@ -37,7 +39,23 @@ public partial class AddPersonViewModel : ObservableObject
     private string? deceased = null;
 
     [ObservableProperty]
-    private string profilePictureFileId = string.Empty;
+    private FileModel? profilePictureFile;
+
+    partial void OnProfilePictureFileChanged(FileModel? value)
+    {
+        if (value is not null)
+        {
+            var imageAbsPath = filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(value!.Path);
+            imageLoader.LoadImage(imageAbsPath);
+        }
+        else
+        {
+            ProfilePicture = null;
+        }
+    }
+
+    [ObservableProperty]
+    private Bitmap? profilePicture = null;
 
     [ObservableProperty]
     private string sexSelection = Sex.NotApplicable.ToString();
@@ -51,15 +69,40 @@ public partial class AddPersonViewModel : ObservableObject
     private readonly IDatabaseAccessProvider dbAccessProvider;
     private readonly IDialogs dialogs;
     private readonly IFileSelector fileSelector;
+    private readonly IFilesystemAccessProvider filesystemAccessProvider;
+    private readonly IImageLoader imageLoader;
 
-    public AddPersonViewModel(IDatabaseAccessProvider dbAccessProvider, IDialogs dialogs, IFileSelector fileSelector, int? personId = null)
+    public AddPersonViewModel(IDatabaseAccessProvider dbAccessProvider, IDialogs dialogs, IFileSelector fileSelector, IFilesystemAccessProvider filesystemAccessProvider, IImageLoader imageLoader, int? personId = null)
     {
         this.dbAccessProvider = dbAccessProvider;
         this.dialogs = dialogs;
         this.fileSelector = fileSelector;
+        this.filesystemAccessProvider = filesystemAccessProvider;
+        this.imageLoader = imageLoader;
         this.personId = personId;
 
         title = personId.HasValue ? Strings.AddPersonEditTitle : Strings.AddPersonAddTitle;
+
+        this.RegisterForEvent<ImageLoaded>((x) =>
+        {
+            Dispatcher.UIThread.Invoke(() =>
+            {
+                if (ProfilePictureFile is not null && x.FilePath == filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(ProfilePictureFile.Path))
+                {
+                    //var profileFile = dbAccessProvider.DbAccess.GetFileById(AffectedPerson!.ProfileFileId!.Value);
+                    // TODO: fix rotation
+                    //personVm.ProfilePictureRotation = -DatabaseParsing.OrientationToDegrees(ProfilePictureFile!.Orientation ?? 0);
+                    ProfilePicture = x.Image;
+                }
+            });
+        });
+
+        this.RegisterForEvent<ImageLoadError>(x =>
+        {
+            ProfilePicture = null;
+            // TODO: show load error?
+        });
+
 
         if (personId.HasValue)
         {
@@ -69,26 +112,15 @@ public partial class AddPersonViewModel : ObservableObject
             Description = personModel.Description;
             DateOfBirth = personModel.DateOfBirth;
             Deceased = personModel.Deceased;
-            ProfilePictureFileId = personModel.ProfileFileId is null ? string.Empty : personModel.ProfileFileId.Value.ToString();
             SexSelection = personModel.Sex.ToString();
+            ProfilePictureFile = personModel.ProfileFileId is not null ? dbAccessProvider.DbAccess.GetFileById(personModel.ProfileFileId.Value) : null;
         }
     }
 
     [RelayCommand]
     private async Task SaveAsync()
     {
-        int? newProfileFileId = null;
-        if (ProfilePictureFileId.HasContent())
-        {
-            if (!int.TryParse(ProfilePictureFileId, out var value))
-            {
-                await dialogs.ShowErrorDialogAsync("Given profile picture file id format not valid");
-                return;
-            }
-
-            newProfileFileId = value;
-        }
-
+        var newProfilePictureFileId = ProfilePictureFile?.Id;
         var newDescription = Description.HasContent() ? Description : null;
         var newDateOfBirth = DateOfBirth.HasContent() ? DateOfBirth : null;
         var newDeceased = Deceased.HasContent() ? Deceased : null;
@@ -103,7 +135,7 @@ public partial class AddPersonViewModel : ObservableObject
                 DateOfBirth = newDateOfBirth,
                 Deceased = newDeceased,
                 Description = newDescription,
-                ProfileFileId = newProfileFileId,
+                ProfileFileId = newProfilePictureFileId,
                 Sex = Enum.Parse<Sex>(SexSelection),
             };
 
@@ -137,11 +169,12 @@ public partial class AddPersonViewModel : ObservableObject
     [RelayCommand]
     private void SetProfilePictureFromSearchResult()
     {
-        if (fileSelector.SelectedFile is null)
-        {
-            return;
-        }
+        ProfilePictureFile = fileSelector.SelectedFile;
+    }
 
-        ProfilePictureFileId = fileSelector.SelectedFile.Id.ToString();
+    [RelayCommand]
+    private void ClearProfilePicture()
+    {
+        ProfilePictureFile = null;
     }
 }

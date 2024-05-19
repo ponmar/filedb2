@@ -280,7 +280,7 @@
     <value>Avliden (valfri):</value>
   </data>
   <data name="AddPersonProfilePictureFileIdLabel" xml:space="preserve">
-    <value>Profilbildsfil-ID (valfri):</value>
+    <value>Profilbild (valfri):</value>
   </data>
   <data name="AddPersonSetCurrentFileLabel" xml:space="preserve">
     <value>Sätt aktuell fil</value>
@@ -1167,5 +1167,8 @@
   </data>
   <data name="ThemeLight" xml:space="preserve">
     <value>Ljust</value>
+  </data>
+  <data name="AddPersonClearCurrentFileToolTip" xml:space="preserve">
+    <value>Ta bort profilbild</value>
   </data>
 </root>

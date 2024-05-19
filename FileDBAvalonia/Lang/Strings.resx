@@ -280,7 +280,7 @@
     <value>Deceased (optional):</value>
   </data>
   <data name="AddPersonProfilePictureFileIdLabel" xml:space="preserve">
-    <value>Profile picture file id (optional):</value>
+    <value>Profile picture (optional):</value>
   </data>
   <data name="AddPersonSetCurrentFileLabel" xml:space="preserve">
     <value>Set current file</value>
@@ -1167,5 +1167,8 @@ YYYY-MM-DDTHH:MM:SS</value>
   </data>
   <data name="ThemeLight" xml:space="preserve">
     <value>Light</value>
+  </data>
+  <data name="AddPersonClearCurrentFileToolTip" xml:space="preserve">
+    <value>Clear profile picture</value>
   </data>
 </root>

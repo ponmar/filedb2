@@ -331,6 +331,15 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clear profile picture.
+        /// </summary>
+        public static string AddPersonClearCurrentFileToolTip {
+            get {
+                return ResourceManager.GetString("AddPersonClearCurrentFileToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date of birth (optional):.
         /// </summary>
         public static string AddPersonDateOfBirthLabel {
@@ -403,7 +412,7 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Profile picture file id (optional):.
+        ///   Looks up a localized string similar to Profile picture (optional):.
         /// </summary>
         public static string AddPersonProfilePictureFileIdLabel {
             get {
