@@ -71,14 +71,16 @@ public partial class AddPersonViewModel : ObservableObject
     private readonly IFileSelector fileSelector;
     private readonly IFilesystemAccessProvider filesystemAccessProvider;
     private readonly IImageLoader imageLoader;
+    private readonly IClipboardService clipboardService;
 
-    public AddPersonViewModel(IDatabaseAccessProvider dbAccessProvider, IDialogs dialogs, IFileSelector fileSelector, IFilesystemAccessProvider filesystemAccessProvider, IImageLoader imageLoader, int? personId = null)
+    public AddPersonViewModel(IDatabaseAccessProvider dbAccessProvider, IDialogs dialogs, IFileSelector fileSelector, IFilesystemAccessProvider filesystemAccessProvider, IImageLoader imageLoader, IClipboardService clipboardService, int? personId = null)
     {
         this.dbAccessProvider = dbAccessProvider;
         this.dialogs = dialogs;
         this.fileSelector = fileSelector;
         this.filesystemAccessProvider = filesystemAccessProvider;
         this.imageLoader = imageLoader;
+        this.clipboardService = clipboardService;
         this.personId = personId;
 
         title = personId.HasValue ? Strings.AddPersonEditTitle : Strings.AddPersonAddTitle;
@@ -170,6 +172,13 @@ public partial class AddPersonViewModel : ObservableObject
     private void SetProfilePictureFromSearchResult()
     {
         ProfilePictureFile = fileSelector.SelectedFile;
+    }
+
+    [RelayCommand]
+    private void CopyProfilePictureId()
+    {
+        var fileList = Utils.CreateFileList([ProfilePictureFile!]);
+        clipboardService.SetTextAsync(fileList);
     }
 
     [RelayCommand]

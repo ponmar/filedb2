@@ -34,6 +34,7 @@
 				<TextBlock Grid.Row="6" Grid.Column="0" Classes="PageTextBlock" Text="{x:Static lang:Strings.AddPersonProfilePictureFileIdLabel}" VerticalAlignment="Center"/>
 				<StackPanel Margin="10" Grid.Row="6" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
 					<Button Margin="0 0 3 0" Content="{x:Static lang:Strings.AddPersonSetCurrentFileLabel}" ToolTip.Tip="{x:Static lang:Strings.AddPersonSetCurrentFileToolTip}" Command="{Binding SetProfilePictureFromSearchResultCommand}" IsEnabled="{Binding CanSetProfilePicture}" VerticalAlignment="Center"/>
+					<Button Margin="0 0 3 0" Content="&#x1f5d0;" ToolTip.Tip="TODO" IsEnabled="{Binding ProfilePicture, Converter={x:Static ObjectConverters.IsNotNull}}" VerticalAlignment="Center" Command="{Binding CopyProfilePictureIdCommand}"/>
 					<Button Content="&#128473;" ToolTip.Tip="{x:Static lang:Strings.AddPersonClearCurrentFileToolTip}" Command="{Binding ClearProfilePictureCommand}" IsEnabled="{Binding ProfilePicture, Converter={x:Static ObjectConverters.IsNotNull}}" VerticalAlignment="Center"/>
 				</StackPanel>
 
