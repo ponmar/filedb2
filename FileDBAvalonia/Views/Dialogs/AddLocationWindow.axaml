@@ -12,15 +12,15 @@
 		WindowStartupLocation="CenterOwner">
 	<StackPanel Orientation="Vertical">
 		<Border Classes="BorderGroup">
-			<Grid ColumnDefinitions="auto,auto" RowDefinitions="auto,auto,auto">
+			<Grid ColumnDefinitions="auto,300" RowDefinitions="auto,auto,auto">
 				<TextBlock Grid.Row="0" Grid.Column="0" Classes="PageTextBlock" Text="{x:Static lang:Strings.AddLocationNameLabel}" VerticalAlignment="Center"/>
-				<TextBox Grid.Row="0" Grid.Column="1" Classes="PageTextBox" Width="300" Text="{Binding Name}" VerticalAlignment="Center"/>
+				<TextBox Grid.Row="0" Grid.Column="1" Classes="PageTextBox" Text="{Binding Name}" VerticalAlignment="Center"/>
 
 				<TextBlock Grid.Row="1" Grid.Column="0" Classes="PageTextBlock" Text="{x:Static lang:Strings.AddLocationDescriptionLabel}" VerticalAlignment="Center"/>
-				<TextBox Grid.Row="1" Grid.Column="1" Classes="PageTextBox" Width="300" Text="{Binding Description}" VerticalAlignment="Center"/>
+				<TextBox Grid.Row="1" Grid.Column="1" Classes="PageTextBox" Text="{Binding Description}" VerticalAlignment="Center"/>
 
 				<TextBlock Grid.Row="2" Grid.Column="0" Classes="PageTextBlock" Text="{x:Static lang:Strings.AddLocationPositionLabel}" VerticalAlignment="Center"/>
-				<TextBox Grid.Row="2" Grid.Column="1" Classes="PageTextBox" Width="300" Text="{Binding Position}" ToolTip.Tip="{x:Static lang:Strings.AddLocationPositionToolTip}" VerticalAlignment="Center"/>
+				<TextBox Grid.Row="2" Grid.Column="1" Classes="PageTextBox" Text="{Binding Position}" ToolTip.Tip="{x:Static lang:Strings.AddLocationPositionToolTip}" VerticalAlignment="Center"/>
 			</Grid>
 		</Border>
 
