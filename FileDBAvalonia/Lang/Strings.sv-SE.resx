@@ -1171,4 +1171,7 @@
   <data name="AddPersonClearCurrentFileToolTip" xml:space="preserve">
     <value>Ta bort profilbild</value>
   </data>
+  <data name="AddPersonCopyCurrentFileToolTip" xml:space="preserve">
+    <value>Kopiera profilbildens id</value>
+  </data>
 </root>

@@ -340,6 +340,15 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copy profile picture id.
+        /// </summary>
+        public static string AddPersonCopyCurrentFileToolTip {
+            get {
+                return ResourceManager.GetString("AddPersonCopyCurrentFileToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date of birth (optional):.
         /// </summary>
         public static string AddPersonDateOfBirthLabel {

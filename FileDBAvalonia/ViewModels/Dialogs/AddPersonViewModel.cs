@@ -45,17 +45,22 @@ public partial class AddPersonViewModel : ObservableObject
     {
         if (value is not null)
         {
+            ProfilePictureRotation = -DatabaseParsing.OrientationToDegrees(value!.Orientation ?? 0);
             var imageAbsPath = filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(value!.Path);
             imageLoader.LoadImage(imageAbsPath);
         }
         else
         {
+            ProfilePictureRotation = 0;
             ProfilePicture = null;
         }
     }
 
     [ObservableProperty]
     private Bitmap? profilePicture = null;
+
+    [ObservableProperty]
+    private int profilePictureRotation = 0;
 
     [ObservableProperty]
     private string sexSelection = Sex.NotApplicable.ToString();
@@ -91,9 +96,6 @@ public partial class AddPersonViewModel : ObservableObject
             {
                 if (ProfilePictureFile is not null && x.FilePath == filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(ProfilePictureFile.Path))
                 {
-                    //var profileFile = dbAccessProvider.DbAccess.GetFileById(AffectedPerson!.ProfileFileId!.Value);
-                    // TODO: fix rotation
-                    //personVm.ProfilePictureRotation = -DatabaseParsing.OrientationToDegrees(ProfilePictureFile!.Orientation ?? 0);
                     ProfilePicture = x.Image;
                 }
             });

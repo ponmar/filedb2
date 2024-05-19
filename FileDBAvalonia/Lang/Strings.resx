@@ -1171,4 +1171,7 @@ YYYY-MM-DDTHH:MM:SS</value>
   <data name="AddPersonClearCurrentFileToolTip" xml:space="preserve">
     <value>Clear profile picture</value>
   </data>
+  <data name="AddPersonCopyCurrentFileToolTip" xml:space="preserve">
+    <value>Copy profile picture id</value>
+  </data>
 </root>
