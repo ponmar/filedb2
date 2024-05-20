@@ -6,6 +6,7 @@ using CommunityToolkit.Mvvm.Input;
 using FileDBAvalonia.Configuration;
 using FileDBAvalonia.Model;
 using FileDBAvalonia.Notifiers;
+using FileDBAvalonia.ViewModels.Search;
 
 namespace FileDBAvalonia.ViewModels;
 
@@ -16,6 +17,9 @@ public partial class MainViewModel : ObservableObject
 
     [ObservableProperty]
     private NotificationType highlightedNotificationType;
+
+    [ObservableProperty]
+    private int numSearchResultFiles = 0;
 
     [ObservableProperty]
     private bool quitSelected;
@@ -56,11 +60,13 @@ public partial class MainViewModel : ObservableObject
 
     private readonly IConfigProvider configProvider;
     private readonly INotificationsRepository notificationsRepository;
+    private readonly ISearchResultRepository searchResultRepository;
 
-    public MainViewModel(IConfigProvider configProvider, INotificationsRepository notificationsRepository)
+    public MainViewModel(IConfigProvider configProvider, INotificationsRepository notificationsRepository, ISearchResultRepository searchResultRepository)
     {
         this.configProvider = configProvider;
         this.notificationsRepository = notificationsRepository;
+        this.searchResultRepository = searchResultRepository;
 
         readWriteMode = !configProvider.Config.ReadOnly;
 
@@ -87,6 +93,11 @@ public partial class MainViewModel : ObservableObject
         {
             var windowMode = x.Fullscreen ? WindowMode.Fullscreen : defaultWindowMode;
             ApplyWindowMode(windowMode);
+        });
+
+        this.RegisterForEvent<SearchResultRepositoryUpdated>(x =>
+        {
+            NumSearchResultFiles = searchResultRepository.Files.Count();
         });
     }
 

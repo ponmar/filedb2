@@ -36,7 +36,12 @@
 			<Setter Property="Margin" Value="10"/>
 		</Style>
 
-		<Style Selector="TextBlock.NotificationBadge">
+		<Style Selector="Border.TabBadge">
+			<Setter Property="CornerRadius" Value="4"/>
+		</Style>
+		
+		<Style Selector="TextBlock.TabBadge">
+			<Setter Property="Margin" Value="2"/>
 			<Setter Property="FontSize" Value="12"/>
 			<Setter Property="Foreground" Value="White"/>
 			<Setter Property="FontWeight" Value="Bold"/>

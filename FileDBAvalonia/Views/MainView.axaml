@@ -16,7 +16,12 @@
 		<TabControl TabStripPlacement="Left">
 			<TabItem HorizontalContentAlignment="Center">
 				<TabItem.Header>
-					<TextBlock Classes="TabIcon" Text="&#x1F50D;" ToolTip.Tip="{x:Static lang:Strings.SearchTitle}"/>
+					<Grid ToolTip.Tip="{x:Static lang:Strings.SearchTitle}">
+						<TextBlock Classes="TabIcon" Text="&#x1F50D;"/>
+						<Border Classes="TabBadge" Background="Green" HorizontalAlignment="Right" VerticalAlignment="Bottom" IsVisible="{Binding NumSearchResultFiles}">
+							<TextBlock Text="{Binding NumSearchResultFiles}" Classes="TabBadge" />
+						</Border>
+					</Grid>
 				</TabItem.Header>
 				<views:SearchView Margin="10 0 10 10"/>
 			</TabItem>
@@ -86,10 +91,10 @@
 
 			<TabItem HorizontalContentAlignment="Center">
 				<TabItem.Header>
-					<Grid>
-						<TextBlock Classes="TabIcon" Text="&#x1F514;" ToolTip.Tip="{x:Static lang:Strings.NotificationsTitle}"/>
-						<Border Background="{Binding HighlightedNotificationType, Converter={StaticResource NotificationTypeToColorConverter}}" HorizontalAlignment="Right" VerticalAlignment="Bottom" IsVisible="{Binding NumNotifications}" CornerRadius="4">
-							<TextBlock Margin="4" Text="{Binding NumNotifications}" Classes="NotificationBadge" />
+					<Grid ToolTip.Tip="{x:Static lang:Strings.NotificationsTitle}">
+						<TextBlock Classes="TabIcon" Text="&#x1F514;"/>
+						<Border Classes="TabBadge" Background="{Binding HighlightedNotificationType, Converter={StaticResource NotificationTypeToColorConverter}}" HorizontalAlignment="Right" VerticalAlignment="Bottom" IsVisible="{Binding NumNotifications}">
+							<TextBlock Text="{Binding NumNotifications}" Classes="TabBadge" />
 						</Border>
 					</Grid>
 				</TabItem.Header>
