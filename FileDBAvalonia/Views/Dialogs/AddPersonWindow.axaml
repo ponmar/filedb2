@@ -12,7 +12,7 @@
 		WindowStartupLocation="CenterOwner">
 	<StackPanel Orientation="Vertical">
 		<Border Classes="BorderGroup">
-			<Grid ColumnDefinitions="auto,300" RowDefinitions="auto,auto,auto,auto,auto,auto,auto,auto">
+			<Grid ColumnDefinitions="auto,350" RowDefinitions="auto,auto,auto,auto,auto,auto,auto,auto">
 				<TextBlock Grid.Row="0" Grid.Column="0" Classes="PageTextBlock" Text="{x:Static lang:Strings.AddPersonFirstnameLabel}" VerticalAlignment="Center"/>
 				<TextBox Grid.Row="0" Grid.Column="1" Classes="PageTextBox" Text="{Binding Firstname}" VerticalAlignment="Center"/>
 
@@ -32,13 +32,13 @@
 				<TextBox Grid.Row="5" Grid.Column="1" Classes="PageTextBox" Text="{Binding Deceased}" ToolTip.Tip="{x:Static lang:Strings.AddPersonDeceasedToolTip}" VerticalAlignment="Center"/>
 
 				<TextBlock Grid.Row="6" Grid.Column="0" Classes="PageTextBlock" Text="{x:Static lang:Strings.AddPersonProfilePictureFileIdLabel}" VerticalAlignment="Center"/>
-				<StackPanel Margin="10" Grid.Row="6" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+				<WrapPanel Margin="10" Grid.Row="6" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
 					<Button Margin="0 0 3 0" Content="{x:Static lang:Strings.AddPersonSetCurrentFileLabel}" ToolTip.Tip="{x:Static lang:Strings.AddPersonSetCurrentFileToolTip}" Command="{Binding SetProfilePictureFromSearchResultCommand}" IsEnabled="{Binding CanSetProfilePicture}" VerticalAlignment="Center"/>
 					<Button Margin="0 0 3 0" Content="&#x1f5d0;" ToolTip.Tip="{x:Static lang:Strings.AddPersonCopyCurrentFileToolTip}" IsEnabled="{Binding ProfilePicture, Converter={x:Static ObjectConverters.IsNotNull}}" VerticalAlignment="Center" Command="{Binding CopyProfilePictureIdCommand}"/>
 					<Button Content="&#128473;" ToolTip.Tip="{x:Static lang:Strings.AddPersonClearCurrentFileToolTip}" Command="{Binding ClearProfilePictureCommand}" IsEnabled="{Binding ProfilePicture, Converter={x:Static ObjectConverters.IsNotNull}}" VerticalAlignment="Center"/>
-				</StackPanel>
+				</WrapPanel>
 
-				<LayoutTransformControl Margin="10 0 10 10" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" IsVisible="{Binding ProfilePicture, Converter={x:Static ObjectConverters.IsNotNull}}" MaxHeight="200" VerticalAlignment="Stretch">
+				<LayoutTransformControl Margin="10 0 10 10" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" IsVisible="{Binding ProfilePicture, Converter={x:Static ObjectConverters.IsNotNull}}" MaxHeight="200" HorizontalAlignment="Center">
 					<LayoutTransformControl.LayoutTransform>
 						<RotateTransform Angle="{Binding ProfilePictureRotation}"/>
 					</LayoutTransformControl.LayoutTransform>

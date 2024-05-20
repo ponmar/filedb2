@@ -283,7 +283,7 @@
     <value>Profilbild (valfri):</value>
   </data>
   <data name="AddPersonSetCurrentFileLabel" xml:space="preserve">
-    <value>Sätt aktuell fil</value>
+    <value>Sätt från sökresultatets markering</value>
   </data>
   <data name="AddPersonSetCurrentFileToolTip" xml:space="preserve">
     <value>Använd profilbild från den valda filen i nuvarande sökresultat</value>

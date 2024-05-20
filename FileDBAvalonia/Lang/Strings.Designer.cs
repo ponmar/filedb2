@@ -430,7 +430,7 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Set current file.
+        ///   Looks up a localized string similar to Set from search result selection.
         /// </summary>
         public static string AddPersonSetCurrentFileLabel {
             get {

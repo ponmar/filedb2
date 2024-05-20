@@ -283,7 +283,7 @@
     <value>Profile picture (optional):</value>
   </data>
   <data name="AddPersonSetCurrentFileLabel" xml:space="preserve">
-    <value>Set current file</value>
+    <value>Set from search result selection</value>
   </data>
   <data name="AddPersonSetCurrentFileToolTip" xml:space="preserve">
     <value>Set profile picture from the selected file in current search result</value>
