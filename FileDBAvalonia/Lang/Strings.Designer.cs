@@ -520,6 +520,24 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add person search filter.
+        /// </summary>
+        public static string BirthdaysAddPersonSearchFilter {
+            get {
+                return ResourceManager.GetString("BirthdaysAddPersonSearchFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string BirthdaysSearch {
+            get {
+                return ResourceManager.GetString("BirthdaysSearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Birthdays.
         /// </summary>
         public static string BirthdaysTitle {

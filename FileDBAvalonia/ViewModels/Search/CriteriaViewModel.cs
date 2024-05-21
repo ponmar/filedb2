@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using FileDBAvalonia.Comparers;
 using FileDBAvalonia.ViewModels.Search;
 using System;
+using FileDBAvalonia.ViewModels.Search.Filters;
 
 namespace FileDBAvalonia.ViewModels;
 
@@ -86,6 +87,18 @@ public partial class CriteriaViewModel : ObservableObject
         this.RegisterForEvent<FileSelectionChanged>(x =>
         {
             SelectedFile = fileSelector.SelectedFile;
+        });
+
+        this.RegisterForEvent<AddPersonSearchFilter>(x =>
+        {
+            AddPersonFilterFor(x.Person);
+        });
+
+        this.RegisterForEvent<SearchForPerson>(async x =>
+        {
+            FilterSettings.Clear();
+            AddPersonFilterFor(x.Person);
+            await FindFilesFromFiltersAsync();
         });
     }
 
@@ -198,9 +211,23 @@ public partial class CriteriaViewModel : ObservableObject
     private void AddFilter()
     {
         var vm = ServiceLocator.Resolve<FilterSelectionViewModel>();
-        vm.IsFirstFilter = FilterSettings.Count == 0;
-        FilterSettings.Add(vm);
+        AddFilter(vm);
+    }
+
+    private void AddFilter(FilterSelectionViewModel viewModel)
+    {
+        viewModel.IsFirstFilter = FilterSettings.Count == 0;
+        FilterSettings.Add(viewModel);
         OnPropertyChanged(nameof(FilterCanBeRemoved));
+    }
+
+    private void AddPersonFilterFor(PersonModel person)
+    {
+        var vm = ServiceLocator.Resolve<FilterSelectionViewModel>();
+        vm.SelectedFilterType = FilterType.Person;
+        var personViewModel = (PersonViewModel)vm.FilterViewModel;
+        personViewModel.SelectedPerson = personViewModel.Persons.First(p => p.Id == person.Id);
+        AddFilter(vm);
     }
 
     [RelayCommand]

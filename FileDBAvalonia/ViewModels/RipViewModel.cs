@@ -43,6 +43,12 @@ public partial class DeceasedPerson : ObservableObject
         this.person = person;
         ProfilePictureAbsPath = profilePictureAbsPath;
     }
+
+    [RelayCommand]
+    private void AddPersonSearchFilter() => Messenger.Send(new AddPersonSearchFilter(Person));
+
+    [RelayCommand]
+    private void SearchForPerson() => Messenger.Send(new SearchForPerson(Person));
 }
 
 public partial class RipViewModel : ObservableObject

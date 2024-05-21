@@ -74,6 +74,12 @@ public partial class PersonBirthday : ObservableObject
             DaysLeftStr = string.Empty;
         }
     }
+
+    [RelayCommand]
+    private void AddPersonSearchFilter() => Messenger.Send(new AddPersonSearchFilter(Person));
+
+    [RelayCommand]
+    private void SearchForPerson() => Messenger.Send(new SearchForPerson(Person));
 }
 
 public class PersonsByDaysLeftUntilBirthdaySorter : IComparer<PersonBirthday>

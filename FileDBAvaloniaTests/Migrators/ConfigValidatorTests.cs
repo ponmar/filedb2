@@ -1,5 +1,4 @@
-﻿using FileDBAvalonia;
-using FileDBAvalonia.Configuration;
+﻿using FileDBAvalonia.Configuration;
 using FileDBAvalonia.Migrators;
 using Xunit;
 

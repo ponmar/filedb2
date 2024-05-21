@@ -43,3 +43,6 @@ public record ImageLoadError(string FilePath, Exception Exception);
 public record FilesAdded(List<FileModel> Files);
 
 public record CloseModalDialogRequest;
+
+public record AddPersonSearchFilter(PersonModel Person);
+public record SearchForPerson(PersonModel Person);

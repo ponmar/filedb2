@@ -1174,4 +1174,10 @@ YYYY-MM-DDTHH:MM:SS</value>
   <data name="AddPersonCopyCurrentFileToolTip" xml:space="preserve">
     <value>Copy profile picture id</value>
   </data>
+  <data name="BirthdaysSearch" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="BirthdaysAddPersonSearchFilter" xml:space="preserve">
+    <value>Add person search filter</value>
+  </data>
 </root>

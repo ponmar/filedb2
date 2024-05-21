@@ -32,10 +32,18 @@
 									</LayoutTransformControl>
 									<StackPanel Orientation="Vertical" VerticalAlignment="Center">
 										<StackPanel Orientation="Horizontal" Margin="5">
-											<TextBlock Text="{Binding Name}" Margin="5"/>
-											<TextBlock Text="{Binding Age}" Margin="5"/>
+											<TextBlock Text="{Binding Name}" Margin="5" VerticalAlignment="Center"/>
+											<TextBlock Text="{Binding Age}" Margin="5" VerticalAlignment="Center"/>
+											<Button Content="..." Margin="5" VerticalAlignment="Center">
+												<Button.Flyout>
+													<MenuFlyout>
+														<MenuItem Header="{x:Static lang:Strings.BirthdaysSearch}" Command="{Binding SearchForPersonCommand}"/>
+														<MenuItem Header="{x:Static lang:Strings.BirthdaysAddPersonSearchFilter}" Command="{Binding AddPersonSearchFilterCommand}"/>
+													</MenuFlyout>
+												</Button.Flyout>
+											</Button>
 										</StackPanel>
-										<StackPanel Orientation="Horizontal">
+										<StackPanel Orientation="Horizontal" Margin="5">
 											<TextBlock Text="{Binding Birthday}" Margin="5"/>
 											<TextBlock Text="{Binding DaysLeftStr}" Margin="5"/>
 										</StackPanel>

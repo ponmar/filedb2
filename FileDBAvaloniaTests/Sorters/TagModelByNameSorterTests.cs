@@ -1,5 +1,4 @@
-﻿using FileDBAvalonia;
-using FileDBAvalonia.Sorters;
+﻿using FileDBAvalonia.Sorters;
 using FileDBInterface.Model;
 using Xunit;
 

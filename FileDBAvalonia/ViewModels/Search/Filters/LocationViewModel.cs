@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using FileDBAvalonia.FilesFilter;
 using FileDBAvalonia.Model;
-using FileDBInterface.DatabaseAccess;
 using System.Collections.ObjectModel;
 using System.Linq;
 
