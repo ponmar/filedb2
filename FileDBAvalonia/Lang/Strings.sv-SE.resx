@@ -1180,4 +1180,10 @@
   <data name="BirthdaysAddPersonSearchFilter" xml:space="preserve">
     <value>Lägg till person-sökfilter</value>
   </data>
+  <data name="BirthdaysSearchForDate" xml:space="preserve">
+    <value>Sök efter detta datum</value>
+  </data>
+  <data name="BirthdaysAddDateSearchFilter" xml:space="preserve">
+    <value>Lägg till datum-sökfilter</value>
+  </data>
 </root>

@@ -100,6 +100,18 @@ public partial class CriteriaViewModel : ObservableObject
             AddPersonFilterFor(x.Person);
             await FindFilesFromFiltersAsync();
         });
+
+        this.RegisterForEvent<SearchForAnnualDate>(async x =>
+        {
+            FilterSettings.Clear();
+            AddAnnualDateFilterFor(x.Month, x.Day);
+            await FindFilesFromFiltersAsync();
+        });
+
+        this.RegisterForEvent<AddDateSearchFilter>(x =>
+        {
+            AddAnnualDateFilterFor(x.Month, x.Day);
+        });
     }
 
     private static void Send(IEnumerable<FileModel> files) => Messenger.Send(new TransferSearchResult(files));
@@ -227,6 +239,16 @@ public partial class CriteriaViewModel : ObservableObject
         vm.SelectedFilterType = FilterType.Person;
         var personViewModel = (PersonViewModel)vm.FilterViewModel;
         personViewModel.SelectedPerson = personViewModel.Persons.First(p => p.Id == person.Id);
+        AddFilter(vm);
+    }
+
+    private void AddAnnualDateFilterFor(int month, int day)
+    {
+        var vm = ServiceLocator.Resolve<FilterSelectionViewModel>();
+        vm.SelectedFilterType = FilterType.AnnualDate;
+        var annualDateViewModel = (AnnualDateViewModel)vm.FilterViewModel;
+        annualDateViewModel.SelectedAnnualMonthStart = month;
+        annualDateViewModel.SelectedAnnualDayStart = day;
         AddFilter(vm);
     }
 

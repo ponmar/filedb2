@@ -39,6 +39,7 @@
 												<Button.Flyout>
 													<MenuFlyout>
 														<MenuItem Header="{x:Static lang:Strings.BirthdaysSearch}" Command="{Binding SearchForPersonCommand}"/>
+														<MenuItem Header="-"/>
 														<MenuItem Header="{x:Static lang:Strings.BirthdaysAddPersonSearchFilter}" Command="{Binding AddPersonSearchFilterCommand}"/>
 													</MenuFlyout>
 												</Button.Flyout>

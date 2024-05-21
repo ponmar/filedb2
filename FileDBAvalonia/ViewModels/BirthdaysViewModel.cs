@@ -80,6 +80,20 @@ public partial class PersonBirthday : ObservableObject
 
     [RelayCommand]
     private void SearchForPerson() => Messenger.Send(new SearchForPerson(Person));
+
+    [RelayCommand]
+    private void SearchForBirthday()
+    {
+        var birthday = DatabaseParsing.ParsePersonDateOfBirth(Person.DateOfBirth!);
+        Messenger.Send(new SearchForAnnualDate(birthday.Month, birthday.Day));
+    }
+
+    [RelayCommand]
+    private void AddBirthdayDateSearchFilter()
+    {
+        var birthday = DatabaseParsing.ParsePersonDateOfBirth(Person.DateOfBirth!);
+        Messenger.Send(new AddDateSearchFilter(birthday.Month, birthday.Day));
+    }
 }
 
 public class PersonsByDaysLeftUntilBirthdaySorter : IComparer<PersonBirthday>

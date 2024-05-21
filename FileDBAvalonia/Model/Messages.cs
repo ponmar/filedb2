@@ -44,5 +44,7 @@ public record FilesAdded(List<FileModel> Files);
 
 public record CloseModalDialogRequest;
 
-public record AddPersonSearchFilter(PersonModel Person);
 public record SearchForPerson(PersonModel Person);
+public record SearchForAnnualDate(int Month, int Day);
+public record AddPersonSearchFilter(PersonModel Person);
+public record AddDateSearchFilter(int Month, int Day);

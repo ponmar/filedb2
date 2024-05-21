@@ -1180,4 +1180,10 @@ YYYY-MM-DDTHH:MM:SS</value>
   <data name="BirthdaysAddPersonSearchFilter" xml:space="preserve">
     <value>Add person search filter</value>
   </data>
+  <data name="BirthdaysSearchForDate" xml:space="preserve">
+    <value>Search for this date</value>
+  </data>
+  <data name="BirthdaysAddDateSearchFilter" xml:space="preserve">
+    <value>Add date search filter</value>
+  </data>
 </root>
