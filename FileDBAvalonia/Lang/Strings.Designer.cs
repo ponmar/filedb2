@@ -1064,6 +1064,15 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add tag search filter.
+        /// </summary>
+        public static string FileInfoAddTagSearchFilter {
+            get {
+                return ResourceManager.GetString("FileInfoAddTagSearchFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Description.
         /// </summary>
         public static string FileInfoDescriptionToolTip {
@@ -1105,6 +1114,15 @@ namespace FileDBAvalonia.Lang {
         public static string FileInfoSearchLocation {
             get {
                 return ResourceManager.GetString("FileInfoSearchLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search for tag.
+        /// </summary>
+        public static string FileInfoSearchTag {
+            get {
+                return ResourceManager.GetString("FileInfoSearchTag", resourceCulture);
             }
         }
         

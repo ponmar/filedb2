@@ -14,6 +14,7 @@ using System.Linq;
 
 namespace FileDBAvalonia.ViewModels.Search;
 
+public record Person(PersonModel Model, string Label);
 public record Location(LocationModel Model, string Name, string? MapUrl);
 
 public enum UpdateHistoryType
@@ -60,13 +61,11 @@ public partial class FileViewModel : ObservableObject
     [ObservableProperty]
     private string? positionLink;
 
-    [ObservableProperty]
-    private string persons = string.Empty;
+    public ObservableCollection<Person> Persons { get; } = [];
 
     public ObservableCollection<Location> Locations { get; } = [];
 
-    [ObservableProperty]
-    private string tags = string.Empty;
+    public ObservableCollection<TagModel> Tags { get; } = [];
 
     [ObservableProperty]
     private string fileLoadError = string.Empty;
@@ -185,10 +184,15 @@ public partial class FileViewModel : ObservableObject
         DateTime = FileTextOverlayCreator.GetFileDateTimeText(selection) ?? string.Empty;
         Position = FileTextOverlayCreator.GetShortPositionText(selection) ?? string.Empty;
         PositionLink = FileTextOverlayCreator.GetPositionUri(configProvider, selection);
-        Persons = FileTextOverlayCreator.GetPersonsText(dbAccessProvider.DbAccess, selection, "\n");
+
+        Persons.Clear();
+        FileTextOverlayCreator.GetPersons(dbAccessProvider.DbAccess, selection).ToList().ForEach(Persons.Add);
+
         Locations.Clear();
         FileTextOverlayCreator.GetLocations(configProvider, dbAccessProvider.DbAccess, selection).ToList().ForEach(Locations.Add);
-        Tags = FileTextOverlayCreator.GetTagsText(dbAccessProvider.DbAccess, selection, "\n");
+
+        Tags.Clear();
+        FileTextOverlayCreator.GetTags(dbAccessProvider.DbAccess, selection).ToList().ForEach(Tags.Add);
 
         FileLoadError = string.Empty;
         Image = null;
@@ -216,9 +220,9 @@ public partial class FileViewModel : ObservableObject
         DateTime = string.Empty;
         Position = string.Empty;
         PositionLink = null;
-        Persons = string.Empty;
+        Persons.Clear();
         Locations.Clear();
-        Tags = string.Empty;
+        Tags.Clear();
 
         FileLoadError = Strings.SearchNoMatch;
         Image = null;
@@ -254,8 +258,20 @@ public partial class FileViewModel : ObservableObject
     private static void PrevDirectory() => Messenger.Send<SelectFileInPrevDirectory>();
 
     [RelayCommand]
+    private static void SearchForPerson(PersonModel person) => Messenger.Send(new SearchForPerson(person));
+
+    [RelayCommand]
+    private static void AddPersonSearchFilter(PersonModel person) => Messenger.Send(new AddPersonSearchFilter(person));
+
+    [RelayCommand]
     private static void SearchForLocation(LocationModel location) => Messenger.Send(new SearchForLocation(location));
 
     [RelayCommand]
     private static void AddLocationSearchFilter(LocationModel location) => Messenger.Send(new AddLocationSearchFilter(location));
+
+    [RelayCommand]
+    private static void SearchForTag(TagModel tag) => Messenger.Send(new SearchForTag(tag));
+
+    [RelayCommand]
+    private static void AddTagSearchFilter(TagModel tag) => Messenger.Send(new AddTagSearchFilter(tag));
 }

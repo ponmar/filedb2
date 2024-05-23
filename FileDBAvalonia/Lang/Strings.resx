@@ -1192,4 +1192,10 @@ YYYY-MM-DDTHH:MM:SS</value>
   <data name="FileInfoAddLocationSearchFilter" xml:space="preserve">
     <value>Add location search filter</value>
   </data>
+  <data name="FileInfoSearchTag" xml:space="preserve">
+    <value>Search for tag</value>
+  </data>
+  <data name="FileInfoAddTagSearchFilter" xml:space="preserve">
+    <value>Add tag search filter</value>
+  </data>
 </root>

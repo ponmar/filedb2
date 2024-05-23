@@ -8,13 +8,30 @@
              x:Class="FileDBAvalonia.Views.Search.File.FileInfoView">
 	<Expander Header="{x:Static lang:Strings.FileInfoTitle}" IsExpanded="True">
 		<StackPanel Orientation="Vertical">
-			<TextBlock FontSize="{Binding OverlayFontSize}" Text="{Binding DateTime}" Margin="0 10 0 10" IsVisible="{Binding DateTime, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+			<TextBlock FontSize="{Binding OverlayFontSize}" Text="{Binding DateTime}" Margin="0 5 0 5" IsVisible="{Binding DateTime, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
 
-			<TextBlock FontSize="{Binding OverlayFontSize}" Text="&#x1F642;" Margin="0 10 0 0" IsVisible="{Binding Persons, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" ToolTip.Tip="{x:Static lang:Strings.FileInfoPersonsToolTip}"/>
-			<TextBlock FontSize="{Binding OverlayFontSize}" Text="{Binding Persons}" Margin="0 0 0 5" IsVisible="{Binding Persons, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+			<TextBlock FontSize="{Binding OverlayFontSize}" Text="&#x1F642;" Margin="0 5 0 0" IsVisible="{Binding Persons.Count}" ToolTip.Tip="{x:Static lang:Strings.FileInfoPersonsToolTip}"/>
+			<ItemsControl IsVisible="{Binding Persons.Count}" ItemsSource="{Binding Persons}" Margin="0 0 0 5" >
+				<ItemsControl.ItemTemplate>
+					<DataTemplate>
+						<StackPanel Orientation="Horizontal" Margin="0 0 0 3">
+							<TextBlock FontSize="{Binding $parent[UserControl].DataContext.OverlayFontSize}" Text="{Binding Label}" Margin="0 0 3 0" VerticalAlignment="Center"/>
+							<Button Content="..." VerticalAlignment="Center">
+								<Button.Flyout>
+									<MenuFlyout>
+										<MenuItem Header="{x:Static lang:Strings.BirthdaysSearch}" Command="{Binding $parent[UserControl].DataContext.SearchForPersonCommand}" CommandParameter="{Binding Model}"/>
+										<MenuItem Header="-"/>
+										<MenuItem Header="{x:Static lang:Strings.BirthdaysAddPersonSearchFilter}" Command="{Binding $parent[UserControl].DataContext.AddPersonSearchFilterCommand}" CommandParameter="{Binding Model}"/>
+									</MenuFlyout>
+								</Button.Flyout>
+							</Button>
+						</StackPanel>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
 
-			<TextBlock FontSize="{Binding OverlayFontSize}" Text="&#x1F3E0;" Margin="0 10 0 0" IsVisible="{Binding Locations.Count}" ToolTip.Tip="{x:Static lang:Strings.FileInfoLocationsToolTip}"/>
-			<ItemsControl IsVisible="{Binding Locations.Count}" ItemsSource="{Binding Locations}" Margin="0 0 10 0" >
+			<TextBlock FontSize="{Binding OverlayFontSize}" Text="&#x1F3E0;" Margin="0 5 0 0" IsVisible="{Binding Locations.Count}" ToolTip.Tip="{x:Static lang:Strings.FileInfoLocationsToolTip}"/>
+			<ItemsControl IsVisible="{Binding Locations.Count}" ItemsSource="{Binding Locations}" Margin="0 0 0 5" >
 				<ItemsControl.ItemTemplate>
 					<DataTemplate>
 						<StackPanel Orientation="Horizontal" Margin="0 0 0 3">
@@ -35,10 +52,27 @@
 				</ItemsControl.ItemTemplate>
 			</ItemsControl>
 
-			<TextBlock FontSize="{Binding OverlayFontSize}" Text="&#x1F516;" Margin="0 10 0 0" IsVisible="{Binding Tags, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" ToolTip.Tip="{x:Static lang:Strings.FileInfoTagsToolTip}"/>
-			<TextBlock FontSize="{Binding OverlayFontSize}" Text="{Binding Tags}" Margin="0 0 0 10" IsVisible="{Binding Tags, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+			<TextBlock FontSize="{Binding OverlayFontSize}" Text="&#x1F516;" Margin="0 5 0 0" IsVisible="{Binding Tags.Count}" ToolTip.Tip="{x:Static lang:Strings.FileInfoTagsToolTip}"/>
+			<ItemsControl IsVisible="{Binding Tags.Count}" ItemsSource="{Binding Tags}" Margin="0 0 0 5" >
+				<ItemsControl.ItemTemplate>
+					<DataTemplate>
+						<StackPanel Orientation="Horizontal" Margin="0 0 0 3">
+							<TextBlock FontSize="{Binding $parent[UserControl].DataContext.OverlayFontSize}" Text="{Binding Name}" Margin="0 0 3 0" VerticalAlignment="Center"/>
+							<Button Content="..." VerticalAlignment="Center">
+								<Button.Flyout>
+									<MenuFlyout>
+										<MenuItem Header="{x:Static lang:Strings.FileInfoSearchTag}" Command="{Binding $parent[UserControl].DataContext.SearchForTagCommand}" CommandParameter="{Binding}"/>
+										<MenuItem Header="-"/>
+										<MenuItem Header="{x:Static lang:Strings.FileInfoAddTagSearchFilter}" Command="{Binding $parent[UserControl].DataContext.AddTagSearchFilterCommand}" CommandParameter="{Binding}"/>
+									</MenuFlyout>
+								</Button.Flyout>
+							</Button>
+						</StackPanel>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
 
-			<StackPanel Margin="0 10 0 10" Orientation="Vertical" IsVisible="{Binding Position, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+			<StackPanel Margin="0 5 0 5" Orientation="Vertical" IsVisible="{Binding Position, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
 				<TextBlock FontSize="{Binding OverlayFontSize}" Text="&#x1F6F0;" ToolTip.Tip="{x:Static lang:Strings.FileInfoPositionToolTip}"/>
 				<StackPanel Orientation="Horizontal">
 					<TextBlock FontSize="{Binding OverlayFontSize}" IsVisible="{Binding Position, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" Text="{Binding Position}" VerticalAlignment="Center"/>
@@ -46,7 +80,7 @@
 				</StackPanel>
 			</StackPanel>
 
-			<TextBlock FontSize="{Binding OverlayFontSize}" Text="&#x1F4DD;" Margin="0 10 0 0" IsVisible="{Binding Description, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" ToolTip.Tip="{x:Static lang:Strings.FileInfoDescriptionToolTip}"/>
+			<TextBlock FontSize="{Binding OverlayFontSize}" Text="&#x1F4DD;" Margin="0 5 0 0" IsVisible="{Binding Description, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" ToolTip.Tip="{x:Static lang:Strings.FileInfoDescriptionToolTip}"/>
 			<TextBlock FontSize="{Binding OverlayFontSize}" MaxWidth="300" Text="{Binding Description}" Margin="0 0 0 5" ToolTip.Tip="{Binding Description}" TextWrapping="Wrap" IsVisible="{Binding Description, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" HorizontalAlignment="Left"/>
 		</StackPanel>
 	</Expander>

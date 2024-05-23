@@ -32,9 +32,20 @@ public class FileTextOverlayCreator
 
     public static IEnumerable<string> GetPersonsTexts(string? fileDateTime, IEnumerable<PersonModel> persons)
     {
-        var personStrings = persons.Select(p => $"{p.Firstname} {p.Lastname}{Utils.GetPersonAgeInFileString(fileDateTime, p.DateOfBirth)}").ToList();
+        var personStrings = persons.Select(p => GetPersonText(p, fileDateTime)).ToList();
         personStrings.Sort();
         return personStrings;
+    }
+
+    private static string GetPersonText(PersonModel person, string? fileDateTime)
+    {
+        return $"{person.Firstname} {person.Lastname}{Utils.GetPersonAgeInFileString(fileDateTime, person.DateOfBirth)}";
+    }
+
+    public static IEnumerable<Person> GetPersons(IDatabaseAccess dbAccess, FileModel file)
+    {
+        var persons = dbAccess.GetPersonsFromFile(file.Id);
+        return persons.Select(x => new Person(x, GetPersonText(x, file.Datetime))).OrderBy(x => x.Label);
     }
 
     public static string GetLocationsText(IDatabaseAccess dbAccess, FileModel file, string separator)
@@ -84,6 +95,12 @@ public class FileTextOverlayCreator
         var tagStrings = tags.Select(t => t.Name).ToList();
         tagStrings.Sort();
         return tagStrings;
+    }
+
+    public static IEnumerable<TagModel> GetTags(IDatabaseAccess dbAccess, FileModel file)
+    {
+        var tags = dbAccess.GetTagsFromFile(file.Id);
+        return tags.OrderBy(x => x.Name);
     }
 
     public static string? GetFileDateTimeText(FileModel file)

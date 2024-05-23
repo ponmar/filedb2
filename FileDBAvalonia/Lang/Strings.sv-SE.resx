@@ -1192,4 +1192,10 @@
   <data name="FileInfoAddLocationSearchFilter" xml:space="preserve">
     <value>Lägg till plats-sökfilter</value>
   </data>
+  <data name="FileInfoSearchTag" xml:space="preserve">
+    <value>Sök etikett</value>
+  </data>
+  <data name="FileInfoAddTagSearchFilter" xml:space="preserve">
+    <value>Lägg till etikett-sökfilter</value>
+  </data>
 </root>

@@ -46,8 +46,10 @@ public record CloseModalDialogRequest;
 
 public record SearchForPerson(PersonModel Person);
 public record SearchForLocation(LocationModel Location);
+public record SearchForTag(TagModel Tag);
 public record SearchForAnnualDate(int Month, int Day);
 
 public record AddPersonSearchFilter(PersonModel Person);
 public record AddLocationSearchFilter(LocationModel Location);
+public record AddTagSearchFilter(TagModel Tag);
 public record AddDateSearchFilter(int Month, int Day);
