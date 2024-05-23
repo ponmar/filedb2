@@ -14,7 +14,7 @@ using System.Linq;
 
 namespace FileDBAvalonia.ViewModels.Search;
 
-public record Location(string Name, string? MapUrl);
+public record Location(LocationModel Model, string Name, string? MapUrl);
 
 public enum UpdateHistoryType
 {
@@ -252,4 +252,10 @@ public partial class FileViewModel : ObservableObject
 
     [RelayCommand]
     private static void PrevDirectory() => Messenger.Send<SelectFileInPrevDirectory>();
+
+    [RelayCommand]
+    private static void SearchForLocation(LocationModel location) => Messenger.Send(new SearchForLocation(location));
+
+    [RelayCommand]
+    private static void AddLocationSearchFilter(LocationModel location) => Messenger.Send(new AddLocationSearchFilter(location));
 }

@@ -1175,7 +1175,7 @@ YYYY-MM-DDTHH:MM:SS</value>
     <value>Copy profile picture id</value>
   </data>
   <data name="BirthdaysSearch" xml:space="preserve">
-    <value>Search</value>
+    <value>Search for person</value>
   </data>
   <data name="BirthdaysAddPersonSearchFilter" xml:space="preserve">
     <value>Add person search filter</value>
@@ -1185,5 +1185,11 @@ YYYY-MM-DDTHH:MM:SS</value>
   </data>
   <data name="BirthdaysAddDateSearchFilter" xml:space="preserve">
     <value>Add date search filter</value>
+  </data>
+  <data name="FileInfoSearchLocation" xml:space="preserve">
+    <value>Search for location</value>
+  </data>
+  <data name="FileInfoAddLocationSearchFilter" xml:space="preserve">
+    <value>Add location search filter</value>
   </data>
 </root>

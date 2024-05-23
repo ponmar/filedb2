@@ -64,7 +64,7 @@ public class FileTextOverlayCreator
 
     public static IEnumerable<Location> GetLocations(IConfigProvider configProvider, IEnumerable<LocationModel> locations)
     {
-        return locations.OrderBy(x => x.Name).Select(x => new Location(x.Name, GetPositionUri(configProvider, x)));
+        return locations.OrderBy(x => x.Name).Select(x => new Location(x, x.Name, GetPositionUri(configProvider, x)));
     }
 
     public static string GetTagsText(IDatabaseAccess dbAccess, FileModel file, string separator)

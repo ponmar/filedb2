@@ -1175,7 +1175,7 @@
     <value>Kopiera profilbildens id</value>
   </data>
   <data name="BirthdaysSearch" xml:space="preserve">
-    <value>Sök</value>
+    <value>Sök person</value>
   </data>
   <data name="BirthdaysAddPersonSearchFilter" xml:space="preserve">
     <value>Lägg till person-sökfilter</value>
@@ -1185,5 +1185,11 @@
   </data>
   <data name="BirthdaysAddDateSearchFilter" xml:space="preserve">
     <value>Lägg till datum-sökfilter</value>
+  </data>
+  <data name="FileInfoSearchLocation" xml:space="preserve">
+    <value>Sök plats</value>
+  </data>
+  <data name="FileInfoAddLocationSearchFilter" xml:space="preserve">
+    <value>Lägg till plats-sökfilter</value>
   </data>
 </root>

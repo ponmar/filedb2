@@ -538,7 +538,7 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search.
+        ///   Looks up a localized string similar to Search for person.
         /// </summary>
         public static string BirthdaysSearch {
             get {
@@ -1055,6 +1055,15 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add location search filter.
+        /// </summary>
+        public static string FileInfoAddLocationSearchFilter {
+            get {
+                return ResourceManager.GetString("FileInfoAddLocationSearchFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Description.
         /// </summary>
         public static string FileInfoDescriptionToolTip {
@@ -1087,6 +1096,15 @@ namespace FileDBAvalonia.Lang {
         public static string FileInfoPositionToolTip {
             get {
                 return ResourceManager.GetString("FileInfoPositionToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search for location.
+        /// </summary>
+        public static string FileInfoSearchLocation {
+            get {
+                return ResourceManager.GetString("FileInfoSearchLocation", resourceCulture);
             }
         }
         

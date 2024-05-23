@@ -19,7 +19,17 @@
 					<DataTemplate>
 						<StackPanel Orientation="Horizontal" Margin="0 0 0 3">
 							<TextBlock FontSize="{Binding $parent[UserControl].DataContext.OverlayFontSize}" Text="{Binding Name}" Margin="0 0 3 0" VerticalAlignment="Center"/>
-							<Button IsVisible="{Binding MapUrl, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" Content="&#x1F4CC;" Command="{Binding $parent[UserControl].DataContext.OpenUrlCommand}" CommandParameter="{Binding MapUrl}" VerticalAlignment="Center" ToolTip.Tip="{x:Static lang:Strings.LocationsShowOnMapButton}"/>
+							<Button Content="..." VerticalAlignment="Center">
+								<Button.Flyout>
+									<MenuFlyout>
+										<MenuItem Header="{x:Static lang:Strings.LocationsShowOnMapButton}" Command="{Binding $parent[UserControl].DataContext.OpenUrlCommand}" CommandParameter="{Binding MapUrl}" IsEnabled="{Binding MapUrl, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+										<MenuItem Header="-"/>
+										<MenuItem Header="{x:Static lang:Strings.FileInfoSearchLocation}" Command="{Binding $parent[UserControl].DataContext.SearchForLocationCommand}" CommandParameter="{Binding Model}"/>
+										<MenuItem Header="-"/>
+										<MenuItem Header="{x:Static lang:Strings.FileInfoAddLocationSearchFilter}" Command="{Binding $parent[UserControl].DataContext.AddLocationSearchFilterCommand}" CommandParameter="{Binding Model}"/>
+									</MenuFlyout>
+								</Button.Flyout>
+							</Button>
 						</StackPanel>
 					</DataTemplate>
 				</ItemsControl.ItemTemplate>

@@ -13,6 +13,7 @@ using FileDBAvalonia.Comparers;
 using FileDBAvalonia.ViewModels.Search;
 using System;
 using FileDBAvalonia.ViewModels.Search.Filters;
+using FileDBInterface.DatabaseAccess;
 
 namespace FileDBAvalonia.ViewModels;
 
@@ -94,10 +95,22 @@ public partial class CriteriaViewModel : ObservableObject
             AddPersonFilterFor(x.Person);
         });
 
+        this.RegisterForEvent<AddLocationSearchFilter>(x =>
+        {
+            AddLocationFilterFor(x.Location);
+        });
+
         this.RegisterForEvent<SearchForPerson>(async x =>
         {
             FilterSettings.Clear();
             AddPersonFilterFor(x.Person);
+            await FindFilesFromFiltersAsync();
+        });
+
+        this.RegisterForEvent<SearchForLocation>(async x =>
+        {
+            FilterSettings.Clear();
+            AddLocationFilterFor(x.Location);
             await FindFilesFromFiltersAsync();
         });
 
@@ -239,6 +252,15 @@ public partial class CriteriaViewModel : ObservableObject
         vm.SelectedFilterType = FilterType.Person;
         var personViewModel = (PersonViewModel)vm.FilterViewModel;
         personViewModel.SelectedPerson = personViewModel.Persons.First(p => p.Id == person.Id);
+        AddFilter(vm);
+    }
+
+    private void AddLocationFilterFor(LocationModel location)
+    {
+        var vm = ServiceLocator.Resolve<FilterSelectionViewModel>();
+        vm.SelectedFilterType = FilterType.Location;
+        var locationViewModel = (LocationViewModel)vm.FilterViewModel;
+        locationViewModel.SelectedLocation = locationViewModel.Locations.First(p => p.Id == location.Id);
         AddFilter(vm);
     }
 
