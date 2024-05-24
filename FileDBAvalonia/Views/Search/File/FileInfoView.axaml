@@ -15,8 +15,7 @@
 				<ItemsControl.ItemTemplate>
 					<DataTemplate>
 						<StackPanel Orientation="Horizontal" Margin="0 0 0 3">
-							<TextBlock FontSize="{Binding $parent[UserControl].DataContext.OverlayFontSize}" Text="{Binding Label}" Margin="0 0 3 0" VerticalAlignment="Center"/>
-							<Button Content="..." VerticalAlignment="Center">
+							<Button Content="..." VerticalAlignment="Center" Margin="0 0 3 0">
 								<Button.Flyout>
 									<MenuFlyout>
 										<MenuItem Header="{x:Static lang:Strings.BirthdaysSearch}" Command="{Binding $parent[UserControl].DataContext.SearchForPersonCommand}" CommandParameter="{Binding Model}"/>
@@ -25,6 +24,7 @@
 									</MenuFlyout>
 								</Button.Flyout>
 							</Button>
+							<TextBlock FontSize="{Binding $parent[UserControl].DataContext.OverlayFontSize}" Text="{Binding Label}" VerticalAlignment="Center"/>
 						</StackPanel>
 					</DataTemplate>
 				</ItemsControl.ItemTemplate>
@@ -35,8 +35,7 @@
 				<ItemsControl.ItemTemplate>
 					<DataTemplate>
 						<StackPanel Orientation="Horizontal" Margin="0 0 0 3">
-							<TextBlock FontSize="{Binding $parent[UserControl].DataContext.OverlayFontSize}" Text="{Binding Name}" Margin="0 0 3 0" VerticalAlignment="Center"/>
-							<Button Content="..." VerticalAlignment="Center">
+							<Button Content="..." VerticalAlignment="Center" Margin="0 0 3 0" >
 								<Button.Flyout>
 									<MenuFlyout>
 										<MenuItem Header="{x:Static lang:Strings.LocationsShowOnMapButton}" Command="{Binding $parent[UserControl].DataContext.OpenUrlCommand}" CommandParameter="{Binding MapUrl}" IsEnabled="{Binding MapUrl, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
@@ -47,6 +46,7 @@
 									</MenuFlyout>
 								</Button.Flyout>
 							</Button>
+							<TextBlock FontSize="{Binding $parent[UserControl].DataContext.OverlayFontSize}" Text="{Binding Name}" VerticalAlignment="Center"/>
 						</StackPanel>
 					</DataTemplate>
 				</ItemsControl.ItemTemplate>
@@ -57,8 +57,7 @@
 				<ItemsControl.ItemTemplate>
 					<DataTemplate>
 						<StackPanel Orientation="Horizontal" Margin="0 0 0 3">
-							<TextBlock FontSize="{Binding $parent[UserControl].DataContext.OverlayFontSize}" Text="{Binding Name}" Margin="0 0 3 0" VerticalAlignment="Center"/>
-							<Button Content="..." VerticalAlignment="Center">
+							<Button Content="..." VerticalAlignment="Center" Margin="0 0 3 0" >
 								<Button.Flyout>
 									<MenuFlyout>
 										<MenuItem Header="{x:Static lang:Strings.FileInfoSearchTag}" Command="{Binding $parent[UserControl].DataContext.SearchForTagCommand}" CommandParameter="{Binding}"/>
@@ -67,6 +66,7 @@
 									</MenuFlyout>
 								</Button.Flyout>
 							</Button>
+							<TextBlock FontSize="{Binding $parent[UserControl].DataContext.OverlayFontSize}" Text="{Binding Name}" VerticalAlignment="Center"/>
 						</StackPanel>
 					</DataTemplate>
 				</ItemsControl.ItemTemplate>
