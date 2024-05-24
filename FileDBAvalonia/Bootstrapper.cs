@@ -8,12 +8,16 @@ using FileDBAvalonia.ViewModels.Dialogs;
 using FileDBAvalonia.ViewModels.Search;
 using FileDBAvalonia.ViewModels.Search.File;
 using FileDBAvalonia.ViewModels.Search.Filters;
+using Microsoft.Extensions.Logging;
+using NReco.Logging.File;
 using System.IO.Abstractions;
 
 namespace FileDBAvalonia;
 
 public static class Bootstrapper
 {
+    private static readonly ILoggerFactory loggerFactory = CreateLoggerFactory();
+
     public static WindsorContainer Container { get; private set; } = new();
 
     private static void Bootstrap()
@@ -88,6 +92,8 @@ public static class Bootstrapper
         Container.Register(Component.For<NumPersonsViewModel>().ImplementedBy<NumPersonsViewModel>().LifestyleTransient());
         Container.Register(Component.For<TagViewModel>().ImplementedBy<TagViewModel>().LifestyleTransient());
         Container.Register(Component.For<TimeViewModel>().ImplementedBy<TimeViewModel>().LifestyleTransient());
+
+        Container.Register(Component.For<ILoggerFactory>().Instance(loggerFactory));
     }
 
     public static void StartServices()
@@ -100,5 +106,20 @@ public static class Bootstrapper
         Container?.Dispose();
         Container = new WindsorContainer();
         Bootstrap();
+    }
+
+    private static ILoggerFactory CreateLoggerFactory()
+    {
+        return LoggerFactory.Create(builder =>
+        {
+            builder.AddSimpleConsole(options =>
+            {
+                options.IncludeScopes = true;
+                options.SingleLine = true;
+                options.TimestampFormat = "HH:mm:ss ";
+            });
+
+            builder.AddFile($"{Utils.ApplicationName}.log");
+        });
     }
 }

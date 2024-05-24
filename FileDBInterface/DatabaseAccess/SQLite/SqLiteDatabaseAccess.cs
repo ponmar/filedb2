@@ -6,33 +6,27 @@ using System.Linq;
 using Dapper;
 using FileDBInterface.Model;
 using System.IO;
-using log4net;
-using System.Reflection;
-using log4net.Config;
 using FileDBInterface.Exceptions;
 using FileDBInterface.Extensions;
 using FileDBInterface.Validators;
 using FileDBInterface.FilesystemAccess;
 using FileDBInterface.Utils;
+using Microsoft.Extensions.Logging;
 
 namespace FileDBInterface.DatabaseAccess.SQLite;
 
 public class SqLiteDatabaseAccess : IDatabaseAccess
 {
-    private static readonly ILog log = LogManager.GetLogger(nameof(SqLiteDatabaseAccess));
-
-    private readonly string database;
-
     public bool NeedsMigration => migrator.NeedsMigration;
 
+    private readonly string database;
+    private readonly ILogger logger;
     private readonly DatabaseMigrator migrator;
 
-    public SqLiteDatabaseAccess(string database)
+    public SqLiteDatabaseAccess(string database, ILoggerFactory loggerFactory)
     {
-        var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
-        XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
-
         this.database = database;
+        this.logger = loggerFactory.CreateLogger<SqLiteDatabaseAccess>();
 
         migrator = new DatabaseMigrator(database);
     }

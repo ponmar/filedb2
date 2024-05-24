@@ -1,5 +1,6 @@
 ﻿using FileDBInterface.FilesystemAccess;
 using FileDBInterface.Model;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -38,8 +39,9 @@ public class MediaFileGrouper
     {
         var filenames = Directory.GetFiles(directory, "*.*");
         var result = new List<FileInfo>();
+        var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
 
-        var filesystemAccess = new FilesystemAccess(new FileSystem(), "not used");
+        var filesystemAccess = new FilesystemAccess(new FileSystem(), loggerFactory, "not used");
 
         foreach (var filename in filenames)
         {

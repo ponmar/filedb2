@@ -5,31 +5,31 @@ using System.IO.Abstractions;
 using System.Linq;
 using FileDBInterface.DatabaseAccess;
 using FileDBInterface.Model;
-using log4net;
 using MetadataExtractor;
 using MetadataExtractor.Formats.Exif;
+using Microsoft.Extensions.Logging;
 
 namespace FileDBInterface.FilesystemAccess;
 
 public class FilesystemAccess : IFilesystemAccess
 {
-    private static readonly ILog log = LogManager.GetLogger(nameof(FilesystemAccess));
-
     public IFileSystem FileSystem { get; }
+    private readonly ILogger logger;
     private readonly string filesRootDirectory;
 
-    public FilesystemAccess(IFileSystem fileSystem, string filesRootDirectory)
+    public FilesystemAccess(IFileSystem fileSystem, ILoggerFactory loggerFactory, string filesRootDirectory)
     {
         FileSystem = fileSystem;
+        this.logger = loggerFactory.CreateLogger<FilesystemAccess>();
         this.filesRootDirectory = filesRootDirectory;
 
         if (fileSystem.Directory.Exists(filesRootDirectory))
         {
-            log.Info($"Using files root directory: {filesRootDirectory}");
+            logger.LogInformation($"Using files root directory: {filesRootDirectory}");
         }
         else
         {
-            log.Warn($"Files root directory does not exist: {filesRootDirectory}");
+            logger.LogWarning($"Files root directory does not exist: {filesRootDirectory}");
         }
     }
 

@@ -16,6 +16,7 @@ using FileDBAvalonia.Views;
 using FileDBInterface.DatabaseAccess;
 using FileDBInterface.DatabaseAccess.SQLite;
 using FileDBInterface.FilesystemAccess;
+using Microsoft.Extensions.Logging;
 using QuestPDF.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -66,6 +67,8 @@ public partial class App : Application
             QuestPDF.Settings.License = LicenseType.Community;
             Bootstrapper.Reset();
             Bootstrapper.StartServices();
+
+            var loggerFactory = ServiceLocator.Resolve<ILoggerFactory>();
 
             // Needed to fix sorting with Swedish characters right in comboboxes and datagrids
             //Utils.SetCulture(CultureInfo.GetCultureInfo("sv-SE"));
@@ -133,7 +136,7 @@ public partial class App : Application
             }
 
             IDatabaseAccess dbAccess = fileSystem.File.Exists(databasePath) ?
-                new SqLiteDatabaseAccess(databasePath) :
+                new SqLiteDatabaseAccess(databasePath, loggerFactory) :
                 new NoDatabaseAccess();
 
             var notifications = new List<Notification>();
@@ -163,7 +166,7 @@ public partial class App : Application
                 }
             }
 
-            var filesystemAccess = new FilesystemAccess(fileSystem, filesRootDirectory);
+            var filesystemAccess = new FilesystemAccess(fileSystem, loggerFactory, filesRootDirectory);
 
             var configUpdater = ServiceLocator.Resolve<IConfigUpdater>();
             configUpdater.InitConfig(applicationFilePaths, config, dbAccess, filesystemAccess);
