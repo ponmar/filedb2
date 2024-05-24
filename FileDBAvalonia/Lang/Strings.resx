@@ -1181,10 +1181,10 @@ YYYY-MM-DDTHH:MM:SS</value>
     <value>Add person search filter</value>
   </data>
   <data name="BirthdaysSearchForDate" xml:space="preserve">
-    <value>Search for this date</value>
+    <value>Search for birthday</value>
   </data>
   <data name="BirthdaysAddDateSearchFilter" xml:space="preserve">
-    <value>Add date search filter</value>
+    <value>Add birthday search filter</value>
   </data>
   <data name="FileInfoSearchLocation" xml:space="preserve">
     <value>Search for location</value>

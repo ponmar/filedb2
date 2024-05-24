@@ -261,7 +261,21 @@ public partial class FileViewModel : ObservableObject
     private static void SearchForPerson(PersonModel person) => Messenger.Send(new SearchForPerson(person));
 
     [RelayCommand]
+    private static void SearchForBirthday(PersonModel person)
+    {
+        var birthday = DatabaseParsing.ParsePersonDateOfBirth(person.DateOfBirth!);
+        Messenger.Send(new SearchForAnnualDate(birthday.Month, birthday.Day));
+    }
+
+    [RelayCommand]
     private static void AddPersonSearchFilter(PersonModel person) => Messenger.Send(new AddPersonSearchFilter(person));
+
+    [RelayCommand]
+    private void AddBirthdayDateSearchFilter(PersonModel person)
+    {
+        var birthday = DatabaseParsing.ParsePersonDateOfBirth(person.DateOfBirth!);
+        Messenger.Send(new AddDateSearchFilter(birthday.Month, birthday.Day));
+    }
 
     [RelayCommand]
     private static void SearchForLocation(LocationModel location) => Messenger.Send(new SearchForLocation(location));

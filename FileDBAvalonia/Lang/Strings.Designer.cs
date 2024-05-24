@@ -520,7 +520,7 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add date search filter.
+        ///   Looks up a localized string similar to Add birthday search filter.
         /// </summary>
         public static string BirthdaysAddDateSearchFilter {
             get {
@@ -547,7 +547,7 @@ namespace FileDBAvalonia.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search for this date.
+        ///   Looks up a localized string similar to Search for birthday.
         /// </summary>
         public static string BirthdaysSearchForDate {
             get {
