@@ -7,6 +7,7 @@
 * Person editing: show current profile picture and add button for clearing and copying the profile picture
 * Show search result count at search tab (to get search feedback when search triggered from another tab)
 * Add "..." button search menues at the birthday tab, RIP tab and file info overlay
+* Fix that birthday was not shown in the person editing table
 * Remove MAUI app
 
 4.6:
