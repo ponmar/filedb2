@@ -1,3 +1,14 @@
+4.7:
+* Use default config for an empty FileDB file (simplifies setting up a new files collection)
+* Change logging framework and log unhandled exceptions
+* Filters: pre-select items from current selected file when available
+* Filters: add AND, OR and XOR selection between filters
+* Text filter: add toggle buttons for matching persons, locations and tags
+* Person editing: show current profile picture and add button for clearing and copying the profile picture
+* Show search result count at search tab (to get search feedback when search triggered from another tab)
+* Add "..." button search menues at the birthday tab, RIP tab and file info overlay
+* Remove MAUI app
+
 4.6:
 * Add time search filter
 * Settings tab: enable default buttons only when a non-default setting is used
