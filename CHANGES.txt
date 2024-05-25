@@ -1,6 +1,5 @@
 4.7:
 * Use default config for an empty FileDB file (simplifies setting up a new files collection)
-* Change logging framework and log unhandled exceptions
 * Filters: pre-select items from current selected file when available
 * Filters: add AND, OR and XOR selection between filters
 * Text filter: add toggle buttons for matching persons, locations and tags
@@ -8,6 +7,7 @@
 * Show search result count at search tab (to get search feedback when search triggered from another tab)
 * Add "..." button search menues at the birthday tab, RIP tab and file info overlay
 * Fix that birthday was not shown in the person editing table
+* Change logging framework and log unhandled exceptions
 * Remove MAUI app
 
 4.6:
