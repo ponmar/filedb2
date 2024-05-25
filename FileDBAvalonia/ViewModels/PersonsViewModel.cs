@@ -108,6 +108,7 @@ public partial class PersonsViewModel : ObservableObject
             Firstname = pm.Firstname,
             Lastname = pm.Lastname,
             Description = pm.Description,
+            DateOfBirth = pm.DateOfBirth,
             Deceased = pm.Deceased,
             ProfileFileId = pm.ProfileFileId,
             Sex = pm.Sex,
