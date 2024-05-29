@@ -1,0 +1,128 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:lang="clr-namespace:FileDB.Lang"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="FileDB.Views.AboutView">
+	<DockPanel>
+		<TextBlock DockPanel.Dock="Top" Text="{x:Static lang:Strings.AboutTitle}" Classes="PageHeader"/>
+		<ScrollViewer>
+			<StackPanel Orientation="Vertical">
+				<TextBlock Text="{Binding AppName}" Classes="PageSubHeader"/>
+				<Border Classes="BorderGroup">
+					<Grid ColumnDefinitions="auto,auto" RowDefinitions="auto,auto,auto,auto,auto">
+						<TextBlock Grid.Row="0" Grid.Column="0" Classes="PageTextBlock" Text="{x:Static lang:Strings.AboutAppVersion}"/>
+						<TextBlock Grid.Row="0" Grid.Column="1" Classes="PageTextBlock" Text="{Binding Version}"/>
+
+						<TextBlock Grid.Row="1" Grid.Column="0" Classes="PageTextBlock" Text="{x:Static lang:Strings.AboutAppAuthor}"/>
+						<TextBlock Grid.Row="1" Grid.Column="1" Classes="PageTextBlock" Text="{Binding Author}"/>
+
+						<TextBlock Grid.Row="2" Grid.Column="0" Classes="PageTextBlock" Text="{x:Static lang:Strings.AboutAppProjectWebsite}" VerticalAlignment="Center"/>
+						<StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+							<TextBlock Classes="PageTextBlock" Text="{Binding ProjectUrl}" VerticalAlignment="Center"/>
+							<Button Classes="PageButton" Content="Open" Command="{Binding OpenUrlCommand}" CommandParameter="{Binding ProjectUrl}" VerticalAlignment="Center"/>
+						</StackPanel>
+
+						<TextBlock Grid.Row="3" Grid.Column="0" Classes="PageTextBlock" Text="{x:Static lang:Strings.AboutDownloadsReleases}" VerticalAlignment="Center"/>
+						<StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
+							<TextBlock Classes="PageTextBlock" Text="{Binding DownloadLink}" VerticalAlignment="Center"/>
+							<Button Classes="PageButton" Content="Open" Command="{Binding OpenUrlCommand}" CommandParameter="{Binding DownloadLink}" VerticalAlignment="Center"/>
+						</StackPanel>
+						
+						<TextBlock Grid.Row="4" Grid.Column="0" Classes="PageTextBlock" Text="{x:Static lang:Strings.AboutLicenseLabel}"/>
+						<TextBlock Grid.Row="4" Grid.Column="1" Classes="PageTextBlock" Text="{x:Static lang:Strings.AboutLicense}"/>
+					</Grid>
+				</Border>
+
+				<TextBlock Text="{x:Static lang:Strings.AboutGettingStartedTitle}" Classes="PageSubHeader"/>
+				<Border Classes="BorderGroup">
+					<Grid ColumnDefinitions="auto,*" RowDefinitions="auto,auto,auto,auto,auto,auto">
+						<TextBlock Grid.Row="0" Grid.Column="0" Classes="PageTextBlock" Text="1."/>
+						<TextBlock Grid.Row="0" Grid.Column="1" Classes="PageTextBlock" TextWrapping="Wrap" Text="{x:Static lang:Strings.AboutGettingStarted1}"/>
+
+						<TextBlock Grid.Row="1" Grid.Column="0" Classes="PageTextBlock" Text="2."/>
+						<TextBlock Grid.Row="1" Grid.Column="1" Classes="PageTextBlock" TextWrapping="Wrap" Text="{x:Static lang:Strings.AboutGettingStarted2}"/>
+
+						<TextBlock Grid.Row="2" Grid.Column="0" Classes="PageTextBlock" Text="3."/>
+						<TextBlock Grid.Row="2" Grid.Column="1" Classes="PageTextBlock" TextWrapping="Wrap" Text="{x:Static lang:Strings.AboutGettingStarted3}"/>
+
+						<TextBlock Grid.Row="3" Grid.Column="0" Classes="PageTextBlock" Text="4."/>
+						<TextBlock Grid.Row="3" Grid.Column="1" Classes="PageTextBlock" TextWrapping="Wrap" Text="{x:Static lang:Strings.AboutGettingStarted4}"/>
+
+						<TextBlock Grid.Row="4" Grid.Column="0" Classes="PageTextBlock" Text="5."/>
+						<TextBlock Grid.Row="4" Grid.Column="1" Classes="PageTextBlock" TextWrapping="Wrap" Text="{x:Static lang:Strings.AboutGettingStarted5}"/>
+
+						<TextBlock Grid.Row="5" Grid.Column="0" Classes="PageTextBlock" Text="6."/>
+						<TextBlock Grid.Row="5" Grid.Column="1" Classes="PageTextBlock" TextWrapping="Wrap" Text="{x:Static lang:Strings.AboutGettingStarted6}"/>
+					</Grid>
+				</Border>
+
+				<TextBlock Text="{x:Static lang:Strings.AboutNotesTitle}" Classes="PageSubHeader"/>
+				<Border Classes="BorderGroup">
+					<StackPanel Orientation="Vertical">
+						<TextBlock TextWrapping="Wrap" Classes="PageTextBlock" Text="{x:Static lang:Strings.AboutNotes1}"/>
+						<TextBlock TextWrapping="Wrap" Classes="PageTextBlock" Text="{x:Static lang:Strings.AboutNotes2}"/>
+
+						<TreeView Margin="10" IsHitTestVisible="False">
+							<TreeViewItem Header="root" IsExpanded="True">
+								<TreeViewItem Header="2015" IsExpanded="True">
+									<TreeViewItem Header="2015-06-12 - Biking" IsExpanded="True">
+										<TreeViewItem Header="file1.jpg"/>
+										<TreeViewItem Header="file2.jpg"/>
+									</TreeViewItem>
+									<TreeViewItem Header="2015-07-13 - Birthday party" IsExpanded="True">
+										<TreeViewItem Header="somefile1.jpg"/>
+									</TreeViewItem>
+								</TreeViewItem>
+								<TreeViewItem Header="2016" IsExpanded="True">
+									<TreeViewItem Header="2016-01-05 - Something else" IsExpanded="True">
+										<TreeViewItem Header="anotherfile1.jpg"/>
+										<TreeViewItem Header="anotherfile2.jpg"/>
+									</TreeViewItem>
+								</TreeViewItem>
+							</TreeViewItem>
+						</TreeView>
+
+						<TextBlock Classes="PageTextBlock" TextWrapping="Wrap" Text="{x:Static lang:Strings.AboutNotes3}"/>
+					</StackPanel>
+				</Border>
+
+				<TextBlock Text="{x:Static lang:Strings.AboutCommandLineArgumentsTitle}" Classes="PageSubHeader"/>
+				<Border Classes="BorderGroup">
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Classes="PageTextBlock" Text="{x:Static lang:Strings.AboutCommandLineArgPath}"/>
+						<TextBlock Classes="PageTextBlock" TextWrapping="Wrap" Text="{x:Static lang:Strings.AboutCommandLineArgPathText}"/>
+					</StackPanel>
+				</Border>
+
+				<TextBlock Text="{x:Static lang:Strings.AboutChangelogTitle}" Classes="PageSubHeader"/>
+				<Border Classes="BorderGroup">
+					<TextBlock Classes="PageTextBlock" Margin="20" Text="{Binding Changes}" TextWrapping="Wrap"/>
+				</Border>
+
+				<TextBlock Text="{x:Static lang:Strings.AboutNuGetPackageLicensesTitle}" Classes="PageSubHeader"/>
+				<Border Classes="BorderGroup">
+					<ListBox ItemsSource="{Binding Licenses}" Grid.IsSharedSizeScope="True" Background="Transparent" Margin="10">
+						<ListBox.ItemTemplate>
+							<DataTemplate>
+								<Grid>
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="Auto" SharedSizeGroup="NameColumn"/>
+										<ColumnDefinition Width="Auto" SharedSizeGroup="VersionColumn"/>
+										<ColumnDefinition Width="Auto" SharedSizeGroup="LicenseTypeColumn"/>
+										<ColumnDefinition Width="Auto" SharedSizeGroup="LicenseLinkColumn"/>
+									</Grid.ColumnDefinitions>
+									<TextBlock Grid.Column="0" Text="{Binding PackageName}" Margin="3"/>
+									<TextBlock Grid.Column="1" Text="{Binding PackageVersion}" Margin="3"/>
+									<TextBlock Grid.Column="2" Text="{Binding LicenseType}" Margin="3"/>
+									<TextBlock Grid.Column="3" Text="{Binding PackageUrl}" Margin="3"/>
+								</Grid>
+							</DataTemplate>
+						</ListBox.ItemTemplate>
+					</ListBox>
+				</Border>
+			</StackPanel>
+		</ScrollViewer>
+	</DockPanel>
+</UserControl>

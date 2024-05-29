@@ -1,0 +1,21 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:lang="clr-namespace:FileDB.Lang"
+			 xmlns:converters="clr-namespace:FileDB.Converters"
+             mc:Ignorable="d"
+             x:Class="FileDB.Views.Search.Filters.PersonSexView">
+	<UserControl.Resources>
+		<converters:SexToStringConverter x:Key="SexToStringConverter"/>
+	</UserControl.Resources>
+	<StackPanel Orientation="Horizontal" DataContext="{Binding FilterViewModel}">
+		<ComboBox Grid.Column="0" ItemsSource="{Binding PersonSexValues}" SelectedItem="{Binding SelectedPersonSex}" ToolTip.Tip="{x:Static lang:Strings.SearchFilterPersonSexTooltip}" VerticalAlignment="Center">
+			<ComboBox.ItemTemplate>
+				<DataTemplate>
+					<TextBlock Text="{Binding Path=., Converter={StaticResource SexToStringConverter}}" />
+				</DataTemplate>
+			</ComboBox.ItemTemplate>
+		</ComboBox>
+	</StackPanel>
+</UserControl>

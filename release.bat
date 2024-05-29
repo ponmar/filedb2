@@ -10,12 +10,12 @@ if not %ERRORLEVEL%==0 (
     echo "Clean solution failed" && exit /b 1
 )
 
-dotnet publish FileDBAvalonia.Desktop\FileDBAvalonia.Desktop.csproj -r win-x64 -p:Version=%version%.0.0 --self-contained true
+dotnet publish FileDB.Desktop\FileDB.Desktop.csproj -r win-x64 -p:Version=%version%.0.0 --self-contained true
 if not %ERRORLEVEL%==0 (
     echo "Build failed" && exit /b 1
 )
 
-set appDir=FileDBAvalonia.Desktop\bin\Release\net8.0\win-x64\publish
+set appDir=FileDB.Desktop\bin\Release\net8.0\win-x64\publish
 set zipDir=FileDB-%version%
 set releaseDir=release\%zipDir%
 set zipFilename=%zipDir%.zip

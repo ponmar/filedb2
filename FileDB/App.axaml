@@ -1,0 +1,96 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:avalonia="clr-namespace:HyperText.Avalonia;assembly=HyperText.Avalonia"
+             x:Class="FileDB.App">
+
+    <Application.Styles>
+        <FluentTheme />
+
+		<Style Selector="TextBlock.TabIcon">
+			<Setter Property="FontSize" Value="22" />
+			<Setter Property="Margin" Value="0"/>
+		</Style>
+
+		<Style Selector="TextBlock.WarningIcon">
+			<Setter Property="FontSize" Value="22" />
+			<Setter Property="Foreground" Value="Orange"/>
+			<Setter Property="Text" Value="&#x26A0;"/>
+		</Style>		
+
+		<Style Selector="TextBlock.PageNotificationIcon">
+			<Setter Property="FontSize" Value="28" />
+			<Setter Property="Margin" Value="10"/>
+		</Style>
+
+		<Style Selector="TextBlock.PageHeader">
+			<Setter Property="FontSize" Value="24"/>
+			<Setter Property="Margin" Value="10"/>
+		</Style>
+
+		<Style Selector="TextBlock.PageSubHeader">
+			<Setter Property="FontSize" Value="18"/>
+			<Setter Property="Margin" Value="10"/>
+		</Style>
+
+		<Style Selector="TextBlock.PageTextBlock">
+			<Setter Property="Margin" Value="10"/>
+		</Style>
+
+		<Style Selector="Border.TabBadge">
+			<Setter Property="CornerRadius" Value="4"/>
+		</Style>
+		
+		<Style Selector="TextBlock.TabBadge">
+			<Setter Property="Margin" Value="2"/>
+			<Setter Property="FontSize" Value="12"/>
+			<Setter Property="Foreground" Value="White"/>
+			<Setter Property="FontWeight" Value="Bold"/>
+		</Style>
+
+		<Style Selector="ComboBox.PageComboBox">
+			<Setter Property="Margin" Value="10"/>
+		</Style>
+
+		<Style Selector="Border.BorderGroup">
+			<Setter Property="BorderThickness" Value="1"/>
+			<Setter Property="BorderBrush" Value="Gray"/>
+			<Setter Property="CornerRadius" Value="5"/>
+			<Setter Property="HorizontalAlignment" Value="Left"/>
+			<Setter Property="VerticalAlignment" Value="Top"/>
+		</Style>
+
+		<Style Selector="Border.PresentationBorder">
+			<Setter Property="Background" Value="Black"/>
+			<Setter Property="Opacity" Value="0.8"/>
+			<Setter Property="BorderThickness" Value="1"/>
+			<Setter Property="BorderBrush" Value="Gray"/>
+			<Setter Property="CornerRadius" Value="5"/>
+		</Style>
+
+		<Style Selector="TextBox.PageTextBox">
+			<Setter Property="Margin" Value="10"/>
+		</Style>
+
+		<Style Selector="CheckBox.PageCheckBox">
+			<Setter Property="Margin" Value="10"/>
+		</Style>
+
+		<Style Selector="Button.PageButton">
+			<Setter Property="Margin" Value="10"/>
+		</Style>
+
+		<Style Selector="ItemsControl.PageItemsControls">
+			<Setter Property="Margin" Value="10"/>
+		</Style>
+
+		<Style Selector="Button.NavigationButton">
+			<Setter Property="CornerRadius" Value="5"/>
+			<Setter Property="FontSize" Value="18"/>
+		</Style>
+
+		<Style Selector="ToggleButton.NavigationButton">
+			<Setter Property="CornerRadius" Value="5"/>
+			<Setter Property="FontSize" Value="18"/>
+		</Style>
+	</Application.Styles>
+</Application>

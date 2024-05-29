@@ -1,0 +1,13 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:lang="clr-namespace:FileDB.Lang"
+			 xmlns:converters="clr-namespace:FileDB.Converters"
+             mc:Ignorable="d"
+             x:Class="FileDB.Views.Search.Filters.LocationView">
+	<StackPanel Orientation="Horizontal" DataContext="{Binding FilterViewModel}">
+		<ComboBox Margin="0 0 3 0" Grid.Column="0" ItemsSource="{Binding Locations}" SelectedItem="{Binding SelectedLocation}" VerticalAlignment="Center"/>
+		<ToggleButton Content="!" IsChecked="{Binding Negate}" ToolTip.Tip="{x:Static lang:Strings.FilterNegateTooltip}"/>
+	</StackPanel>
+</UserControl>

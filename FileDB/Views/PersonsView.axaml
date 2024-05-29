@@ -1,0 +1,57 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:lang="clr-namespace:FileDB.Lang"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="FileDB.Views.PersonsView">
+	<DockPanel>
+		<TextBlock DockPanel.Dock="Top" Text="{x:Static lang:Strings.PersonsTitle}" Classes="PageHeader"/>
+		<ScrollViewer>
+			<Border Classes="BorderGroup">
+				<StackPanel Margin="10">
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="&#x1F50D;" Margin="0 0 5 0" VerticalAlignment="Center"/>
+						<TextBox Width="200" Text="{Binding FilterText}" Margin="0 0 5 0" VerticalAlignment="Center"/>
+						<Button Content="&#128473;" IsEnabled="{Binding FilterText, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" VerticalAlignment="Center" Command="{Binding ClearFilterTextCommand}"/>
+					</StackPanel>
+
+					<WrapPanel Orientation="Horizontal" IsVisible="{Binding ReadWriteMode}" Margin="0 10 0 0">
+						<Button Classes="Normal" Command="{Binding AddPersonCommand}" Content="+" ToolTip.Tip="{x:Static lang:Strings.PersonsAddButton}"/>
+						<Button Classes="Normal" Margin="5 0 5 0" Command="{Binding RemovePersonCommand}" IsEnabled="{Binding SelectedPerson, Converter={x:Static ObjectConverters.IsNotNull}}" Content="&#128465;" ToolTip.Tip="{x:Static lang:Strings.PersonsDeleteButton}"/>
+						<Button Classes="Normal" Command="{Binding EditPersonCommand}" IsEnabled="{Binding SelectedPerson, Converter={x:Static ObjectConverters.IsNotNull}}" Content="&#x1F589;" ToolTip.Tip="{x:Static lang:Strings.PersonsEditButton}"/>
+					</WrapPanel>
+
+					<ListBox Margin="0 10 0 0" ItemsSource="{Binding Persons}" SelectionMode="Single" SelectedItem="{Binding SelectedPerson}" Grid.IsSharedSizeScope="True">
+						<ListBox.ItemTemplate>
+							<DataTemplate>
+								<Grid>
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="auto" SharedSizeGroup="col1"/>
+										<ColumnDefinition Width="auto" SharedSizeGroup="col2"/>
+										<ColumnDefinition Width="auto" SharedSizeGroup="col3"/>
+										<ColumnDefinition Width="auto" SharedSizeGroup="col4"/>
+										<ColumnDefinition Width="auto" SharedSizeGroup="col5"/>
+										<ColumnDefinition Width="auto" SharedSizeGroup="col6"/>
+										<ColumnDefinition Width="auto" SharedSizeGroup="col7"/>
+										<ColumnDefinition Width="auto" SharedSizeGroup="col8"/>
+										<ColumnDefinition Width="auto" SharedSizeGroup="col9"/>
+									</Grid.ColumnDefinitions>
+									<TextBlock Classes="PageTextBlock" Grid.Column="0" Text="{Binding Id}" />
+									<TextBlock Classes="PageTextBlock" Grid.Column="1" Text="{Binding Firstname}" TextWrapping="Wrap"/>
+									<TextBlock Classes="PageTextBlock" Grid.Column="2" Text="{Binding Lastname}" TextWrapping="Wrap"/>
+									<TextBlock Classes="PageTextBlock" Grid.Column="3" Text="{Binding Description}" IsVisible="{Binding Description, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" TextWrapping="Wrap"/>
+									<TextBlock Classes="PageTextBlock" Grid.Column="4" Text="{Binding DateOfBirth}" IsVisible="{Binding DateOfBirth, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" TextWrapping="Wrap"/>
+									<TextBlock Classes="PageTextBlock" Grid.Column="5" Text="{Binding Deceased}" IsVisible="{Binding Deceased, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" TextWrapping="Wrap"/>
+									<TextBlock Classes="PageTextBlock" Grid.Column="6" Text="{Binding Age}" TextWrapping="Wrap"/>
+									<TextBlock Classes="PageTextBlock" Grid.Column="7" Text="{Binding ProfileFileId}" TextWrapping="Wrap"/>
+									<TextBlock Classes="PageTextBlock" Grid.Column="8" Text="{Binding Sex}" TextWrapping="Wrap"/>
+								</Grid>
+							</DataTemplate>
+						</ListBox.ItemTemplate>
+					</ListBox>
+				</StackPanel>
+			</Border>
+		</ScrollViewer>
+	</DockPanel>
+</UserControl>

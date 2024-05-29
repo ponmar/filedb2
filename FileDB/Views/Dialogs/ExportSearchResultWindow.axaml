@@ -1,0 +1,55 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:lang="clr-namespace:FileDB.Lang"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="FileDB.Views.Dialogs.ExportSearchResultWindow"
+        Title="{x:Static lang:Strings.ExportTitle}"
+		Icon="/Assets/icon.ico"
+		SizeToContent="WidthAndHeight"
+		CanResize="False"
+		WindowStartupLocation="CenterOwner">
+	<Border Classes="BorderGroup">
+		<StackPanel Orientation="Vertical">
+			<Grid Margin="10" ColumnDefinitions="auto,*,auto" RowDefinitions="auto,auto,auto">
+				<TextBlock Grid.Row="0" Grid.Column="0" Classes="PageTextBlock" Margin="3" Text="{x:Static lang:Strings.ExportHeaderLabel}" VerticalAlignment="Center"/>
+				<TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Classes="PageTextBox" Margin="3" VerticalAlignment="Center" Text="{Binding ExportName}" ToolTip.Tip="{x:Static lang:Strings.ExportHeaderToolTip}"/>
+
+				<TextBlock Grid.Row="1" Grid.Column="0" Classes="PageTextBlock" Margin="3" Text="{x:Static lang:Strings.ExportDestinationLabel}" VerticalAlignment="Center"/>
+				<TextBox Grid.Row="1" Grid.Column="1" Margin="3" Classes="PageTextBox" VerticalAlignment="Center" Text="{Binding ExportFilesDestinationDirectory}" ToolTip.Tip="{x:Static lang:Strings.ExportHeaderToolTip}"/>
+				<Button Grid.Row="1" Grid.Column="2" Classes="PageButton" Margin="3" VerticalAlignment="Center" Command="{Binding BrowseDestinationDirectoryCommand}" Content="{x:Static lang:Strings.ExportBrowseButton}"/>
+
+				<TextBlock Grid.Row="2" Grid.Column="0" Classes="PageTextBlock" Margin="3" Text="{x:Static lang:Strings.ExportDataLabel}"/>
+				<StackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Vertical">
+					<CheckBox Margin="3" Classes="PageCheckBox" IsChecked="{Binding ExportIncludesFiles}">
+						<TextBlock Text="{x:Static lang:Strings.ExportSearchResultFilesLabel}"/>
+					</CheckBox>
+					<CheckBox Margin="15,3,3,3" Classes="PageCheckBox" IsChecked="{Binding ExportIncludesM3u}">
+						<TextBlock Text="{x:Static lang:Strings.ExportM3UPlaylistLabel}"/>
+					</CheckBox>
+					<CheckBox Margin="3" Classes="PageCheckBox" IsChecked="{Binding ExportIncludesHtml}">
+						<TextBlock Text="{x:Static lang:Strings.ExportHTMLWithMetaDataAndSearchResultFilesLabel}"/>
+					</CheckBox>
+					<!--
+					<CheckBox Margin="3" Classes="PageCheckBox" IsChecked="{Binding ExportIncludesFilesWithMetaData}">
+						<StackPanel Orientation="Vertical" VerticalAlignment="Center">
+							<TextBlock Text="{x:Static lang:Strings.ExportSearchResultFilesWithMetaDataLabel}"/>
+							<RadioButton IsEnabled="{Binding ExportIncludesFilesWithMetaData}" GroupName="PicturesWithMetadataTypeGroup" Margin="3" IsChecked="{Binding ExportFilesWithMetaDataJpeg}">JPEG</RadioButton>
+							<RadioButton IsEnabled="{Binding ExportIncludesFilesWithMetaData}" GroupName="PicturesWithMetadataTypeGroup" Margin="3" >PNG</RadioButton>
+						</StackPanel>
+					</CheckBox>
+					-->
+					<CheckBox Classes="PageCheckBox" Margin="3" IsChecked="{Binding ExportIncludesJson}">
+						<TextBlock Text="{x:Static lang:Strings.ExportSearchResultMetaDataJSONLabel}"/>
+					</CheckBox>
+					<CheckBox Classes="PageCheckBox" Margin="3" IsChecked="{Binding ExportIncludesPdf}">
+						<TextBlock Text="{x:Static lang:Strings.ExportSearchResultPdfLabel}"/>
+					</CheckBox>
+				</StackPanel>
+			</Grid>
+
+			<Button Classes="PageButton" Margin="13" Command="{Binding ExportCommand}" IsEnabled="{Binding ExportEnabled}" HorizontalAlignment="Right" Content="{x:Static lang:Strings.ExportExportButton}"/>
+		</StackPanel>
+	</Border>
+</Window>

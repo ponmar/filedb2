@@ -1,0 +1,245 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:converters="clr-namespace:FileDB.Converters"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="1500"
+			 xmlns:lang="clr-namespace:FileDB.Lang"
+             x:Class="FileDB.Views.SettingsView">
+	<UserControl.Resources>
+		<converters:WindowModeToStringConverter x:Key="WindowModeToStringConverter"/>
+		<converters:SortMethodToStringConverter x:Key="SortMethodToStringConverter"/>
+		<converters:ThemeToStringConverter x:Key="ThemeToStringConverter"/>
+	</UserControl.Resources>
+	<DockPanel>
+		<TextBlock DockPanel.Dock="Top" Text="{x:Static lang:Strings.SettingsTitle}" Classes="PageHeader"/>
+		<ScrollViewer>
+			<StackPanel Orientation="Vertical" Grid.IsSharedSizeScope="True">
+				<StackPanel Orientation="Horizontal">
+					<Button Classes="PageButton" Command="{Binding ResetConfigurationCommand}" ToolTip.Tip="{x:Static lang:Strings.SettingsResetChangesButtonToolTip}" Content="{x:Static lang:Strings.SettingsResetChangesButton}" IsEnabled="{Binding IsDirty}" />
+					<Button Classes="PageButton" Command="{Binding SaveConfigurationCommand}" Content="{x:Static lang:Strings.SettingsSaveButton}" IsEnabled="{Binding IsDirty}" />
+				</StackPanel>
+
+				<TextBlock Text="{x:Static lang:Strings.SettingsGeneralHeading}" Classes="PageSubHeader"/>
+				<Border Classes="BorderGroup">
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="auto" SharedSizeGroup="Column1"/>
+							<ColumnDefinition Width="auto" SharedSizeGroup="Column2"/>
+							<ColumnDefinition Width="auto" SharedSizeGroup="Column3"/>
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="auto"/>
+							<RowDefinition Height="auto"/>
+							<RowDefinition Height="auto"/>
+							<RowDefinition Height="auto"/>
+						</Grid.RowDefinitions>
+
+						<TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static lang:Strings.SettingsWindowModeLabel}" Classes="PageTextBlock"/>
+						<ComboBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" ItemsSource="{Binding WindowModes}" SelectedValue="{Binding WindowMode}">
+							<ComboBox.ItemTemplate>
+								<DataTemplate>
+									<TextBlock Text="{Binding Path=.,Converter={StaticResource WindowModeToStringConverter}}"/>
+								</DataTemplate>
+							</ComboBox.ItemTemplate>
+						</ComboBox>
+						<Button Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Classes="PageButton" Command="{Binding SetDefaultWindowModeCommand}" ToolTip.Tip="{x:Static lang:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static lang:Strings.SettingsDefaultButton}" IsEnabled="{Binding !WindowModeIsDefault}"/>
+
+						<TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static lang:Strings.SettingsLanguageLabel}" Classes="PageTextBlock"/>
+						<ComboBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" ItemsSource="{Binding Languages}" SelectedValue="{Binding SelectedLanguage}"/>
+						<Button Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" Classes="PageButton" Command="{Binding SetDefaultLanguageCommand}" ToolTip.Tip="{x:Static lang:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static lang:Strings.SettingsDefaultButton}" IsEnabled="{Binding !LanguageIsDefault}"/>
+
+						<TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static lang:Strings.SettingsThemeLabel}" Classes="PageTextBlock"/>
+						<ComboBox Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" ItemsSource="{Binding Themes}" SelectedValue="{Binding Theme}">
+							<ComboBox.ItemTemplate>
+								<DataTemplate>
+									<TextBlock Text="{Binding Path=.,Converter={StaticResource ThemeToStringConverter}}"/>
+								</DataTemplate>
+							</ComboBox.ItemTemplate>
+						</ComboBox>
+						<Button Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" Classes="PageButton" Command="{Binding SetDefaultThemeCommand}" ToolTip.Tip="{x:Static lang:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static lang:Strings.SettingsDefaultButton}" IsEnabled="{Binding !ThemeIsDefault}"/>
+
+						<CheckBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" IsChecked="{Binding Path=ReadOnly, Mode=TwoWay}" Classes="PageCheckBox">
+							<TextBlock Text="{x:Static lang:Strings.SettingsReadOnlyModeLabel}"/>
+						</CheckBox>
+						<Button Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" Classes="PageButton" Command="{Binding SetDefaultReadOnlyCommand}" ToolTip.Tip="{x:Static lang:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static lang:Strings.SettingsDefaultButton}" IsEnabled="{Binding !ReadOnlyIsDefault}"/>
+					</Grid>
+				</Border>
+
+				<TextBlock Text="{x:Static lang:Strings.SettingsBrowsingHeading}" Classes="PageSubHeader"/>
+				<Border Classes="BorderGroup">
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition SharedSizeGroup="Column1"/>
+							<ColumnDefinition SharedSizeGroup="Column2"/>
+							<ColumnDefinition SharedSizeGroup="Column3"/>
+							<ColumnDefinition SharedSizeGroup="Column4"/>
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="auto"/>
+							<RowDefinition Height="auto"/>
+							<RowDefinition Height="auto"/>
+							<RowDefinition Height="auto"/>
+							<RowDefinition Height="auto"/>
+							<RowDefinition Height="auto"/>
+							<RowDefinition Height="auto"/>
+							<RowDefinition Height="auto"/>
+						</Grid.RowDefinitions>
+
+						<TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static lang:Strings.SettingsSlideshowDelaySecondsLabel}" Classes="PageTextBlock"/>
+						<TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Width="250" Text="{Binding SlideshowDelay}"></TextBox>
+						<Button Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Classes="PageButton" Command="{Binding SetDefaultSlideshowDelayCommand}" ToolTip.Tip="{x:Static lang:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static lang:Strings.SettingsDefaultButton}" IsEnabled="{Binding !SlideshowDelayIsDefault}"/>
+
+						<TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static lang:Strings.SettingsSearchHistorySizeLabel}" Classes="PageTextBlock"/>
+						<TextBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Width="250" Text="{Binding SearchHistorySize}"></TextBox>
+						<Button Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" Classes="PageButton" Command="{Binding SetDefaultSearchHistorySizeCommand}" ToolTip.Tip="{x:Static lang:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static lang:Strings.SettingsDefaultButton}" IsEnabled="{Binding !SearchHistorySizeIsDefault}"/>
+
+						<TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static lang:Strings.SettingsLocationLinkLabel}" Classes="PageTextBlock"/>
+						<TextBox Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Width="250" Text="{Binding LocationLink}" ToolTip.Tip="{x:Static lang:Strings.SettingsLocationLinkToolTip}"/>
+						<Button Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" Classes="PageButton" Command="{Binding SetDefaultLocationLinkCommand}" ToolTip.Tip="{x:Static lang:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static lang:Strings.SettingsDefaultButton}" IsEnabled="{Binding !LocationLinkIsDefault}"/>
+
+						<TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static lang:Strings.SettingsOverlayTextSizeLabel}" Classes="PageTextBlock"/>
+						<TextBox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Width="250" Text="{Binding OverlayTextSize}" ToolTip.Tip="{x:Static lang:Strings.SettingsOverlayTextSizeToolTip}"></TextBox>
+						<Button Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" Classes="PageButton" Command="{Binding SetDefaultOverlayTextSizeCommand}" ToolTip.Tip="{x:Static lang:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static lang:Strings.SettingsDefaultButton}" IsEnabled="{Binding !OverlayTextSizeIsDefault}"/>
+
+						<TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static lang:Strings.SettingsOverlayTextSizeForLargeModeLabel}" Classes="PageTextBlock"/>
+						<TextBox Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Width="250" Text="{Binding OverlayTextSizeLarge}" ToolTip.Tip="{x:Static lang:Strings.SettingsOverlayTextSizeForLargeModeToolTip}"></TextBox>
+						<Button Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" Classes="PageButton" Command="{Binding SetDefaultOverlayTextSizeLargeCommand}" ToolTip.Tip="{x:Static lang:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static lang:Strings.SettingsDefaultButton}" IsEnabled="{Binding !OverlayTextSizeLargeIsDefault}"/>
+
+						<TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static lang:Strings.SettingsShortItemNameMaxLengthLabel}" Classes="PageTextBlock"/>
+						<TextBox Grid.Row="5" Grid.Column="1" VerticalAlignment="Center" Width="250" Text="{Binding ShortItemNameMaxLength}" ToolTip.Tip="{x:Static lang:Strings.SettingsShortItemNameMaxLengthToolTip}"></TextBox>
+						<Button Grid.Row="5" Grid.Column="2" VerticalAlignment="Center" Classes="PageButton" Command="{Binding SetDefaultShortItemNameMaxLengthCommand}" ToolTip.Tip="{x:Static lang:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static lang:Strings.SettingsDefaultButton}" IsEnabled="{Binding !ShortItemNameMaxLengthIsDefault}"/>
+
+						<TextBlock Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static lang:Strings.SettingsDefaultSortMethodLabel}" Classes="PageTextBlock"/>
+						<ComboBox Grid.Row="6" Grid.Column="1" VerticalAlignment="Center" ItemsSource="{Binding SortMethods}" SelectedValue="{Binding DefaultSortMethod}">
+							<ComboBox.ItemTemplate>
+								<DataTemplate>
+									<TextBlock Text="{Binding Path=.,Converter={StaticResource SortMethodToStringConverter}}"/>
+								</DataTemplate>
+							</ComboBox.ItemTemplate>
+						</ComboBox>
+						<Button Grid.Row="6" Grid.Column="2" VerticalAlignment="Center" Classes="PageButton" Command="{Binding SetDefaultDefaultSortMethodCommand}" ToolTip.Tip="{x:Static lang:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static lang:Strings.SettingsDefaultButton}" IsEnabled="{Binding !DefaultSortMethodIsDefault}"/>
+
+						<CheckBox Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" IsChecked="{Binding Path=KeepSelectionAfterSort, Mode=TwoWay}" Classes="PageCheckBox">
+							<TextBlock Text="{x:Static lang:Strings.SettingsKeepSelectionAfterSortLabel}"/>
+						</CheckBox>
+						<Button Grid.Row="7" Grid.Column="2" VerticalAlignment="Center" Classes="PageButton" Command="{Binding SetDefaultKeepSelectionAfterSortCommand}" ToolTip.Tip="{x:Static lang:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static lang:Strings.SettingsDefaultButton}" IsEnabled="{Binding !KeepSelectionAfterSortIsDefault}"/>
+					</Grid>
+				</Border>
+
+				<TextBlock Text="{x:Static lang:Strings.SettingsImportHeading}" Classes="PageSubHeader"/>
+				<Border Classes="BorderGroup">
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition SharedSizeGroup="Column1"/>
+							<ColumnDefinition SharedSizeGroup="Column2"/>
+							<ColumnDefinition SharedSizeGroup="Column3"/>
+							<ColumnDefinition SharedSizeGroup="Column4"/>
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="auto"/>
+							<RowDefinition Height="auto"/>
+							<RowDefinition Height="auto"/>
+							<RowDefinition Height="auto"/>
+							<RowDefinition Height="auto"/>
+							<RowDefinition Height="auto"/>
+							<RowDefinition Height="auto"/>
+							<RowDefinition Height="auto"/>
+							<RowDefinition Height="auto"/>
+							<RowDefinition Height="auto"/>
+							<RowDefinition Height="auto"/>
+							<RowDefinition Height="auto"/>
+							<RowDefinition Height="auto"/>
+							<RowDefinition Height="auto"/>
+							<RowDefinition Height="auto"/>
+						</Grid.RowDefinitions>
+
+						<TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static lang:Strings.SettingsBlacklistedFilePathPatternsLabel}" Classes="PageTextBlock"/>
+						<TextBox Width="250" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Text="{Binding BlacklistedFilePathPatterns}" ToolTip.Tip="{x:Static lang:Strings.SettingsBlacklistedFilePathPatternsToolTip}"></TextBox>
+						<Button Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Classes="PageButton" Command="{Binding SetDefaultBlacklistedFilePathPatternsCommand}" ToolTip.Tip="{x:Static lang:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static lang:Strings.SettingsDefaultButton}" IsEnabled="{Binding !BlacklistedFilePathPatternsIsDefault}"/>
+
+						<TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static lang:Strings.SettingsWhitelistedFilePathPatternsLabel}" Classes="PageTextBlock"/>
+						<TextBox Width="250" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Text="{Binding WhitelistedFilePathPatterns}" ToolTip.Tip="{x:Static lang:Strings.SettingsWhitelistedFilePathPatternsToolTip}"></TextBox>
+						<Button Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" Classes="PageButton" Command="{Binding SetDefaultWhitelistedFilePathPatternsCommand}" ToolTip.Tip="{x:Static lang:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static lang:Strings.SettingsDefaultButton}" IsEnabled="{Binding !WhitelistedFilePathPatternsIsDefault}"/>
+
+						<TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static lang:Strings.SettingsLocationMaxDistanceAtImportLabel}" Classes="PageTextBlock"/>
+						<TextBox Width="250" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Text="{Binding FileToLocationMaxDistance}"></TextBox>
+						<Button Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" Classes="PageButton" Command="{Binding SetDefaultFileToLocationMaxDistanceCommand}" ToolTip.Tip="{x:Static lang:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static lang:Strings.SettingsDefaultButton}" IsEnabled="{Binding !FileToLocationMaxDistanceIsDefault}"/>
+
+						<CheckBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" IsChecked="{Binding Path=IncludeHiddenDirectories, Mode=TwoWay}" Classes="PageCheckBox">
+							<TextBlock Text="{x:Static lang:Strings.SettingsIncludeHiddenDirectoriesLabel}"/>
+						</CheckBox>
+						<Button Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" Classes="PageButton" Command="{Binding SetDefaultIncludeHiddenDirectoriesCommand}" ToolTip.Tip="{x:Static lang:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static lang:Strings.SettingsDefaultButton}" IsEnabled="{Binding !IncludeHiddenDirectoriesIsDefault}"/>
+					</Grid>
+				</Border>
+
+				<TextBlock Text="{x:Static lang:Strings.SettingsNotificationsHeading}" Classes="PageSubHeader"/>
+				<Border Classes="BorderGroup">
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition SharedSizeGroup="Column1"/>
+							<ColumnDefinition SharedSizeGroup="Column2"/>
+							<ColumnDefinition SharedSizeGroup="Column3"/>
+							<ColumnDefinition SharedSizeGroup="Column4"/>
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="auto"/>
+							<RowDefinition Height="auto"/>
+							<RowDefinition Height="auto"/>
+							<RowDefinition Height="auto"/>
+							<RowDefinition Height="auto"/>
+						</Grid.RowDefinitions>
+						<CheckBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" IsChecked="{Binding Path=BirthdayReminder, Mode=TwoWay}" Classes="PageCheckBox">
+							<TextBlock Text="{x:Static lang:Strings.SettingsBirthdayReminderLabel}"/>
+						</CheckBox>
+						<Button Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Classes="PageButton" Command="{Binding SetDefaultBirthdayReminderCommand}" ToolTip.Tip="{x:Static lang:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static lang:Strings.SettingsDefaultButton}" IsEnabled="{Binding !BirthdayReminderIsDefault}"/>
+
+						<CheckBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" IsChecked="{Binding Path=BirthdayReminderForDeceased, Mode=TwoWay}" Classes="PageCheckBox">
+							<TextBlock Text="{x:Static lang:Strings.SettingsBirthdayReminderForDeceasedLabel}"/>
+						</CheckBox>
+						<Button Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" Classes="PageButton" Command="{Binding SetDefaultBirthdayReminderForDeceasedCommand}" ToolTip.Tip="{x:Static lang:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static lang:Strings.SettingsDefaultButton}" IsEnabled="{Binding !BirthdayReminderForDeceasedIsDefault}"/>
+
+						<CheckBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" IsChecked="{Binding Path=RipReminder, Mode=TwoWay}" Classes="PageCheckBox">
+							<TextBlock Text="{x:Static lang:Strings.SettingsRIPReminderLabel}"/>
+						</CheckBox>
+						<Button Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" Classes="PageButton" Command="{Binding SetDefaultRipReminderCommand}" ToolTip.Tip="{x:Static lang:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static lang:Strings.SettingsDefaultButton}" IsEnabled="{Binding !RipReminderIsDefault}"/>
+
+						<CheckBox Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Grid.ColumnSpan="2" IsChecked="{Binding Path=MissingFilesRootDirNotification, Mode=TwoWay}" Classes="PageCheckBox">
+							<TextBlock Text="{x:Static lang:Strings.SettingsFilesRootDirectoryMissingLabel}"/>
+						</CheckBox>
+						<Button Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" Classes="PageButton" Command="{Binding SetDefaultMissingFilesRootDirNotificationCommand}" ToolTip.Tip="{x:Static lang:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static lang:Strings.SettingsDefaultButton}" IsEnabled="{Binding !MissingFilesRootDirNotificationIsDefault}"/>
+
+						<CheckBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" IsChecked="{Binding Path=BackupReminder, Mode=TwoWay}" VerticalAlignment="Center" Classes="PageCheckBox">
+							<TextBlock Text="{x:Static lang:Strings.SettingsBackupReminderLabel}"/>
+						</CheckBox>
+						<Button Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" Classes="PageButton" Command="{Binding SetDefaultBackupReminderCommand}" ToolTip.Tip="{x:Static lang:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static lang:Strings.SettingsDefaultButton}" IsEnabled="{Binding !BackupReminderIsDefault}"/>
+					</Grid>
+				</Border>
+
+				<TextBlock Text="{x:Static lang:Strings.SettingsPerformanceHeading}" Classes="PageSubHeader"/>
+				<Border Classes="BorderGroup">
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition SharedSizeGroup="Column1"/>
+							<ColumnDefinition SharedSizeGroup="Column2"/>
+							<ColumnDefinition SharedSizeGroup="Column3"/>
+							<ColumnDefinition SharedSizeGroup="Column4"/>
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="auto"/>
+							<RowDefinition Height="auto"/>
+						</Grid.RowDefinitions>
+
+						<TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static lang:Strings.SettingsNumberOfSearchResultImagesToPreloadLabel}" Classes="PageTextBlock"/>
+						<TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Width="250" Text="{Binding NumImagesToPreload}" ToolTip.Tip="{x:Static lang:Strings.SettingsNumberOfSearchResultImagesToPreloadToolTip}"></TextBox>
+						<Button Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Classes="PageButton" Command="{Binding SetDefaultNumImagesToPreloadCommand}" ToolTip.Tip="{x:Static lang:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static lang:Strings.SettingsDefaultButton}" IsEnabled="{Binding !NumImagesToPreloadIsDefault}"/>
+
+						<TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static lang:Strings.SettingsNumberOfLoadedImagesToKeepInMemoryLabel}" Classes="PageTextBlock"/>
+						<TextBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Width="250" Text="{Binding ImageMemoryCacheCount}" ToolTip.Tip="{x:Static lang:Strings.SettingsNumberOfLoadedImagesToKeepInMemoryToolTip}"></TextBox>
+						<Button Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" Classes="PageButton" Command="{Binding SetDefaultImageMemoryCacheCountCommand}" ToolTip.Tip="{x:Static lang:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static lang:Strings.SettingsDefaultButton}" IsEnabled="{Binding !ImageMemoryCacheCountIsDefault}"/>
+					</Grid>
+				</Border>
+			</StackPanel>
+		</ScrollViewer>
+	</DockPanel>
+</UserControl>

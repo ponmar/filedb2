@@ -1,0 +1,29 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:lang="clr-namespace:FileDB.Lang"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="FileDB.Views.Dialogs.AddLocationWindow"
+        Title="{Binding Title}"
+		Icon="/Assets/icon.ico"
+		SizeToContent="WidthAndHeight"
+		CanResize="False"
+		WindowStartupLocation="CenterOwner">
+	<StackPanel Orientation="Vertical">
+		<Border Classes="BorderGroup">
+			<Grid ColumnDefinitions="auto,300" RowDefinitions="auto,auto,auto">
+				<TextBlock Grid.Row="0" Grid.Column="0" Classes="PageTextBlock" Text="{x:Static lang:Strings.AddLocationNameLabel}" VerticalAlignment="Center"/>
+				<TextBox Grid.Row="0" Grid.Column="1" Classes="PageTextBox" Text="{Binding Name}" VerticalAlignment="Center"/>
+
+				<TextBlock Grid.Row="1" Grid.Column="0" Classes="PageTextBlock" Text="{x:Static lang:Strings.AddLocationDescriptionLabel}" VerticalAlignment="Center"/>
+				<TextBox Grid.Row="1" Grid.Column="1" Classes="PageTextBox" Text="{Binding Description}" VerticalAlignment="Center"/>
+
+				<TextBlock Grid.Row="2" Grid.Column="0" Classes="PageTextBlock" Text="{x:Static lang:Strings.AddLocationPositionLabel}" VerticalAlignment="Center"/>
+				<TextBox Grid.Row="2" Grid.Column="1" Classes="PageTextBox" Text="{Binding Position}" ToolTip.Tip="{x:Static lang:Strings.AddLocationPositionToolTip}" VerticalAlignment="Center"/>
+			</Grid>
+		</Border>
+
+		<Button Classes="PageButton" HorizontalAlignment="Right" Command="{Binding SaveCommand}" Content="{x:Static lang:Strings.SaveButton}"/>
+	</StackPanel>
+</Window>

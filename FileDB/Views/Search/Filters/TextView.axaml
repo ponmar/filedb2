@@ -1,0 +1,16 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:lang="clr-namespace:FileDB.Lang"
+			 xmlns:converters="clr-namespace:FileDB.Converters"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="FileDB.Views.Search.Filters.TextView">
+	<StackPanel Orientation="Horizontal" DataContext="{Binding FilterViewModel}">
+		<TextBox Margin="0 0 3 0" Text="{Binding TextFilterSearchPattern}" Width="100" ToolTip.Tip="{x:Static lang:Strings.SearchFilterTextInputToolTip}" VerticalAlignment="Center"/>
+		<ToggleButton Margin="0 0 3 0" IsChecked="{Binding TextFilterCaseSensitive}" Content="&#x1F5DA;" ToolTip.Tip="{x:Static lang:Strings.TextFilterCaseSensitive}"/>
+		<ToggleButton Margin="0 0 3 0" IsChecked="{Binding TextFilterPersons}" Content="&#x1F642;" ToolTip.Tip="{x:Static lang:Strings.TextFilterIncludePersons}"/>
+		<ToggleButton Margin="0 0 3 0" IsChecked="{Binding TextFilterLocations}" Content="&#x1F3E0;" ToolTip.Tip="{x:Static lang:Strings.TextFilterIncludeLocations}"/>
+		<ToggleButton IsChecked="{Binding TextFilterTags}" Content="&#x1F516;" ToolTip.Tip="{x:Static lang:Strings.TextFilterIncludeTags}"/>
+	</StackPanel>
+</UserControl>
