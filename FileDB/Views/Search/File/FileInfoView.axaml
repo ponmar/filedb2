@@ -26,7 +26,7 @@
 									</MenuFlyout>
 								</Button.Flyout>
 							</Button>
-							<TextBlock FontSize="{Binding $parent[UserControl].DataContext.OverlayFontSize}" Text="{Binding Label}" VerticalAlignment="Center"/>
+							<TextBlock FontSize="{Binding $parent[UserControl].DataContext.OverlayFontSize}" Text="{Binding Label}" ToolTip.Tip="{Binding Model.Description}" VerticalAlignment="Center"/>
 						</StackPanel>
 					</DataTemplate>
 				</ItemsControl.ItemTemplate>
@@ -48,7 +48,7 @@
 									</MenuFlyout>
 								</Button.Flyout>
 							</Button>
-							<TextBlock FontSize="{Binding $parent[UserControl].DataContext.OverlayFontSize}" Text="{Binding Name}" VerticalAlignment="Center"/>
+							<TextBlock FontSize="{Binding $parent[UserControl].DataContext.OverlayFontSize}" Text="{Binding Name}" ToolTip.Tip="{Binding Model.Description}" VerticalAlignment="Center"/>
 						</StackPanel>
 					</DataTemplate>
 				</ItemsControl.ItemTemplate>
