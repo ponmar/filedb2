@@ -8,6 +8,7 @@ using FileDB.ViewModels.Search;
 using FileDBInterface.Extensions;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
 using System.Threading.Tasks;
@@ -138,25 +139,25 @@ namespace FileDB.ViewModels.Dialogs
                 return;
             }
 
-            dialogs.ShowProgressDialog(async progress =>
+            dialogs.ShowProgressDialog(progress =>
             {
                 progress.Report(Strings.ExportExporting);
                 try
                 {
                     var exporter = new SearchResultExportHandler(dbAccessProvider, filesystemAccessProvider, fileSystem);
                     exporter.Export(ExportFilesDestinationDirectory, ExportName, SearchResult.Files, selections);
-                    await dialogs.ShowInfoDialogAsync(Strings.ExportFinishedSuccessfully);
                 }
-                catch (Exception e)
+                catch
                 {
-                    await dialogs.ShowErrorDialogAsync(string.Format(Strings.ExportError, e.Message));
+                    // TODO: log and throw?
                 }
             });
         }
 
-        private bool IsDirectoryEmpty(string path)
+        private bool IsDirectoryEmpty(string dirPath)
         {
-            return !fileSystem.Directory.EnumerateFileSystemEntries(path).Any();
+            var nonHiddenItemsInDir = fileSystem.DirectoryInfo.New(dirPath).EnumerateFileSystemInfos().Where(f => !f.Attributes.HasFlag(FileAttributes.Hidden));
+            return !nonHiddenItemsInDir.Any();
         }
     }
 }
