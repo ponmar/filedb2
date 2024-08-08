@@ -12,7 +12,7 @@
 		SystemDecorations="None">
 	<Grid>
 		<Border Classes="BorderGroup">
-			<TextBlock x:Name="Text" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"/>
+			<TextBlock Classes="PageHeader" x:Name="Text" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"/>
 		</Border>
 	</Grid>
 </Window>
