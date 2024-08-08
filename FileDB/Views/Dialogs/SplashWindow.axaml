@@ -4,12 +4,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="FileDB.Views.Dialogs.SplashWindow"
-        Title="SplashWindow"
 		SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterOwner"
 		CanResize="False"
         MinHeight="150"
-        MinWidth="400">
+        MinWidth="400"
+		SystemDecorations="None">
 	<Grid>
 		<Border Classes="BorderGroup">
 			<TextBlock x:Name="Text" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"/>
