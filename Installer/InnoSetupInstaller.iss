@@ -2,7 +2,9 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "FileDB"
-#define MyAppVersion "1.5"
+#ifndef MyAppVersion
+#define MyAppVersion "0.0"
+#endif
 #define MyAppPublisher "Pontus Markström"
 #define MyAppURL "https://bitbucket.org/pontusmarkstrom/filedb2/"
 #define MyAppExeName "FileDBAvalonia.Desktop.exe"

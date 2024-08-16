@@ -17,7 +17,7 @@ if not %ERRORLEVEL%==0 (
 
 set installerFilename=FileDB-%version%
 
-"C:\Program Files (x86)\Inno Setup 6\iscc.exe" Installer\InnoSetupInstaller.iss /F"%installerFilename%"
+"C:\Program Files (x86)\Inno Setup 6\iscc.exe" Installer\InnoSetupInstaller.iss /F"%installerFilename%" /DMyAppVersion=%version%
 if not %ERRORLEVEL%==0 (
     echo "Installer creation failed" && exit /b 1
 )
