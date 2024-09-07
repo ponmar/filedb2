@@ -7,7 +7,7 @@
 #endif
 #define MyAppPublisher "Pontus Markström"
 #define MyAppURL "https://bitbucket.org/pontusmarkstrom/filedb2/"
-#define MyAppExeName "FileDBAvalonia.Desktop.exe"
+#define MyAppExeName "FileDB.Desktop.exe"
 #define MyAppAssocName MyAppName + " Collection"
 #define MyAppAssocExt ".FileDB"
 #define MyAppAssocKey StringChange(MyAppAssocName, " ", "") + MyAppAssocExt
@@ -34,8 +34,8 @@ ArchitecturesAllowed=x64compatible
 ArchitecturesInstallIn64BitMode=x64compatible
 ChangesAssociations=yes
 DisableProgramGroupPage=yes
-LicenseFile=C:\Source\filedb\LICENSE.txt
-InfoBeforeFile=C:\Source\filedb\CHANGES.txt
+LicenseFile=..\LICENSE.txt
+InfoBeforeFile=..\CHANGES.txt
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=commandline
@@ -51,11 +51,11 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "C:\Source\filedb\FileDB.Desktop\bin\Release\net8.0\win-x64\publish\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Source\filedb\FileDB.Desktop\bin\Release\net8.0\win-x64\publish\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Source\filedb\demo\*"; DestDir: "{app}\demo"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Source\filedb\CHANGES.txt"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Source\filedb\LICENSE.txt"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\FileDB.Desktop\bin\Release\net8.0\win-x64\publish\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\FileDB.Desktop\bin\Release\net8.0\win-x64\publish\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\demo\*"; DestDir: "{app}\demo"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\CHANGES.txt"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\LICENSE.txt"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Registry]

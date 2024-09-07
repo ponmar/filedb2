@@ -10,6 +10,8 @@ using FileDB.ViewModels.Search.File;
 using FileDB.ViewModels.Search.Filters;
 using Microsoft.Extensions.Logging;
 using NReco.Logging.File;
+using System;
+using System.IO;
 using System.IO.Abstractions;
 
 namespace FileDB;
@@ -119,7 +121,8 @@ public static class Bootstrapper
                 options.TimestampFormat = "HH:mm:ss ";
             });
 
-            builder.AddFile($"{Utils.ApplicationName}.log");
+            var logfilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), $" {Utils.ApplicationName}.log");
+            builder.AddFile(logfilePath);
         });
     }
 }
