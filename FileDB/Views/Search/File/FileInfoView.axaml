@@ -15,7 +15,7 @@
 				<ItemsControl.ItemTemplate>
 					<DataTemplate>
 						<StackPanel Orientation="Horizontal" Margin="0 0 0 3">
-							<Button Content="..." VerticalAlignment="Center" Margin="0 0 3 0">
+							<Button Content="&#8230;" VerticalContentAlignment="Center" VerticalAlignment="Center" Margin="0 0 3 0">
 								<Button.Flyout>
 									<MenuFlyout>
 										<MenuItem Header="{x:Static lang:Strings.BirthdaysSearch}" Command="{Binding $parent[UserControl].DataContext.SearchForPersonCommand}" CommandParameter="{Binding Model}"/>
@@ -37,7 +37,7 @@
 				<ItemsControl.ItemTemplate>
 					<DataTemplate>
 						<StackPanel Orientation="Horizontal" Margin="0 0 0 3">
-							<Button Content="..." VerticalAlignment="Center" Margin="0 0 3 0" >
+							<Button Content="&#8230;" VerticalAlignment="Center" Margin="0 0 3 0" >
 								<Button.Flyout>
 									<MenuFlyout>
 										<MenuItem Header="{x:Static lang:Strings.LocationsShowOnMapButton}" Command="{Binding $parent[UserControl].DataContext.OpenUrlCommand}" CommandParameter="{Binding MapUrl}" IsEnabled="{Binding MapUrl, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
@@ -59,7 +59,7 @@
 				<ItemsControl.ItemTemplate>
 					<DataTemplate>
 						<StackPanel Orientation="Horizontal" Margin="0 0 0 3">
-							<Button Content="..." VerticalAlignment="Center" Margin="0 0 3 0" >
+							<Button Content="&#8230;" VerticalAlignment="Center" Margin="0 0 3 0" >
 								<Button.Flyout>
 									<MenuFlyout>
 										<MenuItem Header="{x:Static lang:Strings.FileInfoSearchTag}" Command="{Binding $parent[UserControl].DataContext.SearchForTagCommand}" CommandParameter="{Binding}"/>

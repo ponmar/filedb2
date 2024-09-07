@@ -1,3 +1,9 @@
+4.8:
+* Create an Inno Setup based installer
+* Show item description in person and location tooltip
+* Ignore hidden files when checking that export destination directory is empty
+* Fix progress window styling
+
 4.7:
 * Use default config for an empty FileDB file (simplifies setting up a new files collection)
 * Filters: pre-select items from current selected file when available

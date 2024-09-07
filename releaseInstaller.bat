@@ -15,7 +15,7 @@ if not %ERRORLEVEL%==0 (
     echo "Build failed" && exit /b 1
 )
 
-set installerFilename=FileDB-%version%
+set installerFilename=FileDB-%version%-win-x64
 
 "C:\Program Files (x86)\Inno Setup 6\iscc.exe" Installer\InnoSetupInstaller.iss /F"%installerFilename%" /DMyAppVersion=%version%
 if not %ERRORLEVEL%==0 (
