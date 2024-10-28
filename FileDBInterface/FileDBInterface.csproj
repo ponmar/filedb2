@@ -9,8 +9,8 @@
     <PackageReference Include="Dapper" Version="2.1.44" />
     <PackageReference Include="FluentValidation" Version="11.10.0" />
     <PackageReference Include="MetadataExtractor" Version="2.8.1" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
-    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.118" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.2" />
+    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.119" />
     <PackageReference Include="System.IO.Abstractions" Version="21.0.29" />
   </ItemGroup>
 
