@@ -31,7 +31,6 @@ if exist "release\%zipFilename%" (
 mkdir %releaseDir%
 
 xcopy /s %appDir%\* %releaseDir%
-xcopy /s demo %releaseDir%\demo\
 xcopy CHANGES.txt %releaseDir%
 xcopy LICENSE.txt %releaseDir%
 
