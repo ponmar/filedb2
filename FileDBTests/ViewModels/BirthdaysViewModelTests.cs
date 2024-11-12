@@ -16,13 +16,13 @@ public class BirthdaysViewModelTests
     private readonly IDatabaseAccessProvider fakeDbAccessRepo = A.Fake<IDatabaseAccessProvider>();
     private readonly IPersonsRepository fakePersonsRepo = A.Fake<IPersonsRepository>();
     private readonly IFilesystemAccess fakeFilsystemAccess = A.Fake<IFilesystemAccess>();
-    private readonly IFilesystemAccessProvider fakeFilsystemAccessRepo = A.Fake<IFilesystemAccessProvider>();
+    private readonly IFilesystemAccessProvider fakeFilsystemAccessProvider = A.Fake<IFilesystemAccessProvider>();
     private readonly IImageLoader fakeImageLoader = A.Fake<IImageLoader>();
 
     public BirthdaysViewModelTests()
     {
         A.CallTo(() => fakeDbAccessRepo.DbAccess).Returns(fakeDbAccess);
-        A.CallTo(() => fakeFilsystemAccessRepo.FilesystemAccess).Returns(fakeFilsystemAccess);
+        A.CallTo(() => fakeFilsystemAccessProvider.FilesystemAccess).Returns(fakeFilsystemAccess);
     }
 
     [Fact]
@@ -31,7 +31,7 @@ public class BirthdaysViewModelTests
         var config = new ConfigBuilder().Build();
         A.CallTo(() => fakeConfigRepo.Config).Returns(config);
 
-        var viewModel = new BirthdaysViewModel(fakePersonsRepo, fakeFilsystemAccessRepo, fakeDbAccessRepo, fakeImageLoader);
+        var viewModel = new BirthdaysViewModel(fakePersonsRepo, fakeFilsystemAccessProvider, fakeDbAccessRepo, fakeImageLoader);
 
         Assert.Empty(viewModel.Persons);
         Assert.Equal("", viewModel.FilterText);
@@ -45,7 +45,7 @@ public class BirthdaysViewModelTests
         var config = new ConfigBuilder().Build();
         A.CallTo(() => fakeConfigRepo.Config).Returns(config);
 
-        var viewModel = new BirthdaysViewModel(fakePersonsRepo, fakeFilsystemAccessRepo, fakeDbAccessRepo, fakeImageLoader);
+        var viewModel = new BirthdaysViewModel(fakePersonsRepo, fakeFilsystemAccessProvider, fakeDbAccessRepo, fakeImageLoader);
 
         Assert.Equal(2, viewModel.Persons.Count);
     }
@@ -56,7 +56,7 @@ public class BirthdaysViewModelTests
         var config = new ConfigBuilder().Build();
         A.CallTo(() => fakeConfigRepo.Config).Returns(config);
 
-        var viewModel = new BirthdaysViewModel(fakePersonsRepo, fakeFilsystemAccessRepo, fakeDbAccessRepo, fakeImageLoader);
+        var viewModel = new BirthdaysViewModel(fakePersonsRepo, fakeFilsystemAccessProvider, fakeDbAccessRepo, fakeImageLoader);
         Assert.Empty(viewModel.Persons);
 
         A.CallTo(() => fakePersonsRepo.Persons).Returns(SomePersons());
@@ -71,7 +71,7 @@ public class BirthdaysViewModelTests
         var config = new ConfigBuilder().Build();
         A.CallTo(() => fakeConfigRepo.Config).Returns(config);
 
-        var viewModel = new BirthdaysViewModel(fakePersonsRepo, fakeFilsystemAccessRepo, fakeDbAccessRepo, fakeImageLoader);
+        var viewModel = new BirthdaysViewModel(fakePersonsRepo, fakeFilsystemAccessProvider, fakeDbAccessRepo, fakeImageLoader);
         Assert.Empty(viewModel.Persons);
 
         A.CallTo(() => fakePersonsRepo.Persons).Returns(SomePersons());
@@ -87,7 +87,7 @@ public class BirthdaysViewModelTests
         var config = new ConfigBuilder().Build();
         A.CallTo(() => fakeConfigRepo.Config).Returns(config);
 
-        var viewModel = new BirthdaysViewModel(fakePersonsRepo, fakeFilsystemAccessRepo, fakeDbAccessRepo, fakeImageLoader);
+        var viewModel = new BirthdaysViewModel(fakePersonsRepo, fakeFilsystemAccessProvider, fakeDbAccessRepo, fakeImageLoader);
 
         viewModel.FilterText = "Al";
         Assert.Single(viewModel.Persons);
