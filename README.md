@@ -71,7 +71,6 @@ So far this project has been developed by me, Pontus Markström, and I would lov
 
 * master: branch used for official releases in combination with vX.Y version tags
 * dev: development branch, merged to master when ready for new release
-* feature/*: feature-branches merged to dev via pull-requests
 
 ## Licenses
 
