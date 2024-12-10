@@ -15,8 +15,8 @@ public static class Utils
 {
     public const string ApplicationName = "FileDB";
     public const string Author = "Pontus Markström";
-    public const string ApplicationProjectUrl = "https://bitbucket.org/pontusmarkstrom/filedb2/";
-    public const string ApplicationDownloadUrl = "https://drive.google.com/drive/folders/1GyZpdDcMdUOlvvtwtKUuylazoy7XaIcm?usp=sharing";
+    public const string ApplicationProjectUrl = "https://github.com/ponmar/filedb2";
+    public const string ApplicationDownloadUrl = "https://github.com/ponmar/filedb2/releases/";
 
     public static void SetInvariantCulture()
     {
