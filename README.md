@@ -40,10 +40,6 @@ FileDB gives you the possibility to export the internal database and file search
 
 If you want to test FileDB or your collection of files is not ready the [demo](https://github.com/ponmar/filedb2_demo/) can be used.
 
-### Downloads
-
-Download official releases [here](https://drive.google.com/drive/folders/1GyZpdDcMdUOlvvtwtKUuylazoy7XaIcm).
-
 ## Documentation
 
 The release contains the following documentation:
