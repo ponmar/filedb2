@@ -1,3 +1,8 @@
+4.9:
+* Upgrade to .NET9
+* Demo configuration moved to own repo and is no longer included in releases
+* Port MediaFilesHelper application from WPF to Avalonia
+
 4.8:
 * Create an Inno Setup based installer
 * Show item description in person and location tooltip
