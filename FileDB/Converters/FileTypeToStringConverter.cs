@@ -12,7 +12,7 @@ public class FileTypeToStringConverter : IValueConverter
     {
         if (value is null)
         {
-            throw new ArgumentException();
+            return null;
         }
         var fileType = (FileType)value;
         return fileType.ToFriendlyString();

@@ -12,7 +12,7 @@ public class SeasonToStringConverter : IValueConverter
     {
         if (value is null)
         {
-            throw new ArgumentException();
+            return null;
         }
 
         var season = (Season)value;

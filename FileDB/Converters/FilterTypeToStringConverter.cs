@@ -11,7 +11,7 @@ public class FilterTypeToStringConverter : IValueConverter
     {
         if (value is null)
         {
-            throw new ArgumentException();
+            return null;
         }
         var filterType = (FilterType)value;
         return filterType.ToFriendlyString();

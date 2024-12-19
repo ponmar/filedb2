@@ -11,7 +11,7 @@ public class WindowModeToStringConverter : IValueConverter
     {
         if (value is null)
         {
-            throw new ArgumentNullException();
+            return null;
         }
         var windowMode = (WindowMode)value;
         return windowMode.ToFriendlyString();

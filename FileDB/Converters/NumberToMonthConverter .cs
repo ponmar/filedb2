@@ -10,7 +10,7 @@ public class NumberToMonthConverter : IValueConverter
     {
         if (value is null)
         {
-            throw new ArgumentException();
+            return null;
         }
         var month = (int)value;
         return new DateTime(2024, month, 1).ToString("MMM");

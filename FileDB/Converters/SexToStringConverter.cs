@@ -12,7 +12,7 @@ public class SexToStringConverter : IValueConverter
     {
         if (value is null)
         {
-            throw new ArgumentException();
+            return null;
         }
 
         var sex = (Sex)value;

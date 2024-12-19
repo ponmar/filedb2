@@ -11,7 +11,7 @@ public class SortMethodToStringConverter : IValueConverter
     {
         if (value is null)
         {
-            throw new ArgumentNullException();
+            return null;
         }
         var sortMethod = (SortMethod)value;
         return sortMethod.ToFriendlyString();
