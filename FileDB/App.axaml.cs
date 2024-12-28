@@ -65,7 +65,7 @@ public partial class App : Application
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             QuestPDF.Settings.License = LicenseType.Community;
-            Bootstrapper.Reset();
+            Bootstrapper.Bootstrap();
             Bootstrapper.StartServices();
 
             var loggerFactory = ServiceLocator.Resolve<ILoggerFactory>();

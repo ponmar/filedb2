@@ -1,18 +1,62 @@
 ﻿using System;
 using Castle.MicroKernel;
+using Castle.MicroKernel.Registration;
+using Castle.Windsor;
+using Microsoft.Extensions.Logging;
 
 namespace FileDB;
 
 public class ServiceLocator
 {
-    public static object Resolve(Type type)
+    private static WindsorContainer Container { get; } = new();
+
+    public static void RegisterSingleton<T>() where T : class
     {
-        return Bootstrapper.Container.Resolve(type);
+        RegisterSingleton<T, T>();
     }
 
-    public static T Resolve<T>()
+    public static void RegisterSingleton<TService, TImplementedBy>() where TService : class where TImplementedBy : TService
     {
-        return Bootstrapper.Container.Resolve<T>();
+        Container.Register(Component.For<TService>().ImplementedBy<TImplementedBy>());
+    }
+
+    public static void RegisterSingleton<TImplementedBy>(params Type[] services) where TImplementedBy : class
+    {
+        foreach (var service in services)
+        {
+            var implementedByType = typeof(TImplementedBy);
+            if (!service.IsAssignableFrom(implementedByType))
+            {
+                throw new ArgumentException($"Registered type {implementedByType} does not implement {service}");
+            }
+        }
+
+        Container.Register(Component.For(services).ImplementedBy<TImplementedBy>());
+    }
+
+    public static void RegisterSingleton<TService>(TService instance) where TService : class
+    {
+        Container.Register(Component.For<TService>().Instance(instance));
+    }
+
+    public static void RegisterTransient<TServiceAndImplementation>() where TServiceAndImplementation : class
+    {
+        RegisterTransient<TServiceAndImplementation, TServiceAndImplementation>();
+    }
+
+    public static void RegisterTransient<TService, TImplementedBy>() where TService : class where TImplementedBy : TService
+    {
+        Container.Register(Component.For<TService>().ImplementedBy<TImplementedBy>().LifestyleTransient());
+    }
+
+    public static TService Resolve<TService>()
+    {
+        return Container.Resolve<TService>();
+    }
+
+    public static object Resolve(Type serviceType)
+    {
+        return Container.Resolve(serviceType);
     }
 
     public static T Resolve<T>(string key, object? value)
@@ -26,6 +70,6 @@ public class ServiceLocator
         {
             { key, value }
         };
-        return Bootstrapper.Container.Resolve<T>(a);
+        return Container.Resolve<T>(a);
     }
 }
