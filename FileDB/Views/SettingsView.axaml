@@ -47,7 +47,7 @@
 
 						<TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static lang:Strings.SettingsLanguageLabel}" Classes="PageTextBlock"/>
 						<ComboBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" ItemsSource="{Binding Languages}" SelectedValue="{Binding SelectedLanguage}"/>
-						<Button Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" Classes="PageButton" Command="{Binding SetDefaultLanguageCommand}" ToolTip.Tip="{x:Static lang:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static lang:Strings.SettingsDefaultButton}" IsEnabled="{Binding !LanguageIsDefault}"/>
+						<Button Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" Classes="PageButton" Command="{Binding SetDefaultLanguageCommand}" ToolTip.Tip="{x:Static lang:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static lang:Strings.SettingsDefaultButton}" IsEnabled="{Binding !SelectedLanguageIsDefault}"/>
 
 						<TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static lang:Strings.SettingsThemeLabel}" Classes="PageTextBlock"/>
 						<ComboBox Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" ItemsSource="{Binding Themes}" SelectedValue="{Binding Theme}">
