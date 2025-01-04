@@ -13,7 +13,7 @@
 		<Grid ColumnDefinitions="auto,*,auto" RowDefinitions="auto">
 			<StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical" Margin="10" VerticalAlignment="Center">
 				<TextBlock Margin="0,0,0,5" Text="{x:Static lang:Strings.SearchResultHistoryLabel}"/>
-				<ComboBox ItemsSource="{Binding SearchResultHistory}" SelectedItem="{Binding SearchResultHistorySelection}" Width="100" IsEnabled="{Binding SearchResultHistory.Count}}"/>
+				<ComboBox ItemsSource="{Binding SearchResultHistory}" SelectedItem="{Binding SearchResultHistorySelection}" Width="100" IsEnabled="{Binding SearchResultHistory.Count}"/>
 			</StackPanel>
 
 			<StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical" Margin="5" VerticalAlignment="Center">

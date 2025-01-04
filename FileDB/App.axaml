@@ -1,6 +1,5 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-			 xmlns:avalonia="clr-namespace:HyperText.Avalonia;assembly=HyperText.Avalonia"
              x:Class="FileDB.App">
 
     <Application.Styles>
