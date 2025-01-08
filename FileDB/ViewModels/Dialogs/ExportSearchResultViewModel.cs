@@ -55,12 +55,6 @@ namespace FileDB.ViewModels.Dialogs
         }
 
         [ObservableProperty]
-        private bool exportIncludesFilesWithMetaData = false;
-
-        [ObservableProperty]
-        private bool exportFilesWithMetaDataJpeg = true;
-
-        [ObservableProperty]
         private bool exportIncludesJson = false;
 
         [ObservableProperty]
@@ -114,10 +108,6 @@ namespace FileDB.ViewModels.Dialogs
             if (ExportIncludesM3u)
             {
                 selections.Add(SearchResultExportType.M3u);
-            }
-            if (ExportIncludesFilesWithMetaData)
-            {
-                selections.Add(ExportFilesWithMetaDataJpeg ? SearchResultExportType.JpegPicturesWithMetaData : SearchResultExportType.PngPicturesWithMetaData);
             }
             if (ExportIncludesJson)
             {

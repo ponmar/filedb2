@@ -31,15 +31,6 @@
 					<CheckBox Margin="3" Classes="PageCheckBox" IsChecked="{Binding ExportIncludesHtml}">
 						<TextBlock Text="{x:Static lang:Strings.ExportHTMLWithMetaDataAndSearchResultFilesLabel}"/>
 					</CheckBox>
-					<!--
-					<CheckBox Margin="3" Classes="PageCheckBox" IsChecked="{Binding ExportIncludesFilesWithMetaData}">
-						<StackPanel Orientation="Vertical" VerticalAlignment="Center">
-							<TextBlock Text="{x:Static lang:Strings.ExportSearchResultFilesWithMetaDataLabel}"/>
-							<RadioButton IsEnabled="{Binding ExportIncludesFilesWithMetaData}" GroupName="PicturesWithMetadataTypeGroup" Margin="3" IsChecked="{Binding ExportFilesWithMetaDataJpeg}">JPEG</RadioButton>
-							<RadioButton IsEnabled="{Binding ExportIncludesFilesWithMetaData}" GroupName="PicturesWithMetadataTypeGroup" Margin="3" >PNG</RadioButton>
-						</StackPanel>
-					</CheckBox>
-					-->
 					<CheckBox Classes="PageCheckBox" Margin="3" IsChecked="{Binding ExportIncludesJson}">
 						<TextBlock Text="{x:Static lang:Strings.ExportSearchResultMetaDataJSONLabel}"/>
 					</CheckBox>
