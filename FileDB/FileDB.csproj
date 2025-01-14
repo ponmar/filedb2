@@ -66,6 +66,10 @@
     <Compile Update="Views\Search\Filters\SeasonView.axaml.cs">
       <DependentUpon>SeasonView.axaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\Search\Filters\AllFilesView.axaml.cs">
+      <DependentUpon>AllFilesView.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>

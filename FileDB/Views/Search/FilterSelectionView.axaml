@@ -46,6 +46,7 @@
 			<filters:SeasonView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Season}}"/>
 			<filters:AnnualDateView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.AnnualDate}}"/>
 			<filters:TimeView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Time}}"/>
+			<filters:AllFilesView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.AllFiles}}"/>
 		</Grid>
 	</StackPanel>
 </UserControl>

@@ -66,12 +66,6 @@
                         ToolTip.Tip="{x:Static lang:Strings.SearchNewFilesButtonToolTip}" />
                     <Button
                         Margin="5"
-                        VerticalAlignment="Center"
-                        Command="{Binding FindAllFilesCommand}"
-                        Content="{x:Static lang:Strings.SearchAllFilesButton}"
-                        ToolTip.Tip="{x:Static lang:Strings.SearchAllFilesToolTip}" />
-                    <Button
-                        Margin="5"
                         HorizontalAlignment="Left"
                         Command="{Binding FindCurrentDirectoryFilesCommand}"
                         Content="{x:Static lang:Strings.SearchAllFromCurrentDirectoryButton}"
