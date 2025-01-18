@@ -1209,12 +1209,6 @@ namespace FileDB.Lang {
             }
         }
         
-        public static string FilesWarningText {
-            get {
-                return ResourceManager.GetString("FilesWarningText", resourceCulture);
-            }
-        }
-        
         public static string FilesFromFilesCollectionLabel {
             get {
                 return ResourceManager.GetString("FilesFromFilesCollectionLabel", resourceCulture);
@@ -2190,6 +2184,96 @@ namespace FileDB.Lang {
         public static string FilterTypeAllFiles {
             get {
                 return ResourceManager.GetString("FilterTypeAllFiles", resourceCulture);
+            }
+        }
+        
+        public static string FilesSelectASubDirectory {
+            get {
+                return ResourceManager.GetString("FilesSelectASubDirectory", resourceCulture);
+            }
+        }
+        
+        public static string FilesNoDirectorySpecified {
+            get {
+                return ResourceManager.GetString("FilesNoDirectorySpecified", resourceCulture);
+            }
+        }
+        
+        public static string FilesSpecifiedDirectoryDoesNotExist {
+            get {
+                return ResourceManager.GetString("FilesSpecifiedDirectoryDoesNotExist", resourceCulture);
+            }
+        }
+        
+        public static string FilesSpecifiedDirectoryIsNotWithinTheConfiguredFilesRootDirectory {
+            get {
+                return ResourceManager.GetString("FilesSpecifiedDirectoryIsNotWithinTheConfiguredFilesRootDirectory", resourceCulture);
+            }
+        }
+        
+        public static string FilesScanning {
+            get {
+                return ResourceManager.GetString("FilesScanning", resourceCulture);
+            }
+        }
+        
+        public static string FilesScanningNewFiles {
+            get {
+                return ResourceManager.GetString("FilesScanningNewFiles", resourceCulture);
+            }
+        }
+        
+        public static string FilesNoNewFilesFound {
+            get {
+                return ResourceManager.GetString("FilesNoNewFilesFound", resourceCulture);
+            }
+        }
+        
+        public static string FilesAddMetaDataFromFiles {
+            get {
+                return ResourceManager.GetString("FilesAddMetaDataFromFiles", resourceCulture);
+            }
+        }
+        
+        public static string FilesUnableToCreateDatabaseBackup {
+            get {
+                return ResourceManager.GetString("FilesUnableToCreateDatabaseBackup", resourceCulture);
+            }
+        }
+        
+        public static string FilesAddingFile {
+            get {
+                return ResourceManager.GetString("FilesAddingFile", resourceCulture);
+            }
+        }
+        
+        public static string FilesFilesAdded {
+            get {
+                return ResourceManager.GetString("FilesFilesAdded", resourceCulture);
+            }
+        }
+        
+        public static string FilesNoFileIdsSpecified {
+            get {
+                return ResourceManager.GetString("FilesNoFileIdsSpecified", resourceCulture);
+            }
+        }
+        
+        public static string FilesRemoveMetaDataFor {
+            get {
+                return ResourceManager.GetString("FilesRemoveMetaDataFor", resourceCulture);
+            }
+        }
+        
+        public static string FilesFilesRemoved {
+            get {
+                return ResourceManager.GetString("FilesFilesRemoved", resourceCulture);
+            }
+        }
+        
+        public static string FilesFindAllFiles {
+            get {
+                return ResourceManager.GetString("FilesFindAllFiles", resourceCulture);
             }
         }
     }

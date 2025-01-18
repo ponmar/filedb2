@@ -80,7 +80,7 @@ public partial class FilesViewModel : ObservableObject
     [RelayCommand]
     private async Task BrowseSubDirectoryAsync()
     {
-        var selectedDir = await dialogs.ShowBrowseExistingDirectoryDialogAsync("Select a sub directory", configProvider.FilePaths.FilesRootDir);
+        var selectedDir = await dialogs.ShowBrowseExistingDirectoryDialogAsync(Strings.FilesSelectASubDirectory, configProvider.FilePaths.FilesRootDir);
         if (selectedDir is not null)
         {
             SubdirToScan = selectedDir;
@@ -98,17 +98,17 @@ public partial class FilesViewModel : ObservableObject
     {
         if (!SubdirToScan.HasContent())
         {
-            await dialogs.ShowErrorDialogAsync("No directory specified");
+            await dialogs.ShowErrorDialogAsync(Strings.FilesNoDirectorySpecified);
             return;
         }
         if (!filesystemAccessProvider.FilesystemAccess.FileSystem.Directory.Exists(SubdirToScan))
         {
-            await dialogs.ShowErrorDialogAsync("Specified directory does no exist");
+            await dialogs.ShowErrorDialogAsync(Strings.FilesSpecifiedDirectoryDoesNotExist);
             return;
         }
         if (!SubdirToScan.StartsWith(configProvider.FilePaths.FilesRootDir))
         {
-            await dialogs.ShowErrorDialogAsync($"Specified directory is not within the configured files root directory: {configProvider.FilePaths.FilesRootDir}");
+            await dialogs.ShowErrorDialogAsync(string.Format(Strings.FilesSpecifiedDirectoryIsNotWithinTheConfiguredFilesRootDirectory, configProvider.FilePaths.FilesRootDir));
             return;
         }
         await ScanNewFilesAsync(SubdirToScan);
@@ -116,7 +116,7 @@ public partial class FilesViewModel : ObservableObject
 
     public async Task ScanNewFilesAsync(string pathToScan)
     {
-        if (!await dialogs.ShowConfirmDialogAsync($"Find all files, not yet imported, from '{pathToScan}'?\n\n{Strings.FilesWarningText}"))
+        if (!await dialogs.ShowConfirmDialogAsync(string.Format(Strings.FilesFindAllFiles, pathToScan)))
         {
             return;
         }
@@ -130,7 +130,7 @@ public partial class FilesViewModel : ObservableObject
 
         dialogs.ShowProgressDialog(progress =>
         {
-            progress.Report("Scanning...");
+            progress.Report(Strings.FilesScanning);
 
             foreach (var internalFilePath in filesystemAccessProvider.FilesystemAccess.ListNewFilesystemFiles(pathToScan, blacklistedFilePathPatterns, whitelistedFilePathPatterns, configProvider.Config.IncludeHiddenDirectories, dbAccessProvider.DbAccess))
             {
@@ -138,7 +138,7 @@ public partial class FilesViewModel : ObservableObject
                 {
                     NewFiles.Add(new NewFile(internalFilePath, GetDateModified(internalFilePath)));
                 });
-                progress.Report($"Scanning... New files: {NewFiles.Count}");
+                progress.Report(string.Format(Strings.FilesScanningNewFiles, NewFiles.Count));
             }
 
             Dispatcher.UIThread.Invoke(async () =>
@@ -147,7 +147,7 @@ public partial class FilesViewModel : ObservableObject
 
                 if (NewFiles.Count == 0)
                 {
-                    await dialogs.ShowInfoDialogAsync($"No new files found.\n\nAdd new files to '{configProvider.FilePaths.FilesRootDir}'.");
+                    await dialogs.ShowInfoDialogAsync(string.Format(Strings.FilesNoNewFilesFound, configProvider.FilePaths.FilesRootDir));
                 }
             });
         });
@@ -172,7 +172,7 @@ public partial class FilesViewModel : ObservableObject
     [RelayCommand]
     private async Task ImportNewFilesAsync()
     {
-        if (!await dialogs.ShowConfirmDialogAsync($"Add meta-data from {SelectedFiles.Count} files?"))
+        if (!await dialogs.ShowConfirmDialogAsync(string.Format(Strings.FilesAddMetaDataFromFiles, SelectedFiles.Count)))
         {
             return;
         }
@@ -183,7 +183,7 @@ public partial class FilesViewModel : ObservableObject
         }
         catch (Exception e)
         {
-            await dialogs.ShowErrorDialogAsync("Unable to create database backup", e);
+            await dialogs.ShowErrorDialogAsync(Strings.FilesUnableToCreateDatabaseBackup, e);
             return;
         }
 
@@ -198,7 +198,7 @@ public partial class FilesViewModel : ObservableObject
                 var counter = 1;
                 foreach (var fileToAdd in SelectedFiles)
                 {
-                    progress.Report($"Adding file {counter} / {SelectedFiles.Count}...");
+                    progress.Report(string.Format(Strings.FilesAddingFile, counter, SelectedFiles.Count));
                     Thread.Sleep(1000);
 
                     dbAccessProvider.DbAccess.InsertFile(fileToAdd.Path, null, filesystemAccessProvider.FilesystemAccess, FindFileMetadata);
@@ -231,7 +231,7 @@ public partial class FilesViewModel : ObservableObject
                 Dispatcher.UIThread.Invoke(() =>
                 {
                     ImportedFileList = Utils.CreateFileList(addedFiles);
-                    ImportResult = addedFiles.Count > 0 ? $"{addedFiles.Count} files added." : string.Empty;
+                    ImportResult = addedFiles.Count > 0 ? string.Format(Strings.FilesFilesAdded, addedFiles.Count) : string.Empty;
 
                     Messenger.Send(new FilesAdded(addedFiles));
 
@@ -267,14 +267,14 @@ public partial class FilesViewModel : ObservableObject
         var fileIds = Utils.CreateFileIds(RemoveFileList);
         if (fileIds.Count == 0)
         {
-            await dialogs.ShowErrorDialogAsync("No file ids specified");
+            await dialogs.ShowErrorDialogAsync(Strings.FilesNoFileIdsSpecified);
             return;
         }
 
-        if (await dialogs.ShowConfirmDialogAsync($"Remove meta-data for {fileIds.Count} files from the specified file list?"))
+        if (await dialogs.ShowConfirmDialogAsync(string.Format(Strings.FilesRemoveMetaDataFor, fileIds.Count)))
         {
             fileIds.ForEach(x => dbAccessProvider.DbAccess.DeleteFile(x));
-            await dialogs.ShowInfoDialogAsync($"{fileIds.Count} files removed");
+            await dialogs.ShowInfoDialogAsync(string.Format(Strings.FilesFilesRemoved, fileIds.Count));
         }
     }
 

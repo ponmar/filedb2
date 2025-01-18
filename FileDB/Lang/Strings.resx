@@ -699,9 +699,6 @@
   <data name="FilesInfoText" xml:space="preserve">
     <value>Check your settings to adjust what files will be listed.</value>
   </data>
-  <data name="FilesWarningText" xml:space="preserve">
-    <value>This operation can be slow for a large collection of files or if the media access is slow (for example when using a network share).</value>
-  </data>
   <data name="FilesFromFilesCollectionLabel" xml:space="preserve">
     <value>From files collection:</value>
   </data>
@@ -1194,5 +1191,54 @@ YYYY-MM-DDTHH:MM:SS</value>
   </data>
   <data name="FilterTypeAllFiles" xml:space="preserve">
     <value>All files</value>
+  </data>
+  <data name="FilesSelectASubDirectory" xml:space="preserve">
+    <value>Select a sub directory</value>
+  </data>
+  <data name="FilesNoDirectorySpecified" xml:space="preserve">
+    <value>No directory specified</value>
+  </data>
+  <data name="FilesSpecifiedDirectoryDoesNotExist" xml:space="preserve">
+    <value>Specified directory does not exist</value>
+  </data>
+  <data name="FilesSpecifiedDirectoryIsNotWithinTheConfiguredFilesRootDirectory" xml:space="preserve">
+    <value>Specified directory is not within the configured files root directory: {0}</value>
+  </data>
+  <data name="FilesScanning" xml:space="preserve">
+    <value>Scanning...</value>
+  </data>
+  <data name="FilesScanningNewFiles" xml:space="preserve">
+    <value>Scanning... New files: {0}</value>
+  </data>
+  <data name="FilesNoNewFilesFound" xml:space="preserve">
+    <value>No new files found.
+
+Add new files to '{0}'.</value>
+  </data>
+  <data name="FilesAddMetaDataFromFiles" xml:space="preserve">
+    <value>Add meta-data from {0} files?</value>
+  </data>
+  <data name="FilesUnableToCreateDatabaseBackup" xml:space="preserve">
+    <value>Unable to create database backup</value>
+  </data>
+  <data name="FilesAddingFile" xml:space="preserve">
+    <value>Adding file {0} / {1}...</value>
+  </data>
+  <data name="FilesFilesAdded" xml:space="preserve">
+    <value>{0} files added.</value>
+  </data>
+  <data name="FilesNoFileIdsSpecified" xml:space="preserve">
+    <value>No file ids specified</value>
+  </data>
+  <data name="FilesRemoveMetaDataFor" xml:space="preserve">
+    <value>Remove meta-data for {0} files from the specified file list?</value>
+  </data>
+  <data name="FilesFilesRemoved" xml:space="preserve">
+    <value>{0} files removed</value>
+  </data>
+  <data name="FilesFindAllFiles" xml:space="preserve">
+    <value>Find all files, not yet imported, from '{0}'?
+
+This operation can be slow for a large collection of files or if the media access is slow (for example when using a network share).</value>
   </data>
 </root>

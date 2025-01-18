@@ -699,9 +699,6 @@
   <data name="FilesInfoText" xml:space="preserve">
     <value>Kontrollera dina inställningar för att justera vilka filer som kommer att listas.</value>
   </data>
-  <data name="FilesWarningText" xml:space="preserve">
-    <value>Denna åtgärd kan vara långsam för en stor samling filer eller om medieåtkomsten är långsam (till exempel när du använder en nätverksdelning).</value>
-  </data>
   <data name="FilesFromFilesCollectionLabel" xml:space="preserve">
     <value>Från filsamling:</value>
   </data>
@@ -1194,5 +1191,54 @@
   </data>
   <data name="FilterTypeAllFiles" xml:space="preserve">
     <value>Alla filer</value>
+  </data>
+  <data name="FilesAddingFile" xml:space="preserve">
+    <value>Lägger till fil {0} / {1}...</value>
+  </data>
+  <data name="FilesAddMetaDataFromFiles" xml:space="preserve">
+    <value>Lägg till meta-data från {0} filer?</value>
+  </data>
+  <data name="FilesFilesAdded" xml:space="preserve">
+    <value>{0} filer tillagda</value>
+  </data>
+  <data name="FilesFilesRemoved" xml:space="preserve">
+    <value>{0} filer borttagna</value>
+  </data>
+  <data name="FilesFindAllFiles" xml:space="preserve">
+    <value>Hitta alla filer, som inte ännu importerats, från '{0}'?
+
+Detta kan vara mycket långsamt för en stor fil-samling eller om åtkomsten till filerna är långsam (till exempel när de delas via en nätverks-utdelning)</value>
+  </data>
+  <data name="FilesNoDirectorySpecified" xml:space="preserve">
+    <value>Ingen katalog angiven</value>
+  </data>
+  <data name="FilesNoFileIdsSpecified" xml:space="preserve">
+    <value>Inga fil-idn angivna</value>
+  </data>
+  <data name="FilesNoNewFilesFound" xml:space="preserve">
+    <value>Inga nya filer hittades.
+
+Lägg till nya filer i '{0}'.</value>
+  </data>
+  <data name="FilesRemoveMetaDataFor" xml:space="preserve">
+    <value>Ta bort meta-data för {0} filer från den angivna fil-listan?</value>
+  </data>
+  <data name="FilesScanning" xml:space="preserve">
+    <value>Skannar...</value>
+  </data>
+  <data name="FilesScanningNewFiles" xml:space="preserve">
+    <value>Skannar... Nya filer: {0}</value>
+  </data>
+  <data name="FilesSelectASubDirectory" xml:space="preserve">
+    <value>Ange en underkatalog</value>
+  </data>
+  <data name="FilesSpecifiedDirectoryDoesNotExist" xml:space="preserve">
+    <value>Den angivna katalogen finns inte</value>
+  </data>
+  <data name="FilesSpecifiedDirectoryIsNotWithinTheConfiguredFilesRootDirectory" xml:space="preserve">
+    <value>Den angivna katalogen finns inte inom the konfigurerade katalogen: {0}</value>
+  </data>
+  <data name="FilesUnableToCreateDatabaseBackup" xml:space="preserve">
+    <value>Lyckades inte säkerhetskopiera databasen</value>
   </data>
 </root>
