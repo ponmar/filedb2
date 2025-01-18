@@ -56,7 +56,7 @@ public partial class AddTagViewModel : ObservableObject
             {
                 if (dbAccessProvider.DbAccess.GetTags().Any(x => x.Name == tag.Name))
                 {
-                    await dialogs.ShowErrorDialogAsync($"Tag '{tag.Name}' already added");
+                    await dialogs.ShowErrorDialogAsync(string.Format(Strings.AddTagTagAlreadyAdded, tag.Name));
                     return;
                 }
 

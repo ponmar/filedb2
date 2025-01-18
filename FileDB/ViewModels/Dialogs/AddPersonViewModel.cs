@@ -152,7 +152,7 @@ public partial class AddPersonViewModel : ObservableObject
             {
                 var anyPersonsWithThatName = dbAccessProvider.DbAccess.GetPersons().Any(x => x.Firstname == person.Firstname && x.Lastname == person.Lastname);
                 if (anyPersonsWithThatName &&
-                    !await dialogs.ShowConfirmDialogAsync($"There is already a person with that name. Add anyway?"))
+                    !await dialogs.ShowConfirmDialogAsync(Strings.AddPersonPersonAlreadyAdded))
                 {
                     return;
                 }

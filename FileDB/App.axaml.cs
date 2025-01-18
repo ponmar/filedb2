@@ -28,10 +28,8 @@ namespace FileDB;
 
 public partial class App : Application
 {
-    private const string ConfigFileExtension = ".FileDB";
+    public const string ConfigFileExtension = ".FileDB";
     private const string DatabaseFileExtension = ".db";
-    public const string DemoFilename = $"Demo{ConfigFileExtension}";
-    private const string DemoPath = $"demo/{DemoFilename}";
 
     public override void Initialize()
     {
@@ -74,24 +72,16 @@ public partial class App : Application
             //Utils.SetCulture(CultureInfo.GetCultureInfo("sv-SE"));
 
             var dialogs = ServiceLocator.Resolve<IDialogs>();
-
             var fileSystem = ServiceLocator.Resolve<IFileSystem>();
 
-            string configPath;
             if (desktop.Args?.Length != 1)
             {
-                if (!fileSystem.File.Exists(DemoPath))
-                {
-                    await dialogs.ShowErrorDialogAsync("No .FileDB file selected! Double click on your .FileDB file or specify its path via a command line argument.");
-                    desktop.Shutdown(1);
-                    return;
-                }
-                configPath = DemoPath;
+                await dialogs.ShowErrorDialogAsync(Strings.AppNoConfigSelected);
+                desktop.Shutdown(1);
+                return;
             }
-            else
-            {
-                configPath = desktop.Args.First();
-            }
+            
+            var configPath = desktop.Args.First();
 
             if (!Path.IsPathFullyQualified(configPath))
             {
@@ -105,7 +95,7 @@ public partial class App : Application
 
             if (!configPath.EndsWith(ConfigFileExtension))
             {
-                await dialogs.ShowErrorDialogAsync($"Command line argument ({configPath}) does not have file extension FileDB");
+                await dialogs.ShowErrorDialogAsync(string.Format(Strings.AppInvalidCommandLineArgument, configPath));
                 desktop.Shutdown(1);
                 return;
             }
@@ -162,7 +152,7 @@ public partial class App : Application
                 }
                 catch (Exception e)
                 {
-                    await dialogs.ShowErrorDialogAsync("Unable to create database backup before database migration", e);
+                    await dialogs.ShowErrorDialogAsync(Strings.AppUnableToCreateDatabaseBackupBeforeMigration, e);
                 }
             }
 

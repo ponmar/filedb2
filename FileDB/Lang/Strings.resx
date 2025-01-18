@@ -1241,4 +1241,22 @@ Add new files to '{0}'.</value>
 
 This operation can be slow for a large collection of files or if the media access is slow (for example when using a network share).</value>
   </data>
+  <data name="AddTagTagAlreadyAdded" xml:space="preserve">
+    <value>Tag '{0}' already added</value>
+  </data>
+  <data name="AddLocationLocationAlreadyAdded" xml:space="preserve">
+    <value>Location '{0}' already added</value>
+  </data>
+  <data name="AddPersonPersonAlreadyAdded" xml:space="preserve">
+    <value>There is already a person with that name. Add anyway?</value>
+  </data>
+  <data name="AppInvalidCommandLineArgument" xml:space="preserve">
+    <value>Command line argument ({0}) does not have file extension FileDB</value>
+  </data>
+  <data name="AppNoConfigSelected" xml:space="preserve">
+    <value>No .FileDB file selected! Double click on your .FileDB file or specify its path via a command line argument.</value>
+  </data>
+  <data name="AppUnableToCreateDatabaseBackupBeforeMigration" xml:space="preserve">
+    <value>Unable to create database backup before database migration</value>
+  </data>
 </root>

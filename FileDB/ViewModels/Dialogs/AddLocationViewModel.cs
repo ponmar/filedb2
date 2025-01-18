@@ -74,7 +74,7 @@ public partial class AddLocationViewModel : ObservableObject
             {
                 if (dbAccessProvider.DbAccess.GetLocations().Any(x => x.Name == location.Name))
                 {
-                    await dialogs.ShowErrorDialogAsync($"Location '{location.Name}' already added");
+                    await dialogs.ShowErrorDialogAsync(string.Format(Strings.AddLocationLocationAlreadyAdded, location.Name));
                     return;
                 }
 

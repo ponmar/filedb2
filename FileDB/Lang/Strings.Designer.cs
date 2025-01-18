@@ -2276,5 +2276,41 @@ namespace FileDB.Lang {
                 return ResourceManager.GetString("FilesFindAllFiles", resourceCulture);
             }
         }
+        
+        public static string AddTagTagAlreadyAdded {
+            get {
+                return ResourceManager.GetString("AddTagTagAlreadyAdded", resourceCulture);
+            }
+        }
+        
+        public static string AddLocationLocationAlreadyAdded {
+            get {
+                return ResourceManager.GetString("AddLocationLocationAlreadyAdded", resourceCulture);
+            }
+        }
+        
+        public static string AddPersonPersonAlreadyAdded {
+            get {
+                return ResourceManager.GetString("AddPersonPersonAlreadyAdded", resourceCulture);
+            }
+        }
+        
+        public static string AppInvalidCommandLineArgument {
+            get {
+                return ResourceManager.GetString("AppInvalidCommandLineArgument", resourceCulture);
+            }
+        }
+        
+        public static string AppNoConfigSelected {
+            get {
+                return ResourceManager.GetString("AppNoConfigSelected", resourceCulture);
+            }
+        }
+        
+        public static string AppUnableToCreateDatabaseBackupBeforeMigration {
+            get {
+                return ResourceManager.GetString("AppUnableToCreateDatabaseBackupBeforeMigration", resourceCulture);
+            }
+        }
     }
 }
