@@ -58,10 +58,8 @@ The main application is a C# [Avalonia UI](https://avaloniaui.net/) desktop appl
 
 1. Clone GIT repository
 2. Checkout wanted branch
-3. Open FileDB.sln in Visual Studio 2022
-4. Build solution
-5. Set the FileDBAvalonia project as startup project and set the path to the included Demo.FileDB file as command line argument
-6. Start the project
+3. Build FileDB.sln solution
+4. Start the FileDB.Desktop project with a .FileDB file as command line argument (the [demo](https://github.com/ponmar/filedb2_demo/) can be used)
 
 ### Contribute
 
