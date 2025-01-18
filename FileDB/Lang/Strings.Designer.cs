@@ -2312,5 +2312,29 @@ namespace FileDB.Lang {
                 return ResourceManager.GetString("AppUnableToCreateDatabaseBackupBeforeMigration", resourceCulture);
             }
         }
+        
+        public static string FileCategorizationReloadOrientation {
+            get {
+                return ResourceManager.GetString("FileCategorizationReloadOrientation", resourceCulture);
+            }
+        }
+        
+        public static string FileCategorizationReloadMetaData {
+            get {
+                return ResourceManager.GetString("FileCategorizationReloadMetaData", resourceCulture);
+            }
+        }
+        
+        public static string FileCetagorizationPersonNotBornInFile {
+            get {
+                return ResourceManager.GetString("FileCetagorizationPersonNotBornInFile", resourceCulture);
+            }
+        }
+        
+        public static string FileCategorizationPersonDeceased {
+            get {
+                return ResourceManager.GetString("FileCategorizationPersonDeceased", resourceCulture);
+            }
+        }
     }
 }

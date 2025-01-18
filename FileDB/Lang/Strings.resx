@@ -1251,12 +1251,24 @@ This operation can be slow for a large collection of files or if the media acces
     <value>There is already a person with that name. Add anyway?</value>
   </data>
   <data name="AppInvalidCommandLineArgument" xml:space="preserve">
-    <value>Command line argument ({0}) does not have file extension FileDB</value>
+    <value>Command line argument ({0}) does not have the .FileDB file extension</value>
   </data>
   <data name="AppNoConfigSelected" xml:space="preserve">
     <value>No .FileDB file selected! Double click on your .FileDB file or specify its path via a command line argument.</value>
   </data>
   <data name="AppUnableToCreateDatabaseBackupBeforeMigration" xml:space="preserve">
     <value>Unable to create database backup before database migration</value>
+  </data>
+  <data name="FileCategorizationReloadOrientation" xml:space="preserve">
+    <value>Reload orientation from file meta-data?</value>
+  </data>
+  <data name="FileCategorizationReloadMetaData" xml:space="preserve">
+    <value>Reload date, GPS position and orientation from file meta-data?</value>
+  </data>
+  <data name="FileCetagorizationPersonNotBornInFile" xml:space="preserve">
+    <value>Person was not born at the time for this file. Add anyway?</value>
+  </data>
+  <data name="FileCategorizationPersonDeceased" xml:space="preserve">
+    <value>Person was deceased at the time for this file. Add anyway?</value>
   </data>
 </root>

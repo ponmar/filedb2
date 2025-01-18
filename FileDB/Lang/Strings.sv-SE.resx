@@ -1241,4 +1241,34 @@ Lägg till nya filer i '{0}'.</value>
   <data name="FilesUnableToCreateDatabaseBackup" xml:space="preserve">
     <value>Lyckades inte säkerhetskopiera databasen</value>
   </data>
+  <data name="AddLocationLocationAlreadyAdded" xml:space="preserve">
+    <value>Platsen '{0}' finns redan</value>
+  </data>
+  <data name="AddPersonPersonAlreadyAdded" xml:space="preserve">
+    <value>Det finns redan en person med det namnet. Lägg till ändå?</value>
+  </data>
+  <data name="AddTagTagAlreadyAdded" xml:space="preserve">
+    <value>Etiketten '{0}' finns redan</value>
+  </data>
+  <data name="AppInvalidCommandLineArgument" xml:space="preserve">
+    <value>Kommandoradsargumentet ({0}) har inte filändelsen .FileDB</value>
+  </data>
+  <data name="AppNoConfigSelected" xml:space="preserve">
+    <value>Ingen .FileDB-fil vald! Dubbelklicka på din .FileDB-fil eller ange den via kommandoradsargument.</value>
+  </data>
+  <data name="AppUnableToCreateDatabaseBackupBeforeMigration" xml:space="preserve">
+    <value>Kunde inte skapa säkerhetskopia av databasen innan databas-migrering</value>
+  </data>
+  <data name="FileCategorizationPersonDeceased" xml:space="preserve">
+    <value>Personen var avliden vid tidpunkten för denna fil. Lägg till ändå?</value>
+  </data>
+  <data name="FileCategorizationReloadMetaData" xml:space="preserve">
+    <value>Ladda om datum, GPS-position och riktningfrån filens meta-data?</value>
+  </data>
+  <data name="FileCategorizationReloadOrientation" xml:space="preserve">
+    <value>Ladda riktning från filens meta-data?</value>
+  </data>
+  <data name="FileCetagorizationPersonNotBornInFile" xml:space="preserve">
+    <value>Personen vad inte född vid tidpunkten för denna fil. Lägg till ändå?</value>
+  </data>
 </root>

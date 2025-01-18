@@ -391,7 +391,7 @@ public partial class FileCategorizationViewModel : ObservableObject
     {
         if (SelectedFile is not null)
         {
-            if (await dialogs.ShowConfirmDialogAsync("Reload orientation from file meta-data?"))
+            if (await dialogs.ShowConfirmDialogAsync(Strings.FileCategorizationReloadOrientation))
             {
                 var fileMetadata = filesystemAccessProvider.FilesystemAccess.ParseFileMetadata(filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(SelectedFile.Path));
                 dbAccessProvider.DbAccess.UpdateFileOrientation(SelectedFile.Id, fileMetadata.Orientation);
@@ -406,7 +406,7 @@ public partial class FileCategorizationViewModel : ObservableObject
     {
         if (SelectedFile is not null)
         {
-            if (await dialogs.ShowConfirmDialogAsync("Reload date, GPS position and orientation from file meta-data?"))
+            if (await dialogs.ShowConfirmDialogAsync(Strings.FileCategorizationReloadMetaData))
             {
                 dbAccessProvider.DbAccess.UpdateFileFromMetaData(SelectedFile.Id, filesystemAccessProvider.FilesystemAccess);
 
@@ -470,7 +470,7 @@ public partial class FileCategorizationViewModel : ObservableObject
             {
                 var dateOfBirth = DatabaseParsing.ParsePersonDateOfBirth(person.DateOfBirth);
                 if (fileDatetime < dateOfBirth &&
-                    !await dialogs.ShowConfirmDialogAsync("Person was not born at the time for this file. Add anyway?"))
+                    !await dialogs.ShowConfirmDialogAsync(Strings.FileCetagorizationPersonNotBornInFile))
                 {
                     return;
                 }
@@ -480,7 +480,7 @@ public partial class FileCategorizationViewModel : ObservableObject
             {
                 var deceased = DatabaseParsing.ParsePersonDeceasedDate(person.Deceased);
                 if (fileDatetime > deceased &&
-                    !await dialogs.ShowConfirmDialogAsync("Person was deceased at the time for this file. Add anyway?"))
+                    !await dialogs.ShowConfirmDialogAsync(Strings.FileCategorizationPersonDeceased))
                 {
                     return;
                 }
