@@ -7,8 +7,6 @@
 		SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterOwner"
 		CanResize="False"
-        MinHeight="150"
-        MinWidth="400"
 		SystemDecorations="None">
 	<Grid>
 		<Border Classes="BorderGroup">
