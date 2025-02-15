@@ -13,7 +13,6 @@ using FileDB.Comparers;
 using FileDB.ViewModels.Search;
 using System;
 using FileDB.ViewModels.Search.Filters;
-using FileDBInterface.DatabaseAccess;
 
 namespace FileDB.ViewModels;
 
@@ -21,9 +20,6 @@ public partial class CriteriaViewModel : ObservableObject
 {
     [ObservableProperty]
     private string numRandomFiles = "10";
-
-    [ObservableProperty]
-    private string addedFiles = string.Empty;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CombineSearchResultPossible))]
@@ -79,11 +75,6 @@ public partial class CriteriaViewModel : ObservableObject
         var vm = ServiceLocator.Resolve<FilterSelectionViewModel>();
         vm.IsFirstFilter = true;
         filterSettings.Add(vm);
-
-        this.RegisterForEvent<FilesAdded>(x =>
-        {
-            AddedFiles = Utils.CreateFileList(x.Files);
-        });
 
         this.RegisterForEvent<FileSelectionChanged>(x =>
         {
@@ -175,16 +166,6 @@ public partial class CriteriaViewModel : ObservableObject
     private void FindAllFiles()
     {
         Send(dbAccessProvider.DbAccess.GetFiles());
-    }
-
-    [RelayCommand]
-    private void FindAddedFiles()
-    {
-        if (AddedFiles.HasContent())
-        {
-            var fileIds = Utils.CreateFileIds(AddedFiles);
-            Send(dbAccessProvider.DbAccess.SearchFilesFromIds(fileIds));
-        }
     }
 
     [RelayCommand]

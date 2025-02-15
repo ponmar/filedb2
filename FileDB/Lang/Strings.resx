@@ -123,9 +123,6 @@
   <data name="SearchBrowseButton" xml:space="preserve">
     <value>Browse...</value>
   </data>
-  <data name="SearchNewFilesButton" xml:space="preserve">
-    <value>New files</value>
-  </data>
   <data name="SearchAllFromCurrentDirectoryButton" xml:space="preserve">
     <value>All from current directory</value>
   </data>
@@ -137,9 +134,6 @@
   </data>
   <data name="SearchAllFilesWithinCurrentFileDirectoryToolTip" xml:space="preserve">
     <value>Search all files within current file directory (recursive)</value>
-  </data>
-  <data name="SearchNewFilesButtonToolTip" xml:space="preserve">
-    <value>Search for newly added files meta-data</value>
   </data>
   <data name="SearchRandomFilesToolTip" xml:space="preserve">
     <value>Search random files</value>

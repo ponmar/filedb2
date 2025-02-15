@@ -2265,24 +2265,6 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New files.
-        /// </summary>
-        public static string SearchNewFilesButton {
-            get {
-                return ResourceManager.GetString("SearchNewFilesButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Search for newly added files meta-data.
-        /// </summary>
-        public static string SearchNewFilesButtonToolTip {
-            get {
-                return ResourceManager.GetString("SearchNewFilesButtonToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to No match.
         /// </summary>
         public static string SearchNoMatch {

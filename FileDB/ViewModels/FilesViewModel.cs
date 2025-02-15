@@ -233,8 +233,6 @@ public partial class FilesViewModel : ObservableObject
                     ImportedFileList = Utils.CreateFileList(addedFiles);
                     ImportResult = addedFiles.Count > 0 ? string.Format(Strings.FilesFilesAdded, addedFiles.Count) : string.Empty;
 
-                    Messenger.Send(new FilesAdded(addedFiles));
-
                     foreach (var selectedFile in SelectedFiles.ToList())
                     {
                         NewFiles.Remove(selectedFile);

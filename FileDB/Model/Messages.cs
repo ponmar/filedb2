@@ -40,8 +40,6 @@ public record SelectFileInPrevDirectory;
 public record ImageLoaded(string FilePath, Bitmap Image);
 public record ImageLoadError(string FilePath, Exception Exception);
 
-public record FilesAdded(List<FileModel> Files);
-
 public record CloseModalDialogRequest;
 
 public record SearchForFiles(string FileList);
