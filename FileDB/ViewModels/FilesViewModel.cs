@@ -149,6 +149,10 @@ public partial class FilesViewModel : ObservableObject
                 {
                     await dialogs.ShowInfoDialogAsync(string.Format(Strings.FilesNoNewFilesFound, configProvider.FilePaths.FilesRootDir));
                 }
+                else
+                {
+                    SelectAll();
+                }
             });
         });
     }
