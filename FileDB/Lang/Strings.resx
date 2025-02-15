@@ -688,10 +688,10 @@
     <value>Deselect all</value>
   </data>
   <data name="FilesAddMetaDataForSelectedFilesButton" xml:space="preserve">
-    <value>Add meta-data for selected files...</value>
+    <value>Add selected files...</value>
   </data>
-  <data name="FilesCopyFileListForAddedFilesButton" xml:space="preserve">
-    <value>Copy file list for added files</value>
+  <data name="SearchForAddedFilesButton" xml:space="preserve">
+    <value>Search added files</value>
   </data>
   <data name="FilesRemoveButton" xml:space="preserve">
     <value>Remove...</value>

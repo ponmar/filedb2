@@ -30,7 +30,7 @@
 							<Button Classes="PageButton" IsEnabled="{Binding NewFiles.Count}" Content="{x:Static lang:Strings.FilesSelectAllButton}" Command="{Binding SelectAllCommand}" />
 							<Button Classes="PageButton" IsEnabled="{Binding NewFiles.Count}" Content="{x:Static lang:Strings.FilesDeselectAllButton}" Command="{Binding SelectNoneCommand}"/>
 							<Button Classes="PageButton" Command="{Binding ImportNewFilesCommand}" IsEnabled="{Binding SelectedFiles.Count}" Content="{x:Static lang:Strings.FilesAddMetaDataForSelectedFilesButton}"/>
-							<Button Classes="PageButton" Command="{Binding CopyImportedFileListCommand}" IsEnabled="{Binding ImportedFileList, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" Content="{x:Static lang:Strings.FilesCopyFileListForAddedFilesButton}"/>
+							<Button Classes="PageButton" Command="{Binding SearchImportedFileListCommand}" IsEnabled="{Binding ImportedFileList, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" Content="{x:Static lang:Strings.SearchForAddedFilesButton}"/>
 						</WrapPanel>
 						<TextBlock Classes="PageTextBlock" Text="{Binding ImportResult}" IsVisible="{Binding ImportResult, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
 						<ListBox Margin="10" ItemsSource="{Binding NewFiles}" IsVisible="{Binding NewFiles.Count}" SelectionMode="Multiple" Grid.IsSharedSizeScope="True" SelectedItems="{Binding SelectedFiles}">

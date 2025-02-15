@@ -105,6 +105,13 @@ public partial class CriteriaViewModel : ObservableObject
             AddTagFilterFor(x.Tag);
         });
 
+        this.RegisterForEvent<SearchForFiles>(async x =>
+        {
+            FilterSettings.Clear();
+            AddFileListFilterFor(x.FileList);
+            await FindFilesFromFiltersAsync();
+        });
+
         this.RegisterForEvent<SearchForPerson>(async x =>
         {
             FilterSettings.Clear();
@@ -256,6 +263,15 @@ public partial class CriteriaViewModel : ObservableObject
         viewModel.IsFirstFilter = FilterSettings.Count == 0;
         FilterSettings.Add(viewModel);
         OnPropertyChanged(nameof(FilterCanBeRemoved));
+    }
+
+    private void AddFileListFilterFor(string fileListIds)
+    {
+        var vm = ServiceLocator.Resolve<FilterSelectionViewModel>();
+        vm.SelectedFilterType = FilterType.FileList;
+        var fileListViewModel = (FileListViewModel)vm.FilterViewModel;
+        fileListViewModel.FileListIds = fileListIds;
+        AddFilter(vm);
     }
 
     private void AddPersonFilterFor(PersonModel person)

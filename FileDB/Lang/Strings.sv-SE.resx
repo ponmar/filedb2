@@ -688,10 +688,10 @@
     <value>Avmarkera alla</value>
   </data>
   <data name="FilesAddMetaDataForSelectedFilesButton" xml:space="preserve">
-    <value>Lägg till metadata för valda filer...</value>
+    <value>Lägg till valda filer...</value>
   </data>
-  <data name="FilesCopyFileListForAddedFilesButton" xml:space="preserve">
-    <value>Kopiera fillista för tillagda filer</value>
+  <data name="SearchForAddedFilesButton" xml:space="preserve">
+    <value>Sök efter tillagda filer	</value>
   </data>
   <data name="FilesRemoveButton" xml:space="preserve">
     <value>Ta bort...</value>

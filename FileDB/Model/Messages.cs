@@ -44,6 +44,7 @@ public record FilesAdded(List<FileModel> Files);
 
 public record CloseModalDialogRequest;
 
+public record SearchForFiles(string FileList);
 public record SearchForPerson(PersonModel Person);
 public record SearchForLocation(LocationModel Location);
 public record SearchForTag(TagModel Tag);

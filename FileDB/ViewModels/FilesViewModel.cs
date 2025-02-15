@@ -256,10 +256,7 @@ public partial class FilesViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void CopyImportedFileList()
-    {
-        clipboardService.SetTextAsync(ImportedFileList);
-    }
+    private void SearchImportedFileList() => Messenger.Send(new SearchForFiles(ImportedFileList));
 
     [RelayCommand]
     private async Task RemoveFileListMethodAsync()
