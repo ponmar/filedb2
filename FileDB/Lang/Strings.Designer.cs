@@ -2481,11 +2481,20 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to F{0}: Toggle &apos;{1}&apos;.
+        ///   Looks up a localized string similar to Toggle &apos;{0}&apos;.
         /// </summary>
         public static string SearchToggleText {
             get {
                 return ResourceManager.GetString("SearchToggleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to F{0}: Toggle &apos;{1}&apos;.
+        /// </summary>
+        public static string SearchToggleWithKeyText {
+            get {
+                return ResourceManager.GetString("SearchToggleWithKeyText", resourceCulture);
             }
         }
         

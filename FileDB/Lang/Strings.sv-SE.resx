@@ -1060,7 +1060,7 @@
   <data name="AddPersonDeceasedToolTip" xml:space="preserve">
     <value>ÅÅÅÅ-MM-DD, ÅÅÅÅ-MM eller ÅÅÅÅ</value>
   </data>
-  <data name="SearchToggleText" xml:space="preserve">
+  <data name="SearchToggleWithKeyText" xml:space="preserve">
     <value>F{0}: Växla '{1}'</value>
   </data>
   <data name="SearchImageLoadingError" xml:space="preserve">
@@ -1264,5 +1264,8 @@ Lägg till nya filer i '{0}'.</value>
   </data>
   <data name="FileCetagorizationPersonNotBornInFile" xml:space="preserve">
     <value>Personen vad inte född vid tidpunkten för denna fil. Lägg till ändå?</value>
+  </data>
+  <data name="SearchToggleText" xml:space="preserve">
+    <value>Växla '{1}'</value>
   </data>
 </root>

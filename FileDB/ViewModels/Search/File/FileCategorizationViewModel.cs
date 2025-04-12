@@ -42,8 +42,12 @@ public class UpdateHistoryItem
     public required string ShortItemName { get; init; }
     public required string ItemName { get; init; }
     public required int FunctionKey { get; init; }
-    public string HotKey => $"F{FunctionKey}";
-    public string ToggleText => string.Format(Strings.SearchToggleText, FunctionKey, ShortItemName);
+
+    public bool HasHotKey => FunctionKey >= 1 && FunctionKey <= 12;
+    public string? HotKey => HasHotKey ? $"F{FunctionKey}" : null;
+    public string ToggleText => HasHotKey ?
+        string.Format(Strings.SearchToggleWithKeyText, FunctionKey, ShortItemName) :
+        string.Format(Strings.SearchToggleText, ShortItemName);
 }
 
 public partial class FileCategorizationViewModel : ObservableObject
@@ -575,11 +579,6 @@ public partial class FileCategorizationViewModel : ObservableObject
 
     private void AddUpdateHistoryItem(UpdateHistoryType type, int itemId, string itemName)
     {
-        if (UpdateHistoryItems.Count >= 12)
-        {
-            return;
-        }
-
         var duplicatedItem = UpdateHistoryItems.FirstOrDefault(x => x.Type == type && x.ItemName == itemName);
         if (duplicatedItem is not null)
         {
@@ -603,6 +602,16 @@ public partial class FileCategorizationViewModel : ObservableObject
                 return;
             }
         }
+
+        UpdateHistoryItems.Add(new UpdateHistoryItem()
+        {
+            Type = type,
+            ItemId = itemId,
+            ItemName = itemName,
+            FunctionKey = -1,
+            ShortItemName = Utils.CreateShortText(itemName, configProvider.Config.ShortItemNameMaxLength),
+        });
+        OnPropertyChanged(nameof(HasUpdateHistory));
     }
 
     private async Task FunctionKeyAsync(int functionKey)

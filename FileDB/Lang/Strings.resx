@@ -1060,7 +1060,7 @@ YYYY-MM-DDTHH:MM:SS</value>
   <data name="AddPersonDeceasedToolTip" xml:space="preserve">
     <value>YYYY-MM-DD, YYYY-MM or YYYY</value>
   </data>
-  <data name="SearchToggleText" xml:space="preserve">
+  <data name="SearchToggleWithKeyText" xml:space="preserve">
     <value>F{0}: Toggle '{1}'</value>
   </data>
   <data name="SearchImageLoadingError" xml:space="preserve">
@@ -1264,5 +1264,8 @@ This operation can be slow for a large collection of files or if the media acces
   </data>
   <data name="FileCategorizationPersonDeceased" xml:space="preserve">
     <value>Person was deceased at the time for this file. Add anyway?</value>
+  </data>
+  <data name="SearchToggleText" xml:space="preserve">
+    <value>Toggle '{0}'</value>
   </data>
 </root>
