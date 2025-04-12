@@ -685,7 +685,7 @@
     <value>Lägg till valda filer...</value>
   </data>
   <data name="SearchForAddedFilesButton" xml:space="preserve">
-    <value>Sök efter tillagda filer	</value>
+    <value>Sök efter tillagda filer</value>
   </data>
   <data name="FilesRemoveButton" xml:space="preserve">
     <value>Ta bort...</value>
@@ -1193,7 +1193,7 @@
     <value>Lägg till meta-data från {0} filer?</value>
   </data>
   <data name="FilesFilesAdded" xml:space="preserve">
-    <value>{0} filer tillagda</value>
+    <value>{0} filer tillagda.</value>
   </data>
   <data name="FilesFilesRemoved" xml:space="preserve">
     <value>{0} filer borttagna</value>
@@ -1201,7 +1201,7 @@
   <data name="FilesFindAllFiles" xml:space="preserve">
     <value>Hitta alla filer, som inte ännu importerats, från '{0}'?
 
-Detta kan vara mycket långsamt för en stor fil-samling eller om åtkomsten till filerna är långsam (till exempel när de delas via en nätverks-utdelning)</value>
+Detta kan vara mycket långsamt för en stor fil-samling eller om åtkomsten till filerna är långsam (till exempel när de delas via en nätverks-utdelning).</value>
   </data>
   <data name="FilesNoDirectorySpecified" xml:space="preserve">
     <value>Ingen katalog angiven</value>
@@ -1266,6 +1266,6 @@ Lägg till nya filer i '{0}'.</value>
     <value>Personen vad inte född vid tidpunkten för denna fil. Lägg till ändå?</value>
   </data>
   <data name="SearchToggleText" xml:space="preserve">
-    <value>Växla '{1}'</value>
+    <value>Växla '{0}'</value>
   </data>
 </root>
