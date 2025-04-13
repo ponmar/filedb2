@@ -83,6 +83,7 @@ public static class Bootstrapper
         ServiceLocator.RegisterTransient<PersonViewModel>();
         ServiceLocator.RegisterTransient<PersonAgeViewModel>();
         ServiceLocator.RegisterTransient<PersonSexViewModel>();
+        ServiceLocator.RegisterTransient<PersonGroupViewModel>();
         ServiceLocator.RegisterTransient<LocationViewModel>();
         ServiceLocator.RegisterTransient<PositionViewModel>();
         ServiceLocator.RegisterTransient<SeasonViewModel>();

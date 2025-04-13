@@ -249,10 +249,11 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
         return connection.Query<FileModel>($"select * from [files] where Datetime is null");
     }
 
-    public IEnumerable<FileModel> SearchFilesWithPersons(IEnumerable<int> personIds)
+    public IEnumerable<FileModel> SearchFilesWithPersons(IEnumerable<int> personIds, bool allowOtherPersons = true)
     {
         using var connection = DatabaseSetup.CreateConnection(database);
-        return connection.Query<FileModel>($"select * from [files] inner join filepersons on files.Id = filepersons.FileId where filepersons.PersonId in ({string.Join(',', personIds)})");
+        var files = connection.Query<FileModel>($"select * from [files] inner join filepersons on files.Id = filepersons.FileId where filepersons.PersonId in ({string.Join(',', personIds)})");
+        return allowOtherPersons ? files : files.Where(x => GetPersonsFromFile(x.Id).Count() == personIds.Count());
     }
 
     public IEnumerable<FileModel> SearchFilesWithoutPersons(IEnumerable<int> personIds)

@@ -1671,6 +1671,15 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Persons (group).
+        /// </summary>
+        public static string FilterTypePersonGroup {
+            get {
+                return ResourceManager.GetString("FilterTypePersonGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Person sex.
         /// </summary>
         public static string FilterTypePersonSex {
@@ -2144,6 +2153,24 @@ namespace FileDB.Lang {
         public static string SearchFilterPersonAgeTo {
             get {
                 return ResourceManager.GetString("SearchFilterPersonAgeTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inclusive.
+        /// </summary>
+        public static string SearchFilterPersonGroupInclusive {
+            get {
+                return ResourceManager.GetString("SearchFilterPersonGroupInclusive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Include files with non-selected persons.
+        /// </summary>
+        public static string SearchFilterPersonGroupInclusiveToolTip {
+            get {
+                return ResourceManager.GetString("SearchFilterPersonGroupInclusiveToolTip", resourceCulture);
             }
         }
         

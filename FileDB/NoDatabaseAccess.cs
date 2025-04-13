@@ -123,7 +123,7 @@ public class NoDatabaseAccess : IDatabaseAccess
         return [];
     }
 
-    public IEnumerable<FileModel> SearchFilesWithPersons(IEnumerable<int> personIds)
+    public IEnumerable<FileModel> SearchFilesWithPersons(IEnumerable<int> personIds, bool allowOtherPersons)
     {
         return [];
     }

@@ -1268,4 +1268,13 @@ Lägg till nya filer i '{0}'.</value>
   <data name="SearchToggleText" xml:space="preserve">
     <value>Växla '{0}'</value>
   </data>
+  <data name="FilterTypePersonGroup" xml:space="preserve">
+    <value>Personer (grupp)</value>
+  </data>
+  <data name="SearchFilterPersonGroupInclusiveToolTip" xml:space="preserve">
+    <value>Inkludera filer med icke-valda personer</value>
+  </data>
+  <data name="SearchFilterPersonGroupInclusive" xml:space="preserve">
+    <value>Inklusive</value>
+  </data>
 </root>
