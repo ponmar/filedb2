@@ -19,9 +19,11 @@
 									<Button.Flyout>
 										<MenuFlyout>
 											<MenuItem Header="{x:Static lang:Strings.BirthdaysSearch}" Command="{Binding $parent[UserControl].DataContext.SearchForPersonCommand}" CommandParameter="{Binding Model}"/>
+											<MenuItem Header="{x:Static lang:Strings.FileInfoSearchPersonGroup}" Command="{Binding $parent[UserControl].DataContext.SearchForPersonGroupCommand}"/>
 											<MenuItem Header="{x:Static lang:Strings.BirthdaysSearchForDate}" Command="{Binding $parent[UserControl].DataContext.SearchForBirthdayCommand}" CommandParameter="{Binding Model}" IsEnabled="{Binding Model.DateOfBirth, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
 											<MenuItem Header="-"/>
 											<MenuItem Header="{x:Static lang:Strings.BirthdaysAddPersonSearchFilter}" Command="{Binding $parent[UserControl].DataContext.AddPersonSearchFilterCommand}" CommandParameter="{Binding Model}"/>
+											<MenuItem Header="{x:Static lang:Strings.FileInfoSearchAddPersonGroupSearchFilter}" Command="{Binding $parent[UserControl].DataContext.AddPersonGroupSearchFilterCommand}"/>
 											<MenuItem Header="{x:Static lang:Strings.BirthdaysAddDateSearchFilter}" Command="{Binding $parent[UserControl].DataContext.AddBirthdayDateSearchFilterCommand}" CommandParameter="{Binding Model}" IsEnabled="{Binding Model.DateOfBirth, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
 										</MenuFlyout>
 									</Button.Flyout>

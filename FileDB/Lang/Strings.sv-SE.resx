@@ -1277,4 +1277,10 @@ Lägg till nya filer i '{0}'.</value>
   <data name="SearchFilterPersonGroupInclusive" xml:space="preserve">
     <value>Inklusive</value>
   </data>
+  <data name="FileInfoSearchPersonGroup" xml:space="preserve">
+    <value>Sök efter personer (grupp)</value>
+  </data>
+  <data name="FileInfoSearchAddPersonGroupSearchFilter" xml:space="preserve">
+    <value>Lägg till personer-sökfilter</value>
+  </data>
 </root>

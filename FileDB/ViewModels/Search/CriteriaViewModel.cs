@@ -86,6 +86,11 @@ public partial class CriteriaViewModel : ObservableObject
             AddPersonFilterFor(x.Person);
         });
 
+        this.RegisterForEvent<AddPersonGroupSearchFilter>(x =>
+        {
+            AddPersonGroupFilterFor(x.Persons);
+        });
+
         this.RegisterForEvent<AddLocationSearchFilter>(x =>
         {
             AddLocationFilterFor(x.Location);
@@ -107,6 +112,13 @@ public partial class CriteriaViewModel : ObservableObject
         {
             FilterSettings.Clear();
             AddPersonFilterFor(x.Person);
+            await FindFilesFromFiltersAsync();
+        });
+
+        this.RegisterForEvent<SearchForPersonGroup>(async x =>
+        {
+            FilterSettings.Clear();
+            AddPersonGroupFilterFor(x.Persons);
             await FindFilesFromFiltersAsync();
         });
 
@@ -261,6 +273,18 @@ public partial class CriteriaViewModel : ObservableObject
         vm.SelectedFilterType = FilterType.Person;
         var personViewModel = (PersonViewModel)vm.FilterViewModel;
         personViewModel.SelectedPerson = personViewModel.Persons.First(p => p.Id == person.Id);
+        AddFilter(vm);
+    }
+
+    private void AddPersonGroupFilterFor(IEnumerable<PersonModel> persons)
+    {
+        var vm = ServiceLocator.Resolve<FilterSelectionViewModel>();
+        vm.SelectedFilterType = FilterType.PersonGroup;
+        var personGroupViewModel = (PersonGroupViewModel)vm.FilterViewModel;
+        foreach (var person in persons)
+        {
+            personGroupViewModel.SelectedPersons.Add(personGroupViewModel.Persons.First(p => p.Id == person.Id));
+        }
         AddFilter(vm);
     }
 

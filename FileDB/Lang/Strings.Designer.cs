@@ -1199,11 +1199,29 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add persons (group) search filter.
+        /// </summary>
+        public static string FileInfoSearchAddPersonGroupSearchFilter {
+            get {
+                return ResourceManager.GetString("FileInfoSearchAddPersonGroupSearchFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search for location.
         /// </summary>
         public static string FileInfoSearchLocation {
             get {
                 return ResourceManager.GetString("FileInfoSearchLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search for persons (group).
+        /// </summary>
+        public static string FileInfoSearchPersonGroup {
+            get {
+                return ResourceManager.GetString("FileInfoSearchPersonGroup", resourceCulture);
             }
         }
         

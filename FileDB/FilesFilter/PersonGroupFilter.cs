@@ -12,7 +12,6 @@ public class PersonGroupFilter(IEnumerable<PersonForSearch> persons, bool allowO
 
     public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
     {
-        // TODO: how did the previous implementation search?
         return dbAccess.SearchFilesWithPersons(persons.Select(x => x.Id), allowOtherPersons);
     }
 }
