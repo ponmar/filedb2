@@ -25,7 +25,8 @@ public record Config(
     int OverlayTextSizeLarge,
     int ShortItemNameMaxLength,
     string? Language,
-    Theme Theme);
+    Theme Theme,
+    bool LoadExifOrientationFromFileWhenMissingInDatabase);
 
 public static class DefaultConfigs
 {
@@ -52,5 +53,6 @@ public static class DefaultConfigs
             OverlayTextSizeLarge: 24,
             ShortItemNameMaxLength: 15,
             Language: null,
-            Theme: Theme.Default);
+            Theme: Theme.Default,
+            LoadExifOrientationFromFileWhenMissingInDatabase: false);
 }

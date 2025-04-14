@@ -29,6 +29,7 @@ public class ConfigMigrator : IMigrator<Config>
             config.OverlayTextSizeLarge != 0 ? config.OverlayTextSizeLarge : defaultValues.OverlayTextSizeLarge,
             config.ShortItemNameMaxLength != 0 ? config.ShortItemNameMaxLength : defaultValues.ShortItemNameMaxLength,
             config.Language,
-            config.Theme);
+            config.Theme,
+            config.LoadExifOrientationFromFileWhenMissingInDatabase);
     }
 }

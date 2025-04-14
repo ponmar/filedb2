@@ -1283,4 +1283,7 @@ This operation can be slow for a large collection of files or if the media acces
   <data name="FileInfoSearchAddPersonGroupSearchFilter" xml:space="preserve">
     <value>Add persons (group) search filter</value>
   </data>
+  <data name="SettingsLoadExifOrientationFromFileWhenMissingInDatabaseLabel" xml:space="preserve">
+    <value>Load Exif orientation from file when missing in database (only necessary if files was added before version 3.0)</value>
+  </data>
 </root>

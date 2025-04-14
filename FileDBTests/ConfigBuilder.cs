@@ -27,6 +27,7 @@ public class ConfigBuilder
     public int ShortItemNameMaxLength { get; init; }
     public string? Language { get; init; }
     public Theme Theme { get; init; }
+    public bool LoadExifOrientationFromFileWhenMissingInDatabase { get; init; }
 
     public Config Build()
     {
@@ -53,6 +54,7 @@ public class ConfigBuilder
             OverlayTextSizeLarge,
             ShortItemNameMaxLength,
             Language,
-            Theme);
+            Theme,
+            LoadExifOrientationFromFileWhenMissingInDatabase);
     }
 }

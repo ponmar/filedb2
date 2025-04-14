@@ -2724,6 +2724,15 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Load Exif orientation from file when missing in database (only necessary if files was added before version 3.0).
+        /// </summary>
+        public static string SettingsLoadExifOrientationFromFileWhenMissingInDatabaseLabel {
+            get {
+                return ResourceManager.GetString("SettingsLoadExifOrientationFromFileWhenMissingInDatabaseLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Location link:.
         /// </summary>
         public static string SettingsLocationLinkLabel {

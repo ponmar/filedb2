@@ -405,6 +405,16 @@ public partial class ResultViewModel : ObservableObject, ISearchResultRepository
             SelectedFileIndex = index;
             OnPropertyChanged(nameof(CurrentFileInternalPath));
 
+            if (configProvider.Config.LoadExifOrientationFromFileWhenMissingInDatabase)
+            {
+                var selection = SearchResult.Files[SelectedFileIndex];
+                if (selection.Orientation is null)
+                {
+                    var fileAbsolutePath = filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(selection.Path);
+                    selection.Orientation = filesystemAccessProvider.FilesystemAccess.ParseFileMetadata(fileAbsolutePath).Orientation;
+                }
+            }
+
             Messenger.Send<FileSelectionChanged>();
 
             var numImagesToLoad = Math.Max(1, configProvider.Config.NumImagesToPreload);

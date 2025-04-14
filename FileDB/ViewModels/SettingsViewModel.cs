@@ -214,6 +214,14 @@ public partial class SettingsViewModel : ObservableObject
 
     public bool ThemeIsDefault => Theme == DefaultConfigs.Default.Theme;
 
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(LoadExifOrientationFromFileWhenMissingInDatabaseIsDefault))]
+    private bool loadExifOrientationFromFileWhenMissingInDatabase;
+
+    partial void OnLoadExifOrientationFromFileWhenMissingInDatabaseChanged(bool value) => IsDirty = true;
+
+    public bool LoadExifOrientationFromFileWhenMissingInDatabaseIsDefault => LoadExifOrientationFromFileWhenMissingInDatabase == DefaultConfigs.Default.LoadExifOrientationFromFileWhenMissingInDatabase;
+
     [RelayCommand]
     private void SetDefaultSlideshowDelay() => SlideshowDelay = DefaultConfigs.Default.SlideshowDelay;
 
@@ -283,6 +291,9 @@ public partial class SettingsViewModel : ObservableObject
     [RelayCommand]
     private void SetDefaultTheme() => Theme = DefaultConfigs.Default.Theme;
 
+    [RelayCommand]
+    private void SetDefaultLoadExifOrientationFromFileWhenMissingInDatabase() => LoadExifOrientationFromFileWhenMissingInDatabase = DefaultConfigs.Default.LoadExifOrientationFromFileWhenMissingInDatabase;
+
     private readonly IConfigProvider configProvider;
     private readonly IConfigUpdater configUpdater;
     private readonly IDialogs dialogs;
@@ -325,6 +336,7 @@ public partial class SettingsViewModel : ObservableObject
         ShortItemNameMaxLength = config.ShortItemNameMaxLength;
         SelectedLanguage = Languages.FirstOrDefault(x => x.Name == config.Language);
         Theme = config.Theme;
+        LoadExifOrientationFromFileWhenMissingInDatabase = config.LoadExifOrientationFromFileWhenMissingInDatabase;
 
         IsDirty = false;
     }
@@ -361,7 +373,8 @@ public partial class SettingsViewModel : ObservableObject
             OverlayTextSizeLarge,
             ShortItemNameMaxLength,
             SelectedLanguage?.Name == "en" ? null : SelectedLanguage?.Name,
-            Theme);
+            Theme,
+            LoadExifOrientationFromFileWhenMissingInDatabase);
 
         var result = new ConfigValidator().Validate(configToSave);
         if (!result.IsValid)

@@ -84,6 +84,7 @@
 							<RowDefinition Height="auto"/>
 							<RowDefinition Height="auto"/>
 							<RowDefinition Height="auto"/>
+							<RowDefinition Height="auto"/>
 						</Grid.RowDefinitions>
 
 						<TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static lang:Strings.SettingsSlideshowDelaySecondsLabel}" Classes="PageTextBlock"/>
@@ -124,6 +125,11 @@
 							<TextBlock Text="{x:Static lang:Strings.SettingsKeepSelectionAfterSortLabel}"/>
 						</CheckBox>
 						<Button Grid.Row="7" Grid.Column="2" VerticalAlignment="Center" Classes="PageButton" Command="{Binding SetDefaultKeepSelectionAfterSortCommand}" ToolTip.Tip="{x:Static lang:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static lang:Strings.SettingsDefaultButton}" IsEnabled="{Binding !KeepSelectionAfterSortIsDefault}"/>
+
+						<CheckBox Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" IsChecked="{Binding Path=LoadExifOrientationFromFileWhenMissingInDatabase, Mode=TwoWay}" Classes="PageCheckBox">
+							<TextBlock Text="{x:Static lang:Strings.SettingsLoadExifOrientationFromFileWhenMissingInDatabaseLabel}"/>
+						</CheckBox>
+						<Button Grid.Row="8" Grid.Column="2" VerticalAlignment="Center" Classes="PageButton" Command="{Binding SetDefaultLoadExifOrientationFromFileWhenMissingInDatabaseCommand}" ToolTip.Tip="{x:Static lang:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static lang:Strings.SettingsDefaultButton}" IsEnabled="{Binding !LoadExifOrientationFromFileWhenMissingInDatabaseIsDefault}"/>
 					</Grid>
 				</Border>
 
