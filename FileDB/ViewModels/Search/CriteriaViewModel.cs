@@ -281,6 +281,7 @@ public partial class CriteriaViewModel : ObservableObject
         var vm = ServiceLocator.Resolve<FilterSelectionViewModel>();
         vm.SelectedFilterType = FilterType.PersonGroup;
         var personGroupViewModel = (PersonGroupViewModel)vm.FilterViewModel;
+        personGroupViewModel.SelectedPersons.Clear();
         foreach (var person in persons)
         {
             personGroupViewModel.SelectedPersons.Add(personGroupViewModel.Persons.First(p => p.Id == person.Id));
