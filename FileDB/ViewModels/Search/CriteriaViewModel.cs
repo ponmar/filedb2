@@ -101,6 +101,11 @@ public partial class CriteriaViewModel : ObservableObject
             AddTagFilterFor(x.Tag);
         });
 
+        this.RegisterForEvent<AddTagsSearchFilter>(x =>
+        {
+            AddTagsFilterFor(x.Tags);
+        });
+
         this.RegisterForEvent<SearchForFiles>(async x =>
         {
             FilterSettings.Clear();
@@ -133,6 +138,13 @@ public partial class CriteriaViewModel : ObservableObject
         {
             FilterSettings.Clear();
             AddTagFilterFor(x.Tag);
+            await FindFilesFromFiltersAsync();
+        });
+
+        this.RegisterForEvent<SearchForTags>(async x =>
+        {
+            FilterSettings.Clear();
+            AddTagsFilterFor(x.Tags);
             await FindFilesFromFiltersAsync();
         });
 
@@ -304,6 +316,19 @@ public partial class CriteriaViewModel : ObservableObject
         vm.SelectedFilterType = FilterType.Tag;
         var tagViewModel = (TagViewModel)vm.FilterViewModel;
         tagViewModel.SelectedTag = tagViewModel.Tags.First(p => p.Id == tag.Id);
+        AddFilter(vm);
+    }
+
+    private void AddTagsFilterFor(IEnumerable<TagModel> tags)
+    {
+        var vm = ServiceLocator.Resolve<FilterSelectionViewModel>();
+        vm.SelectedFilterType = FilterType.Tags;
+        var tagsViewModel = (Search.Filters.TagsViewModel)vm.FilterViewModel;
+        tagsViewModel.SelectedTags.Clear();
+        foreach (var tag in tags)
+        {
+            tagsViewModel.SelectedTags.Add(tagsViewModel.Tags.First(x => x.Id == tag.Id));
+        }
         AddFilter(vm);
     }
 

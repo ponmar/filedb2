@@ -47,6 +47,9 @@ public enum FilterType
     [FilterTypeViewModel(typeof(TagViewModel))]
     Tag,
 
+    [FilterTypeViewModel(typeof(TagsViewModel))]
+    Tags,
+
     [FilterTypeViewModel(typeof(PositionViewModel))]
     Position,
 
@@ -84,6 +87,7 @@ public static class FilterTypeExtensions
             FilterType.PersonGroup => Strings.FilterTypePersonGroup,
             FilterType.Location => Strings.FilterTypeLocation,
             FilterType.Tag => Strings.FilterTypeTag,
+            FilterType.Tags => Strings.FilterTypeTags,
             FilterType.Position => Strings.FilterTypePosition,
             FilterType.NumPersons => Strings.FilterTypeNumPersons,
             FilterType.Season => Strings.FilterTypeSeason,

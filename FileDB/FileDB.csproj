@@ -54,6 +54,9 @@
     <Compile Update="Views\Search\File\FileCategorizationView.axaml.cs">
       <DependentUpon>FileCategorizationView.axaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\Search\Filters\TagsView.axaml.cs">
+      <DependentUpon>TagsView.axaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\Search\Filters\PersonGroupView.axaml.cs">
       <DependentUpon>PersonGroupView.axaml</DependentUpon>
     </Compile>

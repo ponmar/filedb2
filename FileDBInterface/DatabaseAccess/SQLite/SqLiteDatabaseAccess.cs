@@ -274,10 +274,11 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
         return connection.Query<FileModel>($"select * from [files] inner join filelocations on files.Id = filelocations.FileId where filelocations.LocationId not in ({string.Join(',', locationIds)})");
     }
 
-    public IEnumerable<FileModel> SearchFilesWithTags(IEnumerable<int> tagIds)
+    public IEnumerable<FileModel> SearchFilesWithTags(IEnumerable<int> tagIds, bool allowOtherTags)
     {
         using var connection = DatabaseSetup.CreateConnection(database);
-        return connection.Query<FileModel>($"select * from [files] inner join filetags on files.Id = filetags.FileId where filetags.TagId in ({string.Join(',', tagIds)})");
+        var files = connection.Query<FileModel>($"select * from [files] inner join filetags on files.Id = filetags.FileId where filetags.TagId in ({string.Join(',', tagIds)})");
+        return allowOtherTags ? files : files.Where(x => GetTagsFromFile(x.Id).Count() == tagIds.Count());
     }
 
     public IEnumerable<FileModel> SearchFilesWithoutTags(IEnumerable<int> tagIds)

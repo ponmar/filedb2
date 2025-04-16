@@ -97,10 +97,10 @@ public class FileTextOverlayCreator
         return tagStrings;
     }
 
-    public static IEnumerable<TagModel> GetTags(IDatabaseAccess dbAccess, FileModel file)
+    public static IEnumerable<Tag> GetTags(IDatabaseAccess dbAccess, FileModel file)
     {
         var tags = dbAccess.GetTagsFromFile(file.Id);
-        return tags.OrderBy(x => x.Name);
+        return tags.Select(x => new Tag(x, x.Name)).OrderBy(x => x.Name);
     }
 
     public static string? GetFileDateTimeText(FileModel file)

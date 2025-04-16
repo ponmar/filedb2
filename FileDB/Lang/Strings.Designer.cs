@@ -1163,6 +1163,15 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add tags search filter.
+        /// </summary>
+        public static string FileInfoAddTagsSearchFilter {
+            get {
+                return ResourceManager.GetString("FileInfoAddTagsSearchFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Description.
         /// </summary>
         public static string FileInfoDescriptionToolTip {
@@ -1231,6 +1240,15 @@ namespace FileDB.Lang {
         public static string FileInfoSearchTag {
             get {
                 return ResourceManager.GetString("FileInfoSearchTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search for tags.
+        /// </summary>
+        public static string FileInfoSearchTags {
+            get {
+                return ResourceManager.GetString("FileInfoSearchTags", resourceCulture);
             }
         }
         
@@ -1730,6 +1748,15 @@ namespace FileDB.Lang {
         public static string FilterTypeTag {
             get {
                 return ResourceManager.GetString("FilterTypeTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tags.
+        /// </summary>
+        public static string FilterTypeTags {
+            get {
+                return ResourceManager.GetString("FilterTypeTags", resourceCulture);
             }
         }
         
@@ -2234,6 +2261,24 @@ namespace FileDB.Lang {
         public static string SearchFiltersLabel {
             get {
                 return ResourceManager.GetString("SearchFiltersLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inclusive.
+        /// </summary>
+        public static string SearchFilterTagsInclusive {
+            get {
+                return ResourceManager.GetString("SearchFilterTagsInclusive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Include files with non-selected tags.
+        /// </summary>
+        public static string SearchFilterTagsInclusiveToolTip {
+            get {
+                return ResourceManager.GetString("SearchFilterTagsInclusiveToolTip", resourceCulture);
             }
         }
         

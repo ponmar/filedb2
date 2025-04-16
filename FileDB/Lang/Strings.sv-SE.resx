@@ -1286,4 +1286,19 @@ Lägg till nya filer i '{0}'.</value>
   <data name="SettingsLoadExifOrientationFromFileWhenMissingInDatabaseLabel" xml:space="preserve">
     <value>Ladda Exif-rotation från fil när den inte finns i databasen (behövs enbart om filer lades till innan version 3.0)</value>
   </data>
+  <data name="SearchFilterTagsInclusive" xml:space="preserve">
+    <value>Inklusive</value>
+  </data>
+  <data name="SearchFilterTagsInclusiveToolTip" xml:space="preserve">
+    <value>Inkludera filer med icke-valda etiketter</value>
+  </data>
+  <data name="FilterTypeTags" xml:space="preserve">
+    <value>Etiketter</value>
+  </data>
+  <data name="FileInfoSearchTags" xml:space="preserve">
+    <value>Sök efter etiketter</value>
+  </data>
+  <data name="FileInfoAddTagsSearchFilter" xml:space="preserve">
+    <value>Lägg till etiketter-sökfilter</value>
+  </data>
 </root>

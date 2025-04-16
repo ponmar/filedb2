@@ -16,6 +16,7 @@ namespace FileDB.ViewModels.Search;
 
 public record Person(PersonModel Model, string Label);
 public record Location(LocationModel Model, string Name, string? MapUrl);
+public record Tag(TagModel Model, string Name);
 
 public enum UpdateHistoryType
 {
@@ -65,7 +66,7 @@ public partial class FileViewModel : ObservableObject
 
     public ObservableCollection<Location> Locations { get; } = [];
 
-    public ObservableCollection<TagModel> Tags { get; } = [];
+    public ObservableCollection<Tag> Tags { get; } = [];
 
     [ObservableProperty]
     private string fileLoadError = string.Empty;
@@ -290,8 +291,14 @@ public partial class FileViewModel : ObservableObject
     private static void AddLocationSearchFilter(LocationModel location) => Messenger.Send(new AddLocationSearchFilter(location));
 
     [RelayCommand]
-    private static void SearchForTag(TagModel tag) => Messenger.Send(new SearchForTag(tag));
+    private static void SearchForTag(Tag tag) => Messenger.Send(new SearchForTag(tag.Model));
 
     [RelayCommand]
-    private static void AddTagSearchFilter(TagModel tag) => Messenger.Send(new AddTagSearchFilter(tag));
+    private void SearchForTags() => Messenger.Send(new SearchForTags(Tags.Select(x => x.Model)));
+
+    [RelayCommand]
+    private static void AddTagSearchFilter(Tag tag) => Messenger.Send(new AddTagSearchFilter(tag.Model));
+
+    [RelayCommand]
+    private void AddTagsSearchFilter() => Messenger.Send(new AddTagsSearchFilter(Tags.Select(x => x.Model)));
 }

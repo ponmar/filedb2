@@ -1286,4 +1286,19 @@ This operation can be slow for a large collection of files or if the media acces
   <data name="SettingsLoadExifOrientationFromFileWhenMissingInDatabaseLabel" xml:space="preserve">
     <value>Load Exif orientation from file when missing in database (only necessary if files was added before version 3.0)</value>
   </data>
+  <data name="SearchFilterTagsInclusive" xml:space="preserve">
+    <value>Inclusive</value>
+  </data>
+  <data name="SearchFilterTagsInclusiveToolTip" xml:space="preserve">
+    <value>Include files with non-selected tags</value>
+  </data>
+  <data name="FilterTypeTags" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="FileInfoSearchTags" xml:space="preserve">
+    <value>Search for tags</value>
+  </data>
+  <data name="FileInfoAddTagsSearchFilter" xml:space="preserve">
+    <value>Add tags search filter</value>
+  </data>
 </root>

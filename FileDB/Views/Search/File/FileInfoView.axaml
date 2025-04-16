@@ -10,6 +10,7 @@
 			<StackPanel Orientation="Vertical">
 				<TextBlock FontSize="{Binding OverlayFontSize}" Text="{Binding DateTime}" Margin="0 5 0 5" IsVisible="{Binding DateTime, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
 
+				<!-- Persons -->
 				<TextBlock FontSize="{Binding OverlayFontSize}" Text="&#x1F642;" Margin="0 5 0 0" IsVisible="{Binding Persons.Count}" ToolTip.Tip="{x:Static lang:Strings.FileInfoPersonsToolTip}"/>
 				<ItemsControl IsVisible="{Binding Persons.Count}" ItemsSource="{Binding Persons}" Margin="0 0 0 5" >
 					<ItemsControl.ItemTemplate>
@@ -34,6 +35,7 @@
 					</ItemsControl.ItemTemplate>
 				</ItemsControl>
 
+				<!-- Locations -->
 				<TextBlock FontSize="{Binding OverlayFontSize}" Text="&#x1F3E0;" Margin="0 5 0 0" IsVisible="{Binding Locations.Count}" ToolTip.Tip="{x:Static lang:Strings.FileInfoLocationsToolTip}"/>
 				<ItemsControl IsVisible="{Binding Locations.Count}" ItemsSource="{Binding Locations}" Margin="0 0 0 5" >
 					<ItemsControl.ItemTemplate>
@@ -56,6 +58,7 @@
 					</ItemsControl.ItemTemplate>
 				</ItemsControl>
 
+				<!-- Tags -->
 				<TextBlock FontSize="{Binding OverlayFontSize}" Text="&#x1F516;" Margin="0 5 0 0" IsVisible="{Binding Tags.Count}" ToolTip.Tip="{x:Static lang:Strings.FileInfoTagsToolTip}"/>
 				<ItemsControl IsVisible="{Binding Tags.Count}" ItemsSource="{Binding Tags}" Margin="0 0 0 5" >
 					<ItemsControl.ItemTemplate>
@@ -65,8 +68,10 @@
 									<Button.Flyout>
 										<MenuFlyout>
 											<MenuItem Header="{x:Static lang:Strings.FileInfoSearchTag}" Command="{Binding $parent[UserControl].DataContext.SearchForTagCommand}" CommandParameter="{Binding}"/>
+											<MenuItem Header="{x:Static lang:Strings.FileInfoSearchTags}" Command="{Binding $parent[UserControl].DataContext.SearchForTagsCommand}"/>
 											<MenuItem Header="-"/>
 											<MenuItem Header="{x:Static lang:Strings.FileInfoAddTagSearchFilter}" Command="{Binding $parent[UserControl].DataContext.AddTagSearchFilterCommand}" CommandParameter="{Binding}"/>
+											<MenuItem Header="{x:Static lang:Strings.FileInfoAddTagsSearchFilter}" Command="{Binding $parent[UserControl].DataContext.AddTagsSearchFilterCommand}"/>
 										</MenuFlyout>
 									</Button.Flyout>
 								</Button>
@@ -76,6 +81,7 @@
 					</ItemsControl.ItemTemplate>
 				</ItemsControl>
 
+				<!-- Position -->
 				<StackPanel Margin="0 5 0 5" Orientation="Vertical" IsVisible="{Binding Position, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
 					<TextBlock FontSize="{Binding OverlayFontSize}" Text="&#x1F6F0;" ToolTip.Tip="{x:Static lang:Strings.FileInfoPositionToolTip}"/>
 					<StackPanel Orientation="Horizontal">
@@ -84,6 +90,7 @@
 					</StackPanel>
 				</StackPanel>
 
+				<!-- Description -->
 				<TextBlock FontSize="{Binding OverlayFontSize}" Text="&#x1F4DD;" Margin="0 5 0 0" IsVisible="{Binding Description, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" ToolTip.Tip="{x:Static lang:Strings.FileInfoDescriptionToolTip}"/>
 				<TextBlock FontSize="{Binding OverlayFontSize}" MaxWidth="300" Text="{Binding Description}" Margin="0 0 0 5" ToolTip.Tip="{Binding Description}" TextWrapping="Wrap" IsVisible="{Binding Description, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" HorizontalAlignment="Left"/>
 			</StackPanel>

@@ -46,7 +46,7 @@ public interface IFilesAccess
     IEnumerable<FileModel> SearchFilesWithoutPersons(IEnumerable<int> personIds);
     IEnumerable<FileModel> SearchFilesWithLocations(IEnumerable<int> locationIds);
     IEnumerable<FileModel> SearchFilesWithoutLocations(IEnumerable<int> locationIds);
-    IEnumerable<FileModel> SearchFilesWithTags(IEnumerable<int> tagIds);
+    IEnumerable<FileModel> SearchFilesWithTags(IEnumerable<int> tagIds, bool allowOtherTags = true);
     IEnumerable<FileModel> SearchFilesWithoutTags(IEnumerable<int> tagIds);
     IEnumerable<FileModel> SearchFilesWithMissingData();
 

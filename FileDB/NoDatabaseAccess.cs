@@ -143,7 +143,7 @@ public class NoDatabaseAccess : IDatabaseAccess
         return [];
     }
 
-    public IEnumerable<FileModel> SearchFilesWithTags(IEnumerable<int> tagIds)
+    public IEnumerable<FileModel> SearchFilesWithTags(IEnumerable<int> tagIds, bool allowOtherTags)
     {
         return [];
     }
