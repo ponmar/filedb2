@@ -19,18 +19,7 @@ using FileDBInterface.Utils;
 
 namespace FileDB.ViewModels;
 
-public class NewFile
-{
-    public string Path { get; }
-
-    public string DateModified { get; }
-
-    public NewFile(string path, string dateModified)
-    {
-        Path = path;
-        DateModified = dateModified;
-    }
-}
+public record NewFile(string Path, string DateModified);
 
 public partial class FilesViewModel : ObservableObject
 {

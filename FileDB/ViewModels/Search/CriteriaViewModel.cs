@@ -81,30 +81,17 @@ public partial class CriteriaViewModel : ObservableObject
             SelectedFile = fileSelector.SelectedFile;
         });
 
-        this.RegisterForEvent<AddPersonSearchFilter>(x =>
-        {
-            AddPersonFilterFor(x.Person);
-        });
+        this.RegisterForEvent<AddPersonSearchFilter>(x => AddPersonFilterFor(x.Person));
 
-        this.RegisterForEvent<AddPersonGroupSearchFilter>(x =>
-        {
-            AddPersonGroupFilterFor(x.Persons);
-        });
+        this.RegisterForEvent<AddPersonGroupSearchFilter>(x => AddPersonGroupFilterFor(x.Persons));
 
-        this.RegisterForEvent<AddLocationSearchFilter>(x =>
-        {
-            AddLocationFilterFor(x.Location);
-        });
+        this.RegisterForEvent<AddLocationSearchFilter>(x => AddLocationFilterFor(x.Location));
 
-        this.RegisterForEvent<AddTagSearchFilter>(x =>
-        {
-            AddTagFilterFor(x.Tag);
-        });
+        this.RegisterForEvent<AddTagSearchFilter>(x => AddTagFilterFor(x.Tag));
 
-        this.RegisterForEvent<AddTagsSearchFilter>(x =>
-        {
-            AddTagsFilterFor(x.Tags);
-        });
+        this.RegisterForEvent<AddTagsSearchFilter>(x => AddTagsFilterFor(x.Tags));
+
+        this.RegisterForEvent<AddDateSearchFilter>(x => AddAnnualDateFilterFor(x.Month, x.Day));
 
         this.RegisterForEvent<SearchForFiles>(async x =>
         {
@@ -153,11 +140,6 @@ public partial class CriteriaViewModel : ObservableObject
             FilterSettings.Clear();
             AddAnnualDateFilterFor(x.Month, x.Day);
             await FindFilesFromFiltersAsync();
-        });
-
-        this.RegisterForEvent<AddDateSearchFilter>(x =>
-        {
-            AddAnnualDateFilterFor(x.Month, x.Day);
         });
     }
 
