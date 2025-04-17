@@ -1,3 +1,15 @@
+4.10:
+* Add Tags search filter that is also available via the file info overlay
+* Add Persons (group) search filter that is also available via the file info overlay
+* File update history shows more than 12 items (but function keys are only used for the first 12 items)
+* All files search moved from Basic tab to a new search filter
+* Files tab: replace copy filelist button with a button for adding a filter
+* Files tab: select all new files after scan
+* Basic search tab: remove button for searching for added files
+* Make more areas scrollable in the file info overlay
+* Add setting for enabling loading of Exif orientation from file when no orientation available in database
+* Fix some missing translations
+
 4.9:
 * Upgrade to .NET9
 * Demo configuration moved to own repo and is no longer included in releases
