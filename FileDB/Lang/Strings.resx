@@ -1275,7 +1275,7 @@ This operation can be slow for a large collection of files or if the media acces
     <value>Include files with non-selected persons</value>
   </data>
   <data name="SearchFilterPersonGroupInclusive" xml:space="preserve">
-    <value>Inclusive</value>
+    <value>+</value>
   </data>
   <data name="FileInfoSearchPersonGroup" xml:space="preserve">
     <value>Search for persons (group)</value>
@@ -1287,7 +1287,7 @@ This operation can be slow for a large collection of files or if the media acces
     <value>Load Exif orientation from file when missing in database (only necessary if files was added before version 3.0)</value>
   </data>
   <data name="SearchFilterTagsInclusive" xml:space="preserve">
-    <value>Inclusive</value>
+    <value>+</value>
   </data>
   <data name="SearchFilterTagsInclusiveToolTip" xml:space="preserve">
     <value>Include files with non-selected tags</value>

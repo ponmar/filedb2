@@ -2202,7 +2202,7 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Inclusive.
+        ///   Looks up a localized string similar to +.
         /// </summary>
         public static string SearchFilterPersonGroupInclusive {
             get {
@@ -2265,7 +2265,7 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Inclusive.
+        ///   Looks up a localized string similar to +.
         /// </summary>
         public static string SearchFilterTagsInclusive {
             get {

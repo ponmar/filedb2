@@ -1275,7 +1275,7 @@ Lägg till nya filer i '{0}'.</value>
     <value>Inkludera filer med icke-valda personer</value>
   </data>
   <data name="SearchFilterPersonGroupInclusive" xml:space="preserve">
-    <value>Inklusive</value>
+    <value>+</value>
   </data>
   <data name="FileInfoSearchPersonGroup" xml:space="preserve">
     <value>Sök efter personer (grupp)</value>
@@ -1287,7 +1287,7 @@ Lägg till nya filer i '{0}'.</value>
     <value>Ladda Exif-rotation från fil när den inte finns i databasen (behövs enbart om filer lades till innan version 3.0)</value>
   </data>
   <data name="SearchFilterTagsInclusive" xml:space="preserve">
-    <value>Inklusive</value>
+    <value>+</value>
   </data>
   <data name="SearchFilterTagsInclusiveToolTip" xml:space="preserve">
     <value>Inkludera filer med icke-valda etiketter</value>
