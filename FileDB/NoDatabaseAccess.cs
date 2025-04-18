@@ -123,7 +123,17 @@ public class NoDatabaseAccess : IDatabaseAccess
         return [];
     }
 
-    public IEnumerable<FileModel> SearchFilesWithPersons(IEnumerable<int> personIds, bool allowOtherPersons)
+    public IEnumerable<FileModel> SearchFilesWithPersons(IEnumerable<int> personIds)
+    {
+        return [];
+    }
+
+    public IEnumerable<FileModel> SearchFilesWithPersonGroup(IEnumerable<int> personIds)
+    {
+        return [];
+    }
+
+    public IEnumerable<FileModel> SearchFilesWithPersonGroupOnly(IEnumerable<int> personIds)
     {
         return [];
     }
@@ -143,7 +153,17 @@ public class NoDatabaseAccess : IDatabaseAccess
         return [];
     }
 
-    public IEnumerable<FileModel> SearchFilesWithTags(IEnumerable<int> tagIds, bool allowOtherTags)
+    public IEnumerable<FileModel> SearchFilesWithTags(IEnumerable<int> tagIds)
+    {
+        return [];
+    }
+
+    public IEnumerable<FileModel> SearchFilesWithTagGroup(IEnumerable<int> tagIds)
+    {
+        return [];
+    }
+
+    public IEnumerable<FileModel> SearchFilesWithTagGroupOnly(IEnumerable<int> tagIds)
     {
         return [];
     }

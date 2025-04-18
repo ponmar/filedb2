@@ -42,11 +42,15 @@ public interface IFilesAccess
     IEnumerable<FileModel> SearchFilesByExtension(string extension);
     IEnumerable<FileModel> SearchFilesRandom(int numFiles);
     IEnumerable<FileModel> SearchFilesNearGpsPosition(double latitude, double longitude, double radius);
-    IEnumerable<FileModel> SearchFilesWithPersons(IEnumerable<int> personIds, bool allowOtherPersons = true);
+    IEnumerable<FileModel> SearchFilesWithPersons(IEnumerable<int> personIds);
+    IEnumerable<FileModel> SearchFilesWithPersonGroup(IEnumerable<int> personIds);
+    IEnumerable<FileModel> SearchFilesWithPersonGroupOnly(IEnumerable<int> personIds);
     IEnumerable<FileModel> SearchFilesWithoutPersons(IEnumerable<int> personIds);
     IEnumerable<FileModel> SearchFilesWithLocations(IEnumerable<int> locationIds);
     IEnumerable<FileModel> SearchFilesWithoutLocations(IEnumerable<int> locationIds);
-    IEnumerable<FileModel> SearchFilesWithTags(IEnumerable<int> tagIds, bool allowOtherTags = true);
+    IEnumerable<FileModel> SearchFilesWithTags(IEnumerable<int> tagIds);
+    IEnumerable<FileModel> SearchFilesWithTagGroup(IEnumerable<int> tagIds);
+    IEnumerable<FileModel> SearchFilesWithTagGroupOnly(IEnumerable<int> tagIds);
     IEnumerable<FileModel> SearchFilesWithoutTags(IEnumerable<int> tagIds);
     IEnumerable<FileModel> SearchFilesWithMissingData();
 

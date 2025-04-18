@@ -249,11 +249,34 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
         return connection.Query<FileModel>($"select * from [files] where Datetime is null");
     }
 
-    public IEnumerable<FileModel> SearchFilesWithPersons(IEnumerable<int> personIds, bool allowOtherPersons = true)
+    public IEnumerable<FileModel> SearchFilesWithPersons(IEnumerable<int> personIds)
     {
         using var connection = DatabaseSetup.CreateConnection(database);
         var files = connection.Query<FileModel>($"select * from [files] inner join filepersons on files.Id = filepersons.FileId where filepersons.PersonId in ({string.Join(',', personIds)})");
-        return allowOtherPersons ? files : files.Where(x => GetPersonsFromFile(x.Id).Count() == personIds.Count());
+        return files.DistinctBy(x => x.Id);
+    }
+
+    public IEnumerable<FileModel> SearchFilesWithPersonGroup(IEnumerable<int> personIds)
+    {
+        using var connection = DatabaseSetup.CreateConnection(database);
+        var files = connection.Query<FileModel>($"select * from [files] inner join filepersons on files.Id = filepersons.FileId where filepersons.PersonId in ({string.Join(',', personIds)})");
+        return files.DistinctBy(x => x.Id).Where(x =>
+        {
+            var filePersons = GetPersonsFromFile(x.Id);
+            return filePersons.Select(x => x.Id).Intersect(personIds).Count() == personIds.Count();
+        });
+    }
+
+    public IEnumerable<FileModel> SearchFilesWithPersonGroupOnly(IEnumerable<int> personIds)
+    {
+        using var connection = DatabaseSetup.CreateConnection(database);
+        var files = connection.Query<FileModel>($"select * from [files] inner join filepersons on files.Id = filepersons.FileId where filepersons.PersonId in ({string.Join(',', personIds)})");
+        return files.DistinctBy(x => x.Id).Where(x =>
+        {
+            var filePersons = GetPersonsFromFile(x.Id);
+            return filePersons.Count() == personIds.Count() &&
+                filePersons.Select(x => x.Id).Intersect(personIds).Count() == personIds.Count();
+        });
     }
 
     public IEnumerable<FileModel> SearchFilesWithoutPersons(IEnumerable<int> personIds)
@@ -274,11 +297,33 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
         return connection.Query<FileModel>($"select * from [files] inner join filelocations on files.Id = filelocations.FileId where filelocations.LocationId not in ({string.Join(',', locationIds)})");
     }
 
-    public IEnumerable<FileModel> SearchFilesWithTags(IEnumerable<int> tagIds, bool allowOtherTags)
+    public IEnumerable<FileModel> SearchFilesWithTags(IEnumerable<int> tagIds)
+    {
+        using var connection = DatabaseSetup.CreateConnection(database);
+        return connection.Query<FileModel>($"select * from [files] inner join filetags on files.Id = filetags.FileId where filetags.TagId in ({string.Join(',', tagIds)})");
+    }
+
+    public IEnumerable<FileModel> SearchFilesWithTagGroup(IEnumerable<int> tagIds)
     {
         using var connection = DatabaseSetup.CreateConnection(database);
         var files = connection.Query<FileModel>($"select * from [files] inner join filetags on files.Id = filetags.FileId where filetags.TagId in ({string.Join(',', tagIds)})");
-        return allowOtherTags ? files : files.Where(x => GetTagsFromFile(x.Id).Count() == tagIds.Count());
+        return files.DistinctBy(x => x.Id).Where(x =>
+        {
+            var fileTags = GetTagsFromFile(x.Id);
+            return fileTags.Select(x => x.Id).Intersect(tagIds).Count() == tagIds.Count();
+        });
+    }
+
+    public IEnumerable<FileModel> SearchFilesWithTagGroupOnly(IEnumerable<int> tagIds)
+    {
+        using var connection = DatabaseSetup.CreateConnection(database);
+        var files = connection.Query<FileModel>($"select * from [files] inner join filetags on files.Id = filetags.FileId where filetags.TagId in ({string.Join(',', tagIds)})");
+        return files.DistinctBy(x => x.Id).Where(x =>
+        {
+            var fileTags = GetTagsFromFile(x.Id);
+            return fileTags.Count() == tagIds.Count() &&
+                fileTags.Select(x => x.Id).Intersect(tagIds).Count() == tagIds.Count();
+        });
     }
 
     public IEnumerable<FileModel> SearchFilesWithoutTags(IEnumerable<int> tagIds)
@@ -547,7 +592,7 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
     public IEnumerable<LocationModel> GetLocationsFromFile(int fileId)
     {
         using var connection = DatabaseSetup.CreateConnection(database);
-        return connection.Query<LocationModel>("select * from [locations] where Id in (select LocationId from [filelocations] where FileId = @fileId)", new { fileId = fileId });
+        return connection.Query<LocationModel>("select * from [locations] where Id in (select LocationId from [filelocations] where FileId = @fileId)", new { fileId });
     }
 
     public int GetLocationCount()

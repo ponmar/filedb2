@@ -13,6 +13,8 @@ public class TagsFilter(IEnumerable<TagForSearch> tags, bool allowOtherTags) : I
 
     public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
     {
-        return dbAccess.SearchFilesWithTags(tags.Select(x => x.Id), allowOtherTags);
+        return allowOtherTags ? 
+            dbAccess.SearchFilesWithTagGroup(tags.Select(x => x.Id)) :
+            dbAccess.SearchFilesWithTagGroupOnly(tags.Select(x => x.Id));
     }
 }
