@@ -3,7 +3,6 @@ using CommunityToolkit.Mvvm.Input;
 using System.Collections.Generic;
 using FileDBInterface.Model;
 using System.Linq;
-using System.IO;
 using System.Collections.ObjectModel;
 using FileDBInterface.Extensions;
 using FileDB.Model;
@@ -152,20 +151,6 @@ public partial class CriteriaViewModel : ObservableObject
         {
             Send(dbAccessProvider.DbAccess.SearchFilesRandom(value));
         }
-    }
-
-    [RelayCommand]
-    private async Task FindCurrentDirectoryFilesAsync()
-    {
-        if (SelectedFile is null)
-        {
-            await dialogs.ShowErrorDialogAsync("No file opened");
-            return;
-        }
-
-        var path = SelectedFile.Path;
-        var dir = Path.GetDirectoryName(path)!.Replace('\\', '/');
-        Send(dbAccessProvider.DbAccess.SearchFilesByPath(dir));
     }
 
     [RelayCommand]
