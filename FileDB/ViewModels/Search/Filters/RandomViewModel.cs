@@ -5,8 +5,10 @@ namespace FileDB.ViewModels.Search.Filters;
 
 public partial class RandomViewModel : ObservableObject, IFilterViewModel
 {
+    private const int DefaultNumRandomFiles = 10;
+
     [ObservableProperty]
-    private string numRandomFiles = "10";
+    private string numRandomFiles = DefaultNumRandomFiles.ToString();
 
     public IFilesFilter CreateFilter()
     {

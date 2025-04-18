@@ -123,6 +123,11 @@ public class NoDatabaseAccess : IDatabaseAccess
         return [];
     }
 
+    public IEnumerable<FileModel> SearchFilesByNumPersons(Range numPersonsRange)
+    {
+        return [];
+    }
+
     public IEnumerable<FileModel> SearchFilesWithPersons(IEnumerable<int> personIds)
     {
         return [];

@@ -249,6 +249,13 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
         return connection.Query<FileModel>($"select * from [files] where Datetime is null");
     }
 
+    public IEnumerable<FileModel> SearchFilesByNumPersons(Range numPersonsRange)
+    {
+        using var connection = DatabaseSetup.CreateConnection(database);
+        var sql = "select * from [files] where Id in (select FileId from [filepersons] group by FileId having count(*) >= @start and count(*) <= @end)";
+        return connection.Query<FileModel>(sql, new { start = numPersonsRange.Start.Value, end = numPersonsRange.End.Value });
+    }
+
     public IEnumerable<FileModel> SearchFilesWithPersons(IEnumerable<int> personIds)
     {
         using var connection = DatabaseSetup.CreateConnection(database);

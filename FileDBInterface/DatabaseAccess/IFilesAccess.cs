@@ -42,6 +42,7 @@ public interface IFilesAccess
     IEnumerable<FileModel> SearchFilesByExtension(string extension);
     IEnumerable<FileModel> SearchFilesRandom(int numFiles);
     IEnumerable<FileModel> SearchFilesNearGpsPosition(double latitude, double longitude, double radius);
+    IEnumerable<FileModel> SearchFilesByNumPersons(Range numPersonsRange);
     IEnumerable<FileModel> SearchFilesWithPersons(IEnumerable<int> personIds);
     IEnumerable<FileModel> SearchFilesWithPersonGroup(IEnumerable<int> personIds);
     IEnumerable<FileModel> SearchFilesWithPersonGroupOnly(IEnumerable<int> personIds);

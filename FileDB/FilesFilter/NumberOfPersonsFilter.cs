@@ -1,7 +1,7 @@
 ﻿using FileDBInterface.DatabaseAccess;
 using FileDBInterface.Model;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace FileDB.FilesFilter;
 
@@ -16,12 +16,6 @@ public class NumberOfPersonsFilter(string minText, string maxText) : IFilesFilte
     {
         var min = int.Parse(minText);
         var max = int.Parse(maxText);
-
-        // TODO: create optimized db query 
-        return dbAccess.GetFiles().Where(x =>
-        {
-            var numPersons = dbAccess.GetPersonsFromFile(x.Id).Count();
-            return numPersons >= min && numPersons <= max;
-        });
+        return dbAccess.SearchFilesByNumPersons(new Range(min, max));
     }
 }
