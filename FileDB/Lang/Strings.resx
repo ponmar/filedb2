@@ -1307,4 +1307,7 @@ This operation can be slow for a large collection of files or if the media acces
   <data name="FilterTypeRandom" xml:space="preserve">
     <value>Random</value>
   </data>
+  <data name="FilterTypeCombine" xml:space="preserve">
+    <value>Combine</value>
+  </data>
 </root>

@@ -76,6 +76,7 @@ public static class Bootstrapper
         ServiceLocator.RegisterTransient<DateViewModel>();
         ServiceLocator.RegisterTransient<DirectoryViewModel>();
         ServiceLocator.RegisterTransient<RandomViewModel>();
+        ServiceLocator.RegisterTransient<CombineViewModel>();
         ServiceLocator.RegisterTransient<NoMetaDataViewModel>();
         ServiceLocator.RegisterTransient<AllFilesViewModel>();
         ServiceLocator.RegisterTransient<NoDateTimeViewModel>();

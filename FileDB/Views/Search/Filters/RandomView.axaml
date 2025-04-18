@@ -9,7 +9,6 @@
     <StackPanel Orientation="Horizontal" DataContext="{Binding FilterViewModel}">
         <TextBox
             Width="50"
-            Margin="3,0"
             VerticalAlignment="Center"
             Text="{Binding NumRandomFiles}"
             ToolTip.Tip="{x:Static lang:Strings.SearchRandomFilesToolTip}" />

@@ -10,138 +10,40 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="FileDB.Views.Search.CriteriaView">
 	<Border Classes="BorderGroup" HorizontalAlignment="Stretch">
-        <TabControl Margin="0 0 0 10">
-            <TabItem Header="{x:Static lang:Strings.SearchFiltersLabel}">
-                <Grid ColumnDefinitions="*" RowDefinitions="auto,auto">
-                    <ItemsControl Grid.Row="0" ItemsSource="{Binding FilterSettings}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel Orientation="Horizontal" />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Margin="10" Orientation="Horizontal">
-                                    <Button
-                                        Margin="0 0 3 0"
-                                        Command="{Binding DataContext.RemoveFilterCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                        CommandParameter="{Binding}"
-                                        Content="&#128473;"
-                                        IsEnabled="{Binding DataContext.FilterCanBeRemoved, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                        ToolTip.Tip="Remove filter" />
+        <Grid ColumnDefinitions="*" RowDefinitions="auto,auto" Margin="0 0 0 10">
+            <ItemsControl Grid.Row="0" ItemsSource="{Binding FilterSettings}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="10" Orientation="Horizontal">
+                            <Button
+                                Margin="0 0 3 0"
+                                Command="{Binding DataContext.RemoveFilterCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                CommandParameter="{Binding}"
+                                Content="&#128473;"
+                                IsEnabled="{Binding DataContext.FilterCanBeRemoved, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                ToolTip.Tip="Remove filter" />
 
-									<local:FilterSelectionView/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
+							<local:FilterSelectionView/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
 
-                    <StackPanel Grid.Row="1" Orientation="Horizontal">
-                        <Button
-                            Margin="0 0 5 0"
-                            Command="{Binding AddFilterCommand}"
-                            Content="+"
-                            ToolTip.Tip="Add filter" />
-                        <Button
-                            Command="{Binding FindFilesFromFiltersCommand}"
-                            Content="Search"/>
-                    </StackPanel>
-                </Grid>
-            </TabItem>
-            
-            <TabItem Header="{x:Static lang:Strings.SearchCombineLabel}">
-                <WrapPanel Orientation="Horizontal">
-                    <StackPanel
-                        Margin="5"
-                        VerticalAlignment="Center"
-                        Orientation="Horizontal">
-                        <TextBlock
-                            Margin="3"
-                            VerticalAlignment="Center"
-                            Text="{x:Static lang:Strings.SearchCombineSearch1Label}" />
-                        <TextBox
-                            Width="100"
-                            Margin="3"
-                            VerticalAlignment="Center"
-                            Text="{Binding CombineSearch1}"
-                            ToolTip.Tip="fileId1;fileId2;..." />
-						<Button Content="{x:Static lang:Strings.SearchCombineSearchCurrent}" ToolTip.Tip="{x:Static lang:Strings.SearchCombineSearchCurrentToolTip}" Command="{Binding SetCombineSearch1Command}" IsEnabled="{Binding HasFiles}" />
-                    </StackPanel>
-
-                    <StackPanel
-                        Margin="5"
-                        VerticalAlignment="Center"
-                        Orientation="Horizontal">
-                        <TextBlock
-                            Margin="3"
-                            VerticalAlignment="Center"
-                            Text="{x:Static lang:Strings.SearchCombineSearch2Label}" />
-                        <TextBox
-                            Width="100"
-                            Margin="3"
-                            VerticalAlignment="Center"
-                            Text="{Binding CombineSearch2}"
-                            ToolTip.Tip="fileId1;fileId2;..." />
-						<Button Content="{x:Static lang:Strings.SearchCombineSearchCurrent}" ToolTip.Tip="{x:Static lang:Strings.SearchCombineSearchCurrentToolTip}" Command="{Binding SetCombineSearch2Command}" IsEnabled="{Binding HasFiles}"/>
-					</StackPanel>
-
-                    <StackPanel
-                        Margin="5"
-                        VerticalAlignment="Center">
-                        <Button
-							Width="100"
-                            Margin="3"
-                            Command="{Binding CombineSearchIntersectionCommand}"
-                            Content="{x:Static lang:Strings.SearchIntersectionButton}"
-                            IsEnabled="{Binding CombineSearchResultPossible}"
-                            ToolTip.Tip="{x:Static lang:Strings.SearchAllFilesFromSearch1ThatAlsoBelongToSearch2ToolTip}" />
-						<Button
-							Width="100"
-                            Margin="3"
-                            Command="{Binding CombineSearchUnionCommand}"
-                            Content="{x:Static lang:Strings.SearchUnionButton}"
-                            IsEnabled="{Binding CombineSearchResultPossible}"                            
-                            ToolTip.Tip="{x:Static lang:Strings.SearchAllFilesFromSearch1And2ToolTip}" />
-						<Button
-							Width="100"
-                            Margin="3"
-                            Command="{Binding CombineSearchDifferenceCommand}"
-                            Content="{x:Static lang:Strings.SearchDifferenceButton}"
-                            IsEnabled="{Binding CombineSearchResultPossible}"
-                            ToolTip.Tip="{x:Static lang:Strings.SearchAllFilesThatAreInEitherOfTheSearchesButNotInTheirIntersectionToolTip}" />
-                    </StackPanel>
-
-                    <StackPanel
-                        Margin="5"
-                        VerticalAlignment="Center"
-                        Orientation="Horizontal">
-                        <TextBlock
-                            Margin="3"
-                            VerticalAlignment="Center"
-                            Text="{x:Static lang:Strings.SearchCombineResultLabel}" />
-                        <TextBox
-                            Width="100"
-                            Margin="3"
-                            VerticalAlignment="Center"
-                            IsHitTestVisible="False"
-                            IsReadOnly="True"
-                            Text="{Binding CombineSearchResult}" />
-                        <Button
-                            Margin="3"
-                            VerticalAlignment="Center"
-                            Command="{Binding CombineSearchResultShowCommand}"
-                            Content="{x:Static lang:Strings.SearchOpenButton}"
-                            IsEnabled="{Binding CombineSearchResult, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
-						<Button
-                            Margin="3"
-                            VerticalAlignment="Center"
-                            Command="{Binding CombineSearchResultCopyCommand}"
-							Content="&#x1f5d0;"
-                            ToolTip.Tip="{x:Static lang:Strings.SearchCopyButton}"
-                            IsEnabled="{Binding CombineSearchResult, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
-					</StackPanel>
-                </WrapPanel>
-            </TabItem>
-        </TabControl>
+            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10 5 0 0">
+                <Button
+                    Margin="0 0 5 0"
+                    Command="{Binding AddFilterCommand}"
+                    Content="+"
+                    ToolTip.Tip="Add filter" />
+                <Button
+                    Command="{Binding FindFilesFromFiltersCommand}"
+                    Content="Search"/>
+            </StackPanel>
+        </Grid>
     </Border>
 </UserControl>

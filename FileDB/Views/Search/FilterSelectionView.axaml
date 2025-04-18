@@ -51,6 +51,7 @@
 			<filters:TimeView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Time}}"/>
 			<filters:AllFilesView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.AllFiles}}"/>
 			<filters:RandomView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Random}}"/>
+			<filters:CombineView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Combine}}"/>
 		</Grid>
 	</StackPanel>
 </UserControl>

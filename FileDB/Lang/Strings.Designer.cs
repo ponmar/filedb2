@@ -1626,6 +1626,15 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Combine.
+        /// </summary>
+        public static string FilterTypeCombine {
+            get {
+                return ResourceManager.GetString("FilterTypeCombine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date.
         /// </summary>
         public static string FilterTypeDateTime {

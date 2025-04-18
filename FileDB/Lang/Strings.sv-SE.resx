@@ -1307,4 +1307,7 @@ Lägg till nya filer i '{0}'.</value>
   <data name="FilterTypeRandom" xml:space="preserve">
     <value>Slumpmässig</value>
   </data>
+  <data name="FilterTypeCombine" xml:space="preserve">
+    <value>Kombinera</value>
+  </data>
 </root>

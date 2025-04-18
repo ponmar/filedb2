@@ -73,6 +73,9 @@ public enum FilterType
 
     [FilterTypeViewModel(typeof(RandomViewModel))]
     Random,
+
+    [FilterTypeViewModel(typeof(CombineViewModel))]
+    Combine,
 }
 
 public static class FilterTypeExtensions
@@ -102,6 +105,7 @@ public static class FilterTypeExtensions
             FilterType.AllFiles => Strings.FilterTypeAllFiles,
             FilterType.Directory => Strings.FilterTypeDirectory,
             FilterType.Random => Strings.FilterTypeRandom,
+            FilterType.Combine => Strings.FilterTypeCombine,
             _ => throw new NotImplementedException(),
         };
     }
