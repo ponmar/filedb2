@@ -18,9 +18,6 @@ namespace FileDB.ViewModels;
 public partial class CriteriaViewModel : ObservableObject
 {
     [ObservableProperty]
-    private string numRandomFiles = "10";
-
-    [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CombineSearchResultPossible))]
     private string combineSearch1 = string.Empty;
 
@@ -144,15 +141,7 @@ public partial class CriteriaViewModel : ObservableObject
 
     private static void Send(IEnumerable<FileModel> files) => Messenger.Send(new TransferSearchResult(files));
 
-    [RelayCommand]
-    private void FindRandomFiles()
-    {
-        if (int.TryParse(NumRandomFiles, out var value))
-        {
-            Send(dbAccessProvider.DbAccess.SearchFilesRandom(value));
-        }
-    }
-
+    // TODO: remove?
     [RelayCommand]
     private void FindAllFiles()
     {

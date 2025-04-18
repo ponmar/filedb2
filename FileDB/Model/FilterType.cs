@@ -70,6 +70,9 @@ public enum FilterType
 
     [FilterTypeViewModel(typeof(DirectoryViewModel))]
     Directory,
+
+    [FilterTypeViewModel(typeof(RandomViewModel))]
+    Random,
 }
 
 public static class FilterTypeExtensions
@@ -98,6 +101,7 @@ public static class FilterTypeExtensions
             FilterType.Time => Strings.FilterTypeTime,
             FilterType.AllFiles => Strings.FilterTypeAllFiles,
             FilterType.Directory => Strings.FilterTypeDirectory,
+            FilterType.Random => Strings.FilterTypeRandom,
             _ => throw new NotImplementedException(),
         };
     }

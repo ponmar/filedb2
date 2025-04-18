@@ -48,26 +48,6 @@
                     </StackPanel>
                 </Grid>
             </TabItem>
-
-            <TabItem Header="{x:Static lang:Strings.SearchBasicLabel}">
-                <WrapPanel>
-                    <StackPanel Margin="10,5" Orientation="Horizontal">
-                        <TextBlock
-                            VerticalAlignment="Center"                            
-                            Text="{x:Static lang:Strings.SearchRandomFilesLabel}" />
-                        <TextBox
-                            Width="50"
-                            Margin="3,0"
-                            VerticalAlignment="Center"
-                            Text="{Binding NumRandomFiles}" />
-                        <Button
-                            Command="{Binding FindRandomFilesCommand}"
-                            Content="{x:Static lang:Strings.SearchButton}"
-                            IsEnabled="{Binding NumRandomFiles, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
-                            ToolTip.Tip="{x:Static lang:Strings.SearchRandomFilesToolTip}" />
-                    </StackPanel>
-                </WrapPanel>
-            </TabItem>
             
             <TabItem Header="{x:Static lang:Strings.SearchCombineLabel}">
                 <WrapPanel Orientation="Horizontal">

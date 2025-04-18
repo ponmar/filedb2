@@ -1743,6 +1743,15 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Random.
+        /// </summary>
+        public static string FilterTypeRandom {
+            get {
+                return ResourceManager.GetString("FilterTypeRandom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Season.
         /// </summary>
         public static string FilterTypeSeason {
@@ -2409,7 +2418,7 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search random files.
+        ///   Looks up a localized string similar to Number of random files.
         /// </summary>
         public static string SearchRandomFilesToolTip {
             get {

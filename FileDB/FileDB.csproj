@@ -54,6 +54,9 @@
     <Compile Update="Views\Search\File\FileCategorizationView.axaml.cs">
       <DependentUpon>FileCategorizationView.axaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\Search\Filters\RandomView.axaml.cs">
+      <DependentUpon>RandomView.axaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\Search\Filters\DirectoryView.axaml.cs">
       <DependentUpon>DirectoryView.axaml</DependentUpon>
     </Compile>

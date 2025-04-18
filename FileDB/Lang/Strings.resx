@@ -136,7 +136,7 @@
     <value>Search all files within current file directory (recursive)</value>
   </data>
   <data name="SearchRandomFilesToolTip" xml:space="preserve">
-    <value>Search random files</value>
+    <value>Number of random files</value>
   </data>
   <data name="SearchAllFilesFromSearch1ThatAlsoBelongToSearch2ToolTip" xml:space="preserve">
     <value>All files from search 1 that also belong to search 2</value>
@@ -1303,5 +1303,8 @@ This operation can be slow for a large collection of files or if the media acces
   </data>
   <data name="FilterTypeDirectory" xml:space="preserve">
     <value>Directory</value>
+  </data>
+  <data name="FilterTypeRandom" xml:space="preserve">
+    <value>Random</value>
   </data>
 </root>

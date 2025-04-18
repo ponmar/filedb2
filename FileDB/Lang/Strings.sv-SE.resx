@@ -136,7 +136,7 @@
     <value>Sök alla filer i aktuell filkatalog (rekursiv)</value>
   </data>
   <data name="SearchRandomFilesToolTip" xml:space="preserve">
-    <value>Sök slumpmässiga filer</value>
+    <value>Antal slumpmässiga filer</value>
   </data>
   <data name="SearchAllFilesFromSearch1ThatAlsoBelongToSearch2ToolTip" xml:space="preserve">
     <value>Alla filer från sökning 1 som också tillhör sökning 2</value>
@@ -1303,5 +1303,8 @@ Lägg till nya filer i '{0}'.</value>
   </data>
   <data name="FilterTypeDirectory" xml:space="preserve">
     <value>Katalog</value>
+  </data>
+  <data name="FilterTypeRandom" xml:space="preserve">
+    <value>Slumpmässig</value>
   </data>
 </root>
