@@ -32,17 +32,8 @@ public partial class CombineViewModel : ObservableObject, IFilterViewModel
     private string combineSearchResult = string.Empty;
 
     public bool CombineSearchResultPossible => CombineSearch1.HasContent() && CombineSearch2.HasContent();
-
-    [ObservableProperty]
-    private FileModel? selectedFile;
-
-    partial void OnSelectedFileChanged(FileModel? value)
-    {
-        HasFiles = value is not null;
-    }
-
-    [ObservableProperty]
-    private bool hasFiles;
+    
+    public bool HasSearchResult => searchResultRepository.Files.Any();
 
     private readonly ISearchResultRepository searchResultRepository;
     private readonly IClipboardService clipboardService;
@@ -54,10 +45,7 @@ public partial class CombineViewModel : ObservableObject, IFilterViewModel
         this.clipboardService = clipboardService;
         this.fileSelector = fileSelector;
 
-        this.RegisterForEvent<FileSelectionChanged>(x =>
-        {
-            SelectedFile = fileSelector.SelectedFile;
-        });
+        this.RegisterForEvent<SearchResultRepositoryUpdated>(x => OnPropertyChanged(nameof(HasSearchResult)));
     }
 
     [RelayCommand]

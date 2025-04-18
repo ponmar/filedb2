@@ -2166,6 +2166,15 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Result.
+        /// </summary>
+        public static string SearchFilterCombineResultToolTip {
+            get {
+                return ResourceManager.GetString("SearchFilterCombineResultToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to End.
         /// </summary>
         public static string SearchFilterDateTimeEnd {

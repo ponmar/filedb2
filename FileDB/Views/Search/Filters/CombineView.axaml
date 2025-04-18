@@ -13,11 +13,11 @@
             Orientation="Horizontal">
             <TextBox
                 Width="100"
-                Margin="3"
+                Margin="0 0 3 0"
                 VerticalAlignment="Center"
                 Text="{Binding CombineSearch1}"
                 ToolTip.Tip="fileId1;fileId2;..." />
-			<Button Content="{x:Static lang:Strings.SearchCombineSearchCurrent}" ToolTip.Tip="{x:Static lang:Strings.SearchCombineSearchCurrentToolTip}" Command="{Binding SetCombineSearch1Command}" IsEnabled="{Binding HasFiles}" />
+			<Button Content="{x:Static lang:Strings.SearchCombineSearchCurrent}" ToolTip.Tip="{x:Static lang:Strings.SearchCombineSearchCurrentToolTip}" Command="{Binding SetCombineSearch1Command}" IsEnabled="{Binding HasSearchResult}" />
         </StackPanel>
 
         <StackPanel
@@ -26,11 +26,11 @@
             Orientation="Horizontal">
             <TextBox
                 Width="100"
-                Margin="3"
+                Margin="0 0 3 0"
                 VerticalAlignment="Center"
                 Text="{Binding CombineSearch2}"
                 ToolTip.Tip="fileId1;fileId2;..." />
-			<Button Content="{x:Static lang:Strings.SearchCombineSearchCurrent}" ToolTip.Tip="{x:Static lang:Strings.SearchCombineSearchCurrentToolTip}" Command="{Binding SetCombineSearch2Command}" IsEnabled="{Binding HasFiles}"/>
+			<Button Content="{x:Static lang:Strings.SearchCombineSearchCurrent}" ToolTip.Tip="{x:Static lang:Strings.SearchCombineSearchCurrentToolTip}" Command="{Binding SetCombineSearch2Command}" IsEnabled="{Binding HasSearchResult}"/>
 		</StackPanel>
 
         <StackPanel
@@ -38,37 +38,31 @@
             VerticalAlignment="Center">
             <Button
 				Width="100"
-                Margin="3"
                 Command="{Binding CombineSearchIntersectionCommand}"
                 Content="{x:Static lang:Strings.SearchIntersectionButton}"
                 IsEnabled="{Binding CombineSearchResultPossible}"
                 ToolTip.Tip="{x:Static lang:Strings.SearchAllFilesFromSearch1ThatAlsoBelongToSearch2ToolTip}" />
 			<Button
 				Width="100"
-                Margin="3"
+                Margin="0 3"
                 Command="{Binding CombineSearchUnionCommand}"
                 Content="{x:Static lang:Strings.SearchUnionButton}"
                 IsEnabled="{Binding CombineSearchResultPossible}"                            
                 ToolTip.Tip="{x:Static lang:Strings.SearchAllFilesFromSearch1And2ToolTip}" />
 			<Button
 				Width="100"
-                Margin="3"
                 Command="{Binding CombineSearchDifferenceCommand}"
                 Content="{x:Static lang:Strings.SearchDifferenceButton}"
                 IsEnabled="{Binding CombineSearchResultPossible}"
                 ToolTip.Tip="{x:Static lang:Strings.SearchAllFilesThatAreInEitherOfTheSearchesButNotInTheirIntersectionToolTip}" />
         </StackPanel>
 
-        <TextBlock
-            Margin="3"
-            VerticalAlignment="Center"
-            Text="{x:Static lang:Strings.SearchCombineResultLabel}" />
         <TextBox
             Width="100"
             Margin="3"
             VerticalAlignment="Center"
-            IsHitTestVisible="False"
             IsReadOnly="True"
-            Text="{Binding CombineSearchResult}" />
+            Text="{Binding CombineSearchResult}"
+			ToolTip.Tip="{x:Static lang:Strings.SearchFilterCombineResultToolTip}"/>
     </StackPanel>
 </UserControl>

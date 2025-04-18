@@ -1310,4 +1310,7 @@ Lägg till nya filer i '{0}'.</value>
   <data name="FilterTypeCombine" xml:space="preserve">
     <value>Kombinera</value>
   </data>
+  <data name="SearchFilterCombineResultToolTip" xml:space="preserve">
+    <value>Resultat</value>
+  </data>
 </root>
