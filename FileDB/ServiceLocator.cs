@@ -2,7 +2,6 @@
 using Castle.MicroKernel;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
-using Microsoft.Extensions.Logging;
 
 namespace FileDB;
 

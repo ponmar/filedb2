@@ -53,12 +53,6 @@
                 <WrapPanel>
                     <Button
                         Margin="5"
-                        VerticalAlignment="Center"
-                        Command="{Binding FindBrowsedFilesCommand}"
-                        Content="{x:Static lang:Strings.SearchBrowseButton}"
-                        ToolTip.Tip="{x:Static lang:Strings.SearchForFilesWithinSelectedDirectoryToolTip}" />
-                    <Button
-                        Margin="5"
                         HorizontalAlignment="Left"
                         Command="{Binding FindCurrentDirectoryFilesCommand}"
                         Content="{x:Static lang:Strings.SearchAllFromCurrentDirectoryButton}"

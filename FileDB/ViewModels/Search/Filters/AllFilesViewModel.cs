@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using FileDB.FilesFilter;
-using System;
 
 namespace FileDB.ViewModels.Search.Filters;
 

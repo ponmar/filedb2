@@ -67,6 +67,9 @@ public enum FilterType
     
     [FilterTypeViewModel(typeof(AllFilesViewModel))]
     AllFiles,
+
+    [FilterTypeViewModel(typeof(DirectoryViewModel))]
+    Directory,
 }
 
 public static class FilterTypeExtensions
@@ -94,6 +97,7 @@ public static class FilterTypeExtensions
             FilterType.AnnualDate => Strings.FilterTypeAnnualDate,
             FilterType.Time => Strings.FilterTypeTime,
             FilterType.AllFiles => Strings.FilterTypeAllFiles,
+            FilterType.Directory => Strings.FilterTypeDirectory,
             _ => throw new NotImplementedException(),
         };
     }

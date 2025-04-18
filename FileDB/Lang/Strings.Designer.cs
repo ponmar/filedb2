@@ -1635,6 +1635,15 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Directory.
+        /// </summary>
+        public static string FilterTypeDirectory {
+            get {
+                return ResourceManager.GetString("FilterTypeDirectory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File list.
         /// </summary>
         public static string FilterTypeFileList {

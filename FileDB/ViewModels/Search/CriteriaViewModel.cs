@@ -175,16 +175,6 @@ public partial class CriteriaViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private async Task FindBrowsedFilesAsync()
-    {
-        var selectedDir = await dialogs.ShowBrowseDirectoriesDialogAsync();
-        if (selectedDir is not null)
-        {
-            Send(dbAccessProvider.DbAccess.SearchFilesByPath(selectedDir));
-        }
-    }
-
-    [RelayCommand]
     private void SetCombineSearch1()
     {
         CombineSearch1 = Utils.CreateFileList(searchResultRepository.Files);

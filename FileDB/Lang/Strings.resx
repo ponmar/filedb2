@@ -1301,4 +1301,7 @@ This operation can be slow for a large collection of files or if the media acces
   <data name="FileInfoAddTagsSearchFilter" xml:space="preserve">
     <value>Add tags search filter</value>
   </data>
+  <data name="FilterTypeDirectory" xml:space="preserve">
+    <value>Directory</value>
+  </data>
 </root>

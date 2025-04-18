@@ -1,5 +1,4 @@
-﻿using FileDB.ViewModels.Search;
-using FileDB.ViewModels.Search.Filters;
+﻿using FileDB.ViewModels.Search.Filters;
 using FileDBInterface.DatabaseAccess;
 using FileDBInterface.Model;
 using System.Collections.Generic;
