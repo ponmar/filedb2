@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.IO;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Dialogs;
@@ -13,10 +14,17 @@ public partial class DirectoryViewModel : ObservableObject, IFilterViewModel
 
     private readonly IDialogs dialogs;
 
-    public DirectoryViewModel(IDialogs dialogs)
+    public DirectoryViewModel(IDialogs dialogs, IFileSelector fileSelector)
     {
         this.dialogs = dialogs;
-        // TODO: select directory from current file?
+        if (fileSelector.SelectedFile is not null)
+        {
+            var lastSlashIndex = fileSelector.SelectedFile.Path.LastIndexOf('/');
+            if (lastSlashIndex != -1)
+            {
+                DirectoryPath = fileSelector.SelectedFile.Path[..lastSlashIndex];
+            }
+        }
     }
 
     [RelayCommand]
