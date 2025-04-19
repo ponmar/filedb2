@@ -7,7 +7,7 @@
              mc:Ignorable="d"
              x:Class="FileDB.Views.Search.Filters.DirectoryView">
 	<StackPanel Orientation="Horizontal" DataContext="{Binding FilterViewModel}">
-		<TextBlock Text="{Binding DirectoryPath}" Margin="0 0 3 0" VerticalAlignment="Center"/>
+		<TextBlock Text="{Binding DirectoryPath}" Margin="0 0 3 0" VerticalAlignment="Center" IsVisible="{Binding DirectoryPath, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
 		<Button
 			VerticalAlignment="Center"
 			Command="{Binding FindBrowsedFilesCommand}"
