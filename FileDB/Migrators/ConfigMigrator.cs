@@ -30,6 +30,7 @@ public class ConfigMigrator : IMigrator<Config>
             config.ShortItemNameMaxLength != 0 ? config.ShortItemNameMaxLength : defaultValues.ShortItemNameMaxLength,
             config.Language,
             config.Theme,
-            config.LoadExifOrientationFromFileWhenMissingInDatabase);
+            config.LoadExifOrientationFromFileWhenMissingInDatabase,
+            config.InitialSearchFilterType);
     }
 }

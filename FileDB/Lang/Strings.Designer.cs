@@ -2742,6 +2742,15 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Initial search filter type.
+        /// </summary>
+        public static string SettingsDefaultInitialSearchFilterTypeLabel {
+            get {
+                return ResourceManager.GetString("SettingsDefaultInitialSearchFilterTypeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Default sort method:.
         /// </summary>
         public static string SettingsDefaultSortMethodLabel {

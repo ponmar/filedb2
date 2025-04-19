@@ -1,4 +1,6 @@
-﻿namespace FileDB.Configuration;
+﻿using FileDB.Model;
+
+namespace FileDB.Configuration;
 
 public enum Theme { Default, Dark, Light }
 
@@ -26,7 +28,8 @@ public record Config(
     int ShortItemNameMaxLength,
     string? Language,
     Theme Theme,
-    bool LoadExifOrientationFromFileWhenMissingInDatabase);
+    bool LoadExifOrientationFromFileWhenMissingInDatabase,
+    FilterType InitialSearchFilterType);
 
 public static class DefaultConfigs
 {
@@ -54,5 +57,6 @@ public static class DefaultConfigs
             ShortItemNameMaxLength: 15,
             Language: null,
             Theme: Theme.Default,
-            LoadExifOrientationFromFileWhenMissingInDatabase: false);
+            LoadExifOrientationFromFileWhenMissingInDatabase: false,
+            InitialSearchFilterType: FilterType.Text);
 }

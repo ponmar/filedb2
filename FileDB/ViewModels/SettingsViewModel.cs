@@ -20,6 +20,7 @@ public partial class SettingsViewModel : ObservableObject
     public static IEnumerable<WindowMode> WindowModes { get; } = Enum.GetValues<WindowMode>();
     public static IEnumerable<Theme> Themes { get; } = Enum.GetValues<Theme>();
     public static IEnumerable<CultureInfo> Languages { get; } = [CultureInfo.GetCultureInfo("en"), CultureInfo.GetCultureInfo("sv-SE")];
+    public static IEnumerable<FilterType> SearchFilterTypes { get; } = Enum.GetValues<FilterType>().OrderBy(x => x.ToFriendlyString(), StringComparer.Ordinal);
 
     [ObservableProperty]
     private bool isDirty;
@@ -222,6 +223,14 @@ public partial class SettingsViewModel : ObservableObject
 
     public bool LoadExifOrientationFromFileWhenMissingInDatabaseIsDefault => LoadExifOrientationFromFileWhenMissingInDatabase == DefaultConfigs.Default.LoadExifOrientationFromFileWhenMissingInDatabase;
 
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(InitialSearchFilterTypeIsDefault))]
+    private FilterType initialSearchFilterType;
+
+    partial void OnInitialSearchFilterTypeChanged(FilterType value) => IsDirty = true;
+
+    public bool InitialSearchFilterTypeIsDefault => InitialSearchFilterType == DefaultConfigs.Default.InitialSearchFilterType;
+
     [RelayCommand]
     private void SetDefaultSlideshowDelay() => SlideshowDelay = DefaultConfigs.Default.SlideshowDelay;
 
@@ -293,6 +302,9 @@ public partial class SettingsViewModel : ObservableObject
 
     [RelayCommand]
     private void SetDefaultLoadExifOrientationFromFileWhenMissingInDatabase() => LoadExifOrientationFromFileWhenMissingInDatabase = DefaultConfigs.Default.LoadExifOrientationFromFileWhenMissingInDatabase;
+
+    [RelayCommand]
+    private void SetDefaultInitialSearchFilterType() => InitialSearchFilterType = DefaultConfigs.Default.InitialSearchFilterType;
 
     private readonly IConfigProvider configProvider;
     private readonly IConfigUpdater configUpdater;
@@ -374,7 +386,8 @@ public partial class SettingsViewModel : ObservableObject
             ShortItemNameMaxLength,
             SelectedLanguage?.Name == "en" ? null : SelectedLanguage?.Name,
             Theme,
-            LoadExifOrientationFromFileWhenMissingInDatabase);
+            LoadExifOrientationFromFileWhenMissingInDatabase,
+            InitialSearchFilterType);
 
         var result = new ConfigValidator().Validate(configToSave);
         if (!result.IsValid)

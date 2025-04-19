@@ -11,6 +11,9 @@ public class FilterTypeViewModelAttribute(Type viewModelType) : Attribute
 
 public enum FilterType
 {
+    [FilterTypeViewModel(typeof(TextViewModel))]
+    Text,
+
     [FilterTypeViewModel(typeof(DateViewModel))]
     Date,
 
@@ -19,9 +22,6 @@ public enum FilterType
 
     [FilterTypeViewModel(typeof(NoDateTimeViewModel))]
     NoDateTime,
-
-    [FilterTypeViewModel(typeof(TextViewModel))]
-    Text,
 
     [FilterTypeViewModel(typeof(FileListViewModel))]
     FileList,

@@ -1313,4 +1313,7 @@ Lägg till nya filer i '{0}'.</value>
   <data name="SearchFilterCombineResultToolTip" xml:space="preserve">
     <value>Resultat</value>
   </data>
+  <data name="SettingsDefaultInitialSearchFilterTypeLabel" xml:space="preserve">
+    <value>Initial sökfiltertyp</value>
+  </data>
 </root>

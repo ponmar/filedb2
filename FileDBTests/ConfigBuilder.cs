@@ -1,4 +1,5 @@
 ﻿using FileDB.Configuration;
+using FileDB.Model;
 
 namespace FileDBTests;
 
@@ -28,6 +29,7 @@ public class ConfigBuilder
     public string? Language { get; init; }
     public Theme Theme { get; init; }
     public bool LoadExifOrientationFromFileWhenMissingInDatabase { get; init; }
+    public FilterType InitialSearchFilterType { get; init; }
 
     public Config Build()
     {
@@ -55,6 +57,7 @@ public class ConfigBuilder
             ShortItemNameMaxLength,
             Language,
             Theme,
-            LoadExifOrientationFromFileWhenMissingInDatabase);
+            LoadExifOrientationFromFileWhenMissingInDatabase,
+            InitialSearchFilterType);
     }
 }

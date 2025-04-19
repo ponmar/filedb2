@@ -1313,4 +1313,7 @@ This operation can be slow for a large collection of files or if the media acces
   <data name="SearchFilterCombineResultToolTip" xml:space="preserve">
     <value>Result</value>
   </data>
+  <data name="SettingsDefaultInitialSearchFilterTypeLabel" xml:space="preserve">
+    <value>Initial search filter type</value>
+  </data>
 </root>
