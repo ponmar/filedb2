@@ -514,6 +514,10 @@ public partial class ResultViewModel : ObservableObject, ISearchResultRepository
             case SortMethod.PathDesc:
                 SortFiles(new FileModelByPathSorter(), true, preserveSelection);
                 break;
+
+            case SortMethod.Random:
+                SortFiles(new FileModelByRandomSorter(), false, preserveSelection);
+                break;
         }
     }
 

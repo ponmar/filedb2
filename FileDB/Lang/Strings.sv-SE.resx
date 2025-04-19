@@ -1316,4 +1316,7 @@ Lägg till nya filer i '{0}'.</value>
   <data name="SettingsDefaultInitialSearchFilterTypeLabel" xml:space="preserve">
     <value>Initial sökfiltertyp</value>
   </data>
+  <data name="SortMethodRandom" xml:space="preserve">
+    <value>Slumpmässig</value>
+  </data>
 </root>

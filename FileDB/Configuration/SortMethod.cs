@@ -3,7 +3,14 @@ using System;
 
 namespace FileDB.Configuration;
 
-public enum SortMethod { Date, DateDesc, Path, PathDesc }
+public enum SortMethod
+{
+    Date,
+    DateDesc,
+    Path,
+    PathDesc,
+    Random,
+}
 
 public static class SortMethodExtensions
 {
@@ -15,6 +22,7 @@ public static class SortMethodExtensions
             SortMethod.DateDesc => Strings.SortMethodDateDesc,
             SortMethod.Path => Strings.SortMethodPath,
             SortMethod.PathDesc => Strings.SortMethodPathDesc,
+            SortMethod.Random => Strings.SortMethodRandom,
             _ => throw new NotSupportedException(),
         };
     }

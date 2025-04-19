@@ -3147,6 +3147,15 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Random.
+        /// </summary>
+        public static string SortMethodRandom {
+            get {
+                return ResourceManager.GetString("SortMethodRandom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Demo configuration enabled. When you are ready, make a configuration for your files collection!.
         /// </summary>
         public static string StartupNotificationDemoConfigurationEnabled {
