@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using FileDB.FilesFilter;
 using FileDB.Model;
 using System.Collections.ObjectModel;
@@ -33,12 +34,12 @@ public partial class TagsViewModel : ObservableObject, IFilterViewModel
 
     private void TrySelectTagsFromSelectedFile()
     {
+        SelectedTags.Clear();
         if (fileSelector.SelectedFile is not null)
         {
             var tagsInFile = databaseAccessProvider.DbAccess.GetTagsFromFile(fileSelector.SelectedFile.Id);
             if (tagsInFile.Any())
             {
-                SelectedTags.Clear();
                 foreach (var tagInFile in tagsInFile)
                 {
                     SelectedTags.Add(Tags.First(x => x.Id == tagInFile.Id));
@@ -55,6 +56,9 @@ public partial class TagsViewModel : ObservableObject, IFilterViewModel
             Tags.Add(new(tag.Id, tag.Name));
         }
     }
+
+    [RelayCommand]
+    private void UseTagsFromCurrentFile() => TrySelectTagsFromSelectedFile();
 
     public IFilesFilter CreateFilter() =>
         new TagsFilter(SelectedTags, AllowOtherTags);

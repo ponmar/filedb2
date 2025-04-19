@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using FileDB.FilesFilter;
 using FileDB.Model;
 
@@ -33,12 +34,12 @@ public partial class PersonGroupViewModel : ObservableObject, IFilterViewModel
 
     private void TrySelectPersonsFromSelectedFile()
     {
+        SelectedPersons.Clear();
         if (fileSelector.SelectedFile is not null)
         {
             var personsInFile = databaseAccessProvider.DbAccess.GetPersonsFromFile(fileSelector.SelectedFile.Id);
             if (personsInFile.Any())
             {
-                SelectedPersons.Clear();
                 foreach (var personInFile in personsInFile)
                 {
                     SelectedPersons.Add(Persons.First(x => x.Id == personInFile.Id));
@@ -55,6 +56,9 @@ public partial class PersonGroupViewModel : ObservableObject, IFilterViewModel
             Persons.Add(new(person.Id, $"{person.Firstname} {person.Lastname}"));
         }
     }
+
+    [RelayCommand]
+    private void UsePersonsFromCurrentFile() => TrySelectPersonsFromSelectedFile();
 
     public IFilesFilter CreateFilter() => new PersonGroupFilter(SelectedPersons, AllowOtherPersons);
 }
