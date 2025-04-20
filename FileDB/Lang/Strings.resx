@@ -1319,4 +1319,10 @@ This operation can be slow for a large collection of files or if the media acces
   <data name="SortMethodRandom" xml:space="preserve">
     <value>Random</value>
   </data>
+  <data name="FileInfoSearchDate" xml:space="preserve">
+    <value>Search for date</value>
+  </data>
+  <data name="FileInfoAddDateSearchFilter" xml:space="preserve">
+    <value>Add date search filter</value>
+  </data>
 </root>

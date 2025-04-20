@@ -8,7 +8,19 @@
 	<Expander Header="{x:Static lang:Strings.FileInfoTitle}" IsExpanded="True">
 		<ScrollViewer>
 			<StackPanel Orientation="Vertical">
-				<TextBlock FontSize="{Binding OverlayFontSize}" Text="{Binding DateTime}" Margin="0 5 0 5" IsVisible="{Binding DateTime, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+				<!-- Date -->
+				<StackPanel Orientation="Horizontal" Margin="0 0 0 5" IsVisible="{Binding DateTime, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+					<Button Content="&#8230;" VerticalContentAlignment="Center" VerticalAlignment="Center" Margin="0 0 3 0">
+						<Button.Flyout>
+							<MenuFlyout>
+								<MenuItem Header="{x:Static lang:Strings.FileInfoSearchDate}" Command="{Binding $parent[UserControl].DataContext.SearchForDateCommand}"/>
+								<MenuItem Header="-"/>
+								<MenuItem Header="{x:Static lang:Strings.FileInfoAddDateSearchFilter}" Command="{Binding $parent[UserControl].DataContext.AddSearchForDateCommand}"/>
+							</MenuFlyout>
+						</Button.Flyout>
+					</Button>
+					<TextBlock FontSize="{Binding OverlayFontSize}" Text="{Binding DateTime}" Margin="0 5 0 0"/>
+				</StackPanel>
 
 				<!-- Persons -->
 				<TextBlock FontSize="{Binding OverlayFontSize}" Text="&#x1F642;" Margin="0 5 0 0" IsVisible="{Binding Persons.Count}" ToolTip.Tip="{x:Static lang:Strings.FileInfoPersonsToolTip}"/>

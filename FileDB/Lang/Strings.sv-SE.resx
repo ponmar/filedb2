@@ -1278,7 +1278,7 @@ Lägg till nya filer i '{0}'.</value>
     <value>+</value>
   </data>
   <data name="FileInfoSearchPersonGroup" xml:space="preserve">
-    <value>Sök efter personer (grupp)</value>
+    <value>Sök personer (grupp)</value>
   </data>
   <data name="FileInfoSearchAddPersonGroupSearchFilter" xml:space="preserve">
     <value>Lägg till personer-sökfilter</value>
@@ -1296,7 +1296,7 @@ Lägg till nya filer i '{0}'.</value>
     <value>Etiketter</value>
   </data>
   <data name="FileInfoSearchTags" xml:space="preserve">
-    <value>Sök efter etiketter</value>
+    <value>Sök etiketter</value>
   </data>
   <data name="FileInfoAddTagsSearchFilter" xml:space="preserve">
     <value>Lägg till etiketter-sökfilter</value>
@@ -1318,5 +1318,11 @@ Lägg till nya filer i '{0}'.</value>
   </data>
   <data name="SortMethodRandom" xml:space="preserve">
     <value>Slumpmässig</value>
+  </data>
+  <data name="FileInfoSearchDate" xml:space="preserve">
+    <value>Sök datum</value>
+  </data>
+  <data name="FileInfoAddDateSearchFilter" xml:space="preserve">
+    <value>Lägg till datum-sökfilter</value>
   </data>
 </root>

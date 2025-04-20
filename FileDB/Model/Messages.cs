@@ -49,10 +49,12 @@ public record SearchForLocation(LocationModel Location);
 public record SearchForTag(TagModel Tag);
 public record SearchForTags(IEnumerable<TagModel> Tags);
 public record SearchForAnnualDate(int Month, int Day);
+public record SearchForDate(DateTime Date);
 
 public record AddPersonSearchFilter(PersonModel Person);
 public record AddPersonGroupSearchFilter(IEnumerable<PersonModel> Persons);
 public record AddLocationSearchFilter(LocationModel Location);
 public record AddTagSearchFilter(TagModel Tag);
 public record AddTagsSearchFilter(IEnumerable<TagModel> Tags);
-public record AddDateSearchFilter(int Month, int Day);
+public record AddAnnualDateSearchFilter(int Month, int Day);
+public record AddDateSearchFilter(DateTime Date);

@@ -92,7 +92,7 @@ public partial class PersonBirthday : ObservableObject
     private void AddBirthdayDateSearchFilter()
     {
         var birthday = DatabaseParsing.ParsePersonDateOfBirth(Person.DateOfBirth!);
-        Messenger.Send(new AddDateSearchFilter(birthday.Month, birthday.Day));
+        Messenger.Send(new AddAnnualDateSearchFilter(birthday.Month, birthday.Day));
     }
 }
 

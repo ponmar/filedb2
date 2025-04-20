@@ -43,7 +43,9 @@ public partial class CriteriaViewModel : ObservableObject
 
         this.RegisterForEvent<AddTagsSearchFilter>(x => AddTagsFilterFor(x.Tags));
 
-        this.RegisterForEvent<AddDateSearchFilter>(x => AddAnnualDateFilterFor(x.Month, x.Day));
+        this.RegisterForEvent<AddDateSearchFilter>(x => AddDateFilterFor(x.Date));
+
+        this.RegisterForEvent<AddAnnualDateSearchFilter>(x => AddAnnualDateFilterFor(x.Month, x.Day));
 
         this.RegisterForEvent<SearchForFiles>(async x =>
         {
@@ -91,6 +93,13 @@ public partial class CriteriaViewModel : ObservableObject
         {
             FilterSettings.Clear();
             AddAnnualDateFilterFor(x.Month, x.Day);
+            await FindFilesFromFiltersAsync();
+        });
+
+        this.RegisterForEvent<SearchForDate>(async x =>
+        {
+            FilterSettings.Clear();
+            AddDateFilterFor(x.Date);
             await FindFilesFromFiltersAsync();
         });
     }
@@ -178,6 +187,15 @@ public partial class CriteriaViewModel : ObservableObject
         var annualDateViewModel = (AnnualDateViewModel)vm.FilterViewModel;
         annualDateViewModel.SelectedAnnualMonthStart = month;
         annualDateViewModel.SelectedAnnualDayStart = day;
+        AddFilter(vm);
+    }
+
+    private void AddDateFilterFor(DateTime date)
+    {
+        var vm = ServiceLocator.Resolve<FilterSelectionViewModel>();
+        vm.SelectedFilterType = FilterType.Date;
+        var dateViewModel = (DateViewModel)vm.FilterViewModel;
+        dateViewModel.FirstDateTime = date;
         AddFilter(vm);
     }
 
