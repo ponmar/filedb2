@@ -14,8 +14,10 @@
 						<Button.Flyout>
 							<MenuFlyout>
 								<MenuItem Header="{x:Static lang:Strings.FileInfoSearchDate}" Command="{Binding $parent[UserControl].DataContext.SearchForDateCommand}"/>
+								<MenuItem Header="{x:Static lang:Strings.FileInfoSearchAnnualDate}" Command="{Binding $parent[UserControl].DataContext.SearchForAnnualDateCommand}"/>
 								<MenuItem Header="-"/>
 								<MenuItem Header="{x:Static lang:Strings.FileInfoAddDateSearchFilter}" Command="{Binding $parent[UserControl].DataContext.AddSearchForDateCommand}"/>
+								<MenuItem Header="{x:Static lang:Strings.FileInfoAddAnnualDateSearchFilter}" Command="{Binding $parent[UserControl].DataContext.AddSearchForAnnualDateCommand}"/>
 							</MenuFlyout>
 						</Button.Flyout>
 					</Button>

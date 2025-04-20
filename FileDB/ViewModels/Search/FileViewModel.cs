@@ -272,6 +272,13 @@ public partial class FileViewModel : ObservableObject
     }
 
     [RelayCommand]
+    private void SearchForAnnualDate()
+    {
+        var date = DatabaseParsing.ParseFilesDatetime(SelectedFile!.Datetime)!.Value.Date;
+        Messenger.Send(new AddAnnualDateSearchFilter(date.Month, date.Day));
+    }
+
+    [RelayCommand]
     private static void SearchForBirthday(PersonModel person)
     {
         var birthday = DatabaseParsing.ParsePersonDateOfBirth(person.DateOfBirth!);
@@ -314,5 +321,12 @@ public partial class FileViewModel : ObservableObject
     {
         var date = DatabaseParsing.ParseFilesDatetime(SelectedFile!.Datetime)!.Value.Date;
         Messenger.Send(new AddDateSearchFilter(date));
+    }
+
+    [RelayCommand]
+    private void AddSearchForAnnualDate()
+    {
+        var date = DatabaseParsing.ParseFilesDatetime(SelectedFile!.Datetime)!.Value.Date;
+        Messenger.Send(new AddAnnualDateSearchFilter(date.Month, date.Day));
     }
 }

@@ -1145,6 +1145,15 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add annual date search filter.
+        /// </summary>
+        public static string FileInfoAddAnnualDateSearchFilter {
+            get {
+                return ResourceManager.GetString("FileInfoAddAnnualDateSearchFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add date search filter.
         /// </summary>
         public static string FileInfoAddDateSearchFilter {
@@ -1222,6 +1231,15 @@ namespace FileDB.Lang {
         public static string FileInfoSearchAddPersonGroupSearchFilter {
             get {
                 return ResourceManager.GetString("FileInfoSearchAddPersonGroupSearchFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search for annual date.
+        /// </summary>
+        public static string FileInfoSearchAnnualDate {
+            get {
+                return ResourceManager.GetString("FileInfoSearchAnnualDate", resourceCulture);
             }
         }
         

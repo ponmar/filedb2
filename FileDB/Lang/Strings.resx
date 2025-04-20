@@ -1325,4 +1325,10 @@ This operation can be slow for a large collection of files or if the media acces
   <data name="FileInfoAddDateSearchFilter" xml:space="preserve">
     <value>Add date search filter</value>
   </data>
+  <data name="FileInfoSearchAnnualDate" xml:space="preserve">
+    <value>Search for annual date</value>
+  </data>
+  <data name="FileInfoAddAnnualDateSearchFilter" xml:space="preserve">
+    <value>Add annual date search filter</value>
+  </data>
 </root>

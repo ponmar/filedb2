@@ -1325,4 +1325,10 @@ Lägg till nya filer i '{0}'.</value>
   <data name="FileInfoAddDateSearchFilter" xml:space="preserve">
     <value>Lägg till datum-sökfilter</value>
   </data>
+  <data name="FileInfoSearchAnnualDate" xml:space="preserve">
+    <value>Sök årsdatum</value>
+  </data>
+  <data name="FileInfoAddAnnualDateSearchFilter" xml:space="preserve">
+    <value>Lägg till årsdatum-sökfilter</value>
+  </data>
 </root>
