@@ -41,7 +41,7 @@
 								<ColumnDefinition Width="*"/>
 							</Grid.ColumnDefinitions>
 							<TextBlock Classes="WarningIcon" Margin="0 0 5 0" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
-							<TextBlock Classes="PageTextBlock" Margin="0" Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" Text="{x:Static lang:Strings.ToolsDatabaseBackupWarning1}"/>
+							<TextBlock Classes="PageTextBlock" Margin="0" Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" Text="{x:Static lang:Strings.ToolsDatabaseBackupWarning1}" VerticalAlignment="Center"/>
 						</Grid>
 					</StackPanel>
 				</Border>
@@ -92,7 +92,7 @@
 								<ColumnDefinition Width="*"/>
 							</Grid.ColumnDefinitions>
 							<TextBlock Classes="WarningIcon" Margin="0 0 5 0" Grid.Column="0" VerticalAlignment="Center"/>
-							<TextBlock Classes="PageTextBlock" Margin="0" Grid.Column="1" TextWrapping="Wrap" Text="{x:Static lang:Strings.ToolsFindMetaDataForMissingFilesWarning}"/>
+							<TextBlock Classes="PageTextBlock" Margin="0" Grid.Column="1" TextWrapping="Wrap" Text="{x:Static lang:Strings.ToolsFindMetaDataForMissingFilesWarning}" VerticalAlignment="Center"/>
 						</Grid>
 						<StackPanel Orientation="Horizontal">
 							<Button Classes="Normal" Margin="10" Command="{Binding FileFinderCommand}" HorizontalAlignment="Left" Content="{x:Static lang:Strings.ToolsRunButton}"/>
