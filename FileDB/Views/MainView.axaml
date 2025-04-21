@@ -101,7 +101,7 @@
 				<views:NotificationsView Margin="10 0 10 10"/>
 			</TabItem>
 
-			<TabItem HorizontalContentAlignment="Center" IsSelected="{Binding QuitSelected}">
+			<TabItem HorizontalContentAlignment="Center" IsSelected="{Binding QuitSelected}" IsVisible="{Binding Fullscreen}">
 				<TabItem.Header>
 					<TextBlock Classes="TabIcon" Text="&#x1F6AA;" ToolTip.Tip="{x:Static lang:Strings.ExitToolTip}"/>
 				</TabItem.Header>
