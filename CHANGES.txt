@@ -1,3 +1,14 @@
+4.11:
+* Replace Basic and Combine search tabs withe new filters
+* Add setting for initial search filter (default is "Text")
+* Add file info overlay menu next to date heading for adding search filters
+* Person group and tags search filters: fixes and new button to select from current file
+* File list search filter: add button for selecting from current search result
+* Add directory search filter
+* Add random search filter
+* Add combine search filter
+* Add random sort method
+
 4.10:
 * Add Tags search filter that is also available via the file info overlay
 * Add Persons (group) search filter that is also available via the file info overlay
