@@ -4,7 +4,7 @@
 
 This is a project for storing, maintaining and presenting meta-data (persons, locations and tags) for files. A typical use case is to make a picture and video collection searchable and for running slideshows with extra information.
 
-FileDB provides a desktop application and ways for exporting data to 3rd party applications.
+FileDB provides a desktop application and ways for exporting data to 3rd party applications. Releases are currently only published for Windows, but it is possible to build and run the application in Linux.
 
 FileDB pros:
 
