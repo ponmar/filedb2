@@ -48,8 +48,9 @@ public partial class FilesViewModel : ObservableObject
     private readonly IDialogs dialogs;
     private readonly IFileSystem fileSystem;
     private readonly IClipboardService clipboardService;
+    private readonly ICriteriaViewModel criteriaViewModel;
 
-    public FilesViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IDialogs dialogs, IFileSystem fileSystem, IClipboardService clipboardService)
+    public FilesViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IDialogs dialogs, IFileSystem fileSystem, IClipboardService clipboardService, ICriteriaViewModel criteriaViewModel)
     {
         this.configProvider = configProvider;
         this.dbAccessProvider = dbAccessProvider;
@@ -57,6 +58,7 @@ public partial class FilesViewModel : ObservableObject
         this.dialogs = dialogs;
         this.fileSystem = fileSystem;
         this.clipboardService = clipboardService;
+        this.criteriaViewModel = criteriaViewModel;
 
         subdirToScan = configProvider.FilePaths.FilesRootDir;
 
@@ -247,7 +249,7 @@ public partial class FilesViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void SearchImportedFileList() => Messenger.Send(new SearchForFiles(ImportedFileList));
+    private void SearchImportedFileList() => criteriaViewModel.SearchForFilesAsync(ImportedFileList);
 
     [RelayCommand]
     private async Task RemoveFileListMethodAsync()

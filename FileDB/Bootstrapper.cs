@@ -26,30 +26,27 @@ public static class Bootstrapper
         ServiceLocator.RegisterSingleton<DateObserver>();
         ServiceLocator.RegisterSingleton<IClipboardService, ClipboardService>();
 
-        ServiceLocator.RegisterSingleton<DatabaseCache>([
+        ServiceLocator.RegisterSingleton<DatabaseCache>(
             typeof(IPersonsRepository),
             typeof(ILocationsRepository),
-            typeof(ITagsRepository),
-        ]);
+            typeof(ITagsRepository));
 
         ServiceLocator.RegisterSingleton<AboutViewModel>();
         ServiceLocator.RegisterSingleton<IDialogs, Dialogs.Dialogs>();
 
-        ServiceLocator.RegisterSingleton<Model.Model>([
+        ServiceLocator.RegisterSingleton<Model.Model>(
             typeof(INotificationHandling),
             typeof(INotificationsRepository),
             typeof(IConfigProvider),
             typeof(IDatabaseAccessProvider),
             typeof(IFilesystemAccessProvider),
-            typeof(IConfigUpdater),
-        ]);
+            typeof(IConfigUpdater));
 
         ServiceLocator.RegisterSingleton<MainViewModel>();
-        ServiceLocator.RegisterSingleton<ResultViewModel>([
+        ServiceLocator.RegisterSingleton<ResultViewModel>(
             typeof(ResultViewModel),
             typeof(ISearchResultRepository),
-            typeof(IFileSelector),
-        ]);
+            typeof(IFileSelector));
         ServiceLocator.RegisterSingleton<FileViewModel>();
         ServiceLocator.RegisterSingleton<NotificationsViewModel>();
         ServiceLocator.RegisterSingleton<SettingsViewModel>();
@@ -60,7 +57,9 @@ public static class Bootstrapper
         ServiceLocator.RegisterSingleton<RipViewModel>();
         ServiceLocator.RegisterSingleton<ToolsViewModel>();
         ServiceLocator.RegisterSingleton<FilesViewModel>();
-        ServiceLocator.RegisterSingleton<CriteriaViewModel>();
+        ServiceLocator.RegisterSingleton<CriteriaViewModel>(
+            typeof(CriteriaViewModel),
+            typeof(ICriteriaViewModel));
         ServiceLocator.RegisterSingleton<FileCategorizationViewModel>();
         ServiceLocator.RegisterTransient<AddLocationViewModel>();
         ServiceLocator.RegisterTransient<AddPersonViewModel>();

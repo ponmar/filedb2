@@ -38,17 +38,20 @@ public partial class DeceasedPerson : ObservableObject
     public DateTime Deceased => DatabaseParsing.ParsePersonDeceasedDate(Person.Deceased!);
     public int Age => TimeUtils.GetAgeInYears(Deceased, DatabaseParsing.ParsePersonDateOfBirth(Person.DateOfBirth!));
 
-    public DeceasedPerson(PersonModel person, string? profilePictureAbsPath)
+    private readonly ICriteriaViewModel criteriaViewModel;
+
+    public DeceasedPerson(ICriteriaViewModel criteriaViewModel, PersonModel person, string? profilePictureAbsPath)
     {
+        this.criteriaViewModel = criteriaViewModel;
         this.person = person;
         ProfilePictureAbsPath = profilePictureAbsPath;
     }
 
     [RelayCommand]
-    private void AddPersonSearchFilter() => Messenger.Send(new AddPersonSearchFilter(Person));
+    private void AddPersonSearchFilter() => criteriaViewModel.AddPersonSearchFilter(Person);
 
     [RelayCommand]
-    private void SearchForPerson() => Messenger.Send(new SearchForPerson(Person));
+    private void SearchForPerson() => criteriaViewModel.SearchForPersonAsync(Person);
 }
 
 public partial class RipViewModel : ObservableObject
@@ -68,12 +71,14 @@ public partial class RipViewModel : ObservableObject
     private readonly IDatabaseAccessProvider dbAccessProvider;
     private readonly IFilesystemAccessProvider filesystemAccessProvider;
     private readonly IImageLoader imageLoader;
+    private readonly ICriteriaViewModel criteriaViewModel;
 
-    public RipViewModel(IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IImageLoader imageLoader)
+    public RipViewModel(IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IImageLoader imageLoader, ICriteriaViewModel criteriaViewModel)
     {
         this.dbAccessProvider = dbAccessProvider;
         this.filesystemAccessProvider = filesystemAccessProvider;
         this.imageLoader = imageLoader;
+        this.criteriaViewModel = criteriaViewModel;
 
         this.RegisterForEvent<ConfigUpdated>((x) => UpdatePersons());
         this.RegisterForEvent<PersonsUpdated>((x) => UpdatePersons());
@@ -107,7 +112,7 @@ public partial class RipViewModel : ObservableObject
                 profileFileIdPath = filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(profileFile!.Path);
             }
 
-            allPersons.Add(new DeceasedPerson(person, profileFileIdPath));
+            allPersons.Add(new DeceasedPerson(criteriaViewModel, person, profileFileIdPath));
             if (profileFileIdPath is not null)
             {
                 imageLoader.LoadImage(profileFileIdPath);

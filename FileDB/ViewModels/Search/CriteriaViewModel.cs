@@ -14,7 +14,27 @@ using FileDB.ViewModels.Search.Filters;
 
 namespace FileDB.ViewModels;
 
-public partial class CriteriaViewModel : ObservableObject
+public interface ICriteriaViewModel
+{
+    Task SearchForFilesAsync(string fileList);
+    Task SearchForPersonAsync(PersonModel person);
+    Task SearchForPersonGroupAsync(IEnumerable<PersonModel> persons);
+    Task SearchForLocationAsync(LocationModel location);
+    Task SearchForTagAsync(TagModel tag);
+    Task SearchForTagsAsync(IEnumerable<TagModel> tags);
+    Task SearchForAnnualDateAsync(int month, int day);
+    Task SearchForDateAsync(DateTime date);
+
+    void AddPersonSearchFilter(PersonModel person);
+    void AddPersonGroupSearchFilter(IEnumerable<PersonModel> persons);
+    void AddLocationSearchFilter(LocationModel location);
+    void AddTagSearchFilter(TagModel tag);
+    void AddTagsSearchFilter(IEnumerable<TagModel> tags);
+    void AddAnnualDateSearchFilter(int month, int day);
+    void AddDateSearchFilter(DateTime date);
+}
+
+public partial class CriteriaViewModel : ObservableObject, ICriteriaViewModel
 {
     [ObservableProperty]
     private ObservableCollection<FilterSelectionViewModel> filterSettings = [];
@@ -32,76 +52,6 @@ public partial class CriteriaViewModel : ObservableObject
         var vm = ServiceLocator.Resolve<FilterSelectionViewModel>();
         vm.IsFirstFilter = true;
         filterSettings.Add(vm);
-
-        this.RegisterForEvent<AddPersonSearchFilter>(x => AddPersonFilterFor(x.Person));
-
-        this.RegisterForEvent<AddPersonGroupSearchFilter>(x => AddPersonGroupFilterFor(x.Persons));
-
-        this.RegisterForEvent<AddLocationSearchFilter>(x => AddLocationFilterFor(x.Location));
-
-        this.RegisterForEvent<AddTagSearchFilter>(x => AddTagFilterFor(x.Tag));
-
-        this.RegisterForEvent<AddTagsSearchFilter>(x => AddTagsFilterFor(x.Tags));
-
-        this.RegisterForEvent<AddDateSearchFilter>(x => AddDateFilterFor(x.Date));
-
-        this.RegisterForEvent<AddAnnualDateSearchFilter>(x => AddAnnualDateFilterFor(x.Month, x.Day));
-
-        this.RegisterForEvent<SearchForFiles>(async x =>
-        {
-            FilterSettings.Clear();
-            AddFileListFilterFor(x.FileList);
-            await FindFilesFromFiltersAsync();
-        });
-
-        this.RegisterForEvent<SearchForPerson>(async x =>
-        {
-            FilterSettings.Clear();
-            AddPersonFilterFor(x.Person);
-            await FindFilesFromFiltersAsync();
-        });
-
-        this.RegisterForEvent<SearchForPersonGroup>(async x =>
-        {
-            FilterSettings.Clear();
-            AddPersonGroupFilterFor(x.Persons);
-            await FindFilesFromFiltersAsync();
-        });
-
-        this.RegisterForEvent<SearchForLocation>(async x =>
-        {
-            FilterSettings.Clear();
-            AddLocationFilterFor(x.Location);
-            await FindFilesFromFiltersAsync();
-        });
-
-        this.RegisterForEvent<SearchForTag>(async x =>
-        {
-            FilterSettings.Clear();
-            AddTagFilterFor(x.Tag);
-            await FindFilesFromFiltersAsync();
-        });
-
-        this.RegisterForEvent<SearchForTags>(async x =>
-        {
-            FilterSettings.Clear();
-            AddTagsFilterFor(x.Tags);
-            await FindFilesFromFiltersAsync();
-        });
-
-        this.RegisterForEvent<SearchForAnnualDate>(async x =>
-        {
-            FilterSettings.Clear();
-            AddAnnualDateFilterFor(x.Month, x.Day);
-            await FindFilesFromFiltersAsync();
-        });
-
-        this.RegisterForEvent<SearchForDate>(async x =>
-        {
-            FilterSettings.Clear();
-            AddDateFilterFor(x.Date);
-            await FindFilesFromFiltersAsync();
-        });
     }
 
     [RelayCommand]
@@ -246,4 +196,74 @@ public partial class CriteriaViewModel : ObservableObject
 
         Messenger.Send(new TransferSearchResult(result));
     }
+
+    public async Task SearchForFilesAsync(string fileList)
+    {
+        FilterSettings.Clear();
+        AddFileListFilterFor(fileList);
+        await FindFilesFromFiltersAsync();
+    }
+
+    public async Task SearchForPersonAsync(PersonModel person)
+    {
+        FilterSettings.Clear();
+        AddPersonFilterFor(person);
+        await FindFilesFromFiltersAsync();
+    }
+
+    public async Task SearchForPersonGroupAsync(IEnumerable<PersonModel> persons)
+    {
+        FilterSettings.Clear();
+        AddPersonGroupFilterFor(persons);
+        await FindFilesFromFiltersAsync();
+    }
+
+    public async Task SearchForLocationAsync(LocationModel location)
+    {
+        FilterSettings.Clear();
+        AddLocationFilterFor(location);
+        await FindFilesFromFiltersAsync();
+    }
+
+    public async Task SearchForTagAsync(TagModel tag)
+    {
+        FilterSettings.Clear();
+        AddTagFilterFor(tag);
+        await FindFilesFromFiltersAsync();
+    }
+
+    public async Task SearchForTagsAsync(IEnumerable<TagModel> tags)
+    {
+        FilterSettings.Clear();
+        AddTagsFilterFor(tags);
+        await FindFilesFromFiltersAsync();
+    }
+
+    public async Task SearchForAnnualDateAsync(int month, int day)
+    {
+        FilterSettings.Clear();
+        AddAnnualDateFilterFor(month, day);
+        await FindFilesFromFiltersAsync();
+    }
+
+    public async Task SearchForDateAsync(DateTime date)
+    {
+        FilterSettings.Clear();
+        AddDateFilterFor(date);
+        await FindFilesFromFiltersAsync();
+    }
+
+    public void AddPersonSearchFilter(PersonModel person) => AddPersonFilterFor(person);
+
+    public void AddPersonGroupSearchFilter(IEnumerable<PersonModel> persons) => AddPersonGroupFilterFor(persons);
+
+    public void AddLocationSearchFilter(LocationModel location) => AddLocationFilterFor(location);
+
+    public void AddTagSearchFilter(TagModel tag) => AddTagFilterFor(tag);
+
+    public void AddTagsSearchFilter(IEnumerable<TagModel> tags) => AddTagsFilterFor(tags);
+
+    public void AddAnnualDateSearchFilter(int month, int day) => AddAnnualDateFilterFor(month, day);
+
+    public void AddDateSearchFilter(DateTime date) => AddDateFilterFor(date);
 }

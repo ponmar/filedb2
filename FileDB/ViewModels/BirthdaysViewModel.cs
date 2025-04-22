@@ -41,8 +41,11 @@ public partial class PersonBirthday : ObservableObject
 
     public string Name => $"{Person.Firstname} {Person.Lastname}";
 
-    public PersonBirthday(PersonModel person, string? profilePictureAbsPath)
+    private readonly ICriteriaViewModel criteriaViewModel;
+
+    public PersonBirthday(ICriteriaViewModel criteriaViewModel, PersonModel person, string? profilePictureAbsPath)
     {
+        this.criteriaViewModel = criteriaViewModel;
         this.person = person;
         ProfilePictureAbsPath = profilePictureAbsPath;
         Update(person);
@@ -76,23 +79,23 @@ public partial class PersonBirthday : ObservableObject
     }
 
     [RelayCommand]
-    private void AddPersonSearchFilter() => Messenger.Send(new AddPersonSearchFilter(Person));
+    private void AddPersonSearchFilter() => criteriaViewModel.AddPersonSearchFilter(Person);
 
     [RelayCommand]
-    private void SearchForPerson() => Messenger.Send(new SearchForPerson(Person));
+    private void SearchForPerson() => criteriaViewModel.SearchForPersonAsync(Person);
 
     [RelayCommand]
     private void SearchForBirthday()
     {
         var birthday = DatabaseParsing.ParsePersonDateOfBirth(Person.DateOfBirth!);
-        Messenger.Send(new SearchForAnnualDate(birthday.Month, birthday.Day));
+        criteriaViewModel.SearchForAnnualDateAsync(birthday.Month, birthday.Day);
     }
 
     [RelayCommand]
     private void AddBirthdayDateSearchFilter()
     {
         var birthday = DatabaseParsing.ParsePersonDateOfBirth(Person.DateOfBirth!);
-        Messenger.Send(new AddAnnualDateSearchFilter(birthday.Month, birthday.Day));
+        criteriaViewModel.AddAnnualDateSearchFilter(birthday.Month, birthday.Day);
     }
 }
 
@@ -127,13 +130,15 @@ public partial class BirthdaysViewModel : ObservableObject
     private readonly IDatabaseAccessProvider dbAccessProvider;
     private readonly IFilesystemAccessProvider filesystemAccessProvider;
     private readonly IImageLoader imageLoader;
+    private readonly ICriteriaViewModel criteriaViewModel;
 
-    public BirthdaysViewModel(IPersonsRepository personsRepository, IFilesystemAccessProvider filesystemAccessProvider, IDatabaseAccessProvider dbAccessProvider, IImageLoader imageLoader)
+    public BirthdaysViewModel(IPersonsRepository personsRepository, IFilesystemAccessProvider filesystemAccessProvider, IDatabaseAccessProvider dbAccessProvider, IImageLoader imageLoader, ICriteriaViewModel criteriaViewModel)
     {
         this.personsRepository = personsRepository;
         this.filesystemAccessProvider = filesystemAccessProvider;
         this.dbAccessProvider = dbAccessProvider;
         this.imageLoader = imageLoader;
+        this.criteriaViewModel = criteriaViewModel;
 
         this.RegisterForEvent<ConfigUpdated>((x) => UpdatePersons());
 
@@ -170,7 +175,7 @@ public partial class BirthdaysViewModel : ObservableObject
                 profileFileIdPath = filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(profileFile!.Path);
             }
 
-            allPersons.Add(new PersonBirthday(person, profileFileIdPath));
+            allPersons.Add(new PersonBirthday(criteriaViewModel, person, profileFileIdPath));
             if (profileFileIdPath is not null)
             {
                 imageLoader.LoadImage(profileFileIdPath);

@@ -87,8 +87,9 @@ public partial class FileViewModel : ObservableObject
     private readonly IDialogs dialogs;
     private readonly IClipboardService clipboardService;
     private readonly IFileSelector fileSelector;
+    private readonly ICriteriaViewModel criteriaViewModel;
 
-    public FileViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IImageLoader imageLoader, IFileSystem fileSystem, IDialogs dialogs, IClipboardService clipboardService, IFileSelector fileSelector)
+    public FileViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IImageLoader imageLoader, IFileSystem fileSystem, IDialogs dialogs, IClipboardService clipboardService, IFileSelector fileSelector, ICriteriaViewModel criteriaViewModel)
     {
         this.configProvider = configProvider;
         this.dbAccessProvider = dbAccessProvider;
@@ -98,6 +99,7 @@ public partial class FileViewModel : ObservableObject
         this.dialogs = dialogs;
         this.clipboardService = clipboardService;
         this.fileSelector = fileSelector;
+        this.criteriaViewModel = criteriaViewModel;
 
         this.RegisterForEvent<ConfigUpdated>((x) =>
         {
@@ -259,74 +261,74 @@ public partial class FileViewModel : ObservableObject
     private static void PrevDirectory() => Messenger.Send<SelectFileInPrevDirectory>();
 
     [RelayCommand]
-    private static void SearchForPerson(PersonModel person) => Messenger.Send(new SearchForPerson(person));
+    private void SearchForPerson(PersonModel person) => criteriaViewModel.SearchForPersonAsync(person);
 
     [RelayCommand]
-    private void SearchForPersonGroup() => Messenger.Send(new SearchForPersonGroup(Persons.Select(x => x.Model)));
+    private void SearchForPersonGroup() => criteriaViewModel.SearchForPersonGroupAsync(Persons.Select(x => x.Model));
 
     [RelayCommand]
     private void SearchForDate()
     {
         var date = DatabaseParsing.ParseFilesDatetime(SelectedFile!.Datetime)!.Value.Date;
-        Messenger.Send(new SearchForDate(date));
+        criteriaViewModel.SearchForDateAsync(date);
     }
 
     [RelayCommand]
     private void SearchForAnnualDate()
     {
         var date = DatabaseParsing.ParseFilesDatetime(SelectedFile!.Datetime)!.Value.Date;
-        Messenger.Send(new AddAnnualDateSearchFilter(date.Month, date.Day));
+        criteriaViewModel.SearchForAnnualDateAsync(date.Month, date.Day);
     }
 
     [RelayCommand]
-    private static void SearchForBirthday(PersonModel person)
+    private void SearchForBirthday(PersonModel person)
     {
         var birthday = DatabaseParsing.ParsePersonDateOfBirth(person.DateOfBirth!);
-        Messenger.Send(new SearchForAnnualDate(birthday.Month, birthday.Day));
+        criteriaViewModel.SearchForAnnualDateAsync(birthday.Month, birthday.Day);
     }
 
     [RelayCommand]
-    private static void AddPersonSearchFilter(PersonModel person) => Messenger.Send(new AddPersonSearchFilter(person));
+    private void SearchForLocation(LocationModel location) => criteriaViewModel.SearchForLocationAsync(location);
 
     [RelayCommand]
-    private void AddPersonGroupSearchFilter() => Messenger.Send(new AddPersonGroupSearchFilter(Persons.Select(x => x.Model)));
+    private void SearchForTag(Tag tag) => criteriaViewModel.SearchForTagAsync(tag.Model);
 
     [RelayCommand]
-    private static void AddBirthdayDateSearchFilter(PersonModel person)
+    private void SearchForTags() => criteriaViewModel.SearchForTagsAsync(Tags.Select(x => x.Model));
+
+    [RelayCommand]
+    private void AddPersonSearchFilter(PersonModel person) => criteriaViewModel.AddPersonSearchFilter(person);
+
+    [RelayCommand]
+    private void AddPersonGroupSearchFilter() => criteriaViewModel.AddPersonGroupSearchFilter(Persons.Select(x => x.Model));
+
+    [RelayCommand]
+    private void AddBirthdayDateSearchFilter(PersonModel person)
     {
         var birthday = DatabaseParsing.ParsePersonDateOfBirth(person.DateOfBirth!);
-        Messenger.Send(new AddAnnualDateSearchFilter(birthday.Month, birthday.Day));
+        criteriaViewModel.AddAnnualDateSearchFilter(birthday.Month, birthday.Day);
     }
 
     [RelayCommand]
-    private static void SearchForLocation(LocationModel location) => Messenger.Send(new SearchForLocation(location));
+    private void AddLocationSearchFilter(LocationModel location) => criteriaViewModel.AddLocationSearchFilter(location);
 
     [RelayCommand]
-    private static void AddLocationSearchFilter(LocationModel location) => Messenger.Send(new AddLocationSearchFilter(location));
+    private void AddTagSearchFilter(Tag tag) => criteriaViewModel.AddTagSearchFilter(tag.Model);
 
     [RelayCommand]
-    private static void SearchForTag(Tag tag) => Messenger.Send(new SearchForTag(tag.Model));
-
-    [RelayCommand]
-    private void SearchForTags() => Messenger.Send(new SearchForTags(Tags.Select(x => x.Model)));
-
-    [RelayCommand]
-    private static void AddTagSearchFilter(Tag tag) => Messenger.Send(new AddTagSearchFilter(tag.Model));
-
-    [RelayCommand]
-    private void AddTagsSearchFilter() => Messenger.Send(new AddTagsSearchFilter(Tags.Select(x => x.Model)));
+    private void AddTagsSearchFilter() => criteriaViewModel.AddTagsSearchFilter(Tags.Select(x => x.Model));
 
     [RelayCommand]
     private void AddSearchForDate()
     {
         var date = DatabaseParsing.ParseFilesDatetime(SelectedFile!.Datetime)!.Value.Date;
-        Messenger.Send(new AddDateSearchFilter(date));
+        criteriaViewModel.AddDateSearchFilter(date);
     }
 
     [RelayCommand]
     private void AddSearchForAnnualDate()
     {
         var date = DatabaseParsing.ParseFilesDatetime(SelectedFile!.Datetime)!.Value.Date;
-        Messenger.Send(new AddAnnualDateSearchFilter(date.Month, date.Day));
+        criteriaViewModel.AddAnnualDateSearchFilter(date.Month, date.Day);
     }
 }
