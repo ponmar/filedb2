@@ -3,9 +3,9 @@ using FileDB.ViewModels;
 
 namespace FileDB.Comparers;
 
-public class PersonsByDeceasedSorter : IComparer<DeceasedPerson>
+public class PersonsByDeceasedSorter : IComparer<DeceasedPersonViewModel>
 {
-    public int Compare(DeceasedPerson? x, DeceasedPerson? y)
+    public int Compare(DeceasedPersonViewModel? x, DeceasedPersonViewModel? y)
     {
         return x!.Deceased.CompareTo(y!.Deceased);
     }

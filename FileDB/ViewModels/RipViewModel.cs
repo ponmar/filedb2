@@ -14,7 +14,7 @@ using FileDBInterface.Utils;
 
 namespace FileDB.ViewModels;
 
-public partial class DeceasedPerson : ObservableObject
+public partial class DeceasedPersonViewModel : ObservableObject
 {
     public string? ProfilePictureAbsPath { get; }
 
@@ -40,7 +40,7 @@ public partial class DeceasedPerson : ObservableObject
 
     private readonly ICriteriaViewModel criteriaViewModel;
 
-    public DeceasedPerson(ICriteriaViewModel criteriaViewModel, PersonModel person, string? profilePictureAbsPath)
+    public DeceasedPersonViewModel(ICriteriaViewModel criteriaViewModel, PersonModel person, string? profilePictureAbsPath)
     {
         this.criteriaViewModel = criteriaViewModel;
         this.person = person;
@@ -64,9 +64,9 @@ public partial class RipViewModel : ObservableObject
         FilterPersons();
     }
 
-    private readonly List<DeceasedPerson> allPersons = [];
+    private readonly List<DeceasedPersonViewModel> allPersons = [];
 
-    public ObservableCollection<DeceasedPerson> Persons { get; set; } = [];
+    public ObservableCollection<DeceasedPersonViewModel> Persons { get; set; } = [];
 
     private readonly IDatabaseAccessProvider dbAccessProvider;
     private readonly IFilesystemAccessProvider filesystemAccessProvider;
@@ -112,7 +112,7 @@ public partial class RipViewModel : ObservableObject
                 profileFileIdPath = filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(profileFile!.Path);
             }
 
-            allPersons.Add(new DeceasedPerson(criteriaViewModel, person, profileFileIdPath));
+            allPersons.Add(new DeceasedPersonViewModel(criteriaViewModel, person, profileFileIdPath));
             if (profileFileIdPath is not null)
             {
                 imageLoader.LoadImage(profileFileIdPath);

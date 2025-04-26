@@ -13,7 +13,7 @@ using FileDBInterface.Utils;
 
 namespace FileDB.ViewModels;
 
-public partial class PersonBirthday : ObservableObject
+public partial class PersonBirthdayViewModel : ObservableObject
 {
     [ObservableProperty]
     private string birthday = string.Empty;
@@ -43,7 +43,7 @@ public partial class PersonBirthday : ObservableObject
 
     private readonly ICriteriaViewModel criteriaViewModel;
 
-    public PersonBirthday(ICriteriaViewModel criteriaViewModel, PersonModel person, string? profilePictureAbsPath)
+    public PersonBirthdayViewModel(ICriteriaViewModel criteriaViewModel, PersonModel person, string? profilePictureAbsPath)
     {
         this.criteriaViewModel = criteriaViewModel;
         this.person = person;
@@ -99,9 +99,9 @@ public partial class PersonBirthday : ObservableObject
     }
 }
 
-public class PersonsByDaysLeftUntilBirthdaySorter : IComparer<PersonBirthday>
+public class PersonsByDaysLeftUntilBirthdaySorter : IComparer<PersonBirthdayViewModel>
 {
-    public int Compare(PersonBirthday? x, PersonBirthday? y)
+    public int Compare(PersonBirthdayViewModel? x, PersonBirthdayViewModel? y)
     {
         if (x!.DaysLeft == y!.DaysLeft)
         {
@@ -122,9 +122,9 @@ public partial class BirthdaysViewModel : ObservableObject
         FilterPersons();
     }
 
-    private readonly List<PersonBirthday> allPersons = [];
+    private readonly List<PersonBirthdayViewModel> allPersons = [];
 
-    public ObservableCollection<PersonBirthday> Persons { get; } = [];
+    public ObservableCollection<PersonBirthdayViewModel> Persons { get; } = [];
 
     private readonly IPersonsRepository personsRepository;
     private readonly IDatabaseAccessProvider dbAccessProvider;
@@ -175,7 +175,7 @@ public partial class BirthdaysViewModel : ObservableObject
                 profileFileIdPath = filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(profileFile!.Path);
             }
 
-            allPersons.Add(new PersonBirthday(criteriaViewModel, person, profileFileIdPath));
+            allPersons.Add(new PersonBirthdayViewModel(criteriaViewModel, person, profileFileIdPath));
             if (profileFileIdPath is not null)
             {
                 imageLoader.LoadImage(profileFileIdPath);
