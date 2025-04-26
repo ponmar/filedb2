@@ -2211,6 +2211,33 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Current file.
+        /// </summary>
+        public static string SearchFilterDateSelectFromCurrentFile {
+            get {
+                return ResourceManager.GetString("SearchFilterDateSelectFromCurrentFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Today.
+        /// </summary>
+        public static string SearchFilterDateSelectFromToday {
+            get {
+                return ResourceManager.GetString("SearchFilterDateSelectFromToday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select from....
+        /// </summary>
+        public static string SearchFilterDateSelectFromTooltip {
+            get {
+                return ResourceManager.GetString("SearchFilterDateSelectFromTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to End.
         /// </summary>
         public static string SearchFilterDateTimeEnd {

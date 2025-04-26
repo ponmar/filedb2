@@ -1331,4 +1331,13 @@ This operation can be slow for a large collection of files or if the media acces
   <data name="FileInfoAddAnnualDateSearchFilter" xml:space="preserve">
     <value>Add annual date search filter</value>
   </data>
+  <data name="SearchFilterDateSelectFromTooltip" xml:space="preserve">
+    <value>Select from...</value>
+  </data>
+  <data name="SearchFilterDateSelectFromToday" xml:space="preserve">
+    <value>Today</value>
+  </data>
+  <data name="SearchFilterDateSelectFromCurrentFile" xml:space="preserve">
+    <value>Current file</value>
+  </data>
 </root>

@@ -19,7 +19,15 @@
 				</DataTemplate>
 			</ComboBox.ItemTemplate>
 		</ComboBox>
-		<StackPanel Orientation="Horizontal" IsVisible="{Binding AnnualDateIsRange}" VerticalAlignment="Center">
+		<Button Content="..." VerticalAlignment="Center" ToolTip.Tip="{x:Static lang:Strings.SearchFilterDateSelectFromTooltip}">
+			<Button.Flyout>
+				<MenuFlyout>
+					<MenuItem Header="{x:Static lang:Strings.SearchFilterDateSelectFromToday}" Command="{Binding SetStartDateFromTodayCommand}"/>
+					<MenuItem Header="{x:Static lang:Strings.SearchFilterDateSelectFromCurrentFile}" IsEnabled="{Binding CurrentFileHasDateTime}" Command="{Binding SetStartDateFromCurrentFileCommand}"/>
+				</MenuFlyout>
+			</Button.Flyout>
+		</Button>
+		<StackPanel Margin="3 0 0 0" Orientation="Horizontal" IsVisible="{Binding AnnualDateIsRange}" VerticalAlignment="Center">
 			<TextBlock Margin="0 0 3 0" Text="-" VerticalAlignment="Center"/>
 			<ComboBox Margin="0 0 3 0" ItemsSource="{Binding Days}" SelectedItem="{Binding SelectedAnnualDayEnd}" VerticalAlignment="Center"/>
 			<ComboBox Margin="0 0 3 0" ItemsSource="{Binding Months}" SelectedItem="{Binding SelectedAnnualMonthEnd}" VerticalAlignment="Center">
@@ -29,6 +37,14 @@
 					</DataTemplate>
 				</ComboBox.ItemTemplate>
 			</ComboBox>
+			<Button Content="..." VerticalAlignment="Center" ToolTip.Tip="{x:Static lang:Strings.SearchFilterDateSelectFromTooltip}">
+				<Button.Flyout>
+					<MenuFlyout>
+						<MenuItem Header="{x:Static lang:Strings.SearchFilterDateSelectFromToday}" Command="{Binding SetEndDateFromTodayCommand}"/>
+						<MenuItem Header="{x:Static lang:Strings.SearchFilterDateSelectFromCurrentFile}" IsEnabled="{Binding CurrentFileHasDateTime}" Command="{Binding SetEndDateFromCurrentFileCommand}"/>
+					</MenuFlyout>
+				</Button.Flyout>
+			</Button>
 		</StackPanel>
 	</StackPanel>
 </UserControl>

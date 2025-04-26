@@ -1,6 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using FileDB.FilesFilter;
+using FileDB.Model;
 using FileDBInterface.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -27,17 +30,63 @@ public partial class AnnualDateViewModel : ObservableObject, IFilterViewModel
     [ObservableProperty]
     private int selectedAnnualDayEnd = Days.First();
 
+    public bool CurrentFileHasDateTime => fileSelector.SelectedFile?.Datetime is not null;
+
+    private readonly IFileSelector fileSelector;
+
     public AnnualDateViewModel(IFileSelector fileSelector)
     {
-        var currentFileDateTime = DatabaseParsing.ParseFilesDatetime(fileSelector.SelectedFile?.Datetime);
-        if (currentFileDateTime is not null)
-        {
-            selectedAnnualMonthStart = currentFileDateTime.Value.Month;
-            selectedAnnualDayStart = currentFileDateTime.Value.Day;
+        this.fileSelector = fileSelector;
+        this.RegisterForEvent<FileSelectionChanged>(x => OnPropertyChanged(nameof(CurrentFileHasDateTime)));
 
-            selectedAnnualMonthEnd = currentFileDateTime.Value.Month;
-            selectedAnnualDayEnd = currentFileDateTime.Value.Day;
+        if (CurrentFileHasDateTime)
+        {
+            SetStartDateFromCurrentFile();
+            SetEndDateFromCurrentFile();
         }
+        else
+        {
+            SetStartDateFromToday();
+            SetEndDateFromToday();
+        }
+    }
+
+    [RelayCommand]
+    private void SetStartDateFromCurrentFile()
+    {
+        var date = DatabaseParsing.ParseFilesDatetime(fileSelector.SelectedFile?.Datetime);
+        if (date is not null)
+        {
+            SelectedAnnualMonthStart = date.Value.Month;
+            SelectedAnnualDayStart = date.Value.Day;
+        }
+    }
+
+    [RelayCommand]
+    private void SetEndDateFromCurrentFile()
+    {
+        var date = DatabaseParsing.ParseFilesDatetime(fileSelector.SelectedFile?.Datetime);
+        if (date is not null)
+        {
+            SelectedAnnualMonthEnd = date.Value.Month;
+            SelectedAnnualDayEnd = date.Value.Day;
+        }
+    }
+
+    [RelayCommand]
+    private void SetStartDateFromToday()
+    {
+        var today = DateTime.Now;
+        SelectedAnnualMonthStart = today.Month;
+        SelectedAnnualDayStart = today.Day;
+    }
+
+    [RelayCommand]
+    private void SetEndDateFromToday()
+    {
+        var today = DateTime.Now;
+        SelectedAnnualMonthEnd = today.Month;
+        SelectedAnnualDayEnd = today.Day;
     }
 
     public IFilesFilter CreateFilter()

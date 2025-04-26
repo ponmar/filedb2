@@ -1331,4 +1331,13 @@ Lägg till nya filer i '{0}'.</value>
   <data name="FileInfoAddAnnualDateSearchFilter" xml:space="preserve">
     <value>Lägg till årsdatum-sökfilter</value>
   </data>
+  <data name="SearchFilterDateSelectFromTooltip" xml:space="preserve">
+    <value>Välj från...</value>
+  </data>
+  <data name="SearchFilterDateSelectFromToday" xml:space="preserve">
+    <value>Idag</value>
+  </data>
+  <data name="SearchFilterDateSelectFromCurrentFile" xml:space="preserve">
+    <value>Nuvarande fil</value>
+  </data>
 </root>

@@ -13,12 +13,29 @@
             VerticalAlignment="Center"
             SelectedDate="{Binding FirstDateTime}"
             ToolTip.Tip="{x:Static lang:Strings.SearchFilterDateTimeStart}" />
-		<StackPanel Margin="0 0 3 0" IsVisible="{Binding DateIsRange}" VerticalAlignment="Center" Orientation="Horizontal">
+		<Button Content="..." VerticalAlignment="Center" ToolTip.Tip="{x:Static lang:Strings.SearchFilterDateSelectFromTooltip}">
+			<Button.Flyout>
+				<MenuFlyout>
+					<MenuItem Header="{x:Static lang:Strings.SearchFilterDateSelectFromToday}" Command="{Binding SetStartDateFromTodayCommand}"/>
+					<MenuItem Header="{x:Static lang:Strings.SearchFilterDateSelectFromCurrentFile}" IsEnabled="{Binding CurrentFileHasDateTime}" Command="{Binding SetStartDateFromCurrentFileCommand}"/>
+				</MenuFlyout>
+			</Button.Flyout>
+		</Button>
+		<StackPanel Margin="3 0 0 0" IsVisible="{Binding DateIsRange}" VerticalAlignment="Center" Orientation="Horizontal">
 			<TextBlock Margin="0 0 3 0" Text="-" VerticalAlignment="Center" />
 			<DatePicker
+				Margin="0 0 3 0"
 				VerticalAlignment="Center"
 				SelectedDate="{Binding SecondDateTime}"
 				ToolTip.Tip="{x:Static lang:Strings.SearchFilterDateTimeEnd}" />
+			<Button Content="..." VerticalAlignment="Center" ToolTip.Tip="{x:Static lang:Strings.SearchFilterDateSelectFromTooltip}">
+				<Button.Flyout>
+					<MenuFlyout>
+						<MenuItem Header="{x:Static lang:Strings.SearchFilterDateSelectFromToday}" Command="{Binding SetEndDateFromTodayCommand}"/>
+						<MenuItem Header="{x:Static lang:Strings.SearchFilterDateSelectFromCurrentFile}" IsEnabled="{Binding CurrentFileHasDateTime}" Command="{Binding SetEndDateFromCurrentFileCommand}"/>
+					</MenuFlyout>
+				</Button.Flyout>
+			</Button>
 		</StackPanel>
 	</StackPanel>
 </UserControl>
