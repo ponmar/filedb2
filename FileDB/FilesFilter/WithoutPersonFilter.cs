@@ -11,6 +11,6 @@ public class WithoutPersonFilter(PersonForSearch? person) : IFilesFilter
 
     public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
     {
-        return dbAccess.SearchFilesWithoutPersons([person!.Id]);
+        return dbAccess.SearchFilesWithoutPerson(person!.Id);
     }
 }

@@ -11,6 +11,6 @@ public class WithoutLocationFilter(LocationForSearch? location) : IFilesFilter
 
     public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
     {
-        return dbAccess.SearchFilesWithoutLocations([location!.Id]);
+        return dbAccess.SearchFilesWithoutLocation(location!.Id);
     }
 }

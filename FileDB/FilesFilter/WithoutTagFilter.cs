@@ -11,6 +11,6 @@ public class WithoutTagFilter(TagForSearch? tag) : IFilesFilter
 
     public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
     {
-        return dbAccess.SearchFilesWithoutTags([tag!.Id]);
+        return dbAccess.SearchFilesWithoutTag(tag!.Id);
     }
 }

@@ -46,13 +46,13 @@ public interface IFilesAccess
     IEnumerable<FileModel> SearchFilesWithPersons(IEnumerable<int> personIds);
     IEnumerable<FileModel> SearchFilesWithPersonGroup(IEnumerable<int> personIds);
     IEnumerable<FileModel> SearchFilesWithPersonGroupOnly(IEnumerable<int> personIds);
-    IEnumerable<FileModel> SearchFilesWithoutPersons(IEnumerable<int> personIds);
+    IEnumerable<FileModel> SearchFilesWithoutPerson(int personId);
     IEnumerable<FileModel> SearchFilesWithLocations(IEnumerable<int> locationIds);
-    IEnumerable<FileModel> SearchFilesWithoutLocations(IEnumerable<int> locationIds);
+    IEnumerable<FileModel> SearchFilesWithoutLocation(int locationId);
     IEnumerable<FileModel> SearchFilesWithTags(IEnumerable<int> tagIds);
     IEnumerable<FileModel> SearchFilesWithTagGroup(IEnumerable<int> tagIds);
     IEnumerable<FileModel> SearchFilesWithTagGroupOnly(IEnumerable<int> tagIds);
-    IEnumerable<FileModel> SearchFilesWithoutTags(IEnumerable<int> tagIds);
+    IEnumerable<FileModel> SearchFilesWithoutTag(int tagId);
     IEnumerable<FileModel> SearchFilesWithMissingData();
 
     void InsertFilePerson(int fileId, int personId);

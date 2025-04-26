@@ -286,10 +286,10 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
         });
     }
 
-    public IEnumerable<FileModel> SearchFilesWithoutPersons(IEnumerable<int> personIds)
+    public IEnumerable<FileModel> SearchFilesWithoutPerson(int personId)
     {
         using var connection = DatabaseSetup.CreateConnection(database);
-        return connection.Query<FileModel>($"select * from [files] inner join filepersons on files.Id = filepersons.FileId where filepersons.PersonId not in ({string.Join(',', personIds)})");
+        return connection.Query<FileModel>("select * from [files] where files.Id not in (select FileId from [filepersons] where filepersons.PersonId = @personId)", new { personId });
     }
 
     public IEnumerable<FileModel> SearchFilesWithLocations(IEnumerable<int> locationIds)
@@ -298,10 +298,10 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
         return connection.Query<FileModel>($"select * from [files] inner join filelocations on files.Id = filelocations.FileId where filelocations.LocationId in ({string.Join(',', locationIds)})");
     }
 
-    public IEnumerable<FileModel> SearchFilesWithoutLocations(IEnumerable<int> locationIds)
+    public IEnumerable<FileModel> SearchFilesWithoutLocation(int locationId)
     {
         using var connection = DatabaseSetup.CreateConnection(database);
-        return connection.Query<FileModel>($"select * from [files] inner join filelocations on files.Id = filelocations.FileId where filelocations.LocationId not in ({string.Join(',', locationIds)})");
+        return connection.Query<FileModel>("select * from [files] where files.Id not in (select FileId from [filelocations] where filelocations.LocationId = @locationId)", new { locationId });
     }
 
     public IEnumerable<FileModel> SearchFilesWithTags(IEnumerable<int> tagIds)
@@ -333,10 +333,10 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
         });
     }
 
-    public IEnumerable<FileModel> SearchFilesWithoutTags(IEnumerable<int> tagIds)
+    public IEnumerable<FileModel> SearchFilesWithoutTag(int tagId)
     {
         using var connection = DatabaseSetup.CreateConnection(database);
-        return connection.Query<FileModel>($"select * from [files] inner join filetags on files.Id = filetags.FileId where filetags.TagId not in ({string.Join(',', tagIds)})");
+        return connection.Query<FileModel>("select * from [files] where files.Id not in (select FileId from [filetags] where filetags.TagId = @tagId)", new { tagId });
     }
 
     public IEnumerable<FileModel> SearchFilesWithMissingData()

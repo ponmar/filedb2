@@ -143,7 +143,7 @@ public class NoDatabaseAccess : IDatabaseAccess
         return [];
     }
 
-    public IEnumerable<FileModel> SearchFilesWithoutPersons(IEnumerable<int> personIds)
+    public IEnumerable<FileModel> SearchFilesWithoutPerson(int personId)
     {
         return [];
     }
@@ -153,7 +153,7 @@ public class NoDatabaseAccess : IDatabaseAccess
         return [];
     }
 
-    public IEnumerable<FileModel> SearchFilesWithoutLocations(IEnumerable<int> locationIds)
+    public IEnumerable<FileModel> SearchFilesWithoutLocation(int locationId)
     {
         return [];
     }
@@ -173,7 +173,7 @@ public class NoDatabaseAccess : IDatabaseAccess
         return [];
     }
 
-    public IEnumerable<FileModel> SearchFilesWithoutTags(IEnumerable<int> tagIds)
+    public IEnumerable<FileModel> SearchFilesWithoutTag(int tagId)
     {
         return [];
     }
