@@ -1340,4 +1340,7 @@ This operation can be slow for a large collection of files or if the media acces
   <data name="SearchFilterDateSelectFromCurrentFile" xml:space="preserve">
     <value>Current file</value>
   </data>
+  <data name="SearchFilterTimeSelectFromNow" xml:space="preserve">
+    <value>Current time</value>
+  </data>
 </root>

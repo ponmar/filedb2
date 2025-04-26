@@ -1340,4 +1340,7 @@ Lägg till nya filer i '{0}'.</value>
   <data name="SearchFilterDateSelectFromCurrentFile" xml:space="preserve">
     <value>Nuvarande fil</value>
   </data>
+  <data name="SearchFilterTimeSelectFromNow" xml:space="preserve">
+    <value>Nuvarande tid</value>
+  </data>
 </root>

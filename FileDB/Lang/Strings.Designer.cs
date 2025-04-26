@@ -2391,6 +2391,15 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Current time.
+        /// </summary>
+        public static string SearchFilterTimeSelectFromNow {
+            get {
+                return ResourceManager.GetString("SearchFilterTimeSelectFromNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search added files.
         /// </summary>
         public static string SearchForAddedFilesButton {

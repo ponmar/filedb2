@@ -8,7 +8,23 @@
              x:Class="FileDB.Views.Search.Filters.TimeView">
 	<StackPanel Orientation="Horizontal" DataContext="{Binding FilterViewModel}">
 		<TimePicker Margin="0 0 3 0" ClockIdentifier="24HourClock" VerticalAlignment="Center" SelectedTime="{Binding StartTime}"/>
+		<Button Margin="0 0 3 0" Content="..." VerticalAlignment="Center" ToolTip.Tip="{x:Static lang:Strings.SearchFilterDateSelectFromTooltip}">
+			<Button.Flyout>
+				<MenuFlyout>
+					<MenuItem Header="{x:Static lang:Strings.SearchFilterTimeSelectFromNow}" Command="{Binding SetStartTimeFromNowCommand}"/>
+					<MenuItem Header="{x:Static lang:Strings.SearchFilterDateSelectFromCurrentFile}" IsEnabled="{Binding CurrentFileHasTime}" Command="{Binding SetStartTimeFromCurrentFileCommand}"/>
+				</MenuFlyout>
+			</Button.Flyout>
+		</Button>
 		<TextBlock Margin="0 0 3 0" Text="-" VerticalAlignment="Center"/>
 		<TimePicker Margin="0 0 3 0" ClockIdentifier="24HourClock" VerticalAlignment="Center" SelectedTime="{Binding EndTime}"/>
+		<Button Content="..." VerticalAlignment="Center" ToolTip.Tip="{x:Static lang:Strings.SearchFilterDateSelectFromTooltip}">
+			<Button.Flyout>
+				<MenuFlyout>
+					<MenuItem Header="{x:Static lang:Strings.SearchFilterTimeSelectFromNow}" Command="{Binding SetEndTimeFromNowCommand}"/>
+					<MenuItem Header="{x:Static lang:Strings.SearchFilterDateSelectFromCurrentFile}" IsEnabled="{Binding CurrentFileHasTime}" Command="{Binding SetEndTimeFromCurrentFileCommand}"/>
+				</MenuFlyout>
+			</Button.Flyout>
+		</Button>
 	</StackPanel>
 </UserControl>
