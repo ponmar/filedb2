@@ -1343,4 +1343,10 @@ Lägg till nya filer i '{0}'.</value>
   <data name="SearchFilterTimeSelectFromNow" xml:space="preserve">
     <value>Nuvarande tid</value>
   </data>
+  <data name="FileInfoSearchTime" xml:space="preserve">
+    <value>Sök tid</value>
+  </data>
+  <data name="FileInfoAddTimeSearchFilter" xml:space="preserve">
+    <value>Lägg till tid-sökfilter</value>
+  </data>
 </root>

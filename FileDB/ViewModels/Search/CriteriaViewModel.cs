@@ -11,6 +11,7 @@ using FileDB.Comparers;
 using FileDB.ViewModels.Search;
 using System;
 using FileDB.ViewModels.Search.Filters;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FileDB.ViewModels;
 
@@ -24,6 +25,7 @@ public interface ICriteriaViewModel
     Task SearchForTagsAsync(IEnumerable<TagModel> tags);
     Task SearchForAnnualDateAsync(int month, int day);
     Task SearchForDateAsync(DateTime date);
+    Task SearchForTimeAsync(TimeSpan time);
 
     void AddPersonSearchFilter(PersonModel person);
     void AddPersonGroupSearchFilter(IEnumerable<PersonModel> persons);
@@ -32,6 +34,7 @@ public interface ICriteriaViewModel
     void AddTagsSearchFilter(IEnumerable<TagModel> tags);
     void AddAnnualDateSearchFilter(int month, int day);
     void AddDateSearchFilter(DateTime date);
+    void AddTimeSearchFilter(TimeSpan time);
 }
 
 public partial class CriteriaViewModel : ObservableObject, ICriteriaViewModel
@@ -149,6 +152,16 @@ public partial class CriteriaViewModel : ObservableObject, ICriteriaViewModel
         AddFilter(vm);
     }
 
+    private void AddTimeFilterFor(TimeSpan time)
+    {
+        var vm = ServiceLocator.Resolve<FilterSelectionViewModel>();
+        vm.SelectedFilterType = FilterType.Time;
+        var dateViewModel = (TimeViewModel)vm.FilterViewModel;
+        dateViewModel.StartTime = time;
+        dateViewModel.EndTime = time;
+        AddFilter(vm);
+    }
+
     [RelayCommand]
     private void RemoveFilter(FilterSelectionViewModel vm)
     {
@@ -253,6 +266,13 @@ public partial class CriteriaViewModel : ObservableObject, ICriteriaViewModel
         await FindFilesFromFiltersAsync();
     }
 
+    public async Task SearchForTimeAsync(TimeSpan time)
+    {
+        FilterSettings.Clear();
+        AddTimeFilterFor(time);
+        await FindFilesFromFiltersAsync();
+    }
+
     public void AddPersonSearchFilter(PersonModel person) => AddPersonFilterFor(person);
 
     public void AddPersonGroupSearchFilter(IEnumerable<PersonModel> persons) => AddPersonGroupFilterFor(persons);
@@ -266,4 +286,6 @@ public partial class CriteriaViewModel : ObservableObject, ICriteriaViewModel
     public void AddAnnualDateSearchFilter(int month, int day) => AddAnnualDateFilterFor(month, day);
 
     public void AddDateSearchFilter(DateTime date) => AddDateFilterFor(date);
+
+    public void AddTimeSearchFilter(TimeSpan time) => AddTimeFilterFor(time);
 }

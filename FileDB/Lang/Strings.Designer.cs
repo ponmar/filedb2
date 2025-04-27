@@ -1190,6 +1190,15 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add time search filter.
+        /// </summary>
+        public static string FileInfoAddTimeSearchFilter {
+            get {
+                return ResourceManager.GetString("FileInfoAddTimeSearchFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Description.
         /// </summary>
         public static string FileInfoDescriptionToolTip {
@@ -1285,6 +1294,15 @@ namespace FileDB.Lang {
         public static string FileInfoSearchTags {
             get {
                 return ResourceManager.GetString("FileInfoSearchTags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search for time.
+        /// </summary>
+        public static string FileInfoSearchTime {
+            get {
+                return ResourceManager.GetString("FileInfoSearchTime", resourceCulture);
             }
         }
         

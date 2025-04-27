@@ -7,7 +7,7 @@ namespace FileDB.FilesFilter;
 
 public class TimeFilter(TimeOnly start, TimeOnly end) : IFilesFilter
 {
-    public bool CanRun() => true;
+    public bool CanRun() => start <= end;
 
     public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
     {

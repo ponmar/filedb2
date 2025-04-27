@@ -1343,4 +1343,10 @@ This operation can be slow for a large collection of files or if the media acces
   <data name="SearchFilterTimeSelectFromNow" xml:space="preserve">
     <value>Current time</value>
   </data>
+  <data name="FileInfoSearchTime" xml:space="preserve">
+    <value>Search for time</value>
+  </data>
+  <data name="FileInfoAddTimeSearchFilter" xml:space="preserve">
+    <value>Add time search filter</value>
+  </data>
 </root>

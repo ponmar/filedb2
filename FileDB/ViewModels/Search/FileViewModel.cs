@@ -43,6 +43,8 @@ public partial class FileViewModel : ObservableObject
 
     public bool FileSelected => SelectedFile is not null;
 
+    public bool FileHasTime => SelectedFile?.Datetime is not null && SelectedFile.Datetime.Contains('T');
+
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(FileSelected))]
     private FileModel? selectedFile;
@@ -116,6 +118,7 @@ public partial class FileViewModel : ObservableObject
             {
                 LoadFile(fileSelector.SelectedFile);
             }
+            OnPropertyChanged(nameof(FileHasTime));
         });
 
         this.RegisterForEvent<ImageLoaded>((x) =>
@@ -281,6 +284,13 @@ public partial class FileViewModel : ObservableObject
     }
 
     [RelayCommand]
+    private void SearchForTime()
+    {
+        var time = DatabaseParsing.ParseFilesDatetime(SelectedFile!.Datetime)!.Value.TimeOfDay;
+        criteriaViewModel.SearchForTimeAsync(time);
+    }
+
+    [RelayCommand]
     private void SearchForBirthday(PersonModel person)
     {
         var birthday = DatabaseParsing.ParsePersonDateOfBirth(person.DateOfBirth!);
@@ -330,5 +340,12 @@ public partial class FileViewModel : ObservableObject
     {
         var date = DatabaseParsing.ParseFilesDatetime(SelectedFile!.Datetime)!.Value.Date;
         criteriaViewModel.AddAnnualDateSearchFilter(date.Month, date.Day);
+    }
+
+    [RelayCommand]
+    private void AddSearchForTime()
+    {
+        var time = DatabaseParsing.ParseFilesDatetime(SelectedFile!.Datetime)!.Value.TimeOfDay;
+        criteriaViewModel.AddTimeSearchFilter(time);
     }
 }

@@ -8,16 +8,18 @@
 	<Expander Header="{x:Static lang:Strings.FileInfoTitle}" IsExpanded="True">
 		<ScrollViewer>
 			<StackPanel Orientation="Vertical">
-				<!-- Date -->
+				<!-- Date and time -->
 				<StackPanel Orientation="Horizontal" Margin="0 0 0 5" IsVisible="{Binding DateTime, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
 					<Button Content="&#8230;" VerticalContentAlignment="Center" VerticalAlignment="Center" Margin="0 0 3 0">
 						<Button.Flyout>
 							<MenuFlyout>
-								<MenuItem Header="{x:Static lang:Strings.FileInfoSearchDate}" Command="{Binding $parent[UserControl].DataContext.SearchForDateCommand}"/>
-								<MenuItem Header="{x:Static lang:Strings.FileInfoSearchAnnualDate}" Command="{Binding $parent[UserControl].DataContext.SearchForAnnualDateCommand}"/>
+								<MenuItem Header="{x:Static lang:Strings.FileInfoSearchDate}" Command="{Binding SearchForDateCommand}"/>
+								<MenuItem Header="{x:Static lang:Strings.FileInfoSearchAnnualDate}" Command="{Binding SearchForAnnualDateCommand}"/>
+								<MenuItem Header="{x:Static lang:Strings.FileInfoSearchTime}" Command="{Binding SearchForTimeCommand}" IsEnabled="{Binding FileHasTime}"/>
 								<MenuItem Header="-"/>
-								<MenuItem Header="{x:Static lang:Strings.FileInfoAddDateSearchFilter}" Command="{Binding $parent[UserControl].DataContext.AddSearchForDateCommand}"/>
-								<MenuItem Header="{x:Static lang:Strings.FileInfoAddAnnualDateSearchFilter}" Command="{Binding $parent[UserControl].DataContext.AddSearchForAnnualDateCommand}"/>
+								<MenuItem Header="{x:Static lang:Strings.FileInfoAddDateSearchFilter}" Command="{Binding AddSearchForDateCommand}"/>
+								<MenuItem Header="{x:Static lang:Strings.FileInfoAddAnnualDateSearchFilter}" Command="{Binding AddSearchForAnnualDateCommand}"/>
+								<MenuItem Header="{x:Static lang:Strings.FileInfoAddTimeSearchFilter}" Command="{Binding AddSearchForTimeCommand}" IsEnabled="{Binding FileHasTime}"/>
 							</MenuFlyout>
 						</Button.Flyout>
 					</Button>
