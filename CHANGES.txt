@@ -1,3 +1,11 @@
+4.12:
+* Only show quit tab button when in fullscreen mode
+* Date and annual date search filters: add menu for setting start/end date from today and current file
+* Time search filter: add menu for setting time from current time and current file
+* File info overlay: add menu for searching for time from current file
+* Person, location and tag search filters: fix negated search
+* Settings tab: Layout improvements
+
 4.11:
 * Replace Basic and Combine search tabs withe new filters
 * Add setting for initial search filter (default is "Text")
