@@ -47,11 +47,10 @@ public partial class FilterSelectionViewModel : ObservableObject
     [ObservableProperty]
     private IFilterViewModel filterViewModel;
 
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
     public FilterSelectionViewModel(IConfigProvider configProvider)
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
     {
         SelectedFilterType = configProvider.Config.InitialSearchFilterType;
+        FilterViewModel = CreateFilterFromType(SelectedFilterType);
     }
 
     private static IFilterViewModel CreateFilterFromType(FilterType filterType)
