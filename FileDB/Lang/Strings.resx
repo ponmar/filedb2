@@ -1349,4 +1349,7 @@ This operation can be slow for a large collection of files or if the media acces
   <data name="FileInfoAddTimeSearchFilter" xml:space="preserve">
     <value>Add time search filter</value>
   </data>
+  <data name="SearchResultSlideshowDelay" xml:space="preserve">
+    <value>Slideshow delay [seconds]</value>
+  </data>
 </root>

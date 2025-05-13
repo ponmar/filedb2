@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:lang="clr-namespace:FileDB.Lang"
 			 xmlns:converters="clr-namespace:FileDB.Converters"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="1100" d:DesignHeight="450"
              x:Class="FileDB.Views.Search.ResultView">
 	<UserControl.Resources>
 		<converters:SortMethodToStringConverter x:Key="SortMethodToStringConverter"/>
@@ -27,27 +27,28 @@
 				</Grid>
 				<WrapPanel Orientation="Horizontal" HorizontalAlignment="Center">
 					<StackPanel Orientation="Horizontal" Margin="5">
-						<Button Classes="NavigationButton" Command="{Binding PrevFileCommand}" IsEnabled="{Binding PrevFileAvailable}" ToolTip.Tip="{x:Static lang:Strings.SearchResultGoToPreviousToolTip}" Margin="0 0 2 0" HotKey="PageUp">&#x2B60;</Button>
-						<Button Classes="NavigationButton" Command="{Binding NextFileCommand}" IsEnabled="{Binding NextFileAvailable}" ToolTip.Tip="{x:Static lang:Strings.SearchResultGoToNextToolTip}" HotKey="PageDown">&#x2B62;</Button>
+						<Button Classes="NavigationButton" Command="{Binding PrevFileCommand}" IsEnabled="{Binding PrevFileAvailable}" ToolTip.Tip="{x:Static lang:Strings.SearchResultGoToPreviousToolTip}" Margin="0 0 2 0" HotKey="PageUp" VerticalAlignment="Center">&#x2B60;</Button>
+						<Button Classes="NavigationButton" Command="{Binding NextFileCommand}" IsEnabled="{Binding NextFileAvailable}" ToolTip.Tip="{x:Static lang:Strings.SearchResultGoToNextToolTip}" HotKey="PageDown" VerticalAlignment="Center">&#x2B62;</Button>
 					</StackPanel>
 					<StackPanel Orientation="Horizontal" Margin="5">
-						<Button Classes="NavigationButton" Command="{Binding PrevDirectoryCommand}" IsEnabled="{Binding PrevDirectoryAvailable}" ToolTip.Tip="{x:Static lang:Strings.SearchResultGoToPreviousDirectoryToolTip}" Margin="0 0 2 0" HotKey="Ctrl+PageUp">&#x21C7;</Button>
-						<Button Classes="NavigationButton" Command="{Binding NextDirectoryCommand}" IsEnabled="{Binding NextDirectoryAvailable}" ToolTip.Tip="{x:Static lang:Strings.SearchResultGoToNextDirectoryToolTip}" HotKey="Ctrl+PageDown">&#x21C9;</Button>
+						<Button Classes="NavigationButton" Command="{Binding PrevDirectoryCommand}" IsEnabled="{Binding PrevDirectoryAvailable}" ToolTip.Tip="{x:Static lang:Strings.SearchResultGoToPreviousDirectoryToolTip}" Margin="0 0 2 0" HotKey="Ctrl+PageUp" VerticalAlignment="Center">&#x21C7;</Button>
+						<Button Classes="NavigationButton" Command="{Binding NextDirectoryCommand}" IsEnabled="{Binding NextDirectoryAvailable}" ToolTip.Tip="{x:Static lang:Strings.SearchResultGoToNextDirectoryToolTip}" HotKey="Ctrl+PageDown" VerticalAlignment="Center">&#x21C9;</Button>
 					</StackPanel>
 					<StackPanel Orientation="Horizontal" Margin="5">
-						<Button Classes="NavigationButton" Command="{Binding FirstFileCommand}" IsEnabled="{Binding FirstFileAvailable}" ToolTip.Tip="{x:Static lang:Strings.SearchResultGoToFirstToolTip}" Margin="0 0 2 0" HotKey="Home">&#x21E4;</Button>
-						<Button Classes="NavigationButton" Command="{Binding LastFileCommand}" IsEnabled="{Binding LastFileAvailable}" ToolTip.Tip="{x:Static lang:Strings.SearchResultGoToLastToolTip}" HotKey="End">&#x21E5;</Button>
+						<Button Classes="NavigationButton" Command="{Binding FirstFileCommand}" IsEnabled="{Binding FirstFileAvailable}" ToolTip.Tip="{x:Static lang:Strings.SearchResultGoToFirstToolTip}" Margin="0 0 2 0" HotKey="Home" VerticalAlignment="Center">&#x21E4;</Button>
+						<Button Classes="NavigationButton" Command="{Binding LastFileCommand}" IsEnabled="{Binding LastFileAvailable}" ToolTip.Tip="{x:Static lang:Strings.SearchResultGoToLastToolTip}" HotKey="End" VerticalAlignment="Center">&#x21E5;</Button>
 					</StackPanel>
 					<StackPanel Orientation="Horizontal" Margin="5">
-						<ToggleButton Classes="NavigationButton" Command="{Binding ToggleSlideshowCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" IsChecked="{Binding SlideshowActive}" ToolTip.Tip="{x:Static lang:Strings.SearchResultToggleSlideshowToolTip}" Margin="0 0 2 0">&#x1F39E;</ToggleButton>
-						<ToggleButton Classes="NavigationButton" IsEnabled="{Binding HasNonEmptySearchResult}" IsChecked="{Binding RandomActive}" ToolTip.Tip="{x:Static lang:Strings.SearchResultToggleSlideshowRandomToolTip}" Margin="0 0 2 0">&#x21AD;</ToggleButton>
-						<ToggleButton Classes="NavigationButton" IsEnabled="{Binding HasNonEmptySearchResult}" IsChecked="{Binding RepeatActive}" ToolTip.Tip="{x:Static lang:Strings.SearchResultToggleSlideshowRepeatToolTip}" Margin="0 0 2 0">&#x21BB;</ToggleButton>
-						<ToggleButton Classes="NavigationButton" IsEnabled="{Binding HasNonEmptySearchResult}" IsChecked="{Binding SpeekActive}" ToolTip.Tip="{x:Static lang:Strings.SearchResultToggleFileDescriptionSpeekToolTip}">&#x1F4AC;</ToggleButton>
+						<ToggleButton Classes="NavigationButton" IsEnabled="{Binding HasNonEmptySearchResult}" IsChecked="{Binding SlideshowActive}" ToolTip.Tip="{x:Static lang:Strings.SearchResultToggleSlideshowToolTip}" Margin="0 0 2 0" VerticalAlignment="Center">&#x1F39E;</ToggleButton>
+						<ToggleButton Classes="NavigationButton" IsEnabled="{Binding HasNonEmptySearchResult}" IsChecked="{Binding RandomActive}" ToolTip.Tip="{x:Static lang:Strings.SearchResultToggleSlideshowRandomToolTip}" Margin="0 0 2 0" VerticalAlignment="Center">&#x21AD;</ToggleButton>
+						<ToggleButton Classes="NavigationButton" IsEnabled="{Binding HasNonEmptySearchResult}" IsChecked="{Binding RepeatActive}" ToolTip.Tip="{x:Static lang:Strings.SearchResultToggleSlideshowRepeatToolTip}" Margin="0 0 2 0" VerticalAlignment="Center">&#x21BB;</ToggleButton>
+						<ToggleButton Classes="NavigationButton" IsEnabled="{Binding HasNonEmptySearchResult}" IsChecked="{Binding SpeekActive}" ToolTip.Tip="{x:Static lang:Strings.SearchResultToggleFileDescriptionSpeekToolTip}" Margin="0 0 2 0" VerticalAlignment="Center">&#x1F4AC;</ToggleButton>
+						<NumericUpDown IsEnabled="{Binding HasNonEmptySearchResult}" Minimum="1" Maximum="60" Value="{Binding SlideshowDelay}" FormatString="0" VerticalAlignment="Center" ToolTip.Tip="{x:Static lang:Strings.SearchResultSlideshowDelay}"/>
 					</StackPanel>
 					<StackPanel Orientation="Horizontal" Margin="5">
-						<Button Classes="NavigationButton" Command="{Binding ExportFileListCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip.Tip="{x:Static lang:Strings.SearchResultExportButton}" Content="&#x21E9;" Margin="0 0 2 0"/>
-						<Button Classes="NavigationButton" Command="{Binding CopyFileListCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip.Tip="{x:Static lang:Strings.SearchResultCopyButtonToolTip}" Content="&#x1f5d0;" Margin="0 0 2 0" />
-						<Button Classes="NavigationButton" Command="{Binding ClearSearchCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip.Tip="{x:Static lang:Strings.SearchResultCloseButtonToolTip}" HorizontalAlignment="Right" Content="&#128473;" />
+						<Button Classes="NavigationButton" Command="{Binding ExportFileListCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip.Tip="{x:Static lang:Strings.SearchResultExportButton}" Content="&#x21E9;" Margin="0 0 2 0" VerticalAlignment="Center"/>
+						<Button Classes="NavigationButton" Command="{Binding CopyFileListCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip.Tip="{x:Static lang:Strings.SearchResultCopyButtonToolTip}" Content="&#x1f5d0;" Margin="0 0 2 0" VerticalAlignment="Center"/>
+						<Button Classes="NavigationButton" Command="{Binding ClearSearchCommand}" IsEnabled="{Binding HasNonEmptySearchResult}" ToolTip.Tip="{x:Static lang:Strings.SearchResultCloseButtonToolTip}" HorizontalAlignment="Right" Content="&#128473;" VerticalAlignment="Center"/>
 					</StackPanel>
 				</WrapPanel>
 				<TextBlock Margin="0 3 0 0" HorizontalAlignment="Center" IsVisible="{Binding CurrentFileInternalPath, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" Text="{Binding CurrentFileInternalPath}"/>

@@ -102,7 +102,7 @@ public partial class ResultViewModel : ObservableObject, ISearchResultRepository
     {
         if (value is not null)
         {
-            StopSlideshow();
+            SlideshowActive = false;
             SearchResult = value;
         }
     }
@@ -110,11 +110,37 @@ public partial class ResultViewModel : ObservableObject, ISearchResultRepository
     [ObservableProperty]
     private bool slideshowActive = false;
 
+    partial void OnSlideshowActiveChanged(bool value)
+    {
+        if (value)
+        {
+            if (SearchResult is not null && SearchResult.Count > 1)
+            {
+                slideshowTimer.Start();
+            }
+        }
+        else
+        {
+            slideshowTimer.Stop();
+        }
+    }
+
     [ObservableProperty]
     private bool randomActive = false;
 
     [ObservableProperty]
     private bool repeatActive = false;
+
+    [ObservableProperty]
+    private int slideshowDelay;
+
+    partial void OnSlideshowDelayChanged(int value)
+    {
+        var slideshowWasActive = SlideshowActive;
+        SlideshowActive = false;
+        slideshowTimer.Interval = TimeSpan.FromSeconds(value);
+        SlideshowActive = slideshowWasActive;
+    }
 
     [ObservableProperty]
     private List<SortMethod> sortMethods = [.. Enum.GetValues<SortMethod>()];
@@ -165,8 +191,10 @@ public partial class ResultViewModel : ObservableObject, ISearchResultRepository
         this.speeker = speeker;
         this.clipboardService = clipboardService;
 
+        SlideshowDelay = configProvider.Config.SlideshowDelay;
+
         slideshowTimer.Tick += SlideshowTimer_Tick;
-        slideshowTimer.Interval = TimeSpan.FromSeconds(configProvider.Config.SlideshowDelay);
+        slideshowTimer.Interval = TimeSpan.FromSeconds(SlideshowDelay);
 
         SelectedSortMethod = configProvider.Config.DefaultSortMethod;
 
@@ -177,7 +205,7 @@ public partial class ResultViewModel : ObservableObject, ISearchResultRepository
 
         this.RegisterForEvent<TransferSearchResult>(x =>
         {
-            StopSlideshow();
+            SlideshowActive = false;
             SearchResult = new SearchResult() { Files = x.Files.ToList() };
         });
 
@@ -224,14 +252,14 @@ public partial class ResultViewModel : ObservableObject, ISearchResultRepository
     [RelayCommand]
     private void PrevFile()
     {
-        StopSlideshow();
+        SlideshowActive = false;
         SelectPrevFile();
     }
 
     [RelayCommand]
     public void NextFile()
     {
-        StopSlideshow();
+        SlideshowActive = false;
         SelectNextFile();
     }
 
@@ -261,7 +289,7 @@ public partial class ResultViewModel : ObservableObject, ISearchResultRepository
             return;
         }
 
-        StopSlideshow();
+        SlideshowActive = false;
 
         if (SelectedFileIndex < 1)
             return;
@@ -289,7 +317,7 @@ public partial class ResultViewModel : ObservableObject, ISearchResultRepository
             return;
         }
 
-        StopSlideshow();
+        SlideshowActive = false;
 
         if (SelectedFileIndex == -1 || SelectedFileIndex == SearchResult!.Count - 1)
             return;
@@ -312,7 +340,7 @@ public partial class ResultViewModel : ObservableObject, ISearchResultRepository
     [RelayCommand]
     private void FirstFile()
     {
-        StopSlideshow();
+        SlideshowActive = false;
         LoadFile(0);
         FireBrowsingEnabledEvents();
     }
@@ -320,25 +348,12 @@ public partial class ResultViewModel : ObservableObject, ISearchResultRepository
     [RelayCommand]
     private void LastFile()
     {
-        StopSlideshow();
+        SlideshowActive = false;
         if (searchResult is not null)
         {
             LoadFile(SearchResult!.Count - 1);
         }
         FireBrowsingEnabledEvents();
-    }
-
-    [RelayCommand]
-    private void ToggleSlideshow()
-    {
-        if (SlideshowActive)
-        {
-            StartSlideshow();
-        }
-        else
-        {
-            StopSlideshow();
-        }
     }
 
     private void StartSlideshow()
@@ -347,12 +362,6 @@ public partial class ResultViewModel : ObservableObject, ISearchResultRepository
         {
             slideshowTimer.Start();
         }
-    }
-
-    private void StopSlideshow()
-    {
-        slideshowTimer.Stop();
-        SlideshowActive = false;
     }
 
     private void SlideshowTimer_Tick(object? sender, EventArgs e)
@@ -379,7 +388,7 @@ public partial class ResultViewModel : ObservableObject, ISearchResultRepository
                 SelectNextFile();
                 if (SelectedFileIndex == SearchResult!.Count - 1)
                 {
-                    StopSlideshow();
+                    SlideshowActive = false;
                 }
             }
         }
@@ -479,7 +488,7 @@ public partial class ResultViewModel : ObservableObject, ISearchResultRepository
 
     private void SortFiles(IComparer<FileModel> comparer, bool desc, bool preserveSelection)
     {
-        StopSlideshow();
+        SlideshowActive = false;
         if (HasNonEmptySearchResult)
         {
             var selectedFile = SearchResult!.Files[SelectedFileIndex];

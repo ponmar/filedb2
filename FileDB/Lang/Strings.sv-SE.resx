@@ -1349,4 +1349,7 @@ Lägg till nya filer i '{0}'.</value>
   <data name="FileInfoAddTimeSearchFilter" xml:space="preserve">
     <value>Lägg till tid-sökfilter</value>
   </data>
+  <data name="SearchResultSlideshowDelay" xml:space="preserve">
+    <value>Bildspelsfördröjning [sekunder]</value>
+  </data>
 </root>

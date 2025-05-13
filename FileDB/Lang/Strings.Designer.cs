@@ -2634,6 +2634,15 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Slideshow delay [seconds].
+        /// </summary>
+        public static string SearchResultSlideshowDelay {
+            get {
+                return ResourceManager.GetString("SearchResultSlideshowDelay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sort by:.
         /// </summary>
         public static string SearchResultSortByLabel {
