@@ -31,6 +31,8 @@ public static class Bootstrapper
             typeof(ILocationsRepository),
             typeof(ITagsRepository));
 
+        ServiceLocator.RegisterSingleton<IFilesWritePermissionChecker, FilesWritePermissionChecker>();
+
         ServiceLocator.RegisterSingleton<AboutViewModel>();
         ServiceLocator.RegisterSingleton<IDialogs, Dialogs.Dialogs>();
 

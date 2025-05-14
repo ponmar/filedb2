@@ -161,6 +161,13 @@ public partial class App : Application
             var configUpdater = ServiceLocator.Resolve<IConfigUpdater>();
             configUpdater.InitConfig(applicationFilePaths, config, dbAccess, filesystemAccess);
 
+            if (!ServiceLocator.Resolve<IFilesWritePermissionChecker>().HasWritePermission)
+            {
+                config = config with { ReadOnly = false };
+                configUpdater.UpdateConfig(config);
+                notifications.Add(new(NotificationType.Info, Strings.NotificationNoWritePermission, DateTime.Now));
+            }
+
             Messenger.Send(new SetTheme(config.Theme));
 
             var notificationsHandling = ServiceLocator.Resolve<INotificationHandling>();

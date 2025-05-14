@@ -1352,4 +1352,16 @@ Lägg till nya filer i '{0}'.</value>
   <data name="SearchResultSlideshowDelay" xml:space="preserve">
     <value>Bildspelsfördröjning [sekunder]</value>
   </data>
+  <data name="NotificationNoWritePermission" xml:space="preserve">
+    <value>Inga skrivrättigheter i filsamlingens rotkatalog. Startar i skrivskyddat läge.</value>
+  </data>
+  <data name="SettingsNoWritePermission" xml:space="preserve">
+    <value>Inga skrivrättigheter för konfigurationsfilen</value>
+  </data>
+  <data name="SettingsSaveConfiguration" xml:space="preserve">
+    <value>Spara konfigurationen?</value>
+  </data>
+  <data name="SettingsUnableToSaveConfiguration" xml:space="preserve">
+    <value>Kunde inte spara konfigurationen</value>
+  </data>
 </root>

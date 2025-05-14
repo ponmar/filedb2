@@ -1932,6 +1932,15 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No write permission to files root directory. Starting in readonly mode..
+        /// </summary>
+        public static string NotificationNoWritePermission {
+            get {
+                return ResourceManager.GetString("NotificationNoWritePermission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dismiss all.
         /// </summary>
         public static string NotificationsDismissAllButton {
@@ -2958,6 +2967,15 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No write permission to the config file.
+        /// </summary>
+        public static string SettingsNoWritePermission {
+            get {
+                return ResourceManager.GetString("SettingsNoWritePermission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Number of loaded images to keep in memory:.
         /// </summary>
         public static string SettingsNumberOfLoadedImagesToKeepInMemoryLabel {
@@ -3084,6 +3102,15 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save configuration?.
+        /// </summary>
+        public static string SettingsSaveConfiguration {
+            get {
+                return ResourceManager.GetString("SettingsSaveConfiguration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search history size:.
         /// </summary>
         public static string SettingsSearchHistorySizeLabel {
@@ -3134,6 +3161,15 @@ namespace FileDB.Lang {
         public static string SettingsTitle {
             get {
                 return ResourceManager.GetString("SettingsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to save configuration.
+        /// </summary>
+        public static string SettingsUnableToSaveConfiguration {
+            get {
+                return ResourceManager.GetString("SettingsUnableToSaveConfiguration", resourceCulture);
             }
         }
         

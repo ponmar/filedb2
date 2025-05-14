@@ -1352,4 +1352,16 @@ This operation can be slow for a large collection of files or if the media acces
   <data name="SearchResultSlideshowDelay" xml:space="preserve">
     <value>Slideshow delay [seconds]</value>
   </data>
+  <data name="NotificationNoWritePermission" xml:space="preserve">
+    <value>No write permission to files root directory. Starting in readonly mode.</value>
+  </data>
+  <data name="SettingsNoWritePermission" xml:space="preserve">
+    <value>No write permission to the config file</value>
+  </data>
+  <data name="SettingsSaveConfiguration" xml:space="preserve">
+    <value>Save configuration?</value>
+  </data>
+  <data name="SettingsUnableToSaveConfiguration" xml:space="preserve">
+    <value>Unable to save configuration</value>
+  </data>
 </root>

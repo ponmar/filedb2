@@ -9,6 +9,7 @@ using CommunityToolkit.Mvvm.Input;
 using FileDB.Configuration;
 using FileDB.Dialogs;
 using FileDB.Extensions;
+using FileDB.Lang;
 using FileDB.Model;
 using FileDB.Validators;
 
@@ -310,13 +311,15 @@ public partial class SettingsViewModel : ObservableObject
     private readonly IConfigUpdater configUpdater;
     private readonly IDialogs dialogs;
     private readonly IFileSystem fileSystem;
+    private readonly IFilesWritePermissionChecker filesWritePermissionChecker;
 
-    public SettingsViewModel(IConfigProvider configProvider, IConfigUpdater configUpdater, IDialogs dialogs, IFileSystem fileSystem)
+    public SettingsViewModel(IConfigProvider configProvider, IConfigUpdater configUpdater, IDialogs dialogs, IFileSystem fileSystem, IFilesWritePermissionChecker filesWritePermissionChecker)
     {
         this.configProvider = configProvider;
         this.configUpdater = configUpdater;
         this.dialogs = dialogs;
         this.fileSystem = fileSystem;
+        this.filesWritePermissionChecker = filesWritePermissionChecker;
 
         UpdateFromConfiguration();
     }
@@ -362,6 +365,12 @@ public partial class SettingsViewModel : ObservableObject
     [RelayCommand]
     private async Task SaveConfigurationAsync()
     {
+        if (!filesWritePermissionChecker.HasWritePermission)
+        {
+            await dialogs.ShowErrorDialogAsync(Strings.SettingsNoWritePermission);
+            return;
+        }
+
         var configToSave = new Config(
             FileToLocationMaxDistance,
             BlacklistedFilePathPatterns,
@@ -396,7 +405,7 @@ public partial class SettingsViewModel : ObservableObject
             return;
         }
 
-        if (!await dialogs.ShowConfirmDialogAsync($"Save configuration?"))
+        if (!await dialogs.ShowConfirmDialogAsync(Strings.SettingsSaveConfiguration))
         {
             return;
         }
@@ -414,7 +423,7 @@ public partial class SettingsViewModel : ObservableObject
         }
         catch (Exception e)
         {
-            await dialogs.ShowErrorDialogAsync("Unable to save configuration", e);
+            await dialogs.ShowErrorDialogAsync(Strings.SettingsUnableToSaveConfiguration, e);
         }
     }
 }
