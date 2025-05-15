@@ -1356,7 +1356,7 @@ Lägg till nya filer i '{0}'.</value>
     <value>Inga skrivrättigheter i filsamlingens rotkatalog. Startar i skrivskyddat läge.</value>
   </data>
   <data name="SettingsNoWritePermission" xml:space="preserve">
-    <value>Inga skrivrättigheter för konfigurationsfilen</value>
+    <value>Sparande avaktiverat eftersom inga skrivrättigheter finns.</value>
   </data>
   <data name="SettingsSaveConfiguration" xml:space="preserve">
     <value>Spara konfigurationen?</value>

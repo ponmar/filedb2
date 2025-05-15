@@ -16,9 +16,14 @@
 		<TextBlock DockPanel.Dock="Top" Text="{x:Static lang:Strings.SettingsTitle}" Classes="PageHeader"/>
 		<ScrollViewer>
 			<StackPanel Orientation="Vertical" Grid.IsSharedSizeScope="True">
+				<StackPanel Orientation="Horizontal" Margin="10 0 0 0" IsVisible="{Binding !HasWritePermission}">
+					<TextBlock Classes="WarningIcon" Margin="0 0 5 0" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
+					<TextBlock Classes="PageTextBlock" Margin="0" Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" Text="{x:Static lang:Strings.SettingsNoWritePermission}" VerticalAlignment="Center"/>
+				</StackPanel>
+
 				<StackPanel Orientation="Horizontal">
 					<Button Classes="PageButton" Command="{Binding ResetConfigurationCommand}" ToolTip.Tip="{x:Static lang:Strings.SettingsResetChangesButtonToolTip}" Content="{x:Static lang:Strings.SettingsResetChangesButton}" IsEnabled="{Binding IsDirty}" />
-					<Button Classes="PageButton" Command="{Binding SaveConfigurationCommand}" Content="{x:Static lang:Strings.SettingsSaveButton}" IsEnabled="{Binding IsDirty}" />
+					<Button Classes="PageButton" Command="{Binding SaveConfigurationCommand}" Content="{x:Static lang:Strings.SettingsSaveButton}" IsEnabled="{Binding CanSave}" />
 				</StackPanel>
 
 				<TextBlock Text="{x:Static lang:Strings.SettingsGeneralHeading}" Classes="PageSubHeader"/>

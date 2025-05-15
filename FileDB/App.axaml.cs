@@ -161,9 +161,9 @@ public partial class App : Application
             var configUpdater = ServiceLocator.Resolve<IConfigUpdater>();
             configUpdater.InitConfig(applicationFilePaths, config, dbAccess, filesystemAccess);
 
-            if (!ServiceLocator.Resolve<IFilesWritePermissionChecker>().HasWritePermission)
+            if (!config.ReadOnly && !ServiceLocator.Resolve<IFilesWritePermissionChecker>().HasWritePermission)
             {
-                config = config with { ReadOnly = false };
+                config = config with { ReadOnly = true };
                 configUpdater.UpdateConfig(config);
                 notifications.Add(new(NotificationType.Info, Strings.NotificationNoWritePermission, DateTime.Now));
             }

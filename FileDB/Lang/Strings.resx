@@ -1356,7 +1356,7 @@ This operation can be slow for a large collection of files or if the media acces
     <value>No write permission to files root directory. Starting in readonly mode.</value>
   </data>
   <data name="SettingsNoWritePermission" xml:space="preserve">
-    <value>No write permission to the config file</value>
+    <value>Save disabled because file write permission not available.</value>
   </data>
   <data name="SettingsSaveConfiguration" xml:space="preserve">
     <value>Save configuration?</value>

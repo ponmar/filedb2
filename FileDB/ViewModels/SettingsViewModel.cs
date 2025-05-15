@@ -23,8 +23,13 @@ public partial class SettingsViewModel : ObservableObject
     public static IEnumerable<CultureInfo> Languages { get; } = [CultureInfo.GetCultureInfo("en"), CultureInfo.GetCultureInfo("sv-SE")];
     public static IEnumerable<FilterType> SearchFilterTypes { get; } = Enum.GetValues<FilterType>().OrderBy(x => x.ToFriendlyString(), StringComparer.Ordinal);
 
+    public bool HasWritePermission { get; }
+
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(CanSave))]
     private bool isDirty;
+
+    public bool CanSave => IsDirty && HasWritePermission;
 
     partial void OnIsDirtyChanged(bool value) => Messenger.Send(new ConfigEdited(value));
 
@@ -311,7 +316,6 @@ public partial class SettingsViewModel : ObservableObject
     private readonly IConfigUpdater configUpdater;
     private readonly IDialogs dialogs;
     private readonly IFileSystem fileSystem;
-    private readonly IFilesWritePermissionChecker filesWritePermissionChecker;
 
     public SettingsViewModel(IConfigProvider configProvider, IConfigUpdater configUpdater, IDialogs dialogs, IFileSystem fileSystem, IFilesWritePermissionChecker filesWritePermissionChecker)
     {
@@ -319,7 +323,8 @@ public partial class SettingsViewModel : ObservableObject
         this.configUpdater = configUpdater;
         this.dialogs = dialogs;
         this.fileSystem = fileSystem;
-        this.filesWritePermissionChecker = filesWritePermissionChecker;
+
+        HasWritePermission = filesWritePermissionChecker.HasWritePermission;
 
         UpdateFromConfiguration();
     }
@@ -365,12 +370,6 @@ public partial class SettingsViewModel : ObservableObject
     [RelayCommand]
     private async Task SaveConfigurationAsync()
     {
-        if (!filesWritePermissionChecker.HasWritePermission)
-        {
-            await dialogs.ShowErrorDialogAsync(Strings.SettingsNoWritePermission);
-            return;
-        }
-
         var configToSave = new Config(
             FileToLocationMaxDistance,
             BlacklistedFilePathPatterns,

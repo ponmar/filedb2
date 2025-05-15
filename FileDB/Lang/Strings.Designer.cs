@@ -2967,7 +2967,7 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No write permission to the config file.
+        ///   Looks up a localized string similar to Save disabled because file write permission not available..
         /// </summary>
         public static string SettingsNoWritePermission {
             get {
