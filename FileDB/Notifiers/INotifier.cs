@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using FileDB.Notifications;
 
 namespace FileDB.Notifiers;
-
-public enum NotificationType { Info, Warning, Error };
-
-public record Notification(NotificationType Type, string Message, DateTime DateTime);
 
 public interface INotifier
 {

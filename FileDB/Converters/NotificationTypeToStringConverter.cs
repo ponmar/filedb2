@@ -1,5 +1,5 @@
 ﻿using Avalonia.Data.Converters;
-using FileDB.Notifiers;
+using FileDB.Notifications;
 using System;
 
 namespace FileDB.Converters;

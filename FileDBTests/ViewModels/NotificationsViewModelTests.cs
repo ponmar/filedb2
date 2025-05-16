@@ -2,6 +2,7 @@
 using FileDB;
 using FileDB.Configuration;
 using FileDB.Model;
+using FileDB.Notifications;
 using FileDB.Notifiers;
 using FileDB.ViewModels;
 using FileDBInterface.DatabaseAccess;
@@ -16,8 +17,8 @@ public class NotificationsViewModelTests : IDisposable
     private readonly IDatabaseAccessProvider fakeDbAccessProvider = A.Fake<IDatabaseAccessProvider>();
     private readonly IDatabaseAccess fakeDbAccess = A.Fake<IDatabaseAccess>();
     private readonly INotifierFactory fakeNotifierFactory = A.Fake<INotifierFactory>();
-    private readonly INotificationHandling fakeNotificationHandling = A.Fake<INotificationHandling>();
-    private readonly INotificationsRepository fakeNotificationsRepo = A.Fake<INotificationsRepository>();
+    private readonly INotificationManagement fakeNotificationManagement = A.Fake<INotificationManagement>();
+    private readonly INotificationRepository fakeNotificationRepo = A.Fake<INotificationRepository>();
 
     private NotificationsViewModel? viewModel;
 
@@ -37,7 +38,7 @@ public class NotificationsViewModelTests : IDisposable
     [Fact]
     public void Constructor_NoNotifications()
     {
-        viewModel = new NotificationsViewModel(fakeConfigProvider, fakeDbAccessProvider, fakeNotifierFactory, fakeNotificationHandling, fakeNotificationsRepo);
+        viewModel = new NotificationsViewModel(fakeConfigProvider, fakeDbAccessProvider, fakeNotifierFactory, fakeNotificationManagement, fakeNotificationRepo);
 
         Assert.Empty(viewModel.Notifications);
     }
@@ -46,9 +47,9 @@ public class NotificationsViewModelTests : IDisposable
     public void Constructor_SomeNotifications()
     {
         var initialNotifications = SomeNotifications();
-        A.CallTo(() => fakeNotificationsRepo.Notifications).Returns(initialNotifications);
+        A.CallTo(() => fakeNotificationRepo.Notifications).Returns(initialNotifications);
 
-        viewModel = new NotificationsViewModel(fakeConfigProvider, fakeDbAccessProvider, fakeNotifierFactory, fakeNotificationHandling, fakeNotificationsRepo);
+        viewModel = new NotificationsViewModel(fakeConfigProvider, fakeDbAccessProvider, fakeNotifierFactory, fakeNotificationManagement, fakeNotificationRepo);
 
         Assert.Equal(initialNotifications.Count, viewModel.Notifications.Count);
     }
@@ -57,9 +58,9 @@ public class NotificationsViewModelTests : IDisposable
     public void NotificationsUpdated()
     {
         var notifications = SomeNotifications();
-        A.CallTo(() => fakeNotificationsRepo.Notifications).Returns(notifications);
+        A.CallTo(() => fakeNotificationRepo.Notifications).Returns(notifications);
 
-        viewModel = new NotificationsViewModel(fakeConfigProvider, fakeDbAccessProvider, fakeNotifierFactory, fakeNotificationHandling, fakeNotificationsRepo);
+        viewModel = new NotificationsViewModel(fakeConfigProvider, fakeDbAccessProvider, fakeNotifierFactory, fakeNotificationManagement, fakeNotificationRepo);
 
         notifications.AddRange(SomeNotifications());
         Messenger.Send<NotificationsUpdated>();

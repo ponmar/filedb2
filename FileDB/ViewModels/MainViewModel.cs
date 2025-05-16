@@ -5,7 +5,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Configuration;
 using FileDB.Model;
-using FileDB.Notifiers;
+using FileDB.Notifications;
 using FileDB.ViewModels.Search;
 
 namespace FileDB.ViewModels;
@@ -59,18 +59,18 @@ public partial class MainViewModel : ObservableObject
     private bool fullscreen;
 
     private readonly IConfigProvider configProvider;
-    private readonly INotificationsRepository notificationsRepository;
+    private readonly INotificationRepository notificationRepository;
     private readonly ISearchResultRepository searchResultRepository;
 
-    public MainViewModel(IConfigProvider configProvider, INotificationsRepository notificationsRepository, ISearchResultRepository searchResultRepository)
+    public MainViewModel(IConfigProvider configProvider, INotificationRepository notificationRepository, ISearchResultRepository searchResultRepository)
     {
         this.configProvider = configProvider;
-        this.notificationsRepository = notificationsRepository;
+        this.notificationRepository = notificationRepository;
         this.searchResultRepository = searchResultRepository;
 
         readWriteMode = !configProvider.Config.ReadOnly;
 
-        NumNotifications = notificationsRepository.Notifications.Count();
+        NumNotifications = notificationRepository.Notifications.Count();
         HighlightedNotificationType = NotificationsToType();
 
         var defaultWindowMode = configProvider.Config.WindowMode;
@@ -78,7 +78,7 @@ public partial class MainViewModel : ObservableObject
 
         this.RegisterForEvent<NotificationsUpdated>((x) =>
         {
-            NumNotifications = notificationsRepository.Notifications.Count();
+            NumNotifications = notificationRepository.Notifications.Count();
             HighlightedNotificationType = NotificationsToType();
         });
 
@@ -110,7 +110,7 @@ public partial class MainViewModel : ObservableObject
 
     private NotificationType NotificationsToType()
     {
-        return notificationsRepository.Notifications.Any() ? notificationsRepository.Notifications.Max(x => x.Type) : Enum.GetValues<NotificationType>().First();
+        return notificationRepository.Notifications.Any() ? notificationRepository.Notifications.Max(x => x.Type) : Enum.GetValues<NotificationType>().First();
     }
 
     [RelayCommand]

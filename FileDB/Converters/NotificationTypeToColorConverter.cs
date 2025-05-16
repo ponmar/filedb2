@@ -1,6 +1,6 @@
 ﻿using Avalonia.Data.Converters;
 using Avalonia.Media;
-using FileDB.Notifiers;
+using FileDB.Notifications;
 using System;
 
 namespace FileDB.Converters;

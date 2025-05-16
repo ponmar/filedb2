@@ -3,6 +3,7 @@ using FileDB.Lang;
 using System;
 using System.Collections.Generic;
 using System.IO.Abstractions;
+using FileDB.Notifications;
 
 namespace FileDB.Notifiers;
 

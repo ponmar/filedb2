@@ -1,5 +1,6 @@
 ﻿using FileDB.Dialogs;
 using FileDB.Model;
+using FileDB.Notifications;
 using FileDB.Notifiers;
 using FileDB.ViewModels;
 using FileDB.ViewModels.Dialogs;
@@ -37,12 +38,14 @@ public static class Bootstrapper
         ServiceLocator.RegisterSingleton<IDialogs, Dialogs.Dialogs>();
 
         ServiceLocator.RegisterSingleton<Model.Model>(
-            typeof(INotificationHandling),
-            typeof(INotificationsRepository),
             typeof(IConfigProvider),
             typeof(IDatabaseAccessProvider),
             typeof(IFilesystemAccessProvider),
             typeof(IConfigUpdater));
+
+        ServiceLocator.RegisterSingleton<NotificationRepository>(
+            typeof(INotificationRepository),
+            typeof(INotificationManagement));
 
         ServiceLocator.RegisterSingleton<MainViewModel>();
         ServiceLocator.RegisterSingleton<ResultViewModel>(

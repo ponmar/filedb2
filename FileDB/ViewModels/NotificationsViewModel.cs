@@ -5,6 +5,7 @@ using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Model;
+using FileDB.Notifications;
 using FileDB.Notifiers;
 
 namespace FileDB.ViewModels;
@@ -18,16 +19,16 @@ public partial class NotificationsViewModel : ObservableObject
     private readonly IConfigProvider configProvider;
     private readonly IDatabaseAccessProvider dbAccessProvider;
     private readonly INotifierFactory notifierFactory;
-    private readonly INotificationHandling notificationHandling;
-    private readonly INotificationsRepository notificationsRepository;
+    private readonly INotificationManagement notificationManagement;
+    private readonly INotificationRepository notificationRepository;
 
-    public NotificationsViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, INotifierFactory notifierFactory, INotificationHandling notificationHandling, INotificationsRepository notificationsRepository)
+    public NotificationsViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, INotifierFactory notifierFactory, INotificationManagement notificationManagement, INotificationRepository notificationRepository)
     {
         this.configProvider = configProvider;
         this.dbAccessProvider = dbAccessProvider;
         this.notifierFactory = notifierFactory;
-        this.notificationHandling = notificationHandling;
-        this.notificationsRepository = notificationsRepository;
+        this.notificationManagement = notificationManagement;
+        this.notificationRepository = notificationRepository;
 
         this.RegisterForEvent<ConfigUpdated>((x) =>
         {
@@ -77,13 +78,13 @@ public partial class NotificationsViewModel : ObservableObject
 
     private void RunNotifiers(List<INotifier> notifiers)
     {
-        notifiers.ForEach(x => x.Run().ForEach(y => notificationHandling.AddNotification(y)));
+        notifiers.ForEach(x => x.Run().ForEach(y => notificationManagement.AddNotification(y)));
     }
 
     private void LoadNotifications()
     {
         Notifications.Clear();
-        foreach (var notification in notificationsRepository.Notifications)
+        foreach (var notification in notificationRepository.Notifications)
         {
             Notifications.Add(notification);
         }
@@ -93,6 +94,6 @@ public partial class NotificationsViewModel : ObservableObject
     [RelayCommand]
     private void ClearNotifications()
     {
-        notificationHandling.DismissNotifications();
+        notificationManagement.DismissNotifications();
     }
 }

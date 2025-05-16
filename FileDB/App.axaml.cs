@@ -9,7 +9,7 @@ using FileDB.Extensions;
 using FileDB.Lang;
 using FileDB.Migrators;
 using FileDB.Model;
-using FileDB.Notifiers;
+using FileDB.Notifications;
 using FileDB.Validators;
 using FileDB.ViewModels;
 using FileDB.Views;
@@ -170,7 +170,7 @@ public partial class App : Application
 
             Messenger.Send(new SetTheme(config.Theme));
 
-            var notificationsHandling = ServiceLocator.Resolve<INotificationHandling>();
+            var notificationsHandling = ServiceLocator.Resolve<INotificationManagement>();
             notifications.ForEach(notificationsHandling.AddNotification);
 
             // Only load views and viewmodels when this method did not called shutdown above
