@@ -12,7 +12,7 @@ public class ThemeToStringConverter : IValueConverter
     {
         if (value is null)
         {
-            throw new ArgumentNullException();
+            return null;
         }
         var theme = (Theme)value;
         return theme.ToFriendlyString();

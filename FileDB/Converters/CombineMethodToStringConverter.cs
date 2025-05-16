@@ -10,7 +10,10 @@ public class CombineMethodToStringConverter : IValueConverter
 {
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        ArgumentNullException.ThrowIfNull(value);
+        if (value is null)
+        {
+            return null;
+        }
         var combineMethod = (CombineMethod)value;
         return combineMethod.ToFriendlyString();
     }
