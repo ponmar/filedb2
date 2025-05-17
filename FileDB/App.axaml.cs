@@ -165,7 +165,7 @@ public partial class App : Application
             {
                 config = config with { ReadOnly = true };
                 configUpdater.UpdateConfig(config);
-                notifications.Add(new NoWritePermissionNotification());
+                notifications.Add(new CollectionNoWritePermissionNotification());
             }
 
             Messenger.Send(new SetTheme(config.Theme));
@@ -178,16 +178,16 @@ public partial class App : Application
 
             ServiceLocator.Resolve<SettingsViewModel>().IsDirty = false;
 
-            notificationsHandling.DismissNotification<UnsavedSettingsNotification>();
+            notificationsHandling.DismissNotification<SettingsUnsavedNotification>();
             this.RegisterForEvent<ConfigEdited>(x =>
             {
                 if (x.HasChanges)
                 {
-                    notificationsHandling.AddNotification(new UnsavedSettingsNotification());
+                    notificationsHandling.AddNotification(new SettingsUnsavedNotification());
                 }
                 else
                 {
-                    notificationsHandling.DismissNotification<UnsavedSettingsNotification>();
+                    notificationsHandling.DismissNotification<SettingsUnsavedNotification>();
                 }
             });
         }

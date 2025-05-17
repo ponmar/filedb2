@@ -3,7 +3,7 @@ using FileDB.Lang;
 
 namespace FileDB.Notifications;
 
-public class NoDatabaseBackupNotification : INotification
+public class DatabaseBackupMissingNotification : INotification
 {
     public NotificationSeverity Severity => NotificationSeverity.Warning;
     public string Message => Strings.BackupNotifierNoDatabaseBackupHasBeenCreated;

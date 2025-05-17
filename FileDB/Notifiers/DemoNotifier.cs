@@ -19,7 +19,7 @@ public class DemoNotifier : INotifier
     {
         if (isDemo)
         {
-            return [new DemoConfigurationUsedNotification()];
+            return [new CollectionDemoUsedNotification()];
         }
         return [];
     }

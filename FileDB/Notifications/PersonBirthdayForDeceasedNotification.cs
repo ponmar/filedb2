@@ -3,14 +3,14 @@ using FileDB.Lang;
 
 namespace FileDB.Notifications;
 
-public class RestInPeaceNotification : INotification
+public class PersonBirthdayForDeceasedNotification : INotification
 {
     public NotificationSeverity Severity => NotificationSeverity.Info;
     public string Message { get; }
     public DateTime DateTime { get; } = DateTime.Now;
 
-    public RestInPeaceNotification(string personName)
+    public PersonBirthdayForDeceasedNotification(string personName)
     {
-        Message = string.Format(Strings.RestInPeaceNotifierRestInPeace, personName);
+        Message = string.Format(Strings.BirthdayNotifierTodayIsTheBirthdayFor, personName);
     }
 }

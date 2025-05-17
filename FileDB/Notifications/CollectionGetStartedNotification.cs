@@ -3,9 +3,9 @@ using FileDB.Lang;
 
 namespace FileDB.Notifications;
 
-public class DemoConfigurationUsedNotification : INotification
+public class CollectionGetStartedNotification : INotification
 {
     public NotificationSeverity Severity => NotificationSeverity.Info;
-    public string Message => Strings.StartupNotificationDemoConfigurationEnabled;
+    public string Message => Strings.SettingsUnsavedSettingsNotification;
     public DateTime DateTime { get; } = DateTime.Now;
 }

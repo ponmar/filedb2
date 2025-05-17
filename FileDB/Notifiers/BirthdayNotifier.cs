@@ -42,8 +42,8 @@ public class BirthdayNotifier : INotifier
             {
                 var personName = $"{person.Firstname} {person.Lastname}";
                 notifications.Add(isDeceased ?
-                    new BirthdayForDeceasedNotification(personName) :
-                    new BirthdayNotification(personName));
+                    new PersonBirthdayForDeceasedNotification(personName) :
+                    new PersonBirthdayNotification(personName));
             }
         }
 

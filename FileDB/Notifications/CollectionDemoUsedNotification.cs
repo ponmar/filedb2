@@ -3,9 +3,9 @@ using FileDB.Lang;
 
 namespace FileDB.Notifications;
 
-public class NoWritePermissionNotification : INotification
+public class CollectionDemoUsedNotification : INotification
 {
     public NotificationSeverity Severity => NotificationSeverity.Info;
-    public string Message => Strings.NotificationNoWritePermission;
+    public string Message => Strings.StartupNotificationDemoConfigurationEnabled;
     public DateTime DateTime { get; } = DateTime.Now;
 }

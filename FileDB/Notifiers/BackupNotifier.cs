@@ -20,13 +20,13 @@ public class BackupNotifier : INotifier
         var backupFiles = fileBackup.ListAvailableBackupFiles();
         if (backupFiles.Count == 0)
         {
-            return [new NoDatabaseBackupNotification()];
+            return [new DatabaseBackupMissingNotification()];
         }
         
         var latestBackupDaysAge = (int)backupFiles.Min(x => x.Age).TotalDays;
         if (latestBackupDaysAge >= afterDays)
         {
-            return [new TooLongTimeSinceDatabaseBackupNotification(latestBackupDaysAge)];
+            return [new DatabaseBackupTooLongTimeAgoNotification(latestBackupDaysAge)];
         }
 
         return [];

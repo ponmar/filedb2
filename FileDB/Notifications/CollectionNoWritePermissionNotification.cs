@@ -3,9 +3,9 @@ using FileDB.Lang;
 
 namespace FileDB.Notifications;
 
-public class UnsavedSettingsNotification : INotification
+public class CollectionNoWritePermissionNotification : INotification
 {
     public NotificationSeverity Severity => NotificationSeverity.Info;
-    public string Message => Strings.SettingsUnsavedSettingsNotification;
+    public string Message => Strings.NotificationNoWritePermission;
     public DateTime DateTime { get; } = DateTime.Now;
 }
