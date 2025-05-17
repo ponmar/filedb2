@@ -178,7 +178,7 @@ public partial class App : Application
 
             ServiceLocator.Resolve<SettingsViewModel>().IsDirty = false;
 
-            notificationsHandling.DismissNotification(Strings.SettingsUnsavedSettingsNotification);
+            notificationsHandling.DismissNotification<UnsavedSettingsNotification>();
             this.RegisterForEvent<ConfigEdited>(x =>
             {
                 if (x.HasChanges)
@@ -187,7 +187,7 @@ public partial class App : Application
                 }
                 else
                 {
-                    notificationsHandling.DismissNotification(Strings.SettingsUnsavedSettingsNotification);
+                    notificationsHandling.DismissNotification<UnsavedSettingsNotification>();
                 }
             });
         }

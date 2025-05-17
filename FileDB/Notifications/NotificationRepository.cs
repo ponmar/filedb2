@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Avalonia.Controls;
 using Avalonia.Threading;
 using FileDB.Model;
 using FileDB.Notifiers;
@@ -15,7 +16,7 @@ public interface INotificationRepository
 public interface INotificationManagement
 {
     void AddNotification(INotification notification);
-    void DismissNotification(string message);
+    void DismissNotification<T>() where T : class, INotification;
     void DismissNotifications();
 }
 
@@ -61,9 +62,9 @@ public class NotificationRepository : INotificationRepository, INotificationMana
         Messenger.Send<NotificationsUpdated>();
     }
 
-    public void DismissNotification(string message)
+    public void DismissNotification<T>() where T : class, INotification
     {
-        var numRemoved = notifications.RemoveAll(x => x.Message == message);
+        var numRemoved = notifications.RemoveAll(x => x is T);
         if (numRemoved > 0)
         {
             Messenger.Send<NotificationsUpdated>();
