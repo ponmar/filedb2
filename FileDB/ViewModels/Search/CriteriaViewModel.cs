@@ -11,7 +11,6 @@ using FileDB.Comparers;
 using FileDB.ViewModels.Search;
 using System;
 using FileDB.ViewModels.Search.Filters;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FileDB.ViewModels;
 

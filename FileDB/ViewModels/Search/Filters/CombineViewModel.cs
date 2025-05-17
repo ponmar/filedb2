@@ -4,7 +4,6 @@ using CommunityToolkit.Mvvm.Input;
 using FileDB.FilesFilter;
 using FileDB.Model;
 using FileDBInterface.Extensions;
-using FileDBInterface.Model;
 
 namespace FileDB.ViewModels.Search.Filters;
 

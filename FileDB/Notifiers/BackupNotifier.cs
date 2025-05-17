@@ -1,6 +1,4 @@
-﻿using FileDB.Lang;
-using FileDB.Notifications;
-using System;
+﻿using FileDB.Notifications;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,7 +9,7 @@ public class BackupNotifier : INotifier
     private readonly int afterDays;
     private readonly FileBackup fileBackup;
 
-    public BackupNotifier(FileBackup fileBackup, int afterDays = 30)
+    public BackupNotifier(FileBackup fileBackup, int afterDays)
     {
         this.fileBackup = fileBackup;
         this.afterDays = afterDays;
@@ -20,18 +18,17 @@ public class BackupNotifier : INotifier
     public IEnumerable<INotification> Run()
     {
         var backupFiles = fileBackup.ListAvailableBackupFiles();
-        if (!backupFiles.Any())
+        if (backupFiles.Count == 0)
         {
             return [new NoDatabaseBackupNotification()];
         }
-        else
+        
+        var latestBackupDaysAge = (int)backupFiles.Min(x => x.Age).TotalDays;
+        if (latestBackupDaysAge >= afterDays)
         {
-            var latestBackupDaysAge = (int)backupFiles.Min(x => x.Age).TotalDays;
-            if (latestBackupDaysAge >= afterDays)
-            {
-                return [new TooLongTimeSinceDatabaseBackupNotification(latestBackupDaysAge)];
-            }
+            return [new TooLongTimeSinceDatabaseBackupNotification(latestBackupDaysAge)];
         }
+
         return [];
     }
 }
