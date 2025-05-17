@@ -1364,4 +1364,7 @@ This operation can be slow for a large collection of files or if the media acces
   <data name="SettingsUnableToSaveConfiguration" xml:space="preserve">
     <value>Unable to save configuration</value>
   </data>
+  <data name="NotificationGetStarted" xml:space="preserve">
+    <value>See About tab for how to get started with your new files collection!</value>
+  </data>
 </root>

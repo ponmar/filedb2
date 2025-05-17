@@ -7,6 +7,15 @@ using FileDB.Notifiers;
 
 namespace FileDB.Notifications;
 
+public enum NotificationSeverity { Info, Warning, Error };
+
+public interface INotification
+{
+    NotificationSeverity Severity { get; }
+    string Message { get; }
+    DateTime DateTime { get; }
+}
+
 public interface INotificationRepository
 {
     IEnumerable<INotification> Notifications { get; }
@@ -15,7 +24,7 @@ public interface INotificationRepository
 public interface INotificationManagement
 {
     void AddNotification(INotification notification);
-    void DismissNotification<T>() where T : class, INotification;
+    void DismissNotifications<T>() where T : class, INotification;
     void DismissNotifications();
 }
 
@@ -61,7 +70,7 @@ public class NotificationRepository : INotificationRepository, INotificationMana
         Messenger.Send<NotificationsUpdated>();
     }
 
-    public void DismissNotification<T>() where T : class, INotification
+    public void DismissNotifications<T>() where T : class, INotification
     {
         var numRemoved = notifications.RemoveAll(x => x is T);
         if (numRemoved > 0)

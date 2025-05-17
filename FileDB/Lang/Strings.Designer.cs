@@ -1932,6 +1932,15 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to See About tab for how to get started with your new files collection!.
+        /// </summary>
+        public static string NotificationGetStarted {
+            get {
+                return ResourceManager.GetString("NotificationGetStarted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No write permission to files root directory. Starting in readonly mode..
         /// </summary>
         public static string NotificationNoWritePermission {

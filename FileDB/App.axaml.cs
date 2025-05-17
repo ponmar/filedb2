@@ -100,18 +100,27 @@ public partial class App : Application
                 return;
             }
 
+            var notifications = new List<INotification>();
+
             Config config;
             if (fileSystem.File.Exists(configPath))
             {
-                config = configPath.FromJson<Config>(fileSystem);
+                var parsedConfig = configPath.FromJson<Config>(fileSystem);
 
-                // Config is null for an empty json file
-                config = config is null ? DefaultConfigs.Default :
-                    new ConfigMigrator().Migrate(config, DefaultConfigs.Default);
+                if (parsedConfig is null)
+                {
+                    config = DefaultConfigs.Default;
+                    notifications.Add(new CollectionGetStartedNotification());
+                }
+                else
+                {
+                    config = new ConfigMigrator().Migrate(parsedConfig, DefaultConfigs.Default);
+                }
             }
             else
             {
                 config = DefaultConfigs.Default;
+                notifications.Add(new CollectionGetStartedNotification());
             }
 
             SetUiCulture(config.Language);
@@ -128,8 +137,6 @@ public partial class App : Application
             IDatabaseAccess dbAccess = fileSystem.File.Exists(databasePath) ?
                 new SqLiteDatabaseAccess(databasePath, loggerFactory) :
                 new NoDatabaseAccess();
-
-            var notifications = new List<INotification>();
 
             if (dbAccess.NeedsMigration)
             {
@@ -178,7 +185,7 @@ public partial class App : Application
 
             ServiceLocator.Resolve<SettingsViewModel>().IsDirty = false;
 
-            notificationsHandling.DismissNotification<SettingsUnsavedNotification>();
+            notificationsHandling.DismissNotifications<SettingsUnsavedNotification>();
             this.RegisterForEvent<ConfigEdited>(x =>
             {
                 if (x.HasChanges)
@@ -187,7 +194,7 @@ public partial class App : Application
                 }
                 else
                 {
-                    notificationsHandling.DismissNotification<SettingsUnsavedNotification>();
+                    notificationsHandling.DismissNotifications<SettingsUnsavedNotification>();
                 }
             });
         }

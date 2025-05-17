@@ -1364,4 +1364,7 @@ Lägg till nya filer i '{0}'.</value>
   <data name="SettingsUnableToSaveConfiguration" xml:space="preserve">
     <value>Kunde inte spara konfigurationen</value>
   </data>
+  <data name="NotificationGetStarted" xml:space="preserve">
+    <value>Se Om-fliken för hur du kommer igång med din nya fil-samling!</value>
+  </data>
 </root>
