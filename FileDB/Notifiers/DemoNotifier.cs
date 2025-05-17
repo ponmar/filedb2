@@ -17,7 +17,7 @@ public class DemoNotifier : INotifier
         isDemo = Path.GetFileName(configProvider.FilePaths.ConfigPath) == DemoFilename;
     }
 
-    public List<INotification> Run()
+    public IEnumerable<INotification> Run()
     {
         if (isDemo)
         {

@@ -20,7 +20,7 @@ public class BirthdayNotifier : INotifier
         this.birthdayNotificationFor = birthdayNotificationFor;
     }
 
-    public List<INotification> Run()
+    public IEnumerable<INotification> Run()
     {
         var today = DateTime.Today;
         List<INotification> notifications = [];

@@ -15,7 +15,7 @@ public class RestInPeaceNotifier : INotifier
         this.persons = persons;
     }
 
-    public List<INotification> Run()
+    public IEnumerable<INotification> Run()
     {
         var today = DateTime.Today;
         List<INotification> notifications = [];

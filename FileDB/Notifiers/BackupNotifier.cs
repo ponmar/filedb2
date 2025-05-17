@@ -17,23 +17,21 @@ public class BackupNotifier : INotifier
         this.afterDays = afterDays;
     }
 
-    public List<INotification> Run()
+    public IEnumerable<INotification> Run()
     {
-        List<INotification> notifications = [];
         var backupFiles = fileBackup.ListAvailableBackupFiles();
         if (!backupFiles.Any())
         {
-            notifications.Add(new NoDatabaseBackupNotification());
+            return [new NoDatabaseBackupNotification()];
         }
         else
         {
             var latestBackupDaysAge = (int)backupFiles.Min(x => x.Age).TotalDays;
             if (latestBackupDaysAge >= afterDays)
             {
-                notifications.Add(new TooLongTimeSinceDatabaseBackupNotification(latestBackupDaysAge));
+                return [new TooLongTimeSinceDatabaseBackupNotification(latestBackupDaysAge)];
             }
         }
-
-        return notifications;
+        return [];
     }
 }

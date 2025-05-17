@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Avalonia.Threading;
 using FileDB.Model;
 using FileDB.Notifiers;
@@ -96,13 +97,14 @@ public class NotificationRepository : INotificationRepository, INotificationMana
 
     private void RunAllNotifiers()
     {
-        var notifiers = notifierFactory.GetContinousNotifiers(configProvider.Config, dbAccessProvider.DbAccess);
-        notifiers.AddRange(notifierFactory.GetStartupNotifiers(configProvider.Config, dbAccessProvider.DbAccess));
-        RunNotifiers(notifiers);
+        var notifiers1 = notifierFactory.GetContinousNotifiers(configProvider.Config, dbAccessProvider.DbAccess);
+        var notifiers2 = notifierFactory.GetStartupNotifiers(configProvider.Config, dbAccessProvider.DbAccess);
+        RunNotifiers(notifiers1.Concat(notifiers2));
     }
 
-    private void RunNotifiers(List<INotifier> notifiers)
+    private void RunNotifiers(IEnumerable<INotifier> notifiers)
     {
-        notifiers.ForEach(x => x.Run().ForEach(y => AddNotification(y)));
+        var notification = notifiers.SelectMany(x => x.Run()).ToList();
+        notification.ForEach(AddNotification);
     }
 }
