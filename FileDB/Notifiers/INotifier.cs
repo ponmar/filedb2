@@ -5,5 +5,5 @@ namespace FileDB.Notifiers;
 
 public interface INotifier
 {
-    List<Notification> Run();
+    List<INotification> Run();
 }

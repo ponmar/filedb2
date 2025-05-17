@@ -10,5 +10,3 @@ public interface INotification
     string Message { get; }
     DateTime DateTime { get; }
 }
-
-public record Notification(NotificationSeverity Severity, string Message, DateTime DateTime) : INotification;

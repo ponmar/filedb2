@@ -20,10 +20,10 @@ public class BirthdayNotifier : INotifier
         this.birthdayNotificationFor = birthdayNotificationFor;
     }
 
-    public List<Notification> Run()
+    public List<INotification> Run()
     {
         var today = DateTime.Today;
-        List<Notification> notifications = [];
+        List<INotification> notifications = [];
 
         foreach (var person in persons.Where(x => x.DateOfBirth is not null))
         {
@@ -42,14 +42,9 @@ public class BirthdayNotifier : INotifier
                 dateOfBirth.Day == today.Day)
             {
                 var personName = $"{person.Firstname} {person.Lastname}";
-                if (isDeceased)
-                {
-                    notifications.Add(new Notification(NotificationSeverity.Info, string.Format(Strings.BirthdayNotifierTodayIsTheBirthdayFor, personName), DateTime.Now));
-                }
-                else
-                {
-                    notifications.Add(new Notification(NotificationSeverity.Info, string.Format(Strings.BirthdayNotifierHappyBirthday, personName), DateTime.Now));
-                }
+                notifications.Add(isDeceased ?
+                    new BirthdayForDeceasedNotification(personName) :
+                    new BirthdayNotification(personName));
             }
         }
 

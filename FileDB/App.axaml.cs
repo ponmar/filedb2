@@ -129,7 +129,7 @@ public partial class App : Application
                 new SqLiteDatabaseAccess(databasePath, loggerFactory) :
                 new NoDatabaseAccess();
 
-            var notifications = new List<Notification>();
+            var notifications = new List<INotification>();
 
             if (dbAccess.NeedsMigration)
             {
@@ -142,11 +142,11 @@ public partial class App : Application
                     {
                         if (dbMigration.Exception is null)
                         {
-                            notifications.Add(new(NotificationSeverity.Info, string.Format(Strings.NotificationDatabaseMigration, dbMigration.FromVersion, dbMigration.ToVersion), DateTime.Now));
+                            notifications.Add(new DatabaseMigrationNotification(dbMigration.FromVersion, dbMigration.ToVersion));
                         }
                         else
                         {
-                            notifications.Add(new(NotificationSeverity.Error, string.Format(Strings.NotificationDatabaseMigrationError, dbMigration.FromVersion, dbMigration.ToVersion, dbMigration.Exception.Message), DateTime.Now));
+                            notifications.Add(new DatabaseMigrationErrorNotification(dbMigration.FromVersion, dbMigration.ToVersion, dbMigration.Exception.Message));
                         }
                     }
                 }
@@ -165,7 +165,7 @@ public partial class App : Application
             {
                 config = config with { ReadOnly = true };
                 configUpdater.UpdateConfig(config);
-                notifications.Add(new(NotificationSeverity.Info, Strings.NotificationNoWritePermission, DateTime.Now));
+                notifications.Add(new NoWritePermissionNotification());
             }
 
             Messenger.Send(new SetTheme(config.Theme));
@@ -183,7 +183,7 @@ public partial class App : Application
             {
                 if (x.HasChanges)
                 {
-                    notificationsHandling.AddNotification(new(NotificationSeverity.Info, Strings.SettingsUnsavedSettingsNotification, DateTime.Now));
+                    notificationsHandling.AddNotification(new UnsavedSettingsNotification());
                 }
                 else
                 {

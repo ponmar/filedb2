@@ -54,13 +54,15 @@ public class NotificationsViewModelTests
         Assert.Equal(notifications.Count, viewModel.Notifications.Count);
     }
 
-    private static List<Notification> SomeNotifications()
+    private static List<INotification> SomeNotifications()
     {
         return
         [
-            new(NotificationSeverity.Error, $"Error text {Guid.NewGuid()}", DateTime.Now),
-            new(NotificationSeverity.Warning, $"Warning text {Guid.NewGuid()}", DateTime.Now),
-            new(NotificationSeverity.Info, $"Info text {Guid.NewGuid()}", DateTime.Now),
+            new NotificationForTest(NotificationSeverity.Error, $"Error text {Guid.NewGuid()}", DateTime.Now),
+            new NotificationForTest(NotificationSeverity.Warning, $"Warning text {Guid.NewGuid()}", DateTime.Now),
+            new NotificationForTest(NotificationSeverity.Info, $"Info text {Guid.NewGuid()}", DateTime.Now),
         ];
     }
+
+    private record NotificationForTest(NotificationSeverity Severity, string Message, DateTime DateTime) : INotification;
 }

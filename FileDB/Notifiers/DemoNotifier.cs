@@ -17,11 +17,11 @@ public class DemoNotifier : INotifier
         isDemo = Path.GetFileName(configProvider.FilePaths.ConfigPath) == DemoFilename;
     }
 
-    public List<Notification> Run()
+    public List<INotification> Run()
     {
         if (isDemo)
         {
-            return [new(NotificationSeverity.Info, Strings.StartupNotificationDemoConfigurationEnabled, DateTime.Now)];
+            return [new DemoConfigurationUsedNotification()];
         }
         return [];
     }

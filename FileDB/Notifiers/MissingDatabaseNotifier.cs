@@ -18,12 +18,12 @@ public class MissingDatabaseNotifier : INotifier
         this.fileSystem = fileSystem;
     }
 
-    public List<Notification> Run()
+    public List<INotification> Run()
     {
-        var notifications = new List<Notification>();
+        var notifications = new List<INotification>();
         if (!fileSystem.File.Exists(filePaths.DatabasePath))
         {
-            notifications.Add(new Notification(NotificationSeverity.Error, string.Format(Strings.NotificationDatabaseIsMissing, filePaths.DatabasePath), DateTime.Now));
+            notifications.Add(new DatabaseMissingNotification(filePaths.DatabasePath));
         }
         return notifications;
     }

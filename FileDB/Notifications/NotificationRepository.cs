@@ -13,7 +13,7 @@ public interface INotificationRepository
 
 public interface INotificationManagement
 {
-    void AddNotification(Notification notification);
+    void AddNotification(INotification notification);
     void DismissNotification(string message);
     void DismissNotifications();
 }
@@ -53,7 +53,7 @@ public class NotificationRepository : INotificationRepository, INotificationMana
         notifierTimer.Start();
     }
 
-    public void AddNotification(Notification notification)
+    public void AddNotification(INotification notification)
     {
         notifications.RemoveAll(x => x.Message == notification.Message);
         notifications.Add(notification);

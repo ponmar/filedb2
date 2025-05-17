@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using FileDB.Lang;
 using FileDB.Notifications;
 using FileDBInterface.Model;
 
@@ -16,10 +15,10 @@ public class RestInPeaceNotifier : INotifier
         this.persons = persons;
     }
 
-    public List<Notification> Run()
+    public List<INotification> Run()
     {
         var today = DateTime.Today;
-        List<Notification> notifications = [];
+        List<INotification> notifications = [];
 
         foreach (var person in persons.Where(x => x.DateOfBirth is not null))
         {
@@ -30,7 +29,7 @@ public class RestInPeaceNotifier : INotifier
                     deceased.Day == today.Day)
                 {
                     var personName = $"{person.Firstname} {person.Lastname}";
-                    notifications.Add(new Notification(NotificationSeverity.Info, string.Format(Strings.RestInPeaceNotifierRestInPeace, personName), DateTime.Now));
+                    notifications.Add(new RestInPeaceNotification(personName));
                 }
             }
         }
