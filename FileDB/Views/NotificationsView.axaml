@@ -8,8 +8,8 @@
              x:Class="FileDB.Views.NotificationsView">
 
 	<UserControl.Resources>
-		<converters:NotificationTypeToStringConverter x:Key="NotificationTypeToStringConverter" />
-		<converters:NotificationTypeToColorConverter x:Key="NotificationTypeToColorConverter" />
+		<converters:NotificationSeverityToStringConverter x:Key="NotificationSeverityToStringConverter" />
+		<converters:NotificationSeverityToColorConverter x:Key="NotificationSeverityToColorConverter" />
 	</UserControl.Resources>
 
 	<DockPanel>
@@ -28,7 +28,7 @@
 											<ColumnDefinition Width="Auto" SharedSizeGroup="Column1"/>
 											<ColumnDefinition Width="*" />
 										</Grid.ColumnDefinitions>
-										<TextBlock Grid.Column="0" Text="{Binding Type, Converter={StaticResource NotificationTypeToStringConverter}}" Foreground="{Binding Type, Converter={StaticResource NotificationTypeToColorConverter}}" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip.Tip="{Binding Type}" Classes="PageNotificationIcon"/>
+										<TextBlock Grid.Column="0" Text="{Binding Severity, Converter={StaticResource NotificationSeverityToStringConverter}}" Foreground="{Binding Severity, Converter={StaticResource NotificationSeverityToColorConverter}}" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip.Tip="{Binding Severity}" Classes="PageNotificationIcon"/>
 										<TextBlock Grid.Column="1" Text="{Binding Message}" VerticalAlignment="Center" TextWrapping="Wrap" Classes="PageTextBlock"/>
 									</Grid>
 								</DataTemplate>

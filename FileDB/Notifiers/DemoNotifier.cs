@@ -21,7 +21,7 @@ public class DemoNotifier : INotifier
     {
         if (isDemo)
         {
-            return [new(NotificationType.Info, Strings.StartupNotificationDemoConfigurationEnabled, DateTime.Now)];
+            return [new(NotificationSeverity.Info, Strings.StartupNotificationDemoConfigurationEnabled, DateTime.Now)];
         }
         return [];
     }

@@ -8,7 +8,7 @@ namespace FileDB.ViewModels;
 
 public partial class NotificationsViewModel : ObservableObject
 {
-    public ObservableCollection<Notification> Notifications { get; } = [];
+    public ObservableCollection<INotification> Notifications { get; } = [];
 
     private readonly INotificationManagement notificationManagement;
     private readonly INotificationRepository notificationRepo;

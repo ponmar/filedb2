@@ -5,15 +5,15 @@ using System;
 
 namespace FileDB.Converters;
 
-public class NotificationTypeToColorConverter : IValueConverter
+public class NotificationSeverityToColorConverter : IValueConverter
 {
     public object? Convert(object? value, Type targetType, object? parameter, System.Globalization.CultureInfo culture)
     {
-        return (NotificationType?)value switch
+        return (NotificationSeverity?)value switch
         {
-            NotificationType.Info => new SolidColorBrush(Color.FromRgb(0, 127, 0)),
-            NotificationType.Warning => new SolidColorBrush(Color.FromRgb(255, 127, 0)),
-            NotificationType.Error => new SolidColorBrush(Color.FromRgb(255, 0, 0)),
+            NotificationSeverity.Info => new SolidColorBrush(Color.FromRgb(0, 127, 0)),
+            NotificationSeverity.Warning => new SolidColorBrush(Color.FromRgb(255, 127, 0)),
+            NotificationSeverity.Error => new SolidColorBrush(Color.FromRgb(255, 0, 0)),
             _ => throw new NotSupportedException()
         };
     }

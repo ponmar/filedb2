@@ -16,7 +16,7 @@ public partial class MainViewModel : ObservableObject
     private int numNotifications = 0;
 
     [ObservableProperty]
-    private NotificationType highlightedNotificationType;
+    private NotificationSeverity highlightedNotificationSeverity;
 
     [ObservableProperty]
     private int numSearchResultFiles = 0;
@@ -71,7 +71,7 @@ public partial class MainViewModel : ObservableObject
         readWriteMode = !configProvider.Config.ReadOnly;
 
         NumNotifications = notificationRepository.Notifications.Count();
-        HighlightedNotificationType = NotificationsToType();
+        HighlightedNotificationSeverity = NotificationsToSeverity();
 
         var defaultWindowMode = configProvider.Config.WindowMode;
         ApplyWindowMode(configProvider.Config.WindowMode);
@@ -79,7 +79,7 @@ public partial class MainViewModel : ObservableObject
         this.RegisterForEvent<NotificationsUpdated>((x) =>
         {
             NumNotifications = notificationRepository.Notifications.Count();
-            HighlightedNotificationType = NotificationsToType();
+            HighlightedNotificationSeverity = NotificationsToSeverity();
         });
 
         this.RegisterForEvent<ConfigUpdated>((x) =>
@@ -108,9 +108,9 @@ public partial class MainViewModel : ObservableObject
         Fullscreen = windowMode == WindowMode.Fullscreen;
     }
 
-    private NotificationType NotificationsToType()
+    private NotificationSeverity NotificationsToSeverity()
     {
-        return notificationRepository.Notifications.Any() ? notificationRepository.Notifications.Max(x => x.Type) : Enum.GetValues<NotificationType>().First();
+        return notificationRepository.Notifications.Any() ? notificationRepository.Notifications.Max(x => x.Severity) : Enum.GetValues<NotificationSeverity>().First();
     }
 
     [RelayCommand]

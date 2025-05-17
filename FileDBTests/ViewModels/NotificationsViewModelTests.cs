@@ -58,9 +58,9 @@ public class NotificationsViewModelTests
     {
         return
         [
-            new(NotificationType.Error, $"Error text {Guid.NewGuid()}", DateTime.Now),
-            new(NotificationType.Warning, $"Warning text {Guid.NewGuid()}", DateTime.Now),
-            new(NotificationType.Info, $"Info text {Guid.NewGuid()}", DateTime.Now),
+            new(NotificationSeverity.Error, $"Error text {Guid.NewGuid()}", DateTime.Now),
+            new(NotificationSeverity.Warning, $"Warning text {Guid.NewGuid()}", DateTime.Now),
+            new(NotificationSeverity.Info, $"Info text {Guid.NewGuid()}", DateTime.Now),
         ];
     }
 }

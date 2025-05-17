@@ -4,14 +4,14 @@ using System;
 
 namespace FileDB.Converters;
 
-public class NotificationTypeToStringConverter : IValueConverter
+public class NotificationSeverityToStringConverter : IValueConverter
 {
     public object? Convert(object? value, Type targetType, object? parameter, System.Globalization.CultureInfo culture)
     {
-        return (NotificationType?)value switch
+        return (NotificationSeverity?)value switch
         {
-            NotificationType.Info => "\xD83D\xDEC8",
-            NotificationType.Warning or NotificationType.Error => "\x26A0",
+            NotificationSeverity.Info => "\xD83D\xDEC8",
+            NotificationSeverity.Warning or NotificationSeverity.Error => "\x26A0",
             _ => throw new NotSupportedException(),
         };
     }

@@ -2,6 +2,13 @@
 
 namespace FileDB.Notifications;
 
-public enum NotificationType { Info, Warning, Error };
+public enum NotificationSeverity { Info, Warning, Error };
 
-public record Notification(NotificationType Type, string Message, DateTime DateTime);
+public interface INotification
+{
+    NotificationSeverity Severity { get; }
+    string Message { get; }
+    DateTime DateTime { get; }
+}
+
+public record Notification(NotificationSeverity Severity, string Message, DateTime DateTime) : INotification;

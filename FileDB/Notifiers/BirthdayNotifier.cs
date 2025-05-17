@@ -44,11 +44,11 @@ public class BirthdayNotifier : INotifier
                 var personName = $"{person.Firstname} {person.Lastname}";
                 if (isDeceased)
                 {
-                    notifications.Add(new Notification(NotificationType.Info, string.Format(Strings.BirthdayNotifierTodayIsTheBirthdayFor, personName), DateTime.Now));
+                    notifications.Add(new Notification(NotificationSeverity.Info, string.Format(Strings.BirthdayNotifierTodayIsTheBirthdayFor, personName), DateTime.Now));
                 }
                 else
                 {
-                    notifications.Add(new Notification(NotificationType.Info, string.Format(Strings.BirthdayNotifierHappyBirthday, personName), DateTime.Now));
+                    notifications.Add(new Notification(NotificationSeverity.Info, string.Format(Strings.BirthdayNotifierHappyBirthday, personName), DateTime.Now));
                 }
             }
         }

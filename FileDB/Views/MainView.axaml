@@ -9,7 +9,7 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="FileDB.Views.MainView">
 	<UserControl.Resources>
-		<converters:NotificationTypeToColorConverter x:Key="NotificationTypeToColorConverter" />
+		<converters:NotificationSeverityToColorConverter x:Key="NotificationSeverityToColorConverter" />
 	</UserControl.Resources>
 	
 	<Grid>
@@ -93,7 +93,7 @@
 				<TabItem.Header>
 					<Grid ToolTip.Tip="{x:Static lang:Strings.NotificationsTitle}">
 						<TextBlock Classes="TabIcon" Text="&#x1F514;"/>
-						<Border Classes="TabBadge" Background="{Binding HighlightedNotificationType, Converter={StaticResource NotificationTypeToColorConverter}}" HorizontalAlignment="Right" VerticalAlignment="Bottom" IsVisible="{Binding NumNotifications}">
+						<Border Classes="TabBadge" Background="{Binding HighlightedNotificationSeverity, Converter={StaticResource NotificationSeverityToColorConverter}}" HorizontalAlignment="Right" VerticalAlignment="Bottom" IsVisible="{Binding NumNotifications}">
 							<TextBlock Text="{Binding NumNotifications}" Classes="TabBadge" />
 						</Border>
 					</Grid>

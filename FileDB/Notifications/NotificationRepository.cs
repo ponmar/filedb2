@@ -8,7 +8,7 @@ namespace FileDB.Notifications;
 
 public interface INotificationRepository
 {
-    IEnumerable<Notification> Notifications { get; }
+    IEnumerable<INotification> Notifications { get; }
 }
 
 public interface INotificationManagement
@@ -20,9 +20,9 @@ public interface INotificationManagement
 
 public class NotificationRepository : INotificationRepository, INotificationManagement
 {
-    public IEnumerable<Notification> Notifications => notifications;
+    public IEnumerable<INotification> Notifications => notifications;
 
-    private readonly List<Notification> notifications = [];
+    private readonly List<INotification> notifications = [];
 
     private readonly DispatcherTimer notifierTimer = new();
 

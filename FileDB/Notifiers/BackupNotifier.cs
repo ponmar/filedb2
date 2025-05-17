@@ -23,14 +23,14 @@ public class BackupNotifier : INotifier
         var backupFiles = fileBackup.ListAvailableBackupFiles();
         if (!backupFiles.Any())
         {
-            notifications.Add(new Notification(NotificationType.Warning, Strings.BackupNotifierNoDatabaseBackupHasBeenCreated, DateTime.Now));
+            notifications.Add(new Notification(NotificationSeverity.Warning, Strings.BackupNotifierNoDatabaseBackupHasBeenCreated, DateTime.Now));
         }
         else
         {
             var latestBackupDaysAge = (int)backupFiles.Min(x => x.Age).TotalDays;
             if (latestBackupDaysAge >= afterDays)
             {
-                notifications.Add(new Notification(NotificationType.Warning, string.Format(Strings.BackupNotifierLongTimeSinceBackup, latestBackupDaysAge), DateTime.Now));
+                notifications.Add(new Notification(NotificationSeverity.Warning, string.Format(Strings.BackupNotifierLongTimeSinceBackup, latestBackupDaysAge), DateTime.Now));
             }
         }
 

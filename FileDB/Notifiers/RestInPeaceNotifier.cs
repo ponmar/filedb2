@@ -30,7 +30,7 @@ public class RestInPeaceNotifier : INotifier
                     deceased.Day == today.Day)
                 {
                     var personName = $"{person.Firstname} {person.Lastname}";
-                    notifications.Add(new Notification(NotificationType.Info, string.Format(Strings.RestInPeaceNotifierRestInPeace, personName), DateTime.Now));
+                    notifications.Add(new Notification(NotificationSeverity.Info, string.Format(Strings.RestInPeaceNotifierRestInPeace, personName), DateTime.Now));
                 }
             }
         }
