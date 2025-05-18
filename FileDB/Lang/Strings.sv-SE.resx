@@ -207,11 +207,8 @@
   <data name="AboutGettingStarted2" xml:space="preserve">
     <value>Skapa en databas för din filsamling och ange dina inställningar (se Verktygs-fliken)</value>
   </data>
-  <data name="AboutGettingStarted4" xml:space="preserve">
-    <value>Märk upp personer, platser och etiketter</value>
-  </data>
   <data name="AboutGettingStarted7" xml:space="preserve">
-    <value>Hitta dina önskade bilder och kör bildspel!</value>
+    <value>Hitta dina önskade bilder och visa bildspel!</value>
   </data>
   <data name="AboutNotes1" xml:space="preserve">
     <value>FileDB ändrar endast data i den konfigurerade databasen. Det ändrar inte några filer i din filsamling. Filer läses vid import av metadata och vid visning av filer.</value>
@@ -1363,5 +1360,14 @@ Lägg till nya filer i '{0}'.</value>
   </data>
   <data name="NotificationGetStarted" xml:space="preserve">
     <value>Se Om-fliken för hur du kommer igång med din nya fil-samling!</value>
+  </data>
+  <data name="AboutGettingStarted5" xml:space="preserve">
+    <value>Märk upp personer, platser och etiketter</value>
+  </data>
+  <data name="AboutGettingStarted4" xml:space="preserve">
+    <value>Lägg till dina filer (se Filer-fliken)</value>
+  </data>
+  <data name="AboutGettingStarted6" xml:space="preserve">
+    <value>Lägg till personer, platser och etiketter till dina filer (se Sök-fliken)</value>
   </data>
 </root>
