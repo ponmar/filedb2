@@ -869,7 +869,7 @@
     <value>Skapa databas</value>
   </data>
   <data name="NotificationDatabaseIsMissing" xml:space="preserve">
-    <value>Databasen saknas ({0}). Skapa en ny database på Verktygs-fliken eller återställ den manuellt och starta sedan om programmet.</value>
+    <value>Databasen saknas ({0}). Se Verktygs-fliken för hur en ny kan skapas eller återställ en egen säkerhetskopia manuellt och starta sedan om programmet.</value>
   </data>
   <data name="SettingsUnsavedSettingsNotification" xml:space="preserve">
     <value>Du har osparade ändringar</value>

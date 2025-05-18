@@ -935,7 +935,7 @@ YYYY-MM-DDTHH:MM:SS</value>
     <value>This tool is used to setup a new database.</value>
   </data>
   <data name="NotificationDatabaseIsMissing" xml:space="preserve">
-    <value>Database is missing ({0}). Create a new database at the Tools tab or restore it manually and then restart the application.</value>
+    <value>Database is missing ({0}). See Tools tab for how to create a database, or restore a backup copy manually and then restart the application.</value>
   </data>
   <data name="ToolsDatabaseExportDestinationDirectoryBrowseButton" xml:space="preserve">
     <value>Browse...</value>

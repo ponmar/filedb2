@@ -1905,7 +1905,7 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Database is missing ({0}). Create a new database at the Tools tab or restore it manually and then restart the application..
+        ///   Looks up a localized string similar to Database is missing ({0}). See Tools tab for how to create a database, or restore a backup copy manually and then restart the application..
         /// </summary>
         public static string NotificationDatabaseIsMissing {
             get {
