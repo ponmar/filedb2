@@ -22,9 +22,12 @@ FileDB cons:
 
 The FileDB main application is the GUI towards the internal database that stores the file meta-data. This application includes file browsing, meta-data editing and advanced search features.
 
-The application uses one configuration file that, for example, points out the file collection root directory.
+A [demo](https://github.com/ponmar/filedb2_demo/) with some images and meta-data is available to show case the FileDB potential.
 
-A demo configuration with some images and meta-data is available to show case the FileDB potential.
+### Prerequisites
+
+* A collection of files
+* It is strongly recommended to have a backup procedure for your file collection (although FileDB itself does not intentionally modify your files)
 
 ### 3rd Party Software Integrations
 
@@ -32,13 +35,12 @@ FileDB gives you the possibility to export the internal database and file search
 
 ## Getting Started
 
-### Prerequisites
-
-* A collection of files.
-
-  **Note:** it is recommended to have a backup procedure for your file collection before running FileDB (although FileDB itself does not modify your files).
-
-If you want to test FileDB or your collection of files is not ready the [demo](https://github.com/ponmar/filedb2_demo/) can be used.
+1. Create an empty file in your files collection root directory and name it 'MyFiles.FileDB'. Open the file with the FileDB application.
+2. Create a database for your files collection and adjust your settings (see Tools tab)
+3. Add your files (see Files tab)
+4. Create persons, locations and tags (see Update tabs)
+5. Add persons, locations and tags to your files (see Search tab)
+6. Find your wanted pictures and run slideshows!
 
 ## Documentation
 
