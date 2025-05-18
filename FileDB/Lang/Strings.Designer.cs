@@ -133,7 +133,7 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Play around with the included demo files collection.
+        ///   Looks up a localized string similar to Create an empty file in your files collection root directory and name it &apos;MyFiles.FileDB&apos;. Open the file with the FileDB application..
         /// </summary>
         public static string AboutGettingStarted1 {
             get {
@@ -142,7 +142,7 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cleanup your files collection (see guideline below).
+        ///   Looks up a localized string similar to Create a database for your files collection and adjust your settings (see Tools tab).
         /// </summary>
         public static string AboutGettingStarted2 {
             get {
@@ -151,7 +151,7 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create an empty file in your files collection root directory and name it &apos;MyFiles.FileDB&apos;. Open the file with the FileDB application..
+        ///   Looks up a localized string similar to Optional: cleanup your files collection (see guideline below).
         /// </summary>
         public static string AboutGettingStarted3 {
             get {
@@ -160,7 +160,7 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create a database for your files collection and adjust your settings (see Tools tab).
+        ///   Looks up a localized string similar to Add your files (see Files tab).
         /// </summary>
         public static string AboutGettingStarted4 {
             get {
@@ -169,7 +169,7 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tag persons, locations and tags.
+        ///   Looks up a localized string similar to Create persons, locations and tags (see Update tabs).
         /// </summary>
         public static string AboutGettingStarted5 {
             get {
@@ -178,11 +178,20 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Find your wanted pictures and run slideshows!.
+        ///   Looks up a localized string similar to Add persons, locations and tags to your files (see Search tab).
         /// </summary>
         public static string AboutGettingStarted6 {
             get {
                 return ResourceManager.GetString("AboutGettingStarted6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find your wanted pictures and run slideshows!.
+        /// </summary>
+        public static string AboutGettingStarted7 {
+            get {
+                return ResourceManager.GetString("AboutGettingStarted7", resourceCulture);
             }
         }
         

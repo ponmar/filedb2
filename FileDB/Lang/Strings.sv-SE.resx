@@ -201,19 +201,16 @@
   <data name="AboutNuGetPackageLicensesTitle" xml:space="preserve">
     <value>NuGet-paketlicenser</value>
   </data>
-  <data name="AboutGettingStarted1" xml:space="preserve">
-    <value>Lek med den medföljande demo fil-samlingen</value>
+  <data name="AboutGettingStarted3" xml:space="preserve">
+    <value>Valfritt: rensa din filsamling (se riktlinjer nedan)</value>
   </data>
   <data name="AboutGettingStarted2" xml:space="preserve">
-    <value>Rensa din filsamling (se riktlinjer nedan)</value>
-  </data>
-  <data name="AboutGettingStarted4" xml:space="preserve">
     <value>Skapa en databas för din filsamling och ange dina inställningar (se Verktygs-fliken)</value>
   </data>
-  <data name="AboutGettingStarted5" xml:space="preserve">
+  <data name="AboutGettingStarted4" xml:space="preserve">
     <value>Märk upp personer, platser och etiketter</value>
   </data>
-  <data name="AboutGettingStarted6" xml:space="preserve">
+  <data name="AboutGettingStarted7" xml:space="preserve">
     <value>Hitta dina önskade bilder och kör bildspel!</value>
   </data>
   <data name="AboutNotes1" xml:space="preserve">
@@ -1141,7 +1138,7 @@
   <data name="TextFilterIncludeLocations" xml:space="preserve">
     <value>Inkludera filer med matchande platser</value>
   </data>
-  <data name="AboutGettingStarted3" xml:space="preserve">
+  <data name="AboutGettingStarted1" xml:space="preserve">
     <value>Skapa en tom fil i rot-katalogen för din filsamling och namnge den 'MyFiles.FileDB'. Öppna den med FileDB-programmet.</value>
   </data>
   <data name="ThemeDefault" xml:space="preserve">
