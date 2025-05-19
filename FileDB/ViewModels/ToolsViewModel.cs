@@ -11,6 +11,7 @@ using FileDB.Dialogs;
 using FileDB.Export;
 using FileDB.Lang;
 using FileDB.Model;
+using FileDB.Notifications;
 using FileDBInterface.DatabaseAccess;
 using FileDBInterface.Model;
 using FileDBInterface.Validators;
@@ -44,8 +45,9 @@ public partial class ToolsViewModel : ObservableObject
     private readonly IDialogs dialogs;
     private readonly IFileSystem fileSystem;
     private readonly IClipboardService clipboardService;
+    private readonly INotificationManagement notificationManagement;
 
-    public ToolsViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IDialogs dialogs, IFileSystem fileSystem, IClipboardService clipboardService)
+    public ToolsViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IDialogs dialogs, IFileSystem fileSystem, IClipboardService clipboardService, INotificationManagement notificationManagement)
     {
         this.configProvider = configProvider;
         this.dbAccessProvider = dbAccessProvider;
@@ -53,6 +55,7 @@ public partial class ToolsViewModel : ObservableObject
         this.dialogs = dialogs;
         this.fileSystem = fileSystem;
         this.clipboardService = clipboardService;
+        this.notificationManagement = notificationManagement;
         ScanBackupFiles();
     }
 
@@ -74,6 +77,7 @@ public partial class ToolsViewModel : ObservableObject
                 DatabaseSetup.CreateDatabase(databasePath);
                 await dialogs.ShowInfoDialogAsync(string.Format(Strings.ToolsCreateDatabaseCreated, databasePath));
                 Messenger.Send<CloseModalDialogRequest>();
+                notificationManagement.DismissNotifications<DatabaseMissingNotification>();
             }
             catch (Exception e)
             {
