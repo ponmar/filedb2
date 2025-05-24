@@ -1370,4 +1370,10 @@ Lägg till nya filer i '{0}'.</value>
   <data name="AboutGettingStarted6" xml:space="preserve">
     <value>Lägg till personer, platser och etiketter till dina filer (se Sök-fliken)</value>
   </data>
+  <data name="SearchCriteriaRemoveFilter" xml:space="preserve">
+    <value>Ta bort filter</value>
+  </data>
+  <data name="SearchCriteriaAddFilter" xml:space="preserve">
+    <value>Lägg till filter</value>
+  </data>
 </root>

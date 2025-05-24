@@ -26,8 +26,7 @@
                                 CommandParameter="{Binding}"
                                 Content="&#128473;"
                                 IsEnabled="{Binding DataContext.FilterCanBeRemoved, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                ToolTip.Tip="Remove filter" />
-
+                                ToolTip.Tip="{x:Static lang:Strings.SearchCriteriaRemoveFilter}" />
 							<local:FilterSelectionView/>
                         </StackPanel>
                     </DataTemplate>
@@ -39,10 +38,10 @@
                     Margin="0 0 5 0"
                     Command="{Binding AddFilterCommand}"
                     Content="+"
-                    ToolTip.Tip="Add filter" />
+                    ToolTip.Tip="{x:Static lang:Strings.SearchCriteriaAddFilter}" />
                 <Button
                     Command="{Binding FindFilesFromFiltersCommand}"
-                    Content="Search"/>
+                    Content="{x:Static lang:Strings.SearchButton}"/>
             </StackPanel>
         </Grid>
     </Border>

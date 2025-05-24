@@ -1370,4 +1370,10 @@ This operation can be slow for a large collection of files or if the media acces
   <data name="AboutGettingStarted6" xml:space="preserve">
     <value>Add persons, locations and tags to your files (see Search tab)</value>
   </data>
+  <data name="SearchCriteriaRemoveFilter" xml:space="preserve">
+    <value>Remove filter</value>
+  </data>
+  <data name="SearchCriteriaAddFilter" xml:space="preserve">
+    <value>Add filter</value>
+  </data>
 </root>

@@ -2202,6 +2202,24 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add filter.
+        /// </summary>
+        public static string SearchCriteriaAddFilter {
+            get {
+                return ResourceManager.GetString("SearchCriteriaAddFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove filter.
+        /// </summary>
+        public static string SearchCriteriaRemoveFilter {
+            get {
+                return ResourceManager.GetString("SearchCriteriaRemoveFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Difference.
         /// </summary>
         public static string SearchDifferenceButton {
