@@ -13,8 +13,10 @@ using FileDB.Lang;
 using FileDB.Model;
 using FileDB.Notifications;
 using FileDBInterface.DatabaseAccess;
+using FileDBInterface.DatabaseAccess.SQLite;
 using FileDBInterface.Model;
 using FileDBInterface.Validators;
+using Microsoft.Extensions.Logging;
 
 namespace FileDB.ViewModels;
 
@@ -46,8 +48,9 @@ public partial class ToolsViewModel : ObservableObject
     private readonly IFileSystem fileSystem;
     private readonly IClipboardService clipboardService;
     private readonly INotificationManagement notificationManagement;
+    private readonly IConfigUpdater configUpdater;
 
-    public ToolsViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IDialogs dialogs, IFileSystem fileSystem, IClipboardService clipboardService, INotificationManagement notificationManagement)
+    public ToolsViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IDialogs dialogs, IFileSystem fileSystem, IClipboardService clipboardService, INotificationManagement notificationManagement, IConfigUpdater configUpdater)
     {
         this.configProvider = configProvider;
         this.dbAccessProvider = dbAccessProvider;
@@ -56,6 +59,7 @@ public partial class ToolsViewModel : ObservableObject
         this.fileSystem = fileSystem;
         this.clipboardService = clipboardService;
         this.notificationManagement = notificationManagement;
+        this.configUpdater = configUpdater;
         ScanBackupFiles();
     }
 
@@ -78,6 +82,9 @@ public partial class ToolsViewModel : ObservableObject
                 await dialogs.ShowInfoDialogAsync(string.Format(Strings.ToolsCreateDatabaseCreated, databasePath));
                 Messenger.Send<CloseModalDialogRequest>();
                 notificationManagement.DismissNotifications<DatabaseMissingNotification>();
+
+                var dbAccess = new SqLiteDatabaseAccess(databasePath, ServiceLocator.Resolve<ILoggerFactory>());
+                configUpdater.UpdateDatabaseAccess(dbAccess);
             }
             catch (Exception e)
             {

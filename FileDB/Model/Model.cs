@@ -24,6 +24,7 @@ public interface IConfigUpdater
 {
     void InitConfig(ApplicationFilePaths applicationFilePaths, Config config, IDatabaseAccess dbAccess, IFilesystemAccess filesystemAccess);
     void UpdateConfig(Config config);
+    void UpdateDatabaseAccess(IDatabaseAccess dbAccess);
 }
 
 public record ApplicationFilePaths(string FilesRootDir, string ConfigPath, string DatabasePath);
@@ -54,6 +55,12 @@ public class Model : IConfigProvider, IConfigUpdater, IDatabaseAccessProvider, I
     public void UpdateConfig(Config config)
     {
         Config = config;
+        Messenger.Send<ConfigUpdated>();
+    }
+
+    public void UpdateDatabaseAccess(IDatabaseAccess dbAccess)
+    {
+        DbAccess = dbAccess;
         Messenger.Send<ConfigUpdated>();
     }
 }
