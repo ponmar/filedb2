@@ -101,6 +101,9 @@ public partial class ToolsViewModel : ObservableObject
             new FileBackup(fileSystem, configProvider.FilePaths.DatabasePath).CreateBackup();
             await dialogs.ShowInfoDialogAsync(Strings.ToolsCreateBackupResult);
             ScanBackupFiles();
+
+            notificationManagement.DismissNotifications<DatabaseBackupMissingNotification>();
+            notificationManagement.DismissNotifications<DatabaseBackupTooLongTimeAgoNotification>();
         }
         catch (IOException e)
         {
