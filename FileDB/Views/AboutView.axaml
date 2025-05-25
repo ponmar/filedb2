@@ -3,7 +3,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:lang="clr-namespace:FileDB.Lang"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d"
+			 d:DesignWidth="800" d:DesignHeight="2000"
              x:Class="FileDB.Views.AboutView">
 	<DockPanel>
 		<TextBlock DockPanel.Dock="Top" Text="{x:Static lang:Strings.AboutTitle}" Classes="PageHeader"/>
@@ -66,28 +67,6 @@
 					<StackPanel Orientation="Vertical">
 						<TextBlock TextWrapping="Wrap" Classes="PageTextBlock" Text="{x:Static lang:Strings.AboutNotes1}"/>
 						<TextBlock TextWrapping="Wrap" Classes="PageTextBlock" Text="{x:Static lang:Strings.AboutNotes2}"/>
-
-						<TreeView Margin="10" IsHitTestVisible="False">
-							<TreeViewItem Header="root" IsExpanded="True">
-								<TreeViewItem Header="2015" IsExpanded="True">
-									<TreeViewItem Header="2015-06-12 - Biking" IsExpanded="True">
-										<TreeViewItem Header="file1.jpg"/>
-										<TreeViewItem Header="file2.jpg"/>
-									</TreeViewItem>
-									<TreeViewItem Header="2015-07-13 - Birthday party" IsExpanded="True">
-										<TreeViewItem Header="somefile1.jpg"/>
-									</TreeViewItem>
-								</TreeViewItem>
-								<TreeViewItem Header="2016" IsExpanded="True">
-									<TreeViewItem Header="2016-01-05 - Something else" IsExpanded="True">
-										<TreeViewItem Header="anotherfile1.jpg"/>
-										<TreeViewItem Header="anotherfile2.jpg"/>
-									</TreeViewItem>
-								</TreeViewItem>
-							</TreeViewItem>
-						</TreeView>
-
-						<TextBlock Classes="PageTextBlock" TextWrapping="Wrap" Text="{x:Static lang:Strings.AboutNotes3}"/>
 					</StackPanel>
 				</Border>
 

@@ -232,7 +232,7 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Although any directory structure can be imported to FileDB, take a moment to think about the directory structure before importing the meta-data. This layout has been proven to work very well:.
+        ///   Looks up a localized string similar to If you rename or delete files that has been imported to FileDB you need to remove the FileDB meta-data as well (and possibly add them again). A tool will be provided in the future that helps out with this procedure..
         /// </summary>
         public static string AboutNotes2 {
             get {
@@ -241,16 +241,7 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If you rename or delete files that has been imported to FileDB you need to remove the FileDB meta-data as well (and possibly add them again). A tool will be provided in the future that helps out with this procedure..
-        /// </summary>
-        public static string AboutNotes3 {
-            get {
-                return ResourceManager.GetString("AboutNotes3", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Guidelines for your Files Collection.
+        ///   Looks up a localized string similar to Your Files Collection.
         /// </summary>
         public static string AboutNotesTitle {
             get {

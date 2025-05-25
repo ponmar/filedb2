@@ -187,7 +187,7 @@
     <value>Kom igång</value>
   </data>
   <data name="AboutNotesTitle" xml:space="preserve">
-    <value>Riktlinjer för din filsamling</value>
+    <value>Din filsamling</value>
   </data>
   <data name="AboutCommandLineArgumentsTitle" xml:space="preserve">
     <value>Kommandoradsargument</value>
@@ -214,9 +214,6 @@
     <value>FileDB ändrar endast data i den konfigurerade databasen. Det ändrar inte några filer i din filsamling. Filer läses vid import av metadata och vid visning av filer.</value>
   </data>
   <data name="AboutNotes2" xml:space="preserve">
-    <value>Även om alla katalogstrukturer kan importeras till FileDB, ta en stund att tänka på katalogstrukturen innan du importerar metadata. Denna katalogstruktur har visat sig fungera mycket bra:</value>
-  </data>
-  <data name="AboutNotes3" xml:space="preserve">
     <value>Om du byter namn på eller tar bort filer som har importerats till FileDB måste du också ta bort FileDB-metadata (och eventuellt lägga till dem igen). Ett verktyg kommer att tillhandahållas i framtiden som hjälper till med denna procedur.</value>
   </data>
   <data name="AboutCommandLineArgPathText" xml:space="preserve">

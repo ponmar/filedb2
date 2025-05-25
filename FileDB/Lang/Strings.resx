@@ -187,7 +187,7 @@
     <value>Getting Started</value>
   </data>
   <data name="AboutNotesTitle" xml:space="preserve">
-    <value>Guidelines for your Files Collection</value>
+    <value>Your Files Collection</value>
   </data>
   <data name="AboutCommandLineArgumentsTitle" xml:space="preserve">
     <value>Command Line Arguments</value>
@@ -217,9 +217,6 @@
     <value>FileDB only modifies data in the configured database. It does not modify any files in your files collection. Files are read when importing meta-data and when viewing files.</value>
   </data>
   <data name="AboutNotes2" xml:space="preserve">
-    <value>Although any directory structure can be imported to FileDB, take a moment to think about the directory structure before importing the meta-data. This layout has been proven to work very well:</value>
-  </data>
-  <data name="AboutNotes3" xml:space="preserve">
     <value>If you rename or delete files that has been imported to FileDB you need to remove the FileDB meta-data as well (and possibly add them again). A tool will be provided in the future that helps out with this procedure.</value>
   </data>
   <data name="AboutCommandLineArgPathText" xml:space="preserve">
