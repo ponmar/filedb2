@@ -35,17 +35,15 @@
 										<ColumnDefinition Width="auto" SharedSizeGroup="col6"/>
 										<ColumnDefinition Width="auto" SharedSizeGroup="col7"/>
 										<ColumnDefinition Width="auto" SharedSizeGroup="col8"/>
-										<ColumnDefinition Width="auto" SharedSizeGroup="col9"/>
 									</Grid.ColumnDefinitions>
-									<TextBlock Classes="PageTextBlock" Grid.Column="0" Text="{Binding Id}" />
-									<TextBlock Classes="PageTextBlock" Grid.Column="1" Text="{Binding Firstname}" TextWrapping="Wrap"/>
-									<TextBlock Classes="PageTextBlock" Grid.Column="2" Text="{Binding Lastname}" TextWrapping="Wrap"/>
-									<TextBlock Classes="PageTextBlock" Grid.Column="3" Text="{Binding Description}" IsVisible="{Binding Description, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" TextWrapping="Wrap"/>
-									<TextBlock Classes="PageTextBlock" Grid.Column="4" Text="{Binding DateOfBirth}" IsVisible="{Binding DateOfBirth, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" TextWrapping="Wrap"/>
-									<TextBlock Classes="PageTextBlock" Grid.Column="5" Text="{Binding Deceased}" IsVisible="{Binding Deceased, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" TextWrapping="Wrap"/>
-									<TextBlock Classes="PageTextBlock" Grid.Column="6" Text="{Binding Age}" TextWrapping="Wrap"/>
-									<TextBlock Classes="PageTextBlock" Grid.Column="7" Text="{Binding ProfileFileId}" TextWrapping="Wrap"/>
-									<TextBlock Classes="PageTextBlock" Grid.Column="8" Text="{Binding Sex}" TextWrapping="Wrap"/>
+									<TextBlock Classes="PageTextBlock" Grid.Column="0" Text="{Binding Firstname}" TextWrapping="Wrap"/>
+									<TextBlock Classes="PageTextBlock" Grid.Column="1" Text="{Binding Lastname}" TextWrapping="Wrap"/>
+									<TextBlock Classes="PageTextBlock" Grid.Column="2" Text="{Binding Description}" IsVisible="{Binding Description, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" TextWrapping="Wrap"/>
+									<TextBlock Classes="PageTextBlock" Grid.Column="3" Text="{Binding DateOfBirth}" IsVisible="{Binding DateOfBirth, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" TextWrapping="Wrap"/>
+									<TextBlock Classes="PageTextBlock" Grid.Column="4" Text="{Binding Deceased}" IsVisible="{Binding Deceased, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" TextWrapping="Wrap"/>
+									<TextBlock Classes="PageTextBlock" Grid.Column="5" Text="{Binding Age}" TextWrapping="Wrap"/>
+									<TextBlock Classes="PageTextBlock" Grid.Column="6" Text="{Binding ProfileFileId}" TextWrapping="Wrap"/>
+									<TextBlock Classes="PageTextBlock" Grid.Column="7" Text="{Binding Sex}" TextWrapping="Wrap"/>
 								</Grid>
 							</DataTemplate>
 						</ListBox.ItemTemplate>

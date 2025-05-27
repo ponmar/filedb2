@@ -31,12 +31,10 @@
 										<ColumnDefinition Width="auto" SharedSizeGroup="col1"/>
 										<ColumnDefinition Width="auto" SharedSizeGroup="col2"/>
 										<ColumnDefinition Width="auto" SharedSizeGroup="col3"/>
-										<ColumnDefinition Width="auto" SharedSizeGroup="col4"/>
 									</Grid.ColumnDefinitions>
-									<TextBlock Classes="PageTextBlock" Grid.Column="0" Text="{Binding Id}" />
-									<TextBlock Classes="PageTextBlock" Grid.Column="1" Text="{Binding Name}" TextWrapping="Wrap" />
-									<TextBlock Classes="PageTextBlock" Grid.Column="2" Text="{Binding Description}" TextWrapping="Wrap" />
-									<TextBlock Classes="PageTextBlock" Grid.Column="3" Text="{Binding Position}" TextWrapping="Wrap" />
+									<TextBlock Classes="PageTextBlock" Grid.Column="0" Text="{Binding Name}" TextWrapping="Wrap" />
+									<TextBlock Classes="PageTextBlock" Grid.Column="1" Text="{Binding Description}" TextWrapping="Wrap" />
+									<TextBlock Classes="PageTextBlock" Grid.Column="2" Text="{Binding Position}" TextWrapping="Wrap" />
 								</Grid>
 							</DataTemplate>
 						</ListBox.ItemTemplate>

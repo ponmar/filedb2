@@ -28,10 +28,8 @@
 								<Grid>
 									<Grid.ColumnDefinitions>
 										<ColumnDefinition Width="auto" SharedSizeGroup="col1"/>
-										<ColumnDefinition Width="auto" SharedSizeGroup="col2"/>
 									</Grid.ColumnDefinitions>
-									<TextBlock Classes="PageTextBlock" Grid.Column="0" Text="{Binding Id}" />
-									<TextBlock Classes="PageTextBlock" Grid.Column="1" Text="{Binding Name}" TextWrapping="Wrap"/>
+									<TextBlock Classes="PageTextBlock" Grid.Column="0" Text="{Binding Name}" TextWrapping="Wrap"/>
 								</Grid>
 							</DataTemplate>
 						</ListBox.ItemTemplate>
