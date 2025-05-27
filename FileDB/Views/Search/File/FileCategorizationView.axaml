@@ -9,7 +9,7 @@
 		<ScrollViewer>
 			<StackPanel Orientation="Vertical">
 				<Grid ColumnDefinitions="auto,*,auto,auto,auto" RowDefinitions="auto,auto,auto">
-					<TextBlock Grid.Row="0" Grid.Column="0" Text="&#x1F642;" VerticalAlignment="Center" Margin="5" ToolTip.Tip="Person"/>
+					<TextBlock Grid.Row="0" Grid.Column="0" Text="&#x1F6B6;" VerticalAlignment="Center" Margin="5" ToolTip.Tip="Person"/>
 					<ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Persons}" VerticalAlignment="Center" HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedPersonToUpdate}">
 						<ComboBox.ItemTemplate>
 							<DataTemplate>

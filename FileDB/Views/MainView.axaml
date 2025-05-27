@@ -49,7 +49,7 @@
 
 			<TabItem HorizontalContentAlignment="Center">
 				<TabItem.Header>
-					<TextBlock Classes="TabIcon" Text="&#x1F642;" ToolTip.Tip="{x:Static lang:Strings.PersonsTitle}"/>
+					<TextBlock Classes="TabIcon" Text="&#x1F6B6;" ToolTip.Tip="{x:Static lang:Strings.PersonsTitle}"/>
 				</TabItem.Header>
 				<views:PersonsView Margin="10 0 10 10"/>
 			</TabItem>
