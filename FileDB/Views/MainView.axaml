@@ -84,9 +84,9 @@
 
 			<TabItem HorizontalContentAlignment="Center">
 				<TabItem.Header>
-					<TextBlock Classes="TabIcon" Text="&#x1F6C8;" ToolTip.Tip="{x:Static lang:Strings.AboutTitle}"/>
+					<TextBlock Classes="TabIcon" Text="&#x1F6C8;" ToolTip.Tip="{x:Static lang:Strings.HelpTitle}"/>
 				</TabItem.Header>
-				<views:AboutView Margin="10 0 10 10"/>
+				<views:HelpView Margin="10 0 10 10"/>
 			</TabItem>
 
 			<TabItem HorizontalContentAlignment="Center">

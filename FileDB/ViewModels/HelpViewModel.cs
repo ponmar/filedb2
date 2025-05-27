@@ -11,7 +11,7 @@ namespace FileDB.ViewModels;
 
 public record LicenseFileFormatDto(string PackageName, string PackageVersion, string PackageUrl, string LicenseType);
 
-public partial class AboutViewModel : ObservableObject
+public partial class HelpViewModel : ObservableObject
 {
     private const string ChangesFilePath = "CHANGES.txt";
     private readonly string LicensesJsonFilePath = Path.Combine(AppContext.BaseDirectory, "Resources", "licenses.json");
@@ -21,7 +21,6 @@ public partial class AboutViewModel : ObservableObject
 
     public string Changes => fileSystem.File.Exists(ChangesFilePath) ? fileSystem.File.ReadAllText(ChangesFilePath) : "Not deployed";
 
-    public static string AppName => Utils.ApplicationName;
     public static string Author => Utils.Author;
     public static string Version => Utils.GetVersionString();
 
@@ -29,7 +28,7 @@ public partial class AboutViewModel : ObservableObject
 
     private readonly IFileSystem fileSystem;
 
-    public AboutViewModel(IFileSystem fileSystem)
+    public HelpViewModel(IFileSystem fileSystem)
     {
         this.fileSystem = fileSystem;
 

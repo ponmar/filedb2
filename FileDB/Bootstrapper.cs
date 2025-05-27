@@ -34,7 +34,7 @@ public static class Bootstrapper
 
         ServiceLocator.RegisterSingleton<IFilesWritePermissionChecker, FilesWritePermissionChecker>();
 
-        ServiceLocator.RegisterSingleton<AboutViewModel>();
+        ServiceLocator.RegisterSingleton<HelpViewModel>();
         ServiceLocator.RegisterSingleton<IDialogs, Dialogs.Dialogs>();
 
         ServiceLocator.RegisterSingleton<Model.Model>(

@@ -180,52 +180,52 @@
   <data name="SearchCombineResultLabel" xml:space="preserve">
     <value>Result:</value>
   </data>
-  <data name="AboutTitle" xml:space="preserve">
-    <value>About</value>
+  <data name="HelpTitle" xml:space="preserve">
+    <value>Help</value>
   </data>
-  <data name="AboutGettingStartedTitle" xml:space="preserve">
+  <data name="HelpGettingStartedTitle" xml:space="preserve">
     <value>Getting Started</value>
   </data>
-  <data name="AboutNotesTitle" xml:space="preserve">
+  <data name="HelpNotesTitle" xml:space="preserve">
     <value>Your Files Collection</value>
   </data>
-  <data name="AboutCommandLineArgumentsTitle" xml:space="preserve">
+  <data name="HelpCommandLineArgumentsTitle" xml:space="preserve">
     <value>Command Line Arguments</value>
   </data>
-  <data name="AboutChangelogTitle" xml:space="preserve">
+  <data name="HelpChangelogTitle" xml:space="preserve">
     <value>Changelog</value>
   </data>
-  <data name="AboutLicenseLabel" xml:space="preserve">
+  <data name="HelpLicenseLabel" xml:space="preserve">
     <value>License:</value>
   </data>
-  <data name="AboutNuGetPackageLicensesTitle" xml:space="preserve">
+  <data name="HelpNuGetPackageLicensesTitle" xml:space="preserve">
     <value>NuGet Package Licenses</value>
   </data>
-  <data name="AboutGettingStarted3" xml:space="preserve">
+  <data name="HelpGettingStarted3" xml:space="preserve">
     <value>Optional: cleanup your files collection (see guideline below)</value>
   </data>
-  <data name="AboutGettingStarted2" xml:space="preserve">
+  <data name="HelpGettingStarted2" xml:space="preserve">
     <value>Create a database for your files collection and adjust your settings (see Tools tab)</value>
   </data>
-  <data name="AboutGettingStarted4" xml:space="preserve">
+  <data name="HelpGettingStarted4" xml:space="preserve">
     <value>Add your files (see Files tab)</value>
   </data>
-  <data name="AboutGettingStarted7" xml:space="preserve">
+  <data name="HelpGettingStarted7" xml:space="preserve">
     <value>Find your wanted pictures and run slideshows!</value>
   </data>
-  <data name="AboutNotes1" xml:space="preserve">
+  <data name="HelpNotes1" xml:space="preserve">
     <value>FileDB only modifies data in the configured database. It does not modify any files in your files collection. Files are read when importing meta-data and when viewing files.</value>
   </data>
-  <data name="AboutNotes2" xml:space="preserve">
+  <data name="HelpNotes2" xml:space="preserve">
     <value>If you rename or delete files that has been imported to FileDB you need to remove the FileDB meta-data as well (and possibly add them again). A tool will be provided in the future that helps out with this procedure.</value>
   </data>
-  <data name="AboutCommandLineArgPathText" xml:space="preserve">
+  <data name="HelpCommandLineArgPathText" xml:space="preserve">
     <value>Relative or absolute path to the file to open</value>
   </data>
-  <data name="AboutDownloadsReleases" xml:space="preserve">
+  <data name="HelpDownloadsReleases" xml:space="preserve">
     <value>Official releases:</value>
   </data>
-  <data name="AboutLicense" xml:space="preserve">
+  <data name="HelpLicense" xml:space="preserve">
     <value>MIT (see LICENSE.txt)</value>
   </data>
   <data name="AddLocationNameLabel" xml:space="preserve">
@@ -940,13 +940,13 @@ YYYY-MM-DDTHH:MM:SS</value>
   <data name="ExportDataLabel" xml:space="preserve">
     <value>Data to export:</value>
   </data>
-  <data name="AboutAppVersion" xml:space="preserve">
+  <data name="HelpAppVersion" xml:space="preserve">
     <value>Version:</value>
   </data>
-  <data name="AboutAppAuthor" xml:space="preserve">
+  <data name="HelpAppAuthor" xml:space="preserve">
     <value>Author:</value>
   </data>
-  <data name="AboutAppProjectWebsite" xml:space="preserve">
+  <data name="HelpAppProjectWebsite" xml:space="preserve">
     <value>Project website:</value>
   </data>
   <data name="ExportSelectYourDestinationDirectory" xml:space="preserve">
@@ -1087,7 +1087,7 @@ YYYY-MM-DDTHH:MM:SS</value>
   <data name="SettingsThemeLabel" xml:space="preserve">
     <value>Theme:</value>
   </data>
-  <data name="AboutCommandLineArgPath" xml:space="preserve">
+  <data name="HelpCommandLineArgPath" xml:space="preserve">
     <value>FileDB file</value>
   </data>
   <data name="TextFilterCaseSensitive" xml:space="preserve">
@@ -1135,7 +1135,7 @@ YYYY-MM-DDTHH:MM:SS</value>
   <data name="TextFilterIncludeLocations" xml:space="preserve">
     <value>Include files with matching locations</value>
   </data>
-  <data name="AboutGettingStarted1" xml:space="preserve">
+  <data name="HelpGettingStarted1" xml:space="preserve">
     <value>Create an empty file in your files collection root directory and name it 'MyFiles.FileDB'. Open the file with the FileDB application.</value>
   </data>
   <data name="ThemeDefault" xml:space="preserve">
@@ -1359,12 +1359,12 @@ This operation can be slow for a large collection of files or if the media acces
     <value>Unable to save configuration</value>
   </data>
   <data name="NotificationGetStarted" xml:space="preserve">
-    <value>See About tab for how to get started with your new files collection!</value>
+    <value>See Help tab for how to get started with your new files collection!</value>
   </data>
-  <data name="AboutGettingStarted5" xml:space="preserve">
+  <data name="HelpGettingStarted5" xml:space="preserve">
     <value>Create persons, locations and tags (see Update tabs)</value>
   </data>
-  <data name="AboutGettingStarted6" xml:space="preserve">
+  <data name="HelpGettingStarted6" xml:space="preserve">
     <value>Add persons, locations and tags to your files (see Search tab)</value>
   </data>
   <data name="SearchCriteriaRemoveFilter" xml:space="preserve">
@@ -1372,5 +1372,8 @@ This operation can be slow for a large collection of files or if the media acces
   </data>
   <data name="SearchCriteriaAddFilter" xml:space="preserve">
     <value>Add filter</value>
+  </data>
+  <data name="HelpAbout" xml:space="preserve">
+    <value>About</value>
   </data>
 </root>

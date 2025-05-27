@@ -48,6 +48,9 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Update="Views\HelpView.axaml.cs">
+      <DependentUpon>HelpView.axaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\Search\File\FileCategorizationHistoryView.axaml.cs">
       <DependentUpon>FileCategorizationHistoryView.axaml</DependentUpon>
     </Compile>

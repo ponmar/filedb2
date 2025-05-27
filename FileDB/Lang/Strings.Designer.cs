@@ -61,213 +61,6 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Author:.
-        /// </summary>
-        public static string AboutAppAuthor {
-            get {
-                return ResourceManager.GetString("AboutAppAuthor", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Project website:.
-        /// </summary>
-        public static string AboutAppProjectWebsite {
-            get {
-                return ResourceManager.GetString("AboutAppProjectWebsite", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Version:.
-        /// </summary>
-        public static string AboutAppVersion {
-            get {
-                return ResourceManager.GetString("AboutAppVersion", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Changelog.
-        /// </summary>
-        public static string AboutChangelogTitle {
-            get {
-                return ResourceManager.GetString("AboutChangelogTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to FileDB file.
-        /// </summary>
-        public static string AboutCommandLineArgPath {
-            get {
-                return ResourceManager.GetString("AboutCommandLineArgPath", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Relative or absolute path to the file to open.
-        /// </summary>
-        public static string AboutCommandLineArgPathText {
-            get {
-                return ResourceManager.GetString("AboutCommandLineArgPathText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Command Line Arguments.
-        /// </summary>
-        public static string AboutCommandLineArgumentsTitle {
-            get {
-                return ResourceManager.GetString("AboutCommandLineArgumentsTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Official releases:.
-        /// </summary>
-        public static string AboutDownloadsReleases {
-            get {
-                return ResourceManager.GetString("AboutDownloadsReleases", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Create an empty file in your files collection root directory and name it &apos;MyFiles.FileDB&apos;. Open the file with the FileDB application..
-        /// </summary>
-        public static string AboutGettingStarted1 {
-            get {
-                return ResourceManager.GetString("AboutGettingStarted1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Create a database for your files collection and adjust your settings (see Tools tab).
-        /// </summary>
-        public static string AboutGettingStarted2 {
-            get {
-                return ResourceManager.GetString("AboutGettingStarted2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Optional: cleanup your files collection (see guideline below).
-        /// </summary>
-        public static string AboutGettingStarted3 {
-            get {
-                return ResourceManager.GetString("AboutGettingStarted3", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add your files (see Files tab).
-        /// </summary>
-        public static string AboutGettingStarted4 {
-            get {
-                return ResourceManager.GetString("AboutGettingStarted4", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Create persons, locations and tags (see Update tabs).
-        /// </summary>
-        public static string AboutGettingStarted5 {
-            get {
-                return ResourceManager.GetString("AboutGettingStarted5", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add persons, locations and tags to your files (see Search tab).
-        /// </summary>
-        public static string AboutGettingStarted6 {
-            get {
-                return ResourceManager.GetString("AboutGettingStarted6", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Find your wanted pictures and run slideshows!.
-        /// </summary>
-        public static string AboutGettingStarted7 {
-            get {
-                return ResourceManager.GetString("AboutGettingStarted7", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Getting Started.
-        /// </summary>
-        public static string AboutGettingStartedTitle {
-            get {
-                return ResourceManager.GetString("AboutGettingStartedTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to MIT (see LICENSE.txt).
-        /// </summary>
-        public static string AboutLicense {
-            get {
-                return ResourceManager.GetString("AboutLicense", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to License:.
-        /// </summary>
-        public static string AboutLicenseLabel {
-            get {
-                return ResourceManager.GetString("AboutLicenseLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to FileDB only modifies data in the configured database. It does not modify any files in your files collection. Files are read when importing meta-data and when viewing files..
-        /// </summary>
-        public static string AboutNotes1 {
-            get {
-                return ResourceManager.GetString("AboutNotes1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to If you rename or delete files that has been imported to FileDB you need to remove the FileDB meta-data as well (and possibly add them again). A tool will be provided in the future that helps out with this procedure..
-        /// </summary>
-        public static string AboutNotes2 {
-            get {
-                return ResourceManager.GetString("AboutNotes2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Your Files Collection.
-        /// </summary>
-        public static string AboutNotesTitle {
-            get {
-                return ResourceManager.GetString("AboutNotesTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to NuGet Package Licenses.
-        /// </summary>
-        public static string AboutNuGetPackageLicensesTitle {
-            get {
-                return ResourceManager.GetString("AboutNuGetPackageLicensesTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to About.
-        /// </summary>
-        public static string AboutTitle {
-            get {
-                return ResourceManager.GetString("AboutTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Add Location.
         /// </summary>
         public static string AddLocationAddTitle {
@@ -1860,6 +1653,222 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to About.
+        /// </summary>
+        public static string HelpAbout {
+            get {
+                return ResourceManager.GetString("HelpAbout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Author:.
+        /// </summary>
+        public static string HelpAppAuthor {
+            get {
+                return ResourceManager.GetString("HelpAppAuthor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Project website:.
+        /// </summary>
+        public static string HelpAppProjectWebsite {
+            get {
+                return ResourceManager.GetString("HelpAppProjectWebsite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version:.
+        /// </summary>
+        public static string HelpAppVersion {
+            get {
+                return ResourceManager.GetString("HelpAppVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Changelog.
+        /// </summary>
+        public static string HelpChangelogTitle {
+            get {
+                return ResourceManager.GetString("HelpChangelogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FileDB file.
+        /// </summary>
+        public static string HelpCommandLineArgPath {
+            get {
+                return ResourceManager.GetString("HelpCommandLineArgPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Relative or absolute path to the file to open.
+        /// </summary>
+        public static string HelpCommandLineArgPathText {
+            get {
+                return ResourceManager.GetString("HelpCommandLineArgPathText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Command Line Arguments.
+        /// </summary>
+        public static string HelpCommandLineArgumentsTitle {
+            get {
+                return ResourceManager.GetString("HelpCommandLineArgumentsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Official releases:.
+        /// </summary>
+        public static string HelpDownloadsReleases {
+            get {
+                return ResourceManager.GetString("HelpDownloadsReleases", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create an empty file in your files collection root directory and name it &apos;MyFiles.FileDB&apos;. Open the file with the FileDB application..
+        /// </summary>
+        public static string HelpGettingStarted1 {
+            get {
+                return ResourceManager.GetString("HelpGettingStarted1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create a database for your files collection and adjust your settings (see Tools tab).
+        /// </summary>
+        public static string HelpGettingStarted2 {
+            get {
+                return ResourceManager.GetString("HelpGettingStarted2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Optional: cleanup your files collection (see guideline below).
+        /// </summary>
+        public static string HelpGettingStarted3 {
+            get {
+                return ResourceManager.GetString("HelpGettingStarted3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add your files (see Files tab).
+        /// </summary>
+        public static string HelpGettingStarted4 {
+            get {
+                return ResourceManager.GetString("HelpGettingStarted4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create persons, locations and tags (see Update tabs).
+        /// </summary>
+        public static string HelpGettingStarted5 {
+            get {
+                return ResourceManager.GetString("HelpGettingStarted5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add persons, locations and tags to your files (see Search tab).
+        /// </summary>
+        public static string HelpGettingStarted6 {
+            get {
+                return ResourceManager.GetString("HelpGettingStarted6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find your wanted pictures and run slideshows!.
+        /// </summary>
+        public static string HelpGettingStarted7 {
+            get {
+                return ResourceManager.GetString("HelpGettingStarted7", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Getting Started.
+        /// </summary>
+        public static string HelpGettingStartedTitle {
+            get {
+                return ResourceManager.GetString("HelpGettingStartedTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MIT (see LICENSE.txt).
+        /// </summary>
+        public static string HelpLicense {
+            get {
+                return ResourceManager.GetString("HelpLicense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to License:.
+        /// </summary>
+        public static string HelpLicenseLabel {
+            get {
+                return ResourceManager.GetString("HelpLicenseLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FileDB only modifies data in the configured database. It does not modify any files in your files collection. Files are read when importing meta-data and when viewing files..
+        /// </summary>
+        public static string HelpNotes1 {
+            get {
+                return ResourceManager.GetString("HelpNotes1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If you rename or delete files that has been imported to FileDB you need to remove the FileDB meta-data as well (and possibly add them again). A tool will be provided in the future that helps out with this procedure..
+        /// </summary>
+        public static string HelpNotes2 {
+            get {
+                return ResourceManager.GetString("HelpNotes2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your Files Collection.
+        /// </summary>
+        public static string HelpNotesTitle {
+            get {
+                return ResourceManager.GetString("HelpNotesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NuGet Package Licenses.
+        /// </summary>
+        public static string HelpNuGetPackageLicensesTitle {
+            get {
+                return ResourceManager.GetString("HelpNuGetPackageLicensesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Help.
+        /// </summary>
+        public static string HelpTitle {
+            get {
+                return ResourceManager.GetString("HelpTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add....
         /// </summary>
         public static string LocationsAddButton {
@@ -1932,7 +1941,7 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to See About tab for how to get started with your new files collection!.
+        ///   Looks up a localized string similar to See Help tab for how to get started with your new files collection!.
         /// </summary>
         public static string NotificationGetStarted {
             get {
