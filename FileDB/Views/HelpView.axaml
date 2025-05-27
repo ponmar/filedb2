@@ -80,29 +80,36 @@
 
 				<TextBlock Text="{x:Static lang:Strings.HelpChangelogTitle}" Classes="PageSubHeader"/>
 				<Border Classes="BorderGroup">
-					<TextBlock Classes="PageTextBlock" Margin="20" Text="{Binding Changes}" TextWrapping="Wrap"/>
+					<Expander>
+						<Expander.Header>
+							CHANGES.txt
+						</Expander.Header>
+						<TextBlock Classes="PageTextBlock" Margin="20" Text="{Binding Changes}" TextWrapping="Wrap"/>
+					</Expander>
 				</Border>
 
 				<TextBlock Text="{x:Static lang:Strings.HelpNuGetPackageLicensesTitle}" Classes="PageSubHeader"/>
 				<Border Classes="BorderGroup">
-					<ListBox ItemsSource="{Binding Licenses}" Grid.IsSharedSizeScope="True" Background="Transparent" Margin="10">
-						<ListBox.ItemTemplate>
-							<DataTemplate>
-								<Grid>
-									<Grid.ColumnDefinitions>
-										<ColumnDefinition Width="Auto" SharedSizeGroup="NameColumn"/>
-										<ColumnDefinition Width="Auto" SharedSizeGroup="VersionColumn"/>
-										<ColumnDefinition Width="Auto" SharedSizeGroup="LicenseTypeColumn"/>
-										<ColumnDefinition Width="Auto" SharedSizeGroup="LicenseLinkColumn"/>
-									</Grid.ColumnDefinitions>
-									<TextBlock Grid.Column="0" Text="{Binding PackageName}" Margin="3"/>
-									<TextBlock Grid.Column="1" Text="{Binding PackageVersion}" Margin="3"/>
-									<TextBlock Grid.Column="2" Text="{Binding LicenseType}" Margin="3"/>
-									<TextBlock Grid.Column="3" Text="{Binding PackageUrl}" Margin="3"/>
-								</Grid>
-							</DataTemplate>
-						</ListBox.ItemTemplate>
-					</ListBox>
+					<Expander>
+						<ListBox ItemsSource="{Binding Licenses}" Grid.IsSharedSizeScope="True" Background="Transparent" Margin="10">
+							<ListBox.ItemTemplate>
+								<DataTemplate>
+									<Grid>
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="Auto" SharedSizeGroup="NameColumn"/>
+											<ColumnDefinition Width="Auto" SharedSizeGroup="VersionColumn"/>
+											<ColumnDefinition Width="Auto" SharedSizeGroup="LicenseTypeColumn"/>
+											<ColumnDefinition Width="Auto" SharedSizeGroup="LicenseLinkColumn"/>
+										</Grid.ColumnDefinitions>
+										<TextBlock Grid.Column="0" Text="{Binding PackageName}" Margin="3"/>
+										<TextBlock Grid.Column="1" Text="{Binding PackageVersion}" Margin="3"/>
+										<TextBlock Grid.Column="2" Text="{Binding LicenseType}" Margin="3"/>
+										<TextBlock Grid.Column="3" Text="{Binding PackageUrl}" Margin="3"/>
+									</Grid>
+								</DataTemplate>
+							</ListBox.ItemTemplate>
+						</ListBox>
+					</Expander>
 				</Border>
 			</StackPanel>
 		</ScrollViewer>
