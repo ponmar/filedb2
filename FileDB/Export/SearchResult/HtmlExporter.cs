@@ -62,9 +62,15 @@ public class HtmlExporter(IFileSystem fileSystem, IFilesystemAccessProvider file
 
         string content = string.Empty;
         int index = 1;
-        foreach (var file in data.Files)
+        var existingFiles = data.Files.Where(x => fileSystem.File.Exists(filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(x.OriginalPath)));
+        foreach (var file in existingFiles)
         {
             var sourceFilePath = filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(file.OriginalPath);
+            if (!fileSystem.File.Exists(sourceFilePath))
+            {
+                continue;
+            }
+
             var destinationFilename = Path.GetFileName(file.ExportedPath);
             var destFilePath = Path.Combine(destinationDirPath, destinationFilename);
             fileSystem.File.Copy(sourceFilePath, destFilePath);
@@ -87,7 +93,7 @@ public class HtmlExporter(IFileSystem fileSystem, IFilesystemAccessProvider file
                 pictureDescription += htmlDescription;
             }
 
-            var pictureText = $@"<h2><span class=""index"">{index} / {data.Files.Count}</span> {pictureDateText}{pictureDescription}</h2>";
+            var pictureText = $@"<h2><span class=""index"">{index} / {existingFiles.Count()}</span> {pictureDateText}{pictureDescription}</h2>";
 
             if (file.PersonIds.Count > 0)
             {
