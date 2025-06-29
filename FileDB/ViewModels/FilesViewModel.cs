@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
 using System.Threading;
@@ -71,10 +72,10 @@ public partial class FilesViewModel : ObservableObject
     [RelayCommand]
     private async Task BrowseSubDirectoryAsync()
     {
-        var selectedDir = await dialogs.ShowBrowseExistingDirectoryDialogAsync(Strings.FilesSelectASubDirectory, configProvider.FilePaths.FilesRootDir);
+        var selectedDir = await dialogs.ShowBrowseExistingSubDirectoryDialogAsync(Strings.FilesSelectASubDirectory, configProvider.FilePaths.FilesRootDir);
         if (selectedDir is not null)
         {
-            SubdirToScan = selectedDir;
+            SubdirToScan = Path.Combine(configProvider.FilePaths.FilesRootDir, selectedDir);
         }
     }
 

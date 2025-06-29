@@ -1376,4 +1376,7 @@ Lägg till nya filer i '{0}'.</value>
   <data name="HelpAbout" xml:space="preserve">
     <value>Om</value>
   </data>
+  <data name="ToolsBrowseDatabaseExportDir" xml:space="preserve">
+    <value>Välj mål-katalogen</value>
+  </data>
 </root>

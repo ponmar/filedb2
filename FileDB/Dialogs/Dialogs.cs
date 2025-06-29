@@ -149,6 +149,18 @@ public class Dialogs : IDialogs
         return files.Count > 0 ? files[0].Path.LocalPath : null;
     }
 
+    public async Task<string?> ShowBrowseExistingSubDirectoryDialogAsync(string title, string rootDirectory)
+    {
+        var selectedDir = await ShowBrowseExistingDirectoryDialogAsync(title, rootDirectory);
+        if (selectedDir is null || !selectedDir.StartsWith(rootDirectory, StringComparison.OrdinalIgnoreCase))
+        {
+            return null;
+        }
+        var subDir = selectedDir.Substring(rootDirectory.Length).TrimStart(System.IO.Path.DirectorySeparatorChar, System.IO.Path.AltDirectorySeparatorChar);
+        subDir = subDir.Replace(@"\", "/");
+        return subDir;
+    }
+
     public async Task<PersonModel?> ShowAddPersonDialogAsync(int? personId = null, string? personName = null)
     {
         var parent = GetParentWindow();

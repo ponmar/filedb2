@@ -66,11 +66,6 @@ public class HtmlExporter(IFileSystem fileSystem, IFilesystemAccessProvider file
         foreach (var file in existingFiles)
         {
             var sourceFilePath = filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(file.OriginalPath);
-            if (!fileSystem.File.Exists(sourceFilePath))
-            {
-                continue;
-            }
-
             var destinationFilename = Path.GetFileName(file.ExportedPath);
             var destFilePath = Path.Combine(destinationDirPath, destinationFilename);
             fileSystem.File.Copy(sourceFilePath, destFilePath);

@@ -3444,6 +3444,15 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select your destination directory.
+        /// </summary>
+        public static string ToolsBrowseDatabaseExportDir {
+            get {
+                return ResourceManager.GetString("ToolsBrowseDatabaseExportDir", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Backup created..
         /// </summary>
         public static string ToolsCreateBackupResult {

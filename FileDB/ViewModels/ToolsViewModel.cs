@@ -239,7 +239,7 @@ public partial class ToolsViewModel : ObservableObject
     private async Task BrowseDatabaseExportDirectoryAsync()
     {
         var initialPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-        var selectedDir = await dialogs.ShowBrowseExistingDirectoryDialogAsync("Select your destination directory", initialPath);
+        var selectedDir = await dialogs.ShowBrowseExistingDirectoryDialogAsync(Strings.ToolsBrowseDatabaseExportDir, initialPath);
         DatabaseExportDirectory = selectedDir ?? string.Empty;
     }
 

@@ -1376,4 +1376,7 @@ This operation can be slow for a large collection of files or if the media acces
   <data name="HelpAbout" xml:space="preserve">
     <value>About</value>
   </data>
+  <data name="ToolsBrowseDatabaseExportDir" xml:space="preserve">
+    <value>Select your destination directory</value>
+  </data>
 </root>
