@@ -1,3 +1,16 @@
+4.13:
+* Fixed creash for when the default search filter was the first enum value (Text)
+* Add control for adjusting slideshow delay without updating settings. This setting can be used in readonly mode,
+  when modifying settings is not possible.
+* Set readonly mode and create a notification when not having write access to files root directory
+* Settings tab: show warning message when not having write permissions to files root directory
+* Add a get started notification for when the config file is new (empty)
+* Documentation updates
+* Dismiss missing database notification after the database has been created
+* Start using new database after it has been created (no restart needed)
+* Dismiss dababase missing and too long since backup notification after a new backup has been created
+* Fix some missing translations
+
 4.12:
 * Only show quit tab button when in fullscreen mode
 * Date and annual date search filters: add menu for setting start/end date from today and current file
