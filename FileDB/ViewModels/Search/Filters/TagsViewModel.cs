@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace FileDB.ViewModels.Search.Filters;
 
-public partial class TagsViewModel : ObservableObject, IFilterViewModel
+public partial class TagsViewModel : ObservableValidator, IFilterViewModel
 {
     [ObservableProperty]
     private ObservableCollection<TagForSearch> tags = [];
@@ -30,6 +30,8 @@ public partial class TagsViewModel : ObservableObject, IFilterViewModel
         ReloadTags();
         this.RegisterForEvent<TagsUpdated>((x) => ReloadTags());
         TrySelectTagsFromSelectedFile();
+
+        ValidateAllProperties();
     }
 
     private void TrySelectTagsFromSelectedFile()

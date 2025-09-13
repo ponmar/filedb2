@@ -1,12 +1,15 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.ComponentModel.DataAnnotations;
+using CommunityToolkit.Mvvm.ComponentModel;
 using FileDB.FilesFilter;
 using FileDB.Model;
 
 namespace FileDB.ViewModels.Search.Filters;
 
-public partial class TextViewModel : ObservableObject, IFilterViewModel
+public partial class TextViewModel : ObservableValidator, IFilterViewModel
 {
     [ObservableProperty]
+    [NotifyDataErrorInfo]
+    [Required(ErrorMessage = "Required")]
     private string textFilterSearchPattern = string.Empty;
 
     [ObservableProperty]
@@ -30,6 +33,8 @@ public partial class TextViewModel : ObservableObject, IFilterViewModel
         this.personsRepository = personsRepository;
         this.locationsRepository = locationsRepository;
         this.tagsRepository = tagsRepository;
+
+        ValidateAllProperties();
     }
 
     public IFilesFilter CreateFilter() => new TextFilter(

@@ -1,8 +1,9 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using CommunityToolkit.Mvvm.ComponentModel;
 using FileDB.FilesFilter;
 using FileDB.Model;
-using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace FileDB.ViewModels.Search.Filters;
 
@@ -11,7 +12,7 @@ public record LocationForSearch(int Id, string Name)
     public override string ToString() => Name;
 }
 
-public partial class LocationViewModel : ObservableObject, IFilterViewModel
+public partial class LocationViewModel : ObservableValidator, IFilterViewModel
 {
     [ObservableProperty]
     private ObservableCollection<LocationForSearch> locations = [];
@@ -20,6 +21,8 @@ public partial class LocationViewModel : ObservableObject, IFilterViewModel
     private ObservableCollection<LocationForSearch> locationsWithPosition = [];
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
+    [Required(ErrorMessage = "Required")]
     private LocationForSearch? selectedLocation;
 
     [ObservableProperty]
@@ -37,6 +40,8 @@ public partial class LocationViewModel : ObservableObject, IFilterViewModel
         ReloadLocations();
         this.RegisterForEvent<LocationsUpdated>((x) => ReloadLocations());
         TrySelectLocationFromSelectedFile();
+
+        ValidateAllProperties();
     }
 
     private void TrySelectLocationFromSelectedFile()

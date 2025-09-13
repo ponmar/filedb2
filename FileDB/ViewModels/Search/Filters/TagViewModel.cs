@@ -1,8 +1,9 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using CommunityToolkit.Mvvm.ComponentModel;
 using FileDB.FilesFilter;
 using FileDB.Model;
-using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace FileDB.ViewModels.Search.Filters;
 
@@ -11,12 +12,14 @@ public record TagForSearch(int Id, string Name)
     public override string ToString() => Name;
 }
 
-public partial class TagViewModel : ObservableObject, IFilterViewModel
+public partial class TagViewModel : ObservableValidator, IFilterViewModel
 {
     [ObservableProperty]
     private ObservableCollection<TagForSearch> tags = [];
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
+    [Required(ErrorMessage = "Required")]
     private TagForSearch? selectedTag;
 
     [ObservableProperty]
@@ -34,6 +37,8 @@ public partial class TagViewModel : ObservableObject, IFilterViewModel
         ReloadTags();
         this.RegisterForEvent<TagsUpdated>((x) => ReloadTags());
         TrySelectTagFromSelectedFile();
+
+        ValidateAllProperties();
     }
 
     private void TrySelectTagFromSelectedFile()

@@ -9,12 +9,17 @@ using FileDB.Extensions;
 
 namespace FileDB.ViewModels.Search.Filters;
 
-public partial class FileTypeViewModel : ObservableObject, IFilterViewModel
+public partial class FileTypeViewModel : ObservableValidator, IFilterViewModel
 {
     public static IEnumerable<FileType> FileTypes { get; } = Enum.GetValues<FileType>().Where(x => x != FileType.Unknown).OrderBy(x => x.ToFriendlyString());
 
     [ObservableProperty]
     private FileType selectedFileType = FileTypes.First();
+
+    public FileTypeViewModel()
+    {
+        ValidateAllProperties();
+    }
 
     public IFilesFilter CreateFilter() => new FileTypeFilter(SelectedFileType);
 }

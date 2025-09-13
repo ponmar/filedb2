@@ -1,8 +1,9 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using CommunityToolkit.Mvvm.ComponentModel;
 using FileDB.FilesFilter;
 using FileDB.Model;
-using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace FileDB.ViewModels.Search.Filters;
 
@@ -11,12 +12,14 @@ public record PersonForSearch(int Id, string Name)
     public override string ToString() => Name;
 }
 
-public partial class PersonViewModel : ObservableObject, IFilterViewModel
+public partial class PersonViewModel : ObservableValidator, IFilterViewModel
 {
     [ObservableProperty]
     private ObservableCollection<PersonForSearch> persons = [];
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
+    [Required(ErrorMessage = "Required")]
     private PersonForSearch? selectedPerson;
 
     [ObservableProperty]
@@ -34,6 +37,8 @@ public partial class PersonViewModel : ObservableObject, IFilterViewModel
         ReloadPersons();
         this.RegisterForEvent<PersonsUpdated>((x) => ReloadPersons());
         TrySelectPersonFromSelectedFile();
+
+        ValidateAllProperties();
     }
 
     private void TrySelectPersonFromSelectedFile()

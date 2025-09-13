@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.FilesFilter;
@@ -7,9 +8,11 @@ using FileDBInterface.Extensions;
 
 namespace FileDB.ViewModels.Search.Filters;
 
-public partial class CombineViewModel : ObservableObject, IFilterViewModel
+public partial class CombineViewModel : ObservableValidator, IFilterViewModel
 {
     [ObservableProperty]
+    [NotifyDataErrorInfo]
+    [Required(ErrorMessage = "Required")]
     [NotifyPropertyChangedFor(nameof(CombineSearchResultPossible))]
     private string combineSearch1 = string.Empty;
 
@@ -19,6 +22,8 @@ public partial class CombineViewModel : ObservableObject, IFilterViewModel
     }
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
+    [Required(ErrorMessage = "Required")]
     [NotifyPropertyChangedFor(nameof(CombineSearchResultPossible))]
     private string combineSearch2 = string.Empty;
 
@@ -45,6 +50,8 @@ public partial class CombineViewModel : ObservableObject, IFilterViewModel
         this.fileSelector = fileSelector;
 
         this.RegisterForEvent<SearchResultRepositoryUpdated>(x => OnPropertyChanged(nameof(HasSearchResult)));
+
+        ValidateAllProperties();
     }
 
     [RelayCommand]

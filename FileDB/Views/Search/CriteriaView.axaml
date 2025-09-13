@@ -41,7 +41,8 @@
                     ToolTip.Tip="{x:Static lang:Strings.SearchCriteriaAddFilter}" />
                 <Button
                     Command="{Binding FindFilesFromFiltersCommand}"
-                    Content="{x:Static lang:Strings.SearchButton}"/>
+                    Content="{x:Static lang:Strings.SearchButton}"
+					IsEnabled="{Binding !HasFilterErrors}"/>
             </StackPanel>
         </Grid>
     </Border>

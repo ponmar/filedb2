@@ -10,6 +10,7 @@ public record ConfigEdited(bool HasChanges);
 public record ConfigUpdated();
 public record NotificationsUpdated;
 public record DateChanged;
+public record FilterErrorsUpdated;
 public record Quit;
 
 public record PersonEdited;

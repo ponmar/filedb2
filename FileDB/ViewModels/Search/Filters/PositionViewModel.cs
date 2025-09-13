@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.FilesFilter;
@@ -6,12 +7,16 @@ using FileDB.Model;
 
 namespace FileDB.ViewModels.Search.Filters;
 
-public partial class PositionViewModel : ObservableObject, IFilterViewModel
+public partial class PositionViewModel : ObservableValidator, IFilterViewModel
 {
     [ObservableProperty]
+    [NotifyDataErrorInfo]
+    [Required(ErrorMessage = "Required")]
     private string positionText = string.Empty;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
+    [Required(ErrorMessage = "Required")]
     private string radiusText = "500";
 
     public ObservableCollection<LocationForSearch> LocationsWithPosition { get; } = [];
@@ -43,6 +48,8 @@ public partial class PositionViewModel : ObservableObject, IFilterViewModel
         ReloadLocations();
         this.RegisterForEvent<LocationsUpdated>(x => ReloadLocations());
         this.RegisterForEvent<FileSelectionChanged>(x => CurrentFileHasPosition = fileSelector.SelectedFile?.Position is not null);
+
+        ValidateAllProperties();
     }
 
     private void ReloadLocations()

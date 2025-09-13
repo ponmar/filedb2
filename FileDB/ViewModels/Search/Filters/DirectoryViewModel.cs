@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Dialogs;
@@ -8,9 +9,11 @@ using FileDB.Model;
 
 namespace FileDB.ViewModels.Search.Filters;
 
-public partial class DirectoryViewModel : ObservableObject, IFilterViewModel
+public partial class DirectoryViewModel : ObservableValidator, IFilterViewModel
 {
     [ObservableProperty]
+    [NotifyDataErrorInfo]
+    [Required(ErrorMessage = "Required")]
     private string directoryPath = string.Empty;
 
     private readonly IConfigProvider configProvider;
@@ -29,6 +32,8 @@ public partial class DirectoryViewModel : ObservableObject, IFilterViewModel
                 DirectoryPath = fileSelector.SelectedFile.Path[..lastSlashIndex];
             }
         }
+
+        ValidateAllProperties();
     }
 
     [RelayCommand]

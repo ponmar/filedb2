@@ -3,8 +3,13 @@ using FileDB.FilesFilter;
 
 namespace FileDB.ViewModels.Search.Filters;
 
-public partial class AllFilesViewModel : ObservableObject, IFilterViewModel
+public partial class AllFilesViewModel : ObservableValidator, IFilterViewModel
 {
+    public AllFilesViewModel()
+    {
+        ValidateAllProperties();
+    }
+
     public IFilesFilter CreateFilter()
     {
         return new AllFilesFilter();

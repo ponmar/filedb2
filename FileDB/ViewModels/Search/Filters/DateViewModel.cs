@@ -7,7 +7,7 @@ using System;
 
 namespace FileDB.ViewModels.Search.Filters;
 
-public partial class DateViewModel : ObservableObject, IFilterViewModel
+public partial class DateViewModel : ObservableValidator, IFilterViewModel
 {
     [ObservableProperty]
     private bool dateIsRange = false;
@@ -37,6 +37,8 @@ public partial class DateViewModel : ObservableObject, IFilterViewModel
             SetStartDateFromToday();
             SetEndDateFromToday();
         }
+
+        ValidateAllProperties();
     }
 
     [RelayCommand]

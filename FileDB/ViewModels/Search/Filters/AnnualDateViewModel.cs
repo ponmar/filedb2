@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace FileDB.ViewModels.Search.Filters;
 
-public partial class AnnualDateViewModel : ObservableObject, IFilterViewModel
+public partial class AnnualDateViewModel : ObservableValidator, IFilterViewModel
 {
     [ObservableProperty]
     private bool annualDateIsRange = false;
@@ -49,6 +49,8 @@ public partial class AnnualDateViewModel : ObservableObject, IFilterViewModel
             SetStartDateFromToday();
             SetEndDateFromToday();
         }
+
+        ValidateAllProperties();
     }
 
     [RelayCommand]

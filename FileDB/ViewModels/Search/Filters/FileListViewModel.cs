@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.FilesFilter;
@@ -6,9 +7,11 @@ using FileDB.Model;
 
 namespace FileDB.ViewModels.Search.Filters;
 
-public partial class FileListViewModel : ObservableObject, IFilterViewModel
+public partial class FileListViewModel : ObservableValidator, IFilterViewModel
 {
     [ObservableProperty]
+    [NotifyDataErrorInfo]
+    [Required(ErrorMessage = "Required")]
     private string fileListIds = string.Empty;
 
     [ObservableProperty]
@@ -23,6 +26,8 @@ public partial class FileListViewModel : ObservableObject, IFilterViewModel
         this.searchResultRepository = searchResultRepository;
 
         this.RegisterForEvent<SearchResultRepositoryUpdated>(x => OnPropertyChanged(nameof(HasSearchResult)));
+
+        ValidateAllProperties();
     }
 
     [RelayCommand]

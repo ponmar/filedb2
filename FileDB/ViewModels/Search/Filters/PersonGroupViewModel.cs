@@ -1,4 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections;
+using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -7,12 +10,14 @@ using FileDB.Model;
 
 namespace FileDB.ViewModels.Search.Filters;
 
-public partial class PersonGroupViewModel : ObservableObject, IFilterViewModel
+public partial class PersonGroupViewModel : ObservableValidator, IFilterViewModel
 {
     [ObservableProperty]
     private ObservableCollection<PersonForSearch> persons = [];
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
+    [MinCount(1)]
     private ObservableCollection<PersonForSearch> selectedPersons = [];
 
     [ObservableProperty]
@@ -30,6 +35,8 @@ public partial class PersonGroupViewModel : ObservableObject, IFilterViewModel
         ReloadPersons();
         this.RegisterForEvent<PersonsUpdated>(x => ReloadPersons());
         TrySelectPersonsFromSelectedFile();
+
+        ValidateAllProperties();
     }
 
     private void TrySelectPersonsFromSelectedFile()
@@ -61,4 +68,28 @@ public partial class PersonGroupViewModel : ObservableObject, IFilterViewModel
     private void UsePersonsFromCurrentFile() => TrySelectPersonsFromSelectedFile();
 
     public IFilesFilter CreateFilter() => new PersonGroupFilter(SelectedPersons, AllowOtherPersons);
+}
+
+public class MinCountAttribute : ValidationAttribute
+{
+    public int Min { get; }
+
+    public MinCountAttribute(int min)
+    {
+        Min = min;
+    }
+
+    public override bool IsValid(object? value)
+    {
+        if (value is ICollection collection)
+        {
+            return collection.Count >= Min;
+        }
+        return false;
+    }
+
+    public override string FormatErrorMessage(string name)
+    {
+        return $"The number of items in {name} must be at least {Min}.";
+    }
 }

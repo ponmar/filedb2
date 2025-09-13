@@ -7,12 +7,17 @@ using System.Linq;
 
 namespace FileDB.ViewModels.Search.Filters;
 
-public partial class SeasonViewModel : ObservableObject, IFilterViewModel
+public partial class SeasonViewModel : ObservableValidator, IFilterViewModel
 {
     public static IEnumerable<Season> Seasons { get; } = Enum.GetValues<Season>();
 
     [ObservableProperty]
     private Season selectedSeason = Seasons.First();
+
+    public SeasonViewModel()
+    {
+        ValidateAllProperties();
+    }
 
     public IFilesFilter CreateFilter() => new SeasonFilter(SelectedSeason);
 }

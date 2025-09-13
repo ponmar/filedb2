@@ -42,7 +42,10 @@ public partial class CriteriaViewModel : ObservableObject, ICriteriaViewModel
     private ObservableCollection<FilterSelectionViewModel> filterSettings = [];
 
     public bool FilterCanBeRemoved => FilterSettings.Count > 1;
-        
+
+    [ObservableProperty]
+    private bool hasFilterErrors;
+
     private readonly IDialogs dialogs;
     private readonly IDatabaseAccessProvider dbAccessProvider;
 
@@ -51,9 +54,18 @@ public partial class CriteriaViewModel : ObservableObject, ICriteriaViewModel
         this.dialogs = dialogs;
         this.dbAccessProvider = dbAccessProvider;
 
+        this.RegisterForEvent<FilterErrorsUpdated>((x) =>
+        {
+            EvaluateFilterErrors();
+        });
+
         var vm = ServiceLocator.Resolve<FilterSelectionViewModel>();
-        vm.IsFirstFilter = true;
-        filterSettings.Add(vm);
+        AddFilter(vm);
+    }
+
+    private void EvaluateFilterErrors()
+    {
+        HasFilterErrors = FilterSettings.Any(x => x.FilterViewModel.HasErrors);
     }
 
     [RelayCommand]
@@ -68,6 +80,7 @@ public partial class CriteriaViewModel : ObservableObject, ICriteriaViewModel
         viewModel.IsFirstFilter = FilterSettings.Count == 0;
         FilterSettings.Add(viewModel);
         OnPropertyChanged(nameof(FilterCanBeRemoved));
+        EvaluateFilterErrors();
     }
 
     private void AddFileListFilterFor(string fileListIds)
@@ -175,6 +188,11 @@ public partial class CriteriaViewModel : ObservableObject, ICriteriaViewModel
     [RelayCommand]
     private async Task FindFilesFromFiltersAsync()
     {
+        if (HasFilterErrors)
+        {
+            return;
+        }
+
         var fileModelComparer = new FileModelByIdComparer();
         var filters = FilterSettings.Select(x => (viewModel: x, filter: x.FilterViewModel.CreateFilter())).ToList();
         var filtersWithInvalidSettings = filters.Where(x => !x.filter.CanRun());

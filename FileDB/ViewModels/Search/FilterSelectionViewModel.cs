@@ -39,6 +39,8 @@ public partial class FilterSelectionViewModel : ObservableObject
     partial void OnSelectedFilterTypeChanged(FilterType value)
     {
         FilterViewModel = CreateFilterFromType(value);
+        FilterViewModel.ErrorsChanged += (s, e) => Messenger.Send<FilterErrorsUpdated>();
+        Messenger.Send<FilterErrorsUpdated>();
     }
 
     [ObservableProperty]
@@ -51,6 +53,7 @@ public partial class FilterSelectionViewModel : ObservableObject
     {
         SelectedFilterType = configProvider.Config.InitialSearchFilterType;
         FilterViewModel = CreateFilterFromType(SelectedFilterType);
+        FilterViewModel.ErrorsChanged += (s, e) => Messenger.Send<FilterErrorsUpdated>();
     }
 
     private static IFilterViewModel CreateFilterFromType(FilterType filterType)

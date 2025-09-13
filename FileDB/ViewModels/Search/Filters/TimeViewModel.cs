@@ -7,7 +7,7 @@ using System;
 
 namespace FileDB.ViewModels.Search.Filters;
 
-public partial class TimeViewModel : ObservableObject, IFilterViewModel
+public partial class TimeViewModel : ObservableValidator, IFilterViewModel
 {
     [ObservableProperty]
     private TimeSpan startTime;
@@ -34,6 +34,8 @@ public partial class TimeViewModel : ObservableObject, IFilterViewModel
             SetStartTimeFromNow();
             SetEndTimeFromNow();
         }
+
+        ValidateAllProperties();
     }
 
     [RelayCommand]
