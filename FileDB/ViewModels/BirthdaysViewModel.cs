@@ -47,13 +47,6 @@ public partial class PersonBirthdayViewModel : ObservableObject
     {
         this.criteriaViewModel = criteriaViewModel;
         this.person = person;
-        ProfilePictureAbsPath = profilePictureAbsPath;
-        Update(person);
-    }
-
-    public void Update(PersonModel person)
-    {
-        Person = person;
 
         var dateOfBirth = DatabaseParsing.ParsePersonDateOfBirth(person.DateOfBirth!);
         Birthday = dateOfBirth.ToString("d MMMM");
@@ -76,6 +69,8 @@ public partial class PersonBirthdayViewModel : ObservableObject
         {
             DaysLeftStr = string.Empty;
         }
+
+        ProfilePictureAbsPath = DaysLeft == 0 ? profilePictureAbsPath : null;
     }
 
     [RelayCommand]
