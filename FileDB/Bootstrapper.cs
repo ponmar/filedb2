@@ -73,7 +73,6 @@ public static class Bootstrapper
         ServiceLocator.RegisterSingleton<IImageLoader, ImageLoader>();
 
         ServiceLocator.RegisterTransient<ExportSearchResultViewModel>();
-        ServiceLocator.RegisterTransient<BrowseSubDirectoriesViewModel>();
 
         ServiceLocator.RegisterTransient<FilterSelectionViewModel>();
         ServiceLocator.RegisterTransient<AnnualDateViewModel>();

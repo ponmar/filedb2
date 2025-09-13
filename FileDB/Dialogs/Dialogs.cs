@@ -197,20 +197,6 @@ public class Dialogs : IDialogs
         return null;
     }
 
-    public async Task<string?> ShowBrowseDirectoriesDialogAsync()
-    {
-        var parent = GetParentWindow();
-        if (parent is not null)
-        {
-            var window = new BrowseSubDirectoriesWindow();
-            await window.ShowDialog(parent);
-
-            var windowVm = (BrowseSubDirectoriesViewModel)window.DataContext!;
-            return windowVm.SelectedDirectoryPath;
-        }
-        return null;
-    }
-
     public void ShowExportSearchResultDialog(SearchResult searchResult)
     {
         var parent = GetParentWindow();

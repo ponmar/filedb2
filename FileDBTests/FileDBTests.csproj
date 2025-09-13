@@ -27,4 +27,8 @@
     <ProjectReference Include="..\FileDB\FileDB.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ViewModels\Dialogs\" />
+  </ItemGroup>
+
 </Project>
