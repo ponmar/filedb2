@@ -718,7 +718,7 @@
     <value>Vila i fred {0}!</value>
   </data>
   <data name="StartupNotificationDemoConfigurationEnabled" xml:space="preserve">
-    <value>Demokonfiguration aktiverad. När du är redo kan du skapa en konfiguration for din egna filsamling!</value>
+    <value>Detta är demo-filsamlingen. När du är redo kan du skapa en konfiguration for din egna filsamling!</value>
   </data>
   <data name="CategorizationUpdateHistoryTitle" xml:space="preserve">
     <value>Uppdateringshistorik</value>
