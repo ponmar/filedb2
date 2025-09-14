@@ -9,12 +9,30 @@ public partial class PersonAgeViewModel : ObservableValidator, IFilterViewModel
     [ObservableProperty]
     [NotifyDataErrorInfo]
     [Required(ErrorMessage = "Required")]
-    private string personAgeFrom = "1";
+    [Range(0, 200, ErrorMessage = "Must be between 0 and 200")]
+    private int personAgeFrom = 1;
+
+    partial void OnPersonAgeFromChanged(int value)
+    {
+        if (value > personAgeTo)
+        {
+            PersonAgeTo = value;
+        }
+    }
 
     [ObservableProperty]
     [NotifyDataErrorInfo]
     [Required(ErrorMessage = "Required")]
-    private string personAgeTo = "100";
+    [Range(0, 200, ErrorMessage = "Must be between 0 and 200")]
+    private int personAgeTo = 100;
+
+    partial void OnPersonAgeToChanged(int value)
+    {
+        if (value < personAgeFrom)
+        {
+            PersonAgeFrom = value;
+        }
+    }
 
     public PersonAgeViewModel()
     {
