@@ -6,7 +6,7 @@ namespace FileDB.FilesFilter;
 
 public class RandomFilter(int numFiles) : IFilesFilter
 {
-    public bool CanRun() => numFiles > 0;
+    public bool CanRun() => true;
 
     public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
     {

@@ -10,8 +10,8 @@ public partial class RandomViewModel : ObservableValidator, IFilterViewModel
 
     [ObservableProperty]
     [NotifyDataErrorInfo]
-    [Required(ErrorMessage = "Required")]
-    private string numRandomFiles = DefaultNumRandomFiles.ToString();
+    [Range(1, 1000)]
+    private int numRandomFiles = DefaultNumRandomFiles;
 
     public RandomViewModel()
     {
@@ -20,7 +20,6 @@ public partial class RandomViewModel : ObservableValidator, IFilterViewModel
 
     public IFilesFilter CreateFilter()
     {
-        _ = int.TryParse(NumRandomFiles, out var value);
-        return new RandomFilter(value);
+        return new RandomFilter(NumRandomFiles);
     }
 }

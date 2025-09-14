@@ -7,7 +7,7 @@ namespace FileDB.FilesFilter;
 
 public class PersonFilter(PersonForSearch? person) : IFilesFilter
 {
-    public bool CanRun() => person is not null;
+    public bool CanRun() => true;
 
     public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
     {

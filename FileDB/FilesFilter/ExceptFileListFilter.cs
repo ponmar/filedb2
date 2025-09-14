@@ -7,7 +7,7 @@ namespace FileDB.FilesFilter;
 
 public class ExceptFileListFilter(string exceptFileIdsText) : IFilesFilter
 {
-    public bool CanRun() => exceptFileIdsText.HasContent();
+    public bool CanRun() => true;
 
     public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
     {

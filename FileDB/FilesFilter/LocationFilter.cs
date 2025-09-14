@@ -7,7 +7,7 @@ namespace FileDB.FilesFilter;
 
 public class LocationFilter(LocationForSearch? location) : IFilesFilter
 {
-    public bool CanRun() => location is not null;
+    public bool CanRun() => true;
 
     public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
     {

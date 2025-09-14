@@ -7,10 +7,14 @@
              mc:Ignorable="d"
              x:Class="FileDB.Views.Search.Filters.RandomView">
     <StackPanel Orientation="Horizontal" DataContext="{Binding FilterViewModel}">
-        <TextBox
-            Width="50"
+        <NumericUpDown
+            MinWidth="100"
             VerticalAlignment="Center"
-            Text="{Binding NumRandomFiles}"
+            Value="{Binding NumRandomFiles}"
+			Minimum="1"
+			Maximum="1000"
+			Increment="1"
+			FormatString="0"
             ToolTip.Tip="{x:Static lang:Strings.SearchRandomFilesToolTip}" />
     </StackPanel>
 </UserControl>
