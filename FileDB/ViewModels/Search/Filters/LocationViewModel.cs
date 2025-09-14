@@ -1,9 +1,11 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
-using FileDB.FilesFilter;
 using FileDB.Model;
+using FileDBInterface.DatabaseAccess;
+using FileDBInterface.Model;
 
 namespace FileDB.ViewModels.Search.Filters;
 
@@ -71,6 +73,10 @@ public partial class LocationViewModel : ObservableValidator, IFilterViewModel
         }
     }
 
-    public IFilesFilter CreateFilter() =>
-        Negate ? new WithoutLocationFilter(SelectedLocation) : new LocationFilter(SelectedLocation);
+    public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
+    {
+        return Negate ?
+            dbAccess.SearchFilesWithoutLocation(SelectedLocation!.Id) :
+            dbAccess.SearchFilesWithLocations([SelectedLocation!.Id]);
+    }
 }

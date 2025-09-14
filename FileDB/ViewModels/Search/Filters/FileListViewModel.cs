@@ -1,9 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using FileDB.FilesFilter;
 using FileDB.Model;
+using FileDBInterface.DatabaseAccess;
+using FileDBInterface.Model;
 
 namespace FileDB.ViewModels.Search.Filters;
 
@@ -36,6 +38,9 @@ public partial class FileListViewModel : ObservableValidator, IFilterViewModel
         FileListIds = Utils.CreateFileList(searchResultRepository.Files);
     }
 
-    public IFilesFilter CreateFilter() =>
-        Negate ? new ExceptFileListFilter(FileListIds) : new FileListFilter(FileListIds);
+    public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
+    {
+        var fileIds = Utils.CreateFileIds(FileListIds);
+        return dbAccess.SearchFilesExceptIds(fileIds);
+    }
 }

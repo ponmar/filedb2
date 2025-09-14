@@ -1,11 +1,13 @@
-﻿using System.Collections.Generic;
-using System;
-using CommunityToolkit.Mvvm.ComponentModel;
-using FileDB.FilesFilter;
-using FileDB.Model;
-using FileDBInterface.FileFormats;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using CommunityToolkit.Mvvm.ComponentModel;
 using FileDB.Extensions;
+using FileDB.Model;
+using FileDBInterface.DatabaseAccess;
+using FileDBInterface.FileFormats;
+using FileDBInterface.Model;
+using FileDBInterface.Extensions;
 
 namespace FileDB.ViewModels.Search.Filters;
 
@@ -21,5 +23,16 @@ public partial class FileTypeViewModel : ObservableValidator, IFilterViewModel
         ValidateAllProperties();
     }
 
-    public IFilesFilter CreateFilter() => new FileTypeFilter(SelectedFileType);
+    public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
+    {
+        var fileExtensions = SelectedFileType.GetSupportedFileExtensions();
+
+        var result = new List<FileModel>();
+        foreach (var extension in fileExtensions)
+        {
+            result.AddRange(dbAccess.SearchFilesByExtension(extension));
+        }
+
+        return result;
+    }
 }

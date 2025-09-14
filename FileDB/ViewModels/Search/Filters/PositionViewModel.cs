@@ -1,9 +1,13 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using FileDB.FilesFilter;
 using FileDB.Model;
+using FileDBInterface.DatabaseAccess;
+using FileDBInterface.Model;
 
 namespace FileDB.ViewModels.Search.Filters;
 
@@ -12,12 +16,14 @@ public partial class PositionViewModel : ObservableValidator, IFilterViewModel
     [ObservableProperty]
     [NotifyDataErrorInfo]
     [Required(ErrorMessage = "Required")]
+    [TextIncludesLatitudeAndLongitude()]
     private string positionText = string.Empty;
 
     [ObservableProperty]
     [NotifyDataErrorInfo]
     [Required(ErrorMessage = "Required")]
-    private string radiusText = "500";
+    [Range(1, 10000, ErrorMessage = "Radius must be between 1 and 10000 meters")]
+    private int radius = 500;
 
     public ObservableCollection<LocationForSearch> LocationsWithPosition { get; } = [];
 
@@ -73,11 +79,15 @@ public partial class PositionViewModel : ObservableValidator, IFilterViewModel
         {
             PositionText = filePosition;
         }
-        else
-        {
-            // TODO: take position from file location if available?
-        }
     }
 
-    public IFilesFilter CreateFilter() => new PositionFilter(PositionText, RadiusText);
+    public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
+    {
+        (var lat, var lon) = TextIncludesLatitudeAndLongitudeAttribute.ParsePositionFromTextOrUrl(PositionText)!.Value;
+
+        var result = dbAccess.SearchFilesNearGpsPosition(lat, lon, Radius).ToList();
+        var nearLocations = dbAccess.SearchLocationsNearGpsPosition(lat, lon, Radius);
+        result.AddRange(dbAccess.SearchFilesWithLocations(nearLocations.Select(x => x.Id)));
+        return result;
+    }
 }

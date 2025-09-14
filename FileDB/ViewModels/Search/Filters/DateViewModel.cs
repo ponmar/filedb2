@@ -1,9 +1,10 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System;
+using System.Collections.Generic;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using FileDB.FilesFilter;
 using FileDB.Model;
+using FileDBInterface.DatabaseAccess;
 using FileDBInterface.Model;
-using System;
 
 namespace FileDB.ViewModels.Search.Filters;
 
@@ -71,10 +72,17 @@ public partial class DateViewModel : ObservableValidator, IFilterViewModel
         SecondDateTime = DateTime.Now;
     }
 
-    public IFilesFilter CreateFilter()
+    public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
     {
-        return DateIsRange ?
-            new DateRangeFilter(FirstDateTime, SecondDateTime) :
-            new DateFilter(FirstDateTime);
+        if (DateIsRange)
+        {
+            var start = FirstDateTime.Date < SecondDateTime.Date ? FirstDateTime.Date : SecondDateTime.Date;
+            var end = FirstDateTime.Date < SecondDateTime.Date ? SecondDateTime.Date : FirstDateTime.Date;
+            return dbAccess.SearchFilesByDate(start.Date, end.Date);
+        }
+        else
+        {
+            return dbAccess.SearchFilesByDate(FirstDateTime.Date);
+        }
     }
 }

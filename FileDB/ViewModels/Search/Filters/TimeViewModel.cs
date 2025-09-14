@@ -1,9 +1,10 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System;
+using System.Collections.Generic;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using FileDB.FilesFilter;
 using FileDB.Model;
+using FileDBInterface.DatabaseAccess;
 using FileDBInterface.Model;
-using System;
 
 namespace FileDB.ViewModels.Search.Filters;
 
@@ -70,8 +71,13 @@ public partial class TimeViewModel : ObservableValidator, IFilterViewModel
         }
     }
 
-    public IFilesFilter CreateFilter()
+    public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
     {
-        return new TimeFilter(TimeOnly.FromTimeSpan(StartTime), TimeOnly.FromTimeSpan(EndTime));
+        var start = TimeOnly.FromTimeSpan(StartTime);
+        var end = TimeOnly.FromTimeSpan(EndTime);
+
+        return start < end ?
+            dbAccess.SearchFilesByTime(start, end) :
+            dbAccess.SearchFilesByTime(end, start);
     }
 }

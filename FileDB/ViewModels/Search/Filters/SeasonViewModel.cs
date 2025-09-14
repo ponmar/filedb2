@@ -1,9 +1,9 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using FileDB.FilesFilter;
-using FileDBInterface.DatabaseAccess;
+﻿using System;
 using System.Collections.Generic;
-using System;
 using System.Linq;
+using CommunityToolkit.Mvvm.ComponentModel;
+using FileDBInterface.DatabaseAccess;
+using FileDBInterface.Model;
 
 namespace FileDB.ViewModels.Search.Filters;
 
@@ -19,5 +19,8 @@ public partial class SeasonViewModel : ObservableValidator, IFilterViewModel
         ValidateAllProperties();
     }
 
-    public IFilesFilter CreateFilter() => new SeasonFilter(SelectedSeason);
+    public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
+    {
+        return dbAccess.SearchFilesBySeason(SelectedSeason);
+    }
 }

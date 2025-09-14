@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using FileDB.FilesFilter;
 using FileDB.Model;
+using FileDBInterface.DatabaseAccess;
+using FileDBInterface.Model;
 
 namespace FileDB.ViewModels.Search.Filters;
 
@@ -67,29 +66,10 @@ public partial class PersonGroupViewModel : ObservableValidator, IFilterViewMode
     [RelayCommand]
     private void UsePersonsFromCurrentFile() => TrySelectPersonsFromSelectedFile();
 
-    public IFilesFilter CreateFilter() => new PersonGroupFilter(SelectedPersons, AllowOtherPersons);
-}
-
-public class MinCountAttribute : ValidationAttribute
-{
-    public int Min { get; }
-
-    public MinCountAttribute(int min)
+    public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
     {
-        Min = min;
-    }
-
-    public override bool IsValid(object? value)
-    {
-        if (value is ICollection collection)
-        {
-            return collection.Count >= Min;
-        }
-        return false;
-    }
-
-    public override string FormatErrorMessage(string name)
-    {
-        return $"The number of items in {name} must be at least {Min}.";
+        return AllowOtherPersons ?
+            dbAccess.SearchFilesWithPersonGroup(SelectedPersons.Select(x => x.Id)) :
+            dbAccess.SearchFilesWithPersonGroupOnly(SelectedPersons.Select(x => x.Id));
     }
 }

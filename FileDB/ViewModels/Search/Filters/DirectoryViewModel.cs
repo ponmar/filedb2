@@ -1,11 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Dialogs;
-using FileDB.FilesFilter;
 using FileDB.Lang;
 using FileDB.Model;
+using FileDBInterface.DatabaseAccess;
+using FileDBInterface.Model;
 
 namespace FileDB.ViewModels.Search.Filters;
 
@@ -42,8 +44,8 @@ public partial class DirectoryViewModel : ObservableValidator, IFilterViewModel
         DirectoryPath = await dialogs.ShowBrowseExistingSubDirectoryDialogAsync(Strings.FilesSelectASubDirectory, configProvider.FilePaths.FilesRootDir) ?? string.Empty;
     }
 
-    public IFilesFilter CreateFilter()
+    public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
     {
-        return new DirectoryFilter(DirectoryPath);
+        return dbAccess.SearchFilesByPath(DirectoryPath);
     }
 }

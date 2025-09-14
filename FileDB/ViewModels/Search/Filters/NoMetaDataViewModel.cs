@@ -1,5 +1,7 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using FileDB.FilesFilter;
+﻿using System.Collections.Generic;
+using CommunityToolkit.Mvvm.ComponentModel;
+using FileDBInterface.DatabaseAccess;
+using FileDBInterface.Model;
 
 namespace FileDB.ViewModels.Search.Filters;
 
@@ -10,5 +12,8 @@ public partial class NoMetaDataViewModel : ObservableValidator, IFilterViewModel
         ValidateAllProperties();
     }
 
-    public IFilesFilter CreateFilter() => new WithoutMetaDataFilter();
+    public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
+    {
+        return dbAccess.SearchFilesWithMissingData();
+    }
 }

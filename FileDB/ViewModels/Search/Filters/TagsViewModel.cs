@@ -1,9 +1,11 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using FileDB.FilesFilter;
-using FileDB.Model;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using FileDB.Model;
+using FileDBInterface.DatabaseAccess;
+using FileDBInterface.Model;
 
 namespace FileDB.ViewModels.Search.Filters;
 
@@ -62,6 +64,10 @@ public partial class TagsViewModel : ObservableValidator, IFilterViewModel
     [RelayCommand]
     private void UseTagsFromCurrentFile() => TrySelectTagsFromSelectedFile();
 
-    public IFilesFilter CreateFilter() =>
-        new TagsFilter(SelectedTags, AllowOtherTags);
+    public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
+    {
+        return AllowOtherTags ?
+            dbAccess.SearchFilesWithTagGroup(SelectedTags.Select(x => x.Id)) :
+            dbAccess.SearchFilesWithTagGroupOnly(SelectedTags.Select(x => x.Id));
+    }
 }

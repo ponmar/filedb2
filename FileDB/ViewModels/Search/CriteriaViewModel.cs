@@ -190,31 +190,23 @@ public partial class CriteriaViewModel : ObservableObject, ICriteriaViewModel
     {
         if (HasFilterErrors)
         {
-            return;
-        }
-
-        var fileModelComparer = new FileModelByIdComparer();
-        var filters = FilterSettings.Select(x => (viewModel: x, filter: x.FilterViewModel.CreateFilter())).ToList();
-        var filtersWithInvalidSettings = filters.Where(x => !x.filter.CanRun());
-        if (filtersWithInvalidSettings.Any())
-        {
-            await dialogs.ShowErrorDialogAsync($"Invalid settings for filters: {string.Join(", ", filtersWithInvalidSettings.Select(x => x.viewModel.SelectedFilterType.ToFriendlyString()))}");
+            await dialogs.ShowErrorDialogAsync($"Invalid filter settings");
             return;
         }
 
         var result = Enumerable.Empty<FileModel>();
-        foreach (var filterSettings in filters)
+        foreach (var filter in FilterSettings)
         {
-            var filter = filterSettings.filter;
-            var files = filter.Run(dbAccessProvider.DbAccess);
+            var files = filter.FilterViewModel.Run(dbAccessProvider.DbAccess);
 
-            if (filter == filters.First().filter)
+            if (filter == FilterSettings.First())
             {
                 result = files;
             }
             else
             {
-                result = filterSettings.viewModel.SelectedCombineMethod switch
+                var fileModelComparer = new FileModelByIdComparer();
+                result = filter.SelectedCombineMethod switch
                 {
                     CombineMethod.And => result.Intersect(files, fileModelComparer),
                     CombineMethod.Or => result.Union(files, fileModelComparer),

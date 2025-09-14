@@ -1,6 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
 using CommunityToolkit.Mvvm.ComponentModel;
-using FileDB.FilesFilter;
+using FileDBInterface.DatabaseAccess;
+using FileDBInterface.Model;
 
 namespace FileDB.ViewModels.Search.Filters;
 
@@ -33,5 +35,8 @@ public partial class NumPersonsViewModel : ObservableValidator, IFilterViewModel
         ValidateAllProperties();
     }
 
-    public IFilesFilter CreateFilter() => new NumberOfPersonsFilter(NumPersonsMin, NumPersonsMax);
+    public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
+    {
+        return dbAccess.SearchFilesByNumPersons(new Range(NumPersonsMin, NumPersonsMax));
+    }
 }

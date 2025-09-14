@@ -1,9 +1,11 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
-using FileDB.FilesFilter;
 using FileDB.Model;
+using FileDBInterface.DatabaseAccess;
+using FileDBInterface.Model;
 
 namespace FileDB.ViewModels.Search.Filters;
 
@@ -63,6 +65,10 @@ public partial class PersonViewModel : ObservableValidator, IFilterViewModel
         }
     }
 
-    public IFilesFilter CreateFilter() =>
-        Negate ? new WithoutPersonFilter(SelectedPerson) : new PersonFilter(SelectedPerson);
+    public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
+    {
+        return Negate ?
+            dbAccess.SearchFilesWithoutPerson(SelectedPerson!.Id) :
+            dbAccess.SearchFilesWithPersons([SelectedPerson!.Id]);
+    }
 }

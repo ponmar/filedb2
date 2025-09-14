@@ -1,6 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using CommunityToolkit.Mvvm.ComponentModel;
-using FileDB.FilesFilter;
+using FileDBInterface.DatabaseAccess;
+using FileDBInterface.Model;
 
 namespace FileDB.ViewModels.Search.Filters;
 
@@ -19,8 +21,8 @@ public partial class RandomViewModel : ObservableValidator, IFilterViewModel
         ValidateAllProperties();
     }
 
-    public IFilesFilter CreateFilter()
+    public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
     {
-        return new RandomFilter(NumRandomFiles);
+        return dbAccess.SearchFilesRandom(NumRandomFiles);
     }
 }

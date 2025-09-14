@@ -1,10 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using FileDB.FilesFilter;
 using FileDB.Model;
+using FileDBInterface.DatabaseAccess;
 using FileDBInterface.Extensions;
+using FileDBInterface.Model;
 
 namespace FileDB.ViewModels.Search.Filters;
 
@@ -95,8 +97,9 @@ public partial class CombineViewModel : ObservableValidator, IFilterViewModel
         CombineSearchResult = Utils.CreateFileList(result);
     }
 
-    public IFilesFilter CreateFilter()
+    public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
     {
-        return new FileListFilter(CombineSearchResult);
+        var fileIds = Utils.CreateFileIds(CombineSearchResult);
+        return dbAccess.SearchFilesFromIds(fileIds);
     }
 }

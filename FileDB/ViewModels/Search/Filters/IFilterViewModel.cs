@@ -1,9 +1,11 @@
-﻿using System.ComponentModel;
-using FileDB.FilesFilter;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
+using FileDBInterface.DatabaseAccess;
+using FileDBInterface.Model;
 
 namespace FileDB.ViewModels.Search.Filters;
 
 public interface IFilterViewModel : INotifyDataErrorInfo
 {
-    IFilesFilter CreateFilter();
+    IEnumerable<FileModel> Run(IDatabaseAccess dbAccess);
 }

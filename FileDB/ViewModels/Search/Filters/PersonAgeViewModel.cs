@@ -1,6 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
-using FileDB.FilesFilter;
+using FileDBInterface.DatabaseAccess;
+using FileDBInterface.Model;
+using FileDBInterface.Utils;
 
 namespace FileDB.ViewModels.Search.Filters;
 
@@ -39,5 +43,28 @@ public partial class PersonAgeViewModel : ObservableValidator, IFilterViewModel
         ValidateAllProperties();
     }
 
-    public IFilesFilter CreateFilter() => new PersonAgeFilter(PersonAgeFrom, PersonAgeTo);
+    public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
+    {
+        var result = new List<FileModel>();
+        var personsWithAge = dbAccess.GetPersons().Where(p => p.DateOfBirth is not null);
+
+        foreach (var person in personsWithAge)
+        {
+            var dateOfBirth = DatabaseParsing.ParsePersonDateOfBirth(person.DateOfBirth!);
+            foreach (var file in dbAccess.SearchFilesWithPersons([person.Id]))
+            {
+                var fileDatetime = DatabaseParsing.ParseFilesDatetime(file.Datetime);
+                if (fileDatetime is not null)
+                {
+                    int personAgeInFile = TimeUtils.GetAgeInYears(fileDatetime.Value, dateOfBirth);
+                    if (personAgeInFile >= PersonAgeFrom && personAgeInFile <= PersonAgeTo)
+                    {
+                        result.Add(file);
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
 }

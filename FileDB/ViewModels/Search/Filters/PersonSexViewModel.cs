@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FileDB.Extensions;
-using FileDB.FilesFilter;
 using FileDB.Model;
+using FileDBInterface.DatabaseAccess;
 using FileDBInterface.Model;
 
 namespace FileDB.ViewModels.Search.Filters;
@@ -21,5 +21,8 @@ public partial class PersonSexViewModel : ObservableValidator, IFilterViewModel
         ValidateAllProperties();
     }
 
-    public IFilesFilter CreateFilter() => new PersonSexFilter(SelectedPersonSex);
+    public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
+    {
+        return dbAccess.SearchFilesBySex(SelectedPersonSex);
+    }
 }

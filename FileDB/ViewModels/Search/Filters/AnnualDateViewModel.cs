@@ -1,12 +1,12 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using FileDB.FilesFilter;
-using FileDB.Model;
-using FileDBInterface.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using FileDB.Model;
+using FileDBInterface.DatabaseAccess;
+using FileDBInterface.Model;
 
 namespace FileDB.ViewModels.Search.Filters;
 
@@ -146,10 +146,10 @@ public partial class AnnualDateViewModel : ObservableValidator, IFilterViewModel
         SelectedAnnualDayEnd = today.Day;
     }
 
-    public IFilesFilter CreateFilter()
+    public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
     {
         return AnnualDateIsRange ?
-            new AnnualDateRangeFilter(SelectedAnnualMonthStart, SelectedAnnualDayStart, SelectedAnnualMonthEnd, SelectedAnnualDayEnd) :
-            new AnnualDateFilter(SelectedAnnualMonthStart, SelectedAnnualDayStart);
+            dbAccess.SearchFilesByAnnualDate(SelectedAnnualMonthStart, SelectedAnnualDayStart, SelectedAnnualMonthEnd, SelectedAnnualDayEnd) :
+            dbAccess.SearchFilesByAnnualDate(SelectedAnnualMonthStart, SelectedAnnualDayStart);
     }
 }
