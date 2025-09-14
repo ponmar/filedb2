@@ -90,8 +90,9 @@ public partial class FileViewModel : ObservableObject
     private readonly IClipboardService clipboardService;
     private readonly IFileSelector fileSelector;
     private readonly ICriteriaViewModel criteriaViewModel;
+    private readonly ISearchResultRepositoryManagement searchResultRepoManagement;
 
-    public FileViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IImageLoader imageLoader, IFileSystem fileSystem, IDialogs dialogs, IClipboardService clipboardService, IFileSelector fileSelector, ICriteriaViewModel criteriaViewModel)
+    public FileViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IImageLoader imageLoader, IFileSystem fileSystem, IDialogs dialogs, IClipboardService clipboardService, IFileSelector fileSelector, ICriteriaViewModel criteriaViewModel, ISearchResultRepositoryManagement searchResultRepoManagement)
     {
         this.configProvider = configProvider;
         this.dbAccessProvider = dbAccessProvider;
@@ -102,6 +103,7 @@ public partial class FileViewModel : ObservableObject
         this.clipboardService = clipboardService;
         this.fileSelector = fileSelector;
         this.criteriaViewModel = criteriaViewModel;
+        this.searchResultRepoManagement = searchResultRepoManagement;
 
         this.RegisterForEvent<ConfigUpdated>((x) =>
         {
@@ -177,7 +179,7 @@ public partial class FileViewModel : ObservableObject
     {
         if (SelectedFile is not null)
         {
-            Messenger.Send(new RemoveFileFromSearchResult(SelectedFile));
+            searchResultRepoManagement.RemoveFileFromRepo(SelectedFile);
         }
     }
 

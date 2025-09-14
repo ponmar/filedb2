@@ -28,12 +28,18 @@ public interface ISearchResultRepository
     IEnumerable<FileModel> Files { get; }
 }
 
+public interface ISearchResultRepositoryManagement
+{
+    void PopulateRepo(IEnumerable<FileModel> files);
+    void RemoveFileFromRepo(FileModel file);
+}
+
 public interface IFileSelector
 {
     FileModel? SelectedFile { get; }
 }
 
-public partial class ResultViewModel : ObservableObject, ISearchResultRepository, IFileSelector
+public partial class ResultViewModel : ObservableObject, ISearchResultRepository, ISearchResultRepositoryManagement, IFileSelector
 {
     private readonly IConfigProvider configProvider;
     private readonly IDialogs dialogs;
@@ -201,38 +207,6 @@ public partial class ResultViewModel : ObservableObject, ISearchResultRepository
         this.RegisterForEvent<ConfigUpdated>((x) =>
         {
             slideshowTimer.Interval = TimeSpan.FromSeconds(configProvider.Config.SlideshowDelay);
-        });
-
-        this.RegisterForEvent<TransferSearchResult>(x =>
-        {
-            SlideshowActive = false;
-            SearchResult = new SearchResult() { Files = x.Files.ToList() };
-        });
-
-        this.RegisterForEvent<RemoveFileFromSearchResult>((x) =>
-        {
-            if (SearchResult is null)
-            {
-                return;
-            }
-
-            var fileIndex = SearchResult.Files.IndexOf(x.File);
-            if (fileIndex == -1)
-            {
-                return;
-            }
-
-            SearchResult!.Files.RemoveAt(fileIndex);
-            if (SearchResult.Files.Count > 0)
-            {
-                FireSearchResultUpdatedEvents();
-                var newIndex = SelectedFileIndex == 0 ? 0 : SelectedFileIndex - 1;
-                LoadFile(newIndex);
-            }
-            else
-            {
-                SearchResult = null;
-            }
         });
 
         this.RegisterForEvent<FileEdited>((x) =>
@@ -547,5 +521,37 @@ public partial class ResultViewModel : ObservableObject, ISearchResultRepository
     private void ClearSearch()
     {
         SearchResult = null;
+    }
+
+    public void PopulateRepo(IEnumerable<FileModel> files)
+    {
+        SlideshowActive = false;
+        SearchResult = new SearchResult() { Files = files.ToList() };
+    }
+
+    public void RemoveFileFromRepo(FileModel file)
+    {
+        if (SearchResult is null)
+        {
+            return;
+        }
+
+        var fileIndex = SearchResult.Files.IndexOf(file);
+        if (fileIndex == -1)
+        {
+            return;
+        }
+
+        SearchResult!.Files.RemoveAt(fileIndex);
+        if (SearchResult.Files.Count > 0)
+        {
+            var newIndex = SelectedFileIndex == 0 ? 0 : SelectedFileIndex - 1;
+            LoadFile(newIndex);
+            FireSearchResultUpdatedEvents();
+        }
+        else
+        {
+            SearchResult = null;
+        }
     }
 }

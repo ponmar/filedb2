@@ -48,11 +48,13 @@ public partial class CriteriaViewModel : ObservableObject, ICriteriaViewModel
 
     private readonly IDialogs dialogs;
     private readonly IDatabaseAccessProvider dbAccessProvider;
+    private readonly ISearchResultRepositoryManagement searchResultRepoManagement;
 
-    public CriteriaViewModel(IDialogs dialogs, IDatabaseAccessProvider dbAccessProvider)
+    public CriteriaViewModel(IDialogs dialogs, IDatabaseAccessProvider dbAccessProvider, ISearchResultRepositoryManagement searchResultRepoManagement)
     {
         this.dialogs = dialogs;
         this.dbAccessProvider = dbAccessProvider;
+        this.searchResultRepoManagement = searchResultRepoManagement;
 
         this.RegisterForEvent<FilterErrorsUpdated>((x) =>
         {
@@ -216,7 +218,7 @@ public partial class CriteriaViewModel : ObservableObject, ICriteriaViewModel
             }
         }
 
-        Messenger.Send(new TransferSearchResult(result));
+        searchResultRepoManagement.PopulateRepo(result);
     }
 
     public async Task SearchForFilesAsync(string fileList)

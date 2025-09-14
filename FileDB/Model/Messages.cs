@@ -26,10 +26,8 @@ public record CategorizationFunctionKeyPressed(int FunctionKey);
 public record SetTheme(Theme Theme);
 public record FullscreenBrowsingRequested(bool Fullscreen);
 
-public record TransferSearchResult(IEnumerable<FileModel> Files);
 public record SearchResultRepositoryUpdated();
 public record FileSelectionChanged();
-public record RemoveFileFromSearchResult(FileModel File);
 
 public record SelectPrevFile;
 public record SelectNextFile;

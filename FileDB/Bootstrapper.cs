@@ -51,6 +51,7 @@ public static class Bootstrapper
         ServiceLocator.RegisterSingleton<ResultViewModel>(
             typeof(ResultViewModel),
             typeof(ISearchResultRepository),
+            typeof(ISearchResultRepositoryManagement),
             typeof(IFileSelector));
         ServiceLocator.RegisterSingleton<FileViewModel>();
         ServiceLocator.RegisterSingleton<NotificationsViewModel>();
