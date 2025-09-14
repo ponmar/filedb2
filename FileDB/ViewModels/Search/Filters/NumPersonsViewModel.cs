@@ -7,14 +7,26 @@ namespace FileDB.ViewModels.Search.Filters;
 public partial class NumPersonsViewModel : ObservableValidator, IFilterViewModel
 {
     [ObservableProperty]
-    [NotifyDataErrorInfo]
-    [Required(ErrorMessage = "Required")]
-    private string numPersonsMin = "1";
+    private int numPersonsMin = 1;
+
+    partial void OnNumPersonsMinChanged(int value)
+    {
+        if (value > NumPersonsMax)
+        {
+            NumPersonsMax = value;
+        }
+    }
 
     [ObservableProperty]
-    [NotifyDataErrorInfo]
-    [Required(ErrorMessage = "Required")]
-    private string numPersonsMax = "1";
+    private int numPersonsMax = 1;
+
+    partial void OnNumPersonsMaxChanged(int value)
+    {
+        if (value < NumPersonsMin)
+        {
+            NumPersonsMin = value;
+        }
+    }
 
     public NumPersonsViewModel()
     {

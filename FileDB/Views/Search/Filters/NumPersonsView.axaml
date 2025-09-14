@@ -7,8 +7,8 @@
              mc:Ignorable="d"
              x:Class="FileDB.Views.Search.Filters.NumPersonsView">
 	<StackPanel Orientation="Horizontal" DataContext="{Binding FilterViewModel}">
-		<TextBox Margin="0 0 3 0" Text="{Binding NumPersonsMin}" Width="30" VerticalAlignment="Center" ToolTip.Tip="{x:Static lang:Strings.SearchFilterNumPersonsMin}"/>
+		<NumericUpDown Margin="0 0 3 0" Value="{Binding NumPersonsMin}" Minimum="0" Increment="1" FormatString="0" MinWidth="100" VerticalAlignment="Center" ToolTip.Tip="{x:Static lang:Strings.SearchFilterNumPersonsMin}"/>
 		<TextBlock Margin="0 0 3 0" Text="-" VerticalAlignment="Center" />
-		<TextBox Text="{Binding NumPersonsMax}" Width="30" VerticalAlignment="Center" ToolTip.Tip="{x:Static lang:Strings.SearchFilterNumPersonsMax}"/>
+		<NumericUpDown Value="{Binding NumPersonsMax}" MinWidth="100" Minimum="0" Increment="1" FormatString="0" VerticalAlignment="Center" ToolTip.Tip="{x:Static lang:Strings.SearchFilterNumPersonsMax}"/>
 	</StackPanel>
 </UserControl>
