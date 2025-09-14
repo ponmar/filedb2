@@ -6,7 +6,7 @@ namespace FileDB.FilesFilter;
 
 public class AnnualDateRangeFilter(int startMonth, int startDay, int endMonth, int endDay) : IFilesFilter
 {
-    public bool CanRun() => startMonth < endMonth || (startMonth == endMonth && startDay <= endDay);
+    public bool CanRun() => true;
 
     public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
     {

@@ -5,6 +5,7 @@ using FileDB.Model;
 using FileDBInterface.Model;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace FileDB.ViewModels.Search.Filters;
@@ -19,16 +20,70 @@ public partial class AnnualDateViewModel : ObservableValidator, IFilterViewModel
     public static IEnumerable<int> Days { get; } = Enumerable.Range(1, 31);
 
     [ObservableProperty]
+    [Required(ErrorMessage = "Required")]
     private int selectedAnnualMonthStart = Months.First();
 
+    partial void OnSelectedAnnualMonthStartChanged(int value)
+    {
+        if (value == SelectedAnnualMonthEnd)
+        {
+            if (SelectedAnnualDayStart > SelectedAnnualDayEnd)
+            {
+                SelectedAnnualDayEnd = SelectedAnnualDayStart;
+            }
+        }
+        else if (value > SelectedAnnualMonthEnd)
+        {
+            SelectedAnnualDayEnd = SelectedAnnualDayStart;
+            SelectedAnnualMonthEnd = value;
+        }
+    }
+
     [ObservableProperty]
+    [Required(ErrorMessage = "Required")]
     private int selectedAnnualDayStart = Days.First();
 
-    [ObservableProperty]
-    private int selectedAnnualMonthEnd = Months.First();
+    partial void OnSelectedAnnualDayStartChanged(int value)
+    {
+        if (SelectedAnnualMonthStart == SelectedAnnualMonthEnd &&
+            value > SelectedAnnualDayEnd)
+        {
+            SelectedAnnualDayEnd = value;
+        }
+    }
 
     [ObservableProperty]
+    [Required(ErrorMessage = "Required")]
+    private int selectedAnnualMonthEnd = Months.First();
+
+    partial void OnSelectedAnnualMonthEndChanged(int value)
+    {
+        if (value == SelectedAnnualMonthStart)
+        {
+            if (SelectedAnnualDayStart > SelectedAnnualDayEnd)
+            {
+                SelectedAnnualDayStart = SelectedAnnualDayEnd;
+            }
+        }
+        else if (value < SelectedAnnualMonthStart)
+        {
+            SelectedAnnualDayStart = SelectedAnnualDayEnd;
+            SelectedAnnualMonthStart = value;
+        }
+    }
+
+    [ObservableProperty]
+    [Required(ErrorMessage = "Required")]
     private int selectedAnnualDayEnd = Days.First();
+
+    partial void OnSelectedAnnualDayEndChanged(int value)
+    {
+        if (SelectedAnnualMonthStart == SelectedAnnualMonthEnd &&
+            value < SelectedAnnualDayStart)
+        {
+            SelectedAnnualDayStart = value;
+        }
+    }
 
     public bool CurrentFileHasDateTime => fileSelector.SelectedFile?.Datetime is not null;
 
