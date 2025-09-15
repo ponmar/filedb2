@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.ComponentModel.DataAnnotations;
 
-namespace FileDB.ViewModels.Search.Filters;
+namespace FileDB.Validators;
 
 public class MinCountAttribute : ValidationAttribute
 {

@@ -4,6 +4,7 @@ using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Model;
+using FileDB.Validators;
 using FileDBInterface.DatabaseAccess;
 using FileDBInterface.Model;
 

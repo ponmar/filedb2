@@ -1,8 +1,6 @@
 ﻿using Avalonia.Media.Imaging;
 using FileDB.Configuration;
-using FileDBInterface.Model;
 using System;
-using System.Collections.Generic;
 
 namespace FileDB.Model;
 

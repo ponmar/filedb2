@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using FileDBInterface.Model;
 
-namespace FileDB.ViewModels.Search.Filters;
+namespace FileDB.Validators;
 
 public sealed class TextIncludesLatitudeAndLongitudeAttribute : ValidationAttribute
 {
