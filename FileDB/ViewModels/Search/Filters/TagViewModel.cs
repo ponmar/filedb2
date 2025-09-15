@@ -65,7 +65,7 @@ public partial class TagViewModel : ObservableValidator, IFilterViewModel
         }
     }
 
-    public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
+    public IEnumerable<FileModel> ApplyFilter(IDatabaseAccess dbAccess)
     {
         return Negate ? 
             dbAccess.SearchFilesWithoutTag(SelectedTag!.Id) :

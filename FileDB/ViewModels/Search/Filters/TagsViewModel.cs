@@ -64,7 +64,7 @@ public partial class TagsViewModel : ObservableValidator, IFilterViewModel
     [RelayCommand]
     private void UseTagsFromCurrentFile() => TrySelectTagsFromSelectedFile();
 
-    public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
+    public IEnumerable<FileModel> ApplyFilter(IDatabaseAccess dbAccess)
     {
         return AllowOtherTags ?
             dbAccess.SearchFilesWithTagGroup(SelectedTags.Select(x => x.Id)) :

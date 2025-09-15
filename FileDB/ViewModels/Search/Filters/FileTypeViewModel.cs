@@ -23,7 +23,7 @@ public partial class FileTypeViewModel : ObservableValidator, IFilterViewModel
         ValidateAllProperties();
     }
 
-    public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
+    public IEnumerable<FileModel> ApplyFilter(IDatabaseAccess dbAccess)
     {
         var fileExtensions = SelectedFileType.GetSupportedFileExtensions();
 

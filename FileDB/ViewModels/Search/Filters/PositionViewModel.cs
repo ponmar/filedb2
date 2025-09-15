@@ -82,7 +82,7 @@ public partial class PositionViewModel : ObservableValidator, IFilterViewModel
         }
     }
 
-    public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
+    public IEnumerable<FileModel> ApplyFilter(IDatabaseAccess dbAccess)
     {
         (var lat, var lon) = TextIncludesLatitudeAndLongitudeAttribute.ParsePositionFromTextOrUrl(PositionText)!.Value;
 

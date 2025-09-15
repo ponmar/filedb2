@@ -38,7 +38,7 @@ public partial class FileListViewModel : ObservableValidator, IFilterViewModel
         FileListIds = Utils.CreateFileList(searchResultRepository.Files);
     }
 
-    public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
+    public IEnumerable<FileModel> ApplyFilter(IDatabaseAccess dbAccess)
     {
         var fileIds = Utils.CreateFileIds(FileListIds);
         return dbAccess.SearchFilesExceptIds(fileIds);

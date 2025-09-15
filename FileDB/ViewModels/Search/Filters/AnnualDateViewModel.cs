@@ -146,7 +146,7 @@ public partial class AnnualDateViewModel : ObservableValidator, IFilterViewModel
         SelectedAnnualDayEnd = today.Day;
     }
 
-    public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
+    public IEnumerable<FileModel> ApplyFilter(IDatabaseAccess dbAccess)
     {
         return AnnualDateIsRange ?
             dbAccess.SearchFilesByAnnualDate(SelectedAnnualMonthStart, SelectedAnnualDayStart, SelectedAnnualMonthEnd, SelectedAnnualDayEnd) :

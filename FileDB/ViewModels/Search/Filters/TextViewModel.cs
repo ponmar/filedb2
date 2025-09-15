@@ -42,7 +42,7 @@ public partial class TextViewModel : ObservableValidator, IFilterViewModel
         ValidateAllProperties();
     }
 
-    public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
+    public IEnumerable<FileModel> ApplyFilter(IDatabaseAccess dbAccess)
     {
         var files = dbAccess.SearchFiles(TextFilterSearchPattern, TextFilterCaseSensitive).ToList();
 

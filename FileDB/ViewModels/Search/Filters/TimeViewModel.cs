@@ -71,7 +71,7 @@ public partial class TimeViewModel : ObservableValidator, IFilterViewModel
         }
     }
 
-    public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
+    public IEnumerable<FileModel> ApplyFilter(IDatabaseAccess dbAccess)
     {
         var start = TimeOnly.FromTimeSpan(StartTime);
         var end = TimeOnly.FromTimeSpan(EndTime);

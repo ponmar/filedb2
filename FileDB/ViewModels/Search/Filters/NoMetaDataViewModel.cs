@@ -12,7 +12,7 @@ public partial class NoMetaDataViewModel : ObservableValidator, IFilterViewModel
         ValidateAllProperties();
     }
 
-    public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
+    public IEnumerable<FileModel> ApplyFilter(IDatabaseAccess dbAccess)
     {
         return dbAccess.SearchFilesWithMissingData();
     }

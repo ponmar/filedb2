@@ -7,5 +7,5 @@ namespace FileDB.ViewModels.Search.Filters;
 
 public interface IFilterViewModel : INotifyDataErrorInfo
 {
-    IEnumerable<FileModel> Run(IDatabaseAccess dbAccess);
+    IEnumerable<FileModel> ApplyFilter(IDatabaseAccess dbAccess);
 }

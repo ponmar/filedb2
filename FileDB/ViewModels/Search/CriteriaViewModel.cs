@@ -199,7 +199,7 @@ public partial class CriteriaViewModel : ObservableObject, ICriteriaViewModel
         var result = Enumerable.Empty<FileModel>();
         foreach (var filter in FilterSettings)
         {
-            var files = filter.FilterViewModel.Run(dbAccessProvider.DbAccess);
+            var files = filter.FilterViewModel.ApplyFilter(dbAccessProvider.DbAccess);
 
             if (filter == FilterSettings.First())
             {

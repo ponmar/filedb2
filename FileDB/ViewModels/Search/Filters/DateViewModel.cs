@@ -72,7 +72,7 @@ public partial class DateViewModel : ObservableValidator, IFilterViewModel
         SecondDateTime = DateTime.Now;
     }
 
-    public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
+    public IEnumerable<FileModel> ApplyFilter(IDatabaseAccess dbAccess)
     {
         if (DateIsRange)
         {

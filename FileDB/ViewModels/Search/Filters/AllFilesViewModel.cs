@@ -12,7 +12,7 @@ public partial class AllFilesViewModel : ObservableValidator, IFilterViewModel
         ValidateAllProperties();
     }
 
-    public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
+    public IEnumerable<FileModel> ApplyFilter(IDatabaseAccess dbAccess)
     {
         return dbAccess.GetFiles();
     }

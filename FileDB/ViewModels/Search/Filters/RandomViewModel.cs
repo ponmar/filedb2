@@ -21,7 +21,7 @@ public partial class RandomViewModel : ObservableValidator, IFilterViewModel
         ValidateAllProperties();
     }
 
-    public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
+    public IEnumerable<FileModel> ApplyFilter(IDatabaseAccess dbAccess)
     {
         return dbAccess.SearchFilesRandom(NumRandomFiles);
     }

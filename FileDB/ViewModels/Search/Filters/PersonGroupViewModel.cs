@@ -67,7 +67,7 @@ public partial class PersonGroupViewModel : ObservableValidator, IFilterViewMode
     [RelayCommand]
     private void UsePersonsFromCurrentFile() => TrySelectPersonsFromSelectedFile();
 
-    public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
+    public IEnumerable<FileModel> ApplyFilter(IDatabaseAccess dbAccess)
     {
         return AllowOtherPersons ?
             dbAccess.SearchFilesWithPersonGroup(SelectedPersons.Select(x => x.Id)) :

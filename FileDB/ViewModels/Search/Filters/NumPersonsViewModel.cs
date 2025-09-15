@@ -35,7 +35,7 @@ public partial class NumPersonsViewModel : ObservableValidator, IFilterViewModel
         ValidateAllProperties();
     }
 
-    public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
+    public IEnumerable<FileModel> ApplyFilter(IDatabaseAccess dbAccess)
     {
         return dbAccess.SearchFilesByNumPersons(new Range(NumPersonsMin, NumPersonsMax));
     }

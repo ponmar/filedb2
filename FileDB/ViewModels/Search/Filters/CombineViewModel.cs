@@ -97,7 +97,7 @@ public partial class CombineViewModel : ObservableValidator, IFilterViewModel
         CombineSearchResult = Utils.CreateFileList(result);
     }
 
-    public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
+    public IEnumerable<FileModel> ApplyFilter(IDatabaseAccess dbAccess)
     {
         var fileIds = Utils.CreateFileIds(CombineSearchResult);
         return dbAccess.SearchFilesFromIds(fileIds);

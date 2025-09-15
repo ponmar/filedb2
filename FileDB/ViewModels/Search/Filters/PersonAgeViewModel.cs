@@ -43,7 +43,7 @@ public partial class PersonAgeViewModel : ObservableValidator, IFilterViewModel
         ValidateAllProperties();
     }
 
-    public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
+    public IEnumerable<FileModel> ApplyFilter(IDatabaseAccess dbAccess)
     {
         var result = new List<FileModel>();
         var personsWithAge = dbAccess.GetPersons().Where(p => p.DateOfBirth is not null);

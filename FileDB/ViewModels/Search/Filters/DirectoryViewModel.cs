@@ -44,7 +44,7 @@ public partial class DirectoryViewModel : ObservableValidator, IFilterViewModel
         DirectoryPath = await dialogs.ShowBrowseExistingSubDirectoryDialogAsync(Strings.FilesSelectASubDirectory, configProvider.FilePaths.FilesRootDir) ?? string.Empty;
     }
 
-    public IEnumerable<FileModel> Run(IDatabaseAccess dbAccess)
+    public IEnumerable<FileModel> ApplyFilter(IDatabaseAccess dbAccess)
     {
         return dbAccess.SearchFilesByPath(DirectoryPath);
     }
