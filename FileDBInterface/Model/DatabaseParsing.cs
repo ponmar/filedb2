@@ -110,6 +110,11 @@ public class DatabaseParsing
         return null;
     }
 
+    private const double MinLatitude = -90.0;
+    private const double MaxLatitude = 90.0;
+    private const double MinLongitude = -180.0;
+    private const double MaxLongitude = 180.0;
+
     public static (double lat, double lon)? ParseFilesPosition(string? positionString)
     {
         if (positionString is not null)
@@ -118,8 +123,8 @@ public class DatabaseParsing
             if (parts.Length == 2 &&
                 double.TryParse(parts[0], NumberStyles.Float, CultureInfo.InvariantCulture, out var latitude) &&
                 double.TryParse(parts[1], NumberStyles.Float, CultureInfo.InvariantCulture, out var longitude) &&
-                latitude >= -90.0 && latitude <= 90.0 &&
-                longitude >= -180.0 && longitude <= 180.0)
+                latitude >= MinLatitude && latitude <= MaxLatitude &&
+                longitude >= MinLongitude && longitude <= MaxLongitude)
             {
                 return (latitude, longitude);
             }
@@ -150,7 +155,9 @@ public class DatabaseParsing
             var parts = latLonToEnd.Split(",");
             if (parts.Length >= 2 &&
                 double.TryParse(parts[0], NumberStyles.Float, CultureInfo.InvariantCulture, out var latitude) &&
-                double.TryParse(parts[1], NumberStyles.Float, CultureInfo.InvariantCulture, out var longitude))
+                double.TryParse(parts[1], NumberStyles.Float, CultureInfo.InvariantCulture, out var longitude) &&
+                latitude >= MinLatitude && latitude <= MaxLatitude &&
+                longitude >= MinLongitude && longitude <= MaxLongitude)
             {
                 return (latitude, longitude);
             }
