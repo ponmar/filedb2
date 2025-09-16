@@ -4,6 +4,7 @@ using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Model;
+using FileDB.Validators;
 using FileDBInterface.DatabaseAccess;
 using FileDBInterface.Model;
 
@@ -14,6 +15,7 @@ public partial class FileListViewModel : ObservableValidator, IFilterViewModel
     [ObservableProperty]
     [NotifyDataErrorInfo]
     [Required(ErrorMessage = "Required")]
+    [IsFileIdsText(ErrorMessage = "Format error")]
     private string fileListIds = string.Empty;
 
     [ObservableProperty]
@@ -40,7 +42,6 @@ public partial class FileListViewModel : ObservableValidator, IFilterViewModel
 
     public IEnumerable<FileModel> ApplyFilter(IDatabaseAccess dbAccess)
     {
-        var fileIds = Utils.CreateFileIds(FileListIds);
-        return dbAccess.SearchFilesExceptIds(fileIds);
+        return Utils.TryParseFileIds(FileListIds, out var fileIds) ? dbAccess.SearchFilesExceptIds(fileIds!) : [];
     }
 }

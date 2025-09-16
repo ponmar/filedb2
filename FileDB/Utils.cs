@@ -78,23 +78,31 @@ public static class Utils
         return string.Join(";", fileIds);
     }
 
-    public static List<int> CreateFileIds(string fileList)
+    public static bool TryParseFileIds(string? fileList, out IEnumerable<int>? fileIds)
     {
-        List<int> fileIds = [];
-
-        if (fileList.HasContent())
+        fileIds = null;
+        if (fileList is null)
         {
-            var items = fileList.Split(';');
-            foreach (var item in items)
-            {
-                if (int.TryParse(item, out var fileId))
-                {
-                    fileIds.Add(fileId);
-                }
-            }
+            return false;
         }
 
-        return fileIds;
+        var parsedIds = new List<int>();
+        foreach (var item in fileList.Split(';'))
+        {
+            if (!int.TryParse(item, out var fileId))
+            {
+                return false;
+            }
+            parsedIds.Add(fileId);
+        }
+
+        if (parsedIds.Count > 0)
+        {
+            fileIds = parsedIds;
+            return true;
+        }
+
+        return false;
     }
 
     public static string GetPersonAgeInFileString(string? fileDatetimeStr, string? personDateOfBirthStr)

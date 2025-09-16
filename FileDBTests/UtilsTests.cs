@@ -27,25 +27,24 @@ public class UtilsTests
     [Fact]
     public void CreateFileList_FromIds()
     {
-        IEnumerable<int> files = new List<int>() { 1, 2, 3 };
-        Assert.Equal("1;2;3", Utils.CreateFileList(files));
+        Assert.Equal("1;2;3", Utils.CreateFileList([1, 2, 3]));
     }
 
     [Fact]
     public void CreateFileIds_EmptyString_ReturnsEmptyList()
     {
-        Assert.Empty(Utils.CreateFileIds(string.Empty));
+        var result = Utils.TryParseFileIds(string.Empty, out var fileIds);
+        Assert.False(result);
+        Assert.Null(fileIds);
     }
 
     [Fact]
     public void CreateFileIds_ValidList_ReturnsValidIds()
     {
-        var result = Utils.CreateFileIds("1;3;2");
+        var result = Utils.TryParseFileIds("1;3;2", out var fileIds);
 
-        Assert.Equal(3, result.Count);
-        Assert.Equal(1, result[0]);
-        Assert.Equal(3, result[1]);
-        Assert.Equal(2, result[2]);
+        Assert.True(result);
+        Assert.Equal(fileIds, [1, 3, 2]);
     }
 
     [Fact]

@@ -4,6 +4,7 @@ using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Model;
+using FileDB.Validators;
 using FileDBInterface.DatabaseAccess;
 using FileDBInterface.Extensions;
 using FileDBInterface.Model;
@@ -15,6 +16,7 @@ public partial class CombineViewModel : ObservableValidator, IFilterViewModel
     [ObservableProperty]
     [NotifyDataErrorInfo]
     [Required(ErrorMessage = "Required")]
+    [IsFileIdsText(ErrorMessage = "Format error")]
     [NotifyPropertyChangedFor(nameof(CombineSearchResultPossible))]
     private string combineSearch1 = string.Empty;
 
@@ -26,6 +28,7 @@ public partial class CombineViewModel : ObservableValidator, IFilterViewModel
     [ObservableProperty]
     [NotifyDataErrorInfo]
     [Required(ErrorMessage = "Required")]
+    [IsFileIdsText(ErrorMessage = "Format error")]
     [NotifyPropertyChangedFor(nameof(CombineSearchResultPossible))]
     private string combineSearch2 = string.Empty;
 
@@ -71,35 +74,40 @@ public partial class CombineViewModel : ObservableValidator, IFilterViewModel
     [RelayCommand]
     private void CombineSearchIntersection()
     {
-        var files1 = Utils.CreateFileIds(CombineSearch1);
-        var files2 = Utils.CreateFileIds(CombineSearch2);
-        var result = files1.Intersect(files2);
-        CombineSearchResult = Utils.CreateFileList(result);
+        if (Utils.TryParseFileIds(CombineSearch1, out var files1) &&
+            Utils.TryParseFileIds(CombineSearch2, out var files2))
+        {
+            var result = files1!.Intersect(files2!);
+            CombineSearchResult = Utils.CreateFileList(result);
+        }
     }
 
     [RelayCommand]
     private void CombineSearchUnion()
     {
-        var files1 = Utils.CreateFileIds(CombineSearch1);
-        var files2 = Utils.CreateFileIds(CombineSearch2);
-        var result = files1.Union(files2);
-        CombineSearchResult = Utils.CreateFileList(result);
+        if (Utils.TryParseFileIds(CombineSearch1, out var files1) &&
+            Utils.TryParseFileIds(CombineSearch2, out var files2))
+        {
+            var result = files1!.Union(files2!);
+            CombineSearchResult = Utils.CreateFileList(result);
+        }
     }
 
     [RelayCommand]
     private void CombineSearchDifference()
     {
-        var files1 = Utils.CreateFileIds(CombineSearch1);
-        var files2 = Utils.CreateFileIds(CombineSearch2);
-        var uniqueFiles1 = files1.Except(files2);
-        var uniqueFiles2 = files2.Except(files1);
-        var result = uniqueFiles1.Union(uniqueFiles2);
-        CombineSearchResult = Utils.CreateFileList(result);
+        if (Utils.TryParseFileIds(CombineSearch1, out var files1) &&
+            Utils.TryParseFileIds(CombineSearch2, out var files2))
+        {
+            var uniqueFiles1 = files1!.Except(files2!);
+            var uniqueFiles2 = files2!.Except(files1!);
+            var result = uniqueFiles1.Union(uniqueFiles2);
+            CombineSearchResult = Utils.CreateFileList(result);
+        }
     }
 
     public IEnumerable<FileModel> ApplyFilter(IDatabaseAccess dbAccess)
     {
-        var fileIds = Utils.CreateFileIds(CombineSearchResult);
-        return dbAccess.SearchFilesFromIds(fileIds);
+        return Utils.TryParseFileIds(CombineSearchResult, out var fileIds) ? dbAccess.SearchFilesFromIds(fileIds!) : [];
     }
 }

@@ -255,17 +255,16 @@ public partial class FilesViewModel : ObservableObject
     [RelayCommand]
     private async Task RemoveFileListMethodAsync()
     {
-        var fileIds = Utils.CreateFileIds(RemoveFileList);
-        if (fileIds.Count == 0)
+        if (!Utils.TryParseFileIds(RemoveFileList, out var fileIds))
         {
             await dialogs.ShowErrorDialogAsync(Strings.FilesNoFileIdsSpecified);
             return;
         }
 
-        if (await dialogs.ShowConfirmDialogAsync(string.Format(Strings.FilesRemoveMetaDataFor, fileIds.Count)))
+        if (await dialogs.ShowConfirmDialogAsync(string.Format(Strings.FilesRemoveMetaDataFor, fileIds!.Count())))
         {
-            fileIds.ForEach(x => dbAccessProvider.DbAccess.DeleteFile(x));
-            await dialogs.ShowInfoDialogAsync(string.Format(Strings.FilesFilesRemoved, fileIds.Count));
+            fileIds!.ToList().ForEach(x => dbAccessProvider.DbAccess.DeleteFile(x));
+            await dialogs.ShowInfoDialogAsync(string.Format(Strings.FilesFilesRemoved, fileIds!.Count()));
         }
     }
 
