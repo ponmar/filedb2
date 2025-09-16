@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
@@ -13,6 +14,7 @@ using FileDB.Dialogs;
 using FileDB.Extensions;
 using FileDB.Lang;
 using FileDB.Model;
+using FileDB.Validators;
 using FileDBInterface.Exceptions;
 using FileDBInterface.Extensions;
 using FileDBInterface.Model;
@@ -22,7 +24,7 @@ namespace FileDB.ViewModels;
 
 public record NewFile(string Path, string DateModified);
 
-public partial class FilesViewModel : ObservableObject
+public partial class FilesViewModel : ObservableValidator
 {
     [ObservableProperty]
     private string subdirToScan;
@@ -38,6 +40,9 @@ public partial class FilesViewModel : ObservableObject
     private string importedFileList = string.Empty;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
+    [Required(ErrorMessage = "Required")]
+    [IsFileIdsText(ErrorMessage = "Format error")]
     private string removeFileList = string.Empty;
 
     [ObservableProperty]
@@ -48,17 +53,15 @@ public partial class FilesViewModel : ObservableObject
     private readonly IFilesystemAccessProvider filesystemAccessProvider;
     private readonly IDialogs dialogs;
     private readonly IFileSystem fileSystem;
-    private readonly IClipboardService clipboardService;
     private readonly ICriteriaViewModel criteriaViewModel;
 
-    public FilesViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IDialogs dialogs, IFileSystem fileSystem, IClipboardService clipboardService, ICriteriaViewModel criteriaViewModel)
+    public FilesViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IDialogs dialogs, IFileSystem fileSystem, ICriteriaViewModel criteriaViewModel)
     {
         this.configProvider = configProvider;
         this.dbAccessProvider = dbAccessProvider;
         this.filesystemAccessProvider = filesystemAccessProvider;
         this.dialogs = dialogs;
         this.fileSystem = fileSystem;
-        this.clipboardService = clipboardService;
         this.criteriaViewModel = criteriaViewModel;
 
         subdirToScan = configProvider.FilePaths.FilesRootDir;
@@ -67,6 +70,8 @@ public partial class FilesViewModel : ObservableObject
         {
             SubdirToScan = configProvider.FilePaths.FilesRootDir;
         });
+
+        ValidateAllProperties();
     }
 
     [RelayCommand]
