@@ -19,7 +19,7 @@ public static class FileTypeExtensions
         };
     }
 
-    public static string GetIcon(this FileType fileType)
+    public static string ToIcon(this FileType fileType)
     {
         return fileType switch
         {

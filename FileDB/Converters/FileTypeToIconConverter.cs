@@ -1,21 +1,21 @@
-﻿using System;
-using System.Globalization;
-using Avalonia.Data.Converters;
+﻿using Avalonia.Data.Converters;
 using FileDB.Extensions;
-using FileDB.Model;
+using FileDBInterface.FileFormats;
+using System;
+using System.Globalization;
 
 namespace FileDB.Converters;
 
-public class FileInternalPathToFileTypeIconConverter : IValueConverter
+public class FileTypeToIconConverter : IValueConverter
 {
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         if (value is null)
         {
-            throw new ArgumentNullException();
+            return null;
         }
-        var internalPath = (string)value;
-        return FileTypeUtils.GetFileType(internalPath).ToIcon();
+        var fileType = (FileType)value;
+        return fileType.ToIcon();
     }
 
     public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
