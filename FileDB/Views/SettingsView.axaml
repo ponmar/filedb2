@@ -151,7 +151,7 @@
 					</Grid>
 				</Border>
 
-				<TextBlock Text="{x:Static lang:Strings.SettingsImportHeading}" Classes="PageSubHeader"/>
+				<TextBlock Text="{x:Static lang:Strings.SettingsAddMetaDataHeading}" Classes="PageSubHeader"/>
 				<Border Classes="BorderGroup">
 					<Grid>
 						<Grid.ColumnDefinitions>

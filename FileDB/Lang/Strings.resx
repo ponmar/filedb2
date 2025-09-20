@@ -510,8 +510,8 @@
   <data name="SettingsBrowsingHeading" xml:space="preserve">
     <value>Browsing</value>
   </data>
-  <data name="SettingsImportHeading" xml:space="preserve">
-    <value>Import</value>
+  <data name="SettingsAddMetaDataHeading" xml:space="preserve">
+    <value>Add Meta-Data</value>
   </data>
   <data name="SettingsNotificationsHeading" xml:space="preserve">
     <value>Notifications</value>

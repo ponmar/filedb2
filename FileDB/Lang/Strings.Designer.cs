@@ -2814,6 +2814,15 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Meta-Data.
+        /// </summary>
+        public static string SettingsAddMetaDataHeading {
+            get {
+                return ResourceManager.GetString("SettingsAddMetaDataHeading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Backup reminder (monthly).
         /// </summary>
         public static string SettingsBackupReminderLabel {
@@ -2918,15 +2927,6 @@ namespace FileDB.Lang {
         public static string SettingsGeneralHeading {
             get {
                 return ResourceManager.GetString("SettingsGeneralHeading", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Import.
-        /// </summary>
-        public static string SettingsImportHeading {
-            get {
-                return ResourceManager.GetString("SettingsImportHeading", resourceCulture);
             }
         }
         
