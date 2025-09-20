@@ -94,11 +94,11 @@
 						</Grid.RowDefinitions>
 
 						<TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static lang:Strings.SettingsSlideshowDelaySecondsLabel}" Classes="PageTextBlock"/>
-						<TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Width="250" Text="{Binding SlideshowDelay}" HorizontalAlignment="Left"/>
+						<NumericUpDown Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Minimum="1" Increment="1" Value="{Binding SlideshowDelay}"/>
 						<Button Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Classes="PageButton" Command="{Binding SetDefaultSlideshowDelayCommand}" ToolTip.Tip="{x:Static lang:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static lang:Strings.SettingsDefaultButton}" IsEnabled="{Binding !SlideshowDelayIsDefault}"/>
 
 						<TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static lang:Strings.SettingsSearchHistorySizeLabel}" Classes="PageTextBlock"/>
-						<TextBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Width="250" Text="{Binding SearchHistorySize}" HorizontalAlignment="Left"/>
+						<NumericUpDown Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Minimum="0" Maximum="10" Increment="1" Value="{Binding SearchHistorySize}"/>
 						<Button Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" Classes="PageButton" Command="{Binding SetDefaultSearchHistorySizeCommand}" ToolTip.Tip="{x:Static lang:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static lang:Strings.SettingsDefaultButton}" IsEnabled="{Binding !SearchHistorySizeIsDefault}"/>
 
 						<TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static lang:Strings.SettingsLocationLinkLabel}" Classes="PageTextBlock"/>
@@ -106,15 +106,17 @@
 						<Button Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" Classes="PageButton" Command="{Binding SetDefaultLocationLinkCommand}" ToolTip.Tip="{x:Static lang:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static lang:Strings.SettingsDefaultButton}" IsEnabled="{Binding !LocationLinkIsDefault}"/>
 
 						<TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static lang:Strings.SettingsOverlayTextSizeLabel}" Classes="PageTextBlock"/>
-						<TextBox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Width="250" Text="{Binding OverlayTextSize}" ToolTip.Tip="{x:Static lang:Strings.SettingsOverlayTextSizeToolTip}" HorizontalAlignment="Left"/>
+						<NumericUpDown Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Minimum="8" Maximum="100" Increment="1" Value="{Binding OverlayTextSize}" ToolTip.Tip="{x:Static lang:Strings.SettingsOverlayTextSizeToolTip}"/>
 						<Button Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" Classes="PageButton" Command="{Binding SetDefaultOverlayTextSizeCommand}" ToolTip.Tip="{x:Static lang:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static lang:Strings.SettingsDefaultButton}" IsEnabled="{Binding !OverlayTextSizeIsDefault}"/>
 
 						<TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static lang:Strings.SettingsOverlayTextSizeForLargeModeLabel}" Classes="PageTextBlock"/>
 						<TextBox Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Width="250" Text="{Binding OverlayTextSizeLarge}" ToolTip.Tip="{x:Static lang:Strings.SettingsOverlayTextSizeForLargeModeToolTip}" HorizontalAlignment="Left"/>
+						<NumericUpDown Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Minimum="8" Maximum="100" Increment="1" Value="{Binding OverlayTextSizeLarge}" ToolTip.Tip="{x:Static lang:Strings.SettingsOverlayTextSizeForLargeModeToolTip}"/>
 						<Button Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" Classes="PageButton" Command="{Binding SetDefaultOverlayTextSizeLargeCommand}" ToolTip.Tip="{x:Static lang:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static lang:Strings.SettingsDefaultButton}" IsEnabled="{Binding !OverlayTextSizeLargeIsDefault}"/>
 
 						<TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static lang:Strings.SettingsShortItemNameMaxLengthLabel}" Classes="PageTextBlock"/>
 						<TextBox Grid.Row="5" Grid.Column="1" VerticalAlignment="Center" Width="250" Text="{Binding ShortItemNameMaxLength}" ToolTip.Tip="{x:Static lang:Strings.SettingsShortItemNameMaxLengthToolTip}" HorizontalAlignment="Left"/>
+						<NumericUpDown Grid.Row="5" Grid.Column="1" VerticalAlignment="Center" Minimum="10" Maximum="100" Increment="1" Value="{Binding ShortItemNameMaxLength}" ToolTip.Tip="{x:Static lang:Strings.SettingsShortItemNameMaxLengthToolTip}"/>
 						<Button Grid.Row="5" Grid.Column="2" VerticalAlignment="Center" Classes="PageButton" Command="{Binding SetDefaultShortItemNameMaxLengthCommand}" ToolTip.Tip="{x:Static lang:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static lang:Strings.SettingsDefaultButton}" IsEnabled="{Binding !ShortItemNameMaxLengthIsDefault}"/>
 
 						<TextBlock Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static lang:Strings.SettingsDefaultSortMethodLabel}" Classes="PageTextBlock"/>
@@ -184,7 +186,7 @@
 						<Button Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" Classes="PageButton" Command="{Binding SetDefaultWhitelistedFilePathPatternsCommand}" ToolTip.Tip="{x:Static lang:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static lang:Strings.SettingsDefaultButton}" IsEnabled="{Binding !WhitelistedFilePathPatternsIsDefault}"/>
 
 						<TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static lang:Strings.SettingsLocationMaxDistanceAtImportLabel}" Classes="PageTextBlock"/>
-						<TextBox Width="250" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Text="{Binding FileToLocationMaxDistance}" HorizontalAlignment="Left"/>
+						<NumericUpDown Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Minimum="0" Increment="1" Value="{Binding FileToLocationMaxDistance}" />
 						<Button Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" Classes="PageButton" Command="{Binding SetDefaultFileToLocationMaxDistanceCommand}" ToolTip.Tip="{x:Static lang:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static lang:Strings.SettingsDefaultButton}" IsEnabled="{Binding !FileToLocationMaxDistanceIsDefault}"/>
 
 						<CheckBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" IsChecked="{Binding Path=IncludeHiddenDirectories, Mode=TwoWay}" Classes="PageCheckBox">
@@ -250,11 +252,11 @@
 						</Grid.RowDefinitions>
 
 						<TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static lang:Strings.SettingsNumberOfSearchResultImagesToPreloadLabel}" Classes="PageTextBlock"/>
-						<TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Width="250" Text="{Binding NumImagesToPreload}" ToolTip.Tip="{x:Static lang:Strings.SettingsNumberOfSearchResultImagesToPreloadToolTip}" HorizontalAlignment="Left"/>
+						<NumericUpDown Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Minimum="1" Increment="1" Value="{Binding NumImagesToPreload}" ToolTip.Tip="{x:Static lang:Strings.SettingsNumberOfSearchResultImagesToPreloadToolTip}"/>
 						<Button Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Classes="PageButton" Command="{Binding SetDefaultNumImagesToPreloadCommand}" ToolTip.Tip="{x:Static lang:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static lang:Strings.SettingsDefaultButton}" IsEnabled="{Binding !NumImagesToPreloadIsDefault}"/>
 
 						<TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static lang:Strings.SettingsNumberOfLoadedImagesToKeepInMemoryLabel}" Classes="PageTextBlock"/>
-						<TextBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Width="250" Text="{Binding ImageMemoryCacheCount}" ToolTip.Tip="{x:Static lang:Strings.SettingsNumberOfLoadedImagesToKeepInMemoryToolTip}" HorizontalAlignment="Left"/>
+						<NumericUpDown Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Minimum="1" Increment="1" Value="{Binding ImageMemoryCacheCount}" ToolTip.Tip="{x:Static lang:Strings.SettingsNumberOfLoadedImagesToKeepInMemoryToolTip}"/>
 						<Button Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" Classes="PageButton" Command="{Binding SetDefaultImageMemoryCacheCountCommand}" ToolTip.Tip="{x:Static lang:Strings.SettingsDefaultButtonToolTip}" Content="{x:Static lang:Strings.SettingsDefaultButton}" IsEnabled="{Binding !ImageMemoryCacheCountIsDefault}"/>
 					</Grid>
 				</Border>

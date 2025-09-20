@@ -589,10 +589,10 @@
     <value>LAT and LON is replaced with actual GPS position data when generating links. Set empty to disable feature.</value>
   </data>
   <data name="SettingsOverlayTextSizeToolTip" xml:space="preserve">
-    <value>Range: 8 - 50</value>
+    <value>Range: 8 - 100</value>
   </data>
   <data name="SettingsOverlayTextSizeForLargeModeToolTip" xml:space="preserve">
-    <value>Range: 8 - 50</value>
+    <value>Range: 8 - 100</value>
   </data>
   <data name="SettingsShortItemNameMaxLengthToolTip" xml:space="preserve">
     <value>Range: 10 - 100</value>

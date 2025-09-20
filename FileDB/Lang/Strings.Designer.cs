@@ -3057,7 +3057,7 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Range: 8 - 50.
+        ///   Looks up a localized string similar to Range: 8 - 100.
         /// </summary>
         public static string SettingsOverlayTextSizeForLargeModeToolTip {
             get {
@@ -3075,7 +3075,7 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Range: 8 - 50.
+        ///   Looks up a localized string similar to Range: 8 - 100.
         /// </summary>
         public static string SettingsOverlayTextSizeToolTip {
             get {

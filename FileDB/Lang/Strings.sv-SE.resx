@@ -586,10 +586,10 @@
     <value>LAT och LON ersätts med faktiska GPS-positionsdata vid generering av länkar. Ställ in tom för att inaktivera funktionen.</value>
   </data>
   <data name="SettingsOverlayTextSizeToolTip" xml:space="preserve">
-    <value>Räckvidd: 8 - 50</value>
+    <value>Räckvidd: 8 - 100</value>
   </data>
   <data name="SettingsOverlayTextSizeForLargeModeToolTip" xml:space="preserve">
-    <value>Räckvidd: 8 - 50</value>
+    <value>Räckvidd: 8 - 100</value>
   </data>
   <data name="SettingsShortItemNameMaxLengthToolTip" xml:space="preserve">
     <value>Räckvidd: 10 - 100</value>
