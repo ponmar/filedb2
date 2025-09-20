@@ -253,7 +253,13 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
     {
         using var connection = DatabaseSetup.CreateConnection(database);
         var sql = "select * from [files] where Id in (select FileId from [filepersons] group by FileId having count(*) >= @start and count(*) <= @end)";
-        return connection.Query<FileModel>(sql, new { start = numPersonsRange.Start.Value, end = numPersonsRange.End.Value });
+        var files = connection.Query<FileModel>(sql, new { start = numPersonsRange.Start.Value, end = numPersonsRange.End.Value });
+        if (numPersonsRange.Start.Value == 0)
+        {
+            var filesWithNoPersons = connection.Query<FileModel>("select * from [files] where Id not in (select distinct FileId from [filepersons])");
+            files = files.Concat(filesWithNoPersons);
+        }
+        return files;
     }
 
     public IEnumerable<FileModel> SearchFilesWithPersons(IEnumerable<int> personIds)
