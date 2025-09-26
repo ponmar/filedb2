@@ -762,17 +762,11 @@
   <data name="CategorizationCreateANewTagAndAddItToCurrentFileToolTip" xml:space="preserve">
     <value>Skapa en ny etikett och lägg till den i aktuell fil</value>
   </data>
-  <data name="CategorizationSetButton" xml:space="preserve">
-    <value>Spara</value>
-  </data>
-  <data name="CategorizationSetFileDescriptionToolTip" xml:space="preserve">
-    <value>Spara filbeskrivning</value>
-  </data>
   <data name="CategorizationFileDescriptionToolTip" xml:space="preserve">
-    <value>Filbeskrivning</value>
+    <value>Beskrivning</value>
   </data>
   <data name="CategorizationFileDateAndTimeToolTip" xml:space="preserve">
-    <value>Fildatum och tid</value>
+    <value>Datum och tid</value>
   </data>
   <data name="CategorizationDateAndTimeFormatToolTip" xml:space="preserve">
     <value>Datum och tidsformat:
@@ -781,17 +775,11 @@
 ÅÅÅÅ-MM-DD
 ÅÅÅÅ-MM-DDTHH:MM:SS</value>
   </data>
-  <data name="CategorizationSetFileDateAndTimeToolTip" xml:space="preserve">
-    <value>Ställ in fildatum och; tid</value>
-  </data>
   <data name="CategorizationApplyMetaDataFromLastEditButton" xml:space="preserve">
-    <value>Lägg till metadata från den senaste editerade filen</value>
+    <value>Lägg till från senaste editerade filen</value>
   </data>
   <data name="CategorizationApplyMetaDataFromLastEditToolTip" xml:space="preserve">
     <value>Tillämpa metadata (personer, platser, etiketter och beskrivning) från senaste förändringen</value>
-  </data>
-  <data name="CategorizationReloadMetaDataButton" xml:space="preserve">
-    <value>Ladda om metadata...</value>
   </data>
   <data name="CategorizationReloadFileDateTimeGPSPositionAndOrientationToolTip" xml:space="preserve">
     <value>Ladda om fildatum, tid, GPS-position och orientering från fil Exif-data eller filsökväg</value>
@@ -1244,14 +1232,11 @@ Lägg till nya filer i '{0}'.</value>
   <data name="AppUnableToCreateDatabaseBackupBeforeMigration" xml:space="preserve">
     <value>Kunde inte skapa säkerhetskopia av databasen innan databas-migrering</value>
   </data>
-  <data name="FileCategorizationPersonDeceased" xml:space="preserve">
+  <data name="CategorizationPersonDeceased" xml:space="preserve">
     <value>Personen var avliden vid tidpunkten för denna fil. Lägg till ändå?</value>
   </data>
-  <data name="FileCategorizationReloadMetaData" xml:space="preserve">
+  <data name="CategorizationReloadMetaData" xml:space="preserve">
     <value>Ladda om datum, GPS-position och riktningfrån filens meta-data?</value>
-  </data>
-  <data name="FileCategorizationReloadOrientation" xml:space="preserve">
-    <value>Ladda riktning från filens meta-data?</value>
   </data>
   <data name="FileCetagorizationPersonNotBornInFile" xml:space="preserve">
     <value>Personen vad inte född vid tidpunkten för denna fil. Lägg till ändå?</value>
@@ -1378,5 +1363,20 @@ Lägg till nya filer i '{0}'.</value>
   </data>
   <data name="ToolsBrowseDatabaseExportDir" xml:space="preserve">
     <value>Välj mål-katalogen</value>
+  </data>
+  <data name="CategorizationPositionFormatToolTip" xml:space="preserve">
+    <value>Format: latitud longitud</value>
+  </data>
+  <data name="CategorizationOrientationToolTip" xml:space="preserve">
+    <value>Riktning</value>
+  </data>
+  <data name="CategorizationSaveButton" xml:space="preserve">
+    <value>Spara</value>
+  </data>
+  <data name="CategorizationResetButton" xml:space="preserve">
+    <value>Återställ</value>
+  </data>
+  <data name="CategorizationReloadButton" xml:space="preserve">
+    <value>Ladda om...</value>
   </data>
 </root>

@@ -1,19 +1,19 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Dialogs;
 using FileDB.Lang;
 using FileDB.Model;
+using FileDB.Validators;
 using FileDBInterface.Exceptions;
 using FileDBInterface.Extensions;
 using FileDBInterface.Model;
 using FileDBInterface.Validators;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FileDB.ViewModels.Search.File;
-
 
 public record PersonToToggle(int Id, string Name, string ShortName)
 {
@@ -50,20 +50,46 @@ public class UpdateHistoryItem
         string.Format(Strings.SearchToggleText, ShortItemName);
 }
 
-public partial class FileCategorizationViewModel : ObservableObject
+public partial class FileCategorizationViewModel : ObservableValidator
 {
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(FileSelected))]
     [NotifyPropertyChangedFor(nameof(CanApplyMetaDataFromPrevEdit))]
+    [NotifyPropertyChangedFor(nameof(CanMarkCurrentFileAsPrevEdited))]
     private FileModel? selectedFile;
 
     public bool FileSelected => SelectedFile is not null;
 
     [ObservableProperty]
-    private string? newFileDescription;
+    private string newFileDescription = string.Empty;
+
+    partial void OnNewFileDescriptionChanged(string value)
+    {
+        IsDirty = true;
+    }
 
     [ObservableProperty]
-    private string? newFileDateTime;
+    [NotifyDataErrorInfo]
+    [IsDateAndTime(ErrorMessage = "Format error")]
+    private string newFileDateTime = string.Empty;
+
+    partial void OnNewFileDateTimeChanged(string value)
+    {
+        IsDirty = true;
+        
+        // Notify that CanSave might have changed due to validation
+        OnPropertyChanged(nameof(CanSave));
+    }
+
+    public bool CanSave => !HasErrors && IsDirty;
+
+    [ObservableProperty]
+    private string newFilePosition = string.Empty;
+
+    partial void OnNewFilePositionChanged(string value)
+    {
+        IsDirty = true;
+    }
 
     [ObservableProperty]
     private bool readWriteMode;
@@ -73,6 +99,7 @@ public partial class FileCategorizationViewModel : ObservableObject
     [NotifyPropertyChangedFor(nameof(SelectedPersonCanBeRemoved))]
     private PersonToToggle? selectedPersonToUpdate;
 
+    [ObservableProperty]
     private int imageRotation = 0;
 
     private IEnumerable<PersonModel> personList = [];
@@ -125,13 +152,20 @@ public partial class FileCategorizationViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CanApplyMetaDataFromPrevEdit))]
+    [NotifyPropertyChangedFor(nameof(CanMarkCurrentFileAsPrevEdited))]
     private int? prevEditedFileId = null;
 
-    public bool CanApplyMetaDataFromPrevEdit => SelectedFile is not null && PrevEditedFileId is not null;
+    public bool CanApplyMetaDataFromPrevEdit => SelectedFile is not null && PrevEditedFileId is not null && SelectedFile.Id != PrevEditedFileId;
+
+    public bool CanMarkCurrentFileAsPrevEdited => SelectedFile is not null && SelectedFile.Id != PrevEditedFileId;
 
     public ObservableCollection<PersonToToggle> Persons { get; } = [];
     public ObservableCollection<LocationToToggle> Locations { get; } = [];
     public ObservableCollection<TagToToggle> Tags { get; } = [];
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(CanSave))]
+    private bool isDirty;
 
     private readonly IConfigProvider configProvider;
     private readonly IDatabaseAccessProvider dbAccessProvider;
@@ -184,6 +218,8 @@ public partial class FileCategorizationViewModel : ObservableObject
         {
             await FunctionKeyAsync(x.FunctionKey);
         });
+
+        ValidateAllProperties();
     }
 
     private void ReloadPersons()
@@ -218,8 +254,9 @@ public partial class FileCategorizationViewModel : ObservableObject
     {
         SelectedFile = file;
 
-        NewFileDescription = SelectedFile.Description;
-        NewFileDateTime = SelectedFile.Datetime;
+        NewFileDescription = SelectedFile.Description ?? string.Empty;
+        NewFileDateTime = SelectedFile.Datetime ?? string.Empty;
+        NewFilePosition = SelectedFile.Position ?? string.Empty;
 
         personList = dbAccessProvider.DbAccess.GetPersonsFromFile(SelectedFile.Id);
         OnPropertyChanged(nameof(SelectedPersonCanBeAdded));
@@ -233,7 +270,9 @@ public partial class FileCategorizationViewModel : ObservableObject
         OnPropertyChanged(nameof(SelectedTagCanBeAdded));
         OnPropertyChanged(nameof(SelectedTagCanBeRemoved));
 
-        imageRotation = DatabaseParsing.OrientationToDegrees(SelectedFile.Orientation ?? 0);
+        ImageRotation = DatabaseParsing.OrientationToDegrees(SelectedFile.Orientation ?? 0);
+
+        IsDirty = false;
     }
 
     private void CloseFile()
@@ -241,56 +280,15 @@ public partial class FileCategorizationViewModel : ObservableObject
         SelectedFile = null;
         NewFileDescription = string.Empty;
         NewFileDateTime = string.Empty;
-        imageRotation = 0;
-    }
-
-    [RelayCommand]
-    private async Task SetFileDescriptionAsync()
-    {
-        if (SelectedFile is not null)
-        {
-            NewFileDescription = NewFileDescription?.Trim().ReplaceLineEndings(FileModelValidator.DescriptionLineEnding);
-            var description = NewFileDescription.HasContent() ? NewFileDescription : null;
-
-            try
-            {
-                dbAccessProvider.DbAccess.UpdateFileDescription(SelectedFile.Id, description);
-                SelectedFile.Description = description;
-                SetEditedFile();
-            }
-            catch (DataValidationException e)
-            {
-                await dialogs.ShowErrorDialogAsync(e.Message);
-            }
-        }
+        NewFilePosition = string.Empty;
+        ImageRotation = 0;
+        IsDirty = false;
     }
 
     private void SetEditedFile()
     {
         PrevEditedFileId = SelectedFile!.Id;
         Messenger.Send<FileEdited>();
-    }
-
-    [RelayCommand]
-    private async Task SetFileDateTimeAsync()
-    {
-        if (SelectedFile is not null)
-        {
-            NewFileDateTime = NewFileDateTime?.Trim();
-
-            var dateTime = NewFileDateTime.HasContent() ? NewFileDateTime : null;
-
-            try
-            {
-                dbAccessProvider.DbAccess.UpdateFileDatetime(SelectedFile.Id, dateTime);
-                SelectedFile.Datetime = dateTime;
-                SetEditedFile();
-            }
-            catch (DataValidationException e)
-            {
-                await dialogs.ShowErrorDialogAsync(e.Message);
-            }
-        }
     }
 
     [RelayCommand]
@@ -391,39 +389,6 @@ public partial class FileCategorizationViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private async Task UpdateFileOrientationFromMetaDataAsync()
-    {
-        if (SelectedFile is not null)
-        {
-            if (await dialogs.ShowConfirmDialogAsync(Strings.FileCategorizationReloadOrientation))
-            {
-                var fileMetadata = filesystemAccessProvider.FilesystemAccess.ParseFileMetadata(filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(SelectedFile.Path));
-                dbAccessProvider.DbAccess.UpdateFileOrientation(SelectedFile.Id, fileMetadata.Orientation);
-                SelectedFile.Orientation = fileMetadata.Orientation;
-                Messenger.Send<FileEdited>();
-            }
-        }
-    }
-
-    [RelayCommand]
-    private async Task UpdateFileFromMetaDataAsync()
-    {
-        if (SelectedFile is not null)
-        {
-            if (await dialogs.ShowConfirmDialogAsync(Strings.FileCategorizationReloadMetaData))
-            {
-                dbAccessProvider.DbAccess.UpdateFileFromMetaData(SelectedFile.Id, filesystemAccessProvider.FilesystemAccess);
-
-                var updatedFile = dbAccessProvider.DbAccess.GetFileById(SelectedFile.Id)!;
-                SelectedFile.Datetime = updatedFile.Datetime;
-                SelectedFile.Position = updatedFile.Position;
-                SelectedFile.Orientation = updatedFile.Orientation;
-                Messenger.Send<FileEdited>();
-            }
-        }
-    }
-
-    [RelayCommand]
     private async Task CreatePersonAsync()
     {
         var newPerson = await dialogs.ShowAddPersonDialogAsync();
@@ -484,7 +449,7 @@ public partial class FileCategorizationViewModel : ObservableObject
             {
                 var deceased = DatabaseParsing.ParsePersonDeceasedDate(person.Deceased);
                 if (fileDatetime > deceased &&
-                    !await dialogs.ShowConfirmDialogAsync(Strings.FileCategorizationPersonDeceased))
+                    !await dialogs.ShowConfirmDialogAsync(Strings.CategorizationPersonDeceased))
                 {
                     return;
                 }
@@ -686,6 +651,61 @@ public partial class FileCategorizationViewModel : ObservableObject
         if (UpdateHistoryItems.Remove(itemToRemove))
         {
             OnPropertyChanged(nameof(HasUpdateHistory));
+        }
+    }
+
+
+    [RelayCommand]
+    private async Task SaveAsync()
+    {
+        if (SelectedFile is not null)
+        {
+            try
+            {
+                NewFileDateTime = NewFileDateTime.Trim();
+                var dateTimeToSave = NewFileDateTime.HasContent() ? NewFileDateTime : null;
+                dbAccessProvider.DbAccess.UpdateFileDatetime(SelectedFile.Id, dateTimeToSave);
+                SelectedFile.Datetime = dateTimeToSave;
+
+                NewFileDescription = NewFileDescription.Trim().ReplaceLineEndings(FileModelValidator.DescriptionLineEnding);
+                var descriptionToSave = NewFileDescription.HasContent() ? NewFileDescription : null;
+                dbAccessProvider.DbAccess.UpdateFileDescription(SelectedFile.Id, descriptionToSave);
+                SelectedFile.Description = descriptionToSave;
+
+                SetEditedFile();
+                IsDirty = false;
+            }
+            catch (DataValidationException e)
+            {
+                await dialogs.ShowErrorDialogAsync(e.Message);
+            }
+        }
+    }
+
+    [RelayCommand]
+    private void Reset()
+    {
+        if (SelectedFile is not null)
+        {
+            LoadFile(SelectedFile);
+        }
+    }
+
+    [RelayCommand]
+    private async Task ReloadAsync()
+    {
+        if (SelectedFile is not null)
+        {
+            if (await dialogs.ShowConfirmDialogAsync(Strings.CategorizationReloadMetaData))
+            {
+                dbAccessProvider.DbAccess.UpdateFileFromMetaData(SelectedFile.Id, filesystemAccessProvider.FilesystemAccess);
+
+                var updatedFile = dbAccessProvider.DbAccess.GetFileById(SelectedFile.Id)!;
+                SelectedFile.Datetime = updatedFile.Datetime;
+                SelectedFile.Position = updatedFile.Position;
+                SelectedFile.Orientation = updatedFile.Orientation;
+                Messenger.Send<FileEdited>();
+            }
         }
     }
 }

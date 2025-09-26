@@ -6,6 +6,7 @@ using FileDB;
 using FileDB.ViewModels.Search.File;
 using FileDB.ViewModels.Search;
 using Xunit;
+using FileDBInterface.FilesystemAccess;
 
 namespace FileDBTests.ViewModels;
 
@@ -129,21 +130,138 @@ public class FileCategorizationViewModelTests
     }
 
     [Fact]
-    public void SetFileDescription()
+    public void SaveCommand_NewDescription_DatabaseUpdated()
     {
+        // Arrange
         var viewModel = CreateViewModel();
-
         var editedFileId = 1;
         LoadAFile(editedFileId);
 
+        Assert.False(viewModel.CanSave);
+        Assert.False(viewModel.IsDirty);
+
         var newDescription = "New desciption";
         viewModel.NewFileDescription = newDescription;
-        viewModel.SetFileDescriptionCommand.Execute(null);
 
+        Assert.True(viewModel.CanSave);
+        Assert.True(viewModel.IsDirty);
+
+        // Act
+        viewModel.SaveCommand.Execute(null);
+
+        // Assert
         A.CallTo(() => dbAccessProvider.DbAccess.UpdateFileDescription(editedFileId, newDescription)).MustHaveHappened();
         eventRecorder.AssertEventRecorded<FileEdited>();
         Assert.Equal(editedFileId, viewModel.PrevEditedFileId);
         Assert.Empty(viewModel.UpdateHistoryItems);
+    }
+
+    [Fact]
+    public void SaveCommand_NewFileDateTime_DatabaseUpdated()
+    {
+        // Arrange
+        var viewModel = CreateViewModel();
+        var editedFileId = 1;
+        LoadAFile(editedFileId);
+
+        Assert.False(viewModel.CanSave);
+        Assert.False(viewModel.IsDirty);
+
+        var newFileDateTime = "2025-09-26";
+        viewModel.NewFileDateTime = newFileDateTime;
+
+        Assert.True(viewModel.CanSave);
+        Assert.True(viewModel.IsDirty);
+
+        // Act
+        viewModel.SaveCommand.Execute(null);
+
+        // Assert
+        A.CallTo(() => dbAccessProvider.DbAccess.UpdateFileDatetime(editedFileId, newFileDateTime)).MustHaveHappened();
+        eventRecorder.AssertEventRecorded<FileEdited>();
+        Assert.Equal(editedFileId, viewModel.PrevEditedFileId);
+        Assert.Empty(viewModel.UpdateHistoryItems);
+    }
+
+    [Fact]
+    public void ResetCommand_NewFileDescription_IsReset()
+    {
+        // Arrange
+        var viewModel = CreateViewModel();
+        var editedFileId = 1;
+        LoadAFile(editedFileId);
+
+        Assert.False(viewModel.CanSave);
+        Assert.False(viewModel.IsDirty);
+        Assert.Equal(string.Empty, viewModel.NewFileDescription);
+
+        viewModel.NewFileDescription = "New desciption";
+
+        Assert.True(viewModel.CanSave);
+        Assert.True(viewModel.IsDirty);
+
+        // Act
+        viewModel.ResetCommand.Execute(null);
+
+        // Assert
+        Assert.False(viewModel.IsDirty);
+        Assert.False(viewModel.CanSave);
+        Assert.Equal(string.Empty, viewModel.NewFileDescription);
+    }
+
+    [Fact]
+    public void ResetCommand_NewFileDateTime_IsReset()
+    {
+        // Arrange
+        var viewModel = CreateViewModel();
+        var editedFileId = 1;
+        LoadAFile(editedFileId);
+
+        Assert.False(viewModel.CanSave);
+        Assert.False(viewModel.IsDirty);
+        Assert.Equal(string.Empty, viewModel.NewFileDateTime);
+
+        viewModel.NewFileDateTime = "2025-09-26";
+
+        Assert.True(viewModel.CanSave);
+        Assert.True(viewModel.IsDirty);
+
+        // Act
+        viewModel.ResetCommand.Execute(null);
+
+        // Assert
+        Assert.False(viewModel.IsDirty);
+        Assert.False(viewModel.CanSave);
+        Assert.Equal(string.Empty, viewModel.NewFileDateTime);
+    }
+
+    [Fact]
+    public void ReloadCommand()
+    {
+        // Arrange
+        A.CallTo(() => dialogs.ShowConfirmDialogAsync(A<string>._)).Returns(true);
+
+        var viewModel = CreateViewModel();
+        var editedFileId = 1;
+        LoadAFile(editedFileId);
+
+        var reloadedFile = new FileModel() { Id = editedFileId, Path = "file.jpg", Description = "desc", Datetime = "2025-09-26", Position = "12.34 56.78", Orientation = 1 };
+        A.CallTo(() => dbAccessProvider.DbAccess.GetFileById(editedFileId)).Returns(reloadedFile);
+
+        // Act
+        viewModel.ReloadCommand.Execute(null);
+
+        // Arrange
+        A.CallTo(() => dbAccessProvider.DbAccess.UpdateFileFromMetaData(editedFileId, A<IFilesystemAccess>._)).MustHaveHappened();
+        eventRecorder.AssertEventRecorded<FileEdited>();
+
+        // Act
+        Messenger.Send<FileSelectionChanged>();
+
+        // Assert
+        Assert.Equal(reloadedFile.Datetime, viewModel.NewFileDateTime);
+        Assert.Equal(reloadedFile.Position, viewModel.NewFilePosition);
+        Assert.Equal(DatabaseParsing.OrientationToDegrees(reloadedFile.Orientation), viewModel.ImageRotation);
     }
 
     private FileCategorizationViewModel CreateViewModel()

@@ -466,7 +466,7 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add meta-data from last edited file.
+        ///   Looks up a localized string similar to Apply from last edited file.
         /// </summary>
         public static string CategorizationApplyMetaDataFromLastEditButton {
             get {
@@ -524,7 +524,7 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to File date and time.
+        ///   Looks up a localized string similar to Date and time.
         /// </summary>
         public static string CategorizationFileDateAndTimeToolTip {
             get {
@@ -533,7 +533,7 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to File description.
+        ///   Looks up a localized string similar to Description.
         /// </summary>
         public static string CategorizationFileDescriptionToolTip {
             get {
@@ -542,7 +542,7 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mark.
+        ///   Looks up a localized string similar to Select.
         /// </summary>
         public static string CategorizationMarkButton {
             get {
@@ -551,7 +551,7 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mark this file to be used as last edited file.
+        ///   Looks up a localized string similar to Select this file to be used as last edited file.
         /// </summary>
         public static string CategorizationMarkButtonToolTip {
             get {
@@ -578,6 +578,42 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Orientation.
+        /// </summary>
+        public static string CategorizationOrientationToolTip {
+            get {
+                return ResourceManager.GetString("CategorizationOrientationToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Person was deceased at the time for this file. Add anyway?.
+        /// </summary>
+        public static string CategorizationPersonDeceased {
+            get {
+                return ResourceManager.GetString("CategorizationPersonDeceased", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Format: latitude longitude.
+        /// </summary>
+        public static string CategorizationPositionFormatToolTip {
+            get {
+                return ResourceManager.GetString("CategorizationPositionFormatToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reload....
+        /// </summary>
+        public static string CategorizationReloadButton {
+            get {
+                return ResourceManager.GetString("CategorizationReloadButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reload file date, time, GPS position and orientation from file Exif data or file path.
         /// </summary>
         public static string CategorizationReloadFileDateTimeGPSPositionAndOrientationToolTip {
@@ -587,11 +623,11 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Reload meta-data....
+        ///   Looks up a localized string similar to Reload date, GPS position and orientation from file meta-data?.
         /// </summary>
-        public static string CategorizationReloadMetaDataButton {
+        public static string CategorizationReloadMetaData {
             get {
-                return ResourceManager.GetString("CategorizationReloadMetaDataButton", resourceCulture);
+                return ResourceManager.GetString("CategorizationReloadMetaData", resourceCulture);
             }
         }
         
@@ -641,6 +677,15 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reset.
+        /// </summary>
+        public static string CategorizationResetButton {
+            get {
+                return ResourceManager.GetString("CategorizationResetButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rotate 90 degrees clockwise.
         /// </summary>
         public static string CategorizationRotate90DegreesClockwiseToolTip {
@@ -659,29 +704,11 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Set.
+        ///   Looks up a localized string similar to Save.
         /// </summary>
-        public static string CategorizationSetButton {
+        public static string CategorizationSaveButton {
             get {
-                return ResourceManager.GetString("CategorizationSetButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Set file date and time.
-        /// </summary>
-        public static string CategorizationSetFileDateAndTimeToolTip {
-            get {
-                return ResourceManager.GetString("CategorizationSetFileDateAndTimeToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Set file description.
-        /// </summary>
-        public static string CategorizationSetFileDescriptionToolTip {
-            get {
-                return ResourceManager.GetString("CategorizationSetFileDescriptionToolTip", resourceCulture);
+                return ResourceManager.GetString("CategorizationSaveButton", resourceCulture);
             }
         }
         
@@ -898,33 +925,6 @@ namespace FileDB.Lang {
         public static string ExportTitle {
             get {
                 return ResourceManager.GetString("ExportTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Person was deceased at the time for this file. Add anyway?.
-        /// </summary>
-        public static string FileCategorizationPersonDeceased {
-            get {
-                return ResourceManager.GetString("FileCategorizationPersonDeceased", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Reload date, GPS position and orientation from file meta-data?.
-        /// </summary>
-        public static string FileCategorizationReloadMetaData {
-            get {
-                return ResourceManager.GetString("FileCategorizationReloadMetaData", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Reload orientation from file meta-data?.
-        /// </summary>
-        public static string FileCategorizationReloadOrientation {
-            get {
-                return ResourceManager.GetString("FileCategorizationReloadOrientation", resourceCulture);
             }
         }
         

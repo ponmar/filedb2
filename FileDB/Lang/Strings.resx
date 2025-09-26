@@ -765,17 +765,11 @@
   <data name="CategorizationCreateANewTagAndAddItToCurrentFileToolTip" xml:space="preserve">
     <value>Create a new tag and add it to current file</value>
   </data>
-  <data name="CategorizationSetButton" xml:space="preserve">
-    <value>Set</value>
-  </data>
-  <data name="CategorizationSetFileDescriptionToolTip" xml:space="preserve">
-    <value>Set file description</value>
-  </data>
   <data name="CategorizationFileDescriptionToolTip" xml:space="preserve">
-    <value>File description</value>
+    <value>Description</value>
   </data>
   <data name="CategorizationFileDateAndTimeToolTip" xml:space="preserve">
-    <value>File date and time</value>
+    <value>Date and time</value>
   </data>
   <data name="CategorizationDateAndTimeFormatToolTip" xml:space="preserve">
     <value>Date and time formats:
@@ -784,17 +778,11 @@ YYYY-MM
 YYYY-MM-DD
 YYYY-MM-DDTHH:MM:SS</value>
   </data>
-  <data name="CategorizationSetFileDateAndTimeToolTip" xml:space="preserve">
-    <value>Set file date and time</value>
-  </data>
   <data name="CategorizationApplyMetaDataFromLastEditButton" xml:space="preserve">
-    <value>Add meta-data from last edited file</value>
+    <value>Apply from last edited file</value>
   </data>
   <data name="CategorizationApplyMetaDataFromLastEditToolTip" xml:space="preserve">
     <value>Apply meta-data (persons, locations, tags and description) from last edit</value>
-  </data>
-  <data name="CategorizationReloadMetaDataButton" xml:space="preserve">
-    <value>Reload meta-data...</value>
   </data>
   <data name="CategorizationReloadFileDateTimeGPSPositionAndOrientationToolTip" xml:space="preserve">
     <value>Reload file date, time, GPS position and orientation from file Exif data or file path</value>
@@ -854,10 +842,10 @@ YYYY-MM-DDTHH:MM:SS</value>
     <value>Fullscreen window</value>
   </data>
   <data name="CategorizationMarkButton" xml:space="preserve">
-    <value>Mark</value>
+    <value>Select</value>
   </data>
   <data name="CategorizationMarkButtonToolTip" xml:space="preserve">
-    <value>Mark this file to be used as last edited file</value>
+    <value>Select this file to be used as last edited file</value>
   </data>
   <data name="ToolsCreateDatabaseTitle" xml:space="preserve">
     <value>Create Database</value>
@@ -1247,16 +1235,13 @@ This operation can be slow for a large collection of files or if the media acces
   <data name="AppUnableToCreateDatabaseBackupBeforeMigration" xml:space="preserve">
     <value>Unable to create database backup before database migration</value>
   </data>
-  <data name="FileCategorizationReloadOrientation" xml:space="preserve">
-    <value>Reload orientation from file meta-data?</value>
-  </data>
-  <data name="FileCategorizationReloadMetaData" xml:space="preserve">
+  <data name="CategorizationReloadMetaData" xml:space="preserve">
     <value>Reload date, GPS position and orientation from file meta-data?</value>
   </data>
   <data name="FileCetagorizationPersonNotBornInFile" xml:space="preserve">
     <value>Person was not born at the time for this file. Add anyway?</value>
   </data>
-  <data name="FileCategorizationPersonDeceased" xml:space="preserve">
+  <data name="CategorizationPersonDeceased" xml:space="preserve">
     <value>Person was deceased at the time for this file. Add anyway?</value>
   </data>
   <data name="SearchToggleText" xml:space="preserve">
@@ -1378,5 +1363,20 @@ This operation can be slow for a large collection of files or if the media acces
   </data>
   <data name="ToolsBrowseDatabaseExportDir" xml:space="preserve">
     <value>Select your destination directory</value>
+  </data>
+  <data name="CategorizationPositionFormatToolTip" xml:space="preserve">
+    <value>Format: latitude longitude</value>
+  </data>
+  <data name="CategorizationOrientationToolTip" xml:space="preserve">
+    <value>Orientation</value>
+  </data>
+  <data name="CategorizationSaveButton" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="CategorizationResetButton" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="CategorizationReloadButton" xml:space="preserve">
+    <value>Reload...</value>
   </data>
 </root>
