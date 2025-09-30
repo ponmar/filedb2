@@ -89,7 +89,7 @@ public class FileCategorizationViewModelTests
     [Fact]
     public void SelectSearchResultFile()
     {
-        var viewModel = CreateViewModel();
+        _ = CreateViewModel();
         LoadAFile();
     }
 
@@ -260,7 +260,7 @@ public class FileCategorizationViewModelTests
 
         // Assert
         Assert.Equal(reloadedFile.Datetime, viewModel.NewFileDateTime);
-        Assert.Equal(reloadedFile.Position, viewModel.NewFilePosition);
+        Assert.Equal(reloadedFile.Position, viewModel.FilePosition);
         Assert.Equal(DatabaseParsing.OrientationToDegrees(reloadedFile.Orientation), viewModel.ImageRotation);
     }
 

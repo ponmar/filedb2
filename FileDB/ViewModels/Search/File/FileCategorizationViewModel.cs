@@ -84,9 +84,9 @@ public partial class FileCategorizationViewModel : ObservableValidator
     public bool CanSave => !HasErrors && IsDirty;
 
     [ObservableProperty]
-    private string newFilePosition = string.Empty;
+    private string filePosition = string.Empty;
 
-    partial void OnNewFilePositionChanged(string value)
+    partial void OnFilePositionChanged(string value)
     {
         IsDirty = true;
     }
@@ -256,8 +256,8 @@ public partial class FileCategorizationViewModel : ObservableValidator
 
         NewFileDescription = SelectedFile.Description ?? string.Empty;
         NewFileDateTime = SelectedFile.Datetime ?? string.Empty;
-        NewFilePosition = SelectedFile.Position ?? string.Empty;
-
+        FilePosition = FileTextOverlayCreator.GetShortPositionText(SelectedFile) ?? string.Empty;
+        
         personList = dbAccessProvider.DbAccess.GetPersonsFromFile(SelectedFile.Id);
         OnPropertyChanged(nameof(SelectedPersonCanBeAdded));
         OnPropertyChanged(nameof(SelectedPersonCanBeRemoved));
@@ -280,7 +280,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
         SelectedFile = null;
         NewFileDescription = string.Empty;
         NewFileDateTime = string.Empty;
-        NewFilePosition = string.Empty;
+        FilePosition = string.Empty;
         ImageRotation = 0;
         IsDirty = false;
     }
@@ -362,7 +362,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
     {
         if (SelectedFile is not null)
         {
-            int cameraNewDegrees = imageRotation;
+            int cameraNewDegrees = ImageRotation;
             if (imageRotationDirection == RotationDirection.CounterClockwise)
             {
                 cameraNewDegrees += 90;
