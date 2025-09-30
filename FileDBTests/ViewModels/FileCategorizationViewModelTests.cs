@@ -260,7 +260,7 @@ public class FileCategorizationViewModelTests
 
         // Assert
         Assert.Equal(reloadedFile.Datetime, viewModel.NewFileDateTime);
-        Assert.Equal(reloadedFile.Position, viewModel.FilePosition);
+        Assert.Equal(FileTextOverlayCreator.GetShortPositionText(reloadedFile), viewModel.FilePosition);
         Assert.Equal(DatabaseParsing.OrientationToDegrees(reloadedFile.Orientation), viewModel.ImageRotation);
     }
 
