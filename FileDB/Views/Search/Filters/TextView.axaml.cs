@@ -1,12 +1,11 @@
 using Avalonia.Controls;
 
-namespace FileDB.Views.Search.Filters
+namespace FileDB.Views.Search.Filters;
+
+public partial class TextView : UserControl
 {
-    public partial class TextView : UserControl
+    public TextView()
     {
-        public TextView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

@@ -1,17 +1,16 @@
 using Avalonia.Controls;
 using FileDB.ViewModels;
 
-namespace FileDB.Views
+namespace FileDB.Views;
+
+public partial class ToolsView : UserControl
 {
-    public partial class ToolsView : UserControl
+    public ToolsView()
     {
-        public ToolsView()
+        InitializeComponent();
+        if (!Design.IsDesignMode)
         {
-            InitializeComponent();
-            if (!Design.IsDesignMode)
-            {
-                DataContext = ServiceLocator.Resolve<ToolsViewModel>();
-            }
+            DataContext = ServiceLocator.Resolve<ToolsViewModel>();
         }
     }
 }

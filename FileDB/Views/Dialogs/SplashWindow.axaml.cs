@@ -1,12 +1,11 @@
 using Avalonia.Controls;
 
-namespace FileDB.Views.Dialogs
+namespace FileDB.Views.Dialogs;
+
+public partial class SplashWindow : Window
 {
-    public partial class SplashWindow : Window
+    public SplashWindow()
     {
-        public SplashWindow()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

@@ -1,17 +1,16 @@
 using Avalonia.Controls;
 using FileDB.ViewModels;
 
-namespace FileDB.Views
+namespace FileDB.Views;
+
+public partial class FilesView : UserControl
 {
-    public partial class FilesView : UserControl
+    public FilesView()
     {
-        public FilesView()
+        InitializeComponent();
+        if (!Design.IsDesignMode)
         {
-            InitializeComponent();
-            if (!Design.IsDesignMode)
-            {
-                DataContext = ServiceLocator.Resolve<FilesViewModel>();
-            }
+            DataContext = ServiceLocator.Resolve<FilesViewModel>();
         }
     }
 }

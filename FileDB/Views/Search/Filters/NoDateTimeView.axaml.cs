@@ -1,12 +1,11 @@
 using Avalonia.Controls;
 
-namespace FileDB.Views.Search.Filters
+namespace FileDB.Views.Search.Filters;
+
+public partial class NoDateTimeView : UserControl
 {
-    public partial class NoDateTimeView : UserControl
+    public NoDateTimeView()
     {
-        public NoDateTimeView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

@@ -1,17 +1,16 @@
 using Avalonia.Controls;
 using FileDB.ViewModels.Search.File;
 
-namespace FileDB.Views.Search.File
+namespace FileDB.Views.Search.File;
+
+public partial class FileCategorizationHistoryView : UserControl
 {
-    public partial class FileCategorizationHistoryView : UserControl
+    public FileCategorizationHistoryView()
     {
-        public FileCategorizationHistoryView()
+        InitializeComponent();
+        if (!Design.IsDesignMode)
         {
-            InitializeComponent();
-            if (!Design.IsDesignMode)
-            {
-                DataContext = ServiceLocator.Resolve<FileCategorizationViewModel>();
-            }
+            DataContext = ServiceLocator.Resolve<FileCategorizationViewModel>();
         }
     }
 }

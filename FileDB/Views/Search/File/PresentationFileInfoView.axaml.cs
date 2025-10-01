@@ -1,12 +1,11 @@
 using Avalonia.Controls;
 
-namespace FileDB.Views.Search.File
+namespace FileDB.Views.Search.File;
+
+public partial class PresentationFileInfoView : UserControl
 {
-    public partial class PresentationFileInfoView : UserControl
+    public PresentationFileInfoView()
     {
-        public PresentationFileInfoView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

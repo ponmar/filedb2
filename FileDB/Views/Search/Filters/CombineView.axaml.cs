@@ -1,12 +1,11 @@
 using Avalonia.Controls;
 
-namespace FileDB.Views.Search.Filters
+namespace FileDB.Views.Search.Filters;
+
+public partial class CombineView : UserControl
 {
-    public partial class CombineView : UserControl
+    public CombineView()
     {
-        public CombineView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

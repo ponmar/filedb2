@@ -1,12 +1,11 @@
 using Avalonia.Controls;
 
-namespace FileDB.Views.Search.Filters
+namespace FileDB.Views.Search.Filters;
+
+public partial class PersonGroupView : UserControl
 {
-    public partial class PersonGroupView : UserControl
+    public PersonGroupView()
     {
-        public PersonGroupView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

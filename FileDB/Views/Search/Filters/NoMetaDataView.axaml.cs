@@ -1,12 +1,11 @@
 using Avalonia.Controls;
 
-namespace FileDB.Views.Search.Filters
+namespace FileDB.Views.Search.Filters;
+
+public partial class NoMetaDataView : UserControl
 {
-    public partial class NoMetaDataView : UserControl
+    public NoMetaDataView()
     {
-        public NoMetaDataView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }
