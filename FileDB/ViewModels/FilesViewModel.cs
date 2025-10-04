@@ -125,7 +125,7 @@ public partial class FilesViewModel : ObservableValidator
         var blacklistedFilePathPatterns = configProvider.Config.BlacklistedFilePathPatterns.Split(";");
         var whitelistedFilePathPatterns = configProvider.Config.WhitelistedFilePathPatterns.Split(";");
 
-        dialogs.ShowProgressDialog(progress =>
+        await dialogs.ShowProgressDialogAsync(progress =>
         {
             progress.Report(Strings.FilesScanning);
 
@@ -188,7 +188,7 @@ public partial class FilesViewModel : ObservableValidator
             return;
         }
 
-        dialogs.ShowProgressDialog(progress =>
+        await dialogs.ShowProgressDialogAsync(progress =>
         {
             var locations = dbAccessProvider.DbAccess.GetLocations();
 

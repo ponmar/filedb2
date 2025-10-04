@@ -11,6 +11,7 @@ using FileDB.Dialogs;
 using Avalonia.Threading;
 using FileDB.Configuration;
 using FileDB.Sorters;
+using System.Threading.Tasks;
 
 namespace FileDB.ViewModels.Search;
 
@@ -369,9 +370,9 @@ public partial class ResultViewModel : ObservableObject, ISearchResultRepository
     }
 
     [RelayCommand]
-    private void ExportFileList()
+    private async Task ExportFileListAsync()
     {
-        dialogs.ShowExportSearchResultDialog(SearchResult!);
+        await dialogs.ShowExportSearchResultDialogAsync(SearchResult!);
     }
 
     [RelayCommand]

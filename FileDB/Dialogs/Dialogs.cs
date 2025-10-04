@@ -22,44 +22,17 @@ public class Dialogs : IDialogs
 {
     public async Task ShowInfoDialogAsync(string message)
     {
-        var box = MessageBoxManager.GetMessageBoxStandard(Utils.ApplicationName, message, ButtonEnum.Ok, Icon.Info);
-        var parent = GetParentWindow();
-        if (parent is not null)
-        {
-            await box.ShowWindowDialogAsync(parent);
-        }
-        else
-        {
-            await box.ShowWindowAsync();
-        }
+        await ShowMessageBoxAsync(message, ButtonEnum.Ok, Icon.Info);
     }
 
     public async Task ShowWarningDialogAsync(string message)
     {
-        var box = MessageBoxManager.GetMessageBoxStandard(Utils.ApplicationName, message, ButtonEnum.Ok, Icon.Warning);
-        var parent = GetParentWindow();
-        if (parent is not null)
-        {
-            await box.ShowWindowDialogAsync(parent);
-        }
-        else
-        {
-            await box.ShowWindowAsync();
-        }
+        await ShowMessageBoxAsync(message, ButtonEnum.Ok, Icon.Warning);
     }
 
     public async Task ShowErrorDialogAsync(string message)
     {
-        var box = MessageBoxManager.GetMessageBoxStandard(Utils.ApplicationName, message, ButtonEnum.Ok, Icon.Error);
-        var parent = GetParentWindow();
-        if (parent is not null)
-        {
-            await box.ShowWindowDialogAsync(parent);
-        }
-        else
-        {
-            await box.ShowWindowAsync();
-        }
+        await ShowMessageBoxAsync(message, ButtonEnum.Ok, Icon.Error);
     }
     
     public async Task ShowErrorDialogAsync(string message, Exception e)
@@ -69,7 +42,7 @@ public class Dialogs : IDialogs
 
     public async Task ShowErrorDialogAsync(IEnumerable<string> messages)
     {
-        await ShowErrorDialogAsync(string.Join("\n", messages));
+        await ShowErrorDialogAsync(string.Join('\n', messages));
     }
 
     public async Task ShowErrorDialogAsync(ValidationResult validationResult)
@@ -79,19 +52,8 @@ public class Dialogs : IDialogs
 
     public async Task<bool> ShowConfirmDialogAsync(string question)
     {
-        var box = MessageBoxManager.GetMessageBoxStandard(Utils.ApplicationName, question, ButtonEnum.YesNo, Icon.Question);
-        var parent = GetParentWindow();
-
-        if (parent is not null)
-        {
-            var result = await box.ShowWindowDialogAsync(parent);
-            return result == ButtonResult.Yes;
-        }
-        else
-        {
-            var result = await box.ShowAsync();
-            return result == ButtonResult.Yes;
-        }
+        var result = await ShowMessageBoxAsync(question, ButtonEnum.YesNo, Icon.Question);
+        return result == ButtonResult.Yes;
     }
 
     public static Window? GetParentWindow()
@@ -99,7 +61,7 @@ public class Dialogs : IDialogs
         return Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktopApp ? desktopApp.MainWindow : null;
     }
 
-    public void ShowProgressDialog(Action<IProgress<string>> work)
+    public async Task ShowProgressDialogAsync(Action<IProgress<string>> work)
     {
         var parent = GetParentWindow();
         if (parent is not null)
@@ -115,7 +77,7 @@ public class Dialogs : IDialogs
                 worker.RunWorkerAsync();
             };
 
-            splash.ShowDialog(parent);
+            await splash.ShowDialog(parent);
         }
     }
 
@@ -163,50 +125,31 @@ public class Dialogs : IDialogs
 
     public async Task<PersonModel?> ShowAddPersonDialogAsync(int? personId = null, string? personName = null)
     {
-        var parent = GetParentWindow();
-        if (parent is not null)
-        {
-            var window = new AddPersonWindow(personId, personName);
-            await window.ShowDialog(parent);
-            return ((AddPersonViewModel)window.DataContext!).AffectedPerson;
-        }
-        return null;
+        var window = new AddPersonWindow(personId, personName);
+        await ShowDialog(window);
+        return ((AddPersonViewModel)window.DataContext!).AffectedPerson;
     }
 
     public async Task<LocationModel?> ShowAddLocationDialogAsync(int ?locationId = null, string? locationName = null)
     {
-        var parent = GetParentWindow();
-        if (parent is not null)
-        {
-            var window = new AddLocationWindow(locationId, locationName);
-            await window.ShowDialog(parent);
-            return ((AddLocationViewModel)window.DataContext!).AffectedLocation;
-        }
-        return null;
+        var window = new AddLocationWindow(locationId, locationName);
+        await ShowDialog(window);
+        return ((AddLocationViewModel)window.DataContext!).AffectedLocation;
     }
 
     public async Task<TagModel?> ShowAddTagDialogAsync(int? tagId = null, string? tagName = null)
     {
-        var parent = GetParentWindow();
-        if (parent is not null)
-        {
-            var window = new AddTagWindow(tagId, tagName);
-            await window.ShowDialog(parent);
-            return ((AddTagViewModel)window.DataContext!).AffectedTag;
-        }
-        return null;
+        var window = new AddTagWindow(tagId, tagName);
+        await ShowDialog(window);
+        return ((AddTagViewModel)window.DataContext!).AffectedTag;
     }
 
-    public void ShowExportSearchResultDialog(SearchResult searchResult)
+    public async Task ShowExportSearchResultDialogAsync(SearchResult searchResult)
     {
-        var parent = GetParentWindow();
-        if (parent is not null)
-        {
-            var window = new ExportSearchResultWindow();
-            var viewModel = (ExportSearchResultViewModel)window.DataContext!;
-            viewModel.SearchResult = searchResult;
-            window.ShowDialog(parent);
-        }
+        var window = new ExportSearchResultWindow();
+        var viewModel = (ExportSearchResultViewModel)window.DataContext!;
+        viewModel.SearchResult = searchResult;
+        await ShowDialog(window);
     }
 
     public void ShowPresentationWindow(string title)
@@ -222,5 +165,28 @@ public class Dialogs : IDialogs
             Title = string.Format(title, Utils.ApplicationName, Utils.GetVersionString())
         };
         window.Show(parent);
+    }
+
+    private static async Task<ButtonResult> ShowMessageBoxAsync(string message, ButtonEnum buttons, Icon icon)
+    {
+        var box = MessageBoxManager.GetMessageBoxStandard(Utils.ApplicationName, message, buttons, icon, WindowStartupLocation.CenterOwner);
+        var parent = GetParentWindow();
+        if (parent is not null)
+        {
+            return await box.ShowWindowDialogAsync(parent);
+        }
+        else
+        {
+            return await box.ShowWindowAsync();
+        }
+    }
+
+    private static async Task ShowDialog(Window window)
+    {
+        var parent = GetParentWindow();
+        if (parent is not null)
+        {
+            await window.ShowDialog(parent);
+        }
     }
 }

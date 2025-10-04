@@ -129,7 +129,7 @@ public partial class ExportSearchResultViewModel : ObservableObject
             return;
         }
 
-        dialogs.ShowProgressDialog(progress =>
+        await dialogs.ShowProgressDialogAsync(progress =>
         {
             progress.Report(Strings.ExportExporting);
             try

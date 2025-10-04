@@ -16,13 +16,13 @@ public interface IDialogs
     Task ShowErrorDialogAsync(IEnumerable<string> messages);
     Task ShowErrorDialogAsync(ValidationResult validationResult);
     Task<bool> ShowConfirmDialogAsync(string question);
-    void ShowProgressDialog(Action<IProgress<string>> work);
+    Task ShowProgressDialogAsync(Action<IProgress<string>> work);
     Task<string?> ShowBrowseExistingDirectoryDialogAsync(string title);
     Task<string?> ShowBrowseExistingDirectoryDialogAsync(string title, string initialDirectory);
     Task<string?> ShowBrowseExistingSubDirectoryDialogAsync(string title, string rootDirectory);
     Task<PersonModel?> ShowAddPersonDialogAsync(int? personId = null, string? personName = null);
     Task<LocationModel?> ShowAddLocationDialogAsync(int? locationId = null, string? locationName = null);
     Task<TagModel?> ShowAddTagDialogAsync(int? tagId = null, string? tagName = null);
-    void ShowExportSearchResultDialog(SearchResult searchResult);
+    Task ShowExportSearchResultDialogAsync(SearchResult searchResult);
     void ShowPresentationWindow(string title);
 }
