@@ -2751,7 +2751,7 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Toggle &apos;{0}&apos;.
+        ///   Looks up a localized string similar to {0}.
         /// </summary>
         public static string SearchToggleText {
             get {
@@ -2760,7 +2760,25 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to F{0}: Toggle &apos;{1}&apos;.
+        ///   Looks up a localized string similar to Exclude &apos;{0}&apos;.
+        /// </summary>
+        public static string SearchToggleToolTipExclude {
+            get {
+                return ResourceManager.GetString("SearchToggleToolTipExclude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Include &apos;{0}&apos;.
+        /// </summary>
+        public static string SearchToggleToolTipInclude {
+            get {
+                return ResourceManager.GetString("SearchToggleToolTipInclude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to F{0}: {1}.
         /// </summary>
         public static string SearchToggleWithKeyText {
             get {

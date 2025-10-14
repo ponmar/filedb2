@@ -91,7 +91,16 @@
 			<Setter Property="HorizontalContentAlignment" Value="Center"/>
 		</Style>
 
+		<Style Selector="ToggleButton.ColoredToggleButton">
+			<Style Selector="^:checked /template/ ContentPresenter#PART_ContentPresenter">
+				<Setter Property="Background" Value="rgb(33, 150, 243)"/>
+			</Style>
+		</Style>
+
 		<Style Selector="ToggleButton.NavigationButton">
+			<Style Selector="^:checked /template/ ContentPresenter#PART_ContentPresenter">
+				<Setter Property="Background" Value="rgb(33, 150, 243)"/>
+			</Style>
 			<Setter Property="CornerRadius" Value="5"/>
 			<Setter Property="FontSize" Value="14"/>
 			<Setter Property="Width" Value="35"/>

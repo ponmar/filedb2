@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Avalonia.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Dialogs;
@@ -35,19 +36,34 @@ public record TagToToggle(int Id, string Name, string ShortName)
 
 public enum RotationDirection { Clockwise, CounterClockwise }
 
-public class UpdateHistoryItem
+public partial class UpdateHistoryItem : ObservableObject
 {
     public required UpdateHistoryType Type { get; init; }
     public required int ItemId { get; init; }
     public required string ShortItemName { get; init; }
     public required string ItemName { get; init; }
-    public required int FunctionKey { get; init; }
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(HasHotKey))]
+    [NotifyPropertyChangedFor(nameof(HotKey))]
+    [NotifyPropertyChangedFor(nameof(ToggleText))]
+    private int functionKey;
 
     public bool HasHotKey => FunctionKey >= 1 && FunctionKey <= 12;
-    public string? HotKey => HasHotKey ? $"F{FunctionKey}" : null;
+    
+    public KeyGesture? HotKey => HasHotKey ? KeyGesture.Parse($"F{FunctionKey}"!) : null;
+
     public string ToggleText => HasHotKey ?
         string.Format(Strings.SearchToggleWithKeyText, FunctionKey, ShortItemName) :
         string.Format(Strings.SearchToggleText, ShortItemName);
+
+    public string ToolTip => IsChecked ?
+        string.Format(Strings.SearchToggleToolTipExclude, ItemName) :
+        string.Format(Strings.SearchToggleToolTipInclude, ItemName);
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(ToolTip))]
+    private bool isChecked;
 }
 
 public partial class FileCategorizationViewModel : ObservableValidator
@@ -147,8 +163,6 @@ public partial class FileCategorizationViewModel : ObservableValidator
         tagList.Any(x => x.Id == SelectedTagToUpdate.Id);
 
     public ObservableCollection<UpdateHistoryItem> UpdateHistoryItems { get; } = [];
-
-    public bool HasUpdateHistory => UpdateHistoryItems.Count > 0;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CanApplyMetaDataFromPrevEdit))]
@@ -459,7 +473,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
         if (!dbAccessProvider.DbAccess.GetPersonsFromFile(SelectedFile.Id).Any(p => p.Id == personId))
         {
             dbAccessProvider.DbAccess.InsertFilePerson(SelectedFile.Id, personId);
-            AddUpdateHistoryItem(UpdateHistoryType.TogglePerson, personId, $"{person.Firstname} {person.Lastname}");
+            AddUpdateHistoryItem(UpdateHistoryType.TogglePerson, personId, $"{person.Firstname} {person.Lastname}", true);
             SetEditedFile();
         }
     }
@@ -470,7 +484,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
         if (SelectedFile is not null && SelectedPersonToUpdate is not null)
         {
             dbAccessProvider.DbAccess.DeleteFilePerson(SelectedFile.Id, SelectedPersonToUpdate.Id);
-            AddUpdateHistoryItem(UpdateHistoryType.TogglePerson, SelectedPersonToUpdate.Id, SelectedPersonToUpdate.Name);
+            AddUpdateHistoryItem(UpdateHistoryType.TogglePerson, SelectedPersonToUpdate.Id, SelectedPersonToUpdate.Name, false);
             SetEditedFile();
         }
     }
@@ -492,7 +506,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
             if (!dbAccessProvider.DbAccess.GetLocationsFromFile(fileId).Any(l => l.Id == location.Id))
             {
                 dbAccessProvider.DbAccess.InsertFileLocation(fileId, location.Id);
-                AddUpdateHistoryItem(UpdateHistoryType.ToggleLocation, location.Id, location.Name);
+                AddUpdateHistoryItem(UpdateHistoryType.ToggleLocation, location.Id, location.Name, true);
                 SetEditedFile();
             }
         }
@@ -505,7 +519,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
         {
             var fileId = SelectedFile.Id;
             dbAccessProvider.DbAccess.DeleteFileLocation(fileId, SelectedLocationToUpdate.Id);
-            AddUpdateHistoryItem(UpdateHistoryType.ToggleLocation, SelectedLocationToUpdate.Id, SelectedLocationToUpdate.Name);
+            AddUpdateHistoryItem(UpdateHistoryType.ToggleLocation, SelectedLocationToUpdate.Id, SelectedLocationToUpdate.Name, false);
             SetEditedFile();
         }
     }
@@ -525,7 +539,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
         if (!dbAccessProvider.DbAccess.GetTagsFromFile(fileId).Any(t => t.Id == tag.Id))
         {
             dbAccessProvider.DbAccess.InsertFileTag(fileId, tag.Id);
-            AddUpdateHistoryItem(UpdateHistoryType.ToggleTag, tag.Id, tag.Name);
+            AddUpdateHistoryItem(UpdateHistoryType.ToggleTag, tag.Id, tag.Name, true);
             SetEditedFile();
         }
     }
@@ -537,46 +551,41 @@ public partial class FileCategorizationViewModel : ObservableValidator
         {
             var fileId = SelectedFile.Id;
             dbAccessProvider.DbAccess.DeleteFileTag(fileId, SelectedTagToUpdate.Id);
-            AddUpdateHistoryItem(UpdateHistoryType.ToggleTag, SelectedTagToUpdate.Id, SelectedTagToUpdate.Name);
+            AddUpdateHistoryItem(UpdateHistoryType.ToggleTag, SelectedTagToUpdate.Id, SelectedTagToUpdate.Name, false);
             SetEditedFile();
         }
     }
 
-    private void AddUpdateHistoryItem(UpdateHistoryType type, int itemId, string itemName)
+    private void AddUpdateHistoryItem(UpdateHistoryType type, int itemId, string itemName, bool itemIncluded)
     {
-        var duplicatedItem = UpdateHistoryItems.FirstOrDefault(x => x.Type == type && x.ItemName == itemName);
-        if (duplicatedItem is not null)
+        var existingItem = UpdateHistoryItems.FirstOrDefault(x => x.Type == type && x.ItemId == itemId);
+        if (existingItem is not null)
         {
+            existingItem.IsChecked = itemIncluded;
             return;
         }
 
-        for (int i = 1; i <= 12; i++)
-        {
-            if (!UpdateHistoryItems.Any(x => x.FunctionKey == i))
-            {
-                UpdateHistoryItems.Insert(i - 1, new UpdateHistoryItem()
-                {
-                    Type = type,
-                    ItemId = itemId,
-                    ItemName = itemName,
-                    FunctionKey = i,
-                    ShortItemName = Utils.CreateShortText(itemName, configProvider.Config.ShortItemNameMaxLength),
-                });
-
-                OnPropertyChanged(nameof(HasUpdateHistory));
-                return;
-            }
-        }
-
-        UpdateHistoryItems.Add(new UpdateHistoryItem()
+        var newHistoryItem = new UpdateHistoryItem()
         {
             Type = type,
             ItemId = itemId,
             ItemName = itemName,
             FunctionKey = -1,
             ShortItemName = Utils.CreateShortText(itemName, configProvider.Config.ShortItemNameMaxLength),
-        });
-        OnPropertyChanged(nameof(HasUpdateHistory));
+            IsChecked = itemIncluded,
+        };
+
+        for (int i = 1; i <= 12; i++)
+        {
+            if (!UpdateHistoryItems.Any(x => x.FunctionKey == i))
+            {
+                newHistoryItem.FunctionKey = i;
+                UpdateHistoryItems.Insert(i - 1, newHistoryItem);
+                return;
+            }
+        }
+
+        UpdateHistoryItems.Add(newHistoryItem);
     }
 
     private async Task FunctionKeyAsync(int functionKey)
@@ -590,6 +599,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
         if (historyItem is not null)
         {
             await ToggleFromHistoryItemAsync(historyItem);
+            //historyItem.IsChecked = !historyItem.IsChecked;
         }
     }
 
@@ -610,10 +620,12 @@ public partial class FileCategorizationViewModel : ObservableValidator
                 if (dbAccessProvider.DbAccess.GetPersonsFromFile(fileId).Any(x => x.Id == personId))
                 {
                     dbAccessProvider.DbAccess.DeleteFilePerson(fileId, personId);
+                    historyItem.IsChecked = false;
                 }
                 else
                 {
                     await AddFilePersonToCurrentFileAsync(personId);
+                    historyItem.IsChecked = true;
                 }
                 break;
 
@@ -622,10 +634,12 @@ public partial class FileCategorizationViewModel : ObservableValidator
                 if (dbAccessProvider.DbAccess.GetLocationsFromFile(fileId).Any(x => x.Id == locationId))
                 {
                     dbAccessProvider.DbAccess.DeleteFileLocation(fileId, locationId);
+                    historyItem.IsChecked = true;
                 }
                 else
                 {
                     dbAccessProvider.DbAccess.InsertFileLocation(fileId, locationId);
+                    historyItem.IsChecked = false;
                 }
                 break;
 
@@ -634,10 +648,12 @@ public partial class FileCategorizationViewModel : ObservableValidator
                 if (dbAccessProvider.DbAccess.GetTagsFromFile(fileId).Any(x => x.Id == tagId))
                 {
                     dbAccessProvider.DbAccess.DeleteFileTag(fileId, tagId);
+                    historyItem.IsChecked = false;
                 }
                 else
                 {
                     dbAccessProvider.DbAccess.InsertFileTag(fileId, tagId);
+                    historyItem.IsChecked = true;
                 }
                 break;
         }
@@ -648,12 +664,8 @@ public partial class FileCategorizationViewModel : ObservableValidator
     [RelayCommand]
     private void RemoveHistoryItem(UpdateHistoryItem itemToRemove)
     {
-        if (UpdateHistoryItems.Remove(itemToRemove))
-        {
-            OnPropertyChanged(nameof(HasUpdateHistory));
-        }
+        UpdateHistoryItems.Remove(itemToRemove);
     }
-
 
     [RelayCommand]
     private async Task SaveAsync()

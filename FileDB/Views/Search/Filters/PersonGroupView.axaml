@@ -9,6 +9,6 @@
 	<StackPanel Orientation="Horizontal" DataContext="{Binding FilterViewModel}">
 		<ListBox MaxHeight="150" ItemsSource="{Binding Persons}" SelectionMode="Multiple,Toggle" SelectedItems="{Binding SelectedPersons}"/>
 		<Button Margin="3 0 3 0" Content="&#128408;" ToolTip.Tip="{x:Static lang:Strings.SearchFromCurrentFileButton}" Command="{Binding UsePersonsFromCurrentFileCommand}" VerticalAlignment="Center"/>
-		<ToggleButton Content="{x:Static lang:Strings.SearchFilterPersonGroupInclusive}" IsChecked="{Binding AllowOtherPersons}" ToolTip.Tip="{x:Static lang:Strings.SearchFilterPersonGroupInclusiveToolTip}"/>
+		<ToggleButton Classes="ColoredToggleButton" Content="{x:Static lang:Strings.SearchFilterPersonGroupInclusive}" IsChecked="{Binding AllowOtherPersons}" ToolTip.Tip="{x:Static lang:Strings.SearchFilterPersonGroupInclusiveToolTip}"/>
 	</StackPanel>
 </UserControl>

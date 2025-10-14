@@ -8,6 +8,6 @@
              x:Class="FileDB.Views.Search.Filters.LocationView">
 	<StackPanel Orientation="Horizontal" DataContext="{Binding FilterViewModel}">
 		<ComboBox Margin="0 0 3 0" Grid.Column="0" ItemsSource="{Binding Locations}" SelectedItem="{Binding SelectedLocation}" VerticalAlignment="Center"/>
-		<ToggleButton Content="!" IsChecked="{Binding Negate}" ToolTip.Tip="{x:Static lang:Strings.FilterNegateTooltip}"/>
+		<ToggleButton Classes="ColoredToggleButton" Content="!" IsChecked="{Binding Negate}" ToolTip.Tip="{x:Static lang:Strings.FilterNegateTooltip}"/>
 	</StackPanel>
 </UserControl>

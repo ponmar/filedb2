@@ -1040,7 +1040,7 @@
     <value>ÅÅÅÅ-MM-DD, ÅÅÅÅ-MM eller ÅÅÅÅ</value>
   </data>
   <data name="SearchToggleWithKeyText" xml:space="preserve">
-    <value>F{0}: Växla '{1}'</value>
+    <value>F{0}: {1}</value>
   </data>
   <data name="SearchImageLoadingError" xml:space="preserve">
     <value>Bildladdningsfel:</value>
@@ -1242,7 +1242,7 @@ Lägg till nya filer i '{0}'.</value>
     <value>Personen vad inte född vid tidpunkten för denna fil. Lägg till ändå?</value>
   </data>
   <data name="SearchToggleText" xml:space="preserve">
-    <value>Växla '{0}'</value>
+    <value>{0}</value>
   </data>
   <data name="FilterTypePersonGroup" xml:space="preserve">
     <value>Personer (grupp)</value>
@@ -1378,5 +1378,11 @@ Lägg till nya filer i '{0}'.</value>
   </data>
   <data name="CategorizationReloadButton" xml:space="preserve">
     <value>Ladda om...</value>
+  </data>
+  <data name="SearchToggleToolTipInclude" xml:space="preserve">
+    <value>Inkludera '{0}'</value>
+  </data>
+  <data name="SearchToggleToolTipExclude" xml:space="preserve">
+    <value>Exkludera '{0}'</value>
   </data>
 </root>
