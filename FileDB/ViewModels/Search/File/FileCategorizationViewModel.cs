@@ -44,14 +44,10 @@ public partial class UpdateHistoryItem : ObservableObject
     public required string ItemName { get; init; }
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(HasHotKey))]
-    [NotifyPropertyChangedFor(nameof(HotKey))]
     [NotifyPropertyChangedFor(nameof(ToggleText))]
     private int functionKey;
 
-    public bool HasHotKey => FunctionKey >= 1 && FunctionKey <= 12;
-    
-    public KeyGesture? HotKey => HasHotKey ? KeyGesture.Parse($"F{FunctionKey}"!) : null;
+    private bool HasHotKey => FunctionKey >= 1 && FunctionKey <= 12;
 
     public string ToggleText => HasHotKey ?
         string.Format(Strings.SearchToggleWithKeyText, FunctionKey, ShortItemName) :
@@ -599,7 +595,6 @@ public partial class FileCategorizationViewModel : ObservableValidator
         if (historyItem is not null)
         {
             await ToggleFromHistoryItemAsync(historyItem);
-            //historyItem.IsChecked = !historyItem.IsChecked;
         }
     }
 

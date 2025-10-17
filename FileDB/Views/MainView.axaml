@@ -14,7 +14,7 @@
 	
 	<Grid>
 		<TabControl TabStripPlacement="Left">
-			<TabItem HorizontalContentAlignment="Center">
+			<TabItem HorizontalContentAlignment="Center" IsSelected="{Binding SearchTabSelected}">
 				<TabItem.Header>
 					<Grid ToolTip.Tip="{x:Static lang:Strings.SearchTitle}">
 						<TextBlock Classes="TabIcon" Text="&#x1F50D;"/>

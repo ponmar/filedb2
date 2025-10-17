@@ -32,6 +32,9 @@ public partial class MainViewModel : ObservableObject
         }
     }
 
+    [ObservableProperty]
+    private bool searchTabSelected = true;
+
     public string Title
     {
         get
@@ -114,9 +117,12 @@ public partial class MainViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private static void FunctionKeyPressed(string functionKeyStr)
+    private void FunctionKeyPressed(string functionKeyStr)
     {
-        var functionKey = int.Parse(functionKeyStr);
-        Messenger.Send(new CategorizationFunctionKeyPressed(functionKey));
+        if (SearchTabSelected)
+        {
+            var functionKey = int.Parse(functionKeyStr);
+            Messenger.Send(new CategorizationFunctionKeyPressed(functionKey));
+        }
     }
 }
