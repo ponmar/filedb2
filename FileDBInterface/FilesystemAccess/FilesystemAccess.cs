@@ -144,7 +144,7 @@ public class FilesystemAccess : IFilesystemAccess
 
             if (location is not null)
             {
-                position = DatabaseParsing.ToFilesPosition(location.Latitude, location.Longitude);
+                position = DatabaseParsing.ToFilesPosition(location.Value.Latitude, location.Value.Longitude);
             }
         }
 
@@ -181,11 +181,12 @@ public class FilesystemAccess : IFilesystemAccess
             dateTaken = subIfdDirectory?.GetDateTime(ExifDirectoryBase.TagDateTimeOriginal);
 
             var gpsDir = directories.OfType<GpsDirectory>().FirstOrDefault();
-            location = gpsDir?.GetGeoLocation();
 
-            if (TryGetOrientationTag(directories, out var orientationTag) &&
+            if (gpsDir is not null && gpsDir.TryGetGeoLocation(out var geoLocation) &&
+                TryGetOrientationTag(directories, out var orientationTag) &&
                 orientationTag >= 1 && orientationTag <= 8)
             {
+                location = geoLocation;
                 orientation = orientationTag;
             }
         }
