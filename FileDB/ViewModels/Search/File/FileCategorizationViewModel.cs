@@ -73,6 +73,15 @@ public partial class FileCategorizationViewModel : ObservableValidator
     public bool FileSelected => SelectedFile is not null;
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(Header))]
+    private bool isExpanded = false;
+
+    private readonly string LongHeader = Strings.CategorizationUpdateTitle;
+    private readonly string ShortHeader = char.ConvertFromUtf32(0x1F589);
+
+    public string Header => IsExpanded ? LongHeader : ShortHeader;
+
+    [ObservableProperty]
     private string newFileDescription = string.Empty;
 
     partial void OnNewFileDescriptionChanged(string value)

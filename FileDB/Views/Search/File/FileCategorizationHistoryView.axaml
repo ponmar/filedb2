@@ -5,7 +5,7 @@
 			 xmlns:lang="clr-namespace:FileDB.Lang"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="FileDB.Views.Search.File.FileCategorizationHistoryView">
-	<Expander IsVisible="{Binding ReadWriteMode}" Header="{x:Static lang:Strings.CategorizationUpdateHistoryTitle}" IsExpanded="False">
+	<Expander IsVisible="{Binding IsExpanded}" Header="{x:Static lang:Strings.CategorizationUpdateHistoryTitle}">
 		<ScrollViewer>
 			<StackPanel>
 				<TextBlock IsVisible="{Binding !UpdateHistoryItems.Count}" Text="{x:Static lang:Strings.CategorizationNoChanges}"/>

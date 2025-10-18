@@ -5,7 +5,7 @@
 			 xmlns:lang="clr-namespace:FileDB.Lang"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="FileDB.Views.Search.File.FileCategorizationView">
-	<Expander IsVisible="{Binding ReadWriteMode}" Header="{x:Static lang:Strings.CategorizationUpdateTitle}" IsExpanded="False">
+	<Expander IsVisible="{Binding ReadWriteMode}" Header="{Binding Header}" IsExpanded="{Binding IsExpanded}">
 		<ScrollViewer>
 			<StackPanel Orientation="Vertical">
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
