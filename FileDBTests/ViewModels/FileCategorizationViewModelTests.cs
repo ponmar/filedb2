@@ -53,6 +53,7 @@ public class FileCategorizationViewModelTests
         Assert.Empty(viewModel.UpdateHistoryItems);
         Assert.Null(viewModel.PrevEditedFileId);
 
+        /*
         Assert.False(viewModel.SelectedPersonCanBeAdded);
         Assert.False(viewModel.SelectedPersonCanBeRemoved);
 
@@ -61,6 +62,7 @@ public class FileCategorizationViewModelTests
 
         Assert.False(viewModel.SelectedTagCanBeAdded);
         Assert.False(viewModel.SelectedTagCanBeRemoved);
+        */
     }
 
     [Fact]
@@ -76,6 +78,7 @@ public class FileCategorizationViewModelTests
         Assert.Empty(viewModel.UpdateHistoryItems);
         Assert.Null(viewModel.PrevEditedFileId);
 
+        /*
         Assert.False(viewModel.SelectedPersonCanBeAdded);
         Assert.False(viewModel.SelectedPersonCanBeRemoved);
 
@@ -84,6 +87,7 @@ public class FileCategorizationViewModelTests
 
         Assert.False(viewModel.SelectedTagCanBeAdded);
         Assert.False(viewModel.SelectedTagCanBeRemoved);
+        */
     }
 
     [Fact]

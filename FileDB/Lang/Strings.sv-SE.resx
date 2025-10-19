@@ -1385,4 +1385,31 @@ Lägg till nya filer i '{0}'.</value>
   <data name="SearchToggleToolTipExclude" xml:space="preserve">
     <value>Exkludera '{0}'</value>
   </data>
+  <data name="CategorizationUpdatePersonsTitle" xml:space="preserve">
+    <value>Uppdatera personer</value>
+  </data>
+  <data name="CategorizationUpdateLocationsTitle" xml:space="preserve">
+    <value>Uppdatera platser</value>
+  </data>
+  <data name="CategorizationUpdateTagsTitle" xml:space="preserve">
+    <value>Uppdatera etiketter</value>
+  </data>
+  <data name="CategorizationUpdatePersonsNoPersons" xml:space="preserve">
+    <value>Inga personer tillgängliga.</value>
+  </data>
+  <data name="CategorizationUpdateLocationsNoLocations" xml:space="preserve">
+    <value>Inga platser tillgängliga.</value>
+  </data>
+  <data name="CategorizationUpdateTagsNoTags" xml:space="preserve">
+    <value>Inga etiketter tillgängliga.</value>
+  </data>
+  <data name="CategorizationUpdatePersonsToggleAllToolTip" xml:space="preserve">
+    <value>Växla alla synliga personer</value>
+  </data>
+  <data name="CategorizationUpdateLocationsToggleAllToolTip" xml:space="preserve">
+    <value>Växla alla synliga platser</value>
+  </data>
+  <data name="CategorizationUpdateTagsToggleAllToolTip" xml:space="preserve">
+    <value>Växla alla synliga etiketter</value>
+  </data>
 </root>

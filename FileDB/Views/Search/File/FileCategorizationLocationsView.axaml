@@ -1,0 +1,30 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:lang="clr-namespace:FileDB.Lang"
+			 xmlns:vm="clr-namespace:FileDB.ViewModels.Search.File"
+             x:Class="FileDB.Views.Search.File.FileCategorizationLocationsView"
+             IsVisible="{Binding IsExpanded}">
+    <Expander Header="{Binding UpdateLocationsHeader}" IsExpanded="{Binding UpdateLocationsIsExpanded}">
+		<ScrollViewer>
+			<StackPanel>
+                <TextBlock IsVisible="{Binding !Locations.Count}" Text="{x:Static lang:Strings.CategorizationUpdateLocationsNoLocations}"/>
+				<StackPanel Orientation="Horizontal" IsVisible="{Binding FileSelected}">
+					<TextBlock Text="&#x1F50D;" Margin="0 0 5 0" VerticalAlignment="Center"/>
+					<TextBox Width="125" Text="{Binding LocationsFilterText}" Margin="0 0 5 0" VerticalAlignment="Center"/>
+					<Button Content="&#128473;" IsEnabled="{Binding LocationsFilterText, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" VerticalAlignment="Center" Command="{Binding ClearLocationsFilterTextCommand}"/>
+					<Button Content="&#9212;" Margin="10,0,0,0" IsEnabled="{Binding LocationsFilterText, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" VerticalAlignment="Center" Command="{Binding ToggleLocationsCommand}" ToolTip.Tip="{x:Static lang:Strings.CategorizationUpdateLocationsToggleAllToolTip}"/>
+				</StackPanel>
+				<ItemsControl Margin="0,10,0,0" ItemsSource="{Binding Locations}" IsVisible="{Binding FileSelected}">
+					<ItemsControl.ItemTemplate>
+						<DataTemplate x:DataType="vm:LocationToToggleViewModel">
+							<ToggleButton IsVisible="{Binding IsVisible}" Command="{Binding $parent[ItemsControl].DataContext.ToggleLocationCommand}" CommandParameter="{Binding}" Classes="ColoredToggleButton" Margin="0,2,0,2" Content="{Binding ShortName}" IsChecked="{Binding IsChecked, Mode=OneWay}" ToolTip.Tip="{Binding Name}" />
+						</DataTemplate>
+					</ItemsControl.ItemTemplate>
+				</ItemsControl>
+			</StackPanel>
+		</ScrollViewer>
+	</Expander>
+</UserControl>
