@@ -54,6 +54,12 @@
     <Compile Update="Views\Search\File\FileCategorizationHistoryView.axaml.cs">
       <DependentUpon>FileCategorizationHistoryView.axaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\Search\File\FileCategorizationTagsView.axaml.cs">
+      <DependentUpon>FileCategorizationTagsView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Search\File\FileCategorizationLocationsView.axaml.cs">
+      <DependentUpon>FileCategorizationLocationsView.axaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\Search\File\FileCategorizationView.axaml.cs">
       <DependentUpon>FileCategorizationView.axaml</DependentUpon>
     </Compile>

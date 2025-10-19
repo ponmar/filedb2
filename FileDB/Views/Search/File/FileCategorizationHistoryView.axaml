@@ -4,14 +4,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:lang="clr-namespace:FileDB.Lang"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="FileDB.Views.Search.File.FileCategorizationHistoryView">
-	<Expander IsVisible="{Binding IsExpanded}" Header="{x:Static lang:Strings.CategorizationUpdateHistoryTitle}">
+			 xmlns:vm="clr-namespace:FileDB.ViewModels.Search.File"
+             x:Class="FileDB.Views.Search.File.FileCategorizationHistoryView"
+			 IsVisible="{Binding IsExpanded}">
+	<Expander Header="{Binding HistoryHeader}" IsExpanded="{Binding HistoryIsExpanded}">
 		<ScrollViewer>
 			<StackPanel>
 				<TextBlock IsVisible="{Binding !UpdateHistoryItems.Count}" Text="{x:Static lang:Strings.CategorizationNoChanges}"/>
-				<ItemsControl ItemsSource="{Binding UpdateHistoryItems}" IsVisible="{Binding FileSelected}" x:Name="HistoryItemsItemsControl">
+				<ItemsControl ItemsSource="{Binding UpdateHistoryItems}" IsVisible="{Binding FileSelected}">
 					<ItemsControl.ItemTemplate>
-						<DataTemplate>
+						<DataTemplate x:DataType="vm:UpdateHistoryItemViewModel">
 							<Grid Margin="0 3 0 3">
 								<Grid.ColumnDefinitions>
 									<ColumnDefinition Width="Auto" SharedSizeGroup="column1"/>
@@ -20,8 +22,8 @@
 								<Grid.RowDefinitions>
 									<RowDefinition Height="Auto"/>
 								</Grid.RowDefinitions>
-								<ToggleButton Grid.Column="0" Classes="ColoredToggleButton" Margin="0 0 3 0" Content="{Binding ToggleText}" IsChecked="{Binding IsChecked, Mode=OneWay}" ToolTip.Tip="{Binding ToolTip}" Command="{Binding ElementName=HistoryItemsItemsControl, Path=DataContext.ToggleFromHistoryItemCommand}" CommandParameter="{Binding}"/>
-								<Button Grid.Column="1" Command="{Binding ElementName=HistoryItemsItemsControl, Path=DataContext.RemoveHistoryItemCommand}" CommandParameter="{Binding}" VerticalAlignment="Center" Content="&#128473;" ToolTip.Tip="{x:Static lang:Strings.CategorizationRemoveItemFromUpdateHistory}"/>
+								<ToggleButton Grid.Column="0" Classes="ColoredToggleButton" Margin="0 0 3 0" Content="{Binding ToggleText}" IsChecked="{Binding IsChecked, Mode=OneWay}" ToolTip.Tip="{Binding ToolTip}" Command="{Binding $parent[ItemsControl].DataContext.ToggleFromHistoryItemCommand}" CommandParameter="{Binding}"/>
+								<Button Grid.Column="1" Command="{Binding $parent[ItemsControl].DataContext.RemoveHistoryItemCommand}" CommandParameter="{Binding}" VerticalAlignment="Center" Content="&#128473;" ToolTip.Tip="{x:Static lang:Strings.CategorizationRemoveItemFromUpdateHistory}"/>
 							</Grid>
 						</DataTemplate>
 					</ItemsControl.ItemTemplate>

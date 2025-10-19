@@ -1385,4 +1385,31 @@ This operation can be slow for a large collection of files or if the media acces
   <data name="SearchToggleToolTipExclude" xml:space="preserve">
     <value>Exclude '{0}'</value>
   </data>
+  <data name="CategorizationUpdatePersonsTitle" xml:space="preserve">
+    <value>Update Persons</value>
+  </data>
+  <data name="CategorizationUpdateLocationsTitle" xml:space="preserve">
+    <value>Update Locations</value>
+  </data>
+  <data name="CategorizationUpdateTagsTitle" xml:space="preserve">
+    <value>Update Tags</value>
+  </data>
+  <data name="CategorizationUpdatePersonsNoPersons" xml:space="preserve">
+    <value>No persons available.</value>
+  </data>
+  <data name="CategorizationUpdateLocationsNoLocations" xml:space="preserve">
+    <value>No locations available.</value>
+  </data>
+  <data name="CategorizationUpdateTagsNoTags" xml:space="preserve">
+    <value>No tags available.</value>
+  </data>
+  <data name="CategorizationUpdatePersonsToggleAllToolTip" xml:space="preserve">
+    <value>Toggle all visible persons</value>
+  </data>
+  <data name="CategorizationUpdateLocationsToggleAllToolTip" xml:space="preserve">
+    <value>Toggle all visible locations</value>
+  </data>
+  <data name="CategorizationUpdateTagsToggleAllToolTip" xml:space="preserve">
+    <value>Toggle all visible tags</value>
+  </data>
 </root>
