@@ -215,6 +215,10 @@ public partial class FileCategorizationViewModel : ObservableValidator
     public ObservableCollection<LocationToToggleViewModel> Locations { get; } = [];
     public ObservableCollection<TagToToggleViewModel> Tags { get; } = [];
 
+    public bool HasVisiblePersons => Persons.Any(x => x.IsVisible);
+    public bool HasVisibleLocations => Locations.Any(x => x.IsVisible);
+    public bool HasVisibleTags => Tags.Any(x => x.IsVisible);
+
     [ObservableProperty]
     private string personsFilterText = string.Empty;
 
@@ -224,6 +228,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
         {
             person.ApplyFilter(value);
         }
+        OnPropertyChanged(nameof(HasVisiblePersons));
     }
 
     [ObservableProperty]
@@ -235,6 +240,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
         {
             location.ApplyFilter(value);
         }
+        OnPropertyChanged(nameof(HasVisibleLocations));
     }
 
     [ObservableProperty]
@@ -246,6 +252,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
         {
             tag.ApplyFilter(value);
         }
+        OnPropertyChanged(nameof(HasVisibleTags));
     }
 
     [ObservableProperty]
@@ -322,6 +329,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
             personToUpdate.ApplyFilter(PersonsFilterText);
             Persons.Add(personToUpdate);
         }
+        OnPropertyChanged(nameof(HasVisiblePersons));
     }
 
     private void ReloadLocations()
@@ -336,6 +344,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
             locationToUpdate.ApplyFilter(LocationsFilterText);
             Locations.Add(locationToUpdate);
         }
+        OnPropertyChanged(nameof(HasVisibleLocations));
     }
 
     private void ReloadTags()
@@ -350,6 +359,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
             tagToUpdate.ApplyFilter(TagsFilterText);
             Tags.Add(tagToUpdate);
         }
+        OnPropertyChanged(nameof(HasVisibleTags));
     }
 
     private void LoadFile(FileModel file)
@@ -539,7 +549,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
                 {
                     var dateOfBirth = DatabaseParsing.ParsePersonDateOfBirth(person.DateOfBirth);
                     if (fileDatetime < dateOfBirth &&
-                        !await dialogs.ShowConfirmDialogAsync(Strings.FileCetagorizationPersonNotBornInFile))
+                        !await dialogs.ShowConfirmDialogAsync(string.Format(Strings.FileCetagorizationPersonNotBornInFile, $"{person.Firstname} {person.Lastname}")))
                     {
                         return;
                     }

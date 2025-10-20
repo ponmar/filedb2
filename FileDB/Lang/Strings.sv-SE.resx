@@ -1239,7 +1239,7 @@ Lägg till nya filer i '{0}'.</value>
     <value>Ladda om datum, GPS-position och riktningfrån filens meta-data?</value>
   </data>
   <data name="FileCetagorizationPersonNotBornInFile" xml:space="preserve">
-    <value>Personen vad inte född vid tidpunkten för denna fil. Lägg till ändå?</value>
+    <value>{0} var inte född vid tidpunkten för denna fil. Lägg till ändå?</value>
   </data>
   <data name="SearchToggleText" xml:space="preserve">
     <value>{0}</value>

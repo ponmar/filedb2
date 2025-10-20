@@ -13,7 +13,7 @@
 				<TextBlock Text="&#x1F50D;" Margin="0 0 5 0" VerticalAlignment="Center"/>
 				<TextBox Width="125" Text="{Binding LocationsFilterText}" Margin="0 0 5 0" VerticalAlignment="Center"/>
 				<Button Content="&#128473;" IsEnabled="{Binding LocationsFilterText, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" VerticalAlignment="Center" Command="{Binding ClearLocationsFilterTextCommand}"/>
-				<Button Content="&#9212;" Margin="10,0,0,0" IsEnabled="{Binding LocationsFilterText, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" VerticalAlignment="Center" Command="{Binding ToggleLocationsCommand}" ToolTip.Tip="{x:Static lang:Strings.CategorizationUpdateLocationsToggleAllToolTip}"/>
+				<Button Content="&#9212;" Margin="10,0,0,0" IsEnabled="{Binding HasVisibleLocations}" VerticalAlignment="Center" Command="{Binding ToggleLocationsCommand}" ToolTip.Tip="{x:Static lang:Strings.CategorizationUpdateLocationsToggleAllToolTip}"/>
 			</StackPanel>
 
 			<TextBlock Grid.Row="1" IsVisible="{Binding !Locations.Count}" Text="{x:Static lang:Strings.CategorizationUpdateLocationsNoLocations}"/>

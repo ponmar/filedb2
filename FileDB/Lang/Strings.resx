@@ -1239,7 +1239,7 @@ This operation can be slow for a large collection of files or if the media acces
     <value>Reload date, GPS position and orientation from file meta-data?</value>
   </data>
   <data name="FileCetagorizationPersonNotBornInFile" xml:space="preserve">
-    <value>Person was not born at the time for this file. Add anyway?</value>
+    <value>{0} was not born at the time for this file. Add anyway?</value>
   </data>
   <data name="CategorizationPersonDeceased" xml:space="preserve">
     <value>Person was deceased at the time for this file. Add anyway?</value>
