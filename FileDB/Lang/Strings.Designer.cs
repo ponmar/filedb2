@@ -1010,7 +1010,7 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Person was not born at the time for this file. Add anyway?.
+        ///   Looks up a localized string similar to {0} was not born at the time for this file. Add anyway?.
         /// </summary>
         public static string FileCetagorizationPersonNotBornInFile {
             get {
