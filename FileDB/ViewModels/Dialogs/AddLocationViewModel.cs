@@ -82,8 +82,8 @@ public partial class AddLocationViewModel : ObservableObject
                 AffectedLocation = dbAccessProvider.DbAccess.GetLocations().First(x => x.Name == location.Name);
             }
 
-            Messenger.Send<CloseModalDialogRequest>();
             Messenger.Send<LocationEdited>();
+            Messenger.Send<CloseModalDialogRequest>();
         }
         catch (DataValidationException e)
         {

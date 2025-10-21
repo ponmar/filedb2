@@ -316,15 +316,17 @@ public partial class FileCategorizationViewModel : ObservableValidator
 
     private void ReloadPersons()
     {
+        var personsInSelectedFile = SelectedFile is null ? [] : dbAccessProvider.DbAccess.GetPersonsFromFile(SelectedFile.Id);
+
         Persons.Clear();
-        foreach (var p in personsRepository.Persons)
+        foreach (var person in personsRepository.Persons)
         {
             var personToUpdate = new PersonToToggleViewModel(
-                p.Id,
-                $"{p.Firstname} {p.Lastname}",
-                Utils.CreateShortText($"{p.Firstname} {p.Lastname}", configProvider.Config.ShortItemNameMaxLength))
+                person.Id,
+                $"{person.Firstname} {person.Lastname}",
+                Utils.CreateShortText($"{person.Firstname} {person.Lastname}", configProvider.Config.ShortItemNameMaxLength))
             {
-                IsChecked = SelectedFile is not null && dbAccessProvider.DbAccess.GetPersonsFromFile(SelectedFile.Id).Any(per => per.Id == p.Id),
+                IsChecked = personsInSelectedFile.Any(per => per.Id == person.Id),
             };
             personToUpdate.ApplyFilter(PersonsFilterText);
             Persons.Add(personToUpdate);
@@ -334,12 +336,14 @@ public partial class FileCategorizationViewModel : ObservableValidator
 
     private void ReloadLocations()
     {
+        var locationsInSelectedFile = SelectedFile is null ? [] : dbAccessProvider.DbAccess.GetLocationsFromFile(SelectedFile.Id);
+
         Locations.Clear();
         foreach (var location in locationsRepository.Locations)
         {
             var locationToUpdate = new LocationToToggleViewModel(location.Id, location.Name, Utils.CreateShortText(location.Name, configProvider.Config.ShortItemNameMaxLength))
             {
-                IsChecked = SelectedFile is not null && dbAccessProvider.DbAccess.GetLocationsFromFile(SelectedFile.Id).Any(l => l.Id == location.Id),
+                IsChecked = locationsInSelectedFile.Any(l => l.Id == location.Id),
             };
             locationToUpdate.ApplyFilter(LocationsFilterText);
             Locations.Add(locationToUpdate);
@@ -349,12 +353,14 @@ public partial class FileCategorizationViewModel : ObservableValidator
 
     private void ReloadTags()
     {
+        var tagsInSelectedFile = SelectedFile is null ? [] : dbAccessProvider.DbAccess.GetTagsFromFile(SelectedFile.Id);
+
         Tags.Clear();
         foreach (var tag in tagsRepository.Tags)
         {
             var tagToUpdate = new TagToToggleViewModel(tag.Id, tag.Name, Utils.CreateShortText(tag.Name, configProvider.Config.ShortItemNameMaxLength))
             {
-                IsChecked = SelectedFile is not null && dbAccessProvider.DbAccess.GetTagsFromFile(SelectedFile.Id).Any(t => t.Id == tag.Id),
+                IsChecked = tagsInSelectedFile.Any(t => t.Id == tag.Id),
             };
             tagToUpdate.ApplyFilter(TagsFilterText);
             Tags.Add(tagToUpdate);

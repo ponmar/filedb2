@@ -65,7 +65,7 @@ public partial class AddPersonViewModel : ObservableObject
     [ObservableProperty]
     private string sexSelection = Sex.NotApplicable.ToString();
 
-    public List<string> SexValues { get; } = Enum.GetNames(typeof(Sex)).ToList();
+    public List<string> SexValues { get; } = Enum.GetNames<Sex>().ToList();
 
     public PersonModel? AffectedPerson { get; private set; }
 
@@ -160,9 +160,8 @@ public partial class AddPersonViewModel : ObservableObject
                 dbAccessProvider.DbAccess.InsertPerson(person);
                 AffectedPerson = dbAccessProvider.DbAccess.GetPersons().First(x => x.Firstname == person.Firstname && x.Lastname == person.Lastname && x.DateOfBirth == person.DateOfBirth && x.Deceased == person.Deceased && x.Description == person.Description);
             }
-
-            Messenger.Send<CloseModalDialogRequest>();
             Messenger.Send<PersonEdited>();
+            Messenger.Send<CloseModalDialogRequest>();
         }
         catch (DataValidationException e)
         {
