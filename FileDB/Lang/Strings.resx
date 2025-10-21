@@ -1403,13 +1403,22 @@ This operation can be slow for a large collection of files or if the media acces
   <data name="CategorizationUpdateTagsNoTags" xml:space="preserve">
     <value>No tags available.</value>
   </data>
-  <data name="CategorizationUpdatePersonsToggleAllToolTip" xml:space="preserve">
-    <value>Toggle all visible persons</value>
+  <data name="CategorizationUpdatePersonsAddAllToolTip" xml:space="preserve">
+    <value>Add all visible persons</value>
   </data>
-  <data name="CategorizationUpdateLocationsToggleAllToolTip" xml:space="preserve">
-    <value>Toggle all visible locations</value>
+  <data name="CategorizationUpdateLocationsAddAllToolTip" xml:space="preserve">
+    <value>Add all visible locations</value>
   </data>
-  <data name="CategorizationUpdateTagsToggleAllToolTip" xml:space="preserve">
-    <value>Toggle all visible tags</value>
+  <data name="CategorizationUpdateTagsAddAllToolTip" xml:space="preserve">
+    <value>Add all visible tags</value>
+  </data>
+  <data name="CategorizationUpdatePersonsRemoveAllToolTip" xml:space="preserve">
+    <value>Remove all visible persons</value>
+  </data>
+  <data name="CategorizationUpdateLocationsRemoveAllToolTip" xml:space="preserve">
+    <value>Remove all visible locations</value>
+  </data>
+  <data name="CategorizationUpdateTagsRemoveAllToolTip" xml:space="preserve">
+    <value>Remove all visible tags</value>
   </data>
 </root>

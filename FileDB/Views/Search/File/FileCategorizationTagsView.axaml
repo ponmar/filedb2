@@ -10,11 +10,11 @@
     <Expander Header="{Binding UpdateTagsHeader}" IsExpanded="{Binding UpdateTagsIsExpanded}">
 		<Grid ColumnDefinitions="auto" RowDefinitions="auto,*">
 			<StackPanel Grid.Row="0" Orientation="Horizontal" IsVisible="{Binding FileSelected}">
-				<TextBlock Text="&#x1F50D;" Margin="0 0 5 0" VerticalAlignment="Center"/>
-				<TextBox Width="125" Text="{Binding TagsFilterText}" Margin="0 0 5 0" VerticalAlignment="Center"/>
-				<Button Content="&#128473;" IsEnabled="{Binding TagsFilterText, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" VerticalAlignment="Center" Command="{Binding ClearTagsFilterTextCommand}"/>
-				<Button Content="&#9212;" Margin="10,0,0,0" IsEnabled="{Binding HasVisibleTags}" VerticalAlignment="Center" Command="{Binding ToggleTagsCommand}" ToolTip.Tip="{x:Static lang:Strings.CategorizationUpdateTagsToggleAllToolTip}"/>
-				<Button Content="+" Margin="10,0,0,0" VerticalAlignment="Center" Command="{Binding CreateTagCommand}" ToolTip.Tip="{x:Static lang:Strings.CategorizationCreateANewTagAndAddItToCurrentFileToolTip}"/>
+				<TextBlock Text="&#x1F50D;" VerticalAlignment="Center"/>
+				<TextBox Width="125" Text="{Binding TagsFilterText}" Margin="5,0,0,0" VerticalAlignment="Center"/>
+				<Button Content="&#9744;" Margin="3,0,0,0" IsEnabled="{Binding HasVisibleTags}" VerticalAlignment="Center" Command="{Binding RemoveTagsCommand}" ToolTip.Tip="{x:Static lang:Strings.CategorizationUpdateTagsRemoveAllToolTip}"/>
+				<Button Content="&#9745;" Margin="3,0,0,0" IsEnabled="{Binding HasVisibleTags}" VerticalAlignment="Center" Command="{Binding AddTagsCommand}" ToolTip.Tip="{x:Static lang:Strings.CategorizationUpdateTagsAddAllToolTip}"/>
+				<Button Content="&#10133;" Margin="3,0,0,0" VerticalAlignment="Center" Command="{Binding CreateTagCommand}" ToolTip.Tip="{x:Static lang:Strings.CategorizationCreateANewTagAndAddItToCurrentFileToolTip}"/>
 			</StackPanel>
 
 			<TextBlock Grid.Row="1" IsVisible="{Binding !Tags.Count}" Text="{x:Static lang:Strings.CategorizationUpdateTagsNoTags}"/>
