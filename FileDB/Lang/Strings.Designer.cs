@@ -749,7 +749,7 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update Locations.
+        ///   Looks up a localized string similar to Update Locations ({0} / {1}).
         /// </summary>
         public static string CategorizationUpdateLocationsTitle {
             get {
@@ -785,7 +785,7 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update Persons.
+        ///   Looks up a localized string similar to Update Persons ({0} / {1}).
         /// </summary>
         public static string CategorizationUpdatePersonsTitle {
             get {
@@ -821,7 +821,7 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update Tags.
+        ///   Looks up a localized string similar to Update Tags ({0} / {1}).
         /// </summary>
         public static string CategorizationUpdateTagsTitle {
             get {

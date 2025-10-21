@@ -1386,13 +1386,13 @@ Lägg till nya filer i '{0}'.</value>
     <value>Exkludera '{0}'</value>
   </data>
   <data name="CategorizationUpdatePersonsTitle" xml:space="preserve">
-    <value>Uppdatera personer</value>
+    <value>Uppdatera personer ({0} / {1})</value>
   </data>
   <data name="CategorizationUpdateLocationsTitle" xml:space="preserve">
-    <value>Uppdatera platser</value>
+    <value>Uppdatera platser ({0} / {1})</value>
   </data>
   <data name="CategorizationUpdateTagsTitle" xml:space="preserve">
-    <value>Uppdatera etiketter</value>
+    <value>Uppdatera etiketter ({0} / {1})</value>
   </data>
   <data name="CategorizationUpdatePersonsNoPersons" xml:space="preserve">
     <value>Inga personer tillgängliga.</value>

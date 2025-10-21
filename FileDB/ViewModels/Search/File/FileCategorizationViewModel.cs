@@ -159,9 +159,9 @@ public partial class FileCategorizationViewModel : ObservableValidator
 
     public string Header => IsExpanded ? Strings.CategorizationUpdateTitle : char.ConvertFromUtf32(0x1F589);
     public string HistoryHeader => HistoryIsExpanded ? Strings.CategorizationUpdateHistoryTitle : char.ConvertFromUtf32(0x1F4DC);
-    public string UpdatePersonsHeader => UpdatePersonsIsExpanded ? Strings.CategorizationUpdatePersonsTitle : char.ConvertFromUtf32(0x1F6B6);
-    public string UpdateLocationsHeader => UpdateLocationsIsExpanded ? Strings.CategorizationUpdateLocationsTitle : char.ConvertFromUtf32(0x1F3E0);
-    public string UpdateTagsHeader => UpdateTagsIsExpanded ? Strings.CategorizationUpdateTagsTitle : char.ConvertFromUtf32(0x1F516);
+    public string UpdatePersonsHeader => UpdatePersonsIsExpanded ? string.Format(Strings.CategorizationUpdatePersonsTitle, Persons.Count(x => x.IsVisible), Persons.Count) : char.ConvertFromUtf32(0x1F6B6);
+    public string UpdateLocationsHeader => UpdateLocationsIsExpanded ? string.Format(Strings.CategorizationUpdateLocationsTitle, Locations.Count(x => x.IsVisible), Locations.Count) : char.ConvertFromUtf32(0x1F3E0);
+    public string UpdateTagsHeader => UpdateTagsIsExpanded ? string.Format(Strings.CategorizationUpdateTagsTitle, Tags.Count(x => x.IsVisible), Tags.Count) : char.ConvertFromUtf32(0x1F516);
 
     [ObservableProperty]
     private string newFileDescription = string.Empty;
@@ -229,6 +229,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
             person.ApplyFilter(value);
         }
         OnPropertyChanged(nameof(HasVisiblePersons));
+        OnPropertyChanged(nameof(UpdatePersonsHeader));
     }
 
     [ObservableProperty]
@@ -241,6 +242,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
             location.ApplyFilter(value);
         }
         OnPropertyChanged(nameof(HasVisibleLocations));
+        OnPropertyChanged(nameof(UpdateLocationsHeader));
     }
 
     [ObservableProperty]
@@ -253,6 +255,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
             tag.ApplyFilter(value);
         }
         OnPropertyChanged(nameof(HasVisibleTags));
+        OnPropertyChanged(nameof(UpdateTagsHeader));
     }
 
     [ObservableProperty]
@@ -332,6 +335,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
             Persons.Add(personToUpdate);
         }
         OnPropertyChanged(nameof(HasVisiblePersons));
+        OnPropertyChanged(nameof(UpdatePersonsHeader));
     }
 
     private void ReloadLocations()
@@ -349,6 +353,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
             Locations.Add(locationToUpdate);
         }
         OnPropertyChanged(nameof(HasVisibleLocations));
+        OnPropertyChanged(nameof(UpdateLocationsHeader));
     }
 
     private void ReloadTags()
@@ -366,6 +371,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
             Tags.Add(tagToUpdate);
         }
         OnPropertyChanged(nameof(HasVisibleTags));
+        OnPropertyChanged(nameof(UpdateTagsHeader));
     }
 
     private void LoadFile(FileModel file)
