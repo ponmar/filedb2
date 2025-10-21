@@ -699,11 +699,20 @@ public partial class FileCategorizationViewModel : ObservableValidator
     }
 
     [RelayCommand]
-    private async Task TogglePersonsAsync()
+    private void RemovePersons()
     {
-        foreach (var person in Persons.Where(x => x.IsVisible))
+        foreach (var person in Persons.Where(x => x.IsVisible && x.IsChecked))
         {
-            await TogglePersonAsync(person);
+            RemoveFilePersonFromCurrentFile(person.Id);
+        }
+    }
+
+    [RelayCommand]
+    private async Task AddPersonsAsync()
+    {
+        foreach (var person in Persons.Where(x => x.IsVisible && !x.IsChecked))
+        {
+            await AddFilePersonToCurrentFileAsync(person.Id);
         }
     }
 
@@ -725,11 +734,20 @@ public partial class FileCategorizationViewModel : ObservableValidator
     }
 
     [RelayCommand]
-    private void ToggleLocations()
+    private void RemoveLocations()
     {
-        foreach (var location in Locations.Where(x => x.IsVisible))
+        foreach (var location in Locations.Where(x => x.IsVisible && x.IsChecked))
         {
-            ToggleLocation(location);
+            RemoveFileLocationFromCurrentFile(location.Id);
+        }
+    }
+
+    [RelayCommand]
+    private void AddLocations()
+    {
+        foreach (var location in Locations.Where(x => x.IsVisible && !x.IsChecked))
+        {
+            AddFileLocationToCurrentFile(location.Id);
         }
     }
 
@@ -751,11 +769,20 @@ public partial class FileCategorizationViewModel : ObservableValidator
     }
 
     [RelayCommand]
-    private void ToggleTags()
+    private void RemoveTags()
     {
-        foreach (var tag in Tags.Where(x => x.IsVisible))
+        foreach (var tag in Tags.Where(x => x.IsVisible && x.IsChecked))
         {
-            ToggleTag(tag);
+            RemoveFileTagFromCurrentFile(tag.Id);
+        }
+    }
+
+    [RelayCommand]
+    private void AddTags()
+    {
+        foreach (var tag in Tags.Where(x => x.IsVisible && !x.IsChecked))
+        {
+            AddFileTagToCurrentFile(tag.Id);
         }
     }
 
@@ -893,13 +920,4 @@ public partial class FileCategorizationViewModel : ObservableValidator
             }
         }
     }
-
-    [RelayCommand]
-    private void ClearPersonsFilterText() => PersonsFilterText = string.Empty;
-
-    [RelayCommand]
-    private void ClearLocationsFilterText() => LocationsFilterText = string.Empty;
-
-    [RelayCommand]
-    private void ClearTagsFilterText() => TagsFilterText = string.Empty;
 }

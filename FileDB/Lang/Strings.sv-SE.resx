@@ -1403,13 +1403,22 @@ Lägg till nya filer i '{0}'.</value>
   <data name="CategorizationUpdateTagsNoTags" xml:space="preserve">
     <value>Inga etiketter tillgängliga.</value>
   </data>
-  <data name="CategorizationUpdatePersonsToggleAllToolTip" xml:space="preserve">
-    <value>Växla alla synliga personer</value>
+  <data name="CategorizationUpdatePersonsAddAllToolTip" xml:space="preserve">
+    <value>Lägg till alla synliga personer</value>
   </data>
-  <data name="CategorizationUpdateLocationsToggleAllToolTip" xml:space="preserve">
-    <value>Växla alla synliga platser</value>
+  <data name="CategorizationUpdateLocationsAddAllToolTip" xml:space="preserve">
+    <value>Lägg till alla synliga platser</value>
   </data>
-  <data name="CategorizationUpdateTagsToggleAllToolTip" xml:space="preserve">
-    <value>Växla alla synliga etiketter</value>
+  <data name="CategorizationUpdateTagsAddAllToolTip" xml:space="preserve">
+    <value>Lägg till alla synliga etiketter</value>
+  </data>
+  <data name="CategorizationUpdatePersonsRemoveAllToolTip" xml:space="preserve">
+    <value>Ta bort alla synliga personer</value>
+  </data>
+  <data name="CategorizationUpdateLocationsRemoveAllToolTip" xml:space="preserve">
+    <value>Ta bort alla synliga platser</value>
+  </data>
+  <data name="CategorizationUpdateTagsRemoveAllToolTip" xml:space="preserve">
+    <value>Ta bort alla synliga etiketter</value>
   </data>
 </root>

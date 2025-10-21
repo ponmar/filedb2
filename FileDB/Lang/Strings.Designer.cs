@@ -722,11 +722,29 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add all visible locations.
+        /// </summary>
+        public static string CategorizationUpdateLocationsAddAllToolTip {
+            get {
+                return ResourceManager.GetString("CategorizationUpdateLocationsAddAllToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No locations available..
         /// </summary>
         public static string CategorizationUpdateLocationsNoLocations {
             get {
                 return ResourceManager.GetString("CategorizationUpdateLocationsNoLocations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove all visible locations.
+        /// </summary>
+        public static string CategorizationUpdateLocationsRemoveAllToolTip {
+            get {
+                return ResourceManager.GetString("CategorizationUpdateLocationsRemoveAllToolTip", resourceCulture);
             }
         }
         
@@ -740,11 +758,11 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Toggle all visible locations.
+        ///   Looks up a localized string similar to Add all visible persons.
         /// </summary>
-        public static string CategorizationUpdateLocationsToggleAllToolTip {
+        public static string CategorizationUpdatePersonsAddAllToolTip {
             get {
-                return ResourceManager.GetString("CategorizationUpdateLocationsToggleAllToolTip", resourceCulture);
+                return ResourceManager.GetString("CategorizationUpdatePersonsAddAllToolTip", resourceCulture);
             }
         }
         
@@ -758,6 +776,15 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remove all visible persons.
+        /// </summary>
+        public static string CategorizationUpdatePersonsRemoveAllToolTip {
+            get {
+                return ResourceManager.GetString("CategorizationUpdatePersonsRemoveAllToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Update Persons.
         /// </summary>
         public static string CategorizationUpdatePersonsTitle {
@@ -767,11 +794,11 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Toggle all visible persons.
+        ///   Looks up a localized string similar to Add all visible tags.
         /// </summary>
-        public static string CategorizationUpdatePersonsToggleAllToolTip {
+        public static string CategorizationUpdateTagsAddAllToolTip {
             get {
-                return ResourceManager.GetString("CategorizationUpdatePersonsToggleAllToolTip", resourceCulture);
+                return ResourceManager.GetString("CategorizationUpdateTagsAddAllToolTip", resourceCulture);
             }
         }
         
@@ -785,20 +812,20 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remove all visible tags.
+        /// </summary>
+        public static string CategorizationUpdateTagsRemoveAllToolTip {
+            get {
+                return ResourceManager.GetString("CategorizationUpdateTagsRemoveAllToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Update Tags.
         /// </summary>
         public static string CategorizationUpdateTagsTitle {
             get {
                 return ResourceManager.GetString("CategorizationUpdateTagsTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Toggle all visible tags.
-        /// </summary>
-        public static string CategorizationUpdateTagsToggleAllToolTip {
-            get {
-                return ResourceManager.GetString("CategorizationUpdateTagsToggleAllToolTip", resourceCulture);
             }
         }
         
