@@ -1386,13 +1386,13 @@ This operation can be slow for a large collection of files or if the media acces
     <value>Exclude '{0}'</value>
   </data>
   <data name="CategorizationUpdatePersonsTitle" xml:space="preserve">
-    <value>Update Persons</value>
+    <value>Update Persons ({0} / {1})</value>
   </data>
   <data name="CategorizationUpdateLocationsTitle" xml:space="preserve">
-    <value>Update Locations</value>
+    <value>Update Locations ({0} / {1})</value>
   </data>
   <data name="CategorizationUpdateTagsTitle" xml:space="preserve">
-    <value>Update Tags</value>
+    <value>Update Tags ({0} / {1})</value>
   </data>
   <data name="CategorizationUpdatePersonsNoPersons" xml:space="preserve">
     <value>No persons available.</value>
