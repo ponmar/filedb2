@@ -402,8 +402,8 @@
   <data name="SearchMaximizeButtonToolTip" xml:space="preserve">
     <value>Maximera</value>
   </data>
-  <data name="SearchResultHistoryLabel" xml:space="preserve">
-    <value>Historik:</value>
+  <data name="SearchResultHistoryToolTip" xml:space="preserve">
+    <value>Historik</value>
   </data>
   <data name="SearchResultExportButton" xml:space="preserve">
     <value>Exportera...</value>
@@ -414,8 +414,8 @@
   <data name="SearchResultCloseButtonToolTip" xml:space="preserve">
     <value>Stäng sökresultat</value>
   </data>
-  <data name="SearchResultSortByLabel" xml:space="preserve">
-    <value>Sortera efter:</value>
+  <data name="SearchResultSortByToolTip" xml:space="preserve">
+    <value>Sortera efter</value>
   </data>
   <data name="SearchResultGoToPreviousToolTip" xml:space="preserve">
     <value>Gå till föregående (page up)</value>

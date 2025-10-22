@@ -11,9 +11,9 @@
 	</UserControl.Resources>
 	<Border Classes="BorderGroup" HorizontalAlignment="Stretch">
 		<Grid ColumnDefinitions="auto,*,auto" RowDefinitions="auto">
-			<StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical" Margin="10" VerticalAlignment="Center">
-				<TextBlock Margin="0,0,0,5" Text="{x:Static lang:Strings.SearchResultHistoryLabel}"/>
-				<ComboBox ItemsSource="{Binding SearchResultHistory}" SelectedItem="{Binding SearchResultHistorySelection}" Width="100" IsEnabled="{Binding SearchResultHistory.Count}"/>
+			<StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Margin="10" VerticalAlignment="Center">
+				<TextBlock Margin="0,0,5,0" Text="&#128220;" VerticalAlignment="Center" ToolTip.Tip="{x:Static lang:Strings.SearchResultHistoryToolTip}"/>
+				<ComboBox ItemsSource="{Binding SearchResultHistory}" SelectedItem="{Binding SearchResultHistorySelection}" Width="100" IsEnabled="{Binding SearchResultHistory.Count}" VerticalAlignment="Center"/>
 			</StackPanel>
 
 			<StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical" Margin="5" VerticalAlignment="Center">
@@ -54,8 +54,8 @@
 				<TextBlock Margin="0 3 0 0" HorizontalAlignment="Center" IsVisible="{Binding CurrentFileInternalPath, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" Text="{Binding CurrentFileInternalPath}"/>
 			</StackPanel>
 
-			<StackPanel Grid.Row="0" Grid.Column="2" Orientation="Vertical" Margin="10" VerticalAlignment="Center">
-				<TextBlock VerticalAlignment="Center" Margin="0 0 0 5" Text="{x:Static lang:Strings.SearchResultSortByLabel}"/>
+			<StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" Margin="10" VerticalAlignment="Center">
+				<TextBlock VerticalAlignment="Center" Margin="0 0 5 0" Text="&#11137;" ToolTip.Tip="{x:Static lang:Strings.SearchResultSortByToolTip}"/>
 				<ComboBox Width="160" ItemsSource="{Binding SortMethods}" SelectedValue="{Binding SelectedSortMethod}" VerticalAlignment="Center">
 					<ComboBox.ItemTemplate>
 						<DataTemplate>

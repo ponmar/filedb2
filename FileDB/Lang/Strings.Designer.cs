@@ -2778,11 +2778,11 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to History:.
+        ///   Looks up a localized string similar to History.
         /// </summary>
-        public static string SearchResultHistoryLabel {
+        public static string SearchResultHistoryToolTip {
             get {
-                return ResourceManager.GetString("SearchResultHistoryLabel", resourceCulture);
+                return ResourceManager.GetString("SearchResultHistoryToolTip", resourceCulture);
             }
         }
         
@@ -2796,11 +2796,11 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sort by:.
+        ///   Looks up a localized string similar to Sort by.
         /// </summary>
-        public static string SearchResultSortByLabel {
+        public static string SearchResultSortByToolTip {
             get {
-                return ResourceManager.GetString("SearchResultSortByLabel", resourceCulture);
+                return ResourceManager.GetString("SearchResultSortByToolTip", resourceCulture);
             }
         }
         
