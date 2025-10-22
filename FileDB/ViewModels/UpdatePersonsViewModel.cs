@@ -18,7 +18,7 @@ public class PersonWithAge : PersonModel
     public int Age { get; set; }
 }
 
-public partial class PersonsViewModel : ObservableObject
+public partial class UpdatePersonsViewModel : ObservableObject
 {
     [ObservableProperty]
     private string filterText = string.Empty;
@@ -43,7 +43,7 @@ public partial class PersonsViewModel : ObservableObject
     private readonly IDialogs dialogs;
     private readonly IPersonsRepository personsRepository;
 
-    public PersonsViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IDialogs dialogs, IPersonsRepository personsRepository)
+    public UpdatePersonsViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IDialogs dialogs, IPersonsRepository personsRepository)
     {
         this.configProvider = configProvider;
         this.dbAccessProvider = dbAccessProvider;

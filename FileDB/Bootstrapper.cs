@@ -56,9 +56,9 @@ public static class Bootstrapper
         ServiceLocator.RegisterSingleton<FileViewModel>();
         ServiceLocator.RegisterSingleton<NotificationsViewModel>();
         ServiceLocator.RegisterSingleton<SettingsViewModel>();
-        ServiceLocator.RegisterSingleton<LocationsViewModel>();
-        ServiceLocator.RegisterSingleton<PersonsViewModel>();
-        ServiceLocator.RegisterSingleton<ViewModels.TagsViewModel>();
+        ServiceLocator.RegisterSingleton<UpdateLocationsViewModel>();
+        ServiceLocator.RegisterSingleton<UpdatePersonsViewModel>();
+        ServiceLocator.RegisterSingleton<ViewModels.UpdateTagsViewModel>();
         ServiceLocator.RegisterSingleton<BirthdaysViewModel>();
         ServiceLocator.RegisterSingleton<RipViewModel>();
         ServiceLocator.RegisterSingleton<ToolsViewModel>();

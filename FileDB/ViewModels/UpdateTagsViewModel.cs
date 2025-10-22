@@ -11,7 +11,7 @@ using FileDBInterface.Model;
 
 namespace FileDB.ViewModels;
 
-public partial class TagsViewModel : ObservableObject
+public partial class UpdateTagsViewModel : ObservableObject
 {
     [ObservableProperty]
     private string filterText = string.Empty;
@@ -36,7 +36,7 @@ public partial class TagsViewModel : ObservableObject
     private readonly IDialogs dialogs;
     private readonly ITagsRepository tagsRepository;
 
-    public TagsViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IDialogs dialogs, ITagsRepository tagsRepository)
+    public UpdateTagsViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IDialogs dialogs, ITagsRepository tagsRepository)
     {
         this.configProvider = configProvider;
         this.dbAccessProvider = dbAccessProvider;

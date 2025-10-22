@@ -10,6 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <AvaloniaXaml Remove="ViewModels\Dialogs\**" />
+    <Compile Remove="ViewModels\Dialogs\**" />
+    <EmbeddedResource Remove="ViewModels\Dialogs\**" />
+    <None Remove="ViewModels\Dialogs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="6.0.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -25,10 +32,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FileDB\FileDB.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ViewModels\Dialogs\" />
   </ItemGroup>
 
 </Project>

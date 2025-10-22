@@ -12,7 +12,7 @@ using FileDBInterface.Model;
 
 namespace FileDB.ViewModels;
 
-public partial class LocationsViewModel : ObservableObject
+public partial class UpdateLocationsViewModel : ObservableObject
 {
     [ObservableProperty]
     private string filterText = string.Empty;
@@ -40,7 +40,7 @@ public partial class LocationsViewModel : ObservableObject
     private readonly IDialogs dialogs;
     private readonly ILocationsRepository locationsRepository;
 
-    public LocationsViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IDialogs dialogs, ILocationsRepository locationsRepository)
+    public UpdateLocationsViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IDialogs dialogs, ILocationsRepository locationsRepository)
     {
         this.configProvider = configProvider;
         this.dbAccessProvider = dbAccessProvider;

@@ -3,14 +3,14 @@ using FileDB.ViewModels;
 
 namespace FileDB.Views;
 
-public partial class PersonsView : UserControl
+public partial class UpdateTagsView : UserControl
 {
-    public PersonsView()
+    public UpdateTagsView()
     {
         InitializeComponent();
         if (!Design.IsDesignMode)
         {
-            DataContext = ServiceLocator.Resolve<PersonsViewModel>();
+            DataContext = ServiceLocator.Resolve<UpdateTagsViewModel>();
         }
     }
 }
