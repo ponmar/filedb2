@@ -92,6 +92,7 @@
 		</Style>
 
 		<Style Selector="ToggleButton.ColoredToggleButton">
+			<Setter Property="CornerRadius" Value="15"/>
 			<Style Selector="^:checked /template/ ContentPresenter#PART_ContentPresenter">
 				<Setter Property="Background" Value="rgb(33, 150, 243)"/>
 			</Style>
@@ -101,7 +102,7 @@
 			<Style Selector="^:checked /template/ ContentPresenter#PART_ContentPresenter">
 				<Setter Property="Background" Value="rgb(33, 150, 243)"/>
 			</Style>
-			<Setter Property="CornerRadius" Value="5"/>
+			<Setter Property="CornerRadius" Value="15"/>
 			<Setter Property="FontSize" Value="14"/>
 			<Setter Property="Width" Value="35"/>
 			<Setter Property="Height" Value="35"/>
