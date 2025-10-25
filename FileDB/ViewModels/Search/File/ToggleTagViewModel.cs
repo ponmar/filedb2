@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using FileDB.Model;
+using FileDBInterface.Model;
 
 namespace FileDB.ViewModels.Search.File;
 
@@ -6,7 +8,7 @@ public partial class ToggleTagViewModel : ObservableObject
 {
     public int Id { get; }
     public string Name { get; }
-    public string ShortName { get; }
+    public string ToolTip { get; }
 
     [ObservableProperty]
     private bool isChecked;
@@ -14,15 +16,12 @@ public partial class ToggleTagViewModel : ObservableObject
     [ObservableProperty]
     private bool isVisible;
 
-    public ToggleTagViewModel(int id, string name, string shortName)
+    public ToggleTagViewModel(TagModel tag, IConfigProvider configProvider)
     {
-        Id = id;
-        Name = name;
-        ShortName = shortName;
+        Id = tag.Id;
+        Name = Utils.CreateShortText(tag.Name, configProvider.Config.ShortItemNameMaxLength);
+        ToolTip = tag.Name;
     }
-
-    // Note: overridden for combobox text search
-    public override string ToString() => ShortName;
 
     public void ApplyFilter(string filterText)
     {

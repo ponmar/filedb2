@@ -22,7 +22,7 @@
 				<ItemsControl ItemsSource="{Binding Tags}" IsVisible="{Binding FileSelected}">
 					<ItemsControl.ItemTemplate>
 						<DataTemplate x:DataType="vm:ToggleTagViewModel">
-							<ToggleButton IsVisible="{Binding IsVisible}" Command="{Binding $parent[ItemsControl].DataContext.ToggleTagCommand}" CommandParameter="{Binding}" Classes="ColoredToggleButton" Margin="0,2,0,2" Content="{Binding ShortName}" IsChecked="{Binding IsChecked, Mode=OneWay}" ToolTip.Tip="{Binding Name}" />
+							<ToggleButton IsVisible="{Binding IsVisible}" Command="{Binding $parent[ItemsControl].DataContext.ToggleTagCommand}" CommandParameter="{Binding}" Classes="ColoredToggleButton" Margin="0,2,0,2" Content="{Binding Name}" IsChecked="{Binding IsChecked, Mode=OneWay}" ToolTip.Tip="{Binding ToolTip}" />
 						</DataTemplate>
 					</ItemsControl.ItemTemplate>
 				</ItemsControl>

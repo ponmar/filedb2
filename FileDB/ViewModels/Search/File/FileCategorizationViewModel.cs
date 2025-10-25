@@ -214,10 +214,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
         Persons.Clear();
         foreach (var person in personsRepository.Persons)
         {
-            var personToUpdate = new TogglePersonViewModel(
-                person.Id,
-                $"{person.Firstname} {person.Lastname}",
-                Utils.CreateShortText($"{person.Firstname} {person.Lastname}", configProvider.Config.ShortItemNameMaxLength))
+            var personToUpdate = new TogglePersonViewModel(person, configProvider)
             {
                 IsChecked = personsInSelectedFile.Any(per => per.Id == person.Id),
             };
@@ -235,7 +232,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
         Locations.Clear();
         foreach (var location in locationsRepository.Locations)
         {
-            var locationToUpdate = new ToggleLocationViewModel(location.Id, location.Name, Utils.CreateShortText(location.Name, configProvider.Config.ShortItemNameMaxLength))
+            var locationToUpdate = new ToggleLocationViewModel(location, configProvider)
             {
                 IsChecked = locationsInSelectedFile.Any(l => l.Id == location.Id),
             };
@@ -253,7 +250,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
         Tags.Clear();
         foreach (var tag in tagsRepository.Tags)
         {
-            var tagToUpdate = new ToggleTagViewModel(tag.Id, tag.Name, Utils.CreateShortText(tag.Name, configProvider.Config.ShortItemNameMaxLength))
+            var tagToUpdate = new ToggleTagViewModel(tag, configProvider)
             {
                 IsChecked = tagsInSelectedFile.Any(t => t.Id == tag.Id),
             };

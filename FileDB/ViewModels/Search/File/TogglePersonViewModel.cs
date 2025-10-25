@@ -1,4 +1,7 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System;
+using CommunityToolkit.Mvvm.ComponentModel;
+using FileDB.Model;
+using FileDBInterface.Model;
 
 namespace FileDB.ViewModels.Search.File;
 
@@ -6,7 +9,7 @@ public partial class TogglePersonViewModel : ObservableObject
 {
     public int Id { get; }
     public string Name { get; }
-    public string ShortName { get; }
+    public string ToolTip { get; }
 
     [ObservableProperty]
     private bool isChecked;
@@ -14,18 +17,15 @@ public partial class TogglePersonViewModel : ObservableObject
     [ObservableProperty]
     private bool isVisible;
 
-    public TogglePersonViewModel(int id, string name, string shortName)
+    public TogglePersonViewModel(PersonModel person, IConfigProvider configProvider)
     {
-        Id = id;
-        Name = name;
-        ShortName = shortName;
+        Id = person.Id;
+        Name = FileTextOverlayCreator.GetShortPersonText(person, DateTime.Now, configProvider.Config.ShortItemNameMaxLength);
+        ToolTip = $"{person.Firstname} {person.Lastname}" + (person.Description is not null ? $":\n{person.Description}" : string.Empty);
     }
-
-    // Note: overridden for combobox text search
-    public override string ToString() => ShortName;
 
     public void ApplyFilter(string filterText)
     {
-        IsVisible = string.IsNullOrWhiteSpace(filterText) || Name.Contains(filterText, System.StringComparison.OrdinalIgnoreCase);
+        IsVisible = string.IsNullOrWhiteSpace(filterText) || ToolTip.Contains(filterText, System.StringComparison.OrdinalIgnoreCase);
     }
 }

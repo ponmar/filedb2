@@ -113,13 +113,23 @@ public static class Utils
             return string.Empty;
         }
 
+        return GetPersonAgeAtDate(fileDatetime, personDateOfBirthStr);
+    }
+
+    public static string GetPersonAgeAtDate(DateTime? dateTime, string? personDateOfBirthStr)
+    {
+        if (dateTime is null)
+        {
+            return string.Empty;
+        }
+
         DateTime? personDateOfBirth = personDateOfBirthStr is null ? null : DatabaseParsing.ParsePersonDateOfBirth(personDateOfBirthStr);
         if (personDateOfBirth is null)
         {
             return string.Empty;
         }
 
-        var age = TimeUtils.GetAgeInYears(fileDatetime.Value, personDateOfBirth.Value);
+        var age = TimeUtils.GetAgeInYears(dateTime.Value, personDateOfBirth.Value);
         return $" ({age})";
     }
 

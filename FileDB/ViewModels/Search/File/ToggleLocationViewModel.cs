@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using FileDB.Model;
+using FileDBInterface.Model;
 
 namespace FileDB.ViewModels.Search.File;
 
@@ -6,7 +8,7 @@ public partial class ToggleLocationViewModel : ObservableObject
 {
     public int Id { get; }
     public string Name { get; }
-    public string ShortName { get; }
+    public string ToolTip { get; }
 
     [ObservableProperty]
     private bool isChecked;
@@ -14,15 +16,12 @@ public partial class ToggleLocationViewModel : ObservableObject
     [ObservableProperty]
     private bool isVisible;
 
-    public ToggleLocationViewModel(int id, string name, string shortName)
+    public ToggleLocationViewModel(LocationModel location, IConfigProvider configProvider)
     {
-        Id = id;
-        Name = name;
-        ShortName = shortName;
+        Id = location.Id;
+        Name = Utils.CreateShortText(location.Name, configProvider.Config.ShortItemNameMaxLength);
+        ToolTip = location.Name + (location.Description is not null ? $":\n{location.Description}" : string.Empty);
     }
-
-    // Note: overridden for combobox text search
-    public override string ToString() => ShortName;
 
     public void ApplyFilter(string filterText)
     {

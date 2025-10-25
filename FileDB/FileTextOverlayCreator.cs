@@ -42,6 +42,12 @@ public class FileTextOverlayCreator
         return $"{person.Firstname} {person.Lastname}{Utils.GetPersonAgeInFileString(fileDateTime, person.DateOfBirth)}";
     }
 
+    public static string GetShortPersonText(PersonModel person, DateTime? dateTime, int nameMaxLength)
+    {
+        var name = Utils.CreateShortText($"{person.Firstname} {person.Lastname}", nameMaxLength);
+        return person.Deceased is null ? $"{name}{Utils.GetPersonAgeAtDate(dateTime, person.DateOfBirth)}" : name;
+    }
+
     public static IEnumerable<Person> GetPersons(IDatabaseAccess dbAccess, FileModel file)
     {
         var persons = dbAccess.GetPersonsFromFile(file.Id);
