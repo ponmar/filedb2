@@ -16,7 +16,7 @@
 						<Button Content="&#128473;" IsEnabled="{Binding FilterText, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" VerticalAlignment="Center" Command="{Binding ClearFilterTextCommand}"/>
 					</StackPanel>
 
-					<WrapPanel Orientation="Horizontal" IsVisible="{Binding ReadWriteMode}" Margin="0 10 0 0">
+					<WrapPanel Orientation="Horizontal" IsVisible="{Binding !ReadOnly}" Margin="0 10 0 0">
 						<Button Classes="Normal" Command="{Binding AddTagCommand}" Content="&#10133;" ToolTip.Tip="{x:Static lang:Strings.TagsAddButton}"/>
 						<Button Classes="Normal" Margin="5 0 5 0" Command="{Binding RemoveTagCommand}" IsEnabled="{Binding SelectedTag, Converter={x:Static ObjectConverters.IsNotNull}}" Content="&#128465;" ToolTip.Tip="{x:Static lang:Strings.TagsDeleteButton}"/>
 						<Button Classes="Normal" Command="{Binding EditTagCommand}" IsEnabled="{Binding SelectedTag, Converter={x:Static ObjectConverters.IsNotNull}}" Content="&#x1F589;" ToolTip.Tip="{x:Static lang:Strings.TagEditButton}"/>

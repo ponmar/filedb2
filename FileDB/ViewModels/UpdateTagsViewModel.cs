@@ -22,7 +22,7 @@ public partial class UpdateTagsViewModel : ObservableObject
     }
 
     [ObservableProperty]
-    private bool readWriteMode;
+    private bool readOnly;
 
     public ObservableCollection<TagModel> Tags { get; } = [];
 
@@ -43,13 +43,13 @@ public partial class UpdateTagsViewModel : ObservableObject
         this.dialogs = dialogs;
         this.tagsRepository = tagsRepository;
 
-        ReadWriteMode = !configProvider.Config.ReadOnly;
+        readOnly = configProvider.Config.ReadOnly;
 
         ReloadTags();
 
         this.RegisterForEvent<ConfigUpdated>((x) =>
         {
-            ReadWriteMode = !this.configProvider.Config.ReadOnly;
+            ReadOnly = this.configProvider.Config.ReadOnly;
         });
 
         this.RegisterForEvent<TagsUpdated>((x) =>

@@ -23,7 +23,7 @@ public partial class UpdateLocationsViewModel : ObservableObject
     }
 
     [ObservableProperty]
-    private bool readWriteMode;
+    private bool readOnly;
 
     public ObservableCollection<LocationModel> Locations { get; } = [];
 
@@ -47,7 +47,7 @@ public partial class UpdateLocationsViewModel : ObservableObject
         this.dialogs = dialogs;
         this.locationsRepository = locationsRepository;
 
-        readWriteMode = !configProvider.Config.ReadOnly;
+        readOnly = configProvider.Config.ReadOnly;
 
         ReloadLocations();
 
@@ -55,7 +55,7 @@ public partial class UpdateLocationsViewModel : ObservableObject
 
         this.RegisterForEvent<ConfigUpdated>((x) =>
         {
-            ReadWriteMode = !configProvider.Config.ReadOnly;
+            ReadOnly = configProvider.Config.ReadOnly;
         });
     }
 

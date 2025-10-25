@@ -40,7 +40,7 @@ public partial class MainViewModel : ObservableObject
         get
         {
             var title = $"{Utils.ApplicationName} {Utils.GetVersionString()} - {configProvider.FilePaths.ConfigPath}";
-            if (!ReadWriteMode)
+            if (ReadOnly)
             {
                 title += " (read only)";
             }
@@ -50,7 +50,7 @@ public partial class MainViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(Title))]
-    private bool readWriteMode;
+    private bool readOnly;
 
     [ObservableProperty]
     private SystemDecorations systemDecorations;
@@ -71,7 +71,7 @@ public partial class MainViewModel : ObservableObject
         this.notificationRepository = notificationRepository;
         this.searchResultRepository = searchResultRepository;
 
-        readWriteMode = !configProvider.Config.ReadOnly;
+        readOnly = configProvider.Config.ReadOnly;
 
         NumNotifications = notificationRepository.Notifications.Count();
         HighlightedNotificationSeverity = NotificationsToSeverity();
@@ -87,7 +87,7 @@ public partial class MainViewModel : ObservableObject
 
         this.RegisterForEvent<ConfigUpdated>((x) =>
         {
-            ReadWriteMode = !configProvider.Config.ReadOnly;
+            ReadOnly = configProvider.Config.ReadOnly;
             OnPropertyChanged(nameof(Title));
             ApplyWindowMode(configProvider.Config.WindowMode);
         });

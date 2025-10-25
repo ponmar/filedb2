@@ -29,7 +29,7 @@ public partial class UpdatePersonsViewModel : ObservableObject
     }
 
     [ObservableProperty]
-    private bool readWriteMode;
+    private bool readOnly;
 
     public ObservableCollection<PersonWithAge> Persons { get; } = [];
 
@@ -50,13 +50,13 @@ public partial class UpdatePersonsViewModel : ObservableObject
         this.dialogs = dialogs;
         this.personsRepository = personsRepository;
 
-        readWriteMode = !configProvider.Config.ReadOnly;
+        readOnly = configProvider.Config.ReadOnly;
 
         ReloadPersons();
 
         this.RegisterForEvent<ConfigUpdated>((x) =>
         {
-            ReadWriteMode = !this.configProvider.Config.ReadOnly;
+            ReadOnly = this.configProvider.Config.ReadOnly;
         });
 
         this.RegisterForEvent<PersonsUpdated>((x) =>
