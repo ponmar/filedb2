@@ -1421,4 +1421,7 @@ Lägg till nya filer i '{0}'.</value>
   <data name="CategorizationUpdateTagsRemoveAllToolTip" xml:space="preserve">
     <value>Ta bort alla synliga etiketter</value>
   </data>
+  <data name="CategorizationUpdatePersonsSearchToolTip" xml:space="preserve">
+    <value>Kommaseparerad lista med sökningar (exempel: Alice,Bob)</value>
+  </data>
 </root>

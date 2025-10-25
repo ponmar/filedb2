@@ -785,6 +785,15 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Comma separated list of searches (example: Alice,Bob).
+        /// </summary>
+        public static string CategorizationUpdatePersonsSearchToolTip {
+            get {
+                return ResourceManager.GetString("CategorizationUpdatePersonsSearchToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Update Persons ({0} / {1}).
         /// </summary>
         public static string CategorizationUpdatePersonsTitle {

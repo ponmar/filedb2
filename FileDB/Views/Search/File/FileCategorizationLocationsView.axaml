@@ -6,7 +6,7 @@
              xmlns:lang="clr-namespace:FileDB.Lang"
 			 xmlns:vm="clr-namespace:FileDB.ViewModels.Search.File"
              x:Class="FileDB.Views.Search.File.FileCategorizationLocationsView"
-             IsVisible="{Binding IsExpanded}">
+             IsVisible="{Binding UpdateItemsVisible}">
     <Expander Header="{Binding UpdateLocationsHeader}" IsExpanded="{Binding UpdateLocationsIsExpanded}">
 		<Grid ColumnDefinitions="auto" RowDefinitions="auto,*">
 			<StackPanel Grid.Row="0" Orientation="Horizontal" IsVisible="{Binding FileSelected}">

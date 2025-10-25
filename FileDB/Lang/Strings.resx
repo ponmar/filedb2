@@ -1421,4 +1421,7 @@ This operation can be slow for a large collection of files or if the media acces
   <data name="CategorizationUpdateTagsRemoveAllToolTip" xml:space="preserve">
     <value>Remove all visible tags</value>
   </data>
+  <data name="CategorizationUpdatePersonsSearchToolTip" xml:space="preserve">
+    <value>Comma separated list of searches (example: Alice,Bob)</value>
+  </data>
 </root>

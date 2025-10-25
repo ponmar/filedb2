@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Input;
@@ -21,14 +23,17 @@ public partial class FileCategorizationViewModel : ObservableValidator
 {
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(FileSelected))]
+    [NotifyPropertyChangedFor(nameof(CanCategorize))]
     [NotifyPropertyChangedFor(nameof(CanApplyMetaDataFromPrevEdit))]
     [NotifyPropertyChangedFor(nameof(CanMarkCurrentFileAsPrevEdited))]
+    [NotifyPropertyChangedFor(nameof(UpdateItemsVisible))]
     private FileModel? selectedFile;
 
     public bool FileSelected => SelectedFile is not null;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(Header))]
+    [NotifyPropertyChangedFor(nameof(UpdateItemsVisible))]
     private bool isExpanded = false;
 
     [ObservableProperty]
@@ -46,6 +51,8 @@ public partial class FileCategorizationViewModel : ObservableValidator
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(UpdateTagsHeader))]
     private bool updateTagsIsExpanded = false;
+
+    public bool UpdateItemsVisible => CanCategorize && IsExpanded;
 
     public string Header => IsExpanded ? Strings.CategorizationUpdateTitle : char.ConvertFromUtf32(0x1F589);
     public string HistoryHeader => HistoryIsExpanded ? Strings.CategorizationUpdateHistoryTitle : char.ConvertFromUtf32(0x1F4DC);
@@ -85,7 +92,11 @@ public partial class FileCategorizationViewModel : ObservableValidator
     }
 
     [ObservableProperty]
-    private bool readWriteMode;
+    [NotifyPropertyChangedFor(nameof(CanCategorize))]
+    [NotifyPropertyChangedFor(nameof(UpdateItemsVisible))]
+    private bool readOnly;
+
+    public bool CanCategorize => !ReadOnly && FileSelected;
 
     [ObservableProperty]
     private int imageRotation = 0;
@@ -114,13 +125,16 @@ public partial class FileCategorizationViewModel : ObservableValidator
 
     partial void OnPersonsFilterTextChanged(string value)
     {
+        personsFilters = value.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
         foreach (var person in Persons)
         {
-            person.ApplyFilter(value);
+            person.ApplyFilters(personsFilters);
         }
         OnPropertyChanged(nameof(HasVisiblePersons));
         OnPropertyChanged(nameof(UpdatePersonsHeader));
     }
+
+    private IEnumerable<string> personsFilters = [];
 
     [ObservableProperty]
     private string locationsFilterText = string.Empty;
@@ -172,7 +186,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
         this.tagsRepository = tagsRepository;
         this.fileSelector = fileSelector;
 
-        ReadWriteMode = !configProvider.Config.ReadOnly;
+        ReadOnly = configProvider.Config.ReadOnly;
 
         ReloadPersons();
         ReloadLocations();
@@ -184,7 +198,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
 
         this.RegisterForEvent<ConfigUpdated>((x) =>
         {
-            ReadWriteMode = !configProvider.Config.ReadOnly;
+            ReadOnly = configProvider.Config.ReadOnly;
         });
 
         this.RegisterForEvent<FileSelectionChanged>((x) =>
@@ -218,7 +232,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
             {
                 IsChecked = personsInSelectedFile.Any(per => per.Id == person.Id),
             };
-            personToUpdate.ApplyFilter(PersonsFilterText);
+            personToUpdate.ApplyFilters(personsFilters);
             Persons.Add(personToUpdate);
         }
         OnPropertyChanged(nameof(HasVisiblePersons));
@@ -579,7 +593,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
 
     private async Task FunctionKeyAsync(int functionKey)
     {
-        if (!ReadWriteMode || SelectedFile is null)
+        if (ReadOnly || SelectedFile is null)
         {
             return;
         }
@@ -612,7 +626,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
     [RelayCommand]
     private async Task TogglePersonAsync(TogglePersonViewModel person)
     {
-        if (!ReadWriteMode || SelectedFile is null)
+        if (ReadOnly || SelectedFile is null)
         {
             return;
         }
@@ -647,7 +661,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
     [RelayCommand]
     private void ToggleLocation(ToggleLocationViewModel location)
     {
-        if (!ReadWriteMode || SelectedFile is null)
+        if (ReadOnly || SelectedFile is null)
         {
             return;
         }
@@ -682,7 +696,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
     [RelayCommand]
     private void ToggleTag(ToggleTagViewModel tag)
     {
-        if (!ReadWriteMode || SelectedFile is null)
+        if (ReadOnly || SelectedFile is null)
         {
             return;
         }
@@ -699,7 +713,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
     [RelayCommand]
     private async Task ToggleFromHistoryItemAsync(UpdateHistoryItemViewModel historyItem)
     {
-        if (!ReadWriteMode || SelectedFile is null)
+        if (ReadOnly || SelectedFile is null)
         {
             return;
         }
