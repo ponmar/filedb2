@@ -29,9 +29,11 @@
 						Stretch="Uniform"/>
 				</LayoutTransformControl>
 
-				<!-- File loading error -->
+				<!-- File loading error/info -->
 				<StackPanel Grid.Row="0"
-					Grid.Column="1"
+					Grid.RowSpan="2"
+					Grid.Column="0"
+					Grid.ColumnSpan="3"
 					HorizontalAlignment="Center"
 					VerticalAlignment="Center" Orientation="Vertical"
 					IsVisible="{Binding FileLoadError, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
