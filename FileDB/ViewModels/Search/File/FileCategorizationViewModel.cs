@@ -15,117 +15,7 @@ using FileDBInterface.Validators;
 
 namespace FileDB.ViewModels.Search.File;
 
-public partial class PersonToToggleViewModel : ObservableObject
-{
-    public int Id { get; }
-    public string Name { get; }
-    public string ShortName { get; }
-
-    [ObservableProperty]
-    private bool isChecked;
-
-    [ObservableProperty]
-    private bool isVisible;
-
-    public PersonToToggleViewModel(int id, string name, string shortName)
-    {
-        Id = id;
-        Name = name;
-        ShortName = shortName;
-    }
-
-    // Note: overridden for combobox text search
-    public override string ToString() => ShortName;
-
-    public void ApplyFilter(string filterText)
-    {
-        IsVisible = string.IsNullOrWhiteSpace(filterText) || Name.Contains(filterText, System.StringComparison.OrdinalIgnoreCase);
-    }
-}
-
-public partial class LocationToToggleViewModel : ObservableObject
-{
-    public int Id { get; }
-    public string Name { get; }
-    public string ShortName { get; }
-
-    [ObservableProperty]
-    private bool isChecked;
-
-    [ObservableProperty]
-    private bool isVisible;
-
-    public LocationToToggleViewModel(int id, string name, string shortName)
-    {
-        Id = id;
-        Name = name;
-        ShortName = shortName;
-    }
-
-    // Note: overridden for combobox text search
-    public override string ToString() => ShortName;
-
-    public void ApplyFilter(string filterText)
-    {
-        IsVisible = string.IsNullOrWhiteSpace(filterText) || Name.Contains(filterText, System.StringComparison.OrdinalIgnoreCase);
-    }
-}
-
-public partial class TagToToggleViewModel : ObservableObject
-{
-    public int Id { get; }
-    public string Name { get; }
-    public string ShortName { get; }
-
-    [ObservableProperty]
-    private bool isChecked;
-
-    [ObservableProperty]
-    private bool isVisible;
-
-    public TagToToggleViewModel(int id, string name, string shortName)
-    {
-        Id = id;
-        Name = name;
-        ShortName = shortName;
-    }
-
-    // Note: overridden for combobox text search
-    public override string ToString() => ShortName;
-
-    public void ApplyFilter(string filterText)
-    {
-        IsVisible = string.IsNullOrWhiteSpace(filterText) || Name.Contains(filterText, System.StringComparison.OrdinalIgnoreCase);
-    }
-}
-
 public enum RotationDirection { Clockwise, CounterClockwise }
-
-public partial class UpdateHistoryItemViewModel : ObservableObject
-{
-    public required UpdateHistoryType Type { get; init; }
-    public required int ItemId { get; init; }
-    public required string ShortItemName { get; init; }
-    public required string ItemName { get; init; }
-
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(ToggleText))]
-    private int functionKey;
-
-    private bool HasHotKey => FunctionKey >= 1 && FunctionKey <= 12;
-
-    public string ToggleText => HasHotKey ?
-        string.Format(Strings.SearchToggleWithKeyText, FunctionKey, ShortItemName) :
-        string.Format(Strings.SearchToggleText, ShortItemName);
-
-    public string ToolTip => IsChecked ?
-        string.Format(Strings.SearchToggleToolTipExclude, ItemName) :
-        string.Format(Strings.SearchToggleToolTipInclude, ItemName);
-
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(ToolTip))]
-    private bool isChecked;
-}
 
 public partial class FileCategorizationViewModel : ObservableValidator
 {
@@ -211,9 +101,9 @@ public partial class FileCategorizationViewModel : ObservableValidator
 
     public bool CanMarkCurrentFileAsPrevEdited => SelectedFile is not null && SelectedFile.Id != PrevEditedFileId;
 
-    public ObservableCollection<PersonToToggleViewModel> Persons { get; } = [];
-    public ObservableCollection<LocationToToggleViewModel> Locations { get; } = [];
-    public ObservableCollection<TagToToggleViewModel> Tags { get; } = [];
+    public ObservableCollection<TogglePersonViewModel> Persons { get; } = [];
+    public ObservableCollection<ToggleLocationViewModel> Locations { get; } = [];
+    public ObservableCollection<ToggleTagViewModel> Tags { get; } = [];
 
     public bool HasVisiblePersons => Persons.Any(x => x.IsVisible);
     public bool HasVisibleLocations => Locations.Any(x => x.IsVisible);
@@ -324,7 +214,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
         Persons.Clear();
         foreach (var person in personsRepository.Persons)
         {
-            var personToUpdate = new PersonToToggleViewModel(
+            var personToUpdate = new TogglePersonViewModel(
                 person.Id,
                 $"{person.Firstname} {person.Lastname}",
                 Utils.CreateShortText($"{person.Firstname} {person.Lastname}", configProvider.Config.ShortItemNameMaxLength))
@@ -345,7 +235,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
         Locations.Clear();
         foreach (var location in locationsRepository.Locations)
         {
-            var locationToUpdate = new LocationToToggleViewModel(location.Id, location.Name, Utils.CreateShortText(location.Name, configProvider.Config.ShortItemNameMaxLength))
+            var locationToUpdate = new ToggleLocationViewModel(location.Id, location.Name, Utils.CreateShortText(location.Name, configProvider.Config.ShortItemNameMaxLength))
             {
                 IsChecked = locationsInSelectedFile.Any(l => l.Id == location.Id),
             };
@@ -363,7 +253,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
         Tags.Clear();
         foreach (var tag in tagsRepository.Tags)
         {
-            var tagToUpdate = new TagToToggleViewModel(tag.Id, tag.Name, Utils.CreateShortText(tag.Name, configProvider.Config.ShortItemNameMaxLength))
+            var tagToUpdate = new ToggleTagViewModel(tag.Id, tag.Name, Utils.CreateShortText(tag.Name, configProvider.Config.ShortItemNameMaxLength))
             {
                 IsChecked = tagsInSelectedFile.Any(t => t.Id == tag.Id),
             };
@@ -723,7 +613,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
     }
 
     [RelayCommand]
-    private async Task TogglePersonAsync(PersonToToggleViewModel person)
+    private async Task TogglePersonAsync(TogglePersonViewModel person)
     {
         if (!ReadWriteMode || SelectedFile is null)
         {
@@ -758,7 +648,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
     }
 
     [RelayCommand]
-    private void ToggleLocation(LocationToToggleViewModel location)
+    private void ToggleLocation(ToggleLocationViewModel location)
     {
         if (!ReadWriteMode || SelectedFile is null)
         {
@@ -793,7 +683,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
     }
 
     [RelayCommand]
-    private void ToggleTag(TagToToggleViewModel tag)
+    private void ToggleTag(ToggleTagViewModel tag)
     {
         if (!ReadWriteMode || SelectedFile is null)
         {

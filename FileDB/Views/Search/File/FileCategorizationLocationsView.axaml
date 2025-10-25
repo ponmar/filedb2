@@ -21,7 +21,7 @@
 			<ScrollViewer Grid.Row="1" Margin="0,10,0,0">
 				<ItemsControl ItemsSource="{Binding Locations}" IsVisible="{Binding FileSelected}">
 					<ItemsControl.ItemTemplate>
-						<DataTemplate x:DataType="vm:LocationToToggleViewModel">
+						<DataTemplate x:DataType="vm:ToggleLocationViewModel">
 							<ToggleButton IsVisible="{Binding IsVisible}" Command="{Binding $parent[ItemsControl].DataContext.ToggleLocationCommand}" CommandParameter="{Binding}" Classes="ColoredToggleButton" Margin="0,2,0,2" Content="{Binding ShortName}" IsChecked="{Binding IsChecked, Mode=OneWay}" ToolTip.Tip="{Binding Name}" />
 						</DataTemplate>
 					</ItemsControl.ItemTemplate>
