@@ -301,6 +301,22 @@ public partial class FileCategorizationViewModel : ObservableValidator
             tag.IsChecked = fileTags.Any(t => t.Id == tag.Id);
         }
 
+        foreach (var historyItem in UpdateHistoryItems)
+        {
+            switch (historyItem.Type)
+            {
+                case UpdateHistoryType.TogglePerson:
+                    historyItem.IsChecked = filePersons.Any(p => p.Id == historyItem.ItemId);
+                    break;
+                case UpdateHistoryType.ToggleLocation:
+                    historyItem.IsChecked = fileLocations.Any(l => l.Id == historyItem.ItemId);
+                    break;
+                case UpdateHistoryType.ToggleTag:
+                    historyItem.IsChecked = fileTags.Any(t => t.Id == historyItem.ItemId);
+                    break;
+            }
+        }
+
         ImageRotation = DatabaseParsing.OrientationToDegrees(SelectedFile.Orientation ?? 0);
         IsDirty = false;
     }
@@ -312,6 +328,10 @@ public partial class FileCategorizationViewModel : ObservableValidator
         NewFileDateTime = string.Empty;
         FilePosition = string.Empty;
         ImageRotation = 0;
+        foreach (var historyItem in UpdateHistoryItems)
+        {
+            historyItem.IsChecked = false;
+        }
         IsDirty = false;
     }
 
