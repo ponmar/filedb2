@@ -1404,22 +1404,22 @@ This operation can be slow for a large collection of files or if the media acces
     <value>No tags available.</value>
   </data>
   <data name="CategorizationUpdatePersonsAddAllToolTip" xml:space="preserve">
-    <value>Add all visible persons</value>
+    <value>Select all visible persons</value>
   </data>
   <data name="CategorizationUpdateLocationsAddAllToolTip" xml:space="preserve">
-    <value>Add all visible locations</value>
+    <value>Select all visible locations</value>
   </data>
   <data name="CategorizationUpdateTagsAddAllToolTip" xml:space="preserve">
-    <value>Add all visible tags</value>
+    <value>Select all visible tags</value>
   </data>
   <data name="CategorizationUpdatePersonsRemoveAllToolTip" xml:space="preserve">
-    <value>Remove all visible persons</value>
+    <value>Deselect all visible persons</value>
   </data>
   <data name="CategorizationUpdateLocationsRemoveAllToolTip" xml:space="preserve">
-    <value>Remove all visible locations</value>
+    <value>Deselect all visible locations</value>
   </data>
   <data name="CategorizationUpdateTagsRemoveAllToolTip" xml:space="preserve">
-    <value>Remove all visible tags</value>
+    <value>Deselect all visible tags</value>
   </data>
   <data name="CategorizationUpdatePersonsSearchToolTip" xml:space="preserve">
     <value>Comma separated list of searches (example: Alice,Bob)</value>

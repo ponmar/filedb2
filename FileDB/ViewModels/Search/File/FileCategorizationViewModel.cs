@@ -125,7 +125,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
 
     partial void OnPersonsFilterTextChanged(string value)
     {
-        personsFilters = value.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+        personsFilters = GetSearchFiltersFromText(value);
         foreach (var person in Persons)
         {
             person.ApplyFilters(personsFilters);
@@ -135,15 +135,18 @@ public partial class FileCategorizationViewModel : ObservableValidator
     }
 
     private IEnumerable<string> personsFilters = [];
+    private IEnumerable<string> tagsFilters = [];
+    private IEnumerable<string> locationsFilters = [];
 
     [ObservableProperty]
     private string locationsFilterText = string.Empty;
 
     partial void OnLocationsFilterTextChanged(string value)
     {
+        locationsFilters = GetSearchFiltersFromText(value);
         foreach (var location in Locations)
         {
-            location.ApplyFilter(value);
+            location.ApplyFilters(locationsFilters);
         }
         OnPropertyChanged(nameof(HasVisibleLocations));
         OnPropertyChanged(nameof(UpdateLocationsHeader));
@@ -154,9 +157,10 @@ public partial class FileCategorizationViewModel : ObservableValidator
 
     partial void OnTagsFilterTextChanged(string value)
     {
+        tagsFilters = GetSearchFiltersFromText(value);
         foreach (var tag in Tags)
         {
-            tag.ApplyFilter(value);
+            tag.ApplyFilters(tagsFilters);
         }
         OnPropertyChanged(nameof(HasVisibleTags));
         OnPropertyChanged(nameof(UpdateTagsHeader));
@@ -250,7 +254,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
             {
                 IsChecked = locationsInSelectedFile.Any(l => l.Id == location.Id),
             };
-            locationToUpdate.ApplyFilter(LocationsFilterText);
+            locationToUpdate.ApplyFilters(locationsFilters);
             Locations.Add(locationToUpdate);
         }
         OnPropertyChanged(nameof(HasVisibleLocations));
@@ -268,7 +272,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
             {
                 IsChecked = tagsInSelectedFile.Any(t => t.Id == tag.Id),
             };
-            tagToUpdate.ApplyFilter(TagsFilterText);
+            tagToUpdate.ApplyFilters(tagsFilters);
             Tags.Add(tagToUpdate);
         }
         OnPropertyChanged(nameof(HasVisibleTags));
@@ -846,5 +850,10 @@ public partial class FileCategorizationViewModel : ObservableValidator
                 Messenger.Send<FileEdited>();
             }
         }
+    }
+
+    private IEnumerable<string> GetSearchFiltersFromText(string text)
+    {
+        return text.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
     }
 }

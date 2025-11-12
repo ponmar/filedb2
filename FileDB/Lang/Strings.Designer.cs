@@ -722,7 +722,7 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add all visible locations.
+        ///   Looks up a localized string similar to Select all visible locations.
         /// </summary>
         public static string CategorizationUpdateLocationsAddAllToolTip {
             get {
@@ -740,7 +740,7 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remove all visible locations.
+        ///   Looks up a localized string similar to Deselect all visible locations.
         /// </summary>
         public static string CategorizationUpdateLocationsRemoveAllToolTip {
             get {
@@ -758,7 +758,7 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add all visible persons.
+        ///   Looks up a localized string similar to Select all visible persons.
         /// </summary>
         public static string CategorizationUpdatePersonsAddAllToolTip {
             get {
@@ -776,7 +776,7 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remove all visible persons.
+        ///   Looks up a localized string similar to Deselect all visible persons.
         /// </summary>
         public static string CategorizationUpdatePersonsRemoveAllToolTip {
             get {
@@ -803,7 +803,7 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add all visible tags.
+        ///   Looks up a localized string similar to Select all visible tags.
         /// </summary>
         public static string CategorizationUpdateTagsAddAllToolTip {
             get {
@@ -821,7 +821,7 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remove all visible tags.
+        ///   Looks up a localized string similar to Deselect all visible tags.
         /// </summary>
         public static string CategorizationUpdateTagsRemoveAllToolTip {
             get {

@@ -1,4 +1,7 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using CommunityToolkit.Mvvm.ComponentModel;
 using FileDB.Model;
 using FileDBInterface.Model;
 
@@ -23,8 +26,8 @@ public partial class ToggleLocationViewModel : ObservableObject
         ToolTip = location.Name + (location.Description is not null ? $":\n{location.Description}" : string.Empty);
     }
 
-    public void ApplyFilter(string filterText)
+    public void ApplyFilters(IEnumerable<string> filters)
     {
-        IsVisible = string.IsNullOrWhiteSpace(filterText) || Name.Contains(filterText, System.StringComparison.OrdinalIgnoreCase);
+        IsVisible = !filters.Any() || filters.Any(x => Name.Contains(x, StringComparison.OrdinalIgnoreCase));
     }
 }
