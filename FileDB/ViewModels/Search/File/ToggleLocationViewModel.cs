@@ -26,8 +26,9 @@ public partial class ToggleLocationViewModel : ObservableObject
         ToolTip = location.Name + (location.Description is not null ? $":\n{location.Description}" : string.Empty);
     }
 
-    public void ApplyFilters(IEnumerable<string> filters)
+    public void ApplyFilters(IEnumerable<string> filters, bool caseSensitive)
     {
-        IsVisible = !filters.Any() || filters.Any(x => Name.Contains(x, StringComparison.OrdinalIgnoreCase));
+        var stringComparison = caseSensitive ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase;
+        IsVisible = !filters.Any() || filters.Any(x => Name.Contains(x, stringComparison));
     }
 }

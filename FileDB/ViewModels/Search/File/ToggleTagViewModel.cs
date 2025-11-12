@@ -26,8 +26,9 @@ public partial class ToggleTagViewModel : ObservableObject
         ToolTip = tag.Name;
     }
 
-    public void ApplyFilters(IEnumerable<string> filters)
+    public void ApplyFilters(IEnumerable<string> filters, bool caseSensitive)
     {
-        IsVisible = !filters.Any() || filters.Any(x => Name.Contains(x, StringComparison.OrdinalIgnoreCase));
+        var stringComparison = caseSensitive ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase;
+        IsVisible = !filters.Any() || filters.Any(x => Name.Contains(x, stringComparison));
     }
 }

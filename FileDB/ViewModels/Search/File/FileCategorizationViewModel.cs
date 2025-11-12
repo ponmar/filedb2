@@ -125,28 +125,50 @@ public partial class FileCategorizationViewModel : ObservableValidator
 
     partial void OnPersonsFilterTextChanged(string value)
     {
-        personsFilters = GetSearchFiltersFromText(value);
+        ApplyPersonsFilter();
+    }
+
+    [ObservableProperty]
+    private bool personsFilterTextCaseSensitive;
+
+    partial void OnPersonsFilterTextCaseSensitiveChanged(bool value)
+    {
+        ApplyPersonsFilter();
+    }
+
+    private void ApplyPersonsFilter()
+    {
+        personsFilters = GetSearchFiltersFromText(PersonsFilterText);
         foreach (var person in Persons)
         {
-            person.ApplyFilters(personsFilters);
+            person.ApplyFilters(personsFilters, PersonsFilterTextCaseSensitive);
         }
         OnPropertyChanged(nameof(HasVisiblePersons));
         OnPropertyChanged(nameof(UpdatePersonsHeader));
     }
-
-    private IEnumerable<string> personsFilters = [];
-    private IEnumerable<string> tagsFilters = [];
-    private IEnumerable<string> locationsFilters = [];
 
     [ObservableProperty]
     private string locationsFilterText = string.Empty;
 
     partial void OnLocationsFilterTextChanged(string value)
     {
-        locationsFilters = GetSearchFiltersFromText(value);
+        ApplyLocationsFilter();
+    }
+
+    [ObservableProperty]
+    private bool locationsFilterTextCaseSensitive;
+
+    partial void OnLocationsFilterTextCaseSensitiveChanged(bool value)
+    {
+        ApplyLocationsFilter();
+    }
+
+    private void ApplyLocationsFilter()
+    {
+        locationsFilters = GetSearchFiltersFromText(LocationsFilterText);
         foreach (var location in Locations)
         {
-            location.ApplyFilters(locationsFilters);
+            location.ApplyFilters(locationsFilters, LocationsFilterTextCaseSensitive);
         }
         OnPropertyChanged(nameof(HasVisibleLocations));
         OnPropertyChanged(nameof(UpdateLocationsHeader));
@@ -157,14 +179,31 @@ public partial class FileCategorizationViewModel : ObservableValidator
 
     partial void OnTagsFilterTextChanged(string value)
     {
-        tagsFilters = GetSearchFiltersFromText(value);
+        ApplyTagsFilter();
+    }
+
+    [ObservableProperty]
+    private bool tagsFilterTextCaseSensitive;
+
+    partial void OnTagsFilterTextCaseSensitiveChanged(bool value)
+    {
+        ApplyTagsFilter();
+    }
+
+    private void ApplyTagsFilter()
+    {
+        tagsFilters = GetSearchFiltersFromText(TagsFilterText);
         foreach (var tag in Tags)
         {
-            tag.ApplyFilters(tagsFilters);
+            tag.ApplyFilters(tagsFilters, TagsFilterTextCaseSensitive);
         }
         OnPropertyChanged(nameof(HasVisibleTags));
         OnPropertyChanged(nameof(UpdateTagsHeader));
     }
+
+    private IEnumerable<string> personsFilters = [];
+    private IEnumerable<string> tagsFilters = [];
+    private IEnumerable<string> locationsFilters = [];
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CanSave))]
@@ -236,7 +275,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
             {
                 IsChecked = personsInSelectedFile.Any(per => per.Id == person.Id),
             };
-            personToUpdate.ApplyFilters(personsFilters);
+            personToUpdate.ApplyFilters(personsFilters, PersonsFilterTextCaseSensitive);
             Persons.Add(personToUpdate);
         }
         OnPropertyChanged(nameof(HasVisiblePersons));
@@ -254,7 +293,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
             {
                 IsChecked = locationsInSelectedFile.Any(l => l.Id == location.Id),
             };
-            locationToUpdate.ApplyFilters(locationsFilters);
+            locationToUpdate.ApplyFilters(locationsFilters, LocationsFilterTextCaseSensitive);
             Locations.Add(locationToUpdate);
         }
         OnPropertyChanged(nameof(HasVisibleLocations));
@@ -272,7 +311,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
             {
                 IsChecked = tagsInSelectedFile.Any(t => t.Id == tag.Id),
             };
-            tagToUpdate.ApplyFilters(tagsFilters);
+            tagToUpdate.ApplyFilters(tagsFilters, TagsFilterTextCaseSensitive);
             Tags.Add(tagToUpdate);
         }
         OnPropertyChanged(nameof(HasVisibleTags));

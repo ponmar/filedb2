@@ -29,8 +29,9 @@ public partial class TogglePersonViewModel : ObservableObject
         nameForFilters = $"{person.Firstname} {person.Lastname}";
     }
 
-    public void ApplyFilters(IEnumerable<string> filters)
+    public void ApplyFilters(IEnumerable<string> filters, bool caseSensitive)
     {
-        IsVisible = !filters.Any() || filters.Any(x => nameForFilters.Contains(x, StringComparison.OrdinalIgnoreCase));
+        var stringComparison = caseSensitive ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase;
+        IsVisible = !filters.Any() || filters.Any(x => nameForFilters.Contains(x, stringComparison));
     }
 }
