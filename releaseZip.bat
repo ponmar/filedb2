@@ -5,7 +5,7 @@ set version=%version:~0,-1%
 echo Detected version: %version%
 pause
 
-dotnet clean FileDB.sln -c Release
+dotnet clean FileDB.slnx -c Release
 if not %ERRORLEVEL%==0 (
     echo "Clean solution failed" && exit /b 1
 )

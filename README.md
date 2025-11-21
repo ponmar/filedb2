@@ -60,7 +60,7 @@ The main application is a C# [Avalonia UI](https://avaloniaui.net/) desktop appl
 
 1. Clone GIT repository
 2. Checkout wanted branch
-3. Build FileDB.sln solution
+3. Build FileDB.slnx solution
 4. Start the FileDB.Desktop project with a .FileDB file as command line argument (the [demo](https://github.com/ponmar/filedb2_demo/) can be used)
 
 ### Contribute

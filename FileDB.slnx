@@ -1,0 +1,20 @@
+<Solution>
+  <Folder Name="/Repo/">
+    <File Path=".github/workflows/dotnet.yml" />
+    <File Path=".gitignore" />
+    <File Path="CHANGES.txt" />
+    <File Path="Installer/InnoSetupInstaller.iss" />
+    <File Path="LICENSE.txt" />
+    <File Path="README.md" />
+    <File Path="releaseInstaller.bat" />
+    <File Path="releaseZip.bat" />
+    <File Path="update_licenses.bat" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="FileDBInterfaceTests/FileDBInterfaceTests.csproj" />
+    <Project Path="FileDBTests/FileDBTests.csproj" />
+  </Folder>
+  <Project Path="FileDB.Desktop/FileDB.Desktop.csproj" />
+  <Project Path="FileDB/FileDB.csproj" />
+  <Project Path="FileDBInterface/FileDBInterface.csproj" />
+</Solution>
