@@ -31,8 +31,8 @@ create table files(
 
 create table persons(
     Id integer primary key autoincrement not null,
-    Firstname text not null,
-    Lastname text not null,
+    ShortName text not null,
+    FullName text not null,
     Description text,
     DateOfBirth varchar(10), /* Format: YYYY-MM-DD, YYYY-MM, or YYYY */
     Deceased varchar(10), /* Format: YYYY-MM-DD, YYYY-MM, or YYYY */

@@ -39,12 +39,12 @@ public class FileTextOverlayCreator
 
     private static string GetPersonText(PersonModel person, string? fileDateTime)
     {
-        return $"{person.Firstname} {person.Lastname}{Utils.GetPersonAgeInFileString(fileDateTime, person.DateOfBirth)}";
+        return $"{person.FullName}{Utils.GetPersonAgeInFileString(fileDateTime, person.DateOfBirth)}";
     }
 
     public static string GetShortPersonText(PersonModel person, DateTime? dateTime, int nameMaxLength)
     {
-        var name = Utils.CreateShortText($"{person.Firstname} {person.Lastname}", nameMaxLength);
+        var name = Utils.CreateShortText($"{person.FullName}", nameMaxLength);
         return person.Deceased is null ? $"{name}{Utils.GetPersonAgeAtDate(dateTime, person.DateOfBirth)}" : name;
     }
 

@@ -240,11 +240,11 @@
   <data name="SaveButton" xml:space="preserve">
     <value>Spara</value>
   </data>
-  <data name="AddPersonFirstnameLabel" xml:space="preserve">
-    <value>Förnamn:</value>
+  <data name="AddPersonShortNameLabel" xml:space="preserve">
+    <value>Kort namn:</value>
   </data>
-  <data name="AddPersonLastnameLabel" xml:space="preserve">
-    <value>Efternamn:</value>
+  <data name="AddPersonFullNameLabel" xml:space="preserve">
+    <value>Fullständigt namn:</value>
   </data>
   <data name="AddPersonSexLabel" xml:space="preserve">
     <value>Kön (ISO/IEC 5218):</value>

@@ -36,8 +36,8 @@
 										<ColumnDefinition Width="auto" SharedSizeGroup="col7"/>
 										<ColumnDefinition Width="auto" SharedSizeGroup="col8"/>
 									</Grid.ColumnDefinitions>
-									<TextBlock Classes="PageTextBlock" Grid.Column="0" Text="{Binding Firstname}" TextWrapping="Wrap"/>
-									<TextBlock Classes="PageTextBlock" Grid.Column="1" Text="{Binding Lastname}" TextWrapping="Wrap"/>
+									<TextBlock Classes="PageTextBlock" Grid.Column="0" Text="{Binding ShortName}" TextWrapping="Wrap"/>
+									<TextBlock Classes="PageTextBlock" Grid.Column="1" Text="{Binding FullName}" TextWrapping="Wrap"/>
 									<TextBlock Classes="PageTextBlock" Grid.Column="2" Text="{Binding Description}" IsVisible="{Binding Description, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" TextWrapping="Wrap"/>
 									<TextBlock Classes="PageTextBlock" Grid.Column="3" Text="{Binding DateOfBirth}" IsVisible="{Binding DateOfBirth, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" TextWrapping="Wrap"/>
 									<TextBlock Classes="PageTextBlock" Grid.Column="4" Text="{Binding Deceased}" IsVisible="{Binding Deceased, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" TextWrapping="Wrap"/>

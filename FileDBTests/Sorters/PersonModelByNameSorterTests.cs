@@ -11,9 +11,9 @@ public class PersonModelByNameSorterTests
     {
         var items = new List<PersonModel>()
         {
-            new PersonModel() { Id = 0, Firstname = "A", Lastname = "A" },
-            new PersonModel() { Id = 2, Firstname = "C", Lastname = "C" },
-            new PersonModel() { Id = 1, Firstname = "A", Lastname = "B" },
+            new() { Id = 0, ShortName = "A", FullName = "A" },
+            new() { Id = 2, ShortName = "C", FullName = "C" },
+            new() { Id = 1, ShortName = "A", FullName = "B" },
         };
 
         var sorter = new PersonModelByNameSorter();

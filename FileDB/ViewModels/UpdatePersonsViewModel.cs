@@ -68,7 +68,7 @@ public partial class UpdatePersonsViewModel : ObservableObject
     [RelayCommand]
     private async Task RemovePersonAsync()
     {
-        if (!await dialogs.ShowConfirmDialogAsync($"Remove {SelectedPerson!.Firstname} {SelectedPerson.Lastname}?"))
+        if (!await dialogs.ShowConfirmDialogAsync($"Remove {SelectedPerson!.FullName}?"))
         {
             return;
         }
@@ -105,8 +105,8 @@ public partial class UpdatePersonsViewModel : ObservableObject
         var persons = personsRepository.Persons.Select(pm => new PersonWithAge
         {
             Id = pm.Id,
-            Firstname = pm.Firstname,
-            Lastname = pm.Lastname,
+            ShortName = pm.ShortName,
+            FullName = pm.FullName,
             Description = pm.Description,
             DateOfBirth = pm.DateOfBirth,
             Deceased = pm.Deceased,

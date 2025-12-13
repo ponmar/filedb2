@@ -32,7 +32,7 @@ public partial class DeceasedPersonViewModel : ObservableObject
     [NotifyPropertyChangedFor(nameof(Age))]
     private PersonModel person;
 
-    public string Name => $"{Person.Firstname} {Person.Lastname}";
+    public string Name => Person.FullName;
     public string DateOfBirth => Person.DateOfBirth!;
     public string DeceasedStr => Person.Deceased!;
     public DateTime Deceased => DatabaseParsing.ParsePersonDeceasedDate(Person.Deceased!);

@@ -25,8 +25,8 @@ public partial class TogglePersonViewModel : ObservableObject
     {
         Id = person.Id;
         Name = FileTextOverlayCreator.GetShortPersonText(person, DateTime.Now, configProvider.Config.ShortItemNameMaxLength);
-        ToolTip = $"{person.Firstname} {person.Lastname}" + (person.Description is not null ? $":\n{person.Description}" : string.Empty);
-        nameForFilters = $"{person.Firstname} {person.Lastname}";
+        ToolTip = person.FullName + (person.Description is not null ? $":\n{person.Description}" : string.Empty);
+        nameForFilters = person.FullName;
     }
 
     public void ApplyFilters(IEnumerable<string> filters, bool caseSensitive)

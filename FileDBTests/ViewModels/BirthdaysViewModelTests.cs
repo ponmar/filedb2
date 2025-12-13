@@ -169,8 +169,8 @@ public class BirthdaysViewModelTests
     {
         return
         [
-            new () { Id = 1, Firstname = "Alice", Lastname = "Andersson", DateOfBirth = "2000-01-01" },
-            new () { Id = 2, Firstname = "Bob", Lastname = "Andersson", DateOfBirth = "2000-02-02" },
+            new () { Id = 1, ShortName = "Alice", FullName = "Alice Andersson", DateOfBirth = "2000-01-01" },
+            new () { Id = 2, ShortName = "Bob", FullName = "Bob Andersson", DateOfBirth = "2000-02-02" },
         ];
     }
 }

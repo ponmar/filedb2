@@ -243,11 +243,11 @@
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>
-  <data name="AddPersonFirstnameLabel" xml:space="preserve">
-    <value>Firstname:</value>
+  <data name="AddPersonShortNameLabel" xml:space="preserve">
+    <value>Short name:</value>
   </data>
-  <data name="AddPersonLastnameLabel" xml:space="preserve">
-    <value>Lastname:</value>
+  <data name="AddPersonFullNameLabel" xml:space="preserve">
+    <value>Full name:</value>
   </data>
   <data name="AddPersonSexLabel" xml:space="preserve">
     <value>Sex (ISO/IEC 5218):</value>

@@ -1,6 +1,7 @@
-﻿using Dapper;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Dapper;
+using FileDBInterface.Model;
 
 namespace FileDBInterface.DatabaseAccess.SQLite;
 
@@ -9,7 +10,7 @@ public record DatabaseMigrationResult(int FromVersion, int ToVersion, Exception?
 public class DatabaseMigrator(string dbPath)
 {
     // Note: add migration code below when the version is increased
-    private const int SupportedVersion = 0;
+    private const int SupportedVersion = 1;
 
     public bool NeedsMigration => GetDatabaseVersion() < SupportedVersion;
 
@@ -49,6 +50,18 @@ public class DatabaseMigrator(string dbPath)
         {
             case 0:
                 // First version (no migration needed)
+                break;
+
+            case 1:
+                // Persons table update: replace Firstname and Lastname with Shortname and Fullname
+                connection.Execute("ALTER TABLE Persons RENAME COLUMN Firstname TO ShortName", transaction: transaction);
+                connection.Execute("ALTER TABLE Persons RENAME COLUMN Lastname TO FullName", transaction: transaction);
+                foreach (var person in connection.Query<PersonModel>("select * from [persons]"))
+                {
+                    person.FullName = $"{person.ShortName} {person.FullName}";
+                    var sql = "update [persons] set FullName = @FullName where Id = @Id";
+                    connection.Execute(sql, person, transaction: transaction);
+                }
                 break;
 
             default:

@@ -555,7 +555,7 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
         try
         {
             using var connection = DatabaseSetup.CreateConnection(database);
-            var sql = "insert into [persons] (Firstname, Lastname, Description, DateOfBirth, Deceased, ProfileFileId, Sex) values (@Firstname, @Lastname, @Description, @DateOfBirth, @Deceased, @ProfileFileId, @Sex)";
+            var sql = "insert into [persons] (ShortName, FullName, Description, DateOfBirth, Deceased, ProfileFileId, Sex) values (@ShortName, @FullName, @Description, @DateOfBirth, @Deceased, @ProfileFileId, @Sex)";
             connection.Execute(sql, person);
         }
         catch (SQLiteException e)
@@ -576,7 +576,7 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
         try
         {
             using var connection = DatabaseSetup.CreateConnection(database);
-            var sql = "update [persons] set Firstname = @Firstname, Lastname = @Lastname, Description = @Description, DateOfBirth = @DateOfBirth, Deceased = @Deceased, ProfileFileId = @ProfileFileId, Sex = @Sex where Id = @Id";
+            var sql = "update [persons] set ShortName = @ShortName, FullName = @FullName, Description = @Description, DateOfBirth = @DateOfBirth, Deceased = @Deceased, ProfileFileId = @ProfileFileId, Sex = @Sex where Id = @Id";
             connection.Execute(sql, person);
         }
         catch (SQLiteException e)

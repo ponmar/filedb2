@@ -525,7 +525,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
                 {
                     var dateOfBirth = DatabaseParsing.ParsePersonDateOfBirth(person.DateOfBirth);
                     if (fileDatetime < dateOfBirth &&
-                        !await dialogs.ShowConfirmDialogAsync(string.Format(Strings.FileCetagorizationPersonNotBornInFile, $"{person.Firstname} {person.Lastname}")))
+                        !await dialogs.ShowConfirmDialogAsync(string.Format(Strings.FileCetagorizationPersonNotBornInFile, person.FullName)))
                     {
                         return;
                     }
@@ -546,7 +546,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
             {
                 dbAccessProvider.DbAccess.InsertFilePerson(SelectedFile.Id, personId);
                 Persons.First(p => p.Id == personId).IsChecked = true;
-                AddUpdateHistoryItem(UpdateHistoryType.TogglePerson, personId, $"{person.Firstname} {person.Lastname}", true);
+                AddUpdateHistoryItem(UpdateHistoryType.TogglePerson, personId, person.FullName, true);
                 SetEditedFile();
             }
         }
@@ -559,7 +559,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
             dbAccessProvider.DbAccess.DeleteFilePerson(SelectedFile.Id, personId);
             Persons.First(x => x.Id == personId).IsChecked = false;
             var person = dbAccessProvider.DbAccess.GetPersonById(personId);
-            AddUpdateHistoryItem(UpdateHistoryType.TogglePerson, person.Id, $"{person.Firstname} {person.Lastname}", false);
+            AddUpdateHistoryItem(UpdateHistoryType.TogglePerson, person.Id, person.FullName, false);
             SetEditedFile();
         }
     }

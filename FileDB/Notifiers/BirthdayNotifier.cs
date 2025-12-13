@@ -40,10 +40,9 @@ public class BirthdayNotifier : INotifier
             if (dateOfBirth.Month == today.Month &&
                 dateOfBirth.Day == today.Day)
             {
-                var personName = $"{person.Firstname} {person.Lastname}";
                 notifications.Add(isDeceased ?
-                    new PersonBirthdayForDeceasedNotification(personName) :
-                    new PersonBirthdayNotification(personName));
+                    new PersonBirthdayForDeceasedNotification(person.FullName) :
+                    new PersonBirthdayNotification(person.FullName));
             }
         }
 

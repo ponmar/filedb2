@@ -23,19 +23,8 @@ public partial class AddPersonWindow : Window
         DataContext = vm;
         if (personId is null && personName is not null)
         {
-            if (personName.Contains(' '))
-            {
-                var nameParts = personName.Split(' ');
-                vm.Firstname = nameParts[0];
-                if (nameParts.Length > 1)
-                {
-                    vm.Lastname = nameParts[1];
-                }
-            }
-            else
-            {
-                vm.Firstname = personName;
-            }
+            vm.ShortName = personName;
+            vm.FullName = personName;
         }
         this.RegisterForEvent<CloseModalDialogRequest>((x) => Close());
     }

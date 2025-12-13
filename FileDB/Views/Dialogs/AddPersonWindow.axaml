@@ -13,11 +13,11 @@
 	<StackPanel Orientation="Vertical">
 		<Border Classes="BorderGroup">
 			<Grid ColumnDefinitions="auto,350" RowDefinitions="auto,auto,auto,auto,auto,auto,auto,auto">
-				<TextBlock Grid.Row="0" Grid.Column="0" Classes="PageTextBlock" Text="{x:Static lang:Strings.AddPersonFirstnameLabel}" VerticalAlignment="Center"/>
-				<TextBox Grid.Row="0" Grid.Column="1" Classes="PageTextBox" Text="{Binding Firstname}" VerticalAlignment="Center"/>
+				<TextBlock Grid.Row="0" Grid.Column="0" Classes="PageTextBlock" Text="{x:Static lang:Strings.AddPersonShortNameLabel}" VerticalAlignment="Center"/>
+				<TextBox Grid.Row="0" Grid.Column="1" Classes="PageTextBox" Text="{Binding ShortName}" VerticalAlignment="Center"/>
 
-				<TextBlock Grid.Row="1" Grid.Column="0" Classes="PageTextBlock" Text="{x:Static lang:Strings.AddPersonLastnameLabel}" VerticalAlignment="Center"/>
-				<TextBox Grid.Row="1" Grid.Column="1" Classes="PageTextBox" Text="{Binding Lastname}" VerticalAlignment="Center"/>
+				<TextBlock Grid.Row="1" Grid.Column="0" Classes="PageTextBlock" Text="{x:Static lang:Strings.AddPersonFullNameLabel}" VerticalAlignment="Center"/>
+				<TextBox Grid.Row="1" Grid.Column="1" Classes="PageTextBox" Text="{Binding FullName}" VerticalAlignment="Center"/>
 
 				<TextBlock Grid.Row="2" Grid.Column="0" Classes="PageTextBlock" Text="{x:Static lang:Strings.AddPersonSexLabel}" VerticalAlignment="Center"/>
 				<ComboBox Grid.Row="2" Grid.Column="1" Classes="PageComboBox" ItemsSource="{Binding SexValues}" SelectedItem="{Binding SexSelection}" VerticalAlignment="Center"/>
