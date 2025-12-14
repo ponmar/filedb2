@@ -1424,4 +1424,22 @@ Lägg till nya filer i '{0}'.</value>
   <data name="CategorizationUpdatePersonsSearchToolTip" xml:space="preserve">
     <value>Kommaseparerad lista med sökningar (exempel: Alice,Bob)</value>
   </data>
+  <data name="UpdateLocationsRemoveSelectedLocation" xml:space="preserve">
+    <value>Ta bort {0}?</value>
+  </data>
+  <data name="UpdatePersonsRemoveSelectedPerson" xml:space="preserve">
+    <value>Ta bort {0}?</value>
+  </data>
+  <data name="UpdateTagsRemoveSelectedTag" xml:space="preserve">
+    <value>Ta bort {0}?</value>
+  </data>
+  <data name="UpdateLocationsRemoveUsedLocation" xml:space="preserve">
+    <value>Platsen används i {0} filer, ta bort ändå?</value>
+  </data>
+  <data name="UpdatePersonsRemoveUsedPerson" xml:space="preserve">
+    <value>Personen används i {0} filer, ta bort ändå?</value>
+  </data>
+  <data name="UpdateTagsRemoveUsedTag" xml:space="preserve">
+    <value>Etiketten används i {0} filer, ta bort ändå?</value>
+  </data>
 </root>

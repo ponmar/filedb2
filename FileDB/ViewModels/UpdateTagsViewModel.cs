@@ -6,6 +6,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Dialogs;
 using FileDB.Extensions;
+using FileDB.Lang;
 using FileDB.Model;
 using FileDBInterface.Model;
 
@@ -61,13 +62,13 @@ public partial class UpdateTagsViewModel : ObservableObject
     [RelayCommand]
     private async Task RemoveTagAsync()
     {
-        if (!await dialogs.ShowConfirmDialogAsync($"Remove {SelectedTag!.Name}?"))
+        if (!await dialogs.ShowConfirmDialogAsync(string.Format(Strings.UpdateTagsRemoveSelectedTag, SelectedTag!.Name)))
         {
             return;
         }
 
         var filesWithTag = dbAccessProvider.DbAccess.SearchFilesWithTags([SelectedTag.Id]).ToList();
-        if (filesWithTag.Count == 0 || await dialogs.ShowConfirmDialogAsync($"Tag is used in {filesWithTag.Count} files, remove anyway?"))
+        if (filesWithTag.Count == 0 || await dialogs.ShowConfirmDialogAsync(string.Format(Strings.UpdateTagsRemoveUsedTag, filesWithTag.Count)))
         {
             dbAccessProvider.DbAccess.DeleteTag(SelectedTag.Id);
             Messenger.Send<TagEdited>();

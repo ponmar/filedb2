@@ -3939,6 +3939,60 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remove {0}?.
+        /// </summary>
+        public static string UpdateLocationsRemoveSelectedLocation {
+            get {
+                return ResourceManager.GetString("UpdateLocationsRemoveSelectedLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Location is used in {0} files, remove anyway?.
+        /// </summary>
+        public static string UpdateLocationsRemoveUsedLocation {
+            get {
+                return ResourceManager.GetString("UpdateLocationsRemoveUsedLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove {0}?.
+        /// </summary>
+        public static string UpdatePersonsRemoveSelectedPerson {
+            get {
+                return ResourceManager.GetString("UpdatePersonsRemoveSelectedPerson", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Person is used in {0} files, remove anyway?.
+        /// </summary>
+        public static string UpdatePersonsRemoveUsedPerson {
+            get {
+                return ResourceManager.GetString("UpdatePersonsRemoveUsedPerson", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove {0}?.
+        /// </summary>
+        public static string UpdateTagsRemoveSelectedTag {
+            get {
+                return ResourceManager.GetString("UpdateTagsRemoveSelectedTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tag is used in {0} files, remove anyway?.
+        /// </summary>
+        public static string UpdateTagsRemoveUsedTag {
+            get {
+                return ResourceManager.GetString("UpdateTagsRemoveUsedTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fullscreen window.
         /// </summary>
         public static string WindowModeFullscreen {

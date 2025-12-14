@@ -6,6 +6,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Dialogs;
 using FileDB.Extensions;
+using FileDB.Lang;
 using FileDB.Model;
 using FileDBInterface.Extensions;
 using FileDBInterface.Model;
@@ -62,14 +63,14 @@ public partial class UpdateLocationsViewModel : ObservableObject
     [RelayCommand]
     private async Task RemoveLocationAsync()
     {
-        if (!await dialogs.ShowConfirmDialogAsync($"Remove {SelectedLocation!.Name}?"))
+        if (!await dialogs.ShowConfirmDialogAsync(string.Format(Strings.UpdateLocationsRemoveSelectedLocation, SelectedLocation!.Name)))
         {
             return;
         }
 
         
         var filesWithLocation = dbAccessProvider.DbAccess.SearchFilesWithLocations([SelectedLocation.Id]).ToList();
-        if (filesWithLocation.Count == 0 || await dialogs.ShowConfirmDialogAsync($"Location is used in {filesWithLocation.Count} files, remove anyway?"))
+        if (filesWithLocation.Count == 0 || await dialogs.ShowConfirmDialogAsync(string.Format(Strings.UpdateLocationsRemoveUsedLocation, filesWithLocation.Count)))
         {
             dbAccessProvider.DbAccess.DeleteLocation(SelectedLocation.Id);
             Messenger.Send<LocationEdited>();

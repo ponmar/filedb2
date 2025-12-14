@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Dialogs;
 using FileDB.Extensions;
+using FileDB.Lang;
 using FileDB.Model;
 using FileDBInterface.Model;
 using FileDBInterface.Utils;
@@ -68,13 +69,13 @@ public partial class UpdatePersonsViewModel : ObservableObject
     [RelayCommand]
     private async Task RemovePersonAsync()
     {
-        if (!await dialogs.ShowConfirmDialogAsync($"Remove {SelectedPerson!.FullName}?"))
+        if (!await dialogs.ShowConfirmDialogAsync(string.Format(Strings.UpdatePersonsRemoveSelectedPerson, SelectedPerson!.FullName)))
         {
             return;
         }
 
         var filesWithPerson = dbAccessProvider.DbAccess.SearchFilesWithPersons([SelectedPerson.Id]).ToList();
-        if (filesWithPerson.Count == 0 || await dialogs.ShowConfirmDialogAsync($"Person is used in {filesWithPerson.Count} files, remove anyway?"))
+        if (filesWithPerson.Count == 0 || await dialogs.ShowConfirmDialogAsync(string.Format(Strings.UpdatePersonsRemoveUsedPerson, filesWithPerson.Count)))
         {
             dbAccessProvider.DbAccess.DeletePerson(SelectedPerson.Id);
             Messenger.Send<PersonEdited>();
