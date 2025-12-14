@@ -1,3 +1,3 @@
-dotnet-project-licenses -i FileDB.sln -u -o -j --output-directory FileDB\Resources\
+nuget-license -i FileDB.slnx -o Json --file-output FileDB\Resources\licenses.json
 
 pause

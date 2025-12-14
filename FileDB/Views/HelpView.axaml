@@ -101,10 +101,10 @@
 											<ColumnDefinition Width="Auto" SharedSizeGroup="LicenseTypeColumn"/>
 											<ColumnDefinition Width="Auto" SharedSizeGroup="LicenseLinkColumn"/>
 										</Grid.ColumnDefinitions>
-										<TextBlock Grid.Column="0" Text="{Binding PackageName}" Margin="3"/>
+										<TextBlock Grid.Column="0" Text="{Binding PackageId}" Margin="3"/>
 										<TextBlock Grid.Column="1" Text="{Binding PackageVersion}" Margin="3"/>
-										<TextBlock Grid.Column="2" Text="{Binding LicenseType}" Margin="3"/>
-										<TextBlock Grid.Column="3" Text="{Binding PackageUrl}" Margin="3"/>
+										<TextBlock Grid.Column="2" Text="{Binding License}" Margin="3"/>
+										<TextBlock Grid.Column="3" Text="{Binding PackageProjectUrl}" Margin="3"/>
 									</Grid>
 								</DataTemplate>
 							</ListBox.ItemTemplate>

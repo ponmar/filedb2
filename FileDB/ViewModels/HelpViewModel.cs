@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Extensions;
+using FileDB.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,8 +9,6 @@ using System.IO;
 using System.IO.Abstractions;
 
 namespace FileDB.ViewModels;
-
-public record LicenseFileFormatDto(string PackageName, string PackageVersion, string PackageUrl, string LicenseType);
 
 public partial class HelpViewModel : ObservableObject
 {
