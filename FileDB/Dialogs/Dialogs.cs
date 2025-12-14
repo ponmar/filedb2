@@ -169,7 +169,7 @@ public class Dialogs : IDialogs
 
     private static async Task<ButtonResult> ShowMessageBoxAsync(string message, ButtonEnum buttons, Icon icon)
     {
-        var box = MessageBoxManager.GetMessageBoxStandard(Utils.ApplicationName, message, buttons, icon, WindowStartupLocation.CenterOwner);
+        var box = MessageBoxManager.GetMessageBoxStandard(Utils.ApplicationName, message, buttons, icon, null, WindowStartupLocation.CenterOwner);
         var parent = GetParentWindow();
         if (parent is not null)
         {
