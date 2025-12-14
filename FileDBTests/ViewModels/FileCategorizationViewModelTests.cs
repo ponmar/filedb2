@@ -81,7 +81,7 @@ public class FileCategorizationViewModelTests
         var viewModel = CreateViewModel();
         Assert.Empty(viewModel.Persons);
 
-        persons.Add(new() { Id = 1, Firstname = "Alice", Lastname = "Smith" });
+        persons.Add(new() { Id = 1, ShortName = "Alice", FullName = "Alice Smith" });
         Messenger.Send<PersonsUpdated>();
 
         Assert.Single(viewModel.Persons);
@@ -254,8 +254,8 @@ public class FileCategorizationViewModelTests
     private void PopulateRepositories()
     {
         persons.Clear();
-        persons.Add(new() { Id = 1, Firstname = "Alice", Lastname = "Smith" });
-        persons.Add(new() { Id = 2, Firstname = "Bob", Lastname = "Smith" });
+        persons.Add(new() { Id = 1, ShortName = "Alice", FullName = "Alice Smith" });
+        persons.Add(new() { Id = 2, ShortName = "Bob", FullName = "Bob Smith" });
 
         locations.Clear();
         locations.Add(new() { Id = 1, Name = "Home" });

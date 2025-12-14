@@ -51,7 +51,10 @@ public partial class TextViewModel : ObservableValidator, IFilterViewModel
         IEnumerable<FileModel> filesWithPersons = [];
         if (TextFilterPersons)
         {
-            var machingPersons = personsRepository.Persons.Where(x => $"{x.Firstname} {x.Lastname}".Contains(TextFilterSearchPattern, stringComparison) || (x.Description is not null && x.Description.Contains(TextFilterSearchPattern, stringComparison))).Select(x => x.Id);
+            var machingPersons = personsRepository.Persons.Where(x =>
+                x.ShortName.Contains(TextFilterSearchPattern, stringComparison) ||
+                x.FullName.Contains(TextFilterSearchPattern, stringComparison) ||
+                (x.Description is not null && x.Description.Contains(TextFilterSearchPattern, stringComparison))).Select(x => x.Id);
             filesWithPersons = dbAccess.SearchFilesWithPersons(machingPersons);
         }
 

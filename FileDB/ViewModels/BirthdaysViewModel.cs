@@ -39,7 +39,7 @@ public partial class PersonBirthdayViewModel : ObservableObject
     [NotifyPropertyChangedFor(nameof(Name))]
     private PersonModel person;
 
-    public string Name => $"{Person.Firstname} {Person.Lastname}";
+    public string Name => Person.FullName;
 
     private readonly ICriteriaViewModel criteriaViewModel;
 

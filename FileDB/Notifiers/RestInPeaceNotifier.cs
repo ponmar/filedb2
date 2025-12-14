@@ -28,8 +28,7 @@ public class RestInPeaceNotifier : INotifier
                 if (deceased.Month == today.Month &&
                     deceased.Day == today.Day)
                 {
-                    var personName = $"{person.Firstname} {person.Lastname}";
-                    notifications.Add(new PersonRestInPeaceNotification(personName));
+                    notifications.Add(new PersonRestInPeaceNotification(person.FullName));
                 }
             }
         }

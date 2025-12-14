@@ -24,10 +24,10 @@ public partial class AddPersonViewModel : ObservableObject
     private string title;
 
     [ObservableProperty]
-    private string firstname = string.Empty;
+    private string shortName = string.Empty;
 
     [ObservableProperty]
-    private string lastname = string.Empty;
+    private string fullName = string.Empty;
 
     [ObservableProperty]
     private string? description = null;
@@ -111,8 +111,8 @@ public partial class AddPersonViewModel : ObservableObject
         if (personId.HasValue)
         {
             var personModel = dbAccessProvider.DbAccess.GetPersonById(personId.Value);
-            Firstname = personModel.Firstname;
-            Lastname = personModel.Lastname;
+            ShortName = personModel.ShortName;
+            FullName = personModel.FullName;
             Description = personModel.Description;
             DateOfBirth = personModel.DateOfBirth;
             Deceased = personModel.Deceased;
@@ -134,8 +134,8 @@ public partial class AddPersonViewModel : ObservableObject
             var person = new PersonModel()
             {
                 Id = personId ?? default,
-                Firstname = Firstname,
-                Lastname = Lastname,
+                ShortName = ShortName,
+                FullName = FullName,
                 DateOfBirth = newDateOfBirth,
                 Deceased = newDeceased,
                 Description = newDescription,
@@ -150,7 +150,7 @@ public partial class AddPersonViewModel : ObservableObject
             }
             else
             {
-                var anyPersonsWithThatName = dbAccessProvider.DbAccess.GetPersons().Any(x => x.Firstname == person.Firstname && x.Lastname == person.Lastname);
+                var anyPersonsWithThatName = dbAccessProvider.DbAccess.GetPersons().Any(x => x.ShortName == person.ShortName && x.FullName == person.FullName);
                 if (anyPersonsWithThatName &&
                     !await dialogs.ShowConfirmDialogAsync(Strings.AddPersonPersonAlreadyAdded))
                 {
@@ -158,7 +158,7 @@ public partial class AddPersonViewModel : ObservableObject
                 }
 
                 dbAccessProvider.DbAccess.InsertPerson(person);
-                AffectedPerson = dbAccessProvider.DbAccess.GetPersons().First(x => x.Firstname == person.Firstname && x.Lastname == person.Lastname && x.DateOfBirth == person.DateOfBirth && x.Deceased == person.Deceased && x.Description == person.Description);
+                AffectedPerson = dbAccessProvider.DbAccess.GetPersons().First(x => x.ShortName == person.ShortName && x.FullName == person.FullName && x.DateOfBirth == person.DateOfBirth && x.Deceased == person.Deceased && x.Description == person.Description);
             }
             Messenger.Send<PersonEdited>();
             Messenger.Send<CloseModalDialogRequest>();

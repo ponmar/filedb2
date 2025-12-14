@@ -15,8 +15,8 @@ public class PersonModelValidatorTests
         var model = new PersonModel()
         {
             Id = 1,
-            Firstname = "firstname",
-            Lastname = "lastname",
+            ShortName = "Short",
+            FullName = "Full",
             Description = null,
             DateOfBirth = null,
             Deceased = null,
@@ -33,8 +33,8 @@ public class PersonModelValidatorTests
         var model = new PersonModel()
         {
             Id = 1,
-            Firstname = "firstname",
-            Lastname = "lastname",
+            ShortName = "short",
+            FullName = "full",
             Description = "description",
             DateOfBirth = "2000-01-01",
             Deceased = "2000-01-02",
@@ -51,8 +51,8 @@ public class PersonModelValidatorTests
         var model = new PersonModel()
         {
             Id = -1,
-            Firstname = "firstname",
-            Lastname = "lastname",
+            ShortName = "short",
+            FullName = "full",
             Description = null,
             DateOfBirth = null,
             Deceased = null,
@@ -64,13 +64,13 @@ public class PersonModelValidatorTests
     }
 
     [Fact]
-    public void Validate_FirstnameIsEmpty_Error()
+    public void Validate_ShortNameIsEmpty_Error()
     {
         var model = new PersonModel()
         {
             Id = 1,
-            Firstname = string.Empty,
-            Lastname = "lastname",
+            ShortName = string.Empty,
+            FullName = "full",
             Description = null,
             DateOfBirth = null,
             Deceased = null,
@@ -78,17 +78,17 @@ public class PersonModelValidatorTests
             Sex = Sex.NotKnown,
         };
         var result = validator.TestValidate(model);
-        result.ShouldHaveValidationErrorFor(x => x.Firstname);
+        result.ShouldHaveValidationErrorFor(x => x.ShortName);
     }
 
     [Fact]
-    public void Validate_LastnameIsEmpty_Error()
+    public void Validate_FullNameIsEmpty_Error()
     {
         var model = new PersonModel()
         {
             Id = 1,
-            Firstname = "firstname",
-            Lastname = string.Empty,
+            ShortName = "short",
+            FullName = string.Empty,
             Description = null,
             DateOfBirth = null,
             Deceased = null,
@@ -96,17 +96,17 @@ public class PersonModelValidatorTests
             Sex = Sex.NotKnown,
         };
         var result = validator.TestValidate(model);
-        result.ShouldHaveValidationErrorFor(x => x.Lastname);
+        result.ShouldHaveValidationErrorFor(x => x.FullName);
     }
 
     [Fact]
-    public void Validate_FirstnameIsTooShort_Error()
+    public void Validate_ShortNameIsTooShort_Error()
     {
         var model = new PersonModel()
         {
             Id = 1,
-            Firstname = "x",
-            Lastname = "lastname",
+            ShortName = "s",
+            FullName = "full",
             Description = null,
             DateOfBirth = null,
             Deceased = null,
@@ -114,17 +114,17 @@ public class PersonModelValidatorTests
             Sex = Sex.NotKnown,
         };
         var result = validator.TestValidate(model);
-        result.ShouldHaveValidationErrorFor(x => x.Firstname);
+        result.ShouldHaveValidationErrorFor(x => x.ShortName);
     }
 
     [Fact]
-    public void Validate_LastnameIsTooShort_Error()
+    public void Validate_FullNameIsTooShort_Error()
     {
         var model = new PersonModel()
         {
             Id = 1,
-            Firstname = "firstname",
-            Lastname = "x",
+            ShortName = "short",
+            FullName = "f",
             Description = null,
             DateOfBirth = null,
             Deceased = null,
@@ -132,7 +132,7 @@ public class PersonModelValidatorTests
             Sex = Sex.NotKnown,
         };
         var result = validator.TestValidate(model);
-        result.ShouldHaveValidationErrorFor(x => x.Lastname);
+        result.ShouldHaveValidationErrorFor(x => x.FullName);
     }
 
     [Fact]
@@ -141,8 +141,8 @@ public class PersonModelValidatorTests
         var model = new PersonModel()
         {
             Id = 1,
-            Firstname = "firstname",
-            Lastname = "lastname",
+            ShortName = "short",
+            FullName = "full",
             Description = string.Empty,
             DateOfBirth = null,
             Deceased = null,
@@ -159,8 +159,8 @@ public class PersonModelValidatorTests
         var model = new PersonModel()
         {
             Id = 1,
-            Firstname = "firstname",
-            Lastname = "lastname",
+            ShortName = "short",
+            FullName = "full",
             Description = null,
             DateOfBirth = "invalid",
             Deceased = null,
@@ -177,8 +177,8 @@ public class PersonModelValidatorTests
         var model = new PersonModel()
         {
             Id = 1,
-            Firstname = "firstname",
-            Lastname = "lastname",
+            ShortName = "short",
+            FullName = "full",
             Description = null,
             DateOfBirth = null,
             Deceased = "invalid",
@@ -195,8 +195,8 @@ public class PersonModelValidatorTests
         var model = new PersonModel()
         {
             Id = 1,
-            Firstname = "firstname",
-            Lastname = "lastname",
+            ShortName = "short",
+            FullName = "full",
             Description = null,
             DateOfBirth = null,
             Deceased = "invalid",

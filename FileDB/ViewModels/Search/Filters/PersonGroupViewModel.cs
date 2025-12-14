@@ -60,7 +60,7 @@ public partial class PersonGroupViewModel : ObservableValidator, IFilterViewMode
         Persons.Clear();
         foreach (var person in personsRepository.Persons)
         {
-            Persons.Add(new(person.Id, $"{person.Firstname} {person.Lastname}"));
+            Persons.Add(new(person.Id, person.FullName));
         }
     }
 

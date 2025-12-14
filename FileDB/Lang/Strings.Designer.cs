@@ -19,7 +19,7 @@ namespace FileDB.Lang {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Strings {
@@ -205,20 +205,11 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Firstname:.
+        ///   Looks up a localized string similar to Full name:.
         /// </summary>
-        public static string AddPersonFirstnameLabel {
+        public static string AddPersonFullNameLabel {
             get {
-                return ResourceManager.GetString("AddPersonFirstnameLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Lastname:.
-        /// </summary>
-        public static string AddPersonLastnameLabel {
-            get {
-                return ResourceManager.GetString("AddPersonLastnameLabel", resourceCulture);
+                return ResourceManager.GetString("AddPersonFullNameLabel", resourceCulture);
             }
         }
         
@@ -264,6 +255,15 @@ namespace FileDB.Lang {
         public static string AddPersonSexLabel {
             get {
                 return ResourceManager.GetString("AddPersonSexLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Short name:.
+        /// </summary>
+        public static string AddPersonShortNameLabel {
+            get {
+                return ResourceManager.GetString("AddPersonShortNameLabel", resourceCulture);
             }
         }
         
