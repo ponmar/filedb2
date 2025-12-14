@@ -44,7 +44,7 @@ public class FileTextOverlayCreator
 
     public static string GetShortPersonText(PersonModel person, DateTime? dateTime, int nameMaxLength)
     {
-        var name = Utils.CreateShortText($"{person.FullName}", nameMaxLength);
+        var name = Utils.CreateShortText(person.FullName, nameMaxLength);
         return person.Deceased is null ? $"{name}{Utils.GetPersonAgeAtDate(dateTime, person.DateOfBirth)}" : name;
     }
 
