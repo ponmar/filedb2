@@ -721,7 +721,7 @@
     <value>Detta är demo-filsamlingen. När du är redo kan du skapa en konfiguration for din egna filsamling!</value>
   </data>
   <data name="CategorizationUpdateHistoryTitle" xml:space="preserve">
-    <value>Uppdateringshistorik</value>
+    <value>Historik</value>
   </data>
   <data name="CategorizationNoChanges" xml:space="preserve">
     <value>Inga ändringar.</value>
@@ -730,7 +730,7 @@
     <value>Ta bort objekt från uppdateringshistoriken</value>
   </data>
   <data name="CategorizationUpdateTitle" xml:space="preserve">
-    <value>Uppdatera</value>
+    <value>Metadata</value>
   </data>
   <data name="CategorizationAddSelectedPersonToFileToolTip" xml:space="preserve">
     <value>Lägg till vald person till filen</value>
@@ -1386,13 +1386,13 @@ Lägg till nya filer i '{0}'.</value>
     <value>Exkludera '{0}'</value>
   </data>
   <data name="CategorizationUpdatePersonsTitle" xml:space="preserve">
-    <value>Uppdatera personer ({0} / {1})</value>
+    <value>Personer ({0} / {1})</value>
   </data>
   <data name="CategorizationUpdateLocationsTitle" xml:space="preserve">
-    <value>Uppdatera platser ({0} / {1})</value>
+    <value>Platser ({0} / {1})</value>
   </data>
   <data name="CategorizationUpdateTagsTitle" xml:space="preserve">
-    <value>Uppdatera etiketter ({0} / {1})</value>
+    <value>Etiketter ({0} / {1})</value>
   </data>
   <data name="CategorizationUpdatePersonsNoPersons" xml:space="preserve">
     <value>Inga personer tillgängliga.</value>
@@ -1441,5 +1441,8 @@ Lägg till nya filer i '{0}'.</value>
   </data>
   <data name="UpdateTagsRemoveUsedTag" xml:space="preserve">
     <value>Etiketten används i {0} filer, ta bort ändå?</value>
+  </data>
+  <data name="CategorizationEditToolTip" xml:space="preserve">
+    <value>Redigera</value>
   </data>
 </root>

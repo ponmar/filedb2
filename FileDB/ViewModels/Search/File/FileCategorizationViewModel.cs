@@ -33,32 +33,42 @@ public partial class FileCategorizationViewModel : ObservableValidator
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(Header))]
+    [NotifyPropertyChangedFor(nameof(HeaderToolTip))]
     [NotifyPropertyChangedFor(nameof(UpdateItemsVisible))]
     private bool isExpanded = false;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(HistoryHeader))]
+    [NotifyPropertyChangedFor(nameof(HistoryHeaderToolTip))]
     private bool historyIsExpanded = false;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(UpdatePersonsHeader))]
+    [NotifyPropertyChangedFor(nameof(UpdatePersonsHeaderToolTip))]
     private bool updatePersonsIsExpanded = false;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(UpdateLocationsHeader))]
+    [NotifyPropertyChangedFor(nameof(UpdateLocationsHeaderToolTip))]
     private bool updateLocationsIsExpanded = false;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(UpdateTagsHeader))]
+    [NotifyPropertyChangedFor(nameof(UpdateTagsHeaderToolTip))]
     private bool updateTagsIsExpanded = false;
 
     public bool UpdateItemsVisible => CanCategorize && IsExpanded;
 
     public string Header => IsExpanded ? Strings.CategorizationUpdateTitle : char.ConvertFromUtf32(0x1F589);
+    public string? HeaderToolTip => IsExpanded ? null : Strings.CategorizationEditToolTip;
     public string HistoryHeader => HistoryIsExpanded ? Strings.CategorizationUpdateHistoryTitle : char.ConvertFromUtf32(0x1F4DC);
+    public string? HistoryHeaderToolTip => HistoryIsExpanded ? null : Strings.CategorizationUpdateHistoryTitle;
     public string UpdatePersonsHeader => UpdatePersonsIsExpanded ? string.Format(Strings.CategorizationUpdatePersonsTitle, Persons.Count(x => x.IsVisible), Persons.Count) : char.ConvertFromUtf32(0x1F6B6);
+    public string? UpdatePersonsHeaderToolTip => UpdatePersonsIsExpanded ? null : string.Format(Strings.CategorizationUpdatePersonsTitle, Persons.Count(x => x.IsVisible), Persons.Count);
     public string UpdateLocationsHeader => UpdateLocationsIsExpanded ? string.Format(Strings.CategorizationUpdateLocationsTitle, Locations.Count(x => x.IsVisible), Locations.Count) : char.ConvertFromUtf32(0x1F3E0);
+    public string? UpdateLocationsHeaderToolTip => UpdateLocationsIsExpanded ? null : string.Format(Strings.CategorizationUpdateLocationsTitle, Locations.Count(x => x.IsVisible), Locations.Count);
     public string UpdateTagsHeader => UpdateTagsIsExpanded ? string.Format(Strings.CategorizationUpdateTagsTitle, Tags.Count(x => x.IsVisible), Tags.Count) : char.ConvertFromUtf32(0x1F516);
+    public string? UpdateTagsHeaderToolTip => UpdateTagsIsExpanded ? null : string.Format(Strings.CategorizationUpdateTagsTitle, Tags.Count(x => x.IsVisible), Tags.Count);
 
     [ObservableProperty]
     private string newFileDescription = string.Empty;

@@ -524,6 +524,15 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string CategorizationEditToolTip {
+            get {
+                return ResourceManager.GetString("CategorizationEditToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date and time.
         /// </summary>
         public static string CategorizationFileDateAndTimeToolTip {
@@ -713,7 +722,7 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update History.
+        ///   Looks up a localized string similar to History.
         /// </summary>
         public static string CategorizationUpdateHistoryTitle {
             get {
@@ -749,7 +758,7 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update Locations ({0} / {1}).
+        ///   Looks up a localized string similar to Locations ({0} / {1}).
         /// </summary>
         public static string CategorizationUpdateLocationsTitle {
             get {
@@ -794,7 +803,7 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update Persons ({0} / {1}).
+        ///   Looks up a localized string similar to Persons ({0} / {1}).
         /// </summary>
         public static string CategorizationUpdatePersonsTitle {
             get {
@@ -830,7 +839,7 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update Tags ({0} / {1}).
+        ///   Looks up a localized string similar to Tags ({0} / {1}).
         /// </summary>
         public static string CategorizationUpdateTagsTitle {
             get {
@@ -839,7 +848,7 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update.
+        ///   Looks up a localized string similar to Metadata.
         /// </summary>
         public static string CategorizationUpdateTitle {
             get {

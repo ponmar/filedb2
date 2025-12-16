@@ -724,7 +724,7 @@
     <value>This is the demo files collection. When you are ready, make a configuration for your files collection!</value>
   </data>
   <data name="CategorizationUpdateHistoryTitle" xml:space="preserve">
-    <value>Update History</value>
+    <value>History</value>
   </data>
   <data name="CategorizationNoChanges" xml:space="preserve">
     <value>No changes.</value>
@@ -733,7 +733,7 @@
     <value>Remove item from update history</value>
   </data>
   <data name="CategorizationUpdateTitle" xml:space="preserve">
-    <value>Update</value>
+    <value>Metadata</value>
   </data>
   <data name="CategorizationAddSelectedPersonToFileToolTip" xml:space="preserve">
     <value>Add selected person to file</value>
@@ -1386,13 +1386,13 @@ This operation can be slow for a large collection of files or if the media acces
     <value>Exclude '{0}'</value>
   </data>
   <data name="CategorizationUpdatePersonsTitle" xml:space="preserve">
-    <value>Update Persons ({0} / {1})</value>
+    <value>Persons ({0} / {1})</value>
   </data>
   <data name="CategorizationUpdateLocationsTitle" xml:space="preserve">
-    <value>Update Locations ({0} / {1})</value>
+    <value>Locations ({0} / {1})</value>
   </data>
   <data name="CategorizationUpdateTagsTitle" xml:space="preserve">
-    <value>Update Tags ({0} / {1})</value>
+    <value>Tags ({0} / {1})</value>
   </data>
   <data name="CategorizationUpdatePersonsNoPersons" xml:space="preserve">
     <value>No persons available.</value>
@@ -1441,5 +1441,8 @@ This operation can be slow for a large collection of files or if the media acces
   </data>
   <data name="UpdateTagsRemoveUsedTag" xml:space="preserve">
     <value>Tag is used in {0} files, remove anyway?</value>
+  </data>
+  <data name="CategorizationEditToolTip" xml:space="preserve">
+    <value>Edit</value>
   </data>
 </root>
