@@ -155,6 +155,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
         }
         OnPropertyChanged(nameof(HasVisiblePersons));
         OnPropertyChanged(nameof(UpdatePersonsHeader));
+        OnPropertyChanged(nameof(UpdatePersonsHeaderToolTip));
     }
 
     [ObservableProperty]
@@ -182,6 +183,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
         }
         OnPropertyChanged(nameof(HasVisibleLocations));
         OnPropertyChanged(nameof(UpdateLocationsHeader));
+        OnPropertyChanged(nameof(UpdateLocationsHeaderToolTip));
     }
 
     [ObservableProperty]
@@ -209,6 +211,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
         }
         OnPropertyChanged(nameof(HasVisibleTags));
         OnPropertyChanged(nameof(UpdateTagsHeader));
+        OnPropertyChanged(nameof(UpdateTagsHeaderToolTip));
     }
 
     private IEnumerable<string> personsFilters = [];
@@ -290,6 +293,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
         }
         OnPropertyChanged(nameof(HasVisiblePersons));
         OnPropertyChanged(nameof(UpdatePersonsHeader));
+        OnPropertyChanged(nameof(UpdatePersonsHeaderToolTip));
     }
 
     private void ReloadLocations()
@@ -308,6 +312,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
         }
         OnPropertyChanged(nameof(HasVisibleLocations));
         OnPropertyChanged(nameof(UpdateLocationsHeader));
+        OnPropertyChanged(nameof(UpdateLocationsHeaderToolTip));
     }
 
     private void ReloadTags()
@@ -326,6 +331,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
         }
         OnPropertyChanged(nameof(HasVisibleTags));
         OnPropertyChanged(nameof(UpdateTagsHeader));
+        OnPropertyChanged(nameof(UpdateTagsHeaderToolTip));
     }
 
     private void LoadFile(FileModel file)
@@ -340,18 +346,24 @@ public partial class FileCategorizationViewModel : ObservableValidator
         foreach (var person in Persons)
         {
             person.IsChecked = filePersons.Any(p => p.Id == person.Id);
+            OnPropertyChanged(nameof(UpdatePersonsHeader));
+            OnPropertyChanged(nameof(UpdatePersonsHeaderToolTip));
         }
 
         var fileLocations = dbAccessProvider.DbAccess.GetLocationsFromFile(SelectedFile.Id);
         foreach (var location in Locations)
         {
             location.IsChecked = fileLocations.Any(l => l.Id == location.Id);
+            OnPropertyChanged(nameof(UpdateLocationsHeader));
+            OnPropertyChanged(nameof(UpdateLocationsHeaderToolTip));
         }
 
         var fileTags = dbAccessProvider.DbAccess.GetTagsFromFile(SelectedFile.Id);
         foreach (var tag in Tags)
         {
             tag.IsChecked = fileTags.Any(t => t.Id == tag.Id);
+            OnPropertyChanged(nameof(UpdateTagsHeader));
+            OnPropertyChanged(nameof(UpdateTagsHeaderToolTip));
         }
 
         foreach (var historyItem in UpdateHistoryItems)
@@ -555,7 +567,11 @@ public partial class FileCategorizationViewModel : ObservableValidator
             if (!dbAccessProvider.DbAccess.GetPersonsFromFile(SelectedFile.Id).Any(p => p.Id == personId))
             {
                 dbAccessProvider.DbAccess.InsertFilePerson(SelectedFile.Id, personId);
+                
                 Persons.First(p => p.Id == personId).IsChecked = true;
+                OnPropertyChanged(nameof(UpdatePersonsHeader));
+                OnPropertyChanged(nameof(UpdatePersonsHeaderToolTip));
+
                 AddUpdateHistoryItem(UpdateHistoryType.TogglePerson, personId, person.FullName, true);
                 SetEditedFile();
             }
@@ -567,7 +583,11 @@ public partial class FileCategorizationViewModel : ObservableValidator
         if (SelectedFile is not null)
         {
             dbAccessProvider.DbAccess.DeleteFilePerson(SelectedFile.Id, personId);
+            
             Persons.First(x => x.Id == personId).IsChecked = false;
+            OnPropertyChanged(nameof(UpdatePersonsHeader));
+            OnPropertyChanged(nameof(UpdatePersonsHeaderToolTip));
+
             var person = dbAccessProvider.DbAccess.GetPersonById(personId);
             AddUpdateHistoryItem(UpdateHistoryType.TogglePerson, person.Id, person.FullName, false);
             SetEditedFile();
@@ -582,7 +602,11 @@ public partial class FileCategorizationViewModel : ObservableValidator
             if (!dbAccessProvider.DbAccess.GetLocationsFromFile(fileId).Any(l => l.Id == locationId))
             {
                 dbAccessProvider.DbAccess.InsertFileLocation(fileId, locationId);
+                
                 Locations.First(x => x.Id == locationId).IsChecked = true;
+                OnPropertyChanged(nameof(UpdateLocationsHeader));
+                OnPropertyChanged(nameof(UpdateLocationsHeaderToolTip));
+
                 var location = dbAccessProvider.DbAccess.GetLocationById(locationId);
                 AddUpdateHistoryItem(UpdateHistoryType.ToggleLocation, location.Id, location.Name, true);
                 SetEditedFile();
@@ -596,7 +620,11 @@ public partial class FileCategorizationViewModel : ObservableValidator
         {
             var fileId = SelectedFile.Id;
             dbAccessProvider.DbAccess.DeleteFileLocation(fileId, locationId);
+            
             Locations.First(x => x.Id == locationId).IsChecked = false;
+            OnPropertyChanged(nameof(UpdateLocationsHeader));
+            OnPropertyChanged(nameof(UpdateLocationsHeaderToolTip));
+
             var location = dbAccessProvider.DbAccess.GetLocationById(locationId);
             AddUpdateHistoryItem(UpdateHistoryType.ToggleLocation, location.Id, location.Name, false);
             SetEditedFile();
@@ -611,7 +639,11 @@ public partial class FileCategorizationViewModel : ObservableValidator
             if (!dbAccessProvider.DbAccess.GetTagsFromFile(fileId).Any(t => t.Id == tagId))
             {
                 dbAccessProvider.DbAccess.InsertFileTag(fileId, tagId);
+                
                 Tags.First(x => x.Id == tagId).IsChecked = true;
+                OnPropertyChanged(nameof(UpdateTagsHeader));
+                OnPropertyChanged(nameof(UpdateTagsHeaderToolTip));
+
                 var tag = dbAccessProvider.DbAccess.GetTagById(tagId);
                 AddUpdateHistoryItem(UpdateHistoryType.ToggleTag, tag.Id, tag.Name, true);
                 SetEditedFile();
@@ -625,7 +657,11 @@ public partial class FileCategorizationViewModel : ObservableValidator
         {
             var fileId = SelectedFile!.Id;
             dbAccessProvider.DbAccess.DeleteFileTag(fileId, tagId);
+            
             Tags.First(x => x.Id == tagId).IsChecked = false;
+            OnPropertyChanged(nameof(UpdateTagsHeader));
+            OnPropertyChanged(nameof(UpdateTagsHeaderToolTip));
+
             var tag = dbAccessProvider.DbAccess.GetTagById(tagId);
             AddUpdateHistoryItem(UpdateHistoryType.ToggleTag, tag.Id, tag.Name, false);
             SetEditedFile();
