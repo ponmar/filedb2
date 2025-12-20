@@ -11,7 +11,7 @@
 		<Grid ColumnDefinitions="auto" RowDefinitions="auto,auto,*">
 			<StackPanel Grid.Row="0" Orientation="Horizontal" IsVisible="{Binding FileSelected}">
 				<TextBlock Text="&#x1F50D;" VerticalAlignment="Center"/>
-				<TextBox Width="150" Text="{Binding PersonsFilterText}" Margin="3,0,3,0" VerticalAlignment="Center" ToolTip.Tip="{x:Static lang:Strings.CategorizationUpdatePersonsSearchToolTip}"/>
+				<TextBox Width="150" Text="{Binding PersonsFilterText}" Margin="3,0,3,0" VerticalAlignment="Center" ToolTip.Tip="{x:Static lang:Strings.CategorizationItemSearchToolTip}"/>
 				<ToggleButton Classes="ColoredToggleButton" IsChecked="{Binding PersonsFilterTextCaseSensitive}" Content="&#x1F5DA;" ToolTip.Tip="{x:Static lang:Strings.TextFilterCaseSensitive}"/>
 			</StackPanel>
 			

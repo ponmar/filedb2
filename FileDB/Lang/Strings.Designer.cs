@@ -551,6 +551,15 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Comma separated list of searches.
+        /// </summary>
+        public static string CategorizationItemSearchToolTip {
+            get {
+                return ResourceManager.GetString("CategorizationItemSearchToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select.
         /// </summary>
         public static string CategorizationMarkButton {
@@ -790,15 +799,6 @@ namespace FileDB.Lang {
         public static string CategorizationUpdatePersonsRemoveAllToolTip {
             get {
                 return ResourceManager.GetString("CategorizationUpdatePersonsRemoveAllToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Comma separated list of searches (example: Alice,Bob).
-        /// </summary>
-        public static string CategorizationUpdatePersonsSearchToolTip {
-            get {
-                return ResourceManager.GetString("CategorizationUpdatePersonsSearchToolTip", resourceCulture);
             }
         }
         
