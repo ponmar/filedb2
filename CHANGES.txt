@@ -1,3 +1,13 @@
+4.15:
+* Upgrade to .NET 10
+* Database: store ShortName and FullName (instead of Firstname and Lastname)
+  Reasons are listed here: https://www.w3.org/International/questions/qa-personal-names
+  Note: names are migrated automatically
+* Improved file categorization views
+* Use ToggleButton for file categorization history and improve styling for all ToggleButton
+* Layout improvements and more icon usage
+* Fix some missing translations
+
 4.14:
 * Show filter input validation errors live when changing filter settings
 * Birthday page: only show profile picture for persons with a birthday today
