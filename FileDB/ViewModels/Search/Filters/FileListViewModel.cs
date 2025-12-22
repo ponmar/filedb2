@@ -42,6 +42,13 @@ public partial class FileListViewModel : ObservableValidator, IFilterViewModel
 
     public IEnumerable<FileModel> ApplyFilter(IDatabaseAccess dbAccess)
     {
-        return Utils.TryParseFileIds(FileListIds, out var fileIds) ? dbAccess.SearchFilesExceptIds(fileIds!) : [];
+        if (!Utils.TryParseFileIds(FileListIds, out var fileIds))
+        {
+            return [];
+        }
+
+        return Negate ?
+            dbAccess.SearchFilesExceptIds(fileIds!) :
+            dbAccess.SearchFilesFromIds(fileIds!);
     }
 }
