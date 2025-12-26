@@ -1,3 +1,6 @@
+4.16:
+* Fix file list search filter, which always searched for the negated set of files
+
 4.15:
 * Upgrade to .NET 10
 * Database: store ShortName and FullName (instead of Firstname and Lastname)
