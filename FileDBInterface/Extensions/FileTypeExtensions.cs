@@ -9,7 +9,7 @@ public static class FileTypeExtensions
     {
         return fileType switch
         {
-            FileType.Picture => [".jpg", ".png", ".bmp", ".gif"],
+            FileType.Picture => [".jpg", ".jpeg", ".png", ".bmp", ".gif"],
             FileType.Movie => [".mkv", ".avi", ".mpg", ".mov", ".mp4"],
             FileType.Document => [".doc", ".pdf", ".txt", ".md"],
             FileType.Audio => [".mp3", ".wav"],
