@@ -1166,7 +1166,7 @@
     <value>Alla filer</value>
   </data>
   <data name="FilesAddingFile" xml:space="preserve">
-    <value>Lägger till fil {0} / {1}...</value>
+    <value>Lägger till fil {0} / {1}</value>
   </data>
   <data name="FilesAddMetaDataFromFiles" xml:space="preserve">
     <value>Lägg till meta-data från {0} filer?</value>

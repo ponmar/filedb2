@@ -1244,7 +1244,7 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Adding file {0} / {1}....
+        ///   Looks up a localized string similar to Adding file {0} / {1}.
         /// </summary>
         public static string FilesAddingFile {
             get {

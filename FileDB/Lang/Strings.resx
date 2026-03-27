@@ -1198,7 +1198,7 @@ Add new files to '{0}'.</value>
     <value>Unable to create database backup</value>
   </data>
   <data name="FilesAddingFile" xml:space="preserve">
-    <value>Adding file {0} / {1}...</value>
+    <value>Adding file {0} / {1}</value>
   </data>
   <data name="FilesFilesAdded" xml:space="preserve">
     <value>{0} files added.</value>
