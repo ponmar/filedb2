@@ -182,11 +182,14 @@ public class FilesystemAccess : IFilesystemAccess
 
             var gpsDir = directories.OfType<GpsDirectory>().FirstOrDefault();
 
-            if (gpsDir is not null && gpsDir.TryGetGeoLocation(out var geoLocation) &&
-                TryGetOrientationTag(directories, out var orientationTag) &&
-                orientationTag >= 1 && orientationTag <= 8)
+            if (gpsDir is not null && gpsDir.TryGetGeoLocation(out var geoLocation) && !geoLocation.IsZero)
             {
                 location = geoLocation;
+            }
+
+            if (TryGetOrientationTag(directories, out var orientationTag) &&
+                orientationTag >= 1 && orientationTag <= 8)
+            {
                 orientation = orientationTag;
             }
         }
