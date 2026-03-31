@@ -2517,6 +2517,15 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Set GPS position from from selected location.
+        /// </summary>
+        public static string SearchFilterPositionFromLocationToolTip {
+            get {
+                return ResourceManager.GetString("SearchFilterPositionFromLocationToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to LAT LON or Google Maps URL.
         /// </summary>
         public static string SearchFilterPositionInputToolTip {

@@ -1445,4 +1445,7 @@ Lägg till nya filer i '{0}'.</value>
   <data name="CategorizationEditToolTip" xml:space="preserve">
     <value>Redigera</value>
   </data>
+  <data name="SearchFilterPositionFromLocationToolTip" xml:space="preserve">
+    <value>Sätt GPS-position från vald plats</value>
+  </data>
 </root>

@@ -1445,4 +1445,7 @@ This operation can be slow for a large collection of files or if the media acces
   <data name="CategorizationEditToolTip" xml:space="preserve">
     <value>Edit</value>
   </data>
+  <data name="SearchFilterPositionFromLocationToolTip" xml:space="preserve">
+    <value>Set GPS position from from selected location</value>
+  </data>
 </root>

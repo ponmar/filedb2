@@ -8,7 +8,7 @@
              x:Class="FileDB.Views.Search.Filters.PositionView">
 	<StackPanel Orientation="Horizontal" DataContext="{Binding FilterViewModel}">
 		<TextBox Margin="0 0 3 0" Text="{Binding PositionText}" Width="150" VerticalAlignment="Center" ToolTip.Tip="{x:Static lang:Strings.SearchFilterPositionInputToolTip}"/>
-		<ComboBox Margin="0 0 3 0" ItemsSource="{Binding LocationsWithPosition}" SelectedItem="{Binding SelectedLocationsWithPosition}" VerticalAlignment="Center"/>
+		<ComboBox Margin="0 0 3 0" ItemsSource="{Binding LocationsWithPosition}" SelectedItem="{Binding SelectedLocationsWithPosition}" VerticalAlignment="Center" ToolTip.Tip="{x:Static lang:Strings.SearchFilterPositionFromLocationToolTip}"/>
 		<Button Margin="0 0 3 0" Content="&#128408;" ToolTip.Tip="{x:Static lang:Strings.SearchFromCurrentFileButton}" IsEnabled="{Binding CurrentFileHasPosition}" Command="{Binding UsePositionFromCurrentFileCommand}" VerticalAlignment="Center"/>
 		<NumericUpDown Value="{Binding Radius}" Increment="1" Minimum="1" Maximum="10000" MinWidth="150" VerticalAlignment="Center" ToolTip.Tip="{x:Static lang:Strings.SearchFilterPositionRadiusInputToolTip}"/>
 	</StackPanel>
