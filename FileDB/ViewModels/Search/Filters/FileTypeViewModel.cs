@@ -16,7 +16,7 @@ public partial class FileTypeViewModel : ObservableValidator, IFilterViewModel
     public static IEnumerable<FileType> FileTypes { get; } = Enum.GetValues<FileType>().Where(x => x != FileType.Unknown).OrderBy(x => x.ToFriendlyString());
 
     [ObservableProperty]
-    private FileType selectedFileType = FileTypes.First();
+    public partial FileType SelectedFileType { get; set; } = FileTypes.First();
 
     public FileTypeViewModel()
     {

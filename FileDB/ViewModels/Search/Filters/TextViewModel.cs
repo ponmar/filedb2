@@ -15,19 +15,19 @@ public partial class TextViewModel : ObservableValidator, IFilterViewModel
     [ObservableProperty]
     [NotifyDataErrorInfo]
     [Required(ErrorMessage = "Required")]
-    private string textFilterSearchPattern = string.Empty;
+    public partial string TextFilterSearchPattern { get; set; } = string.Empty;
 
     [ObservableProperty]
-    private bool textFilterCaseSensitive = false;
+    public partial bool TextFilterCaseSensitive { get; set; } = false;
 
     [ObservableProperty]
-    private bool textFilterPersons;
+    public partial bool TextFilterPersons { get; set; }
 
     [ObservableProperty]
-    private bool textFilterLocations;
+    public partial bool TextFilterLocations { get; set; }
 
     [ObservableProperty]
-    private bool textFilterTags;
+    public partial bool TextFilterTags { get; set; }
 
     private readonly IPersonsRepository personsRepository;
     private readonly ILocationsRepository locationsRepository;

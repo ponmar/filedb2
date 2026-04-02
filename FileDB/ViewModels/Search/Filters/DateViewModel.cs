@@ -11,13 +11,13 @@ namespace FileDB.ViewModels.Search.Filters;
 public partial class DateViewModel : ObservableValidator, IFilterViewModel
 {
     [ObservableProperty]
-    private bool dateIsRange = false;
+    public partial bool DateIsRange { get; set; } = false;
 
     [ObservableProperty]
-    private DateTimeOffset firstDateTime = DateTime.Now;
+    public partial DateTimeOffset FirstDateTime { get; set; } = DateTime.Now;
 
     [ObservableProperty]
-    private DateTimeOffset secondDateTime = DateTime.Now;
+    public partial DateTimeOffset SecondDateTime { get; set; } = DateTime.Now;
 
     public bool CurrentFileHasDateTime => fileSelector.SelectedFile?.Datetime is not null;
 

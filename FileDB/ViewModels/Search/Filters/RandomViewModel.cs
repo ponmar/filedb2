@@ -14,7 +14,7 @@ public partial class RandomViewModel : ObservableValidator, IFilterViewModel
     [NotifyDataErrorInfo]
     [Required(ErrorMessage = "Required")]
     [Range(1, 1000, ErrorMessage = "Must be between 1 and 1000")]
-    private int numRandomFiles = DefaultNumRandomFiles;
+    public partial int NumRandomFiles { get; set; } = DefaultNumRandomFiles;
 
     public RandomViewModel()
     {

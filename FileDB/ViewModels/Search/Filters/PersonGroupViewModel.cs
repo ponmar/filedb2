@@ -13,15 +13,15 @@ namespace FileDB.ViewModels.Search.Filters;
 public partial class PersonGroupViewModel : ObservableValidator, IFilterViewModel
 {
     [ObservableProperty]
-    private ObservableCollection<PersonForSearch> persons = [];
+    public partial ObservableCollection<PersonForSearch> Persons { get; set; } = [];
 
     [ObservableProperty]
     [NotifyDataErrorInfo]
     [MinCount(1)]
-    private ObservableCollection<PersonForSearch> selectedPersons = [];
+    public partial ObservableCollection<PersonForSearch> SelectedPersons { get; set; } = [];
 
     [ObservableProperty]
-    private bool allowOtherPersons;
+    public partial bool AllowOtherPersons { get; set; }
 
     private readonly IPersonsRepository personsRepository;
     private readonly IFileSelector fileSelector;

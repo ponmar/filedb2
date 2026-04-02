@@ -12,7 +12,7 @@ public partial class SeasonViewModel : ObservableValidator, IFilterViewModel
     public static IEnumerable<Season> Seasons { get; } = Enum.GetValues<Season>();
 
     [ObservableProperty]
-    private Season selectedSeason = Seasons.First();
+    public partial Season SelectedSeason { get; set; } = Seasons.First();
 
     public SeasonViewModel()
     {

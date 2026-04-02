@@ -14,7 +14,7 @@ public partial class PersonSexViewModel : ObservableValidator, IFilterViewModel
     public static IEnumerable<Sex> PersonSexValues { get; } = Enum.GetValues<Sex>().OrderBy(x => x.ToFriendlyString());
 
     [ObservableProperty]
-    private Sex selectedPersonSex = PersonSexValues.First();
+    public partial Sex SelectedPersonSex { get; set; } = PersonSexValues.First();
 
     public PersonSexViewModel()
     {

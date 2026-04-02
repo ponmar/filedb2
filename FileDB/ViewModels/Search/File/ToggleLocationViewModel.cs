@@ -14,10 +14,10 @@ public partial class ToggleLocationViewModel : ObservableObject
     public string ToolTip { get; }
 
     [ObservableProperty]
-    private bool isChecked;
+    public partial bool IsChecked { get; set; }
 
     [ObservableProperty]
-    private bool isVisible;
+    public partial bool IsVisible { get; set; }
 
     public ToggleLocationViewModel(LocationModel location, IConfigProvider configProvider)
     {

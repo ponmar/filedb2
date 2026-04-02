@@ -17,15 +17,15 @@ public record TagForSearch(int Id, string Name)
 public partial class TagViewModel : ObservableValidator, IFilterViewModel
 {
     [ObservableProperty]
-    private ObservableCollection<TagForSearch> tags = [];
+    public partial ObservableCollection<TagForSearch> Tags { get; set; } = [];
 
     [ObservableProperty]
     [NotifyDataErrorInfo]
     [Required(ErrorMessage = "Required")]
-    private TagForSearch? selectedTag;
+    public partial TagForSearch? SelectedTag { get; set; }
 
     [ObservableProperty]
-    private bool negate;
+    public partial bool Negate { get; set; }
 
     private readonly ITagsRepository tagsRepo;
     private readonly IFileSelector fileSelector;

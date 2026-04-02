@@ -17,15 +17,15 @@ public record PersonForSearch(int Id, string Name)
 public partial class PersonViewModel : ObservableValidator, IFilterViewModel
 {
     [ObservableProperty]
-    private ObservableCollection<PersonForSearch> persons = [];
+    public partial ObservableCollection<PersonForSearch> Persons { get; set; } = [];
 
     [ObservableProperty]
     [NotifyDataErrorInfo]
     [Required(ErrorMessage = "Required")]
-    private PersonForSearch? selectedPerson;
+    public partial PersonForSearch? SelectedPerson { get; set; }
 
     [ObservableProperty]
-    private bool negate;
+    public partial bool Negate { get; set; }
 
     private readonly IPersonsRepository personsRepository;
     private readonly IFileSelector fileSelector;

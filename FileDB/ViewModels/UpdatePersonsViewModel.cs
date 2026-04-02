@@ -22,7 +22,7 @@ public class PersonWithAge : PersonModel
 public partial class UpdatePersonsViewModel : ObservableObject
 {
     [ObservableProperty]
-    private string filterText = string.Empty;
+    public partial string FilterText { get; set; } = string.Empty;
 
     partial void OnFilterTextChanged(string value)
     {
@@ -30,14 +30,13 @@ public partial class UpdatePersonsViewModel : ObservableObject
     }
 
     [ObservableProperty]
-    private bool readOnly;
-
+    public partial bool ReadOnly { get; set; }
     public ObservableCollection<PersonWithAge> Persons { get; } = [];
 
     private readonly List<PersonWithAge> allPersons = [];
 
     [ObservableProperty]
-    private PersonWithAge? selectedPerson;
+    public partial PersonWithAge? SelectedPerson { get; set; }
 
     private readonly IConfigProvider configProvider;
     private readonly IDatabaseAccessProvider dbAccessProvider;
@@ -50,8 +49,7 @@ public partial class UpdatePersonsViewModel : ObservableObject
         this.dbAccessProvider = dbAccessProvider;
         this.dialogs = dialogs;
         this.personsRepository = personsRepository;
-
-        readOnly = configProvider.Config.ReadOnly;
+        ReadOnly = configProvider.Config.ReadOnly;
 
         ReloadPersons();
 

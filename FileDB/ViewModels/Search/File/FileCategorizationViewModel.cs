@@ -27,7 +27,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
     [NotifyPropertyChangedFor(nameof(CanApplyMetaDataFromPrevEdit))]
     [NotifyPropertyChangedFor(nameof(CanMarkCurrentFileAsPrevEdited))]
     [NotifyPropertyChangedFor(nameof(UpdateItemsVisible))]
-    private FileModel? selectedFile;
+    public partial FileModel? SelectedFile { get; set; }
 
     public bool FileSelected => SelectedFile is not null;
 
@@ -35,27 +35,27 @@ public partial class FileCategorizationViewModel : ObservableValidator
     [NotifyPropertyChangedFor(nameof(Header))]
     [NotifyPropertyChangedFor(nameof(HeaderToolTip))]
     [NotifyPropertyChangedFor(nameof(UpdateItemsVisible))]
-    private bool isExpanded = false;
+    public partial bool IsExpanded { get; set; } = false;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(HistoryHeader))]
     [NotifyPropertyChangedFor(nameof(HistoryHeaderToolTip))]
-    private bool historyIsExpanded = false;
+    public partial bool HistoryIsExpanded { get; set; } = false;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(UpdatePersonsHeader))]
     [NotifyPropertyChangedFor(nameof(UpdatePersonsHeaderToolTip))]
-    private bool updatePersonsIsExpanded = false;
+    public partial bool UpdatePersonsIsExpanded { get; set; } = false;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(UpdateLocationsHeader))]
     [NotifyPropertyChangedFor(nameof(UpdateLocationsHeaderToolTip))]
-    private bool updateLocationsIsExpanded = false;
+    public partial bool UpdateLocationsIsExpanded { get; set; } = false;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(UpdateTagsHeader))]
     [NotifyPropertyChangedFor(nameof(UpdateTagsHeaderToolTip))]
-    private bool updateTagsIsExpanded = false;
+    public partial bool UpdateTagsIsExpanded { get; set; } = false;
 
     public bool UpdateItemsVisible => CanCategorize && IsExpanded;
 
@@ -71,7 +71,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
     public string? UpdateTagsHeaderToolTip => UpdateTagsIsExpanded ? null : string.Format(Strings.CategorizationUpdateTagsTitle, Tags.Count(x => x.IsChecked), Tags.Count);
 
     [ObservableProperty]
-    private string newFileDescription = string.Empty;
+    public partial string NewFileDescription { get; set; } = string.Empty;
 
     partial void OnNewFileDescriptionChanged(string value)
     {
@@ -81,7 +81,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
     [ObservableProperty]
     [NotifyDataErrorInfo]
     [IsDateAndTime(ErrorMessage = "Format error")]
-    private string newFileDateTime = string.Empty;
+    public partial string NewFileDateTime { get; set; } = string.Empty;
 
     partial void OnNewFileDateTimeChanged(string value)
     {
@@ -94,7 +94,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
     public bool CanSave => !HasErrors && IsDirty;
 
     [ObservableProperty]
-    private string filePosition = string.Empty;
+    public partial string FilePosition { get; set; } = string.Empty;
 
     partial void OnFilePositionChanged(string value)
     {
@@ -104,19 +104,18 @@ public partial class FileCategorizationViewModel : ObservableValidator
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CanCategorize))]
     [NotifyPropertyChangedFor(nameof(UpdateItemsVisible))]
-    private bool readOnly;
+    public partial bool ReadOnly { get; set; }
 
     public bool CanCategorize => !ReadOnly && FileSelected;
 
     [ObservableProperty]
-    private int imageRotation = 0;
-
+    public partial int ImageRotation { get; set; } = 0;
     public ObservableCollection<UpdateHistoryItemViewModel> UpdateHistoryItems { get; } = [];
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CanApplyMetaDataFromPrevEdit))]
     [NotifyPropertyChangedFor(nameof(CanMarkCurrentFileAsPrevEdited))]
-    private int? prevEditedFileId = null;
+    public partial int? PrevEditedFileId { get; set; } = null;
 
     public bool CanApplyMetaDataFromPrevEdit => SelectedFile is not null && PrevEditedFileId is not null && SelectedFile.Id != PrevEditedFileId;
 
@@ -131,7 +130,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
     public bool HasVisibleTags => Tags.Any(x => x.IsVisible);
 
     [ObservableProperty]
-    private string personsFilterText = string.Empty;
+    public partial string PersonsFilterText { get; set; } = string.Empty;
 
     partial void OnPersonsFilterTextChanged(string value)
     {
@@ -139,7 +138,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
     }
 
     [ObservableProperty]
-    private bool personsFilterTextCaseSensitive;
+    public partial bool PersonsFilterTextCaseSensitive { get; set; }
 
     partial void OnPersonsFilterTextCaseSensitiveChanged(bool value)
     {
@@ -159,7 +158,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
     }
 
     [ObservableProperty]
-    private string locationsFilterText = string.Empty;
+    public partial string LocationsFilterText { get; set; } = string.Empty;
 
     partial void OnLocationsFilterTextChanged(string value)
     {
@@ -167,7 +166,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
     }
 
     [ObservableProperty]
-    private bool locationsFilterTextCaseSensitive;
+    public partial bool LocationsFilterTextCaseSensitive { get; set; }
 
     partial void OnLocationsFilterTextCaseSensitiveChanged(bool value)
     {
@@ -187,7 +186,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
     }
 
     [ObservableProperty]
-    private string tagsFilterText = string.Empty;
+    public partial string TagsFilterText { get; set; } = string.Empty;
 
     partial void OnTagsFilterTextChanged(string value)
     {
@@ -195,7 +194,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
     }
 
     [ObservableProperty]
-    private bool tagsFilterTextCaseSensitive;
+    public partial bool TagsFilterTextCaseSensitive { get; set; }
 
     partial void OnTagsFilterTextCaseSensitiveChanged(bool value)
     {
@@ -220,7 +219,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CanSave))]
-    private bool isDirty;
+    public partial bool IsDirty { get; set; }
 
     private readonly IConfigProvider configProvider;
     private readonly IDatabaseAccessProvider dbAccessProvider;

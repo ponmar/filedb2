@@ -15,7 +15,7 @@ namespace FileDB.ViewModels;
 public partial class UpdateTagsViewModel : ObservableObject
 {
     [ObservableProperty]
-    private string filterText = string.Empty;
+    public partial string FilterText { get; set; } = string.Empty;
 
     partial void OnFilterTextChanged(string value)
     {
@@ -23,14 +23,13 @@ public partial class UpdateTagsViewModel : ObservableObject
     }
 
     [ObservableProperty]
-    private bool readOnly;
-
+    public partial bool ReadOnly { get; set; }
     public ObservableCollection<TagModel> Tags { get; } = [];
 
     private readonly List<TagModel> allTags = [];
 
     [ObservableProperty]
-    private TagModel? selectedTag;
+    public partial TagModel? SelectedTag { get; set; }
 
     private readonly IConfigProvider configProvider;
     private readonly IDatabaseAccessProvider dbAccessProvider;
@@ -43,8 +42,7 @@ public partial class UpdateTagsViewModel : ObservableObject
         this.dbAccessProvider = dbAccessProvider;
         this.dialogs = dialogs;
         this.tagsRepository = tagsRepository;
-
-        readOnly = configProvider.Config.ReadOnly;
+        ReadOnly = configProvider.Config.ReadOnly;
 
         ReloadTags();
 

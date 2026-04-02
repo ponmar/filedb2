@@ -15,11 +15,10 @@ public partial class AddTagViewModel : ObservableObject
     private readonly int? tagId;
 
     [ObservableProperty]
-    private string title;
+    public partial string Title { get; set; }
 
     [ObservableProperty]
-    private string name = string.Empty;
-
+    public partial string Name { get; set; } = string.Empty;
     public TagModel? AffectedTag { get; private set; }
 
     private readonly IDatabaseAccessProvider dbAccessProvider;
@@ -30,8 +29,7 @@ public partial class AddTagViewModel : ObservableObject
         this.dbAccessProvider = dbAccessProvider;
         this.dialogs = dialogs;
         this.tagId = tagId;
-
-        title = tagId.HasValue ? Strings.AddTagEditTitle : Strings.AddTagAddTitle;
+        Title = tagId.HasValue ? Strings.AddTagEditTitle : Strings.AddTagAddTitle;
 
         if (tagId.HasValue)
         {

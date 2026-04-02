@@ -29,12 +29,11 @@ public partial class FilterSelectionViewModel : ObservableObject
     public static IEnumerable<FilterType> FilterTypes { get; } = Enum.GetValues<FilterType>().OrderBy(x => x.ToFriendlyString(), StringComparer.Ordinal);
 
     [ObservableProperty]
-    private FilterType selectedFilterType;
-
+    public partial FilterType SelectedFilterType { get; set; }
     public static IEnumerable<CombineMethod> CombineMethods { get; } = Enum.GetValues<CombineMethod>();
 
     [ObservableProperty]
-    private CombineMethod selectedCombineMethod;
+    public partial CombineMethod SelectedCombineMethod { get; set; }
 
     partial void OnSelectedFilterTypeChanged(FilterType value)
     {
@@ -44,10 +43,10 @@ public partial class FilterSelectionViewModel : ObservableObject
     }
 
     [ObservableProperty]
-    private bool isFirstFilter;
+    public partial bool IsFirstFilter { get; set; }
 
     [ObservableProperty]
-    private IFilterViewModel filterViewModel;
+    public partial IFilterViewModel FilterViewModel { get; set; }
 
     public FilterSelectionViewModel(IConfigProvider configProvider)
     {

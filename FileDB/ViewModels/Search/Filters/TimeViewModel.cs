@@ -11,10 +11,10 @@ namespace FileDB.ViewModels.Search.Filters;
 public partial class TimeViewModel : ObservableValidator, IFilterViewModel
 {
     [ObservableProperty]
-    private TimeSpan startTime;
+    public partial TimeSpan StartTime { get; set; }
 
     [ObservableProperty]
-    private TimeSpan endTime;
+    public partial TimeSpan EndTime { get; set; }
 
     public bool CurrentFileHasTime => fileSelector.SelectedFile?.Datetime is not null && fileSelector.SelectedFile?.Datetime.Contains('T') == true;
 

@@ -28,7 +28,7 @@ public enum UpdateHistoryType
 public partial class FileViewModel : ObservableObject
 {
     [ObservableProperty]
-    private bool maximize = false;
+    public partial bool Maximize { get; set; } = false;
 
     partial void OnMaximizeChanged(bool value)
     {
@@ -37,7 +37,7 @@ public partial class FileViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(OverlayFontSize))]
-    private bool largeTextMode = false;
+    public partial bool LargeTextMode { get; set; } = false;
 
     public int OverlayFontSize => LargeTextMode ? configProvider.Config.OverlayTextSizeLarge : configProvider.Config.OverlayTextSize;
 
@@ -47,23 +47,22 @@ public partial class FileViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(FileSelected))]
-    private FileModel? selectedFile;
+    public partial FileModel? SelectedFile { get; set; }
 
     [ObservableProperty]
-    private string internalPath = string.Empty;
+    public partial string InternalPath { get; set; } = string.Empty;
 
     [ObservableProperty]
-    private string description = string.Empty;
+    public partial string Description { get; set; } = string.Empty;
 
     [ObservableProperty]
-    private string dateTime = string.Empty;
+    public partial string DateTime { get; set; } = string.Empty;
 
     [ObservableProperty]
-    private string position = string.Empty;
+    public partial string Position { get; set; } = string.Empty;
 
     [ObservableProperty]
-    private string? positionLink;
-
+    public partial string? PositionLink { get; set; }
     public ObservableCollection<Person> Persons { get; } = [];
 
     public ObservableCollection<Location> Locations { get; } = [];
@@ -71,13 +70,13 @@ public partial class FileViewModel : ObservableObject
     public ObservableCollection<Tag> Tags { get; } = [];
 
     [ObservableProperty]
-    private string fileLoadError = string.Empty;
+    public partial string FileLoadError { get; set; } = string.Empty;
 
     [ObservableProperty]
-    private Bitmap? image = null;
+    public partial Bitmap? Image { get; set; } = null;
 
     [ObservableProperty]
-    private int imageRotation = 0;
+    public partial int ImageRotation { get; set; } = 0;
 
     private string absolutePath = string.Empty;
 

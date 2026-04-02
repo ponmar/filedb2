@@ -18,7 +18,7 @@ public partial class CombineViewModel : ObservableValidator, IFilterViewModel
     [Required(ErrorMessage = "Required")]
     [IsFileIdsText(ErrorMessage = "Format error")]
     [NotifyPropertyChangedFor(nameof(CombineSearchResultPossible))]
-    private string combineSearch1 = string.Empty;
+    public partial string CombineSearch1 { get; set; } = string.Empty;
 
     partial void OnCombineSearch1Changed(string value)
     {
@@ -30,7 +30,7 @@ public partial class CombineViewModel : ObservableValidator, IFilterViewModel
     [Required(ErrorMessage = "Required")]
     [IsFileIdsText(ErrorMessage = "Format error")]
     [NotifyPropertyChangedFor(nameof(CombineSearchResultPossible))]
-    private string combineSearch2 = string.Empty;
+    public partial string CombineSearch2 { get; set; } = string.Empty;
 
     partial void OnCombineSearch2Changed(string value)
     {
@@ -38,7 +38,7 @@ public partial class CombineViewModel : ObservableValidator, IFilterViewModel
     }
 
     [ObservableProperty]
-    private string combineSearchResult = string.Empty;
+    public partial string CombineSearchResult { get; set; } = string.Empty;
 
     public bool CombineSearchResultPossible => CombineSearch1.HasContent() && CombineSearch2.HasContent();
     

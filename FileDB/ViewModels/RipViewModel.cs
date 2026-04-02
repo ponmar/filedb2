@@ -19,10 +19,10 @@ public partial class DeceasedPersonViewModel : ObservableObject
     public string? ProfilePictureAbsPath { get; }
 
     [ObservableProperty]
-    private Bitmap? profilePicture = null;
+    public partial Bitmap? ProfilePicture { get; set; } = null;
 
     [ObservableProperty]
-    private int profilePictureRotation = 0;
+    public partial int ProfilePictureRotation { get; set; } = 0;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(Name))]
@@ -30,7 +30,7 @@ public partial class DeceasedPersonViewModel : ObservableObject
     [NotifyPropertyChangedFor(nameof(DeceasedStr))]
     [NotifyPropertyChangedFor(nameof(Deceased))]
     [NotifyPropertyChangedFor(nameof(Age))]
-    private PersonModel person;
+    public partial PersonModel Person { get; set; }
 
     public string Name => Person.FullName;
     public string DateOfBirth => Person.DateOfBirth!;
@@ -43,7 +43,7 @@ public partial class DeceasedPersonViewModel : ObservableObject
     public DeceasedPersonViewModel(ICriteriaViewModel criteriaViewModel, PersonModel person, string? profilePictureAbsPath)
     {
         this.criteriaViewModel = criteriaViewModel;
-        this.person = person;
+        Person = person;
         ProfilePictureAbsPath = profilePictureAbsPath;
     }
 
@@ -57,7 +57,7 @@ public partial class DeceasedPersonViewModel : ObservableObject
 public partial class RipViewModel : ObservableObject
 {
     [ObservableProperty]
-    private string filterText = string.Empty;
+    public partial string FilterText { get; set; } = string.Empty;
 
     partial void OnFilterTextChanged(string value)
     {

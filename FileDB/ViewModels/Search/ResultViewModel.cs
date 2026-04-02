@@ -101,7 +101,7 @@ public partial class ResultViewModel : ObservableObject, ISearchResultRepository
     public ObservableCollection<SearchResult> SearchResultHistory { get; } = [];
 
     [ObservableProperty]
-    private SearchResult? searchResultHistorySelection;
+    public partial SearchResult? SearchResultHistorySelection { get; set; }
 
     public bool FindFilesFromHistoryEnabled => SearchResultHistory.Count >= 2;
 
@@ -115,7 +115,7 @@ public partial class ResultViewModel : ObservableObject, ISearchResultRepository
     }
 
     [ObservableProperty]
-    private bool slideshowActive = false;
+    public partial bool SlideshowActive { get; set; } = false;
 
     partial void OnSlideshowActiveChanged(bool value)
     {
@@ -133,13 +133,13 @@ public partial class ResultViewModel : ObservableObject, ISearchResultRepository
     }
 
     [ObservableProperty]
-    private bool randomActive = false;
+    public partial bool RandomActive { get; set; } = false;
 
     [ObservableProperty]
-    private bool repeatActive = false;
+    public partial bool RepeatActive { get; set; } = false;
 
     [ObservableProperty]
-    private int slideshowDelay;
+    public partial int SlideshowDelay { get; set; }
 
     partial void OnSlideshowDelayChanged(int value)
     {
@@ -150,10 +150,10 @@ public partial class ResultViewModel : ObservableObject, ISearchResultRepository
     }
 
     [ObservableProperty]
-    private List<SortMethod> sortMethods = [.. Enum.GetValues<SortMethod>()];
+    public partial List<SortMethod> SortMethods { get; set; } = [.. Enum.GetValues<SortMethod>()];
 
     [ObservableProperty]
-    private SortMethod selectedSortMethod;
+    public partial SortMethod SelectedSortMethod { get; set; }
 
     partial void OnSelectedSortMethodChanged(SortMethod value)
     {
@@ -162,7 +162,7 @@ public partial class ResultViewModel : ObservableObject, ISearchResultRepository
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(SelectedFileNumber))]
-    private int selectedFileIndex = -1;
+    public partial int SelectedFileIndex { get; set; } = -1;
 
     public int SelectedFileNumber => SelectedFileIndex + 1;
 
@@ -175,7 +175,7 @@ public partial class ResultViewModel : ObservableObject, ISearchResultRepository
     public bool HasNonEmptySearchResult => SearchResult is not null && SearchResult.Count > 0;
 
     [ObservableProperty]
-    private bool speekActive;
+    public partial bool SpeekActive { get; set; }
 
     partial void OnSpeekActiveChanged(bool value)
     {

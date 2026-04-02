@@ -18,18 +18,17 @@ public partial class PositionViewModel : ObservableValidator, IFilterViewModel
     [NotifyDataErrorInfo]
     [Required(ErrorMessage = "Required")]
     [TextIncludesLatitudeAndLongitude()]
-    private string positionText = string.Empty;
+    public partial string PositionText { get; set; } = string.Empty;
 
     [ObservableProperty]
     [NotifyDataErrorInfo]
     [Required(ErrorMessage = "Required")]
     [Range(1, 10000, ErrorMessage = "Radius must be between 1 and 10000 meters")]
-    private int radius = 500;
-
+    public partial int Radius { get; set; } = 500;
     public ObservableCollection<LocationForSearch> LocationsWithPosition { get; } = [];
 
     [ObservableProperty]
-    private LocationForSearch? selectedLocationsWithPosition = null;
+    public partial LocationForSearch? SelectedLocationsWithPosition { get; set; } = null;
 
     partial void OnSelectedLocationsWithPositionChanged(LocationForSearch? value)
     {
@@ -41,7 +40,7 @@ public partial class PositionViewModel : ObservableValidator, IFilterViewModel
     }
 
     [ObservableProperty]
-    private bool currentFileHasPosition;
+    public partial bool CurrentFileHasPosition { get; set; }
 
     private readonly ILocationsRepository locationsRepository;
     private readonly IDatabaseAccessProvider databaseAccessProvider;

@@ -13,15 +13,14 @@ namespace FileDB.ViewModels.Search.Filters;
 public partial class AnnualDateViewModel : ObservableValidator, IFilterViewModel
 {
     [ObservableProperty]
-    private bool annualDateIsRange = false;
-
+    public partial bool AnnualDateIsRange { get; set; } = false;
     public static IEnumerable<int> Months { get; } = Enumerable.Range(1, 12);
 
     public static IEnumerable<int> Days { get; } = Enumerable.Range(1, 31);
 
     [ObservableProperty]
     [Required(ErrorMessage = "Required")]
-    private int selectedAnnualMonthStart = Months.First();
+    public partial int SelectedAnnualMonthStart { get; set; } = Months.First();
 
     partial void OnSelectedAnnualMonthStartChanged(int value)
     {
@@ -41,7 +40,7 @@ public partial class AnnualDateViewModel : ObservableValidator, IFilterViewModel
 
     [ObservableProperty]
     [Required(ErrorMessage = "Required")]
-    private int selectedAnnualDayStart = Days.First();
+    public partial int SelectedAnnualDayStart { get; set; } = Days.First();
 
     partial void OnSelectedAnnualDayStartChanged(int value)
     {
@@ -54,7 +53,7 @@ public partial class AnnualDateViewModel : ObservableValidator, IFilterViewModel
 
     [ObservableProperty]
     [Required(ErrorMessage = "Required")]
-    private int selectedAnnualMonthEnd = Months.First();
+    public partial int SelectedAnnualMonthEnd { get; set; } = Months.First();
 
     partial void OnSelectedAnnualMonthEndChanged(int value)
     {
@@ -74,7 +73,7 @@ public partial class AnnualDateViewModel : ObservableValidator, IFilterViewModel
 
     [ObservableProperty]
     [Required(ErrorMessage = "Required")]
-    private int selectedAnnualDayEnd = Days.First();
+    public partial int SelectedAnnualDayEnd { get; set; } = Days.First();
 
     partial void OnSelectedAnnualDayEndChanged(int value)
     {

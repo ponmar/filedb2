@@ -9,7 +9,7 @@ namespace FileDB.ViewModels.Search.Filters;
 public partial class NumPersonsViewModel : ObservableValidator, IFilterViewModel
 {
     [ObservableProperty]
-    private int numPersonsMin = 1;
+    public partial int NumPersonsMin { get; set; } = 1;
 
     partial void OnNumPersonsMinChanged(int value)
     {
@@ -20,7 +20,7 @@ public partial class NumPersonsViewModel : ObservableValidator, IFilterViewModel
     }
 
     [ObservableProperty]
-    private int numPersonsMax = 1;
+    public partial int NumPersonsMax { get; set; } = 1;
 
     partial void OnNumPersonsMaxChanged(int value)
     {

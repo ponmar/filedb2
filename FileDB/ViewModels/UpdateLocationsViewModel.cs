@@ -16,7 +16,7 @@ namespace FileDB.ViewModels;
 public partial class UpdateLocationsViewModel : ObservableObject
 {
     [ObservableProperty]
-    private string filterText = string.Empty;
+    public partial string FilterText { get; set; } = string.Empty;
 
     partial void OnFilterTextChanged(string value)
     {
@@ -24,15 +24,14 @@ public partial class UpdateLocationsViewModel : ObservableObject
     }
 
     [ObservableProperty]
-    private bool readOnly;
-
+    public partial bool ReadOnly { get; set; }
     public ObservableCollection<LocationModel> Locations { get; } = [];
 
     private readonly List<LocationModel> allLocations = [];
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(SelectedLocationHasPosition))]
-    private LocationModel? selectedLocation;
+    public partial LocationModel? SelectedLocation { get; set; }
 
     public bool SelectedLocationHasPosition => SelectedLocation is not null && SelectedLocation.Position.HasContent();
 
@@ -47,8 +46,7 @@ public partial class UpdateLocationsViewModel : ObservableObject
         this.dbAccessProvider = dbAccessProvider;
         this.dialogs = dialogs;
         this.locationsRepository = locationsRepository;
-
-        readOnly = configProvider.Config.ReadOnly;
+        ReadOnly = configProvider.Config.ReadOnly;
 
         ReloadLocations();
 

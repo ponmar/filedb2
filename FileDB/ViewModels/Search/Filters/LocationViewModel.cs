@@ -17,18 +17,18 @@ public record LocationForSearch(int Id, string Name)
 public partial class LocationViewModel : ObservableValidator, IFilterViewModel
 {
     [ObservableProperty]
-    private ObservableCollection<LocationForSearch> locations = [];
+    public partial ObservableCollection<LocationForSearch> Locations { get; set; } = [];
 
     [ObservableProperty]
-    private ObservableCollection<LocationForSearch> locationsWithPosition = [];
+    public partial ObservableCollection<LocationForSearch> LocationsWithPosition { get; set; } = [];
 
     [ObservableProperty]
     [NotifyDataErrorInfo]
     [Required(ErrorMessage = "Required")]
-    private LocationForSearch? selectedLocation;
+    public partial LocationForSearch? SelectedLocation { get; set; }
 
     [ObservableProperty]
-    private bool negate;
+    public partial bool Negate { get; set; }
 
     private readonly ILocationsRepository locationsRepository;
     private readonly IFileSelector fileSelector;

@@ -16,10 +16,10 @@ public partial class FileListViewModel : ObservableValidator, IFilterViewModel
     [NotifyDataErrorInfo]
     [Required(ErrorMessage = "Required")]
     [IsFileIdsText(ErrorMessage = "Format error")]
-    private string fileListIds = string.Empty;
+    public partial string FileListIds { get; set; } = string.Empty;
 
     [ObservableProperty]
-    private bool negate;
+    public partial bool Negate { get; set; }
 
     public bool HasSearchResult => searchResultRepository.Files.Any();
 

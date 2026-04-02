@@ -12,13 +12,13 @@ namespace FileDB.ViewModels.Search.Filters;
 public partial class TagsViewModel : ObservableValidator, IFilterViewModel
 {
     [ObservableProperty]
-    private ObservableCollection<TagForSearch> tags = [];
+    public partial ObservableCollection<TagForSearch> Tags { get; set; } = [];
 
     [ObservableProperty]
-    private ObservableCollection<TagForSearch> selectedTags = [];
+    public partial ObservableCollection<TagForSearch> SelectedTags { get; set; } = [];
 
     [ObservableProperty]
-    private bool allowOtherTags;
+    public partial bool AllowOtherTags { get; set; }
 
     private readonly ITagsRepository tagsRepo;
     private readonly IFileSelector fileSelector;

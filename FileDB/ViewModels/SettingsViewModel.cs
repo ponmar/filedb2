@@ -27,7 +27,7 @@ public partial class SettingsViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CanSave))]
-    private bool isDirty;
+    public partial bool IsDirty { get; set; }
 
     public bool CanSave => IsDirty && HasWritePermission;
 
@@ -35,7 +35,7 @@ public partial class SettingsViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(SlideshowDelayIsDefault))]
-    private int slideshowDelay;
+    public partial int SlideshowDelay { get; set; }
 
     partial void OnSlideshowDelayChanged(int value) => IsDirty = true;
 
@@ -43,7 +43,7 @@ public partial class SettingsViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(SearchHistorySizeIsDefault))]
-    private int searchHistorySize;
+    public partial int SearchHistorySize { get; set; }
 
     partial void OnSearchHistorySizeChanged(int value) => IsDirty = true;
 
@@ -51,7 +51,7 @@ public partial class SettingsViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(DefaultSortMethodIsDefault))]
-    private SortMethod defaultSortMethod;
+    public partial SortMethod DefaultSortMethod { get; set; }
 
     partial void OnDefaultSortMethodChanged(SortMethod value) => IsDirty = true;
 
@@ -59,7 +59,7 @@ public partial class SettingsViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(KeepSelectionAfterSortIsDefault))]
-    private bool keepSelectionAfterSort;
+    public partial bool KeepSelectionAfterSort { get; set; }
 
     partial void OnKeepSelectionAfterSortChanged(bool value) => IsDirty = true;
 
@@ -67,7 +67,7 @@ public partial class SettingsViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IncludeHiddenDirectoriesIsDefault))]
-    private bool includeHiddenDirectories;
+    public partial bool IncludeHiddenDirectories { get; set; }
 
     partial void OnIncludeHiddenDirectoriesChanged(bool value) => IsDirty = true;
 
@@ -75,7 +75,7 @@ public partial class SettingsViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(BlacklistedFilePathPatternsIsDefault))]
-    private string blacklistedFilePathPatterns = string.Empty;
+    public partial string BlacklistedFilePathPatterns { get; set; } = string.Empty;
 
     partial void OnBlacklistedFilePathPatternsChanged(string value) => IsDirty = true;
 
@@ -83,7 +83,7 @@ public partial class SettingsViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(WhitelistedFilePathPatternsIsDefault))]
-    private string whitelistedFilePathPatterns = string.Empty;
+    public partial string WhitelistedFilePathPatterns { get; set; } = string.Empty;
 
     partial void OnWhitelistedFilePathPatternsChanged(string value) => IsDirty = true;
 
@@ -91,7 +91,7 @@ public partial class SettingsViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(ReadOnlyIsDefault))]
-    private bool readOnly;
+    public partial bool ReadOnly { get; set; }
 
     partial void OnReadOnlyChanged(bool value) => IsDirty = true;
 
@@ -99,7 +99,7 @@ public partial class SettingsViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(BackupReminderIsDefault))]
-    private bool backupReminder;
+    public partial bool BackupReminder { get; set; }
 
     partial void OnBackupReminderChanged(bool value) => IsDirty = true;
 
@@ -107,7 +107,7 @@ public partial class SettingsViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(BirthdayReminderIsDefault))]
-    private bool birthdayReminder;
+    public partial bool BirthdayReminder { get; set; }
 
     partial void OnBirthdayReminderChanged(bool value) => IsDirty = true;
 
@@ -115,7 +115,7 @@ public partial class SettingsViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(BirthdayReminderForDeceasedIsDefault))]
-    private bool birthdayReminderForDeceased;
+    public partial bool BirthdayReminderForDeceased { get; set; }
 
     partial void OnBirthdayReminderForDeceasedChanged(bool value) => IsDirty = true;
 
@@ -123,7 +123,7 @@ public partial class SettingsViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(RipReminderIsDefault))]
-    private bool ripReminder;
+    public partial bool RipReminder { get; set; }
 
     partial void OnRipReminderChanged(bool value) => IsDirty = true;
 
@@ -131,7 +131,7 @@ public partial class SettingsViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(MissingFilesRootDirNotificationIsDefault))]
-    private bool missingFilesRootDirNotification;
+    public partial bool MissingFilesRootDirNotification { get; set; }
 
     partial void OnMissingFilesRootDirNotificationChanged(bool value) => IsDirty = true;
 
@@ -139,7 +139,7 @@ public partial class SettingsViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(LocationLinkIsDefault))]
-    private string locationLink = string.Empty;
+    public partial string LocationLink { get; set; } = string.Empty;
 
     partial void OnLocationLinkChanged(string value) => IsDirty = true;
 
@@ -147,7 +147,7 @@ public partial class SettingsViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(FileToLocationMaxDistanceIsDefault))]
-    private int fileToLocationMaxDistance;
+    public partial int FileToLocationMaxDistance { get; set; }
 
     partial void OnFileToLocationMaxDistanceChanged(int value) => IsDirty = true;
 
@@ -155,7 +155,7 @@ public partial class SettingsViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(WindowModeIsDefault))]
-    private WindowMode windowMode;
+    public partial WindowMode WindowMode { get; set; }
 
     partial void OnWindowModeChanged(WindowMode value) => IsDirty = true;
 
@@ -163,7 +163,7 @@ public partial class SettingsViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(SelectedLanguageIsDefault))]
-    private CultureInfo? selectedLanguage;
+    public partial CultureInfo? SelectedLanguage { get; set; }
 
     partial void OnSelectedLanguageChanged(CultureInfo? value) => IsDirty = true;
 
@@ -171,7 +171,7 @@ public partial class SettingsViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(ImageMemoryCacheCountIsDefault))]
-    private int imageMemoryCacheCount;
+    public partial int ImageMemoryCacheCount { get; set; }
 
     partial void OnImageMemoryCacheCountChanged(int value) => IsDirty = true;
 
@@ -179,7 +179,7 @@ public partial class SettingsViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(NumImagesToPreloadIsDefault))]
-    private int numImagesToPreload;
+    public partial int NumImagesToPreload { get; set; }
 
     partial void OnNumImagesToPreloadChanged(int value) => IsDirty = true;
 
@@ -187,7 +187,7 @@ public partial class SettingsViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(OverlayTextSizeIsDefault))]
-    private int overlayTextSize;
+    public partial int OverlayTextSize { get; set; }
 
     partial void OnOverlayTextSizeChanged(int value) => IsDirty = true;
 
@@ -195,7 +195,7 @@ public partial class SettingsViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(OverlayTextSizeLargeIsDefault))]
-    private int overlayTextSizeLarge;
+    public partial int OverlayTextSizeLarge { get; set; }
 
     partial void OnOverlayTextSizeLargeChanged(int value) => IsDirty = true;
 
@@ -203,7 +203,7 @@ public partial class SettingsViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(ShortItemNameMaxLengthIsDefault))]
-    private int shortItemNameMaxLength;
+    public partial int ShortItemNameMaxLength { get; set; }
 
     partial void OnShortItemNameMaxLengthChanged(int value) => IsDirty = true;
 
@@ -211,7 +211,7 @@ public partial class SettingsViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(ThemeIsDefault))]
-    private Theme theme;
+    public partial Theme Theme { get; set; }
 
     partial void OnThemeChanged(Theme value)
     {
@@ -223,7 +223,7 @@ public partial class SettingsViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(LoadExifOrientationFromFileWhenMissingInDatabaseIsDefault))]
-    private bool loadExifOrientationFromFileWhenMissingInDatabase;
+    public partial bool LoadExifOrientationFromFileWhenMissingInDatabase { get; set; }
 
     partial void OnLoadExifOrientationFromFileWhenMissingInDatabaseChanged(bool value) => IsDirty = true;
 
@@ -231,7 +231,7 @@ public partial class SettingsViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(InitialSearchFilterTypeIsDefault))]
-    private FilterType initialSearchFilterType;
+    public partial FilterType InitialSearchFilterType { get; set; }
 
     partial void OnInitialSearchFilterTypeChanged(FilterType value) => IsDirty = true;
 

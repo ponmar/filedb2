@@ -16,28 +16,27 @@ namespace FileDB.ViewModels;
 public partial class PersonBirthdayViewModel : ObservableObject
 {
     [ObservableProperty]
-    private string birthday = string.Empty;
+    public partial string Birthday { get; set; } = string.Empty;
 
     [ObservableProperty]
-    private int daysLeft;
+    public partial int DaysLeft { get; set; }
 
     [ObservableProperty]
-    private string daysLeftStr = string.Empty;
+    public partial string DaysLeftStr { get; set; } = string.Empty;
 
     [ObservableProperty]
-    private int age;
-
+    public partial int Age { get; set; }
     public string? ProfilePictureAbsPath { get; }
 
     [ObservableProperty]
-    private Bitmap? profilePicture = null;
+    public partial Bitmap? ProfilePicture { get; set; } = null;
 
     [ObservableProperty]
-    private int profilePictureRotation = 0;
+    public partial int ProfilePictureRotation { get; set; } = 0;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(Name))]
-    private PersonModel person;
+    public partial PersonModel Person { get; set; }
 
     public string Name => Person.FullName;
 
@@ -46,7 +45,7 @@ public partial class PersonBirthdayViewModel : ObservableObject
     public PersonBirthdayViewModel(ICriteriaViewModel criteriaViewModel, PersonModel person, string? profilePictureAbsPath)
     {
         this.criteriaViewModel = criteriaViewModel;
-        this.person = person;
+        Person = person;
 
         var dateOfBirth = DatabaseParsing.ParsePersonDateOfBirth(person.DateOfBirth!);
         Birthday = dateOfBirth.ToString("d MMMM");
@@ -110,7 +109,7 @@ public class PersonsByDaysLeftUntilBirthdaySorter : IComparer<PersonBirthdayView
 public partial class BirthdaysViewModel : ObservableObject
 {
     [ObservableProperty]
-    private string filterText = string.Empty;
+    public partial string FilterText { get; set; } = string.Empty;
 
     partial void OnFilterTextChanged(string value)
     {

@@ -13,16 +13,16 @@ namespace FileDB.ViewModels;
 public partial class MainViewModel : ObservableObject
 {
     [ObservableProperty]
-    private int numNotifications = 0;
+    public partial int NumNotifications { get; set; } = 0;
 
     [ObservableProperty]
-    private NotificationSeverity highlightedNotificationSeverity;
+    public partial NotificationSeverity HighlightedNotificationSeverity { get; set; }
 
     [ObservableProperty]
-    private int numSearchResultFiles = 0;
+    public partial int NumSearchResultFiles { get; set; } = 0;
 
     [ObservableProperty]
-    private bool quitSelected;
+    public partial bool QuitSelected { get; set; }
 
     partial void OnQuitSelectedChanged(bool value)
     {
@@ -33,7 +33,7 @@ public partial class MainViewModel : ObservableObject
     }
 
     [ObservableProperty]
-    private bool searchTabSelected = true;
+    public partial bool SearchTabSelected { get; set; } = true;
 
     public string Title
     {
@@ -50,16 +50,16 @@ public partial class MainViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(Title))]
-    private bool readOnly;
+    public partial bool ReadOnly { get; set; }
 
     [ObservableProperty]
-    private SystemDecorations systemDecorations;
+    public partial SystemDecorations SystemDecorations { get; set; }
 
     [ObservableProperty]
-    private WindowState windowState;
+    public partial WindowState WindowState { get; set; }
 
     [ObservableProperty]
-    private bool fullscreen;
+    public partial bool Fullscreen { get; set; }
 
     private readonly IConfigProvider configProvider;
     private readonly INotificationRepository notificationRepository;
@@ -70,8 +70,7 @@ public partial class MainViewModel : ObservableObject
         this.configProvider = configProvider;
         this.notificationRepository = notificationRepository;
         this.searchResultRepository = searchResultRepository;
-
-        readOnly = configProvider.Config.ReadOnly;
+        ReadOnly = configProvider.Config.ReadOnly;
 
         NumNotifications = notificationRepository.Notifications.Count();
         HighlightedNotificationSeverity = NotificationsToSeverity();

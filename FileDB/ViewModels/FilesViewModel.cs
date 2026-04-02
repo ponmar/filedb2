@@ -27,26 +27,25 @@ public record NewFile(string Path, string DateModified);
 public partial class FilesViewModel : ObservableValidator
 {
     [ObservableProperty]
-    private string subdirToScan;
-
+    public partial string SubdirToScan { get; set; }
     public ObservableCollection<NewFile> NewFiles { get; } = [];
 
     public ObservableCollection<NewFile> SelectedFiles { get; } = [];
 
     [ObservableProperty]
-    private string importResult = string.Empty;
+    public partial string ImportResult { get; set; } = string.Empty;
 
     [ObservableProperty]
-    private string importedFileList = string.Empty;
+    public partial string ImportedFileList { get; set; } = string.Empty;
 
     [ObservableProperty]
     [NotifyDataErrorInfo]
     [Required(ErrorMessage = "Required")]
     [IsFileIdsText(ErrorMessage = "Format error")]
-    private string removeFileList = string.Empty;
+    public partial string RemoveFileList { get; set; } = string.Empty;
 
     [ObservableProperty]
-    private bool findFileMetadata = true;
+    public partial bool FindFileMetadata { get; set; } = true;
 
     private readonly IConfigProvider configProvider;
     private readonly IDatabaseAccessProvider dbAccessProvider;
@@ -63,8 +62,7 @@ public partial class FilesViewModel : ObservableValidator
         this.dialogs = dialogs;
         this.fileSystem = fileSystem;
         this.criteriaViewModel = criteriaViewModel;
-
-        subdirToScan = configProvider.FilePaths.FilesRootDir;
+        SubdirToScan = configProvider.FilePaths.FilesRootDir;
 
         this.RegisterForEvent<ConfigUpdated>((x) =>
         {

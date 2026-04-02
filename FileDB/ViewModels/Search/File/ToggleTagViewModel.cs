@@ -14,10 +14,10 @@ public partial class ToggleTagViewModel : ObservableObject
     public string ToolTip { get; }
 
     [ObservableProperty]
-    private bool isChecked;
+    public partial bool IsChecked { get; set; }
 
     [ObservableProperty]
-    private bool isVisible;
+    public partial bool IsVisible { get; set; }
 
     public ToggleTagViewModel(TagModel tag, IConfigProvider configProvider)
     {

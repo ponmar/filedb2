@@ -12,7 +12,7 @@ public partial class UpdateHistoryItemViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(ToggleText))]
-    private int functionKey;
+    public partial int FunctionKey { get; set; }
 
     private bool HasHotKey => FunctionKey >= 1 && FunctionKey <= 12;
 
@@ -26,5 +26,5 @@ public partial class UpdateHistoryItemViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(ToolTip))]
-    private bool isChecked;
+    public partial bool IsChecked { get; set; }
 }

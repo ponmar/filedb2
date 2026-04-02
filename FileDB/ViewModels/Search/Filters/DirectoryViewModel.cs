@@ -16,7 +16,7 @@ public partial class DirectoryViewModel : ObservableValidator, IFilterViewModel
     [ObservableProperty]
     [NotifyDataErrorInfo]
     [Required(ErrorMessage = "Required")]
-    private string directoryPath = string.Empty;
+    public partial string DirectoryPath { get; set; } = string.Empty;
 
     private readonly IConfigProvider configProvider;
     private readonly IDialogs dialogs;

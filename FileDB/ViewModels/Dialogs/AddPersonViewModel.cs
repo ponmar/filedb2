@@ -21,25 +21,25 @@ public partial class AddPersonViewModel : ObservableObject
     private readonly int? personId;
 
     [ObservableProperty]
-    private string title;
+    public partial string Title { get; set; }
 
     [ObservableProperty]
-    private string shortName = string.Empty;
+    public partial string ShortName { get; set; } = string.Empty;
 
     [ObservableProperty]
-    private string fullName = string.Empty;
+    public partial string FullName { get; set; } = string.Empty;
 
     [ObservableProperty]
-    private string? description = null;
+    public partial string? Description { get; set; } = null;
 
     [ObservableProperty]
-    private string? dateOfBirth = null;
+    public partial string? DateOfBirth { get; set; } = null;
 
     [ObservableProperty]
-    private string? deceased = null;
+    public partial string? Deceased { get; set; } = null;
 
     [ObservableProperty]
-    private FileModel? profilePictureFile;
+    public partial FileModel? ProfilePictureFile { get; set; }
 
     partial void OnProfilePictureFileChanged(FileModel? value)
     {
@@ -57,14 +57,13 @@ public partial class AddPersonViewModel : ObservableObject
     }
 
     [ObservableProperty]
-    private Bitmap? profilePicture = null;
+    public partial Bitmap? ProfilePicture { get; set; } = null;
 
     [ObservableProperty]
-    private int profilePictureRotation = 0;
+    public partial int ProfilePictureRotation { get; set; } = 0;
 
     [ObservableProperty]
-    private string sexSelection = Sex.NotApplicable.ToString();
-
+    public partial string SexSelection { get; set; } = Sex.NotApplicable.ToString();
     public List<string> SexValues { get; } = Enum.GetNames<Sex>().ToList();
 
     public PersonModel? AffectedPerson { get; private set; }
@@ -87,8 +86,7 @@ public partial class AddPersonViewModel : ObservableObject
         this.imageLoader = imageLoader;
         this.clipboardService = clipboardService;
         this.personId = personId;
-
-        title = personId.HasValue ? Strings.AddPersonEditTitle : Strings.AddPersonAddTitle;
+        Title = personId.HasValue ? Strings.AddPersonEditTitle : Strings.AddPersonAddTitle;
 
         this.RegisterForEvent<ImageLoaded>((x) =>
         {

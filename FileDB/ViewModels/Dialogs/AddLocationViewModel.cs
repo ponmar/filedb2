@@ -16,16 +16,16 @@ public partial class AddLocationViewModel : ObservableObject
     private readonly int? locationId;
 
     [ObservableProperty]
-    private string title;
+    public partial string Title { get; set; }
 
     [ObservableProperty]
-    private string name = string.Empty;
+    public partial string Name { get; set; } = string.Empty;
 
     [ObservableProperty]
-    private string? description = string.Empty;
+    public partial string? Description { get; set; } = string.Empty;
 
     [ObservableProperty]
-    private string? position = string.Empty;
+    public partial string? Position { get; set; } = string.Empty;
 
     private readonly IDatabaseAccessProvider dbAccessProvider;
     private readonly IDialogs dialogs;
@@ -37,8 +37,7 @@ public partial class AddLocationViewModel : ObservableObject
         this.dbAccessProvider = dbAccessProvider;
         this.dialogs = dialogs;
         this.locationId = locationId;
-
-        title = locationId.HasValue ? Strings.AddLocationEditTitle : Strings.AddLocationAddTitle;
+        Title = locationId.HasValue ? Strings.AddLocationEditTitle : Strings.AddLocationAddTitle;
 
         if (locationId.HasValue)
         {

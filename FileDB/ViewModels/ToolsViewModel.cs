@@ -23,23 +23,21 @@ namespace FileDB.ViewModels;
 public partial class ToolsViewModel : ObservableObject
 {
     [ObservableProperty]
-    private string backupListHeader = string.Empty;
-
+    public partial string BackupListHeader { get; set; } = string.Empty;
     public ObservableCollection<BackupFile> BackupFiles { get; } = [];
 
     [ObservableProperty]
-    private string importedNoLongerApplicableFileList = string.Empty;
-
+    public partial string ImportedNoLongerApplicableFileList { get; set; } = string.Empty;
     public ObservableCollection<string> DabaseValidationErrors { get; } = [];
 
     [ObservableProperty]
-    private string invalidFileList = string.Empty;
+    public partial string InvalidFileList { get; set; } = string.Empty;
 
     [ObservableProperty]
-    private string missingFilesList = string.Empty;
+    public partial string MissingFilesList { get; set; } = string.Empty;
 
     [ObservableProperty]
-    private string databaseExportDirectory = string.Empty;
+    public partial string DatabaseExportDirectory { get; set; } = string.Empty;
 
     private readonly IConfigProvider configProvider;
     private readonly IDatabaseAccessProvider dbAccessProvider;

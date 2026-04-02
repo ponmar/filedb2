@@ -21,14 +21,14 @@ public partial class ExportSearchResultViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(ExportEnabled))]
-    private string? exportFilesDestinationDirectory;
+    public partial string? ExportFilesDestinationDirectory { get; set; }
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(ExportEnabled))]
-    private string exportName = "My Files";
+    public partial string ExportName { get; set; } = "My Files";
 
     [ObservableProperty]
-    private bool exportIncludesFiles = false;
+    public partial bool ExportIncludesFiles { get; set; } = false;
 
     public bool ExportEnabled => ExportName.HasContent() && ExportFilesDestinationDirectory.HasContent();
 
@@ -41,10 +41,10 @@ public partial class ExportSearchResultViewModel : ObservableObject
     }
 
     [ObservableProperty]
-    private bool exportIncludesHtml = false;
+    public partial bool ExportIncludesHtml { get; set; } = false;
 
     [ObservableProperty]
-    private bool exportIncludesM3u = false;
+    public partial bool ExportIncludesM3u { get; set; } = false;
 
     partial void OnExportIncludesM3uChanged(bool value)
     {
@@ -55,10 +55,10 @@ public partial class ExportSearchResultViewModel : ObservableObject
     }
 
     [ObservableProperty]
-    private bool exportIncludesJson = false;
+    public partial bool ExportIncludesJson { get; set; } = false;
 
     [ObservableProperty]
-    private bool exportIncludesPdf = false;
+    public partial bool ExportIncludesPdf { get; set; } = false;
 
     private readonly IDialogs dialogs;
     private readonly IDatabaseAccessProvider dbAccessProvider;

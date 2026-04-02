@@ -39,12 +39,12 @@ public interface ICriteriaViewModel
 public partial class CriteriaViewModel : ObservableObject, ICriteriaViewModel
 {
     [ObservableProperty]
-    private ObservableCollection<FilterSelectionViewModel> filterSettings = [];
+    public partial ObservableCollection<FilterSelectionViewModel> FilterSettings { get; set; } = [];
 
     public bool FilterCanBeRemoved => FilterSettings.Count > 1;
 
     [ObservableProperty]
-    private bool hasFilterErrors;
+    public partial bool HasFilterErrors { get; set; }
 
     private readonly IDialogs dialogs;
     private readonly IDatabaseAccessProvider dbAccessProvider;
