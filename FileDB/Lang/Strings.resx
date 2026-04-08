@@ -127,7 +127,7 @@
     <value>All from current directory</value>
   </data>
   <data name="SearchFromCurrentFileButton" xml:space="preserve">
-    <value>From current file</value>
+    <value>Set from current file</value>
   </data>
   <data name="SearchForFilesWithinSelectedDirectoryToolTip" xml:space="preserve">
     <value>Search for files within selected directory</value>
@@ -1084,8 +1084,8 @@ YYYY-MM-DDTHH:MM:SS</value>
   <data name="SearchCombineSearchCurrent" xml:space="preserve">
     <value>Current</value>
   </data>
-  <data name="SearchCombineSearchCurrentToolTip" xml:space="preserve">
-    <value>Use current search result</value>
+  <data name="SearchCombineSearchCurrentMenuItem" xml:space="preserve">
+    <value>Set from current search result</value>
   </data>
   <data name="FilterNegateTooltip" xml:space="preserve">
     <value>Negate selection</value>

@@ -127,7 +127,7 @@
     <value>Allt från nuvarande katalog</value>
   </data>
   <data name="SearchFromCurrentFileButton" xml:space="preserve">
-    <value>Från nuvarande fil</value>
+    <value>Tilldela från nuvarande fil</value>
   </data>
   <data name="SearchForFilesWithinSelectedDirectoryToolTip" xml:space="preserve">
     <value>Sök efter filer i den valda katalogen</value>
@@ -1081,8 +1081,8 @@
   <data name="SearchCombineSearchCurrent" xml:space="preserve">
     <value>Nuvarande</value>
   </data>
-  <data name="SearchCombineSearchCurrentToolTip" xml:space="preserve">
-    <value>Använd nuvarande sökresultat</value>
+  <data name="SearchCombineSearchCurrentMenuItem" xml:space="preserve">
+    <value>Tilldela från nuvarande sökresultat</value>
   </data>
   <data name="FilterNegateTooltip" xml:space="preserve">
     <value>Negera markering</value>

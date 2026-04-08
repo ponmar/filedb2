@@ -2301,11 +2301,11 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Use current search result.
+        ///   Looks up a localized string similar to Set from current search result.
         /// </summary>
-        public static string SearchCombineSearchCurrentToolTip {
+        public static string SearchCombineSearchCurrentMenuItem {
             get {
-                return ResourceManager.GetString("SearchCombineSearchCurrentToolTip", resourceCulture);
+                return ResourceManager.GetString("SearchCombineSearchCurrentMenuItem", resourceCulture);
             }
         }
         
@@ -2616,7 +2616,7 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to From current file.
+        ///   Looks up a localized string similar to Set from current file.
         /// </summary>
         public static string SearchFromCurrentFileButton {
             get {

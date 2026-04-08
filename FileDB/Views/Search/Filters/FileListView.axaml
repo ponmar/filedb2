@@ -8,7 +8,13 @@
              x:Class="FileDB.Views.Search.Filters.FileListView">
 	<StackPanel Orientation="Horizontal" DataContext="{Binding FilterViewModel}">
 		<TextBox Text="{Binding FileListIds}" Width="100" VerticalAlignment="Center" ToolTip.Tip="{x:Static lang:Strings.SearchFilterFileListToolTip}"/>
-		<Button Margin="3 0" Content="&#128408;" ToolTip.Tip="{x:Static lang:Strings.SearchCombineSearchCurrentToolTip}" Command="{Binding SetFromCurrentCommand}" IsEnabled="{Binding HasSearchResult}" />
+		<Button Margin="3 0" Content="..." VerticalAlignment="Center">
+			<Button.Flyout>
+				<MenuFlyout>
+					<MenuItem Header="{x:Static lang:Strings.SearchCombineSearchCurrentMenuItem}" Command="{Binding SetFromCurrentCommand}" IsEnabled="{Binding HasSearchResult}"/>
+				</MenuFlyout>
+			</Button.Flyout>
+		</Button>
 		<ToggleButton Classes="ColoredToggleButton" Content="!" IsChecked="{Binding Negate}" ToolTip.Tip="{x:Static lang:Strings.FilterNegateTooltip}"/>
 	</StackPanel>
 </UserControl>

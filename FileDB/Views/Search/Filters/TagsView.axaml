@@ -8,7 +8,13 @@
              x:Class="FileDB.Views.Search.Filters.TagsView">
 	<StackPanel Orientation="Horizontal" DataContext="{Binding FilterViewModel}">
 		<ListBox MaxHeight="150" ItemsSource="{Binding Tags}" SelectionMode="Multiple,Toggle" SelectedItems="{Binding SelectedTags}"/>
-		<Button Margin="3 0 3 0" Content="&#128408;" ToolTip.Tip="{x:Static lang:Strings.SearchFromCurrentFileButton}" Command="{Binding UseTagsFromCurrentFileCommand}" VerticalAlignment="Center"/>
+		<Button Margin="3 0 3 0" Content="..." VerticalAlignment="Center">
+			<Button.Flyout>
+				<MenuFlyout>
+					<MenuItem Header="{x:Static lang:Strings.SearchFromCurrentFileButton}" Command="{Binding UseTagsFromCurrentFileCommand}"/>
+				</MenuFlyout>
+			</Button.Flyout>
+		</Button>
 		<ToggleButton Classes="ColoredToggleButton" Content="{x:Static lang:Strings.SearchFilterTagsInclusive}" IsChecked="{Binding AllowOtherTags}" ToolTip.Tip="{x:Static lang:Strings.SearchFilterTagsInclusiveToolTip}"/>
 	</StackPanel>
 </UserControl>

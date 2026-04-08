@@ -17,7 +17,13 @@
                 VerticalAlignment="Center"
                 Text="{Binding CombineSearch1}"
                 ToolTip.Tip="fileId1;fileId2;..." />
-			<Button Content="&#128408;" ToolTip.Tip="{x:Static lang:Strings.SearchCombineSearchCurrentToolTip}" Command="{Binding SetCombineSearch1Command}" IsEnabled="{Binding HasSearchResult}" />
+			<Button Content="..." VerticalAlignment="Center">
+				<Button.Flyout>
+					<MenuFlyout>
+						<MenuItem Header="{x:Static lang:Strings.SearchCombineSearchCurrentMenuItem}" Command="{Binding SetCombineSearch1Command}" IsEnabled="{Binding HasSearchResult}"/>
+					</MenuFlyout>
+				</Button.Flyout>
+			</Button>
         </StackPanel>
 
         <StackPanel
@@ -30,7 +36,13 @@
                 VerticalAlignment="Center"
                 Text="{Binding CombineSearch2}"
                 ToolTip.Tip="fileId1;fileId2;..." />
-			<Button Content="&#128408;" ToolTip.Tip="{x:Static lang:Strings.SearchCombineSearchCurrentToolTip}" Command="{Binding SetCombineSearch2Command}" IsEnabled="{Binding HasSearchResult}"/>
+			<Button Content="..." VerticalAlignment="Center">
+				<Button.Flyout>
+					<MenuFlyout>
+						<MenuItem Header="{x:Static lang:Strings.SearchCombineSearchCurrentMenuItem}" Command="{Binding SetCombineSearch2Command}" IsEnabled="{Binding HasSearchResult}"/>
+					</MenuFlyout>
+				</Button.Flyout>
+			</Button>
 		</StackPanel>
 
         <StackPanel
