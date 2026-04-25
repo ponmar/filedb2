@@ -3939,6 +3939,42 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Errors:\n{0}.
+        /// </summary>
+        public static string ToolsReloadExifErrorsHeader {
+            get {
+                return ResourceManager.GetString("ToolsReloadExifErrorsHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No valid file ids specified..
+        /// </summary>
+        public static string ToolsReloadExifNoValidFileIds {
+            get {
+                return ResourceManager.GetString("ToolsReloadExifNoValidFileIds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updating {0}/{1} (id {2}).
+        /// </summary>
+        public static string ToolsReloadExifProgress {
+            get {
+                return ResourceManager.GetString("ToolsReloadExifProgress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updated {0}/{1} files..
+        /// </summary>
+        public static string ToolsReloadExifUpdatedSummary {
+            get {
+                return ResourceManager.GetString("ToolsReloadExifUpdatedSummary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Run.
         /// </summary>
         public static string ToolsRunButton {

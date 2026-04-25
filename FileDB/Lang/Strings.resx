@@ -1448,4 +1448,16 @@ This operation can be slow for a large collection of files or if the media acces
   <data name="SearchFilterPositionFromLocationToolTip" xml:space="preserve">
     <value>Set GPS position from from selected location</value>
   </data>
+  <data name="ToolsReloadExifProgress" xml:space="preserve">
+    <value>Updating {0}/{1} (id {2})</value>
+  </data>
+  <data name="ToolsReloadExifNoValidFileIds" xml:space="preserve">
+    <value>No valid file ids specified.</value>
+  </data>
+  <data name="ToolsReloadExifUpdatedSummary" xml:space="preserve">
+    <value>Updated {0}/{1} files.</value>
+  </data>
+  <data name="ToolsReloadExifErrorsHeader" xml:space="preserve">
+    <value>Errors:\n{0}</value>
+  </data>
 </root>

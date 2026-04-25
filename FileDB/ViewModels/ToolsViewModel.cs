@@ -271,4 +271,55 @@ public partial class ToolsViewModel : ObservableObject
             await dialogs.ShowErrorDialogAsync(e.Message);
         }
     }
+
+    [ObservableProperty]
+    public partial string FileIdsInput { get; set; } = string.Empty;
+
+    [RelayCommand]
+    private async Task ReloadExifForFilesAsync()
+    {
+        if (!Utils.TryParseFileIds(FileIdsInput, out var fileIds))
+        {
+            await dialogs.ShowErrorDialogAsync("No valid file ids specified.");
+            return;
+        }
+
+        var ids = fileIds!.ToList();
+
+        if (!await dialogs.ShowConfirmDialogAsync(Strings.CategorizationReloadMetaData))
+        {
+            return;
+        }
+
+        var errors = new List<string>();
+        int success = 0;
+        await dialogs.ShowProgressDialogAsync(progress =>
+        {
+            var total = ids.Count;
+            var i = 0;
+            foreach (var id in ids)
+            {
+                i++;
+                progress.Report(string.Format(Strings.ToolsReloadExifProgress, i, total, id));
+                try
+                {
+                    dbAccessProvider.DbAccess.UpdateFileFromMetaData(id, filesystemAccessProvider.FilesystemAccess);
+                    Messenger.Send<FileEdited>();
+                    success++;
+                }
+                catch (Exception e)
+                {
+                    errors.Add($"{id}: {e.Message}");
+                }
+            }
+        });
+
+        var summary = string.Format(Strings.ToolsReloadExifUpdatedSummary, success, ids.Count);
+        if (errors.Count > 0)
+        {
+            summary += "\n" + string.Format(Strings.ToolsReloadExifErrorsHeader, string.Join("\n", errors));
+        }
+
+        await dialogs.ShowInfoDialogAsync(summary);
+    }
 }

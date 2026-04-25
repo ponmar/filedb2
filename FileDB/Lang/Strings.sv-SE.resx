@@ -1448,4 +1448,16 @@ Lägg till nya filer i '{0}'.</value>
   <data name="SearchFilterPositionFromLocationToolTip" xml:space="preserve">
     <value>Sätt GPS-position från vald plats</value>
   </data>
+  <data name="ToolsReloadExifProgress" xml:space="preserve">
+    <value>Uppdaterar {0}/{1} (id {2})</value>
+  </data>
+  <data name="ToolsReloadExifNoValidFileIds" xml:space="preserve">
+    <value>Inga giltiga fil-id angivna.</value>
+  </data>
+  <data name="ToolsReloadExifUpdatedSummary" xml:space="preserve">
+    <value>Uppdaterade {0}/{1} filer.</value>
+  </data>
+  <data name="ToolsReloadExifErrorsHeader" xml:space="preserve">
+    <value>Fel:\n{0}</value>
+  </data>
 </root>
