@@ -1,3 +1,11 @@
+4.17:
+* Upgrade to Avalonia 12, which fixes the cropped dialog boxes
+* Replace some filter icon buttons with "..." flyout menues
+* Add .jpeg file extension to default whitelisted file path patterns.
+  Use this setting in your configuration by resetting it to default or manually adding it.
+* Show files with .jpeg file extension as images in the file browser
+* Avoid setting file GPS position when it is zero in the file Exif
+
 4.16:
 * Fix file list search filter, which always searched for the negated set of files
 
