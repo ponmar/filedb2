@@ -7,7 +7,7 @@
 		SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterOwner"
 		CanResize="False"
-		SystemDecorations="None">
+		WindowDecorations="None">
 	<Grid>
 		<Border Classes="BorderGroup">
 			<TextBlock Classes="PageHeader" x:Name="Text" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"/>

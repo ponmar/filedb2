@@ -16,12 +16,12 @@ public partial class PresentationWindow : Window
         if (WindowState == WindowState.FullScreen)
         {
             WindowState = WindowState.Normal;
-            SystemDecorations = SystemDecorations.Full;
+            WindowDecorations = WindowDecorations.Full;
         }
         else
         {
             WindowState = WindowState.FullScreen;
-            SystemDecorations = SystemDecorations.None;
+            WindowDecorations = WindowDecorations.None;
         }
     }
 }

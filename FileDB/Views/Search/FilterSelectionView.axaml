@@ -1,12 +1,14 @@
 <UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:vm="clr-namespace:FileDB.ViewModels.Search"
+			 xmlns:model="clr-namespace:FileDB.Model"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:filters="clr-namespace:FileDB.Views.Search.Filters;assembly=FileDB"
 			 xmlns:converters="clr-namespace:FileDB.Converters;assembly=FileDB"
-			 xmlns:model="clr-namespace:FileDB.Model;assembly=FileDB"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="FileDB.Views.Search.FilterSelectionView">
+			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 x:Class="FileDB.Views.Search.FilterSelectionView"
+			 x:DataType="vm:FilterSelectionViewModel">
 	<UserControl.Resources>
 		<converters:FilterTypeToVisibilityConverter x:Key="FilterTypeToVisibilityConverter"/>
 		<converters:FilterTypeToStringConverter x:Key="FilterTypeToStringConverter"/>
@@ -15,7 +17,7 @@
 	<StackPanel Orientation="Horizontal">
 		<ComboBox IsVisible="{Binding !IsFirstFilter}" Margin="0 0 3 0" ItemsSource="{Binding CombineMethods}" SelectedItem="{Binding SelectedCombineMethod}" ToolTip.Tip="Filter type" VerticalAlignment="Center">
 			<ComboBox.ItemTemplate>
-				<DataTemplate>
+				<DataTemplate x:DataType="vm:CombineMethod">
 					<TextBlock Text="{Binding Path=., Converter={StaticResource CombineMethodToStringConverter}}"/>
 				</DataTemplate>
 			</ComboBox.ItemTemplate>
@@ -23,7 +25,7 @@
 
 		<ComboBox Margin="0 0 3 0" ItemsSource="{Binding FilterTypes}" SelectedItem="{Binding SelectedFilterType}" ToolTip.Tip="Filter type" VerticalAlignment="Center">
 			<ComboBox.ItemTemplate>
-				<DataTemplate>
+				<DataTemplate x:DataType="model:FilterType">
 					<TextBlock Text="{Binding Path=., Converter={StaticResource FilterTypeToStringConverter}}"/>
 				</DataTemplate>
 			</ComboBox.ItemTemplate>

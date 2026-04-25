@@ -53,7 +53,7 @@ public partial class MainViewModel : ObservableObject
     public partial bool ReadOnly { get; set; }
 
     [ObservableProperty]
-    public partial SystemDecorations SystemDecorations { get; set; }
+    public partial WindowDecorations WindowDecorations { get; set; }
 
     [ObservableProperty]
     public partial WindowState WindowState { get; set; }
@@ -105,7 +105,7 @@ public partial class MainViewModel : ObservableObject
 
     private void ApplyWindowMode(WindowMode windowMode)
     {
-        SystemDecorations = windowMode == WindowMode.Fullscreen ? SystemDecorations.None : SystemDecorations.Full;
+        WindowDecorations = windowMode == WindowMode.Fullscreen ? WindowDecorations.None : WindowDecorations.Full;
         WindowState = windowMode.ToWindowState();
         Fullscreen = windowMode == WindowMode.Fullscreen;
     }

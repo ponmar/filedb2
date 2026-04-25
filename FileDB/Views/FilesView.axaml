@@ -1,10 +1,12 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:FileDB.ViewModels"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
 			 xmlns:lang="clr-namespace:FileDB.Lang"
-             x:Class="FileDB.Views.FilesView">
+             x:Class="FileDB.Views.FilesView"
+             x:DataType="vm:FilesViewModel">
 	<DockPanel>
 		<TextBlock DockPanel.Dock="Top" Text="{x:Static lang:Strings.FilesTitle}" Classes="PageHeader"/>
 		<ScrollViewer>
@@ -35,7 +37,7 @@
 						<TextBlock Classes="PageTextBlock" Text="{Binding ImportResult}" IsVisible="{Binding ImportResult, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
 						<ListBox Margin="10" ItemsSource="{Binding NewFiles}" IsVisible="{Binding NewFiles.Count}" SelectionMode="Multiple" Grid.IsSharedSizeScope="True" SelectedItems="{Binding SelectedFiles}">
 							<ListBox.ItemTemplate>
-								<DataTemplate>
+								<DataTemplate x:DataType="vm:NewFile">
 									<Grid>
 										<Grid.ColumnDefinitions>
 											<ColumnDefinition Width="Auto" SharedSizeGroup="PathColumn"/>

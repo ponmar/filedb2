@@ -1,11 +1,15 @@
 <UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:vm="clr-namespace:FileDB.ViewModels.Search"
+			 xmlns:model="clr-namespace:FileDB.Model"
+			 xmlns:config="clr-namespace:FileDB.Configuration"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:lang="clr-namespace:FileDB.Lang"
 			 xmlns:converters="clr-namespace:FileDB.Converters"
              mc:Ignorable="d" d:DesignWidth="1100" d:DesignHeight="450"
-             x:Class="FileDB.Views.Search.ResultView">
+             x:Class="FileDB.Views.Search.ResultView"
+             x:DataType="vm:ResultViewModel">
 	<UserControl.Resources>
 		<converters:SortMethodToStringConverter x:Key="SortMethodToStringConverter"/>
 	</UserControl.Resources>
@@ -58,7 +62,7 @@
 				<TextBlock VerticalAlignment="Center" Margin="0 0 5 0" Text="&#11137;" ToolTip.Tip="{x:Static lang:Strings.SearchResultSortByToolTip}"/>
 				<ComboBox Width="160" ItemsSource="{Binding SortMethods}" SelectedValue="{Binding SelectedSortMethod}" VerticalAlignment="Center">
 					<ComboBox.ItemTemplate>
-						<DataTemplate>
+						<DataTemplate x:DataType="config:SortMethod">
 							<TextBlock Text="{Binding Path=.,Converter={StaticResource SortMethodToStringConverter}}"/>
 						</DataTemplate>
 					</ComboBox.ItemTemplate>

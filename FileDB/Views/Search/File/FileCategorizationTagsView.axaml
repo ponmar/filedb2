@@ -5,8 +5,9 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              xmlns:lang="clr-namespace:FileDB.Lang"
 			 xmlns:vm="clr-namespace:FileDB.ViewModels.Search.File"
-             x:Class="FileDB.Views.Search.File.FileCategorizationTagsView"
-             IsVisible="{Binding UpdateItemsVisible}">
+			 x:Class="FileDB.Views.Search.File.FileCategorizationTagsView"
+			 x:DataType="vm:FileCategorizationViewModel"
+			 IsVisible="{Binding UpdateItemsVisible}">
     <Expander Header="{Binding UpdateTagsHeader}" ToolTip.Tip="{Binding UpdateTagsHeaderToolTip}" IsExpanded="{Binding UpdateTagsIsExpanded}">
 		<Grid ColumnDefinitions="auto" RowDefinitions="auto,auto,*">
 			<StackPanel Grid.Row="0" Orientation="Horizontal" IsVisible="{Binding FileSelected}">

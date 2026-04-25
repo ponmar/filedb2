@@ -1,10 +1,13 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:FileDB.ViewModels"
+             xmlns:model="clr-namespace:FileDBInterface.Model;assembly=FileDBInterface"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:lang="clr-namespace:FileDB.Lang"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="FileDB.Views.UpdateLocationsView">
+             x:Class="FileDB.Views.UpdateLocationsView"
+             x:DataType="vm:UpdateLocationsViewModel">
 	<DockPanel>
 		<TextBlock DockPanel.Dock="Top" Text="{x:Static lang:Strings.LocationsTitle}" Classes="PageHeader"/>
 		<ScrollViewer>
@@ -25,7 +28,7 @@
 
 					<ListBox Margin="0 10 0 0" ItemsSource="{Binding Locations}" SelectionMode="Single" SelectedItem="{Binding SelectedLocation}" Grid.IsSharedSizeScope="True">
 						<ListBox.ItemTemplate>
-							<DataTemplate>
+							<DataTemplate x:DataType="model:LocationModel">
 								<Grid>
 									<Grid.ColumnDefinitions>
 										<ColumnDefinition Width="auto" SharedSizeGroup="col1"/>

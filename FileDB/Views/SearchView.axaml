@@ -1,11 +1,13 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:FileDB.ViewModels"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:lang="clr-namespace:FileDB.Lang"
 			 xmlns:searchviews="clr-namespace:FileDB.Views.Search"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="FileDB.Views.SearchView" Focusable="True">
+             x:Class="FileDB.Views.SearchView"
+             x:DataType="vm:MainViewModel" Focusable="True">
 	<DockPanel>
 		<TextBlock DockPanel.Dock="Top" Text="{x:Static lang:Strings.SearchTitle}" Classes="PageHeader" IsVisible="{Binding !Fullscreen}"/>
 		<Grid ColumnDefinitions="*" RowDefinitions="auto,auto,*">

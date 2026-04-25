@@ -3,8 +3,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:lang="clr-namespace:FileDB.Lang"
+			 xmlns:vm="clr-namespace:FileDB.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="FileDB.Views.BirthdaysView">
+             x:Class="FileDB.Views.BirthdaysView"
+			 x:DataType="vm:BirthdaysViewModel">
 	<DockPanel>
 		<TextBlock DockPanel.Dock="Top" Text="{x:Static lang:Strings.BirthdaysTitle}" Classes="PageHeader"/>
 		<ScrollViewer>
@@ -22,7 +24,7 @@
 							</ItemsPanelTemplate>
 						</ItemsControl.ItemsPanel>
 						<ItemsControl.ItemTemplate>
-							<DataTemplate>
+							<DataTemplate x:DataType="vm:PersonBirthdayViewModel">
 								<StackPanel Orientation="Horizontal" Margin="5" Width="400">
 									<LayoutTransformControl Margin="5">
 										<LayoutTransformControl.LayoutTransform>

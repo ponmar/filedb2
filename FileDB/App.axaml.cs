@@ -40,7 +40,7 @@ public partial class App : Application
     {
         // Line below is needed to remove Avalonia data validation.
         // Without this line you will get duplicate validations from both Avalonia and CT
-        BindingPlugins.DataValidators.RemoveAt(0);
+        //BindingPlugins.DataValidators.RemoveAt(0);
 
         this.RegisterForEvent<Quit>((x) =>
         {

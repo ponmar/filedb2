@@ -1,11 +1,14 @@
 <UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:vm="clr-namespace:FileDB.ViewModels"
+			 xmlns:model="clr-namespace:FileDB.Model"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:lang="clr-namespace:FileDB.Lang"
              mc:Ignorable="d"
 			 d:DesignWidth="800" d:DesignHeight="2000"
-             x:Class="FileDB.Views.HelpView">
+             x:Class="FileDB.Views.HelpView"
+             x:DataType="vm:HelpViewModel">
 	<DockPanel>
 		<TextBlock DockPanel.Dock="Top" Text="{x:Static lang:Strings.HelpTitle}" Classes="PageHeader"/>
 		<ScrollViewer>
@@ -93,7 +96,7 @@
 					<Expander>
 						<ListBox ItemsSource="{Binding Licenses}" Grid.IsSharedSizeScope="True" Background="Transparent" Margin="10">
 							<ListBox.ItemTemplate>
-								<DataTemplate>
+								<DataTemplate x:DataType="model:LicenseFileFormatDto">
 									<Grid>
 										<Grid.ColumnDefinitions>
 											<ColumnDefinition Width="Auto" SharedSizeGroup="NameColumn"/>

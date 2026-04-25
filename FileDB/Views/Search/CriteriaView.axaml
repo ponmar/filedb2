@@ -1,5 +1,7 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:vm="clr-namespace:FileDB.ViewModels"
+             xmlns:searchVms="clr-namespace:FileDB.ViewModels.Search"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:lang="clr-namespace:FileDB.Lang"
@@ -8,24 +10,25 @@
 			 xmlns:converters="clr-namespace:FileDB.Converters;assembly=FileDB"
 			 xmlns:model="clr-namespace:FileDB.Model;assembly=FileDB"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="FileDB.Views.Search.CriteriaView">
+             x:Class="FileDB.Views.Search.CriteriaView"
+             x:DataType="vm:CriteriaViewModel">
 	<Border Classes="BorderGroup" HorizontalAlignment="Stretch">
         <Grid ColumnDefinitions="*" RowDefinitions="auto,auto" Margin="0 0 0 10">
-            <ItemsControl Grid.Row="0" ItemsSource="{Binding FilterSettings}">
+            <ItemsControl Grid.Row="0" ItemsSource="{Binding FilterSettings}" x:DataType="vm:CriteriaViewModel">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel Orientation="Horizontal" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
-                    <DataTemplate>
+                    <DataTemplate x:DataType="searchVms:FilterSelectionViewModel">
                         <StackPanel Margin="10" Orientation="Horizontal">
                             <Button
                                 Margin="0 0 3 0"
-                                Command="{Binding DataContext.RemoveFilterCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                Command="{Binding $parent[ItemsControl].((vm:CriteriaViewModel)DataContext).RemoveFilterCommand}"
                                 CommandParameter="{Binding}"
                                 Content="&#128473;"
-                                IsEnabled="{Binding DataContext.FilterCanBeRemoved, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                IsEnabled="{Binding $parent[ItemsControl].((vm:CriteriaViewModel)DataContext).FilterCanBeRemoved}"
                                 ToolTip.Tip="{x:Static lang:Strings.SearchCriteriaRemoveFilter}" />
 							<local:FilterSelectionView/>
                         </StackPanel>
