@@ -125,11 +125,9 @@
 							ToolTip.Tip="{x:Static lang:Strings.SearchMaximizeButtonToolTip}" />
 					</StackPanel>
 					<StackPanel Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" Orientation="Horizontal" IsVisible="{Binding !Maximize}">
-						<fileviews:FileCategorizationPersonsView Margin="0,0,10,0" VerticalAlignment="Top" />
-						<fileviews:FileCategorizationLocationsView Margin="0,0,10,0" VerticalAlignment="Top" />
-						<fileviews:FileCategorizationTagsView Margin="0,0,10,0" VerticalAlignment="Top" />
-						<fileviews:FileCategorizationHistoryView Margin="0,0,10,0" VerticalAlignment="Top" />
-						<fileviews:FileCategorizationView VerticalAlignment="Top" />
+                        <fileviews:FileCategorizationView Margin="0,0,10,0" VerticalAlignment="Top" />
+						<fileviews:FileHistoryView Margin="0,0,10,0" VerticalAlignment="Top" />
+						<fileviews:FileMetaDataView VerticalAlignment="Top" />
 					</StackPanel>
 				</Grid>
 

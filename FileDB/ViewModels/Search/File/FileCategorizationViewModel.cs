@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -43,32 +43,20 @@ public partial class FileCategorizationViewModel : ObservableValidator
     public partial bool HistoryIsExpanded { get; set; } = false;
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(UpdatePersonsHeader))]
-    [NotifyPropertyChangedFor(nameof(UpdatePersonsHeaderToolTip))]
-    public partial bool UpdatePersonsIsExpanded { get; set; } = false;
-
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(UpdateLocationsHeader))]
-    [NotifyPropertyChangedFor(nameof(UpdateLocationsHeaderToolTip))]
-    public partial bool UpdateLocationsIsExpanded { get; set; } = false;
-
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(UpdateTagsHeader))]
-    [NotifyPropertyChangedFor(nameof(UpdateTagsHeaderToolTip))]
-    public partial bool UpdateTagsIsExpanded { get; set; } = false;
+    [NotifyPropertyChangedFor(nameof(CategorizationHeader))]
+    [NotifyPropertyChangedFor(nameof(CategorizationHeaderToolTip))]
+    public partial bool CategorizationIsExpanded { get; set; } = false;
 
     public bool UpdateItemsVisible => CanCategorize && IsExpanded;
 
     public string Header => IsExpanded ? Strings.CategorizationUpdateTitle : char.ConvertFromUtf32(0x1F589);
     public string? HeaderToolTip => IsExpanded ? null : Strings.CategorizationEditToolTip;
+
     public string HistoryHeader => HistoryIsExpanded ? Strings.CategorizationUpdateHistoryTitle : char.ConvertFromUtf32(0x1F4DC);
     public string? HistoryHeaderToolTip => HistoryIsExpanded ? null : Strings.CategorizationUpdateHistoryTitle;
-    public string UpdatePersonsHeader => UpdatePersonsIsExpanded ? string.Format(Strings.CategorizationUpdatePersonsTitle, Persons.Count(x => x.IsChecked), Persons.Count) : char.ConvertFromUtf32(0x1F6B6);
-    public string? UpdatePersonsHeaderToolTip => UpdatePersonsIsExpanded ? null : string.Format(Strings.CategorizationUpdatePersonsTitle, Persons.Count(x => x.IsChecked), Persons.Count);
-    public string UpdateLocationsHeader => UpdateLocationsIsExpanded ? string.Format(Strings.CategorizationUpdateLocationsTitle, Locations.Count(x => x.IsChecked), Locations.Count) : char.ConvertFromUtf32(0x1F3E0);
-    public string? UpdateLocationsHeaderToolTip => UpdateLocationsIsExpanded ? null : string.Format(Strings.CategorizationUpdateLocationsTitle, Locations.Count(x => x.IsChecked), Locations.Count);
-    public string UpdateTagsHeader => UpdateTagsIsExpanded ? string.Format(Strings.CategorizationUpdateTagsTitle, Tags.Count(x => x.IsChecked), Tags.Count) : char.ConvertFromUtf32(0x1F516);
-    public string? UpdateTagsHeaderToolTip => UpdateTagsIsExpanded ? null : string.Format(Strings.CategorizationUpdateTagsTitle, Tags.Count(x => x.IsChecked), Tags.Count);
+
+    public string CategorizationHeader => CategorizationIsExpanded ? string.Format(Strings.CategorizationUpdateCombinedTitle, Items.Count(x => x.IsChecked), Items.Count) : char.ConvertFromUtf32(0x1F4DD);
+    public string? CategorizationHeaderToolTip => CategorizationIsExpanded ? null : string.Format(Strings.CategorizationUpdateCombinedTitle, Items.Count(x => x.IsChecked), Items.Count);
 
     [ObservableProperty]
     public partial string NewFileDescription { get; set; } = string.Empty;
@@ -110,7 +98,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
 
     [ObservableProperty]
     public partial int ImageRotation { get; set; } = 0;
-    public ObservableCollection<UpdateHistoryItemViewModel> UpdateHistoryItems { get; } = [];
+    public ObservableCollection<HistoryItemViewModel> UpdateHistoryItems { get; } = [];
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CanApplyMetaDataFromPrevEdit))]
@@ -121,101 +109,122 @@ public partial class FileCategorizationViewModel : ObservableValidator
 
     public bool CanMarkCurrentFileAsPrevEdited => SelectedFile is not null && SelectedFile.Id != PrevEditedFileId;
 
-    public ObservableCollection<TogglePersonViewModel> Persons { get; } = [];
-    public ObservableCollection<ToggleLocationViewModel> Locations { get; } = [];
-    public ObservableCollection<ToggleTagViewModel> Tags { get; } = [];
+    public ObservableCollection<ItemViewModel> Items { get; } = [];
 
-    public bool HasVisiblePersons => Persons.Any(x => x.IsVisible);
-    public bool HasVisibleLocations => Locations.Any(x => x.IsVisible);
-    public bool HasVisibleTags => Tags.Any(x => x.IsVisible);
+    public bool HasVisibleItems => Items.Any(x => x.IsVisible);
 
     [ObservableProperty]
-    public partial string PersonsFilterText { get; set; } = string.Empty;
+    public partial string ItemsFilterText { get; set; } = string.Empty;
 
-    partial void OnPersonsFilterTextChanged(string value)
+    partial void OnItemsFilterTextChanged(string value)
     {
-        ApplyPersonsFilter();
+        ApplyItemsFilter();
     }
 
     [ObservableProperty]
-    public partial bool PersonsFilterTextCaseSensitive { get; set; }
+    public partial bool ItemsFilterTextCaseSensitive { get; set; }
 
-    partial void OnPersonsFilterTextCaseSensitiveChanged(bool value)
+    partial void OnItemsFilterTextCaseSensitiveChanged(bool value)
     {
-        ApplyPersonsFilter();
+        ApplyItemsFilter();
     }
 
-    private void ApplyPersonsFilter()
+    private void ApplyItemsFilter()
     {
-        personsFilters = GetSearchFiltersFromText(PersonsFilterText);
-        foreach (var person in Persons)
+        var itemFilters = GetSearchFiltersFromText(ItemsFilterText);
+        foreach (var item in Items)
         {
-            person.ApplyFilters(personsFilters, PersonsFilterTextCaseSensitive);
+            item.ApplyFilters(itemFilters, ItemsFilterTextCaseSensitive);
         }
-        OnPropertyChanged(nameof(HasVisiblePersons));
-        OnPropertyChanged(nameof(UpdatePersonsHeader));
-        OnPropertyChanged(nameof(UpdatePersonsHeaderToolTip));
+        OnPropertyChanged(nameof(HasVisibleItems));
+        OnPropertyChanged(nameof(CategorizationHeader));
+        OnPropertyChanged(nameof(CategorizationHeaderToolTip));
     }
 
-    [ObservableProperty]
-    public partial string LocationsFilterText { get; set; } = string.Empty;
-
-    partial void OnLocationsFilterTextChanged(string value)
+    private void PopulateCategorizationItems()
     {
-        ApplyLocationsFilter();
-    }
+        Items.Clear();
 
-    [ObservableProperty]
-    public partial bool LocationsFilterTextCaseSensitive { get; set; }
-
-    partial void OnLocationsFilterTextCaseSensitiveChanged(bool value)
-    {
-        ApplyLocationsFilter();
-    }
-
-    private void ApplyLocationsFilter()
-    {
-        locationsFilters = GetSearchFiltersFromText(LocationsFilterText);
-        foreach (var location in Locations)
+        var personsInSelectedFile = SelectedFile is null ? [] : dbAccessProvider.DbAccess.GetPersonsFromFile(SelectedFile.Id);
+        foreach (var person in personsRepository.Persons)
         {
-            location.ApplyFilters(locationsFilters, LocationsFilterTextCaseSensitive);
+            Items.Add(new ItemViewModel(person, configProvider)
+            {
+                IsChecked = personsInSelectedFile.Any(x => x.Id == person.Id),
+            });
         }
-        OnPropertyChanged(nameof(HasVisibleLocations));
-        OnPropertyChanged(nameof(UpdateLocationsHeader));
-        OnPropertyChanged(nameof(UpdateLocationsHeaderToolTip));
-    }
 
-    [ObservableProperty]
-    public partial string TagsFilterText { get; set; } = string.Empty;
-
-    partial void OnTagsFilterTextChanged(string value)
-    {
-        ApplyTagsFilter();
-    }
-
-    [ObservableProperty]
-    public partial bool TagsFilterTextCaseSensitive { get; set; }
-
-    partial void OnTagsFilterTextCaseSensitiveChanged(bool value)
-    {
-        ApplyTagsFilter();
-    }
-
-    private void ApplyTagsFilter()
-    {
-        tagsFilters = GetSearchFiltersFromText(TagsFilterText);
-        foreach (var tag in Tags)
+        var locationsInSelectedFile = SelectedFile is null ? [] : dbAccessProvider.DbAccess.GetLocationsFromFile(SelectedFile.Id);
+        foreach (var location in locationsRepository.Locations)
         {
-            tag.ApplyFilters(tagsFilters, TagsFilterTextCaseSensitive);
+            Items.Add(new ItemViewModel(location, configProvider)
+            {
+                IsChecked = locationsInSelectedFile.Any(x => x.Id == location.Id),
+            });
         }
-        OnPropertyChanged(nameof(HasVisibleTags));
-        OnPropertyChanged(nameof(UpdateTagsHeader));
-        OnPropertyChanged(nameof(UpdateTagsHeaderToolTip));
+
+        var tagsInSelectedFile = SelectedFile is null ? [] : dbAccessProvider.DbAccess.GetTagsFromFile(SelectedFile.Id);
+        foreach (var tag in tagsRepository.Tags)
+        {
+            Items.Add(new ItemViewModel(tag, configProvider)
+            {
+                IsChecked = tagsInSelectedFile.Any(x => x.Id == tag.Id),
+            });
+        }
+
+        ApplyItemsFilter();
     }
 
-    private IEnumerable<string> personsFilters = [];
-    private IEnumerable<string> tagsFilters = [];
-    private IEnumerable<string> locationsFilters = [];
+    private void UpdateItemsChecked(CombinedItemType type, int id, bool isChecked)
+    {
+        var item = Items.FirstOrDefault(x => x.Type == type && x.Id == id);
+        item?.IsChecked = isChecked;
+        OnPropertyChanged(nameof(HasVisibleItems));
+    }
+
+    [RelayCommand]
+    private async Task ToggleCombinedAsync(ItemViewModel item)
+    {
+        if (ReadOnly || SelectedFile is null || item is null)
+        {
+            return;
+        }
+
+        if (item.IsChecked)
+        {
+            // currently included -> remove
+            switch (item.Type)
+            {
+                case CombinedItemType.Person:
+                    RemoveFilePersonFromCurrentFile(item.Id);
+                    break;
+                case CombinedItemType.Location:
+                    RemoveFileLocationFromCurrentFile(item.Id);
+                    break;
+                case CombinedItemType.Tag:
+                    RemoveFileTagFromCurrentFile(item.Id);
+                    break;
+            }
+            item.IsChecked = false;
+        }
+        else
+        {
+            // currently not included -> add
+            switch (item.Type)
+            {
+                case CombinedItemType.Person:
+                    await AddFilePersonToCurrentFileAsync(item.Id);
+                    break;
+                case CombinedItemType.Location:
+                    AddFileLocationToCurrentFile(item.Id);
+                    break;
+                case CombinedItemType.Tag:
+                    AddFileTagToCurrentFile(item.Id);
+                    break;
+            }
+            item.IsChecked = true;
+        }
+    }
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CanSave))]
@@ -243,13 +252,11 @@ public partial class FileCategorizationViewModel : ObservableValidator
 
         ReadOnly = configProvider.Config.ReadOnly;
 
-        ReloadPersons();
-        ReloadLocations();
-        ReloadTags();
+        PopulateCategorizationItems();
 
-        this.RegisterForEvent<PersonsUpdated>((x) => ReloadPersons());
-        this.RegisterForEvent<LocationsUpdated>((x) => ReloadLocations());
-        this.RegisterForEvent<TagsUpdated>((x) => ReloadTags());
+        this.RegisterForEvent<PersonsUpdated>((x) => PopulateCategorizationItems());
+        this.RegisterForEvent<LocationsUpdated>((x) => PopulateCategorizationItems());
+        this.RegisterForEvent<TagsUpdated>((x) => PopulateCategorizationItems());
 
         this.RegisterForEvent<ConfigUpdated>((x) =>
         {
@@ -276,63 +283,6 @@ public partial class FileCategorizationViewModel : ObservableValidator
         ValidateAllProperties();
     }
 
-    private void ReloadPersons()
-    {
-        var personsInSelectedFile = SelectedFile is null ? [] : dbAccessProvider.DbAccess.GetPersonsFromFile(SelectedFile.Id);
-
-        Persons.Clear();
-        foreach (var person in personsRepository.Persons)
-        {
-            var personToUpdate = new TogglePersonViewModel(person, configProvider)
-            {
-                IsChecked = personsInSelectedFile.Any(per => per.Id == person.Id),
-            };
-            personToUpdate.ApplyFilters(personsFilters, PersonsFilterTextCaseSensitive);
-            Persons.Add(personToUpdate);
-        }
-        OnPropertyChanged(nameof(HasVisiblePersons));
-        OnPropertyChanged(nameof(UpdatePersonsHeader));
-        OnPropertyChanged(nameof(UpdatePersonsHeaderToolTip));
-    }
-
-    private void ReloadLocations()
-    {
-        var locationsInSelectedFile = SelectedFile is null ? [] : dbAccessProvider.DbAccess.GetLocationsFromFile(SelectedFile.Id);
-
-        Locations.Clear();
-        foreach (var location in locationsRepository.Locations)
-        {
-            var locationToUpdate = new ToggleLocationViewModel(location, configProvider)
-            {
-                IsChecked = locationsInSelectedFile.Any(l => l.Id == location.Id),
-            };
-            locationToUpdate.ApplyFilters(locationsFilters, LocationsFilterTextCaseSensitive);
-            Locations.Add(locationToUpdate);
-        }
-        OnPropertyChanged(nameof(HasVisibleLocations));
-        OnPropertyChanged(nameof(UpdateLocationsHeader));
-        OnPropertyChanged(nameof(UpdateLocationsHeaderToolTip));
-    }
-
-    private void ReloadTags()
-    {
-        var tagsInSelectedFile = SelectedFile is null ? [] : dbAccessProvider.DbAccess.GetTagsFromFile(SelectedFile.Id);
-
-        Tags.Clear();
-        foreach (var tag in tagsRepository.Tags)
-        {
-            var tagToUpdate = new ToggleTagViewModel(tag, configProvider)
-            {
-                IsChecked = tagsInSelectedFile.Any(t => t.Id == tag.Id),
-            };
-            tagToUpdate.ApplyFilters(tagsFilters, TagsFilterTextCaseSensitive);
-            Tags.Add(tagToUpdate);
-        }
-        OnPropertyChanged(nameof(HasVisibleTags));
-        OnPropertyChanged(nameof(UpdateTagsHeader));
-        OnPropertyChanged(nameof(UpdateTagsHeaderToolTip));
-    }
-
     private void LoadFile(FileModel file)
     {
         SelectedFile = file;
@@ -342,28 +292,21 @@ public partial class FileCategorizationViewModel : ObservableValidator
         FilePosition = FileTextOverlayCreator.GetShortPositionText(SelectedFile) ?? string.Empty;
 
         var filePersons = dbAccessProvider.DbAccess.GetPersonsFromFile(SelectedFile.Id);
-        foreach (var person in Persons)
-        {
-            person.IsChecked = filePersons.Any(p => p.Id == person.Id);
-            OnPropertyChanged(nameof(UpdatePersonsHeader));
-            OnPropertyChanged(nameof(UpdatePersonsHeaderToolTip));
-        }
-
         var fileLocations = dbAccessProvider.DbAccess.GetLocationsFromFile(SelectedFile.Id);
-        foreach (var location in Locations)
-        {
-            location.IsChecked = fileLocations.Any(l => l.Id == location.Id);
-            OnPropertyChanged(nameof(UpdateLocationsHeader));
-            OnPropertyChanged(nameof(UpdateLocationsHeaderToolTip));
-        }
-
         var fileTags = dbAccessProvider.DbAccess.GetTagsFromFile(SelectedFile.Id);
-        foreach (var tag in Tags)
+
+        foreach (var item in Items)
         {
-            tag.IsChecked = fileTags.Any(t => t.Id == tag.Id);
-            OnPropertyChanged(nameof(UpdateTagsHeader));
-            OnPropertyChanged(nameof(UpdateTagsHeaderToolTip));
+            item.IsChecked = item.Type switch
+            {
+                CombinedItemType.Person => filePersons.Any(p => p.Id == item.Id),
+                CombinedItemType.Location => fileLocations.Any(l => l.Id == item.Id),
+                CombinedItemType.Tag => fileTags.Any(t => t.Id == item.Id),
+                _ => item.IsChecked,
+            };
         }
+        OnPropertyChanged(nameof(CategorizationHeader));
+        OnPropertyChanged(nameof(CategorizationHeaderToolTip));
 
         foreach (var historyItem in UpdateHistoryItems)
         {
@@ -508,6 +451,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
         var newPerson = await dialogs.ShowAddPersonDialogAsync();
         if (newPerson is not null && SelectedFile is not null)
         {
+            PopulateCategorizationItems();
             await AddFilePersonToCurrentFileAsync(newPerson.Id);
         }
     }
@@ -518,6 +462,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
         var newLocation = await dialogs.ShowAddLocationDialogAsync();
         if (newLocation is not null && SelectedFile is not null)
         {
+            PopulateCategorizationItems();
             AddFileLocationToCurrentFile(newLocation.Id);
         }
     }
@@ -528,6 +473,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
         var newTag = await dialogs.ShowAddTagDialogAsync();
         if (newTag is not null && SelectedFile is not null)
         {
+            PopulateCategorizationItems();
             AddFileTagToCurrentFile(newTag.Id);
         }
     }
@@ -567,10 +513,11 @@ public partial class FileCategorizationViewModel : ObservableValidator
             {
                 dbAccessProvider.DbAccess.InsertFilePerson(SelectedFile.Id, personId);
                 
-                Persons.First(p => p.Id == personId).IsChecked = true;
-                OnPropertyChanged(nameof(UpdatePersonsHeader));
-                OnPropertyChanged(nameof(UpdatePersonsHeaderToolTip));
+                Items.First(p => p.Type == CombinedItemType.Person && p.Id == personId).IsChecked = true;
+                OnPropertyChanged(nameof(CategorizationHeader));
+                OnPropertyChanged(nameof(CategorizationHeaderToolTip));
 
+                UpdateItemsChecked(CombinedItemType.Person, personId, true);
                 AddUpdateHistoryItem(UpdateHistoryType.TogglePerson, personId, person.FullName, true);
                 SetEditedFile();
             }
@@ -582,11 +529,12 @@ public partial class FileCategorizationViewModel : ObservableValidator
         if (SelectedFile is not null)
         {
             dbAccessProvider.DbAccess.DeleteFilePerson(SelectedFile.Id, personId);
-            
-            Persons.First(x => x.Id == personId).IsChecked = false;
-            OnPropertyChanged(nameof(UpdatePersonsHeader));
-            OnPropertyChanged(nameof(UpdatePersonsHeaderToolTip));
 
+            Items.First(x => x.Type == CombinedItemType.Person && x.Id == personId).IsChecked = false;
+            OnPropertyChanged(nameof(CategorizationHeader));
+            OnPropertyChanged(nameof(CategorizationHeaderToolTip));
+
+            UpdateItemsChecked(CombinedItemType.Person, personId, false);
             var person = dbAccessProvider.DbAccess.GetPersonById(personId);
             AddUpdateHistoryItem(UpdateHistoryType.TogglePerson, person.Id, person.FullName, false);
             SetEditedFile();
@@ -601,10 +549,11 @@ public partial class FileCategorizationViewModel : ObservableValidator
             if (!dbAccessProvider.DbAccess.GetLocationsFromFile(fileId).Any(l => l.Id == locationId))
             {
                 dbAccessProvider.DbAccess.InsertFileLocation(fileId, locationId);
-                
-                Locations.First(x => x.Id == locationId).IsChecked = true;
-                OnPropertyChanged(nameof(UpdateLocationsHeader));
-                OnPropertyChanged(nameof(UpdateLocationsHeaderToolTip));
+
+                Items.First(x => x.Type == CombinedItemType.Location && x.Id == locationId).IsChecked = true;
+                UpdateItemsChecked(CombinedItemType.Location, locationId, true);
+                OnPropertyChanged(nameof(CategorizationHeader));
+                OnPropertyChanged(nameof(CategorizationHeaderToolTip));
 
                 var location = dbAccessProvider.DbAccess.GetLocationById(locationId);
                 AddUpdateHistoryItem(UpdateHistoryType.ToggleLocation, location.Id, location.Name, true);
@@ -620,9 +569,10 @@ public partial class FileCategorizationViewModel : ObservableValidator
             var fileId = SelectedFile.Id;
             dbAccessProvider.DbAccess.DeleteFileLocation(fileId, locationId);
             
-            Locations.First(x => x.Id == locationId).IsChecked = false;
-            OnPropertyChanged(nameof(UpdateLocationsHeader));
-            OnPropertyChanged(nameof(UpdateLocationsHeaderToolTip));
+            Items.First(x => x.Type == CombinedItemType.Location && x.Id == locationId).IsChecked = false;
+            UpdateItemsChecked(CombinedItemType.Location, locationId, false);
+            OnPropertyChanged(nameof(CategorizationHeader));
+            OnPropertyChanged(nameof(CategorizationHeaderToolTip));
 
             var location = dbAccessProvider.DbAccess.GetLocationById(locationId);
             AddUpdateHistoryItem(UpdateHistoryType.ToggleLocation, location.Id, location.Name, false);
@@ -638,10 +588,11 @@ public partial class FileCategorizationViewModel : ObservableValidator
             if (!dbAccessProvider.DbAccess.GetTagsFromFile(fileId).Any(t => t.Id == tagId))
             {
                 dbAccessProvider.DbAccess.InsertFileTag(fileId, tagId);
-                
-                Tags.First(x => x.Id == tagId).IsChecked = true;
-                OnPropertyChanged(nameof(UpdateTagsHeader));
-                OnPropertyChanged(nameof(UpdateTagsHeaderToolTip));
+
+                Items.First(x => x.Type == CombinedItemType.Tag && x.Id == tagId).IsChecked = true;
+                UpdateItemsChecked(CombinedItemType.Tag, tagId, true);
+                OnPropertyChanged(nameof(CategorizationHeader));
+                OnPropertyChanged(nameof(CategorizationHeaderToolTip));
 
                 var tag = dbAccessProvider.DbAccess.GetTagById(tagId);
                 AddUpdateHistoryItem(UpdateHistoryType.ToggleTag, tag.Id, tag.Name, true);
@@ -657,9 +608,10 @@ public partial class FileCategorizationViewModel : ObservableValidator
             var fileId = SelectedFile!.Id;
             dbAccessProvider.DbAccess.DeleteFileTag(fileId, tagId);
             
-            Tags.First(x => x.Id == tagId).IsChecked = false;
-            OnPropertyChanged(nameof(UpdateTagsHeader));
-            OnPropertyChanged(nameof(UpdateTagsHeaderToolTip));
+            Items.First(x => x.Type == CombinedItemType.Tag && x.Id == tagId).IsChecked = false;
+            UpdateItemsChecked(CombinedItemType.Tag, tagId, false);
+            OnPropertyChanged(nameof(CategorizationHeader));
+            OnPropertyChanged(nameof(CategorizationHeaderToolTip));
 
             var tag = dbAccessProvider.DbAccess.GetTagById(tagId);
             AddUpdateHistoryItem(UpdateHistoryType.ToggleTag, tag.Id, tag.Name, false);
@@ -676,7 +628,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
             return;
         }
 
-        var newHistoryItem = new UpdateHistoryItemViewModel()
+        var newHistoryItem = new HistoryItemViewModel()
         {
             Type = type,
             ItemId = itemId,
@@ -714,112 +666,47 @@ public partial class FileCategorizationViewModel : ObservableValidator
     }
 
     [RelayCommand]
-    private void RemovePersons()
+    private void RemoveItems()
     {
-        foreach (var person in Persons.Where(x => x.IsVisible && x.IsChecked))
+        foreach (var item in Items.Where(x => x.IsVisible && x.IsChecked))
         {
-            RemoveFilePersonFromCurrentFile(person.Id);
+            switch (item.Type)
+            {
+                case CombinedItemType.Person:
+                    RemoveFilePersonFromCurrentFile(item.Id);
+                    break;
+                case CombinedItemType.Location:
+                    RemoveFileLocationFromCurrentFile(item.Id);
+                    break;
+                case CombinedItemType.Tag:
+                    RemoveFileTagFromCurrentFile(item.Id);
+                    break;
+            }
         }
     }
 
     [RelayCommand]
-    private async Task AddPersonsAsync()
+    private async Task AddItemsAsync()
     {
-        foreach (var person in Persons.Where(x => x.IsVisible && !x.IsChecked))
+        foreach (var item in Items.Where(x => x.IsVisible && !x.IsChecked))
         {
-            await AddFilePersonToCurrentFileAsync(person.Id);
+            switch (item.Type)
+            {
+                case CombinedItemType.Person:
+                     await AddFilePersonToCurrentFileAsync(item.Id);
+                    break;
+                case CombinedItemType.Location:
+                    AddFileLocationToCurrentFile(item.Id);
+                    break;
+                case CombinedItemType.Tag:
+                    AddFileTagToCurrentFile(item.Id);
+                    break;
+            }
         }
     }
 
     [RelayCommand]
-    private async Task TogglePersonAsync(TogglePersonViewModel person)
-    {
-        if (ReadOnly || SelectedFile is null)
-        {
-            return;
-        }
-        if (person.IsChecked)
-        {
-            RemoveFilePersonFromCurrentFile(person.Id);
-        }
-        else
-        {
-            await AddFilePersonToCurrentFileAsync(person.Id);
-        }
-    }
-
-    [RelayCommand]
-    private void RemoveLocations()
-    {
-        foreach (var location in Locations.Where(x => x.IsVisible && x.IsChecked))
-        {
-            RemoveFileLocationFromCurrentFile(location.Id);
-        }
-    }
-
-    [RelayCommand]
-    private void AddLocations()
-    {
-        foreach (var location in Locations.Where(x => x.IsVisible && !x.IsChecked))
-        {
-            AddFileLocationToCurrentFile(location.Id);
-        }
-    }
-
-    [RelayCommand]
-    private void ToggleLocation(ToggleLocationViewModel location)
-    {
-        if (ReadOnly || SelectedFile is null)
-        {
-            return;
-        }
-        if (location.IsChecked)
-        {
-            RemoveFileLocationFromCurrentFile(location.Id);
-        }
-        else
-        {
-            AddFileLocationToCurrentFile(location.Id);
-        }
-    }
-
-    [RelayCommand]
-    private void RemoveTags()
-    {
-        foreach (var tag in Tags.Where(x => x.IsVisible && x.IsChecked))
-        {
-            RemoveFileTagFromCurrentFile(tag.Id);
-        }
-    }
-
-    [RelayCommand]
-    private void AddTags()
-    {
-        foreach (var tag in Tags.Where(x => x.IsVisible && !x.IsChecked))
-        {
-            AddFileTagToCurrentFile(tag.Id);
-        }
-    }
-
-    [RelayCommand]
-    private void ToggleTag(ToggleTagViewModel tag)
-    {
-        if (ReadOnly || SelectedFile is null)
-        {
-            return;
-        }
-        if (tag.IsChecked)
-        {
-            RemoveFileTagFromCurrentFile(tag.Id);
-        }
-        else
-        {
-            AddFileTagToCurrentFile(tag.Id);
-        }
-    }
-
-    [RelayCommand]
-    private async Task ToggleFromHistoryItemAsync(UpdateHistoryItemViewModel historyItem)
+    private async Task ToggleFromHistoryItemAsync(HistoryItemViewModel historyItem)
     {
         if (ReadOnly || SelectedFile is null)
         {
@@ -877,7 +764,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
     }
 
     [RelayCommand]
-    private void RemoveHistoryItem(UpdateHistoryItemViewModel itemToRemove)
+    private void RemoveHistoryItem(HistoryItemViewModel itemToRemove)
     {
         UpdateHistoryItems.Remove(itemToRemove);
     }

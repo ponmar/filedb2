@@ -1403,8 +1403,8 @@ This operation can be slow for a large collection of files or if the media acces
   <data name="CategorizationUpdateTagsNoTags" xml:space="preserve">
     <value>No tags available.</value>
   </data>
-  <data name="CategorizationUpdatePersonsAddAllToolTip" xml:space="preserve">
-    <value>Select all visible persons</value>
+  <data name="CategorizationUpdateAddAllToolTip" xml:space="preserve">
+    <value>Select all visible</value>
   </data>
   <data name="CategorizationUpdateLocationsAddAllToolTip" xml:space="preserve">
     <value>Select all visible locations</value>
@@ -1412,8 +1412,8 @@ This operation can be slow for a large collection of files or if the media acces
   <data name="CategorizationUpdateTagsAddAllToolTip" xml:space="preserve">
     <value>Select all visible tags</value>
   </data>
-  <data name="CategorizationUpdatePersonsRemoveAllToolTip" xml:space="preserve">
-    <value>Deselect all visible persons</value>
+  <data name="CategorizationUpdateRemoveAllToolTip" xml:space="preserve">
+    <value>Deselect all visible</value>
   </data>
   <data name="CategorizationUpdateLocationsRemoveAllToolTip" xml:space="preserve">
     <value>Deselect all visible locations</value>
@@ -1459,5 +1459,11 @@ This operation can be slow for a large collection of files or if the media acces
   </data>
   <data name="ToolsReloadExifErrorsHeader" xml:space="preserve">
     <value>Errors:\n{0}</value>
+  </data>
+  <data name="CategorizationUpdateCombinedTitle" xml:space="preserve">
+    <value>Categorization ({0} / {1})</value>
+  </data>
+  <data name="CategorizationUpdateNoItems" xml:space="preserve">
+    <value>No items available.</value>
   </data>
 </root>

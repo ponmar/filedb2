@@ -731,6 +731,24 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select all visible.
+        /// </summary>
+        public static string CategorizationUpdateAddAllToolTip {
+            get {
+                return ResourceManager.GetString("CategorizationUpdateAddAllToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Categorization ({0} / {1}).
+        /// </summary>
+        public static string CategorizationUpdateCombinedTitle {
+            get {
+                return ResourceManager.GetString("CategorizationUpdateCombinedTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to History.
         /// </summary>
         public static string CategorizationUpdateHistoryTitle {
@@ -776,11 +794,11 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select all visible persons.
+        ///   Looks up a localized string similar to No items available..
         /// </summary>
-        public static string CategorizationUpdatePersonsAddAllToolTip {
+        public static string CategorizationUpdateNoItems {
             get {
-                return ResourceManager.GetString("CategorizationUpdatePersonsAddAllToolTip", resourceCulture);
+                return ResourceManager.GetString("CategorizationUpdateNoItems", resourceCulture);
             }
         }
         
@@ -794,20 +812,20 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Deselect all visible persons.
-        /// </summary>
-        public static string CategorizationUpdatePersonsRemoveAllToolTip {
-            get {
-                return ResourceManager.GetString("CategorizationUpdatePersonsRemoveAllToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Persons ({0} / {1}).
         /// </summary>
         public static string CategorizationUpdatePersonsTitle {
             get {
                 return ResourceManager.GetString("CategorizationUpdatePersonsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deselect all visible.
+        /// </summary>
+        public static string CategorizationUpdateRemoveAllToolTip {
+            get {
+                return ResourceManager.GetString("CategorizationUpdateRemoveAllToolTip", resourceCulture);
             }
         }
         

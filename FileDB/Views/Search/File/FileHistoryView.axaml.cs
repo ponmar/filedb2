@@ -3,9 +3,9 @@ using FileDB.ViewModels.Search.File;
 
 namespace FileDB.Views.Search.File;
 
-public partial class FileCategorizationLocationsView : UserControl
+public partial class FileHistoryView : UserControl
 {
-    public FileCategorizationLocationsView()
+    public FileHistoryView()
     {
         InitializeComponent();
         if (!Design.IsDesignMode)

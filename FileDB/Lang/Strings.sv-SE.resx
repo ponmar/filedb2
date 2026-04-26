@@ -1403,8 +1403,8 @@ Lägg till nya filer i '{0}'.</value>
   <data name="CategorizationUpdateTagsNoTags" xml:space="preserve">
     <value>Inga etiketter tillgängliga.</value>
   </data>
-  <data name="CategorizationUpdatePersonsAddAllToolTip" xml:space="preserve">
-    <value>Markera alla synliga personer</value>
+  <data name="CategorizationUpdateAddAllToolTip" xml:space="preserve">
+    <value>Markera alla synliga</value>
   </data>
   <data name="CategorizationUpdateLocationsAddAllToolTip" xml:space="preserve">
     <value>Markera alla synliga platser</value>
@@ -1412,8 +1412,8 @@ Lägg till nya filer i '{0}'.</value>
   <data name="CategorizationUpdateTagsAddAllToolTip" xml:space="preserve">
     <value>Markera alla synliga etiketter</value>
   </data>
-  <data name="CategorizationUpdatePersonsRemoveAllToolTip" xml:space="preserve">
-    <value>Avmarkera alla synliga personer</value>
+  <data name="CategorizationUpdateRemoveAllToolTip" xml:space="preserve">
+    <value>Avmarkera alla synliga</value>
   </data>
   <data name="CategorizationUpdateLocationsRemoveAllToolTip" xml:space="preserve">
     <value>Avmarkera alla synliga platser</value>
@@ -1459,5 +1459,11 @@ Lägg till nya filer i '{0}'.</value>
   </data>
   <data name="ToolsReloadExifErrorsHeader" xml:space="preserve">
     <value>Fel:\n{0}</value>
+  </data>
+  <data name="CategorizationUpdateCombinedTitle" xml:space="preserve">
+    <value>Kategorisering ({0} / {1})</value>
+  </data>
+  <data name="CategorizationUpdateNoItems" xml:space="preserve">
+    <value>Inga föremål tillgängliga.</value>
   </data>
 </root>

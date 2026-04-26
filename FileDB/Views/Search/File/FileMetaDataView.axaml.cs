@@ -3,9 +3,9 @@ using FileDB.ViewModels.Search.File;
 
 namespace FileDB.Views.Search.File;
 
-public partial class FileCategorizationTagsView : UserControl
+public partial class FileMetaDataView : UserControl
 {
-    public FileCategorizationTagsView()
+    public FileMetaDataView()
     {
         InitializeComponent();
         if (!Design.IsDesignMode)
