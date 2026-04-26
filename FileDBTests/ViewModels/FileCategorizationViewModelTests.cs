@@ -45,10 +45,7 @@ public class FileCategorizationViewModelTests
     public void Constructor_ReposEmpty()
     {
         var viewModel = CreateViewModel();
-
-        Assert.Empty(viewModel.Persons);
-        Assert.Empty(viewModel.Locations);
-        Assert.Empty(viewModel.Tags);
+        Assert.Empty(viewModel.Items);
 
         Assert.Empty(viewModel.UpdateHistoryItems);
         Assert.Null(viewModel.PrevEditedFileId);
@@ -60,9 +57,9 @@ public class FileCategorizationViewModelTests
         PopulateRepositories();
         var viewModel = CreateViewModel();
 
-        Assert.Equal(2, viewModel.Persons.Count);
-        Assert.Equal(2, viewModel.Locations.Count);
-        Assert.Single(viewModel.Tags);
+        Assert.Equal(2, viewModel.Items.Count(x => x.Type == CombinedItemType.Person));
+        Assert.Equal(2, viewModel.Items.Count(x => x.Type == CombinedItemType.Location));
+        Assert.Equal(1, viewModel.Items.Count(x => x.Type == CombinedItemType.Tag));
 
         Assert.Empty(viewModel.UpdateHistoryItems);
         Assert.Null(viewModel.PrevEditedFileId);
@@ -79,36 +76,36 @@ public class FileCategorizationViewModelTests
     public void PersonUpdated()
     {
         var viewModel = CreateViewModel();
-        Assert.Empty(viewModel.Persons);
+        Assert.Empty(viewModel.Items);
 
         persons.Add(new() { Id = 1, ShortName = "Alice", FullName = "Alice Smith" });
         Messenger.Send<PersonsUpdated>();
 
-        Assert.Single(viewModel.Persons);
+        Assert.Single(viewModel.Items);
     }
 
     [Fact]
     public void LocationsUpdated()
     {
         var viewModel = CreateViewModel();
-        Assert.Empty(viewModel.Locations);
+        Assert.Empty(viewModel.Items);
 
         locations.Add(new() { Id = 1, Name = "Home" });
         Messenger.Send<LocationsUpdated>();
 
-        Assert.Single(viewModel.Locations);
+        Assert.Single(viewModel.Items);
     }
 
     [Fact]
     public void TagsUpdated()
     {
         var viewModel = CreateViewModel();
-        Assert.Empty(viewModel.Tags);
+        Assert.Empty(viewModel.Items);
 
         tags.Add(new() { Id = 1, Name = "Favorites" });
         Messenger.Send<TagsUpdated>();
 
-        Assert.Single(viewModel.Tags);
+        Assert.Single(viewModel.Items);
     }
 
     [Fact]
