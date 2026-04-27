@@ -20,6 +20,7 @@ public class FileCategorizationViewModelTests
     private readonly ILocationsRepository locationsRepository = A.Fake<ILocationsRepository>();
     private readonly ITagsRepository tagsRepository = A.Fake<ITagsRepository>();
     private readonly IFileSelector fileSelector = A.Fake<IFileSelector>();
+    private readonly IFileRotator fileRotator = A.Fake<IFileRotator>();
 
     private readonly List<PersonModel> persons = [];
     private readonly List<LocationModel> locations = [];
@@ -245,7 +246,7 @@ public class FileCategorizationViewModelTests
 
     private FileCategorizationViewModel CreateViewModel()
     {
-        return new FileCategorizationViewModel(configProvider, dbAccessProvider, dialogs, filesystemAccessProvider, personsRepository, locationsRepository, tagsRepository, fileSelector);
+        return new FileCategorizationViewModel(configProvider, dbAccessProvider, dialogs, filesystemAccessProvider, personsRepository, locationsRepository, tagsRepository, fileSelector, fileRotator);
     }
 
     private void PopulateRepositories()

@@ -238,8 +238,9 @@ public partial class FileCategorizationViewModel : ObservableValidator
     private readonly ILocationsRepository locationsRepository;
     private readonly ITagsRepository tagsRepository;
     private readonly IFileSelector fileSelector;
+    private readonly IFileRotator fileRotator;
 
-    public FileCategorizationViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IDialogs dialogs, IFilesystemAccessProvider filesystemAccessProvider, IPersonsRepository personsRepository, ILocationsRepository locationsRepository, ITagsRepository tagsRepository, IFileSelector fileSelector)
+    public FileCategorizationViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IDialogs dialogs, IFilesystemAccessProvider filesystemAccessProvider, IPersonsRepository personsRepository, ILocationsRepository locationsRepository, ITagsRepository tagsRepository, IFileSelector fileSelector, IFileRotator fileRotator)
     {
         this.configProvider = configProvider;
         this.dbAccessProvider = dbAccessProvider;
@@ -249,6 +250,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
         this.locationsRepository = locationsRepository;
         this.tagsRepository = tagsRepository;
         this.fileSelector = fileSelector;
+        this.fileRotator = fileRotator;
 
         ReadOnly = configProvider.Config.ReadOnly;
 
@@ -419,28 +421,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
     {
         if (SelectedFile is not null)
         {
-            int cameraNewDegrees = ImageRotation;
-            if (imageRotationDirection == RotationDirection.CounterClockwise)
-            {
-                cameraNewDegrees += 90;
-                if (cameraNewDegrees > 270)
-                {
-                    cameraNewDegrees = 0;
-                }
-            }
-            else if (imageRotationDirection == RotationDirection.Clockwise)
-            {
-                cameraNewDegrees -= 90;
-                if (cameraNewDegrees < 0)
-                {
-                    cameraNewDegrees = 270;
-                }
-            }
-
-            var newOrientation = DatabaseParsing.DegreesToOrientation(cameraNewDegrees);
-            dbAccessProvider.DbAccess.UpdateFileOrientation(SelectedFile.Id, newOrientation);
-            SelectedFile.Orientation = newOrientation;
-
+            ImageRotation = fileRotator.Rotate(SelectedFile, ImageRotation, imageRotationDirection);
             Messenger.Send<FileEdited>();
         }
     }
