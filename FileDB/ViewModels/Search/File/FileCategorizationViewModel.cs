@@ -49,7 +49,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
 
     public bool UpdateItemsVisible => CanCategorize && IsExpanded;
 
-    public string Header => IsExpanded ? Strings.CategorizationUpdateTitle : char.ConvertFromUtf32(0x1F589);
+    public string Header => IsExpanded ? (IsDirty ? Strings.CategorizationUpdateTitle + " *" : Strings.CategorizationUpdateTitle) : char.ConvertFromUtf32(0x1F589);
     public string? HeaderToolTip => IsExpanded ? null : Strings.CategorizationEditToolTip;
 
     public string HistoryHeader => HistoryIsExpanded ? Strings.CategorizationUpdateHistoryTitle : char.ConvertFromUtf32(0x1F4DC);
@@ -228,6 +228,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CanSave))]
+    [NotifyPropertyChangedFor(nameof(Header))]
     public partial bool IsDirty { get; set; }
 
     private readonly IConfigProvider configProvider;
