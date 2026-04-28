@@ -627,6 +627,9 @@
   <data name="ToolsRunButton" xml:space="preserve">
     <value>Run</value>
   </data>
+  <data name="ToolsRunning" xml:space="preserve">
+    <value>Running...</value>
+  </data>
   <data name="ToolsDatabaseBackupWarning1" xml:space="preserve">
     <value>Database recovery must be done manually if needed. Backup of your files collection, settings and database to external media should be done continuously!</value>
   </data>

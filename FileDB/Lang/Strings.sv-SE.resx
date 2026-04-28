@@ -624,6 +624,9 @@
   <data name="ToolsRunButton" xml:space="preserve">
     <value>Kör</value>
   </data>
+  <data name="ToolsRunning" xml:space="preserve">
+    <value>Kör...</value>
+  </data>
   <data name="ToolsFilesCollectionFilteringCopyButton" xml:space="preserve">
     <value>Kopiera fillista med ej längre tillämpliga filer</value>
   </data>

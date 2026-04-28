@@ -96,7 +96,11 @@ public partial class ToolsViewModel : ObservableObject
     {
         try
         {
-            new FileBackup(fileSystem, configProvider.FilePaths.DatabasePath).CreateBackup();
+            await dialogs.ShowProgressDialogAsync(progress =>
+            {
+                progress.Report(Strings.ToolsRunning);
+                new FileBackup(fileSystem, configProvider.FilePaths.DatabasePath).CreateBackup();
+            });
             await dialogs.ShowInfoDialogAsync(Strings.ToolsCreateBackupResult);
             ScanBackupFiles();
 
@@ -133,7 +137,12 @@ public partial class ToolsViewModel : ObservableObject
     {
         var blacklistedFilePathPatterns = configProvider.Config.BlacklistedFilePathPatterns.Split(";");
         var whitelistedFilePathPatterns = configProvider.Config.WhitelistedFilePathPatterns.Split(";");
-        var notApplicableFiles = dbAccessProvider.DbAccess.GetFiles().Where(x => !filesystemAccessProvider.FilesystemAccess.PathIsApplicable(x.Path, blacklistedFilePathPatterns, whitelistedFilePathPatterns, configProvider.Config.IncludeHiddenDirectories)).ToList();
+        List<FileModel> notApplicableFiles = [];
+        await dialogs.ShowProgressDialogAsync(progress =>
+        {
+            progress.Report(Strings.ToolsRunning);
+            notApplicableFiles = dbAccessProvider.DbAccess.GetFiles().Where(x => !filesystemAccessProvider.FilesystemAccess.PathIsApplicable(x.Path, blacklistedFilePathPatterns, whitelistedFilePathPatterns, configProvider.Config.IncludeHiddenDirectories)).ToList();
+        });
         ImportedNoLongerApplicableFileList = Utils.CreateFileList(notApplicableFiles);
         await dialogs.ShowInfoDialogAsync(string.Format(Strings.ToolsFoundNotApplicableFilesCountFilesThatNowShouldBeFiltered, notApplicableFiles.Count));
     }
@@ -151,58 +160,62 @@ public partial class ToolsViewModel : ObservableObject
 
         var filesValidator = new FileModelValidator();
         List<FileModel> invalidFiles = [];
-        foreach (var file in dbAccessProvider.DbAccess.GetFiles())
+        await dialogs.ShowProgressDialogAsync(progress =>
         {
-            var result = filesValidator.Validate(file);
-            if (!result.IsValid)
+            progress.Report(Strings.ToolsRunning);
+            foreach (var file in dbAccessProvider.DbAccess.GetFiles())
             {
-                foreach (var error in result.Errors)
+                var result = filesValidator.Validate(file);
+                if (!result.IsValid)
                 {
-                    DabaseValidationErrors.Add(string.Format(Strings.ToolsDatabaseValidationFileError, file.Id, error.ErrorMessage));
+                    foreach (var error in result.Errors)
+                    {
+                        DabaseValidationErrors.Add(string.Format(Strings.ToolsDatabaseValidationFileError, file.Id, error.ErrorMessage));
+                    }
+                    invalidFiles.Add(file);
                 }
-                invalidFiles.Add(file);
             }
-        }
-        InvalidFileList = Utils.CreateFileList(invalidFiles);
+            InvalidFileList = Utils.CreateFileList(invalidFiles);
 
-        var personValidator = new PersonModelValidator();
-        foreach (var person in dbAccessProvider.DbAccess.GetPersons())
-        {
-            var result = personValidator.Validate(person);
-            if (!result.IsValid)
+            var personValidator = new PersonModelValidator();
+            foreach (var person in dbAccessProvider.DbAccess.GetPersons())
             {
-                foreach (var error in result.Errors)
+                var result = personValidator.Validate(person);
+                if (!result.IsValid)
                 {
-                    DabaseValidationErrors.Add(string.Format(Strings.ToolsDatabaseValidationPersonError, person.Id, error.ErrorMessage));
+                    foreach (var error in result.Errors)
+                    {
+                        DabaseValidationErrors.Add(string.Format(Strings.ToolsDatabaseValidationPersonError, person.Id, error.ErrorMessage));
+                    }
                 }
             }
-        }
 
-        var locationValidator = new LocationModelValidator();
-        foreach (var location in dbAccessProvider.DbAccess.GetLocations())
-        {
-            var result = locationValidator.Validate(location);
-            if (!result.IsValid)
+            var locationValidator = new LocationModelValidator();
+            foreach (var location in dbAccessProvider.DbAccess.GetLocations())
             {
-                foreach (var error in result.Errors)
+                var result = locationValidator.Validate(location);
+                if (!result.IsValid)
                 {
-                    DabaseValidationErrors.Add(string.Format(Strings.ToolsDatabaseValidationLocationError, location.Id, error.ErrorMessage));
+                    foreach (var error in result.Errors)
+                    {
+                        DabaseValidationErrors.Add(string.Format(Strings.ToolsDatabaseValidationLocationError, location.Id, error.ErrorMessage));
+                    }
                 }
             }
-        }
 
-        var tagValidator = new TagModelValidator();
-        foreach (var tag in dbAccessProvider.DbAccess.GetTags())
-        {
-            var result = tagValidator.Validate(tag);
-            if (!result.IsValid)
+            var tagValidator = new TagModelValidator();
+            foreach (var tag in dbAccessProvider.DbAccess.GetTags())
             {
-                foreach (var error in result.Errors)
+                var result = tagValidator.Validate(tag);
+                if (!result.IsValid)
                 {
-                    DabaseValidationErrors.Add(string.Format(Strings.ToolsDatabaseValidationTagError, tag.Id, error.ErrorMessage));
+                    foreach (var error in result.Errors)
+                    {
+                        DabaseValidationErrors.Add(string.Format(Strings.ToolsDatabaseValidationTagError, tag.Id, error.ErrorMessage));
+                    }
                 }
             }
-        }
+        });
 
         var resultText = DabaseValidationErrors.Count > 0 ? string.Format(Strings.ToolsDabaseValidationErrorsFound, DabaseValidationErrors.Count) : Strings.ToolsDatabaseValidationNoErrorsFound;
         await dialogs.ShowInfoDialogAsync(resultText);
@@ -219,8 +232,12 @@ public partial class ToolsViewModel : ObservableObject
     [RelayCommand]
     private async Task FileFinderAsync()
     {
-        List<FileModel> missingFiles = [.. filesystemAccessProvider.FilesystemAccess.GetFilesMissingInFilesystem(dbAccessProvider.DbAccess.GetFiles())];
-
+        List<FileModel> missingFiles = [];
+        await dialogs.ShowProgressDialogAsync(progress =>
+        {
+            progress.Report(Strings.ToolsRunning);
+            missingFiles = [.. filesystemAccessProvider.FilesystemAccess.GetFilesMissingInFilesystem(dbAccessProvider.DbAccess.GetFiles())];
+        });
         var result = missingFiles.Count == 0 ? Strings.ToolsNoMissingFilesFound : string.Format(Strings.ToolsMissingFilesFound, missingFiles.Count);
         await dialogs.ShowInfoDialogAsync(result);
         MissingFilesList = Utils.CreateFileList(missingFiles);
@@ -258,12 +275,16 @@ public partial class ToolsViewModel : ObservableObject
 
         try
         {
-            var exporter = new DatabaseExportHandler(DatabaseExportDirectory, fileSystem);
             var persons = dbAccessProvider.DbAccess.GetPersons().ToList();
             var locations = dbAccessProvider.DbAccess.GetLocations().ToList();
             var tags = dbAccessProvider.DbAccess.GetTags().ToList();
             var files = dbAccessProvider.DbAccess.GetFiles().ToList();
-            exporter.Export(persons, locations, tags, files);
+            await dialogs.ShowProgressDialogAsync(progress =>
+            {
+                progress.Report(Strings.ToolsRunning);
+                var exporter = new DatabaseExportHandler(DatabaseExportDirectory, fileSystem);
+                exporter.Export(persons, locations, tags, files);
+            });
             await dialogs.ShowInfoDialogAsync(string.Format(Strings.ToolsDatabaseExportResult, persons.Count, locations.Count, tags.Count, files.Count));
         }
         catch (Exception e)

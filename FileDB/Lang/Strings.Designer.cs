@@ -4001,6 +4001,12 @@ namespace FileDB.Lang {
             }
         }
         
+        public static string ToolsRunning {
+            get {
+                return ResourceManager.GetString("ToolsRunning", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Tools.
         /// </summary>
