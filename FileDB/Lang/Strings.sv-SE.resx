@@ -627,6 +627,9 @@
   <data name="ToolsRunning" xml:space="preserve">
     <value>Kör...</value>
   </data>
+  <data name="ProgressDialogCancelButton" xml:space="preserve">
+    <value>Avbryt</value>
+  </data>
   <data name="ToolsFilesCollectionFilteringCopyButton" xml:space="preserve">
     <value>Kopiera fillista med ej längre tillämpliga filer</value>
   </data>

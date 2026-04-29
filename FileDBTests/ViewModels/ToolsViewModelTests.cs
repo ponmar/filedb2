@@ -9,6 +9,7 @@ using FileDBInterface.FilesystemAccess;
 using FileDBInterface.Model;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace FileDBTests.ViewModels;
@@ -49,6 +50,13 @@ public class ToolsViewModelTests
     {
         A.CallTo(() => dialogs.ShowProgressDialogAsync(A<Action<IProgress<string>>>._))
             .Invokes((Action<IProgress<string>> work) => work(new Progress<string>(_ => { })))
+            .Returns(Task.CompletedTask);
+    }
+
+    private void SetupCancellableProgressDialogToExecuteWork()
+    {
+        A.CallTo(() => dialogs.ShowProgressDialogAsync(A<Action<IProgress<string>, CancellationToken>>._))
+            .Invokes((Action<IProgress<string>, CancellationToken> work) => work(new Progress<string>(_ => { }), CancellationToken.None))
             .Returns(Task.CompletedTask);
     }
 
@@ -115,7 +123,7 @@ public class ToolsViewModelTests
     public void FindImportedNoLongerApplicableFilesCommand_AllFilesApplicable_EmptyFileList()
     {
         SetupConfig();
-        SetupProgressDialogToExecuteWork();
+        SetupCancellableProgressDialogToExecuteWork();
         var files = new List<FileModel>
         {
             new() { Id = 1, Path = "photos/a.jpg" },
@@ -135,7 +143,7 @@ public class ToolsViewModelTests
     public void FindImportedNoLongerApplicableFilesCommand_SomeNotApplicable_FileListPopulated()
     {
         SetupConfig();
-        SetupProgressDialogToExecuteWork();
+        SetupCancellableProgressDialogToExecuteWork();
         var files = new List<FileModel>
         {
             new() { Id = 1, Path = "photos/a.jpg" },
@@ -167,7 +175,7 @@ public class ToolsViewModelTests
     [Fact]
     public void DatabaseValidationCommand_NoErrors_EmptyErrorCollection()
     {
-        SetupProgressDialogToExecuteWork();
+        SetupCancellableProgressDialogToExecuteWork();
         A.CallTo(() => dbAccessProvider.DbAccess.GetFiles()).Returns([]);
         A.CallTo(() => dbAccessProvider.DbAccess.GetPersons()).Returns([]);
         A.CallTo(() => dbAccessProvider.DbAccess.GetLocations()).Returns([]);
@@ -183,7 +191,7 @@ public class ToolsViewModelTests
     [Fact]
     public void DatabaseValidationCommand_InvalidFile_AddsErrorAndSetsInvalidFileList()
     {
-        SetupProgressDialogToExecuteWork();
+        SetupCancellableProgressDialogToExecuteWork();
         var invalidFile = new FileModel { Id = 1, Path = "\\invalid\\path" }; // backslash makes path invalid
         A.CallTo(() => dbAccessProvider.DbAccess.GetFiles()).Returns([invalidFile]);
         A.CallTo(() => dbAccessProvider.DbAccess.GetPersons()).Returns([]);
@@ -214,7 +222,7 @@ public class ToolsViewModelTests
     [Fact]
     public void FileFinderCommand_NoMissingFiles_EmptyMissingFilesList()
     {
-        SetupProgressDialogToExecuteWork();
+        SetupCancellableProgressDialogToExecuteWork();
         A.CallTo(() => dbAccessProvider.DbAccess.GetFiles()).Returns([]);
         A.CallTo(() => filesystemAccessProvider.FilesystemAccess.GetFilesMissingInFilesystem(A<IEnumerable<FileModel>>._)).Returns([]);
 
@@ -228,7 +236,7 @@ public class ToolsViewModelTests
     [Fact]
     public void FileFinderCommand_SomeMissingFiles_MissingFilesListPopulated()
     {
-        SetupProgressDialogToExecuteWork();
+        SetupCancellableProgressDialogToExecuteWork();
         var missingFile = new FileModel { Id = 1, Path = "photos/missing.jpg" };
         A.CallTo(() => dbAccessProvider.DbAccess.GetFiles()).Returns([missingFile]);
         A.CallTo(() => filesystemAccessProvider.FilesystemAccess.GetFilesMissingInFilesystem(A<IEnumerable<FileModel>>._)).Returns([missingFile]);
@@ -340,14 +348,10 @@ public class ToolsViewModelTests
     {
         // Arrange
         A.CallTo(() => dialogs.ShowConfirmDialogAsync(A<string>._)).Returns(true);
+        SetupCancellableProgressDialogToExecuteWork();
 
         var viewModel = CreateViewModel();
         viewModel.FileIdsInput = "1;2";
-
-        // Arrange progress dialog to execute work
-        A.CallTo(() => dialogs.ShowProgressDialogAsync(A<Action<IProgress<string>>>._))
-            .Invokes((Action<IProgress<string>> work) => work(new Progress<string>(s => { })))
-            .Returns(Task.CompletedTask);
 
         // Act
         viewModel.ReloadExifForFilesCommand.Execute(null);

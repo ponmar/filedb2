@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
+using System.Threading;
 
 namespace FileDB.Export;
 
@@ -33,17 +34,19 @@ public class SearchResultExportHandler
         this.fileSystem = fileSystem;
     }
 
-    public void Export(string destinationDirectory, string name, List<FileModel> files, List<SearchResultExportType> exportTypes)
+    public void Export(string destinationDirectory, string name, List<FileModel> files, List<SearchResultExportType> exportTypes, CancellationToken cancellationToken = default)
     {
-        var data = GetExportedData(files, name, "Files");
+        var data = GetExportedData(files, name, "Files", cancellationToken);
 
         if (exportTypes.Contains(SearchResultExportType.Files))
         {
+            cancellationToken.ThrowIfCancellationRequested();
             new FilesExporter().Export(data, destinationDirectory);
         }
 
         if (exportTypes.Contains(SearchResultExportType.Json))
         {
+            cancellationToken.ThrowIfCancellationRequested();
             var path = Path.Combine(destinationDirectory, "Export.json");
             var exporter = new JsonExporter(fileSystem);
             exporter.Export(data, path);
@@ -51,6 +54,7 @@ public class SearchResultExportHandler
 
         if (exportTypes.Contains(SearchResultExportType.M3u))
         {
+            cancellationToken.ThrowIfCancellationRequested();
             var path = Path.Combine(destinationDirectory, "Export.m3u");
             var exporter = new M3uExporter(fileSystem);
             exporter.Export(data, path);
@@ -58,6 +62,7 @@ public class SearchResultExportHandler
 
         if (exportTypes.Contains(SearchResultExportType.Html))
         {
+            cancellationToken.ThrowIfCancellationRequested();
             var path = Path.Combine(destinationDirectory, "Html");
             var exporter = new HtmlExporter(fileSystem, filesystemAccessProvider);
             exporter.Export(data, path);
@@ -65,13 +70,14 @@ public class SearchResultExportHandler
 
         if (exportTypes.Contains(SearchResultExportType.Pdf))
         {
+            cancellationToken.ThrowIfCancellationRequested();
             var path = Path.Combine(destinationDirectory, "Export.pdf");
             var exporter = new PdfExporter(fileSystem, filesystemAccessProvider, PageSizes.A4.Landscape());
             exporter.Export(data, path);
         }
     }
 
-    private SearchResultExport GetExportedData(List<FileModel> files, string name, string filesSubdir)
+    private SearchResultExport GetExportedData(List<FileModel> files, string name, string filesSubdir, CancellationToken cancellationToken = default)
     {
         var exportedFiles = new List<ExportedFile>();
         var persons = new List<PersonModel>();
@@ -81,6 +87,7 @@ public class SearchResultExportHandler
         int index = 1;
         foreach (var file in files)
         {
+            cancellationToken.ThrowIfCancellationRequested();
             var filePersons = dbAccessProvider.DbAccess.GetPersonsFromFile(file.Id);
             foreach (var person in filePersons)
             {

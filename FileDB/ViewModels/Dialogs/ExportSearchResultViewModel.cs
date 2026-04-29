@@ -129,19 +129,29 @@ public partial class ExportSearchResultViewModel : ObservableObject
             return;
         }
 
-        await dialogs.ShowProgressDialogAsync(progress =>
+        Exception? exportError = null;
+        await dialogs.ShowProgressDialogAsync((progress, cancellationToken) =>
         {
             progress.Report(Strings.ExportExporting);
             try
             {
                 var exporter = new SearchResultExportHandler(dbAccessProvider, filesystemAccessProvider, fileSystem);
-                exporter.Export(ExportFilesDestinationDirectory, ExportName, SearchResult.Files, selections);
+                exporter.Export(ExportFilesDestinationDirectory, ExportName, SearchResult.Files, selections, cancellationToken);
             }
-            catch
+            catch (OperationCanceledException)
             {
-                // TODO: log and throw?
+                // user cancelled — exit silently
+            }
+            catch (Exception e)
+            {
+                exportError = e;
             }
         });
+
+        if (exportError is not null)
+        {
+            await dialogs.ShowErrorDialogAsync(exportError.Message);
+        }
     }
 
     private bool IsDirectoryEmpty(string dirPath)

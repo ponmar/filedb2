@@ -4007,6 +4007,12 @@ namespace FileDB.Lang {
             }
         }
         
+        public static string ProgressDialogCancelButton {
+            get {
+                return ResourceManager.GetString("ProgressDialogCancelButton", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Tools.
         /// </summary>

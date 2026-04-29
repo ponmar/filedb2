@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using MsBox.Avalonia;
+using System.Threading;
 using System.Threading.Tasks;
 using MsBox.Avalonia.Enums;
 using FileDB.Views.Dialogs;
@@ -73,6 +74,28 @@ public class Dialogs : IDialogs
                 var worker = new BackgroundWorker();
                 var progress = new Progress<string>(x => splash.Text.Text = x);
                 worker.DoWork += (s, workerArgs) => work(progress);
+                worker.RunWorkerCompleted += (s, workerArgs) => splash.Close();
+                worker.RunWorkerAsync();
+            };
+
+            await splash.ShowDialog(parent);
+        }
+    }
+
+    public async Task ShowProgressDialogAsync(Action<IProgress<string>, CancellationToken> work)
+    {
+        var parent = GetParentWindow();
+        if (parent is not null)
+        {
+            var cts = new CancellationTokenSource();
+            var splash = new SplashWindow();
+            splash.EnableCancellation(cts);
+
+            splash.Loaded += (_, args) =>
+            {
+                var worker = new BackgroundWorker();
+                var progress = new Progress<string>(x => splash.Text.Text = x);
+                worker.DoWork += (s, workerArgs) => work(progress, cts.Token);
                 worker.RunWorkerCompleted += (s, workerArgs) => splash.Close();
                 worker.RunWorkerAsync();
             };

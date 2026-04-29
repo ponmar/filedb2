@@ -3,6 +3,7 @@ using FileDBInterface.Model;
 using FluentValidation.Results;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace FileDB.Dialogs;
@@ -17,6 +18,7 @@ public interface IDialogs
     Task ShowErrorDialogAsync(ValidationResult validationResult);
     Task<bool> ShowConfirmDialogAsync(string question);
     Task ShowProgressDialogAsync(Action<IProgress<string>> work);
+    Task ShowProgressDialogAsync(Action<IProgress<string>, CancellationToken> work);
     Task<string?> ShowBrowseExistingDirectoryDialogAsync(string title);
     Task<string?> ShowBrowseExistingDirectoryDialogAsync(string title, string initialDirectory);
     Task<string?> ShowBrowseExistingSubDirectoryDialogAsync(string title, string rootDirectory);

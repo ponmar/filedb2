@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -138,10 +139,17 @@ public partial class ToolsViewModel : ObservableObject
         var blacklistedFilePathPatterns = configProvider.Config.BlacklistedFilePathPatterns.Split(";");
         var whitelistedFilePathPatterns = configProvider.Config.WhitelistedFilePathPatterns.Split(";");
         List<FileModel> notApplicableFiles = [];
-        await dialogs.ShowProgressDialogAsync(progress =>
+        await dialogs.ShowProgressDialogAsync((progress, cancellationToken) =>
         {
             progress.Report(Strings.ToolsRunning);
-            notApplicableFiles = dbAccessProvider.DbAccess.GetFiles().Where(x => !filesystemAccessProvider.FilesystemAccess.PathIsApplicable(x.Path, blacklistedFilePathPatterns, whitelistedFilePathPatterns, configProvider.Config.IncludeHiddenDirectories)).ToList();
+            foreach (var file in dbAccessProvider.DbAccess.GetFiles())
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                if (!filesystemAccessProvider.FilesystemAccess.PathIsApplicable(file.Path, blacklistedFilePathPatterns, whitelistedFilePathPatterns, configProvider.Config.IncludeHiddenDirectories))
+                {
+                    notApplicableFiles.Add(file);
+                }
+            }
         });
         ImportedNoLongerApplicableFileList = Utils.CreateFileList(notApplicableFiles);
         await dialogs.ShowInfoDialogAsync(string.Format(Strings.ToolsFoundNotApplicableFilesCountFilesThatNowShouldBeFiltered, notApplicableFiles.Count));
@@ -160,11 +168,12 @@ public partial class ToolsViewModel : ObservableObject
 
         var filesValidator = new FileModelValidator();
         List<FileModel> invalidFiles = [];
-        await dialogs.ShowProgressDialogAsync(progress =>
+        await dialogs.ShowProgressDialogAsync((progress, cancellationToken) =>
         {
             progress.Report(Strings.ToolsRunning);
             foreach (var file in dbAccessProvider.DbAccess.GetFiles())
             {
+                cancellationToken.ThrowIfCancellationRequested();
                 var result = filesValidator.Validate(file);
                 if (!result.IsValid)
                 {
@@ -180,6 +189,7 @@ public partial class ToolsViewModel : ObservableObject
             var personValidator = new PersonModelValidator();
             foreach (var person in dbAccessProvider.DbAccess.GetPersons())
             {
+                cancellationToken.ThrowIfCancellationRequested();
                 var result = personValidator.Validate(person);
                 if (!result.IsValid)
                 {
@@ -193,6 +203,7 @@ public partial class ToolsViewModel : ObservableObject
             var locationValidator = new LocationModelValidator();
             foreach (var location in dbAccessProvider.DbAccess.GetLocations())
             {
+                cancellationToken.ThrowIfCancellationRequested();
                 var result = locationValidator.Validate(location);
                 if (!result.IsValid)
                 {
@@ -206,6 +217,7 @@ public partial class ToolsViewModel : ObservableObject
             var tagValidator = new TagModelValidator();
             foreach (var tag in dbAccessProvider.DbAccess.GetTags())
             {
+                cancellationToken.ThrowIfCancellationRequested();
                 var result = tagValidator.Validate(tag);
                 if (!result.IsValid)
                 {
@@ -233,10 +245,14 @@ public partial class ToolsViewModel : ObservableObject
     private async Task FileFinderAsync()
     {
         List<FileModel> missingFiles = [];
-        await dialogs.ShowProgressDialogAsync(progress =>
+        await dialogs.ShowProgressDialogAsync((progress, cancellationToken) =>
         {
             progress.Report(Strings.ToolsRunning);
-            missingFiles = [.. filesystemAccessProvider.FilesystemAccess.GetFilesMissingInFilesystem(dbAccessProvider.DbAccess.GetFiles())];
+            foreach (var file in filesystemAccessProvider.FilesystemAccess.GetFilesMissingInFilesystem(dbAccessProvider.DbAccess.GetFiles()))
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                missingFiles.Add(file);
+            }
         });
         var result = missingFiles.Count == 0 ? Strings.ToolsNoMissingFilesFound : string.Format(Strings.ToolsMissingFilesFound, missingFiles.Count);
         await dialogs.ShowInfoDialogAsync(result);
@@ -314,12 +330,13 @@ public partial class ToolsViewModel : ObservableObject
 
         var errors = new List<string>();
         int success = 0;
-        await dialogs.ShowProgressDialogAsync(progress =>
+        await dialogs.ShowProgressDialogAsync((progress, cancellationToken) =>
         {
             var total = ids.Count;
             var i = 0;
             foreach (var id in ids)
             {
+                cancellationToken.ThrowIfCancellationRequested();
                 i++;
                 progress.Report(string.Format(Strings.ToolsReloadExifProgress, i, total, id));
                 try

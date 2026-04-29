@@ -2,6 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:lang="clr-namespace:FileDB.Lang"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="FileDB.Views.Dialogs.SplashWindow"
 		SizeToContent="WidthAndHeight"
@@ -10,7 +11,11 @@
 		WindowDecorations="None">
 	<Grid>
 		<Border Classes="BorderGroup">
-			<TextBlock Classes="PageHeader" x:Name="Text" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"/>
+			<StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+				<TextBlock Classes="PageHeader" x:Name="Text" HorizontalAlignment="Center" TextWrapping="Wrap"/>
+				<Button x:Name="CancelButton" Classes="PageButton" Margin="0,10,0,0" HorizontalAlignment="Center"
+						Content="{x:Static lang:Strings.ProgressDialogCancelButton}" IsVisible="False"/>
+			</StackPanel>
 		</Border>
 	</Grid>
 </Window>
