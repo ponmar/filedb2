@@ -301,7 +301,7 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
     public IEnumerable<FileModel> SearchFilesWithLocations(IEnumerable<int> locationIds)
     {
         using var connection = DatabaseSetup.CreateConnection(database);
-        return connection.Query<FileModel>($"select * from [files] inner join filelocations on files.Id = filelocations.FileId where filelocations.LocationId in ({string.Join(',', locationIds)})");
+        return connection.Query<FileModel>($"select * from [files] inner join filelocations on files.Id = filelocations.FileId where filelocations.LocationId in ({string.Join(',', locationIds)})").DistinctBy(x => x.Id);
     }
 
     public IEnumerable<FileModel> SearchFilesWithoutLocation(int locationId)
@@ -313,7 +313,7 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
     public IEnumerable<FileModel> SearchFilesWithTags(IEnumerable<int> tagIds)
     {
         using var connection = DatabaseSetup.CreateConnection(database);
-        return connection.Query<FileModel>($"select * from [files] inner join filetags on files.Id = filetags.FileId where filetags.TagId in ({string.Join(',', tagIds)})");
+        return connection.Query<FileModel>($"select * from [files] inner join filetags on files.Id = filetags.FileId where filetags.TagId in ({string.Join(',', tagIds)})").DistinctBy(x => x.Id);
     }
 
     public IEnumerable<FileModel> SearchFilesWithTagGroup(IEnumerable<int> tagIds)
