@@ -45,6 +45,7 @@ public partial class ResultViewModel : ObservableObject, ISearchResultRepository
     private readonly IConfigProvider configProvider;
     private readonly IDialogs dialogs;
     private readonly IFilesystemAccessProvider filesystemAccessProvider;
+    private readonly IDatabaseAccessProvider dbAccessProvider;
     private readonly IImageLoader imageLoader;
     private readonly ISpeeker speeker;
     private readonly IClipboardService clipboardService;
@@ -189,11 +190,12 @@ public partial class ResultViewModel : ObservableObject, ISearchResultRepository
         }
     }
 
-    public ResultViewModel(IConfigProvider configProvider, IDialogs dialogs, IFilesystemAccessProvider filesystemAccessProvider, IImageLoader imageLoader, ISpeeker speeker, IClipboardService clipboardService)
+    public ResultViewModel(IConfigProvider configProvider, IDialogs dialogs, IFilesystemAccessProvider filesystemAccessProvider, IDatabaseAccessProvider dbAccessProvider, IImageLoader imageLoader, ISpeeker speeker, IClipboardService clipboardService)
     {
         this.configProvider = configProvider;
         this.dialogs = dialogs;
         this.filesystemAccessProvider = filesystemAccessProvider;
+        this.dbAccessProvider = dbAccessProvider;
         this.imageLoader = imageLoader;
         this.speeker = speeker;
         this.clipboardService = clipboardService;
@@ -501,6 +503,12 @@ public partial class ResultViewModel : ObservableObject, ISearchResultRepository
 
             case SortMethod.Random:
                 SortFiles(new FileModelByRandomSorter(), false, preserveSelection);
+                break;
+
+            case SortMethod.NumPersons:
+            case SortMethod.NumPersonsDesc:
+                var counts = SearchResult!.Files.ToDictionary(f => f.Id, f => dbAccessProvider.DbAccess.GetPersonsFromFile(f.Id).Count());
+                SortFiles(new FileModelByPersonCountSorter(counts), SelectedSortMethod == SortMethod.NumPersonsDesc, preserveSelection);
                 break;
         }
     }

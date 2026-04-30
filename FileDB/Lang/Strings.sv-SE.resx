@@ -1301,6 +1301,12 @@ Lägg till nya filer i '{0}'.</value>
   <data name="SortMethodRandom" xml:space="preserve">
     <value>Slumpmässig</value>
   </data>
+  <data name="SortMethodNumPersons" xml:space="preserve">
+    <value>Personer (Få - Många)</value>
+  </data>
+  <data name="SortMethodNumPersonsDesc" xml:space="preserve">
+    <value>Personer (Många - Få)</value>
+  </data>
   <data name="FileInfoSearchDate" xml:space="preserve">
     <value>Sök datum</value>
   </data>

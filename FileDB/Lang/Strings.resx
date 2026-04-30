@@ -1304,6 +1304,12 @@ This operation can be slow for a large collection of files or if the media acces
   <data name="SortMethodRandom" xml:space="preserve">
     <value>Random</value>
   </data>
+  <data name="SortMethodNumPersons" xml:space="preserve">
+    <value>Persons (Low - High)</value>
+  </data>
+  <data name="SortMethodNumPersonsDesc" xml:space="preserve">
+    <value>Persons (High - Low)</value>
+  </data>
   <data name="FileInfoSearchDate" xml:space="preserve">
     <value>Search for date</value>
   </data>

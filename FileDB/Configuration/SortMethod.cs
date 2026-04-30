@@ -10,6 +10,8 @@ public enum SortMethod
     Path,
     PathDesc,
     Random,
+    NumPersons,
+    NumPersonsDesc,
 }
 
 public static class SortMethodExtensions
@@ -23,6 +25,8 @@ public static class SortMethodExtensions
             SortMethod.Path => Strings.SortMethodPath,
             SortMethod.PathDesc => Strings.SortMethodPathDesc,
             SortMethod.Random => Strings.SortMethodRandom,
+            SortMethod.NumPersons => Strings.SortMethodNumPersons,
+            SortMethod.NumPersonsDesc => Strings.SortMethodNumPersonsDesc,
             _ => throw new NotSupportedException(),
         };
     }

@@ -3497,6 +3497,18 @@ namespace FileDB.Lang {
             }
         }
         
+        public static string SortMethodNumPersons {
+            get {
+                return ResourceManager.GetString("SortMethodNumPersons", resourceCulture);
+            }
+        }
+        
+        public static string SortMethodNumPersonsDesc {
+            get {
+                return ResourceManager.GetString("SortMethodNumPersonsDesc", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to This is the demo files collection. When you are ready, make a configuration for your files collection!.
         /// </summary>
