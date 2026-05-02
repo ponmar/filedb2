@@ -788,7 +788,7 @@ YYYY-MM-DDTHH:MM:SS</value>
     <value>Apply from last edited file</value>
   </data>
   <data name="CategorizationApplyMetaDataFromLastEditToolTip" xml:space="preserve">
-    <value>Apply meta-data (persons, locations, tags and description) from last edit</value>
+    <value>Apply categorization (persons, locations and tags) from last edit</value>
   </data>
   <data name="CategorizationReloadFileDateTimeGPSPositionAndOrientationToolTip" xml:space="preserve">
     <value>Reload file date, time, GPS position and orientation from file Exif data or file path</value>

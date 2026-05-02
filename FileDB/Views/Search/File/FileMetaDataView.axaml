@@ -10,11 +10,6 @@
 	<Expander IsVisible="{Binding CanCategorize}" Header="{Binding Header}" ToolTip.Tip="{Binding HeaderToolTip}" IsExpanded="{Binding IsExpanded}">
 		<ScrollViewer>
 			<StackPanel Orientation="Vertical">
-				<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-					<Button Margin="5,0,0,5" HorizontalAlignment="Left" Command="{Binding AddMetaDataFromPrevEditedFileCommand}" IsEnabled="{Binding CanApplyMetaDataFromPrevEdit}" ToolTip.Tip="{x:Static lang:Strings.CategorizationApplyMetaDataFromLastEditToolTip}" Content="{x:Static lang:Strings.CategorizationApplyMetaDataFromLastEditButton}"/>
-					<Button Margin="5,0,0,5" HorizontalAlignment="Left" Command="{Binding MarkPrevEditedFileCommand}" IsEnabled="{Binding CanMarkCurrentFileAsPrevEdited}" ToolTip.Tip="{x:Static lang:Strings.CategorizationMarkButtonToolTip}" Content="{x:Static lang:Strings.CategorizationMarkButton}"/>
-				</StackPanel>
-
 				<Grid ColumnDefinitions="auto,*" RowDefinitions="auto,auto,auto,auto">
 					<TextBlock Grid.Row="0" Grid.Column="0" Margin="5" Text="&#x1F4DD;" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip.Tip="{x:Static lang:Strings.CategorizationFileDescriptionToolTip}"/>
 					<TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4" Margin="0,5,0,5" VerticalAlignment="Center" Text="{Binding NewFileDescription}" IsEnabled="{Binding FileSelected}" ToolTip.Tip="{x:Static lang:Strings.CategorizationFileDescriptionToolTip}" TextWrapping="Wrap" AcceptsReturn="True" MaxWidth="300"/>

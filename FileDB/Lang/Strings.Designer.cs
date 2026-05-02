@@ -475,7 +475,7 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Apply meta-data (persons, locations, tags and description) from last edit.
+        ///   Looks up a localized string similar to Apply categorization (persons, locations and tags) from last edit.
         /// </summary>
         public static string CategorizationApplyMetaDataFromLastEditToolTip {
             get {
@@ -2175,6 +2175,15 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string ProgressDialogCancelButton {
+            get {
+                return ResourceManager.GetString("ProgressDialogCancelButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rest in Peace {0}!.
         /// </summary>
         public static string RestInPeaceNotifierRestInPeace {
@@ -3471,6 +3480,24 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Persons (Low - High).
+        /// </summary>
+        public static string SortMethodNumPersons {
+            get {
+                return ResourceManager.GetString("SortMethodNumPersons", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persons (High - Low).
+        /// </summary>
+        public static string SortMethodNumPersonsDesc {
+            get {
+                return ResourceManager.GetString("SortMethodNumPersonsDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Path (A - Z).
         /// </summary>
         public static string SortMethodPath {
@@ -3494,18 +3521,6 @@ namespace FileDB.Lang {
         public static string SortMethodRandom {
             get {
                 return ResourceManager.GetString("SortMethodRandom", resourceCulture);
-            }
-        }
-        
-        public static string SortMethodNumPersons {
-            get {
-                return ResourceManager.GetString("SortMethodNumPersons", resourceCulture);
-            }
-        }
-        
-        public static string SortMethodNumPersonsDesc {
-            get {
-                return ResourceManager.GetString("SortMethodNumPersonsDesc", resourceCulture);
             }
         }
         
@@ -4013,15 +4028,12 @@ namespace FileDB.Lang {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to Running....
+        /// </summary>
         public static string ToolsRunning {
             get {
                 return ResourceManager.GetString("ToolsRunning", resourceCulture);
-            }
-        }
-        
-        public static string ProgressDialogCancelButton {
-            get {
-                return ResourceManager.GetString("ProgressDialogCancelButton", resourceCulture);
             }
         }
         

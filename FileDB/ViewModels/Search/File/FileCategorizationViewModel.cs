@@ -24,7 +24,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(FileSelected))]
     [NotifyPropertyChangedFor(nameof(CanCategorize))]
-    [NotifyPropertyChangedFor(nameof(CanApplyMetaDataFromPrevEdit))]
+    [NotifyPropertyChangedFor(nameof(CanApplyCategorizationFromPrevEdit))]
     [NotifyPropertyChangedFor(nameof(CanMarkCurrentFileAsPrevEdited))]
     [NotifyPropertyChangedFor(nameof(UpdateItemsVisible))]
     public partial FileModel? SelectedFile { get; set; }
@@ -101,11 +101,11 @@ public partial class FileCategorizationViewModel : ObservableValidator
     public ObservableCollection<HistoryItemViewModel> UpdateHistoryItems { get; } = [];
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(CanApplyMetaDataFromPrevEdit))]
+    [NotifyPropertyChangedFor(nameof(CanApplyCategorizationFromPrevEdit))]
     [NotifyPropertyChangedFor(nameof(CanMarkCurrentFileAsPrevEdited))]
     public partial int? PrevEditedFileId { get; set; } = null;
 
-    public bool CanApplyMetaDataFromPrevEdit => SelectedFile is not null && PrevEditedFileId is not null && SelectedFile.Id != PrevEditedFileId;
+    public bool CanApplyCategorizationFromPrevEdit => SelectedFile is not null && PrevEditedFileId is not null && SelectedFile.Id != PrevEditedFileId;
 
     public bool CanMarkCurrentFileAsPrevEdited => SelectedFile is not null && SelectedFile.Id != PrevEditedFileId;
 
@@ -352,7 +352,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
     }
 
     [RelayCommand]
-    private async Task AddMetaDataFromPrevEditedFileAsync()
+    private async Task AddCategorizationFromPrevEditedFileAsync()
     {
         if (SelectedFile is null || PrevEditedFileId is null)
         {
@@ -385,9 +385,6 @@ public partial class FileCategorizationViewModel : ObservableValidator
             {
                 dbAccessProvider.DbAccess.InsertFileTag(fileId, tag.Id);
             }
-
-            dbAccessProvider.DbAccess.UpdateFileDescription(fileId, prevEditedFile.Description);
-            SelectedFile.Description = prevEditedFile.Description;
 
             Messenger.Send<FileEdited>();
         }

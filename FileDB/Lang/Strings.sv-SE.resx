@@ -785,7 +785,7 @@
     <value>Lägg till från senaste editerade filen</value>
   </data>
   <data name="CategorizationApplyMetaDataFromLastEditToolTip" xml:space="preserve">
-    <value>Tillämpa metadata (personer, platser, etiketter och beskrivning) från senaste förändringen</value>
+    <value>Tillämpa kategorisering (personer, platser och etiketter) från senaste förändringen</value>
   </data>
   <data name="CategorizationReloadFileDateTimeGPSPositionAndOrientationToolTip" xml:space="preserve">
     <value>Ladda om fildatum, tid, GPS-position och orientering från fil Exif-data eller filsökväg</value>
