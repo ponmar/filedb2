@@ -41,6 +41,9 @@ public enum FilterType
     [FilterTypeViewModel(typeof(PersonGroupViewModel))]
     PersonGroup,
 
+    [FilterTypeViewModel(typeof(PersonProfileFilesViewModel))]
+    PersonProfileFiles,
+
     [FilterTypeViewModel(typeof(LocationViewModel))]
     Location,
 
@@ -94,6 +97,7 @@ public static class FilterTypeExtensions
             FilterType.PersonAge => Strings.FilterTypePersonAge,
             FilterType.PersonSex => Strings.FilterTypePersonSex,
             FilterType.PersonGroup => Strings.FilterTypePersonGroup,
+            FilterType.PersonProfileFiles => Strings.FilterTypePersonProfileFiles,
             FilterType.Location => Strings.FilterTypeLocation,
             FilterType.Tag => Strings.FilterTypeTag,
             FilterType.Tags => Strings.FilterTypeTags,

@@ -1725,6 +1725,15 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Person profile files.
+        /// </summary>
+        public static string FilterTypePersonProfileFiles {
+            get {
+                return ResourceManager.GetString("FilterTypePersonProfileFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Person sex.
         /// </summary>
         public static string FilterTypePersonSex {

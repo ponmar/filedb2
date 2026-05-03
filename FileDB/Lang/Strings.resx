@@ -1478,4 +1478,7 @@ This operation can be slow for a large collection of files or if the media acces
   <data name="CategorizationUpdateNoItems" xml:space="preserve">
     <value>No items available.</value>
   </data>
+  <data name="FilterTypePersonProfileFiles" xml:space="preserve">
+    <value>Person profile files</value>
+  </data>
 </root>

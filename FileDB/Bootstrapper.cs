@@ -58,7 +58,7 @@ public static class Bootstrapper
         ServiceLocator.RegisterSingleton<SettingsViewModel>();
         ServiceLocator.RegisterSingleton<UpdateLocationsViewModel>();
         ServiceLocator.RegisterSingleton<UpdatePersonsViewModel>();
-        ServiceLocator.RegisterSingleton<ViewModels.UpdateTagsViewModel>();
+        ServiceLocator.RegisterSingleton<UpdateTagsViewModel>();
         ServiceLocator.RegisterSingleton<BirthdaysViewModel>();
         ServiceLocator.RegisterSingleton<RipViewModel>();
         ServiceLocator.RegisterSingleton<ToolsViewModel>();
@@ -92,12 +92,13 @@ public static class Bootstrapper
         ServiceLocator.RegisterTransient<PersonAgeViewModel>();
         ServiceLocator.RegisterTransient<PersonSexViewModel>();
         ServiceLocator.RegisterTransient<PersonGroupViewModel>();
+        ServiceLocator.RegisterTransient<PersonProfileFilesViewModel>();
         ServiceLocator.RegisterTransient<LocationViewModel>();
         ServiceLocator.RegisterTransient<PositionViewModel>();
         ServiceLocator.RegisterTransient<SeasonViewModel>();
         ServiceLocator.RegisterTransient<NumPersonsViewModel>();
         ServiceLocator.RegisterTransient<TagViewModel>();
-        ServiceLocator.RegisterTransient<ViewModels.Search.Filters.TagsViewModel>();
+        ServiceLocator.RegisterTransient<TagsViewModel>();
         ServiceLocator.RegisterTransient<TimeViewModel>();
 
         ServiceLocator.RegisterSingleton(loggerFactory);

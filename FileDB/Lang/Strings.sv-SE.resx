@@ -1478,4 +1478,7 @@ Lägg till nya filer i '{0}'.</value>
   <data name="CategorizationUpdateNoItems" xml:space="preserve">
     <value>Inga föremål tillgängliga.</value>
   </data>
+  <data name="FilterTypePersonProfileFiles" xml:space="preserve">
+    <value>Person profil-filer</value>
+  </data>
 </root>
