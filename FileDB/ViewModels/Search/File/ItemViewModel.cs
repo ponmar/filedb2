@@ -29,7 +29,7 @@ public partial class ItemViewModel : ObservableObject
         Type = CombinedItemType.Person;
         Id = person.Id;
         Name = FileTextOverlayCreator.GetShortPersonText(person, DateTime.Now, configProvider.Config.ShortItemNameMaxLength);
-        ToolTip = person.FullName + (person.Description is not null ? $":\n{person.Description}" : string.Empty);
+        ToolTip = FileTextOverlayCreator.GetPersonDetailsText(person, DateTime.Now);
         nameForFilters = person.FullName;
     }
 
@@ -47,7 +47,7 @@ public partial class ItemViewModel : ObservableObject
         Type = CombinedItemType.Location;
         Id = location.Id;
         Name = Utils.CreateShortText(location.Name, configProvider.Config.ShortItemNameMaxLength);
-        ToolTip = location.Name + (location.Description is not null ? $":\n{location.Description}" : string.Empty);
+        ToolTip = FileTextOverlayCreator.GetLocationDetailsText(location);
         nameForFilters = location.Name;
     }
 

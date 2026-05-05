@@ -151,4 +151,25 @@ public class FileTextOverlayCreator
     {
         return location.Position is null ? null : Utils.CreatePositionLink(location.Position, configProvider.Config.LocationLink);
     }
+
+    public static string GetPersonDetailsText(PersonModel person, DateTime? dateTime)
+    {
+        var ageText = Utils.GetPersonAgeAtDate(dateTime, person.DateOfBirth);
+        var result = person.FullName + ageText;
+        if (person.Description is not null)
+        {
+            result += $":\n{person.Description}";
+        }
+        return result;
+    }
+
+    public static string GetLocationDetailsText(LocationModel location)
+    {
+        var result = location.Name;
+        if (location.Description is not null)
+        {
+            result += $":\n{location.Description}";
+        }
+        return result;
+    }
 }
