@@ -1481,4 +1481,40 @@ This operation can be slow for a large collection of files or if the media acces
   <data name="FilterTypePersonProfileFiles" xml:space="preserve">
     <value>Person profile files</value>
   </data>
+  <data name="ConfigValidatorInvalidFileToLocationMaxDistance" xml:space="preserve">
+    <value>Invalid file to location max distance</value>
+  </data>
+  <data name="ConfigValidatorInvalidBlacklistedFilePathPatterns" xml:space="preserve">
+    <value>Invalid blacklisted file path patterns</value>
+  </data>
+  <data name="ConfigValidatorInvalidWhitelistedFilePathPatterns" xml:space="preserve">
+    <value>Invalid whitelisted file path patterns</value>
+  </data>
+  <data name="ConfigValidatorInvalidSlideshowDelay" xml:space="preserve">
+    <value>Invalid slideshow delay</value>
+  </data>
+  <data name="ConfigValidatorInvalidSearchHistorySize" xml:space="preserve">
+    <value>Invalid search history size</value>
+  </data>
+  <data name="ConfigValidatorLocationLinkNotValidUrl" xml:space="preserve">
+    <value>Location link is not a valid url</value>
+  </data>
+  <data name="ConfigValidatorLatNotIncludedInUrl" xml:space="preserve">
+    <value>LAT not included in url</value>
+  </data>
+  <data name="ConfigValidatorLonNotIncludedInUrl" xml:space="preserve">
+    <value>LON not included in url</value>
+  </data>
+  <data name="ConfigValidatorInvalidOverlayTextSize" xml:space="preserve">
+    <value>Invalid overlay text size</value>
+  </data>
+  <data name="ConfigValidatorInvalidOverlayLargeTextSize" xml:space="preserve">
+    <value>Invalid overlay large text size</value>
+  </data>
+  <data name="ConfigValidatorInvalidShortItemNameMaxLength" xml:space="preserve">
+    <value>Invalid short item name max length</value>
+  </data>
+  <data name="ConfigValidatorInvalidLanguage" xml:space="preserve">
+    <value>Invalid language</value>
+  </data>
 </root>

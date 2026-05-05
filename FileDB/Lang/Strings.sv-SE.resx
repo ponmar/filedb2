@@ -1481,4 +1481,40 @@ Lägg till nya filer i '{0}'.</value>
   <data name="FilterTypePersonProfileFiles" xml:space="preserve">
     <value>Person profil-filer</value>
   </data>
+  <data name="ConfigValidatorInvalidFileToLocationMaxDistance" xml:space="preserve">
+    <value>Ogiltigt max avstånd för fil till plats</value>
+  </data>
+  <data name="ConfigValidatorInvalidBlacklistedFilePathPatterns" xml:space="preserve">
+    <value>Ogiltiga svartslistade filsökvägsmönster</value>
+  </data>
+  <data name="ConfigValidatorInvalidWhitelistedFilePathPatterns" xml:space="preserve">
+    <value>Ogiltiga vitlistade filsökvägsmönster</value>
+  </data>
+  <data name="ConfigValidatorInvalidSlideshowDelay" xml:space="preserve">
+    <value>Ogiltig bildspelsfördröjning</value>
+  </data>
+  <data name="ConfigValidatorInvalidSearchHistorySize" xml:space="preserve">
+    <value>Ogiltig storlek på sökhistorik</value>
+  </data>
+  <data name="ConfigValidatorLocationLinkNotValidUrl" xml:space="preserve">
+    <value>Platslänk är inte en giltig URL</value>
+  </data>
+  <data name="ConfigValidatorLatNotIncludedInUrl" xml:space="preserve">
+    <value>LAT ingår inte i URL</value>
+  </data>
+  <data name="ConfigValidatorLonNotIncludedInUrl" xml:space="preserve">
+    <value>LON ingår inte i URL</value>
+  </data>
+  <data name="ConfigValidatorInvalidOverlayTextSize" xml:space="preserve">
+    <value>Ogiltig textöverlagringsstorlek</value>
+  </data>
+  <data name="ConfigValidatorInvalidOverlayLargeTextSize" xml:space="preserve">
+    <value>Ogiltig stor textöverlagringsstorlek</value>
+  </data>
+  <data name="ConfigValidatorInvalidShortItemNameMaxLength" xml:space="preserve">
+    <value>Ogiltig maxlängd för kortnamn</value>
+  </data>
+  <data name="ConfigValidatorInvalidLanguage" xml:space="preserve">
+    <value>Ogiltigt språk</value>
+  </data>
 </root>

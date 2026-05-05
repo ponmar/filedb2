@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Linq;
 using FileDB.Configuration;
+using FileDB.Lang;
 using FileDBInterface.Extensions;
 using FluentValidation;
 
@@ -12,41 +13,41 @@ public class ConfigValidator : AbstractValidator<Config>
     public ConfigValidator()
     {
         RuleFor(c => c.FileToLocationMaxDistance)
-            .GreaterThanOrEqualTo(0).WithMessage("Invalid file to location max distance");
+            .GreaterThanOrEqualTo(0).WithMessage(Strings.ConfigValidatorInvalidFileToLocationMaxDistance);
 
         RuleFor(c => c.BlacklistedFilePathPatterns)
-            .Must(IsSemicolonSeparatedFilePatterns).WithMessage("Invalid blacklisted file path patterns");
+            .Must(IsSemicolonSeparatedFilePatterns).WithMessage(Strings.ConfigValidatorInvalidBlacklistedFilePathPatterns);
 
         RuleFor(c => c.WhitelistedFilePathPatterns)
-            .Must(IsSemicolonSeparatedFilePatterns).WithMessage("Invalid whitelisted file path patterns");
+            .Must(IsSemicolonSeparatedFilePatterns).WithMessage(Strings.ConfigValidatorInvalidWhitelistedFilePathPatterns);
 
         RuleFor(c => c.SlideshowDelay)
-            .GreaterThan(0).WithMessage("Invalid slideshow delay");
+            .GreaterThan(0).WithMessage(Strings.ConfigValidatorInvalidSlideshowDelay);
 
         RuleFor(c => c.SearchHistorySize)
-            .InclusiveBetween(0, 10).WithMessage("Invalid search history size");
+            .InclusiveBetween(0, 10).WithMessage(Strings.ConfigValidatorInvalidSearchHistorySize);
 
         When(c => c.LocationLink.HasContent(), () =>
         {
             RuleFor(c => c.LocationLink)
-                .Must(IsValidUrl).WithMessage("Location link is not a valid url")
-                .Must(x => x.Contains("LAT")).WithMessage("LAT not included in url")
-                .Must(x => x.Contains("LON")).WithMessage("LON not included in url");
+                .Must(IsValidUrl).WithMessage(Strings.ConfigValidatorLocationLinkNotValidUrl)
+                .Must(x => x.Contains("LAT")).WithMessage(Strings.ConfigValidatorLatNotIncludedInUrl)
+                .Must(x => x.Contains("LON")).WithMessage(Strings.ConfigValidatorLonNotIncludedInUrl);
         });
 
         RuleFor(c => c.OverlayTextSize)
-            .InclusiveBetween(8, 100).WithMessage("Invalid overlay text size");
+            .InclusiveBetween(8, 100).WithMessage(Strings.ConfigValidatorInvalidOverlayTextSize);
 
         RuleFor(c => c.OverlayTextSizeLarge)
-            .InclusiveBetween(8, 100).WithMessage("Invalid overlay large text size");
+            .InclusiveBetween(8, 100).WithMessage(Strings.ConfigValidatorInvalidOverlayLargeTextSize);
 
         RuleFor(c => c.ShortItemNameMaxLength)
-            .InclusiveBetween(10, 100).WithMessage("Invalid short item name max length");
+            .InclusiveBetween(10, 100).WithMessage(Strings.ConfigValidatorInvalidShortItemNameMaxLength);
 
         When(c => c.Language is not null, () =>
         {
             RuleFor(c => c.Language)
-               .Must(IsCulture!).WithMessage("Invalid language");
+               .Must(IsCulture!).WithMessage(Strings.ConfigValidatorInvalidLanguage);
         });
 
         RuleFor(c => c.ImageMemoryCacheCount)
