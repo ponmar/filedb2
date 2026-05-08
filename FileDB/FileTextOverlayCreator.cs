@@ -156,9 +156,17 @@ public class FileTextOverlayCreator
     {
         var ageText = Utils.GetPersonAgeAtDate(dateTime, person.DateOfBirth);
         var result = person.FullName + ageText;
+        if (person.DateOfBirth is not null && person.Deceased is not null)
+        {
+            result += $"\n{person.DateOfBirth} - {person.Deceased}";
+        }
+        else if (person.DateOfBirth is not null)
+        {
+            result += $"\n{person.DateOfBirth}";
+        }
         if (person.Description is not null)
         {
-            result += $":\n{person.Description}";
+            result += $"\n{person.Description}";
         }
         return result;
     }
