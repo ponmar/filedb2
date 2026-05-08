@@ -10,7 +10,7 @@ using System.Web;
 
 namespace FileDB.Export.SearchResult;
 
-public class HtmlExporter(IFileSystem fileSystem, IFilesystemAccessProvider filesystemAccessProvider) : ISearchResultExporter
+public class HtmlExporter(IFileSystem fileSystem, IFilesystemAccessProvider filesystemAccessProvider, IConfigProvider configProvider) : ISearchResultExporter
 {
     public void Export(SearchResultExport data, string destinationDirPath)
     {
@@ -99,9 +99,15 @@ public class HtmlExporter(IFileSystem fileSystem, IFilesystemAccessProvider file
 
             if (file.LocationIds.Count > 0)
             {
-                var locations = data.Locations.Where(x => file.LocationIds.Contains(x.Id));
-                var locationsStr = FileTextOverlayCreator.GetLocationsText(locations, ", ");
-                pictureText += $"<p>&#127968; {locationsStr}</p>";
+                var locations = data.Locations.Where(x => file.LocationIds.Contains(x.Id)).OrderBy(x => x.Name);
+                var locationParts = locations.Select(l =>
+                {
+                    var link = Utils.CreatePositionLink(l.Position, configProvider.Config.LocationLink);
+                    return link is not null
+                        ? $"<a href=\"{link}\">{HttpUtility.HtmlEncode(l.Name)}</a>"
+                        : HttpUtility.HtmlEncode(l.Name);
+                });
+                pictureText += $"<p>&#127968; {string.Join(", ", locationParts)}</p>";
             }
 
             if (file.TagIds.Count > 0)
@@ -109,6 +115,12 @@ public class HtmlExporter(IFileSystem fileSystem, IFilesystemAccessProvider file
                 var tags = data.Tags.Where(x => file.TagIds.Contains(x.Id));
                 var tagsStr = FileTextOverlayCreator.GetTagsText(tags, ", ");
                 pictureText += $"<p>&#128278; {tagsStr}</p>";
+            }
+
+            var filePositionLink = Utils.CreatePositionLink(file.Position, configProvider.Config.LocationLink);
+            if (filePositionLink is not null)
+            {
+                pictureText += $"<p>&#x1F6F0; <a href=\"{filePositionLink}\">{HttpUtility.HtmlEncode(file.Position)}</a></p>";
             }
 
             var pictureHtml = pictureBase.Replace("%PATH%", destinationFilename).Replace("%PICTURETEXT%", pictureText);

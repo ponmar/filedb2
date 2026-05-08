@@ -26,12 +26,14 @@ public class SearchResultExportHandler
     private readonly IDatabaseAccessProvider dbAccessProvider;
     private readonly IFilesystemAccessProvider filesystemAccessProvider;
     private readonly IFileSystem fileSystem;
+    private readonly IConfigProvider configProvider;
 
-    public SearchResultExportHandler(IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IFileSystem fileSystem)
+    public SearchResultExportHandler(IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IFileSystem fileSystem, IConfigProvider configProvider)
     {
         this.dbAccessProvider = dbAccessProvider;
         this.filesystemAccessProvider = filesystemAccessProvider;
         this.fileSystem = fileSystem;
+        this.configProvider = configProvider;
     }
 
     public void Export(string destinationDirectory, string name, List<FileModel> files, List<SearchResultExportType> exportTypes, CancellationToken cancellationToken = default)
@@ -64,7 +66,7 @@ public class SearchResultExportHandler
         {
             cancellationToken.ThrowIfCancellationRequested();
             var path = Path.Combine(destinationDirectory, "Html");
-            var exporter = new HtmlExporter(fileSystem, filesystemAccessProvider);
+            var exporter = new HtmlExporter(fileSystem, filesystemAccessProvider, configProvider);
             exporter.Export(data, path);
         }
 

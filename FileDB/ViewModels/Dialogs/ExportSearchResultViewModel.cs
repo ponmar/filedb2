@@ -64,13 +64,15 @@ public partial class ExportSearchResultViewModel : ObservableObject
     private readonly IDatabaseAccessProvider dbAccessProvider;
     private readonly IFilesystemAccessProvider filesystemAccessProvider;
     private readonly IFileSystem fileSystem;
+    private readonly IConfigProvider configProvider;
 
-    public ExportSearchResultViewModel(IDialogs dialogs, IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IFileSystem fileSystem)
+    public ExportSearchResultViewModel(IDialogs dialogs, IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IFileSystem fileSystem, IConfigProvider configProvider)
     {
         this.dialogs = dialogs;
         this.dbAccessProvider = dbAccessProvider;
         this.filesystemAccessProvider = filesystemAccessProvider;
         this.fileSystem = fileSystem;
+        this.configProvider = configProvider;
     }
 
     [RelayCommand]
@@ -135,7 +137,7 @@ public partial class ExportSearchResultViewModel : ObservableObject
             progress.Report(Strings.ExportExporting);
             try
             {
-                var exporter = new SearchResultExportHandler(dbAccessProvider, filesystemAccessProvider, fileSystem);
+                var exporter = new SearchResultExportHandler(dbAccessProvider, filesystemAccessProvider, fileSystem, configProvider);
                 exporter.Export(ExportFilesDestinationDirectory, ExportName, SearchResult.Files, selections, cancellationToken);
             }
             catch (OperationCanceledException)
