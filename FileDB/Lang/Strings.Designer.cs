@@ -524,15 +524,6 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit.
-        /// </summary>
-        public static string CategorizationEditToolTip {
-            get {
-                return ResourceManager.GetString("CategorizationEditToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Date and time.
         /// </summary>
         public static string CategorizationFileDateAndTimeToolTip {
@@ -871,6 +862,114 @@ namespace FileDB.Lang {
         public static string CategorizationUpdateTitle {
             get {
                 return ResourceManager.GetString("CategorizationUpdateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid blacklisted file path patterns.
+        /// </summary>
+        public static string ConfigValidatorInvalidBlacklistedFilePathPatterns {
+            get {
+                return ResourceManager.GetString("ConfigValidatorInvalidBlacklistedFilePathPatterns", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid file to location max distance.
+        /// </summary>
+        public static string ConfigValidatorInvalidFileToLocationMaxDistance {
+            get {
+                return ResourceManager.GetString("ConfigValidatorInvalidFileToLocationMaxDistance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid language.
+        /// </summary>
+        public static string ConfigValidatorInvalidLanguage {
+            get {
+                return ResourceManager.GetString("ConfigValidatorInvalidLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid overlay large text size.
+        /// </summary>
+        public static string ConfigValidatorInvalidOverlayLargeTextSize {
+            get {
+                return ResourceManager.GetString("ConfigValidatorInvalidOverlayLargeTextSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid overlay text size.
+        /// </summary>
+        public static string ConfigValidatorInvalidOverlayTextSize {
+            get {
+                return ResourceManager.GetString("ConfigValidatorInvalidOverlayTextSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid search history size.
+        /// </summary>
+        public static string ConfigValidatorInvalidSearchHistorySize {
+            get {
+                return ResourceManager.GetString("ConfigValidatorInvalidSearchHistorySize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid short item name max length.
+        /// </summary>
+        public static string ConfigValidatorInvalidShortItemNameMaxLength {
+            get {
+                return ResourceManager.GetString("ConfigValidatorInvalidShortItemNameMaxLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid slideshow delay.
+        /// </summary>
+        public static string ConfigValidatorInvalidSlideshowDelay {
+            get {
+                return ResourceManager.GetString("ConfigValidatorInvalidSlideshowDelay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid whitelisted file path patterns.
+        /// </summary>
+        public static string ConfigValidatorInvalidWhitelistedFilePathPatterns {
+            get {
+                return ResourceManager.GetString("ConfigValidatorInvalidWhitelistedFilePathPatterns", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LAT not included in url.
+        /// </summary>
+        public static string ConfigValidatorLatNotIncludedInUrl {
+            get {
+                return ResourceManager.GetString("ConfigValidatorLatNotIncludedInUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Location link is not a valid url.
+        /// </summary>
+        public static string ConfigValidatorLocationLinkNotValidUrl {
+            get {
+                return ResourceManager.GetString("ConfigValidatorLocationLinkNotValidUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LON not included in url.
+        /// </summary>
+        public static string ConfigValidatorLonNotIncludedInUrl {
+            get {
+                return ResourceManager.GetString("ConfigValidatorLonNotIncludedInUrl", resourceCulture);
             }
         }
         
@@ -4133,114 +4232,6 @@ namespace FileDB.Lang {
         public static string WindowModeNormal {
             get {
                 return ResourceManager.GetString("WindowModeNormal", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Invalid file to location max distance.
-        /// </summary>
-        public static string ConfigValidatorInvalidFileToLocationMaxDistance {
-            get {
-                return ResourceManager.GetString("ConfigValidatorInvalidFileToLocationMaxDistance", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Invalid blacklisted file path patterns.
-        /// </summary>
-        public static string ConfigValidatorInvalidBlacklistedFilePathPatterns {
-            get {
-                return ResourceManager.GetString("ConfigValidatorInvalidBlacklistedFilePathPatterns", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Invalid whitelisted file path patterns.
-        /// </summary>
-        public static string ConfigValidatorInvalidWhitelistedFilePathPatterns {
-            get {
-                return ResourceManager.GetString("ConfigValidatorInvalidWhitelistedFilePathPatterns", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Invalid slideshow delay.
-        /// </summary>
-        public static string ConfigValidatorInvalidSlideshowDelay {
-            get {
-                return ResourceManager.GetString("ConfigValidatorInvalidSlideshowDelay", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Invalid search history size.
-        /// </summary>
-        public static string ConfigValidatorInvalidSearchHistorySize {
-            get {
-                return ResourceManager.GetString("ConfigValidatorInvalidSearchHistorySize", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Location link is not a valid url.
-        /// </summary>
-        public static string ConfigValidatorLocationLinkNotValidUrl {
-            get {
-                return ResourceManager.GetString("ConfigValidatorLocationLinkNotValidUrl", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to LAT not included in url.
-        /// </summary>
-        public static string ConfigValidatorLatNotIncludedInUrl {
-            get {
-                return ResourceManager.GetString("ConfigValidatorLatNotIncludedInUrl", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to LON not included in url.
-        /// </summary>
-        public static string ConfigValidatorLonNotIncludedInUrl {
-            get {
-                return ResourceManager.GetString("ConfigValidatorLonNotIncludedInUrl", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Invalid overlay text size.
-        /// </summary>
-        public static string ConfigValidatorInvalidOverlayTextSize {
-            get {
-                return ResourceManager.GetString("ConfigValidatorInvalidOverlayTextSize", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Invalid overlay large text size.
-        /// </summary>
-        public static string ConfigValidatorInvalidOverlayLargeTextSize {
-            get {
-                return ResourceManager.GetString("ConfigValidatorInvalidOverlayLargeTextSize", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Invalid short item name max length.
-        /// </summary>
-        public static string ConfigValidatorInvalidShortItemNameMaxLength {
-            get {
-                return ResourceManager.GetString("ConfigValidatorInvalidShortItemNameMaxLength", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Invalid language.
-        /// </summary>
-        public static string ConfigValidatorInvalidLanguage {
-            get {
-                return ResourceManager.GetString("ConfigValidatorInvalidLanguage", resourceCulture);
             }
         }
     }

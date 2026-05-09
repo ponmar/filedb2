@@ -32,10 +32,9 @@ public partial class FileCategorizationViewModel : ObservableValidator
     public bool FileSelected => SelectedFile is not null;
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(Header))]
-    [NotifyPropertyChangedFor(nameof(HeaderToolTip))]
-    [NotifyPropertyChangedFor(nameof(UpdateItemsVisible))]
-    public partial bool IsExpanded { get; set; } = false;
+    [NotifyPropertyChangedFor(nameof(MetaDataHeader))]
+    [NotifyPropertyChangedFor(nameof(MetaDataHeaderToolTip))]
+    public partial bool MetaDataIsExpanded { get; set; } = false;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(HistoryHeader))]
@@ -47,10 +46,10 @@ public partial class FileCategorizationViewModel : ObservableValidator
     [NotifyPropertyChangedFor(nameof(CategorizationHeaderToolTip))]
     public partial bool CategorizationIsExpanded { get; set; } = false;
 
-    public bool UpdateItemsVisible => CanCategorize && IsExpanded;
+    public bool UpdateItemsVisible => CanCategorize;
 
-    public string Header => IsExpanded ? (IsDirty ? Strings.CategorizationUpdateTitle + " *" : Strings.CategorizationUpdateTitle) : char.ConvertFromUtf32(0x1F589);
-    public string? HeaderToolTip => IsExpanded ? null : Strings.CategorizationEditToolTip;
+    public string MetaDataHeader => MetaDataIsExpanded ? (IsDirty ? Strings.CategorizationUpdateTitle + " *" : Strings.CategorizationUpdateTitle) : char.ConvertFromUtf32(0x1F589);
+    public string? MetaDataHeaderToolTip => MetaDataIsExpanded ? null : Strings.CategorizationUpdateTitle;
 
     public string HistoryHeader => HistoryIsExpanded ? Strings.CategorizationUpdateHistoryTitle : char.ConvertFromUtf32(0x1F4DC);
     public string? HistoryHeaderToolTip => HistoryIsExpanded ? null : Strings.CategorizationUpdateHistoryTitle;
@@ -228,7 +227,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CanSave))]
-    [NotifyPropertyChangedFor(nameof(Header))]
+    [NotifyPropertyChangedFor(nameof(MetaDataHeader))]
     public partial bool IsDirty { get; set; }
 
     private readonly IConfigProvider configProvider;

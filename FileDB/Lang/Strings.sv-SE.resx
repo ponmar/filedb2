@@ -1454,9 +1454,6 @@ Lägg till nya filer i '{0}'.</value>
   <data name="UpdateTagsRemoveUsedTag" xml:space="preserve">
     <value>Etiketten används i {0} filer, ta bort ändå?</value>
   </data>
-  <data name="CategorizationEditToolTip" xml:space="preserve">
-    <value>Redigera</value>
-  </data>
   <data name="SearchFilterPositionFromLocationToolTip" xml:space="preserve">
     <value>Sätt GPS-position från vald plats</value>
   </data>
