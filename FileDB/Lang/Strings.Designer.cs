@@ -484,29 +484,29 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create a new location and add it to current file.
+        ///   Looks up a localized string similar to Create a new location and add it to current file....
         /// </summary>
-        public static string CategorizationCreateANewLocationAndAddItToCurrentFileToolTip {
+        public static string CategorizationCreateANewLocationAndAddItToCurrentFile {
             get {
-                return ResourceManager.GetString("CategorizationCreateANewLocationAndAddItToCurrentFileToolTip", resourceCulture);
+                return ResourceManager.GetString("CategorizationCreateANewLocationAndAddItToCurrentFile", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create a new person and add it to current file.
+        ///   Looks up a localized string similar to Create a new person and add it to current file....
         /// </summary>
-        public static string CategorizationCreateANewPersonAndAddItToCurrentFileToolTip {
+        public static string CategorizationCreateANewPersonAndAddItToCurrentFile {
             get {
-                return ResourceManager.GetString("CategorizationCreateANewPersonAndAddItToCurrentFileToolTip", resourceCulture);
+                return ResourceManager.GetString("CategorizationCreateANewPersonAndAddItToCurrentFile", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create a new tag and add it to current file.
+        ///   Looks up a localized string similar to Create a new tag and add it to current file....
         /// </summary>
-        public static string CategorizationCreateANewTagAndAddItToCurrentFileToolTip {
+        public static string CategorizationCreateANewTagAndAddItToCurrentFile {
             get {
-                return ResourceManager.GetString("CategorizationCreateANewTagAndAddItToCurrentFileToolTip", resourceCulture);
+                return ResourceManager.GetString("CategorizationCreateANewTagAndAddItToCurrentFile", resourceCulture);
             }
         }
         

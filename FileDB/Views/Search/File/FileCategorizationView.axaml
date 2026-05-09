@@ -22,14 +22,18 @@
                     <Button Content="&#9745;" Margin="0" IsEnabled="{Binding HasVisibleItems}" VerticalAlignment="Center" Command="{Binding AddItemsCommand}" ToolTip.Tip="{x:Static lang:Strings.CategorizationUpdateAddAllToolTip}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <Button Content="&#x1F6B6;&#10133;" Margin="10,0,2,0" VerticalAlignment="Center" Command="{Binding CreatePersonCommand}" ToolTip.Tip="{x:Static lang:Strings.CategorizationCreateANewPersonAndAddItToCurrentFileToolTip}"/>
-                    <Button Content="&#x1F3E0;&#10133;" Margin="0,0,2,0" VerticalAlignment="Center" Command="{Binding CreateLocationCommand}" ToolTip.Tip="{x:Static lang:Strings.CategorizationCreateANewLocationAndAddItToCurrentFileToolTip}"/>
-                    <Button Content="&#x1F516;&#10133;" Margin="0" VerticalAlignment="Center" Command="{Binding CreateTagCommand}" ToolTip.Tip="{x:Static lang:Strings.CategorizationCreateANewTagAndAddItToCurrentFileToolTip}"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
 	    			<Button Margin="10,0,2,0" Command="{Binding MarkPrevEditedFileCommand}" IsEnabled="{Binding CanMarkCurrentFileAsPrevEdited}" ToolTip.Tip="{x:Static lang:Strings.CategorizationMarkButtonToolTip}" Content="[ ]" VerticalAlignment="Center"/>
           			<Button Margin="0" Command="{Binding AddCategorizationFromPrevEditedFileCommand}" IsEnabled="{Binding CanApplyCategorizationFromPrevEdit}" ToolTip.Tip="{x:Static lang:Strings.CategorizationApplyMetaDataFromLastEditToolTip}" Content="[*]" VerticalAlignment="Center"/>
                 </StackPanel>
+                <Button Margin="10,0,0,0" Content="..." VerticalAlignment="Center">
+					<Button.Flyout>
+						<MenuFlyout>
+                            <MenuItem Command="{Binding CreatePersonCommand}" Header="{x:Static lang:Strings.CategorizationCreateANewPersonAndAddItToCurrentFile}"/>
+                            <MenuItem Command="{Binding CreateLocationCommand}" Header="{x:Static lang:Strings.CategorizationCreateANewLocationAndAddItToCurrentFile}"/>
+                            <MenuItem Command="{Binding CreateTagCommand}" Header="{x:Static lang:Strings.CategorizationCreateANewTagAndAddItToCurrentFile}"/>
+						</MenuFlyout>
+					</Button.Flyout>
+				</Button>
             </StackPanel>
 
             <TextBlock Grid.Row="2" Margin="0,10,0,0" IsVisible="{Binding !HasVisibleItems}" Text="{x:Static lang:Strings.CategorizationUpdateNoItems}"/>

@@ -762,14 +762,14 @@
   <data name="CategorizationNewButton" xml:space="preserve">
     <value>New...</value>
   </data>
-  <data name="CategorizationCreateANewPersonAndAddItToCurrentFileToolTip" xml:space="preserve">
-    <value>Create a new person and add it to current file</value>
+  <data name="CategorizationCreateANewPersonAndAddItToCurrentFile" xml:space="preserve">
+    <value>Create a new person and add it to current file...</value>
   </data>
-  <data name="CategorizationCreateANewLocationAndAddItToCurrentFileToolTip" xml:space="preserve">
-    <value>Create a new location and add it to current file</value>
+  <data name="CategorizationCreateANewLocationAndAddItToCurrentFile" xml:space="preserve">
+    <value>Create a new location and add it to current file...</value>
   </data>
-  <data name="CategorizationCreateANewTagAndAddItToCurrentFileToolTip" xml:space="preserve">
-    <value>Create a new tag and add it to current file</value>
+  <data name="CategorizationCreateANewTagAndAddItToCurrentFile" xml:space="preserve">
+    <value>Create a new tag and add it to current file...</value>
   </data>
   <data name="CategorizationFileDescriptionToolTip" xml:space="preserve">
     <value>Description</value>

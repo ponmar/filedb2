@@ -759,14 +759,14 @@
   <data name="CategorizationNewButton" xml:space="preserve">
     <value>Ny...</value>
   </data>
-  <data name="CategorizationCreateANewPersonAndAddItToCurrentFileToolTip" xml:space="preserve">
-    <value>Skapa en ny person och lägg till den till aktuell fil</value>
+  <data name="CategorizationCreateANewPersonAndAddItToCurrentFile" xml:space="preserve">
+    <value>Skapa en ny person och lägg till den till aktuell fil...</value>
   </data>
-  <data name="CategorizationCreateANewLocationAndAddItToCurrentFileToolTip" xml:space="preserve">
-    <value>Skapa en ny plats och lägg till den till aktuell fil</value>
+  <data name="CategorizationCreateANewLocationAndAddItToCurrentFile" xml:space="preserve">
+    <value>Skapa en ny plats och lägg till den till aktuell fil...</value>
   </data>
-  <data name="CategorizationCreateANewTagAndAddItToCurrentFileToolTip" xml:space="preserve">
-    <value>Skapa en ny etikett och lägg till den i aktuell fil</value>
+  <data name="CategorizationCreateANewTagAndAddItToCurrentFile" xml:space="preserve">
+    <value>Skapa en ny etikett och lägg till den i aktuell fil...</value>
   </data>
   <data name="CategorizationFileDescriptionToolTip" xml:space="preserve">
     <value>Beskrivning</value>
