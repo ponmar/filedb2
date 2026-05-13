@@ -490,15 +490,15 @@ public partial class FileCategorizationViewModel : ObservableValidator
             if (!dbAccessProvider.DbAccess.GetPersonsFromFile(SelectedFile.Id).Any(p => p.Id == personId))
             {
                 dbAccessProvider.DbAccess.InsertFilePerson(SelectedFile.Id, personId);
-                
-                Items.First(p => p.Type == CombinedItemType.Person && p.Id == personId).IsChecked = true;
-                OnPropertyChanged(nameof(CategorizationHeader));
-                OnPropertyChanged(nameof(CategorizationHeaderToolTip));
-
-                UpdateItemsChecked(CombinedItemType.Person, personId, true);
-                AddUpdateHistoryItem(UpdateHistoryType.TogglePerson, personId, person.FullName, true);
-                SetEditedFile();
             }
+
+            Items.First(p => p.Type == CombinedItemType.Person && p.Id == personId).IsChecked = true;
+            OnPropertyChanged(nameof(CategorizationHeader));
+            OnPropertyChanged(nameof(CategorizationHeaderToolTip));
+
+            UpdateItemsChecked(CombinedItemType.Person, personId, true);
+            AddUpdateHistoryItem(UpdateHistoryType.TogglePerson, personId, person.FullName, true);
+            SetEditedFile();
         }
     }
 
@@ -527,16 +527,16 @@ public partial class FileCategorizationViewModel : ObservableValidator
             if (!dbAccessProvider.DbAccess.GetLocationsFromFile(fileId).Any(l => l.Id == locationId))
             {
                 dbAccessProvider.DbAccess.InsertFileLocation(fileId, locationId);
-
-                Items.First(x => x.Type == CombinedItemType.Location && x.Id == locationId).IsChecked = true;
-                UpdateItemsChecked(CombinedItemType.Location, locationId, true);
-                OnPropertyChanged(nameof(CategorizationHeader));
-                OnPropertyChanged(nameof(CategorizationHeaderToolTip));
-
-                var location = dbAccessProvider.DbAccess.GetLocationById(locationId);
-                AddUpdateHistoryItem(UpdateHistoryType.ToggleLocation, location.Id, location.Name, true);
-                SetEditedFile();
             }
+
+            Items.First(x => x.Type == CombinedItemType.Location && x.Id == locationId).IsChecked = true;
+            UpdateItemsChecked(CombinedItemType.Location, locationId, true);
+            OnPropertyChanged(nameof(CategorizationHeader));
+            OnPropertyChanged(nameof(CategorizationHeaderToolTip));
+
+            var location = dbAccessProvider.DbAccess.GetLocationById(locationId);
+            AddUpdateHistoryItem(UpdateHistoryType.ToggleLocation, location.Id, location.Name, true);
+            SetEditedFile();
         }
     }
 
@@ -566,6 +566,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
             if (!dbAccessProvider.DbAccess.GetTagsFromFile(fileId).Any(t => t.Id == tagId))
             {
                 dbAccessProvider.DbAccess.InsertFileTag(fileId, tagId);
+                }
 
                 Items.First(x => x.Type == CombinedItemType.Tag && x.Id == tagId).IsChecked = true;
                 UpdateItemsChecked(CombinedItemType.Tag, tagId, true);
@@ -575,7 +576,6 @@ public partial class FileCategorizationViewModel : ObservableValidator
                 var tag = dbAccessProvider.DbAccess.GetTagById(tagId);
                 AddUpdateHistoryItem(UpdateHistoryType.ToggleTag, tag.Id, tag.Name, true);
                 SetEditedFile();
-            }
         }
     }
 
@@ -714,12 +714,12 @@ public partial class FileCategorizationViewModel : ObservableValidator
                 if (dbAccessProvider.DbAccess.GetLocationsFromFile(fileId).Any(x => x.Id == locationId))
                 {
                     RemoveFileLocationFromCurrentFile(locationId);
-                    historyItem.IsChecked = true;
+                    historyItem.IsChecked = false;
                 }
                 else
                 {
                     AddFileLocationToCurrentFile(locationId);
-                    historyItem.IsChecked = false;
+                    historyItem.IsChecked = true;
                 }
                 break;
 
@@ -737,8 +737,6 @@ public partial class FileCategorizationViewModel : ObservableValidator
                 }
                 break;
         }
-
-        Messenger.Send<FileEdited>();
     }
 
     [RelayCommand]
