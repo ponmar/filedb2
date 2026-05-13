@@ -7,8 +7,6 @@ using FileDBInterface.Model;
 
 namespace FileDB.ViewModels.Search.File;
 
-public enum CombinedItemType { Person, Location, Tag }
-
 public partial class ItemViewModel : ObservableObject
 {
     public int Id { get; }

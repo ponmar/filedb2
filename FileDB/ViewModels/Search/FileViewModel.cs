@@ -18,13 +18,6 @@ public record Person(PersonModel Model, string Label);
 public record Location(LocationModel Model, string Name, string? MapUrl);
 public record Tag(TagModel Model, string Name);
 
-public enum UpdateHistoryType
-{
-    TogglePerson,
-    ToggleLocation,
-    ToggleTag,
-}
-
 public partial class FileViewModel : ObservableObject
 {
     [ObservableProperty]

@@ -314,13 +314,13 @@ public partial class FileCategorizationViewModel : ObservableValidator
         {
             switch (historyItem.Type)
             {
-                case UpdateHistoryType.TogglePerson:
+                case CombinedItemType.Person:
                     historyItem.IsChecked = filePersons.Any(p => p.Id == historyItem.ItemId);
                     break;
-                case UpdateHistoryType.ToggleLocation:
+                case CombinedItemType.Location:
                     historyItem.IsChecked = fileLocations.Any(l => l.Id == historyItem.ItemId);
                     break;
-                case UpdateHistoryType.ToggleTag:
+                case CombinedItemType.Tag:
                     historyItem.IsChecked = fileTags.Any(t => t.Id == historyItem.ItemId);
                     break;
             }
@@ -497,7 +497,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
             OnPropertyChanged(nameof(CategorizationHeaderToolTip));
 
             UpdateItemsChecked(CombinedItemType.Person, personId, true);
-            AddUpdateHistoryItem(UpdateHistoryType.TogglePerson, personId, person.FullName, true);
+            AddUpdateHistoryItem(CombinedItemType.Person, personId, person.FullName, true);
             SetEditedFile();
         }
     }
@@ -514,7 +514,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
 
             UpdateItemsChecked(CombinedItemType.Person, personId, false);
             var person = dbAccessProvider.DbAccess.GetPersonById(personId);
-            AddUpdateHistoryItem(UpdateHistoryType.TogglePerson, person.Id, person.FullName, false);
+            AddUpdateHistoryItem(CombinedItemType.Person, person.Id, person.FullName, false);
             SetEditedFile();
         }
     }
@@ -535,7 +535,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
             OnPropertyChanged(nameof(CategorizationHeaderToolTip));
 
             var location = dbAccessProvider.DbAccess.GetLocationById(locationId);
-            AddUpdateHistoryItem(UpdateHistoryType.ToggleLocation, location.Id, location.Name, true);
+            AddUpdateHistoryItem(CombinedItemType.Location, location.Id, location.Name, true);
             SetEditedFile();
         }
     }
@@ -553,7 +553,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
             OnPropertyChanged(nameof(CategorizationHeaderToolTip));
 
             var location = dbAccessProvider.DbAccess.GetLocationById(locationId);
-            AddUpdateHistoryItem(UpdateHistoryType.ToggleLocation, location.Id, location.Name, false);
+            AddUpdateHistoryItem(CombinedItemType.Location, location.Id, location.Name, false);
             SetEditedFile();
         }
     }
@@ -574,7 +574,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
                 OnPropertyChanged(nameof(CategorizationHeaderToolTip));
 
                 var tag = dbAccessProvider.DbAccess.GetTagById(tagId);
-                AddUpdateHistoryItem(UpdateHistoryType.ToggleTag, tag.Id, tag.Name, true);
+                AddUpdateHistoryItem(CombinedItemType.Tag, tag.Id, tag.Name, true);
                 SetEditedFile();
         }
     }
@@ -592,12 +592,12 @@ public partial class FileCategorizationViewModel : ObservableValidator
             OnPropertyChanged(nameof(CategorizationHeaderToolTip));
 
             var tag = dbAccessProvider.DbAccess.GetTagById(tagId);
-            AddUpdateHistoryItem(UpdateHistoryType.ToggleTag, tag.Id, tag.Name, false);
+            AddUpdateHistoryItem(CombinedItemType.Tag, tag.Id, tag.Name, false);
             SetEditedFile();
         }
     }
 
-    private void AddUpdateHistoryItem(UpdateHistoryType type, int itemId, string itemName, bool itemIncluded)
+    private void AddUpdateHistoryItem(CombinedItemType type, int itemId, string itemName, bool itemIncluded)
     {
         var existingItem = UpdateHistoryItems.FirstOrDefault(x => x.Type == type && x.ItemId == itemId);
         if (existingItem is not null)
@@ -695,7 +695,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
 
         switch (historyItem.Type)
         {
-            case UpdateHistoryType.TogglePerson:
+            case CombinedItemType.Person:
                 var personId = historyItem.ItemId;
                 if (dbAccessProvider.DbAccess.GetPersonsFromFile(fileId).Any(x => x.Id == personId))
                 {
@@ -709,7 +709,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
                 }
                 break;
 
-            case UpdateHistoryType.ToggleLocation:
+            case CombinedItemType.Location:
                 var locationId = historyItem.ItemId;
                 if (dbAccessProvider.DbAccess.GetLocationsFromFile(fileId).Any(x => x.Id == locationId))
                 {
@@ -723,7 +723,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
                 }
                 break;
 
-            case UpdateHistoryType.ToggleTag:
+            case CombinedItemType.Tag:
                 var tagId = historyItem.ItemId;
                 if (dbAccessProvider.DbAccess.GetTagsFromFile(fileId).Any(x => x.Id == tagId))
                 {

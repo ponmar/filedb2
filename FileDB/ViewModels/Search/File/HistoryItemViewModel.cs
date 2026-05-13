@@ -5,7 +5,7 @@ namespace FileDB.ViewModels.Search.File;
 
 public partial class HistoryItemViewModel : ObservableObject
 {
-    public required UpdateHistoryType Type { get; init; }
+    public required CombinedItemType Type { get; init; }
     public required int ItemId { get; init; }
     public required string ShortItemName { get; init; }
     public required string ItemName { get; init; }
