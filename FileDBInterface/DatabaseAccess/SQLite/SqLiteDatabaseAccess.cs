@@ -109,8 +109,8 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
     public IEnumerable<FileModel> SearchFilesRandom(int numFiles)
     {
         using var connection = DatabaseSetup.CreateConnection(database);
-        var sql = $"select * from [files] order by random() limit {numFiles}";
-        return connection.Query<FileModel>(sql);
+        var sql = "select * from [files] order by random() limit @numFiles";
+        return connection.Query<FileModel>(sql, new { numFiles });
     }
 
     public IEnumerable<LocationModel> SearchLocationsNearGpsPosition(double latitude, double longitude, double radius)
@@ -265,14 +265,14 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
     public IEnumerable<FileModel> SearchFilesWithPersons(IEnumerable<int> personIds)
     {
         using var connection = DatabaseSetup.CreateConnection(database);
-        var files = connection.Query<FileModel>($"select * from [files] inner join filepersons on files.Id = filepersons.FileId where filepersons.PersonId in ({string.Join(',', personIds)})");
+        var files = connection.Query<FileModel>("select [files].* from [files] inner join [filepersons] on [files].Id = [filepersons].FileId where [filepersons].PersonId in @ids", new { ids = personIds });
         return files.DistinctBy(x => x.Id);
     }
 
     public IEnumerable<FileModel> SearchFilesWithPersonGroup(IEnumerable<int> personIds)
     {
         using var connection = DatabaseSetup.CreateConnection(database);
-        var files = connection.Query<FileModel>($"select * from [files] inner join filepersons on files.Id = filepersons.FileId where filepersons.PersonId in ({string.Join(',', personIds)})");
+        var files = connection.Query<FileModel>("select [files].* from [files] inner join [filepersons] on [files].Id = [filepersons].FileId where [filepersons].PersonId in @ids", new { ids = personIds });
         return files.DistinctBy(x => x.Id).Where(x =>
         {
             var filePersons = GetPersonsFromFile(x.Id);
@@ -283,7 +283,7 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
     public IEnumerable<FileModel> SearchFilesWithPersonGroupOnly(IEnumerable<int> personIds)
     {
         using var connection = DatabaseSetup.CreateConnection(database);
-        var files = connection.Query<FileModel>($"select * from [files] inner join filepersons on files.Id = filepersons.FileId where filepersons.PersonId in ({string.Join(',', personIds)})");
+        var files = connection.Query<FileModel>("select [files].* from [files] inner join [filepersons] on [files].Id = [filepersons].FileId where [filepersons].PersonId in @ids", new { ids = personIds });
         return files.DistinctBy(x => x.Id).Where(x =>
         {
             var filePersons = GetPersonsFromFile(x.Id);
@@ -301,7 +301,7 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
     public IEnumerable<FileModel> SearchFilesWithLocations(IEnumerable<int> locationIds)
     {
         using var connection = DatabaseSetup.CreateConnection(database);
-        return connection.Query<FileModel>($"select * from [files] inner join filelocations on files.Id = filelocations.FileId where filelocations.LocationId in ({string.Join(',', locationIds)})").DistinctBy(x => x.Id);
+        return connection.Query<FileModel>("select [files].* from [files] inner join [filelocations] on [files].Id = [filelocations].FileId where [filelocations].LocationId in @ids", new { ids = locationIds }).DistinctBy(x => x.Id);
     }
 
     public IEnumerable<FileModel> SearchFilesWithoutLocation(int locationId)
@@ -313,13 +313,13 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
     public IEnumerable<FileModel> SearchFilesWithTags(IEnumerable<int> tagIds)
     {
         using var connection = DatabaseSetup.CreateConnection(database);
-        return connection.Query<FileModel>($"select * from [files] inner join filetags on files.Id = filetags.FileId where filetags.TagId in ({string.Join(',', tagIds)})").DistinctBy(x => x.Id);
+        return connection.Query<FileModel>("select [files].* from [files] inner join [filetags] on [files].Id = [filetags].FileId where [filetags].TagId in @ids", new { ids = tagIds }).DistinctBy(x => x.Id);
     }
 
     public IEnumerable<FileModel> SearchFilesWithTagGroup(IEnumerable<int> tagIds)
     {
         using var connection = DatabaseSetup.CreateConnection(database);
-        var files = connection.Query<FileModel>($"select * from [files] inner join filetags on files.Id = filetags.FileId where filetags.TagId in ({string.Join(',', tagIds)})");
+        var files = connection.Query<FileModel>("select [files].* from [files] inner join [filetags] on [files].Id = [filetags].FileId where [filetags].TagId in @ids", new { ids = tagIds });
         return files.DistinctBy(x => x.Id).Where(x =>
         {
             var fileTags = GetTagsFromFile(x.Id);
@@ -330,7 +330,7 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
     public IEnumerable<FileModel> SearchFilesWithTagGroupOnly(IEnumerable<int> tagIds)
     {
         using var connection = DatabaseSetup.CreateConnection(database);
-        var files = connection.Query<FileModel>($"select * from [files] inner join filetags on files.Id = filetags.FileId where filetags.TagId in ({string.Join(',', tagIds)})");
+        var files = connection.Query<FileModel>("select [files].* from [files] inner join [filetags] on [files].Id = [filetags].FileId where [filetags].TagId in @ids", new { ids = tagIds });
         return files.DistinctBy(x => x.Id).Where(x =>
         {
             var fileTags = GetTagsFromFile(x.Id);
@@ -477,7 +477,7 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
     public void InsertFileLocation(int fileId, int locationId)
     {
         using var connection = DatabaseSetup.CreateConnection(database);
-        var sql = "insert into [filelocations] (Fileid, LocationId) values (@fileId, @locationId)";
+        var sql = "insert into [filelocations] (FileId, LocationId) values (@fileId, @locationId)";
         connection.Execute(sql, new { fileId, locationId });
     }
 
