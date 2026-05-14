@@ -7,10 +7,6 @@ using FileDB.Dialogs;
 using FileDB.Model;
 using FileDBInterface.FilesystemAccess;
 using FileDBInterface.Model;
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace FileDBTests.ViewModels;
 
