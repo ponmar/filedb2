@@ -16,6 +16,7 @@ public enum SearchResultExportType
 {
     Files,
     Html,
+    SelfContainedHtml,
     M3u,
     Json,
     Pdf
@@ -67,6 +68,14 @@ public class SearchResultExportHandler
             cancellationToken.ThrowIfCancellationRequested();
             var path = Path.Combine(destinationDirectory, "Html");
             var exporter = new HtmlExporter(fileSystem, filesystemAccessProvider, configProvider);
+            exporter.Export(data, path);
+        }
+
+        if (exportTypes.Contains(SearchResultExportType.SelfContainedHtml))
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            var path = Path.Combine(destinationDirectory, "Export.html");
+            var exporter = new SelfContainedHtmlExporter(fileSystem, filesystemAccessProvider, configProvider);
             exporter.Export(data, path);
         }
 

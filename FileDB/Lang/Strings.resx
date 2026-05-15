@@ -312,6 +312,9 @@
   <data name="ExportHTMLWithMetaDataAndSearchResultFilesLabel" xml:space="preserve">
     <value>HTML with files and meta-data</value>
   </data>
+  <data name="ExportSelfContainedHtmlLabel" xml:space="preserve">
+    <value>Self-contained HTML (single file, images embedded)</value>
+  </data>
   <data name="ExportSearchResultFilesWithMetaDataLabel" xml:space="preserve">
     <value>Pictures with meta-data</value>
   </data>

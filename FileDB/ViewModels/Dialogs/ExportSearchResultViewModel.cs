@@ -44,6 +44,9 @@ public partial class ExportSearchResultViewModel : ObservableObject
     public partial bool ExportIncludesHtml { get; set; } = false;
 
     [ObservableProperty]
+    public partial bool ExportIncludesSelfContainedHtml { get; set; } = false;
+
+    [ObservableProperty]
     public partial bool ExportIncludesM3u { get; set; } = false;
 
     partial void OnExportIncludesM3uChanged(bool value)
@@ -106,6 +109,10 @@ public partial class ExportSearchResultViewModel : ObservableObject
         if (ExportIncludesHtml)
         {
             selections.Add(SearchResultExportType.Html);
+        }
+        if (ExportIncludesSelfContainedHtml)
+        {
+            selections.Add(SearchResultExportType.SelfContainedHtml);
         }
         if (ExportIncludesM3u)
         {

@@ -1091,6 +1091,15 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Self-contained HTML (single file, images embedded).
+        /// </summary>
+        public static string ExportSelfContainedHtmlLabel {
+            get {
+                return ResourceManager.GetString("ExportSelfContainedHtmlLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to M3U playlist.
         /// </summary>
         public static string ExportM3UPlaylistLabel {

@@ -34,9 +34,8 @@ public class HtmlExporter(IFileSystem fileSystem, IFilesystemAccessProvider file
 }
 .picture {
   width: 100%;
-  height: 800px;
-  background-repeat: no-repeat;
-  background-size: contain;
+  max-height: 800px;
+  object-fit: contain;
 }
 .index {
   border-radius: 5px;
@@ -56,7 +55,7 @@ public class HtmlExporter(IFileSystem fileSystem, IFilesystemAccessProvider file
         var pictureBase =
 @"<div class=""file"">
   %PICTURETEXT%
-  <a href=""%PATH%""><div class=""picture"" style=""background-image: url(%PATH%);""></div></a>
+  <a href=""%PATH%""><img class=""picture"" src=""%PATH%"" alt=""%PATH%""/></a>
 </div>
 ";
 
