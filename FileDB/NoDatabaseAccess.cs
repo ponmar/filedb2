@@ -183,8 +183,9 @@ public class NoDatabaseAccess : IDatabaseAccess
         return [];
     }
 
-    public void InsertFile(string internalPath, string? description, IFilesystemAccess fileSystemAccess, bool findMetadata)
+    public int InsertFile(string internalPath, string? description, IFilesystemAccess fileSystemAccess, bool findMetadata)
     {
+        return 0;
     }
 
     public void UpdateFileFromMetaData(int id, IFilesystemAccess filesystemAccess)
@@ -261,8 +262,9 @@ public class NoDatabaseAccess : IDatabaseAccess
         return false;
     }
 
-    public void InsertPerson(PersonModel person)
+    public int InsertPerson(PersonModel person)
     {
+        return 0;
     }
 
     public void UpdatePerson(PersonModel person)
@@ -298,8 +300,9 @@ public class NoDatabaseAccess : IDatabaseAccess
         return false;
     }
 
-    public void InsertLocation(LocationModel location)
+    public int InsertLocation(LocationModel location)
     {
+        return 0;
     }
 
     public void UpdateLocation(LocationModel location)
@@ -335,8 +338,9 @@ public class NoDatabaseAccess : IDatabaseAccess
         return false;
     }
 
-    public void InsertTag(TagModel tag)
+    public int InsertTag(TagModel tag)
     {
+        return 0;
     }
 
     public void UpdateTag(TagModel tag)

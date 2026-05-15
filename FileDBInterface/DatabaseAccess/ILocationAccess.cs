@@ -10,7 +10,7 @@ public interface ILocationAccess
     bool HasLocationId(int id);
     int GetLocationCount();
     IEnumerable<LocationModel> SearchLocationsNearGpsPosition(double latitude, double longitude, double radius);
-    void InsertLocation(LocationModel location);
+    int InsertLocation(LocationModel location);
     void UpdateLocation(LocationModel location);
     void DeleteLocation(int id);
 }

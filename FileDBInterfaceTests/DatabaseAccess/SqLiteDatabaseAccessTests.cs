@@ -1,7 +1,6 @@
 using System;
 using System.Data;
 using System.Data.SQLite;
-using System.IO;
 using System.Linq;
 using Dapper;
 using FileDBInterface.DatabaseAccess;
@@ -14,24 +13,26 @@ namespace FileDBInterfaceTests.DatabaseAccess;
 
 public class SqLiteDatabaseAccessTests : IDisposable
 {
-    private readonly string _dbPath;
+    private readonly string _connectionString;
+    private readonly IDbConnection _anchor;
     private readonly SqLiteDatabaseAccess _db;
 
     public SqLiteDatabaseAccessTests()
     {
-        _dbPath = Path.Combine(Path.GetTempPath(), $"sqllitetest_{Guid.NewGuid():N}.db");
-        DatabaseSetup.CreateDatabase(_dbPath);
-        _db = new SqLiteDatabaseAccess(_dbPath, NullLoggerFactory.Instance);
+        var uniqueName = Guid.NewGuid().ToString("N");
+        _connectionString = $"FullUri=file:{uniqueName}?mode=memory&cache=shared;foreign keys=true";
+        _anchor = new SQLiteConnection(_connectionString);
+        _anchor.Open();
+        _anchor.Execute(DatabaseSetup.DatabaseCreationSql);
+        _db = new SqLiteDatabaseAccess(_connectionString, NullLoggerFactory.Instance);
     }
 
     public void Dispose()
     {
-        if (File.Exists(_dbPath))
-            File.Delete(_dbPath);
+        _anchor.Dispose();
     }
 
-    private IDbConnection OpenConnection() =>
-        new SQLiteConnection($"Data Source={_dbPath};foreign keys = true");
+    private IDbConnection OpenConnection() => new SQLiteConnection(_connectionString);
 
     private int InsertFileRow(string path = "file.jpg", string? description = null, string? datetime = null, string? position = null)
     {
@@ -342,9 +343,8 @@ public class SqLiteDatabaseAccessTests : IDisposable
     [Fact]
     public void InsertPerson_GetPersonById_ReturnsCorrectPerson()
     {
-        _db.InsertPerson(new PersonModel { Id = 0, ShortName = "JD", FullName = "John Doe", Sex = Sex.Male });
-        var person = _db.GetPersons().Single();
-        var byId = _db.GetPersonById(person.Id);
+        var id = _db.InsertPerson(new PersonModel { Id = 0, ShortName = "JD", FullName = "John Doe", Sex = Sex.Male });
+        var byId = _db.GetPersonById(id);
         Assert.Equal("JD", byId.ShortName);
         Assert.Equal("John Doe", byId.FullName);
         Assert.Equal(Sex.Male, byId.Sex);
@@ -406,9 +406,8 @@ public class SqLiteDatabaseAccessTests : IDisposable
     [Fact]
     public void InsertLocation_GetLocationById_ReturnsCorrectLocation()
     {
-        _db.InsertLocation(new LocationModel { Id = 0, Name = "Home", Description = "My home" });
-        var location = _db.GetLocations().Single();
-        var byId = _db.GetLocationById(location.Id);
+        var id = _db.InsertLocation(new LocationModel { Id = 0, Name = "Home", Description = "My home" });
+        var byId = _db.GetLocationById(id);
         Assert.Equal("Home", byId.Name);
         Assert.Equal("My home", byId.Description);
     }
@@ -478,9 +477,8 @@ public class SqLiteDatabaseAccessTests : IDisposable
     [Fact]
     public void InsertTag_GetTagById_ReturnsCorrectTag()
     {
-        _db.InsertTag(new TagModel { Id = 0, Name = "Nature" });
-        var tag = _db.GetTags().Single();
-        var byId = _db.GetTagById(tag.Id);
+        var id = _db.InsertTag(new TagModel { Id = 0, Name = "Nature" });
+        var byId = _db.GetTagById(id);
         Assert.Equal("Nature", byId.Name);
     }
 

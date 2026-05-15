@@ -9,7 +9,7 @@ public interface ITagAccess
     int GetTagCount();
     TagModel GetTagById(int id);
     bool HasTagId(int id);
-    void InsertTag(TagModel tag);
+    int InsertTag(TagModel tag);
     void UpdateTag(TagModel tag);
     void DeleteTag(int id);
 }

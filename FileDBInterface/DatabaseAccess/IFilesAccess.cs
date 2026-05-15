@@ -20,7 +20,7 @@ public interface IFilesAccess
     int GetFileCount();
     FileModel? GetFileById(int id);
     FileModel? GetFileByPath(string path);
-    void InsertFile(string internalPath, string? description, IFilesystemAccess filesystemAccess, bool findMetadata);
+    int InsertFile(string internalPath, string? description, IFilesystemAccess filesystemAccess, bool findMetadata);
     void DeleteFile(int id);
     void UpdateFileFromMetaData(int id, IFilesystemAccess filesystemAccess);
     void UpdateFileDescription(int id, string? description);

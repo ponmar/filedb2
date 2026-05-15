@@ -200,9 +200,9 @@ public partial class FilesViewModel : ObservableValidator
                     progress.Report(string.Format(Strings.FilesAddingFile, counter, SelectedFiles.Count));
                     Thread.Sleep(1000);
 
-                    dbAccessProvider.DbAccess.InsertFile(fileToAdd.Path, null, filesystemAccessProvider.FilesystemAccess, FindFileMetadata);
+                    var newFileId = dbAccessProvider.DbAccess.InsertFile(fileToAdd.Path, null, filesystemAccessProvider.FilesystemAccess, FindFileMetadata);
 
-                    var importedFile = dbAccessProvider.DbAccess.GetFileByPath(fileToAdd.Path);
+                    var importedFile = dbAccessProvider.DbAccess.GetFileById(newFileId);
 
                     if (importedFile is not null)
                     {

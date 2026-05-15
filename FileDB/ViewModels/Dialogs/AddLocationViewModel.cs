@@ -77,8 +77,8 @@ public partial class AddLocationViewModel : ObservableObject
                     return;
                 }
 
-                dbAccessProvider.DbAccess.InsertLocation(location);
-                AffectedLocation = dbAccessProvider.DbAccess.GetLocations().First(x => x.Name == location.Name);
+                var newLocationId = dbAccessProvider.DbAccess.InsertLocation(location);
+                AffectedLocation = dbAccessProvider.DbAccess.GetLocationById(newLocationId);
             }
 
             Messenger.Send<LocationEdited>();

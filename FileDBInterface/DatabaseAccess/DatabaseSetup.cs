@@ -13,9 +13,11 @@ public static class DatabaseSetup
         connection.Query(DatabaseCreationSql);
     }
 
-    internal static IDbConnection CreateConnection(string databasePath)
+    internal static IDbConnection CreateConnection(string database)
     {
-        var connectionString = $"Data Source={databasePath};foreign keys = true";
+        var connectionString = database.Contains('=')
+            ? database
+            : $"Data Source={database};foreign keys = true";
         return new SQLiteConnection(connectionString);
     }
 

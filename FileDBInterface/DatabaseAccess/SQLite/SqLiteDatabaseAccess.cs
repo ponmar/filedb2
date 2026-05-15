@@ -351,7 +351,7 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
         return connection.Query<FileModel>($"select * from [files] where Description is null and Id not in (select FileId from [filepersons]) and Id not in (select FileId from [filelocations]) and Id not in (select FileId from [filetags])");
     }
 
-    public void InsertFile(string internalPath, string? description, IFilesystemAccess filesystemAccess, bool findMetadata)
+    public int InsertFile(string internalPath, string? description, IFilesystemAccess filesystemAccess, bool findMetadata)
     {
         if (!FileModelValidator.ValidateDescription(description))
         {
@@ -369,9 +369,11 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
         try
         {
             using var connection = DatabaseSetup.CreateConnection(database);
+            connection.Open();
             var files = new FileModel() { Id = default, Path = internalPath, Description = description, Datetime = fileMetadata.Datetime, Position = fileMetadata.Position, Orientation = fileMetadata.Orientation };
             var sql = "insert into [files] (Path, Description, Datetime, Position, Orientation) values (@Path, @Description, @Datetime, @Position, @Orientation)";
             connection.Execute(sql, files);
+            return (int)connection.ExecuteScalar<long>("select last_insert_rowid()");
         }
         catch (SQLiteException e)
         {
@@ -543,7 +545,7 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
         return connection.ExecuteScalar<bool>("select count(1) from [persons] where Id=@id", new { id });
     }
 
-    public void InsertPerson(PersonModel person)
+    public int InsertPerson(PersonModel person)
     {
         var validator = new PersonModelValidator();
         var result = validator.Validate(person);
@@ -555,8 +557,10 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
         try
         {
             using var connection = DatabaseSetup.CreateConnection(database);
+            connection.Open();
             var sql = "insert into [persons] (ShortName, FullName, Description, DateOfBirth, Deceased, ProfileFileId, Sex) values (@ShortName, @FullName, @Description, @DateOfBirth, @Deceased, @ProfileFileId, @Sex)";
             connection.Execute(sql, person);
+            return (int)connection.ExecuteScalar<long>("select last_insert_rowid()");
         }
         catch (SQLiteException e)
         {
@@ -626,7 +630,7 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
         return connection.ExecuteScalar<bool>("select count(1) from [locations] where Id=@id", new { id });
     }
 
-    public void InsertLocation(LocationModel location)
+    public int InsertLocation(LocationModel location)
     {
         var validator = new LocationModelValidator();
         var result = validator.Validate(location);
@@ -638,8 +642,10 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
         try
         {
             using var connection = DatabaseSetup.CreateConnection(database);
+            connection.Open();
             var sql = "insert into [locations] (Name, Description, Position) values (@Name, @Description, @Position)";
             connection.Execute(sql, location);
+            return (int)connection.ExecuteScalar<long>("select last_insert_rowid()");
         }
         catch (SQLiteException e)
         {
@@ -710,7 +716,7 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
         return connection.ExecuteScalar<bool>("select count(1) from [tags] where Id=@id", new { id });
     }
 
-    public void InsertTag(TagModel tag)
+    public int InsertTag(TagModel tag)
     {
         var validator = new TagModelValidator();
         var result = validator.Validate(tag);
@@ -722,8 +728,10 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
         try
         {
             using var connection = DatabaseSetup.CreateConnection(database);
+            connection.Open();
             var sql = "insert into [tags] (Name) values (@Name)";
             connection.Execute(sql, tag);
+            return (int)connection.ExecuteScalar<long>("select last_insert_rowid()");
         }
         catch (SQLiteException e)
         {

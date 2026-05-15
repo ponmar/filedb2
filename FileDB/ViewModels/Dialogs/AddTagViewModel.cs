@@ -58,8 +58,8 @@ public partial class AddTagViewModel : ObservableObject
                     return;
                 }
 
-                dbAccessProvider.DbAccess.InsertTag(tag);
-                AffectedTag = dbAccessProvider.DbAccess.GetTags().First(x => x.Name == tag.Name);
+                var newTagId = dbAccessProvider.DbAccess.InsertTag(tag);
+                AffectedTag = dbAccessProvider.DbAccess.GetTagById(newTagId);
             }
 
             Messenger.Send<TagEdited>();

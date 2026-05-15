@@ -155,8 +155,8 @@ public partial class AddPersonViewModel : ObservableObject
                     return;
                 }
 
-                dbAccessProvider.DbAccess.InsertPerson(person);
-                AffectedPerson = dbAccessProvider.DbAccess.GetPersons().First(x => x.ShortName == person.ShortName && x.FullName == person.FullName && x.DateOfBirth == person.DateOfBirth && x.Deceased == person.Deceased && x.Description == person.Description);
+                var newPersonId = dbAccessProvider.DbAccess.InsertPerson(person);
+                AffectedPerson = dbAccessProvider.DbAccess.GetPersonById(newPersonId);
             }
             Messenger.Send<PersonEdited>();
             Messenger.Send<CloseModalDialogRequest>();

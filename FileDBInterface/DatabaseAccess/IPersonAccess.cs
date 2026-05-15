@@ -9,7 +9,7 @@ public interface IPersonAccess
     int GetPersonCount();
     PersonModel GetPersonById(int id);
     bool HasPersonId(int id);
-    void InsertPerson(PersonModel person);
+    int InsertPerson(PersonModel person);
     void UpdatePerson(PersonModel person);
     void DeletePerson(int id);
 
