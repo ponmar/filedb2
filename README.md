@@ -42,6 +42,36 @@ FileDB gives you the possibility to export the internal database and file search
 5. Add persons, locations and tags to your files (see Search tab)
 6. Find your wanted pictures and run slideshows!
 
+## Search Filters
+
+The following search filters are available. Multiple filters can be added and combined using AND, OR, or XOR operators.
+
+| Filter | Description |
+|--------|-------------|
+| All Files | Returns all files in the database |
+| Annual Date | Filter by day and month (optionally a range), ignoring the year — useful for finding files from recurring calendar dates |
+| Combine | Combine two file ID lists using intersection, union, or difference operations |
+| Date | Filter by a specific date or date range |
+| Directory | Filter by directory path within the file collection |
+| File List | Filter by an explicit list of file IDs (can be negated) |
+| File Type | Filter by file type (e.g., image, video) |
+| Location | Filter by assigned location (can be negated) |
+| No Date/Time | Files that have no date/time metadata |
+| No Meta Data | Files that have no meta-data (no persons, locations or tags) |
+| Num Persons | Filter by the number of persons tagged in the file |
+| Person | Filter by a specific person (can be negated) |
+| Person Age | Filter by the age of tagged persons at the time of the file (age range) |
+| Person Group | Filter by a group of persons, with an option to allow additional persons in the file |
+| Person Profile Files | Files that are used as a person's profile picture |
+| Person Sex | Filter by the sex of tagged persons |
+| Position | Filter by GPS position — specify a coordinate and a search radius in meters |
+| Random | Return a random selection of files |
+| Season | Filter by season (spring, summer, autumn, winter) |
+| Tag | Filter by a specific tag (can be negated) |
+| Tags | Filter by a group of tags, with an option to allow additional tags in the file |
+| Text | Search by text in file descriptions, and optionally in person names/descriptions, location names/descriptions, and tag names |
+| Time | Filter by time-of-day range |
+
 ## Documentation
 
 The release contains the following documentation:
