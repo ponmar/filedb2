@@ -18,31 +18,13 @@ FileDB cons:
 
 * Categorizing files is a bit time consuming. However, the main application tries to make this process as simple as possible. Competing cloud services usually identifies persons automatically with face recognition, but that feature is not implemented in FileDB.
 
-### Main Application
+## Main Application
 
 The FileDB main application is the GUI towards the internal database that stores the file meta-data. This application includes file browsing, meta-data editing and advanced search features.
 
 A [demo](https://github.com/ponmar/filedb2_demo/) with some images and meta-data is available to show case the FileDB potential.
 
-### Prerequisites
-
-* A collection of files
-* It is strongly recommended to have a backup procedure for your file collection (although FileDB itself does not intentionally modify your files)
-
-### 3rd Party Software Integrations
-
-FileDB gives you the possibility to export the internal database and file searches to your own applications.
-
-## Getting Started
-
-1. Create an empty file in your files collection root directory and name it 'MyFiles.FileDB'. Open the file with the FileDB application.
-2. Create a database for your files collection and adjust your settings (see Tools tab)
-3. Add your files (see Files tab)
-4. Create persons, locations and tags (see Update tabs)
-5. Add persons, locations and tags to your files (see Search tab)
-6. Find your wanted pictures and run slideshows!
-
-## Search Filters
+### Search Filters
 
 The following search filters are available. Multiple filters can be added and combined using AND, OR, or XOR operators.
 
@@ -71,6 +53,24 @@ The following search filters are available. Multiple filters can be added and co
 | Tags | Filter by a group of tags, with an option to allow additional tags in the file |
 | Text | Search by text in file descriptions, and optionally in person names/descriptions, location names/descriptions, and tag names |
 | Time | Filter by time-of-day range |
+
+### Prerequisites
+
+* A collection of files
+* It is strongly recommended to have a backup procedure for your file collection (although FileDB itself does not intentionally modify your files)
+
+### 3rd Party Software Integrations
+
+FileDB gives you the possibility to export the internal database and file searches to your own applications.
+
+## Getting Started
+
+1. Create an empty file in your files collection root directory and name it 'MyFiles.FileDB'. Open the file with the FileDB application.
+2. Create a database for your files collection and adjust your settings (see Tools tab)
+3. Add your files (see Files tab)
+4. Create persons, locations and tags (see Update tabs)
+5. Add persons, locations and tags to your files (see Search tab)
+6. Find your wanted pictures and run slideshows!
 
 ## Documentation
 
