@@ -1,4 +1,4 @@
-# README
+# FileDB
 
 ## About
 
@@ -10,7 +10,7 @@ FileDB pros:
 
 * Own your data: No data is shared with other parties
 * Control your data: All data is stored in an SQLite database and may be converted for future use depending on your future needs (no lock-in effect). The FileDB application has support for exporting to JSON format.
-* Search cababilities: Find files given a basic search criteria. Combine basic search criterias for creating an advanced search criteria
+* Search capabilities: Find files given a basic search criterion. Combine criteria for creating an advanced search
 * The built-in file browser supports showing extra data such as person age
 * 3rd party software integrations
 
@@ -22,7 +22,7 @@ FileDB cons:
 
 The FileDB main application is the GUI towards the internal database that stores the file meta-data. This application includes file browsing, meta-data editing and advanced search features.
 
-A [demo](https://github.com/ponmar/filedb2_demo/) with some images and meta-data is available to show case the FileDB potential.
+A [demo](https://github.com/ponmar/filedb2_demo/) with some images and meta-data is available to showcase the FileDB potential.
 
 ### Search Filters
 
@@ -61,11 +61,17 @@ The following search filters are available. Multiple filters can be added and co
 
 ### 3rd Party Software Integrations
 
-FileDB gives you the possibility to export the internal database and file searches to your own applications.
+FileDB gives you the possibility to export the internal database and file searches to your own applications. The following export formats are supported:
+
+* **JSON** — full meta-data export
+* **HTML** — files and meta-data as a browsable HTML page (images stored alongside)
+* **Self-contained HTML** — single HTML file with images embedded (base64)
+* **M3U** — playlist for media players
+* **PDF** — files and meta-data as a PDF document
 
 ## Getting Started
 
-1. Create an empty file in your files collection root directory and name it 'MyFiles.FileDB'. Open the file with the FileDB application.
+1. Create an empty file in your files collection root directory with the `.FileDB` extension (e.g. `MyFiles.FileDB`). Open the file with the FileDB application.
 2. Create a database for your files collection and adjust your settings (see Tools tab)
 3. Add your files (see Files tab)
 4. Create persons, locations and tags (see Update tabs)
