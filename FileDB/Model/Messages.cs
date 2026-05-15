@@ -5,6 +5,7 @@ using System;
 namespace FileDB.Model;
 
 public record ConfigEdited(bool HasChanges);
+public record MetaDataEdited(bool HasChanges);
 public record ConfigUpdated();
 public record NotificationsUpdated;
 public record DateChanged;

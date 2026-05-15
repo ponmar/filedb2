@@ -230,6 +230,11 @@ public partial class FileCategorizationViewModel : ObservableValidator
     [NotifyPropertyChangedFor(nameof(MetaDataHeader))]
     public partial bool IsDirty { get; set; }
 
+    partial void OnIsDirtyChanged(bool value)
+    {
+        Messenger.Send(new MetaDataEdited(value));
+    }
+
     private readonly IConfigProvider configProvider;
     private readonly IDatabaseAccessProvider dbAccessProvider;
     private readonly IDialogs dialogs;

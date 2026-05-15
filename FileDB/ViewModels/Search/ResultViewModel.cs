@@ -224,11 +224,18 @@ public partial class ResultViewModel : ObservableObject, ISearchResultRepository
         this.RegisterForEvent<SelectLastFile>((x) => LastFile());
         this.RegisterForEvent<SelectFileInNextDirectory>((x) => NextDirectory());
         this.RegisterForEvent<SelectFileInPrevDirectory>((x) => PrevDirectory());
+
+        this.RegisterForEvent<MetaDataEdited>((x) =>
+        {
+            metaDataHasUnsavedChanges = x.HasChanges;
+            FireBrowsingEnabledEvents();
+        });
     }
 
     [RelayCommand]
     private void PrevFile()
     {
+        if (metaDataHasUnsavedChanges) return;
         SlideshowActive = false;
         SelectPrevFile();
     }
@@ -236,6 +243,7 @@ public partial class ResultViewModel : ObservableObject, ISearchResultRepository
     [RelayCommand]
     public void NextFile()
     {
+        if (metaDataHasUnsavedChanges) return;
         SlideshowActive = false;
         SelectNextFile();
     }
@@ -261,6 +269,7 @@ public partial class ResultViewModel : ObservableObject, ISearchResultRepository
     [RelayCommand]
     private void PrevDirectory()
     {
+        if (metaDataHasUnsavedChanges) return;
         if (!PrevDirectoryAvailable)
         {
             return;
@@ -289,6 +298,7 @@ public partial class ResultViewModel : ObservableObject, ISearchResultRepository
     [RelayCommand]
     private void NextDirectory()
     {
+        if (metaDataHasUnsavedChanges) return;
         if (!NextDirectoryAvailable)
         {
             return;
@@ -317,6 +327,7 @@ public partial class ResultViewModel : ObservableObject, ISearchResultRepository
     [RelayCommand]
     private void FirstFile()
     {
+        if (metaDataHasUnsavedChanges) return;
         SlideshowActive = false;
         LoadFile(0);
         FireBrowsingEnabledEvents();
@@ -325,6 +336,7 @@ public partial class ResultViewModel : ObservableObject, ISearchResultRepository
     [RelayCommand]
     private void LastFile()
     {
+        if (metaDataHasUnsavedChanges) return;
         SlideshowActive = false;
         if (searchResult is not null)
         {
@@ -343,6 +355,7 @@ public partial class ResultViewModel : ObservableObject, ISearchResultRepository
 
     private void SlideshowTimer_Tick(object? sender, EventArgs e)
     {
+        if (metaDataHasUnsavedChanges) return;
         if (RandomActive)
         {
             SelectNextRandomFile();
@@ -436,12 +449,14 @@ public partial class ResultViewModel : ObservableObject, ISearchResultRepository
         }
     }    
 
-    public bool PrevFileAvailable => SelectedFileIndex > 0;
-    public bool NextFileAvailable => searchResult is not null && SelectedFileIndex < searchResult.Count - 1;
-    public bool FirstFileAvailable => searchResult is not null && SelectedFileIndex > 0;
-    public bool LastFileAvailable => searchResult is not null && SelectedFileIndex < searchResult.Count - 1;
-    public bool PrevDirectoryAvailable => HasNonEmptySearchResult;
-    public bool NextDirectoryAvailable => HasNonEmptySearchResult;
+    private bool metaDataHasUnsavedChanges = false;
+
+    public bool PrevFileAvailable => !metaDataHasUnsavedChanges && SelectedFileIndex > 0;
+    public bool NextFileAvailable => !metaDataHasUnsavedChanges && searchResult is not null && SelectedFileIndex < searchResult.Count - 1;
+    public bool FirstFileAvailable => !metaDataHasUnsavedChanges && searchResult is not null && SelectedFileIndex > 0;
+    public bool LastFileAvailable => !metaDataHasUnsavedChanges && searchResult is not null && SelectedFileIndex < searchResult.Count - 1;
+    public bool PrevDirectoryAvailable => !metaDataHasUnsavedChanges && HasNonEmptySearchResult;
+    public bool NextDirectoryAvailable => !metaDataHasUnsavedChanges && HasNonEmptySearchResult;
 
     private void FireSearchResultUpdatedEvents()
     {
