@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -43,29 +42,6 @@ public static class Utils
     {
         Thread.CurrentThread.CurrentUICulture = culture;
         CultureInfo.DefaultThreadCurrentUICulture = culture;
-    }
-
-    public static void OpenUriInBrowser(string uri)
-    {
-        Process.Start(new ProcessStartInfo(uri) { UseShellExecute = true });
-    }
-
-    public static void SelectFileInExplorer(string path)
-    {
-        var explorerPath = path.Replace("/", @"\");
-        Process.Start("explorer.exe", "/select, " + explorerPath);
-    }
-
-    public static void OpenDirectoryInExplorer(string path)
-    {
-        var explorerPath = path.Replace("/", @"\");
-        Process.Start("explorer.exe", "/open, " + explorerPath);
-    }
-
-    public static void OpenFileWithDefaultApp(string path)
-    {
-        var explorerPath = path.Replace("/", @"\");
-        Process.Start("explorer", $"\"{explorerPath}\"");
     }
 
     public static string CreateFileList(IEnumerable<FileModel> files)

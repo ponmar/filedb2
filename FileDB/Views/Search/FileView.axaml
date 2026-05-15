@@ -82,13 +82,13 @@
 							Command="{Binding OpenFileLocationCommand}"
 							IsEnabled="{Binding FileSelected}"
 							ToolTip.Tip="{x:Static lang:Strings.SearchLocateButtonToolTip}"
-							IsVisible="{Binding !Maximize}" Content="&#x1F4C2;"/>
+							IsVisible="{Binding IsOpenFileLocationButtonVisible}" Content="&#x1F4C2;"/>
 						<Button
 							Margin="0,0,5,0"
 							Command="{Binding OpenFileWithDefaultAppCommand}"
 							IsEnabled="{Binding FileSelected}"
 							ToolTip.Tip="{x:Static lang:Strings.SearchOpenButtonToolTip}"
-							IsVisible="{Binding !Maximize}" Content="&#9654;"/>
+							IsVisible="{Binding IsOpenFileWithDefaultAppButtonVisible}" Content="&#9654;"/>
 						<Button
 							Margin="0,0,5,0"
 							Command="{Binding CopyFileIdCommand}"

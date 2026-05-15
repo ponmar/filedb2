@@ -25,13 +25,13 @@
 						<TextBlock Grid.Row="2" Grid.Column="0" Classes="PageTextBlock" Text="{x:Static lang:Strings.HelpAppProjectWebsite}" VerticalAlignment="Center"/>
 						<StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
 							<TextBlock Classes="PageTextBlock" Text="{Binding ProjectUrl}" VerticalAlignment="Center"/>
-							<Button Classes="PageButton" Content="Open" Command="{Binding OpenUrlCommand}" CommandParameter="{Binding ProjectUrl}" VerticalAlignment="Center"/>
+							<Button Classes="PageButton" Content="Open" Command="{Binding OpenUrlCommand}" CommandParameter="{Binding ProjectUrl}" VerticalAlignment="Center" IsVisible="{Binding IsOpenUrlSupported}"/>
 						</StackPanel>
 
 						<TextBlock Grid.Row="3" Grid.Column="0" Classes="PageTextBlock" Text="{x:Static lang:Strings.HelpDownloadsReleases}" VerticalAlignment="Center"/>
 						<StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
 							<TextBlock Classes="PageTextBlock" Text="{Binding DownloadLink}" VerticalAlignment="Center"/>
-							<Button Classes="PageButton" Content="Open" Command="{Binding OpenUrlCommand}" CommandParameter="{Binding DownloadLink}" VerticalAlignment="Center"/>
+								<Button Classes="PageButton" Content="Open" Command="{Binding OpenUrlCommand}" CommandParameter="{Binding DownloadLink}" VerticalAlignment="Center" IsVisible="{Binding IsOpenUrlSupported}"/>
 						</StackPanel>
 						
 						<TextBlock Grid.Row="4" Grid.Column="0" Classes="PageTextBlock" Text="{x:Static lang:Strings.HelpLicenseLabel}"/>

@@ -21,6 +21,8 @@ public record Tag(TagModel Model, string Name);
 public partial class FileViewModel : ObservableObject
 {
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(IsOpenFileLocationButtonVisible))]
+    [NotifyPropertyChangedFor(nameof(IsOpenFileWithDefaultAppButtonVisible))]
     public partial bool Maximize { get; set; } = false;
 
     partial void OnMaximizeChanged(bool value)
@@ -30,6 +32,8 @@ public partial class FileViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(OverlayFontSize))]
+    [NotifyPropertyChangedFor(nameof(IsOpenFileLocationButtonVisible))]
+    [NotifyPropertyChangedFor(nameof(IsOpenFileWithDefaultAppButtonVisible))]
     public partial bool LargeTextMode { get; set; } = false;
 
     public int OverlayFontSize => LargeTextMode ? configProvider.Config.OverlayTextSizeLarge : configProvider.Config.OverlayTextSize;
@@ -37,6 +41,9 @@ public partial class FileViewModel : ObservableObject
     public bool FileSelected => SelectedFile is not null;
 
     public bool FileHasTime => SelectedFile?.Datetime is not null && SelectedFile.Datetime.Contains('T');
+
+    public bool IsOpenFileLocationButtonVisible => !Maximize && processUtils.IsSelectFileInExplorerSupported();
+    public bool IsOpenFileWithDefaultAppButtonVisible => !Maximize && processUtils.IsOpenFileWithDefaultAppSupported();
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(FileSelected))]
@@ -83,8 +90,9 @@ public partial class FileViewModel : ObservableObject
     private readonly IFileSelector fileSelector;
     private readonly ICriteriaViewModel criteriaViewModel;
     private readonly ISearchResultRepositoryManagement searchResultRepoManagement;
+    private readonly IProcessUtils processUtils;
 
-    public FileViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IImageLoader imageLoader, IFileSystem fileSystem, IDialogs dialogs, IClipboardService clipboardService, IFileSelector fileSelector, ICriteriaViewModel criteriaViewModel, ISearchResultRepositoryManagement searchResultRepoManagement)
+    public FileViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IImageLoader imageLoader, IFileSystem fileSystem, IDialogs dialogs, IClipboardService clipboardService, IFileSelector fileSelector, ICriteriaViewModel criteriaViewModel, ISearchResultRepositoryManagement searchResultRepoManagement, IProcessUtils processUtils)
     {
         this.configProvider = configProvider;
         this.dbAccessProvider = dbAccessProvider;
@@ -96,6 +104,7 @@ public partial class FileViewModel : ObservableObject
         this.fileSelector = fileSelector;
         this.criteriaViewModel = criteriaViewModel;
         this.searchResultRepoManagement = searchResultRepoManagement;
+        this.processUtils = processUtils;
 
         this.RegisterForEvent<ConfigUpdated>((x) =>
         {
@@ -144,7 +153,7 @@ public partial class FileViewModel : ObservableObject
     {
         if (absolutePath.HasContent() && fileSystem.File.Exists(absolutePath))
         {
-            Utils.SelectFileInExplorer(absolutePath);
+            processUtils.SelectFileInExplorer(absolutePath);
         }
     }
 
@@ -153,7 +162,7 @@ public partial class FileViewModel : ObservableObject
     {
         if (absolutePath.HasContent() && fileSystem.File.Exists(absolutePath))
         {
-            Utils.OpenFileWithDefaultApp(absolutePath);
+            processUtils.OpenFileWithDefaultApp(absolutePath);
         }
     }
 
@@ -237,7 +246,7 @@ public partial class FileViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private static void OpenUrl(string url) => Utils.OpenUriInBrowser(url);
+    private void OpenUrl(string url) => processUtils.OpenUriInBrowser(url);
 
     [RelayCommand]
     private static void PrevFile() => Messenger.Send<SelectPrevFile>();

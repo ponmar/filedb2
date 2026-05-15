@@ -23,18 +23,22 @@ public partial class HelpViewModel : ObservableObject
     public static string Author => Utils.Author;
     public static string Version => Utils.GetVersionString();
 
+    public bool IsOpenUrlSupported => processUtils.IsOpenUriInBrowserSupported();
+
     public ObservableCollection<LicenseFileFormatDto> Licenses { get; } = [];
 
     private readonly IFileSystem fileSystem;
+    private readonly IProcessUtils processUtils;
 
-    public HelpViewModel(IFileSystem fileSystem)
+    public HelpViewModel(IFileSystem fileSystem, IProcessUtils processUtils)
     {
         this.fileSystem = fileSystem;
+        this.processUtils = processUtils;
 
         var licenses = LicensesJsonFilePath.FromJson<List<LicenseFileFormatDto>>(fileSystem);
         licenses!.ForEach(x => Licenses.Add(x));
     }
 
     [RelayCommand]
-    private static void OpenUrl(string url) => Utils.OpenUriInBrowser(url);
+    private void OpenUrl(string url) => processUtils.OpenUriInBrowser(url);
 }

@@ -22,6 +22,7 @@ public static class Bootstrapper
     public static void Bootstrap()
     {
         ServiceLocator.RegisterSingleton<IFileSystem, FileSystem>();
+        ServiceLocator.RegisterSingleton<IProcessUtils, ProcessUtils>();
         ServiceLocator.RegisterSingleton<INotifierFactory, NotifierFactory>();
         ServiceLocator.RegisterSingleton<ISpeeker, Speeker>();
         ServiceLocator.RegisterSingleton<DateObserver>();

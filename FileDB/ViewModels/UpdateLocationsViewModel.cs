@@ -39,13 +39,17 @@ public partial class UpdateLocationsViewModel : ObservableObject
     private readonly IDatabaseAccessProvider dbAccessProvider;
     private readonly IDialogs dialogs;
     private readonly ILocationsRepository locationsRepository;
+    private readonly IProcessUtils processUtils;
 
-    public UpdateLocationsViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IDialogs dialogs, ILocationsRepository locationsRepository)
+    public bool IsShowLocationOnMapSupported => processUtils.IsOpenUriInBrowserSupported();
+
+    public UpdateLocationsViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IDialogs dialogs, ILocationsRepository locationsRepository, IProcessUtils processUtils)
     {
         this.configProvider = configProvider;
         this.dbAccessProvider = dbAccessProvider;
         this.dialogs = dialogs;
         this.locationsRepository = locationsRepository;
+        this.processUtils = processUtils;
         ReadOnly = configProvider.Config.ReadOnly;
 
         ReloadLocations();
@@ -93,7 +97,7 @@ public partial class UpdateLocationsViewModel : ObservableObject
         var link = Utils.CreatePositionLink(SelectedLocation!.Position, configProvider.Config.LocationLink);
         if (link is not null)
         {
-            Utils.OpenUriInBrowser(link);
+            processUtils.OpenUriInBrowser(link);
         }
     }
 
