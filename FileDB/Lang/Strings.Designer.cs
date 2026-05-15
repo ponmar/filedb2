@@ -2544,6 +2544,15 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Swedish holiday.
+        /// </summary>
+        public static string SearchFilterDateSelectFromSwedishHoliday {
+            get {
+                return ResourceManager.GetString("SearchFilterDateSelectFromSwedishHoliday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Today.
         /// </summary>
         public static string SearchFilterDateSelectFromToday {

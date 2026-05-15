@@ -19,6 +19,15 @@
 				<MenuFlyout>
 					<MenuItem Header="{x:Static lang:Strings.SearchFilterDateSelectFromToday}" Command="{Binding SetStartDateFromTodayCommand}"/>
 					<MenuItem Header="{x:Static lang:Strings.SearchFilterDateSelectFromCurrentFile}" IsEnabled="{Binding CurrentFileHasDateTime}" Command="{Binding SetStartDateFromCurrentFileCommand}"/>
+					<MenuItem Header="{x:Static lang:Strings.SearchFilterDateSelectFromSwedishHoliday}" ItemsSource="{Binding SwedishFixedHolidays}">
+						<MenuItem.ItemContainerTheme>
+							<ControlTheme TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+								<Setter Property="Header" Value="{Binding Name}"/>
+								<Setter Property="Command" Value="{Binding $parent[StackPanel].DataContext.SetStartDateFromHolidayCommand}"/>
+								<Setter Property="CommandParameter" Value="{Binding}"/>
+							</ControlTheme>
+						</MenuItem.ItemContainerTheme>
+					</MenuItem>
 				</MenuFlyout>
 			</Button.Flyout>
 		</Button>
@@ -34,6 +43,15 @@
 					<MenuFlyout>
 						<MenuItem Header="{x:Static lang:Strings.SearchFilterDateSelectFromToday}" Command="{Binding SetEndDateFromTodayCommand}"/>
 						<MenuItem Header="{x:Static lang:Strings.SearchFilterDateSelectFromCurrentFile}" IsEnabled="{Binding CurrentFileHasDateTime}" Command="{Binding SetEndDateFromCurrentFileCommand}"/>
+						<MenuItem Header="{x:Static lang:Strings.SearchFilterDateSelectFromSwedishHoliday}" ItemsSource="{Binding SwedishFixedHolidays}">
+							<MenuItem.ItemContainerTheme>
+								<ControlTheme TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+									<Setter Property="Header" Value="{Binding Name}"/>
+									<Setter Property="Command" Value="{Binding $parent[StackPanel].DataContext.SetEndDateFromHolidayCommand}"/>
+									<Setter Property="CommandParameter" Value="{Binding}"/>
+								</ControlTheme>
+							</MenuItem.ItemContainerTheme>
+						</MenuItem>
 					</MenuFlyout>
 				</Button.Flyout>
 			</Button>

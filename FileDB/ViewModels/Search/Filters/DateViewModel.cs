@@ -19,6 +19,8 @@ public partial class DateViewModel : ObservableValidator, IFilterViewModel
     [ObservableProperty]
     public partial DateTimeOffset SecondDateTime { get; set; } = DateTime.Now;
 
+    public static IReadOnlyList<FixedHoliday> SwedishFixedHolidays => SwedishHolidays.All;
+
     public bool CurrentFileHasDateTime => fileSelector.SelectedFile?.Datetime is not null;
 
     private readonly IFileSelector fileSelector;
@@ -70,6 +72,18 @@ public partial class DateViewModel : ObservableValidator, IFilterViewModel
     private void SetEndDateFromToday()
     {
         SecondDateTime = DateTime.Now;
+    }
+
+    [RelayCommand]
+    private void SetStartDateFromHoliday(FixedHoliday holiday)
+    {
+        FirstDateTime = new DateTime(FirstDateTime.Year, holiday.Month, holiday.Day);
+    }
+
+    [RelayCommand]
+    private void SetEndDateFromHoliday(FixedHoliday holiday)
+    {
+        SecondDateTime = new DateTime(SecondDateTime.Year, holiday.Month, holiday.Day);
     }
 
     public IEnumerable<FileModel> ApplyFilter(IDatabaseAccess dbAccess)

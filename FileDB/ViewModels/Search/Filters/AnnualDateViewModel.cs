@@ -84,6 +84,8 @@ public partial class AnnualDateViewModel : ObservableValidator, IFilterViewModel
         }
     }
 
+    public static IReadOnlyList<FixedHoliday> SwedishFixedHolidays => SwedishHolidays.All;
+
     public bool CurrentFileHasDateTime => fileSelector.SelectedFile?.Datetime is not null;
 
     private readonly IFileSelector fileSelector;
@@ -143,6 +145,20 @@ public partial class AnnualDateViewModel : ObservableValidator, IFilterViewModel
         var today = DateTime.Now;
         SelectedAnnualMonthEnd = today.Month;
         SelectedAnnualDayEnd = today.Day;
+    }
+
+    [RelayCommand]
+    private void SetStartDateFromHoliday(FixedHoliday holiday)
+    {
+        SelectedAnnualMonthStart = holiday.Month;
+        SelectedAnnualDayStart = holiday.Day;
+    }
+
+    [RelayCommand]
+    private void SetEndDateFromHoliday(FixedHoliday holiday)
+    {
+        SelectedAnnualMonthEnd = holiday.Month;
+        SelectedAnnualDayEnd = holiday.Day;
     }
 
     public IEnumerable<FileModel> ApplyFilter(IDatabaseAccess dbAccess)
