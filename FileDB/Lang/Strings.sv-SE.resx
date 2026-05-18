@@ -964,8 +964,8 @@
   <data name="ExportSelectYourDestinationDirectory" xml:space="preserve">
     <value>Väljd din destinationskatalog</value>
   </data>
-  <data name="FilterTypeNoMetaData" xml:space="preserve">
-    <value>Utan metadata</value>
+  <data name="FilterTypeUncategorized" xml:space="preserve">
+    <value>Okategoriserad</value>
   </data>
   <data name="FilterTypeNoDateTime" xml:space="preserve">
     <value>Utan datum och tid</value>

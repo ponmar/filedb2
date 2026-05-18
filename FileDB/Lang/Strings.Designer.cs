@@ -1788,11 +1788,11 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No meta-data.
+        ///   Looks up a localized string similar to Uncategorized.
         /// </summary>
-        public static string FilterTypeNoMetaData {
+        public static string FilterTypeUncategorized {
             get {
-                return ResourceManager.GetString("FilterTypeNoMetaData", resourceCulture);
+                return ResourceManager.GetString("FilterTypeUncategorized", resourceCulture);
             }
         }
         

@@ -2,9 +2,9 @@ using Avalonia.Controls;
 
 namespace FileDB.Views.Search.Filters;
 
-public partial class NoMetaDataView : UserControl
+public partial class UncategorizedView : UserControl
 {
-    public NoMetaDataView()
+    public UncategorizedView()
     {
         InitializeComponent();
     }

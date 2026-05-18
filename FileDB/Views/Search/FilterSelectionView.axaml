@@ -33,7 +33,7 @@
 
 		<Grid>
 			<filters:DateView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Date}}"/>
-			<filters:NoMetaDataView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.NoMetaData}}"/>
+			<filters:UncategorizedView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Uncategorized}}"/>
 			<filters:NoDateTimeView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.NoDateTime}}"/>
 			<filters:TextView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Text}}"/>
 			<filters:FileListView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.FileList}}"/>

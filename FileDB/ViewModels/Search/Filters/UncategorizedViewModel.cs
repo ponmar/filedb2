@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FileDBInterface.DatabaseAccess;
 using FileDBInterface.Model;
 
 namespace FileDB.ViewModels.Search.Filters;
 
-public partial class NoMetaDataViewModel : ObservableValidator, IFilterViewModel
+public partial class UncategorizedViewModel : ObservableValidator, IFilterViewModel
 {
-    public NoMetaDataViewModel()
+    public UncategorizedViewModel()
     {
         ValidateAllProperties();
     }

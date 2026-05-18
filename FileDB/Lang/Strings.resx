@@ -970,8 +970,8 @@ YYYY-MM-DDTHH:MM:SS</value>
   <data name="ExportError" xml:space="preserve">
     <value>Export error: {0}</value>
   </data>
-  <data name="FilterTypeNoMetaData" xml:space="preserve">
-    <value>No meta-data</value>
+  <data name="FilterTypeUncategorized" xml:space="preserve">
+    <value>Uncategorized</value>
   </data>
   <data name="FilterTypeNoDateTime" xml:space="preserve">
     <value>No date and time</value>

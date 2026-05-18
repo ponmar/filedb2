@@ -17,8 +17,8 @@ public enum FilterType
     [FilterTypeViewModel(typeof(DateViewModel))]
     Date,
 
-    [FilterTypeViewModel(typeof(NoMetaDataViewModel))]
-    NoMetaData,
+    [FilterTypeViewModel(typeof(UncategorizedViewModel))]
+    Uncategorized,
 
     [FilterTypeViewModel(typeof(NoDateTimeViewModel))]
     NoDateTime,
@@ -88,7 +88,7 @@ public static class FilterTypeExtensions
         return filterType switch
         {
             FilterType.Date => Strings.FilterTypeDateTime,
-            FilterType.NoMetaData => Strings.FilterTypeNoMetaData,
+            FilterType.Uncategorized => Strings.FilterTypeUncategorized,
             FilterType.NoDateTime => Strings.FilterTypeNoDateTime,
             FilterType.Text => Strings.FilterTypeText,
             FilterType.FileList => Strings.FilterTypeFileList,
