@@ -5,12 +5,13 @@ using FileDBInterface.FileFormats;
 using FileDBInterface.Model;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
+using System.Collections.Generic;
 using System.IO.Abstractions;
 using System.Linq;
 
 namespace FileDB.Export.SearchResult;
 
-public class PdfExporter(IFileSystem fileSystem, IFilesystemAccessProvider filesystemAccessProvider, PageSize pageSize) : ISearchResultExporter
+public class PdfExporter(IFileSystem fileSystem, IFilesystemAccessProvider filesystemAccessProvider, PageSize pageSize, IConfigProvider configProvider) : ISearchResultExporter
 {
     public void Export(SearchResultExport data, string filename)
     {
@@ -56,10 +57,14 @@ public class PdfExporter(IFileSystem fileSystem, IFilesystemAccessProvider files
                 }
 
                 string? fileLocations = null;
+                var fileLocationItems = new List<(string Name, string? Link)>();
                 if (picture.LocationIds.Count > 0)
                 {
                     var locations = data.Locations.Where(x => picture.LocationIds.Contains(x.Id));
                     fileLocations = FileTextOverlayCreator.GetLocationsText(locations, ", ");
+                    fileLocationItems = locations
+                        .Select(l => (l.Name, Utils.CreatePositionLink(l.Position, configProvider.Config.LocationLink)))
+                        .ToList();
                 }
 
                 string? fileTags = null;
@@ -69,35 +74,56 @@ public class PdfExporter(IFileSystem fileSystem, IFilesystemAccessProvider files
                     fileTags = FileTextOverlayCreator.GetTagsText(tags, ", ");
                 }
 
+                var filePositionLink = Utils.CreatePositionLink(picture.Position, configProvider.Config.LocationLink);
+
                 document.Page(filePage =>
                 {
                     filePage.Margin(10);
                     filePage.Size(pageSize);
-                    filePage.Header().AlignCenter().Text(fileHeading).SemiBold().FontSize(18).FontColor(Colors.Blue.Darken2);
-                    filePage.Content().AlignCenter().AlignMiddle().Column(column =>
+                    filePage.Header().Column(headerCol =>
                     {
+                        headerCol.Item().AlignCenter().Text(fileHeading).SemiBold().FontSize(18).FontColor(Colors.Blue.Darken2);
                         if (filePersons is not null)
                         {
-                            column.Item().Text(filePersons);
+                            headerCol.Item().AlignCenter().Text(filePersons);
                         }
                         if (fileLocations is not null)
                         {
-                            column.Item().Text(fileLocations);
+                            headerCol.Item().AlignCenter().Text(text =>
+                            {
+                                bool first = true;
+                                foreach (var (name, link) in fileLocationItems)
+                                {
+                                    if (!first) text.Span(", ");
+                                    if (link is not null)
+                                        text.Hyperlink(name, link);
+                                    else
+                                        text.Span(name);
+                                    first = false;
+                                }
+                            });
                         }
                         if (fileTags is not null)
                         {
-                            column.Item().Text(fileTags);
+                            headerCol.Item().AlignCenter().Text(fileTags);
                         }
-
-                        var item = column.Item();
-                        var degrees = DatabaseParsing.OrientationToDegrees(picture.Orientation);
-                        for (int i = 0; i < degrees / 90; i++)
+                        if (filePositionLink is not null)
                         {
-                            item = item.RotateLeft();
+                            headerCol.Item().AlignCenter().Text(text => text.Hyperlink(picture.Position!, filePositionLink));
                         }
-                        var sourceFilePath = filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(picture.OriginalPath);
-                        item.Image(sourceFilePath);
+                        else if (picture.Position is not null)
+                        {
+                            headerCol.Item().AlignCenter().Text(picture.Position);
+                        }
                     });
+                    var imageContainer = filePage.Content().AlignCenter().AlignMiddle();
+                    var degrees = DatabaseParsing.OrientationToDegrees(picture.Orientation);
+                    for (int i = 0; i < degrees / 90; i++)
+                    {
+                        imageContainer = imageContainer.RotateLeft();
+                    }
+                    var sourceFilePath = filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(picture.OriginalPath);
+                    imageContainer.Image(sourceFilePath).FitArea();
                     filePage.Footer().AlignCenter().Text(text =>
                     {
                         text.CurrentPageNumber();

@@ -83,7 +83,7 @@ public class SearchResultExportHandler
         {
             cancellationToken.ThrowIfCancellationRequested();
             var path = Path.Combine(destinationDirectory, "Export.pdf");
-            var exporter = new PdfExporter(fileSystem, filesystemAccessProvider, PageSizes.A4.Landscape());
+            var exporter = new PdfExporter(fileSystem, filesystemAccessProvider, PageSizes.A4.Landscape(), configProvider);
             exporter.Export(data, path);
         }
     }
