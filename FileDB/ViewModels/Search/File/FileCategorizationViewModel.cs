@@ -367,8 +367,6 @@ public partial class FileCategorizationViewModel : ObservableValidator
 
         try
         {
-            var prevEditedFile = dbAccessProvider.DbAccess.GetFileById(PrevEditedFileId.Value)!;
-
             var prevPersons = dbAccessProvider.DbAccess.GetPersonsFromFile(PrevEditedFileId.Value);
             var prevLocations = dbAccessProvider.DbAccess.GetLocationsFromFile(PrevEditedFileId.Value);
             var prevTags = dbAccessProvider.DbAccess.GetTagsFromFile(PrevEditedFileId.Value);
@@ -685,6 +683,20 @@ public partial class FileCategorizationViewModel : ObservableValidator
                     AddFileTagToCurrentFile(item.Id);
                     break;
             }
+        }
+    }
+
+    [RelayCommand]
+    private async Task ToggleVisibleItemsAsync()
+    {
+        if (string.IsNullOrEmpty(ItemsFilterText))
+        {
+            return;
+        }
+
+        foreach (var item in Items.Where(x => x.IsVisible && !x.IsChecked).ToList())
+        {
+            await ToggleCombinedAsync(item);
         }
     }
 

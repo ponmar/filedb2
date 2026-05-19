@@ -244,6 +244,67 @@ public class FileCategorizationViewModelTests
         Assert.Equal(DatabaseParsing.OrientationToDegrees(reloadedFile.Orientation), viewModel.ImageRotation);
     }
 
+    [Fact]
+    public async Task ToggleVisibleItemsCommand_EmptyFilter_DoesNothing()
+    {
+        // Arrange
+        PopulateRepositories();
+        var viewModel = CreateViewModel();
+        LoadAFile();
+
+        viewModel.ItemsFilterText = string.Empty;
+
+        // Act
+        await viewModel.ToggleVisibleItemsCommand.ExecuteAsync(null);
+
+        // Assert
+        A.CallTo(() => dbAccessProvider.DbAccess.InsertFileTag(A<int>._, A<int>._)).MustNotHaveHappened();
+        A.CallTo(() => dbAccessProvider.DbAccess.InsertFileLocation(A<int>._, A<int>._)).MustNotHaveHappened();
+    }
+
+    [Fact]
+    public async Task ToggleVisibleItemsCommand_WithFilter_TogglesVisibleItems()
+    {
+        // Arrange: one unchecked tag visible via filter
+        var tag = new TagModel() { Id = 1, Name = "Favorites" };
+        tags.Add(tag);
+        A.CallTo(() => dbAccessProvider.DbAccess.GetTagById(tag.Id)).Returns(tag);
+
+        var viewModel = CreateViewModel();
+        LoadAFile();
+
+        viewModel.ItemsFilterText = "Favor";
+
+        // Act
+        await viewModel.ToggleVisibleItemsCommand.ExecuteAsync(null);
+
+        // Assert: unchecked visible tag is added
+        A.CallTo(() => dbAccessProvider.DbAccess.InsertFileTag(1, 1)).MustHaveHappened();
+        A.CallTo(() => dbAccessProvider.DbAccess.InsertFileLocation(A<int>._, A<int>._)).MustNotHaveHappened();
+    }
+
+    [Fact]
+    public async Task ToggleVisibleItemsCommand_WithFilter_AlreadyCheckedItemIsNotRemoved()
+    {
+        // Arrange: tag already on file (starts checked)
+        var tag = new TagModel() { Id = 1, Name = "Favorites" };
+        tags.Add(tag);
+        A.CallTo(() => dbAccessProvider.DbAccess.GetTagById(tag.Id)).Returns(tag);
+        A.CallTo(() => dbAccessProvider.DbAccess.GetTagsFromFile(A<int>._)).Returns([tag]);
+
+        var viewModel = CreateViewModel();
+        LoadAFile();
+
+        viewModel.ItemsFilterText = "Favor";
+
+        // Act
+        await viewModel.ToggleVisibleItemsCommand.ExecuteAsync(null);
+
+        // Assert: already-checked visible tag is not removed
+        A.CallTo(() => dbAccessProvider.DbAccess.DeleteFileTag(A<int>._, A<int>._)).MustNotHaveHappened();
+        A.CallTo(() => dbAccessProvider.DbAccess.InsertFileTag(A<int>._, A<int>._)).MustNotHaveHappened();
+    }
+
     private FileCategorizationViewModel CreateViewModel()
     {
         return new FileCategorizationViewModel(configProvider, dbAccessProvider, dialogs, filesystemAccessProvider, personsRepository, locationsRepository, tagsRepository, fileSelector, fileRotator);

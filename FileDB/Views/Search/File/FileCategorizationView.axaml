@@ -12,7 +12,11 @@
         <Grid ColumnDefinitions="auto" RowDefinitions="auto,auto,*">
             <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,5,0,0" IsVisible="{Binding FileSelected}">
                 <TextBlock Text="&#x1F50D;" VerticalAlignment="Center"/>
-                <TextBox Width="250" Text="{Binding ItemsFilterText}" Margin="3,0,3,0" VerticalAlignment="Center" ToolTip.Tip="{x:Static lang:Strings.CategorizationItemSearchToolTip}"/>
+                <TextBox Width="250" Text="{Binding ItemsFilterText}" Margin="3,0,3,0" VerticalAlignment="Center" ToolTip.Tip="{x:Static lang:Strings.CategorizationItemSearchToolTip}">
+                    <TextBox.KeyBindings>
+                        <KeyBinding Gesture="Enter" Command="{Binding ToggleVisibleItemsCommand}"/>
+                    </TextBox.KeyBindings>
+                </TextBox>
                 <ToggleButton Classes="ColoredToggleButton" IsChecked="{Binding ItemsFilterTextCaseSensitive}" Content="&#x1F5DA;" ToolTip.Tip="{x:Static lang:Strings.TextFilterCaseSensitive}"/>
             </StackPanel>
 
@@ -22,8 +26,8 @@
                     <Button Content="&#9745;" Margin="0" IsEnabled="{Binding HasVisibleItems}" VerticalAlignment="Center" Command="{Binding AddItemsCommand}" ToolTip.Tip="{x:Static lang:Strings.CategorizationUpdateAddAllToolTip}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-	    			<Button Margin="10,0,2,0" Command="{Binding MarkPrevEditedFileCommand}" IsEnabled="{Binding CanMarkCurrentFileAsPrevEdited}" ToolTip.Tip="{x:Static lang:Strings.CategorizationMarkButtonToolTip}" Content="[ ]" VerticalAlignment="Center"/>
-          			<Button Margin="0" Command="{Binding AddCategorizationFromPrevEditedFileCommand}" IsEnabled="{Binding CanApplyCategorizationFromPrevEdit}" ToolTip.Tip="{x:Static lang:Strings.CategorizationApplyMetaDataFromLastEditToolTip}" Content="[*]" VerticalAlignment="Center"/>
+	    			<Button Margin="10,0,2,0" Command="{Binding MarkPrevEditedFileCommand}" IsEnabled="{Binding CanMarkCurrentFileAsPrevEdited}" ToolTip.Tip="{x:Static lang:Strings.CategorizationMarkButtonToolTip}" Content="&#x2398;" VerticalAlignment="Center"/>
+          			<Button Margin="0" Command="{Binding AddCategorizationFromPrevEditedFileCommand}" IsEnabled="{Binding CanApplyCategorizationFromPrevEdit}" ToolTip.Tip="{x:Static lang:Strings.CategorizationApplyMetaDataFromLastEditToolTip}" Content="&#x29C9;" VerticalAlignment="Center"/>
                 </StackPanel>
                 <Button Margin="10,0,0,0" Content="..." VerticalAlignment="Center">
 					<Button.Flyout>

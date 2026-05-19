@@ -1434,7 +1434,7 @@ Lägg till nya filer i '{0}'.</value>
     <value>Avmarkera alla synliga etiketter</value>
   </data>
   <data name="CategorizationItemSearchToolTip" xml:space="preserve">
-    <value>Kommaseparerad lista med sökningar</value>
+    <value>Kommaseparerad lista med sökningar. Tryck Enter för att lägga till alla synliga objekt.</value>
   </data>
   <data name="UpdateLocationsRemoveSelectedLocation" xml:space="preserve">
     <value>Ta bort {0}?</value>
