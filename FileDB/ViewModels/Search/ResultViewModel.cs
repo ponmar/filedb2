@@ -525,6 +525,14 @@ public partial class ResultViewModel : ObservableObject, ISearchResultRepository
                 var counts = SearchResult!.Files.ToDictionary(f => f.Id, f => dbAccessProvider.DbAccess.GetPersonsFromFile(f.Id).Count());
                 SortFiles(new FileModelByPersonCountSorter(counts), SelectedSortMethod == SortMethod.NumPersonsDesc, preserveSelection);
                 break;
+
+            case SortMethod.DirectoryDate:
+                SortFiles(new FileModelByDirectoryAndDateSorter(), false, preserveSelection);
+                break;
+
+            case SortMethod.DirectoryDateDesc:
+                SortFiles(new FileModelByDirectoryAndDateSorter(), true, preserveSelection);
+                break;
         }
     }
 

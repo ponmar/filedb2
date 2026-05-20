@@ -12,6 +12,8 @@ public enum SortMethod
     Random,
     NumPersons,
     NumPersonsDesc,
+    DirectoryDate,
+    DirectoryDateDesc,
 }
 
 public static class SortMethodExtensions
@@ -27,6 +29,8 @@ public static class SortMethodExtensions
             SortMethod.Random => Strings.SortMethodRandom,
             SortMethod.NumPersons => Strings.SortMethodNumPersons,
             SortMethod.NumPersonsDesc => Strings.SortMethodNumPersonsDesc,
+            SortMethod.DirectoryDate => Strings.SortMethodDirectoryDate,
+            SortMethod.DirectoryDateDesc => Strings.SortMethodDirectoryDateDesc,
             _ => throw new NotSupportedException(),
         };
     }

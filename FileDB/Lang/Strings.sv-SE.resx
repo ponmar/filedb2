@@ -1307,6 +1307,12 @@ Lägg till nya filer i '{0}'.</value>
   <data name="SortMethodNumPersonsDesc" xml:space="preserve">
     <value>Personer (Många - Få)</value>
   </data>
+  <data name="SortMethodDirectoryDate" xml:space="preserve">
+    <value>Katalog + Datum (A-Ö, Gammalt-Nytt)</value>
+  </data>
+  <data name="SortMethodDirectoryDateDesc" xml:space="preserve">
+    <value>Katalog + Datum (Ö-A, Nytt-Gammalt)</value>
+  </data>
   <data name="FileInfoSearchDate" xml:space="preserve">
     <value>Sök datum</value>
   </data>

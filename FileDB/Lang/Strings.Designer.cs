@@ -3624,6 +3624,24 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Directory + Date (A-Z, Old-New).
+        /// </summary>
+        public static string SortMethodDirectoryDate {
+            get {
+                return ResourceManager.GetString("SortMethodDirectoryDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Directory + Date (Z-A, New-Old).
+        /// </summary>
+        public static string SortMethodDirectoryDateDesc {
+            get {
+                return ResourceManager.GetString("SortMethodDirectoryDateDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Path (A - Z).
         /// </summary>
         public static string SortMethodPath {

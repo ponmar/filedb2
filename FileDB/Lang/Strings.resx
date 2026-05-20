@@ -1313,6 +1313,12 @@ This operation can be slow for a large collection of files or if the media acces
   <data name="SortMethodNumPersonsDesc" xml:space="preserve">
     <value>Persons (High - Low)</value>
   </data>
+  <data name="SortMethodDirectoryDate" xml:space="preserve">
+    <value>Directory + Date (A-Z, Old-New)</value>
+  </data>
+  <data name="SortMethodDirectoryDateDesc" xml:space="preserve">
+    <value>Directory + Date (Z-A, New-Old)</value>
+  </data>
   <data name="FileInfoSearchDate" xml:space="preserve">
     <value>Search for date</value>
   </data>
