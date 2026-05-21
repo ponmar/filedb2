@@ -1057,6 +1057,9 @@ YYYY-MM-DDTHH:MM:SS</value>
   <data name="SearchImageLoadingError" xml:space="preserve">
     <value>Image loading error:</value>
   </data>
+  <data name="SearchTextLoadingError" xml:space="preserve">
+    <value>Text file loading error:</value>
+  </data>
   <data name="SearchFileTypeNotSupported" xml:space="preserve">
     <value>File type not supported.</value>
   </data>

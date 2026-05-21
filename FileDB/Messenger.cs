@@ -23,6 +23,11 @@ public static class Messenger
         var instance = Activator.CreateInstance<T>();
         Send(instance);
     }
+
+    public static void Unregister(object recipient)
+    {
+        WeakReferenceMessenger.Default.UnregisterAll(recipient);
+    }
 }
 
 public static class ObjectExtensions

@@ -36,7 +36,7 @@ public static class DefaultConfigs
     public static Config Default =>
         new(FileToLocationMaxDistance: 300,
             BlacklistedFilePathPatterns: "Thumbs.db;filedb.db;unsorted;TN_",
-            WhitelistedFilePathPatterns: ".jpg;.jpeg;.png;.bmp;.gif;.avi;.mpg;.mp4;.mkv;.mov;.pdf",
+            WhitelistedFilePathPatterns: ".jpg;.jpeg;.png;.bmp;.gif;.avi;.mpg;.mp4;.mkv;.mov;.pdf;.txt;.md",
             IncludeHiddenDirectories: false,
             SlideshowDelay: 3,
             SearchHistorySize: 4,

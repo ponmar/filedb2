@@ -1,6 +1,7 @@
 ﻿using FileDBInterface.Model;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System;
 using System.IO.Abstractions;
 using FileDBInterface.FileFormats;
 using FileDBInterface.Extensions;
@@ -77,6 +78,9 @@ public partial class FileViewModel : ObservableObject
 
     [ObservableProperty]
     public partial int ImageRotation { get; set; } = 0;
+
+    [ObservableProperty]
+    public partial string? TextContent { get; set; } = null;
 
     private string absolutePath = string.Empty;
 
@@ -205,14 +209,27 @@ public partial class FileViewModel : ObservableObject
 
         FileLoadError = string.Empty;
         Image = null;
+        TextContent = null;
 
         absolutePath = filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(selection.Path);
         ImageRotation = -DatabaseParsing.OrientationToDegrees(selection.Orientation ?? 0);
 
+        var fileExtension = System.IO.Path.GetExtension(selection.Path).ToLower();
         var fileType = FileTypeUtils.GetFileType(selection.Path);
         if (fileType == FileType.Picture)
         {
             imageLoader.LoadImage(absolutePath);
+        }
+        else if (fileType == FileType.Document && (fileExtension == ".txt" || fileExtension == ".md"))
+        {
+            try
+            {
+                TextContent = fileSystem.File.ReadAllText(absolutePath);
+            }
+            catch (Exception e)
+            {
+                FileLoadError = Strings.SearchTextLoadingError + $"\n{e.Message}";
+            }
         }
         else
         {
@@ -235,6 +252,7 @@ public partial class FileViewModel : ObservableObject
 
         FileLoadError = Strings.SearchNoMatch;
         Image = null;
+        TextContent = null;
         ImageRotation = 0;
         absolutePath = string.Empty;
     }

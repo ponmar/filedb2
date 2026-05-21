@@ -31,6 +31,22 @@
 						Stretch="Uniform"/>
 				</LayoutTransformControl>
 
+					<!-- Text content (.txt / .md) -->
+					<ScrollViewer
+						Grid.Row="0"
+						Grid.RowSpan="2"
+						Grid.Column="0"
+						Grid.ColumnSpan="3"
+						IsVisible="{Binding TextContent, Converter={x:Static ObjectConverters.IsNotNull}}"
+						HorizontalScrollBarVisibility="Disabled"
+						VerticalScrollBarVisibility="Auto"
+						Margin="10">
+						<SelectableTextBlock
+							Text="{Binding TextContent}"
+							TextWrapping="Wrap"
+							FontFamily="Monospace" />
+					</ScrollViewer>
+
 				<!-- File loading error/info -->
 				<StackPanel Grid.Row="0"
 					Grid.RowSpan="2"

@@ -2787,6 +2787,15 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Text file loading error:.
+        /// </summary>
+        public static string SearchTextLoadingError {
+            get {
+                return ResourceManager.GetString("SearchTextLoadingError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Intersection.
         /// </summary>
         public static string SearchIntersectionButton {
