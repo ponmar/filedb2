@@ -5,7 +5,6 @@ using FileDB.Model;
 using FileDB.ViewModels;
 using FileDB.ViewModels.Search;
 using FileDBInterface.Model;
-using System.IO;
 using System.IO.Abstractions;
 using Xunit;
 

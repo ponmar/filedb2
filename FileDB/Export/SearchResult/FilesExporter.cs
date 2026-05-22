@@ -5,16 +5,13 @@ using System.IO.Abstractions;
 
 namespace FileDB.Export.SearchResult;
 
-public class FilesExporter : ISearchResultExporter
+public class FilesExporter(IFileSystem fileSystem, IFilesystemAccessProvider filesystemAccessProvider) : ISearchResultExporter
 {
     public void Export(SearchResultExport data, string path)
     {
-        var fileSystemAccess = ServiceLocator.Resolve<IFilesystemAccessProvider>();
-        var fileSystem = ServiceLocator.Resolve<IFileSystem>();
-
         foreach (var file in data.Files)
         {
-            var sourceFilePath = fileSystemAccess.FilesystemAccess.ToAbsolutePath(file.OriginalPath);
+            var sourceFilePath = filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(file.OriginalPath);
             var destFilePath = Path.Combine(path, file.ExportedPath);
             var destDir = Path.GetDirectoryName(destFilePath)!;
             if (!fileSystem.Directory.Exists(destDir))

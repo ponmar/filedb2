@@ -123,7 +123,8 @@ public class PdfExporter(IFileSystem fileSystem, IFilesystemAccessProvider files
                         imageContainer = imageContainer.RotateLeft();
                     }
                     var sourceFilePath = filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(picture.OriginalPath);
-                    imageContainer.Image(sourceFilePath).FitArea();
+                    var imageBytes = fileSystem.File.ReadAllBytes(sourceFilePath);
+                    imageContainer.Image(imageBytes).FitArea();
                     filePage.Footer().AlignCenter().Text(text =>
                     {
                         text.CurrentPageNumber();

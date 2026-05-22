@@ -122,9 +122,15 @@ public class SelfContainedHtmlExporter(IFileSystem fileSystem, IFilesystemAccess
 
         if (file.PersonIds.Count > 0)
         {
+            var fileDateTime = DatabaseParsing.ParseFilesDatetime(file.Datetime);
             var persons = data.Persons.Where(x => file.PersonIds.Contains(x.Id));
-            var personsStr = FileTextOverlayCreator.GetPersonsText(file.Datetime, persons, ", ");
-            text += $"<p>&#128578; {personsStr}</p>";
+            var personParts = persons
+                .Select(p => (
+                    Display: FileTextOverlayCreator.GetPersonText(p, file.Datetime),
+                    Tooltip: FileTextOverlayCreator.GetPersonDetailsText(p, fileDateTime)))
+                .OrderBy(x => x.Display)
+                .Select(x => $"<span title=\"{HttpUtility.HtmlEncode(x.Tooltip)}\">{HttpUtility.HtmlEncode(x.Display)}</span>");
+            text += $"<p>&#128578; {string.Join(", ", personParts)}</p>";
         }
 
         if (file.LocationIds.Count > 0)

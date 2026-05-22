@@ -37,7 +37,7 @@ public class FileTextOverlayCreator
         return personStrings;
     }
 
-    private static string GetPersonText(PersonModel person, string? fileDateTime)
+    public static string GetPersonText(PersonModel person, string? fileDateTime)
     {
         return $"{person.FullName}{Utils.GetPersonAgeInFileString(fileDateTime, person.DateOfBirth)}";
     }

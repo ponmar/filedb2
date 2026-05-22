@@ -44,7 +44,7 @@ public class SearchResultExportHandler
         if (exportTypes.Contains(SearchResultExportType.Files))
         {
             cancellationToken.ThrowIfCancellationRequested();
-            new FilesExporter().Export(data, destinationDirectory);
+            new FilesExporter(fileSystem, filesystemAccessProvider).Export(data, destinationDirectory);
         }
 
         if (exportTypes.Contains(SearchResultExportType.Json))
