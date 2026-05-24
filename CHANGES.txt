@@ -1,3 +1,22 @@
+4.19:
+* Add search filter for finding profile files
+* Rename "No meta data" search filter to "Uncategorized"
+* Add new search result sort methods: Number of persons, directory (A-Z) + date & time
+* Add Swedish holiday date selection to date filters
+* Add self-contained HTML export with embedded base64 encoded images
+* Create GPS position links for files/locations for PDF search result export
+* Create location links for HTML & PDF search result export
+* Add more details to person tooltips in HTML export
+* Add support for showing text file content (.txt and .md)
+* Default config setting for whitelisted file path patterns updated with .txt and .md.
+  Use this setting in your configuration by resetting it to default or manually adding it.
+* Press enter in file categorization view to add all visible items
+* Disable search result navigation when metadata view has unsaved changes
+* File categorization toggling fixes and layout improvements
+* Improve person tooltips in categorization view (include person date of birth and deceased date)
+* Add localization for config validator error messages
+* Fix possible duplicate files being returned for some queries
+
 4.18:
 * Unify categorization UI for persons, locations and tags
 * Add bulk EXIF reload tool to the tools tab
