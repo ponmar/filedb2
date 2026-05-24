@@ -1,6 +1,6 @@
 ﻿using FileDB.Extensions;
 using FileDB.Model;
-using FileDBInterface.FileFormats;
+using FileDB.Model.FileFormats;
 using FileDBInterface.Model;
 using FileDBInterface.Validators;
 using System.IO;

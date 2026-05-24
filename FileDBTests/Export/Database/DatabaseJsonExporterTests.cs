@@ -1,6 +1,6 @@
 using FakeItEasy;
 using FileDB.Export.Database;
-using FileDBInterface.FileFormats;
+using FileDB.Model.FileFormats;
 using FileDBInterface.Model;
 using System.IO.Abstractions;
 using Xunit;

@@ -1,7 +1,7 @@
 ﻿using FileDB.Extensions;
 using FileDB.Model;
+using FileDB.Model.FileFormats;
 using FileDBInterface.Extensions;
-using FileDBInterface.FileFormats;
 using FileDBInterface.Model;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;

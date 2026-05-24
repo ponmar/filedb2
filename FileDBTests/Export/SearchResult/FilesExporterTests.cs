@@ -1,7 +1,8 @@
 using FakeItEasy;
 using FileDB.Export.SearchResult;
 using FileDB.Model;
-using FileDBInterface.FileFormats;
+using FileDB.Model.FileFormats;
+using FileDBInterface.Model;
 using System.IO.Abstractions;
 using Xunit;
 

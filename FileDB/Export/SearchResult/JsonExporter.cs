@@ -1,5 +1,5 @@
 ﻿using FileDB.Extensions;
-using FileDBInterface.FileFormats;
+using FileDB.Model.FileFormats;
 using System.IO.Abstractions;
 
 namespace FileDB.Export.SearchResult;

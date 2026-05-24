@@ -1,5 +1,5 @@
 ﻿using FileDB.Lang;
-using FileDBInterface.FileFormats;
+using FileDBInterface.Model;
 using System;
 
 namespace FileDB.Extensions;
@@ -28,6 +28,19 @@ public static class FileTypeExtensions
             FileType.Document => "\xD83D\xDDCE", // Unicode character name "Document"
             FileType.Audio => "\xD83C\xDFB5", // Unicode character name "Musical Note"
             FileType.Unknown => "\x2370", // Unicode characeter name "APL Functional Symbol Quad Question"
+            _ => throw new NotImplementedException(),
+        };
+    }
+
+    public static string[] GetSupportedFileExtensions(this FileType fileType)
+    {
+        return fileType switch
+        {
+            FileType.Picture => [".jpg", ".jpeg", ".png", ".bmp", ".gif"],
+            FileType.Movie => [".mkv", ".avi", ".mpg", ".mov", ".mp4"],
+            FileType.Document => [".doc", ".pdf", ".txt", ".md"],
+            FileType.Audio => [".mp3", ".wav"],
+            FileType.Unknown => [],
             _ => throw new NotImplementedException(),
         };
     }

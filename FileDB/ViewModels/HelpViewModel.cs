@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Extensions;
-using FileDB.Model;
+using FileDB.Model.FileFormats;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

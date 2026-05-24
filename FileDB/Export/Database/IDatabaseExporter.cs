@@ -1,4 +1,4 @@
-﻿using FileDBInterface.FileFormats;
+﻿using FileDB.Model.FileFormats;
 
 namespace FileDB.Export.Database;
 

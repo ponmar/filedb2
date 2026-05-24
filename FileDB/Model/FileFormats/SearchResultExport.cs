@@ -2,16 +2,7 @@
 using System.Collections.Generic;
 using FileDBInterface.Model;
 
-namespace FileDBInterface.FileFormats;
-
-public enum FileType
-{
-    Picture,
-    Movie,
-    Document,
-    Audio,
-    Unknown,
-}
+namespace FileDB.Model.FileFormats;
 
 public record ExportedFile(
     int Id,
@@ -36,11 +27,3 @@ public record SearchResultExport(
     List<LocationModel> Locations,
     List<TagModel> Tags,
     string ApplicationProjectUrl);
-
-public record DatabaseExport(
-    string FileDBVersion,
-    DateTime ExportDateTime,
-    List<PersonModel> Persons,
-    List<LocationModel> Locations,
-    List<TagModel> Tags,
-    List<FileModel> Files);

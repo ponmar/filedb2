@@ -5,7 +5,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using FileDB.Extensions;
 using FileDB.Model;
 using FileDBInterface.DatabaseAccess;
-using FileDBInterface.FileFormats;
 using FileDBInterface.Model;
 using FileDBInterface.Extensions;
 

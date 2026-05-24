@@ -3,7 +3,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
 using System.IO.Abstractions;
-using FileDBInterface.FileFormats;
 using FileDBInterface.Extensions;
 using FileDB.Lang;
 using FileDB.Model;

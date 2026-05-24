@@ -1,5 +1,5 @@
 ﻿using FileDB.Export.Database;
-using FileDBInterface.FileFormats;
+using FileDB.Model.FileFormats;
 using FileDBInterface.Model;
 using System;
 using System.Collections.Generic;

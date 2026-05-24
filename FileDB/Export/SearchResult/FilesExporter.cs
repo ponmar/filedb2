@@ -1,5 +1,5 @@
 ﻿using FileDB.Model;
-using FileDBInterface.FileFormats;
+using FileDB.Model.FileFormats;
 using System.IO;
 using System.IO.Abstractions;
 

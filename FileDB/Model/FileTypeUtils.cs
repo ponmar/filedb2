@@ -1,5 +1,6 @@
-﻿using FileDBInterface.Extensions;
-using FileDBInterface.FileFormats;
+﻿using FileDB.Extensions;
+using FileDBInterface.Extensions;
+using FileDBInterface.Model;
 using System;
 using System.IO;
 using System.Linq;
