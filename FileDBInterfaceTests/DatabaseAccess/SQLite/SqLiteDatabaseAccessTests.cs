@@ -3,13 +3,12 @@ using System.Data;
 using System.Data.SQLite;
 using System.Linq;
 using Dapper;
-using FileDBInterface.DatabaseAccess;
 using FileDBInterface.DatabaseAccess.SQLite;
 using FileDBInterface.Model;
 using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
-namespace FileDBInterfaceTests.DatabaseAccess;
+namespace FileDBInterfaceTests.DatabaseAccess.SQLite;
 
 public class SqLiteDatabaseAccessTests : IDisposable
 {
@@ -23,7 +22,7 @@ public class SqLiteDatabaseAccessTests : IDisposable
         _connectionString = $"FullUri=file:{uniqueName}?mode=memory&cache=shared;foreign keys=true";
         _anchor = new SQLiteConnection(_connectionString);
         _anchor.Open();
-        _anchor.Execute(DatabaseSetup.DatabaseCreationSql);
+        _anchor.Execute(SqLiteDatabaseCreator.DatabaseCreationSql);
         _db = new SqLiteDatabaseAccess(_connectionString, NullLoggerFactory.Instance);
     }
 

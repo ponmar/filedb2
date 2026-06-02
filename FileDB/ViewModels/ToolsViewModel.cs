@@ -12,7 +12,6 @@ using FileDB.Export;
 using FileDB.Lang;
 using FileDB.Model;
 using FileDB.Notifications;
-using FileDBInterface.DatabaseAccess;
 using FileDBInterface.DatabaseAccess.SQLite;
 using FileDBInterface.Model;
 using FileDBInterface.Validators;
@@ -76,7 +75,7 @@ public partial class ToolsViewModel : ObservableObject
         {
             try
             {
-                DatabaseSetup.CreateDatabase(databasePath);
+                SqLiteDatabaseCreator.CreateDatabase(databasePath);
                 await dialogs.ShowInfoDialogAsync(string.Format(Strings.ToolsCreateDatabaseCreated, databasePath));
                 Messenger.Send<CloseModalDialogRequest>();
                 notificationManagement.DismissNotifications<DatabaseMissingNotification>();

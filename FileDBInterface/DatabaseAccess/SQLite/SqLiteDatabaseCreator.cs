@@ -1,11 +1,10 @@
 ﻿using System.Data.SQLite;
 using System.Data;
 using Dapper;
-using FileDBInterface.DatabaseAccess.SQLite;
 
-namespace FileDBInterface.DatabaseAccess;
+namespace FileDBInterface.DatabaseAccess.SQLite;
 
-public static class DatabaseSetup
+public static class SqLiteDatabaseCreator
 {
     public static void CreateDatabase(string databasePath)
     {
@@ -15,7 +14,7 @@ public static class DatabaseSetup
         
         // Set initial database version to 2 (current supported version)
         using var setupConnection = CreateConnection(databasePath);
-        setupConnection.Execute($"pragma user_version = {DatabaseMigrator.SupportedVersion};");
+        setupConnection.Execute($"pragma user_version = {SqLiteDatabaseMigrator.SupportedVersion};");
     }
 
     internal static IDbConnection CreateConnection(string database)

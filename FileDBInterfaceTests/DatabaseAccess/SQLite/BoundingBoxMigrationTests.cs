@@ -1,4 +1,3 @@
-using FileDBInterface.DatabaseAccess;
 using FileDBInterface.Model;
 using FileDBInterface.Validators;
 using System;
@@ -6,8 +5,9 @@ using System.Data.SQLite;
 using System.IO;
 using Dapper;
 using Xunit;
+using FileDBInterface.DatabaseAccess.SQLite;
 
-namespace FileDBInterfaceTests.DatabaseAccess;
+namespace FileDBInterfaceTests.DatabaseAccess.SQLite;
 
 public class BoundingBoxMigrationTests : IDisposable
 {
@@ -18,7 +18,7 @@ public class BoundingBoxMigrationTests : IDisposable
     {
         // Arrange
         tempDbPath = Path.Combine(Path.GetTempPath(), $"test_{Guid.NewGuid()}.db");
-        DatabaseSetup.CreateDatabase(tempDbPath);
+        SqLiteDatabaseCreator.CreateDatabase(tempDbPath);
 
         // Act & Assert: Verify bbox columns are in the schema
         using (var connection = new SQLiteConnection($"Data Source={tempDbPath};foreign keys = true"))
@@ -55,7 +55,7 @@ public class BoundingBoxMigrationTests : IDisposable
     {
         // Arrange
         tempDbPath = Path.Combine(Path.GetTempPath(), $"test_{Guid.NewGuid()}.db");
-        DatabaseSetup.CreateDatabase(tempDbPath);
+        SqLiteDatabaseCreator.CreateDatabase(tempDbPath);
 
         // Act & Assert: Verify we can insert and retrieve bbox data
         using (var connection = new SQLiteConnection($"Data Source={tempDbPath};foreign keys = true"))

@@ -7,7 +7,7 @@ namespace FileDBInterface.DatabaseAccess.SQLite;
 
 public record DatabaseMigrationResult(int FromVersion, int ToVersion, Exception? Exception = null);
 
-public class DatabaseMigrator(string dbPath)
+public class SqLiteDatabaseMigrator(string dbPath)
 {
     // Note: add migration code below when the version is increased
     public const int SupportedVersion = 2;
@@ -36,13 +36,13 @@ public class DatabaseMigrator(string dbPath)
 
     private int GetDatabaseVersion()
     {
-        using var connection = DatabaseSetup.CreateConnection(dbPath);
+        using var connection = SqLiteDatabaseCreator.CreateConnection(dbPath);
         return connection.ExecuteScalar<int>("pragma user_version;");
     }
 
     private void MigrateIteration(int newVersion)
     {
-        using var connection = DatabaseSetup.CreateConnection(dbPath);
+        using var connection = SqLiteDatabaseCreator.CreateConnection(dbPath);
         connection.Open();
 
         using var transaction = connection.BeginTransaction();
