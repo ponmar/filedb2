@@ -7,6 +7,7 @@ using FileDBInterface.Model;
 using FileDB.Model;
 using System;
 using System.Collections.Generic;
+using FileDB.Infrastructure;
 
 namespace FileDB.Views.Search.File;
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Avalonia.Threading;
+using FileDB.Infrastructure;
 using FileDB.Model;
 using FileDB.Notifiers;
 

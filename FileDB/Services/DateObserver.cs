@@ -1,8 +1,9 @@
 ﻿using System;
 using Avalonia.Threading;
+using FileDB.Infrastructure;
 using FileDB.Model;
 
-namespace FileDB;
+namespace FileDB.Services;
 
 public class DateObserver : IDisposable
 {

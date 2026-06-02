@@ -4,7 +4,7 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Input.Platform;
 
-namespace FileDB;
+namespace FileDB.Services;
 
 public interface IClipboardService
 {

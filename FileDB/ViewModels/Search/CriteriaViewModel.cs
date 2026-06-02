@@ -11,6 +11,7 @@ using FileDB.Comparers;
 using FileDB.ViewModels.Search;
 using System;
 using FileDB.ViewModels.Search.Filters;
+using FileDB.Infrastructure;
 
 namespace FileDB.ViewModels;
 

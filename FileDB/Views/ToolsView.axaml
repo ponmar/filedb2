@@ -1,7 +1,7 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="clr-namespace:FileDB.ViewModels"
-             xmlns:model="clr-namespace:FileDB"
+             xmlns:services="clr-namespace:FileDB.Services"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:lang="clr-namespace:FileDB.Lang"
@@ -31,7 +31,7 @@
                         <TextBlock Classes="PageTextBlock" Text="{Binding BackupListHeader}"/>
                         <ListBox IsVisible="{Binding BackupFiles.Count}" Margin="10" ItemsSource="{Binding BackupFiles}" HorizontalAlignment="Left" MaxHeight="150">
                             <ListBox.ItemTemplate>
-                                <DataTemplate x:DataType="model:BackupFile">
+                                <DataTemplate x:DataType="services:BackupFile">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="{Binding Path=Filename}" ToolTip.Tip="{Binding Path=Filename}" />
                                     </StackPanel>

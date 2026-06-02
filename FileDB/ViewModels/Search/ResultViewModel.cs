@@ -12,6 +12,8 @@ using Avalonia.Threading;
 using FileDB.Configuration;
 using FileDB.Sorters;
 using System.Threading.Tasks;
+using FileDB.Infrastructure;
+using FileDB.Services;
 
 namespace FileDB.ViewModels.Search;
 

@@ -7,7 +7,9 @@ using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Extensions;
+using FileDB.Infrastructure;
 using FileDB.Model;
+using FileDB.Services;
 using FileDBInterface.Model;
 using FileDBInterface.Utils;
 

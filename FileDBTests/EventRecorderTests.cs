@@ -1,15 +1,15 @@
-﻿using FileDB;
+﻿using FileDB.Infrastructure;
 using Xunit;
 
 namespace FileDBTests;
 
 record Event();
 
-public class EventsTests
+public class EventRecorderTests
 {
     private readonly EventRecorder recorder;
 
-    public EventsTests()
+    public EventRecorderTests()
     {
         recorder = new();
         recorder.Reset();

@@ -1,6 +1,7 @@
 ﻿using FakeItEasy;
-using FileDB;
+using FileDB.Infrastructure;
 using FileDB.Model;
+using FileDB.Services;
 using FileDB.ViewModels;
 using FileDBInterface.DatabaseAccess;
 using FileDBInterface.FilesystemAccess;

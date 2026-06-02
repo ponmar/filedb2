@@ -7,6 +7,7 @@ using FileDB.ViewModels.Search.File;
 using FileDB.ViewModels.Search;
 using Xunit;
 using FileDBInterface.FilesystemAccess;
+using FileDB.Infrastructure;
 
 namespace FileDBTests.ViewModels;
 

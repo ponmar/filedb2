@@ -4,6 +4,7 @@ using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Configuration;
+using FileDB.Infrastructure;
 using FileDB.Model;
 using FileDB.Notifications;
 using FileDB.ViewModels.Search;

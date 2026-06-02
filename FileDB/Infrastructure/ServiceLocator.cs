@@ -3,7 +3,7 @@ using Castle.MicroKernel;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 
-namespace FileDB;
+namespace FileDB.Infrastructure;
 
 public class ServiceLocator
 {

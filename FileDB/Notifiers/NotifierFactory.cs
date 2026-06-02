@@ -1,5 +1,7 @@
 ﻿using FileDB.Configuration;
+using FileDB.Infrastructure;
 using FileDB.Model;
+using FileDB.Services;
 using FileDBInterface.DatabaseAccess;
 using System.Collections.Generic;
 using System.IO.Abstractions;

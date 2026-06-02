@@ -1,5 +1,5 @@
 ﻿using FakeItEasy;
-using FileDB;
+using FileDB.Infrastructure;
 using FileDB.Model;
 using FileDB.Notifications;
 using FileDB.ViewModels;

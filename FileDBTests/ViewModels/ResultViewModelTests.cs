@@ -1,8 +1,8 @@
 using FakeItEasy;
-using FileDB;
 using FileDB.Configuration;
 using FileDB.Dialogs;
 using FileDB.Model;
+using FileDB.Services;
 using FileDB.ViewModels.Search;
 using FileDBInterface.FilesystemAccess;
 using FileDBInterface.Model;

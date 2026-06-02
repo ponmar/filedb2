@@ -8,6 +8,7 @@ using FileDB.ViewModels.Search;
 using FileDB.ViewModels.Search.File;
 using FileDBInterface.Model;
 using FileDB.Model;
+using FileDB.Infrastructure;
 
 namespace FileDB.Views.Search;
 

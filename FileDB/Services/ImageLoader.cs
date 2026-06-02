@@ -3,9 +3,10 @@ using System.Collections.Concurrent;
 using System.Linq;
 using System.Threading;
 using Avalonia.Media.Imaging;
+using FileDB.Infrastructure;
 using FileDB.Model;
 
-namespace FileDB;
+namespace FileDB.Services;
 
 public interface IImageLoader
 {

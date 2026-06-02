@@ -1,12 +1,12 @@
 using FakeItEasy;
 using Xunit;
-using FileDB;
 using FileDB.Notifications;
 using FileDB.ViewModels;
 using FileDB.Dialogs;
 using FileDB.Model;
 using FileDBInterface.FilesystemAccess;
 using FileDBInterface.Model;
+using FileDB.Services;
 
 namespace FileDBTests.ViewModels;
 

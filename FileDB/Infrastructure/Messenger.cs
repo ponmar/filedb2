@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using System;
 
-namespace FileDB;
+namespace FileDB.Infrastructure;
 
 public static class Messenger
 {

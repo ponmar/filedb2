@@ -1,7 +1,9 @@
 ﻿using FileDB.Dialogs;
+using FileDB.Infrastructure;
 using FileDB.Model;
 using FileDB.Notifications;
 using FileDB.Notifiers;
+using FileDB.Services;
 using FileDB.ViewModels;
 using FileDB.ViewModels.Dialogs;
 using FileDB.ViewModels.Search;

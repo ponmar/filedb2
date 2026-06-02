@@ -1,6 +1,6 @@
 ﻿using FileDB.Model;
 
-namespace FileDB;
+namespace FileDB.Services;
 
 public interface IFilesWritePermissionChecker
 {

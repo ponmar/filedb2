@@ -12,6 +12,8 @@ using FileDB.Dialogs;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Collections.Generic;
+using FileDB.Infrastructure;
+using FileDB.Services;
 
 namespace FileDB.ViewModels.Search;
 
