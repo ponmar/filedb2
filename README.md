@@ -6,17 +6,13 @@ This is a project for storing, maintaining and presenting meta-data (persons, lo
 
 FileDB provides a desktop application and ways for exporting data to 3rd party applications. Releases are currently only published for Windows, but it is possible to build and run the application in Linux.
 
-FileDB pros:
+Key features:
 
 * Own your data: No data is shared with other parties
-* Control your data: All data is stored in an SQLite database and may be converted for future use depending on your future needs (no lock-in effect). The FileDB application has support for exporting to JSON format.
+* Control your data: All data is stored in an SQLite database and may be converted for future use depending on your future needs (no lock-in effect)
 * Search capabilities: Find files given a basic search criterion. Combine criteria for creating an advanced search
 * The built-in file browser supports showing extra data such as person age
-* 3rd party software integrations
-
-FileDB cons:
-
-* Categorizing files is a bit time consuming. However, the main application tries to make this process as simple as possible. Competing cloud services usually identifies persons automatically with face recognition, but that feature is not implemented in FileDB.
+* Database and search result export to simplify 3rd party software integrations
 
 ## Main Application
 
