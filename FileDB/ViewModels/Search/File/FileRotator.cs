@@ -11,10 +11,12 @@ public interface IFileRotator
 public class FileRotator : IFileRotator
 {
     private readonly IDatabaseAccessProvider dbAccessProvider;
+    private readonly IBoundingBoxRotator boundingBoxRotator;
 
-    public FileRotator(IDatabaseAccessProvider dbAccessProvider)
+    public FileRotator(IDatabaseAccessProvider dbAccessProvider, IBoundingBoxRotator boundingBoxRotator)
     {
         this.dbAccessProvider = dbAccessProvider;
+        this.boundingBoxRotator = boundingBoxRotator;
     }
 
     public int Rotate(FileModel file, int currentDegrees, RotationDirection direction)
@@ -22,6 +24,7 @@ public class FileRotator : IFileRotator
         var newDegrees = CalculateNewDegrees(currentDegrees, direction);
         var newOrientation = DatabaseParsing.DegreesToOrientation(newDegrees);
         dbAccessProvider.DbAccess.UpdateFileOrientation(file.Id, newOrientation);
+        boundingBoxRotator.RotateFileBoundingBoxes(file.Id, direction);
         file.Orientation = newOrientation;
         return newDegrees;
     }

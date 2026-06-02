@@ -476,6 +476,49 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
         connection.Execute(sql, new { fileId, personId });
     }
 
+    public void UpdateFilePersonBoundingBox(int fileId, int personId, PersonBoundingBox? boundingBox)
+    {
+        if (boundingBox is not null)
+        {
+            var validator = new PersonBoundingBoxValidator();
+            var validationResult = validator.Validate(boundingBox);
+            if (!validationResult.IsValid)
+            {
+                throw new DataValidationException($"Bounding box validation failed: {string.Join(", ", validationResult.Errors.Select(e => e.ErrorMessage))}");
+            }
+        }
+
+        using var connection = DatabaseSetup.CreateConnection(database);
+        var sql = "update [filepersons] set BBoxX = @x, BBoxY = @y, BBoxWidth = @width, BBoxHeight = @height where FileId = @fileId and PersonId = @personId";
+        connection.Execute(sql, new { x = boundingBox?.X, y = boundingBox?.Y, width = boundingBox?.Width, height = boundingBox?.Height, fileId, personId });
+    }
+
+    public PersonBoundingBox? GetFilePersonBoundingBox(int fileId, int personId)
+    {
+        using var connection = DatabaseSetup.CreateConnection(database);
+        var sql = "select BBoxX, BBoxY, BBoxWidth, BBoxHeight from [filepersons] where FileId = @fileId and PersonId = @personId";
+        var result = connection.QuerySingleOrDefault<(double? X, double? Y, double? Width, double? Height)?>(sql, new { fileId, personId });
+        
+        if (result is null || result.Value.X is null || result.Value.Y is null || result.Value.Width is null || result.Value.Height is null)
+        {
+            return null;
+        }
+
+        return new PersonBoundingBox(result.Value.X!.Value, result.Value.Y!.Value, result.Value.Width!.Value, result.Value.Height!.Value);
+    }
+
+    public IEnumerable<(int PersonId, PersonBoundingBox BoundingBox)> GetFilePersonBoundingBoxes(int fileId)
+    {
+        using var connection = DatabaseSetup.CreateConnection(database);
+        var sql = "select PersonId, BBoxX, BBoxY, BBoxWidth, BBoxHeight from [filepersons] where FileId = @fileId and BBoxX is not null and BBoxY is not null and BBoxWidth is not null and BBoxHeight is not null";
+        var results = connection.Query<(int PersonId, double? X, double? Y, double? Width, double? Height)>(sql, new { fileId });
+        
+        return results
+            .Where(r => r.X is not null && r.Y is not null && r.Width is not null && r.Height is not null)
+            .Select(r => (r.PersonId, new PersonBoundingBox(r.X!.Value, r.Y!.Value, r.Width!.Value, r.Height!.Value)))
+            .ToList();
+    }
+
     public void InsertFileLocation(int fileId, int locationId)
     {
         using var connection = DatabaseSetup.CreateConnection(database);

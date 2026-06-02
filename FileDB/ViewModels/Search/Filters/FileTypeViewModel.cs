@@ -6,7 +6,6 @@ using FileDB.Extensions;
 using FileDB.Model;
 using FileDBInterface.DatabaseAccess;
 using FileDBInterface.Model;
-using FileDBInterface.Extensions;
 
 namespace FileDB.ViewModels.Search.Filters;
 

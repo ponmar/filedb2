@@ -1529,4 +1529,7 @@ This operation can be slow for a large collection of files or if the media acces
   <data name="ConfigValidatorInvalidLanguage" xml:space="preserve">
     <value>Invalid language</value>
   </data>
+  <data name="CategorizationPlaceBoundingBoxToolTip" xml:space="preserve">
+    <value>Place person bounding box in image (image files only). Draw a tight rectangle around the face (not the head), including all facial features, with a small consistent margin.</value>
+  </data>
 </root>

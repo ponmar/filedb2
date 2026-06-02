@@ -9,8 +9,9 @@ namespace FileDBTests.ViewModels;
 public class FileRotatorTests
 {
     private readonly IDatabaseAccessProvider dbAccessProvider = A.Fake<IDatabaseAccessProvider>();
+    private readonly IBoundingBoxRotator boundingBoxRotator = A.Fake<IBoundingBoxRotator>();
 
-    private FileRotator CreateFileRotator() => new(dbAccessProvider);
+    private FileRotator CreateFileRotator() => new(dbAccessProvider, boundingBoxRotator);
 
     // --- Pure degree calculation (static method) ---
 
@@ -97,5 +98,29 @@ public class FileRotatorTests
         var result = rotator.Rotate(file, 180, RotationDirection.Clockwise);
 
         Assert.Equal(90, result);
+    }
+
+    [Fact]
+    public void Rotate_CallsBoundingBoxRotator()
+    {
+        var file = new FileModel { Id = 42, Path = "file.jpg" };
+        var rotator = CreateFileRotator();
+
+        rotator.Rotate(file, 0, RotationDirection.Clockwise);
+
+        A.CallTo(() => boundingBoxRotator.RotateFileBoundingBoxes(42, RotationDirection.Clockwise))
+            .MustHaveHappenedOnceExactly();
+    }
+
+    [Fact]
+    public void Rotate_CallsBoundingBoxRotatorWithCorrectFileId()
+    {
+        var file = new FileModel { Id = 123, Path = "file.jpg" };
+        var rotator = CreateFileRotator();
+
+        rotator.Rotate(file, 90, RotationDirection.CounterClockwise);
+
+        A.CallTo(() => boundingBoxRotator.RotateFileBoundingBoxes(123, RotationDirection.CounterClockwise))
+            .MustHaveHappenedOnceExactly();
     }
 }

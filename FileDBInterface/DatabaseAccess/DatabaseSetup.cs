@@ -1,6 +1,7 @@
 ﻿using System.Data.SQLite;
 using System.Data;
 using Dapper;
+using FileDBInterface.DatabaseAccess.SQLite;
 
 namespace FileDBInterface.DatabaseAccess;
 
@@ -11,6 +12,10 @@ public static class DatabaseSetup
         SQLiteConnection.CreateFile(databasePath);
         using var connection = CreateConnection(databasePath);
         connection.Query(DatabaseCreationSql);
+        
+        // Set initial database version to 2 (current supported version)
+        using var setupConnection = CreateConnection(databasePath);
+        setupConnection.Execute($"pragma user_version = {DatabaseMigrator.SupportedVersion};");
     }
 
     internal static IDbConnection CreateConnection(string database)
@@ -57,6 +62,10 @@ create table tags(
 create table filepersons(
     FileId integer references files(Id) on delete cascade,
     PersonId integer references persons(Id) on delete cascade,
+    BBoxX real, /* Format: null or value in range [0.0, 1.0] - normalized x coordinate relative to rotated image dimensions */
+    BBoxY real, /* Format: null or value in range [0.0, 1.0] - normalized y coordinate relative to rotated image dimensions */
+    BBoxWidth real, /* Format: null or value in range [0.0, 1.0] - normalized width relative to rotated image dimensions */
+    BBoxHeight real, /* Format: null or value in range [0.0, 1.0] - normalized height relative to rotated image dimensions */
     primary key(FileId, PersonId)
 );
 

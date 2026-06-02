@@ -216,6 +216,20 @@ public class NoDatabaseAccess : IDatabaseAccess
     {
     }
 
+    public void UpdateFilePersonBoundingBox(int fileId, int personId, PersonBoundingBox? boundingBox)
+    {
+    }
+
+    public PersonBoundingBox? GetFilePersonBoundingBox(int fileId, int personId)
+    {
+        return null;
+    }
+
+    public IEnumerable<(int PersonId, PersonBoundingBox BoundingBox)> GetFilePersonBoundingBoxes(int fileId)
+    {
+        return [];
+    }
+
     public void InsertFileLocation(int fileId, int locationId)
     {
     }

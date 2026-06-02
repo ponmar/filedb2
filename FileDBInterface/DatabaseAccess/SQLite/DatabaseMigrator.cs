@@ -10,7 +10,7 @@ public record DatabaseMigrationResult(int FromVersion, int ToVersion, Exception?
 public class DatabaseMigrator(string dbPath)
 {
     // Note: add migration code below when the version is increased
-    private const int SupportedVersion = 1;
+    public const int SupportedVersion = 2;
 
     public bool NeedsMigration => GetDatabaseVersion() < SupportedVersion;
 
@@ -62,6 +62,14 @@ public class DatabaseMigrator(string dbPath)
                     var sql = "update [persons] set FullName = @FullName where Id = @Id";
                     connection.Execute(sql, person, transaction: transaction);
                 }
+                break;
+
+            case 2:
+                // filepersons table: add bounding box columns
+                connection.Execute("ALTER TABLE filepersons ADD COLUMN BBoxX real", transaction: transaction);
+                connection.Execute("ALTER TABLE filepersons ADD COLUMN BBoxY real", transaction: transaction);
+                connection.Execute("ALTER TABLE filepersons ADD COLUMN BBoxWidth real", transaction: transaction);
+                connection.Execute("ALTER TABLE filepersons ADD COLUMN BBoxHeight real", transaction: transaction);
                 break;
 
             default:

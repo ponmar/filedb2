@@ -39,3 +39,7 @@ public record ImageLoaded(string FilePath, Bitmap Image);
 public record ImageLoadError(string FilePath, Exception Exception);
 
 public record CloseModalDialogRequest;
+public record StartPersonBoundingBoxPlacement(int FileId, int PersonId);
+public record PersonBoundingBoxPlacementAborted(int FileId, int PersonId);
+public record BoundingBoxStateChanged(int FileId, int PersonId, bool HasBbox);
+public record FilePersonRemoved(int FileId, int PersonId);

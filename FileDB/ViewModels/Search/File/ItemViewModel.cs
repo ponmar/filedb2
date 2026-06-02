@@ -20,6 +20,12 @@ public partial class ItemViewModel : ObservableObject
     [ObservableProperty]
     public partial bool IsVisible { get; set; }
 
+    [ObservableProperty]
+    public partial bool HasBoundingBox { get; set; }
+
+    [ObservableProperty]
+    public partial bool IsPlacingBoundingBox { get; set; }
+
     private readonly string nameForFilters;
 
     public ItemViewModel(PersonModel person, IConfigProvider configProvider)
@@ -58,6 +64,8 @@ public partial class ItemViewModel : ObservableObject
     };
 
     public string DisplayName => string.IsNullOrWhiteSpace(Prefix) ? Name : $"{Prefix} {Name}";
+
+    public bool IsPerson => Type == CombinedItemType.Person;
 
     public void ApplyFilters(IEnumerable<string> filters, bool caseSensitive)
     {

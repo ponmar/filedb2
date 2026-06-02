@@ -27,6 +27,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
     [NotifyPropertyChangedFor(nameof(CanApplyCategorizationFromPrevEdit))]
     [NotifyPropertyChangedFor(nameof(CanMarkCurrentFileAsPrevEdited))]
     [NotifyPropertyChangedFor(nameof(UpdateItemsVisible))]
+    [NotifyPropertyChangedFor(nameof(CanPlaceBoundingBox))]
     public partial FileModel? SelectedFile { get; set; }
 
     public bool FileSelected => SelectedFile is not null;
@@ -91,6 +92,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CanCategorize))]
     [NotifyPropertyChangedFor(nameof(UpdateItemsVisible))]
+    [NotifyPropertyChangedFor(nameof(CanPlaceBoundingBox))]
     public partial bool ReadOnly { get; set; }
 
     public bool CanCategorize => !ReadOnly && FileSelected;
@@ -107,6 +109,8 @@ public partial class FileCategorizationViewModel : ObservableValidator
     public bool CanApplyCategorizationFromPrevEdit => SelectedFile is not null && PrevEditedFileId is not null && SelectedFile.Id != PrevEditedFileId;
 
     public bool CanMarkCurrentFileAsPrevEdited => SelectedFile is not null && SelectedFile.Id != PrevEditedFileId;
+
+    public bool CanPlaceBoundingBox => !ReadOnly && SelectedFile is not null && FileTypeUtils.GetFileType(SelectedFile.Path) == FileType.Picture;
 
     public ObservableCollection<ItemViewModel> Items { get; } = [];
 
@@ -145,11 +149,14 @@ public partial class FileCategorizationViewModel : ObservableValidator
         Items.Clear();
 
         var personsInSelectedFile = SelectedFile is null ? [] : dbAccessProvider.DbAccess.GetPersonsFromFile(SelectedFile.Id);
+        var filePersonBoundingBoxes = SelectedFile is null ? [] : dbAccessProvider.DbAccess.GetFilePersonBoundingBoxes(SelectedFile.Id);
+        
         foreach (var person in personsRepository.Persons)
         {
             Items.Add(new ItemViewModel(person, configProvider)
             {
                 IsChecked = personsInSelectedFile.Any(x => x.Id == person.Id),
+                HasBoundingBox = filePersonBoundingBoxes.Any(b => b.PersonId == person.Id),
             });
         }
 
@@ -270,6 +277,48 @@ public partial class FileCategorizationViewModel : ObservableValidator
             ReadOnly = configProvider.Config.ReadOnly;
         });
 
+        this.RegisterForEvent<BoundingBoxStateChanged>((x) =>
+        {
+            // Update the HasBoundingBox state for the person and ensure they're checked
+            if (SelectedFile is not null && x.FileId == SelectedFile.Id)
+            {
+                var personItem = Items.FirstOrDefault(item => item.Type == CombinedItemType.Person && item.Id == x.PersonId);
+                if (personItem is not null)
+                {
+                    personItem.HasBoundingBox = x.HasBbox;
+                    personItem.IsPlacingBoundingBox = false;
+                    // If a bbox was just created, make sure the person is checked (added to file)
+                    if (x.HasBbox && !personItem.IsChecked)
+                    {
+                        personItem.IsChecked = true;
+                    }
+                }
+            }
+        });
+
+        this.RegisterForEvent<StartPersonBoundingBoxPlacement>((x) =>
+        {
+            // Set placement mode indicator on the person item
+            if (SelectedFile is not null && x.FileId == SelectedFile.Id)
+            {
+                var personItem = Items.FirstOrDefault(item => item.Type == CombinedItemType.Person && item.Id == x.PersonId);
+                if (personItem is not null)
+                {
+                    personItem.IsPlacingBoundingBox = true;
+                }
+            }
+        });
+
+        this.RegisterForEvent<PersonBoundingBoxPlacementAborted>((x) =>
+        {
+            // Clear placement mode indicator when aborted
+            var personItem = Items.FirstOrDefault(item => item.Type == CombinedItemType.Person && item.Id == x.PersonId);
+            if (personItem is not null)
+            {
+                personItem.IsPlacingBoundingBox = false;
+            }
+        });
+
         this.RegisterForEvent<FileSelectionChanged>((x) =>
         {
             if (fileSelector.SelectedFile is null)
@@ -301,6 +350,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
         var filePersons = dbAccessProvider.DbAccess.GetPersonsFromFile(SelectedFile.Id);
         var fileLocations = dbAccessProvider.DbAccess.GetLocationsFromFile(SelectedFile.Id);
         var fileTags = dbAccessProvider.DbAccess.GetTagsFromFile(SelectedFile.Id);
+        var filePersonBoundingBoxes = dbAccessProvider.DbAccess.GetFilePersonBoundingBoxes(SelectedFile.Id);
 
         foreach (var item in Items)
         {
@@ -311,6 +361,12 @@ public partial class FileCategorizationViewModel : ObservableValidator
                 CombinedItemType.Tag => fileTags.Any(t => t.Id == item.Id),
                 _ => item.IsChecked,
             };
+            
+            // Set HasBoundingBox for persons
+            if (item.Type == CombinedItemType.Person)
+            {
+                item.HasBoundingBox = filePersonBoundingBoxes.Any(b => b.PersonId == item.Id);
+            }
         }
         OnPropertyChanged(nameof(CategorizationHeader));
         OnPropertyChanged(nameof(CategorizationHeaderToolTip));
@@ -511,7 +567,10 @@ public partial class FileCategorizationViewModel : ObservableValidator
         {
             dbAccessProvider.DbAccess.DeleteFilePerson(SelectedFile.Id, personId);
 
-            Items.First(x => x.Type == CombinedItemType.Person && x.Id == personId).IsChecked = false;
+            var item = Items.First(x => x.Type == CombinedItemType.Person && x.Id == personId);
+            item.IsChecked = false;
+            item.HasBoundingBox = false;  // Clear the bounding box indicator in UI
+            
             OnPropertyChanged(nameof(CategorizationHeader));
             OnPropertyChanged(nameof(CategorizationHeaderToolTip));
 
@@ -519,6 +578,9 @@ public partial class FileCategorizationViewModel : ObservableValidator
             var person = dbAccessProvider.DbAccess.GetPersonById(personId);
             AddUpdateHistoryItem(CombinedItemType.Person, person.Id, person.FullName, false);
             SetEditedFile();
+            
+            // Notify that a person was removed so FileViewModel can reload bounding boxes
+            Messenger.Send(new FilePersonRemoved(SelectedFile.Id, personId));
         }
     }
 
@@ -812,6 +874,24 @@ public partial class FileCategorizationViewModel : ObservableValidator
                 SelectedFile.Position = updatedFile.Position;
                 SelectedFile.Orientation = updatedFile.Orientation;
                 Messenger.Send<FileEdited>();
+            }
+        }
+    }
+
+    [RelayCommand]
+    private void PlaceBoundingBox(ItemViewModel item)
+    {
+        if (SelectedFile is not null && item.Type == CombinedItemType.Person)
+        {
+            if (item.HasBoundingBox)
+            {
+                // Toggle OFF - delete bounding box
+                RemoveFilePersonFromCurrentFile(item.Id);
+            }
+            else
+            {
+                // Toggle ON - start placement mode
+                Messenger.Send(new StartPersonBoundingBoxPlacement(SelectedFile.Id, item.Id));
             }
         }
     }

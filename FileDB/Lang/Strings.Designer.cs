@@ -4279,5 +4279,23 @@ namespace FileDB.Lang {
                 return ResourceManager.GetString("WindowModeNormal", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Place person bounding box in image (image files only).
+        /// </summary>
+        public static string CategorizationPlaceBoundingBoxToolTip {
+            get {
+                return ResourceManager.GetString("CategorizationPlaceBoundingBoxToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} (ID: {1}).
+        /// </summary>
+        public static string FileViewBoundingBoxPersonTooltip {
+            get {
+                return ResourceManager.GetString("FileViewBoundingBoxPersonTooltip", resourceCulture);
+            }
+        }
     }
 }

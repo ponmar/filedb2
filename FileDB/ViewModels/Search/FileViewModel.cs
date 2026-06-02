@@ -11,6 +11,7 @@ using Avalonia.Threading;
 using FileDB.Dialogs;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace FileDB.ViewModels.Search;
 
@@ -81,6 +82,21 @@ public partial class FileViewModel : ObservableObject
     [ObservableProperty]
     public partial string? TextContent { get; set; } = null;
 
+    [ObservableProperty]
+    public partial bool IsPlacingBoundingBox { get; set; } = false;
+
+    [ObservableProperty]
+    public partial int PlacingPersonId { get; set; } = -1;
+
+    [ObservableProperty]
+    public partial double ImageWidth { get; set; } = 1.0;
+
+    [ObservableProperty]
+    public partial double ImageHeight { get; set; } = 1.0;
+
+    [ObservableProperty]
+    public partial List<(int PersonId, PersonBoundingBox BBox)> FilePersonBoundingBoxes { get; set; } = [];
+
     private string absolutePath = string.Empty;
 
     private readonly IConfigProvider configProvider;
@@ -134,6 +150,11 @@ public partial class FileViewModel : ObservableObject
                 if (x.FilePath == absolutePath)
                 {
                     Image = x.Image;
+                    if (x.Image is not null)
+                    {
+                        ImageWidth = x.Image.PixelSize.Width;
+                        ImageHeight = x.Image.PixelSize.Height;
+                    }
                 }
             });
         });
@@ -148,6 +169,38 @@ public partial class FileViewModel : ObservableObject
                     Image = null;
                 }
             });
+        });
+
+        this.RegisterForEvent<StartPersonBoundingBoxPlacement>((msg) =>
+        {
+            if (SelectedFile is not null && SelectedFile.Id == msg.FileId)
+            {
+                IsPlacingBoundingBox = true;
+                PlacingPersonId = msg.PersonId;
+            }
+        });
+
+        this.RegisterForEvent<PersonBoundingBoxPlacementAborted>((msg) =>
+        {
+            // Reset placement state when ESC is pressed or placement is otherwise aborted
+            IsPlacingBoundingBox = false;
+            PlacingPersonId = -1;
+        });
+
+        this.RegisterForEvent<FilePersonRemoved>((msg) =>
+        {
+            if (SelectedFile is not null && SelectedFile.Id == msg.FileId)
+            {
+                LoadFilePersonBoundingBoxes(msg.FileId);
+            }
+        });
+
+        this.RegisterForEvent<FileEdited>((msg) =>
+        {
+            if (SelectedFile is not null)
+            {
+                LoadFilePersonBoundingBoxes(SelectedFile.Id);
+            }
         });
     }
 
@@ -209,6 +262,9 @@ public partial class FileViewModel : ObservableObject
         FileLoadError = string.Empty;
         Image = null;
         TextContent = null;
+        IsPlacingBoundingBox = false;
+        PlacingPersonId = -1;
+        FilePersonBoundingBoxes = [];
 
         absolutePath = filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(selection.Path);
         ImageRotation = -DatabaseParsing.OrientationToDegrees(selection.Orientation ?? 0);
@@ -218,6 +274,7 @@ public partial class FileViewModel : ObservableObject
         if (fileType == FileType.Picture)
         {
             imageLoader.LoadImage(absolutePath);
+            LoadFilePersonBoundingBoxes(selection.Id);
         }
         else if (fileType == FileType.Document && (fileExtension == ".txt" || fileExtension == ".md"))
         {
@@ -254,6 +311,22 @@ public partial class FileViewModel : ObservableObject
         TextContent = null;
         ImageRotation = 0;
         absolutePath = string.Empty;
+        IsPlacingBoundingBox = false;
+        PlacingPersonId = -1;
+        FilePersonBoundingBoxes = [];
+        ImageWidth = 1.0;
+        ImageHeight = 1.0;
+    }
+
+    public virtual void LoadFilePersonBoundingBoxes(int fileId)
+    {
+        var bboxes = dbAccessProvider.DbAccess.GetFilePersonBoundingBoxes(fileId);
+        var newList = new List<(int PersonId, PersonBoundingBox BBox)>();
+        foreach (var (personId, bbox) in bboxes)
+        {
+            newList.Add((personId, bbox));
+        }
+        FilePersonBoundingBoxes = newList;
     }
 
     [RelayCommand]

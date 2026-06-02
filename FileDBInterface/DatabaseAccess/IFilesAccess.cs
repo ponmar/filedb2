@@ -57,6 +57,9 @@ public interface IFilesAccess
 
     void InsertFilePerson(int fileId, int personId);
     void DeleteFilePerson(int fileId, int personId);
+    void UpdateFilePersonBoundingBox(int fileId, int personId, PersonBoundingBox? boundingBox);
+    PersonBoundingBox? GetFilePersonBoundingBox(int fileId, int personId);
+    IEnumerable<(int PersonId, PersonBoundingBox BoundingBox)> GetFilePersonBoundingBoxes(int fileId);
 
     void InsertFileLocation(int fileId, int locationId);
     void DeleteFileLocation(int fileId, int locationId);

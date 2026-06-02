@@ -67,6 +67,7 @@ public static class Bootstrapper
         ServiceLocator.RegisterSingleton<CriteriaViewModel>(
             typeof(CriteriaViewModel),
             typeof(ICriteriaViewModel));
+        ServiceLocator.RegisterSingleton<IBoundingBoxRotator, BoundingBoxRotator>();
         ServiceLocator.RegisterSingleton<IFileRotator, FileRotator>();
         ServiceLocator.RegisterSingleton<FileCategorizationViewModel>();
         ServiceLocator.RegisterTransient<AddLocationViewModel>();
