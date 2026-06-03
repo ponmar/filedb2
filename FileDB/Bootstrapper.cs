@@ -9,6 +9,7 @@ using FileDB.ViewModels.Dialogs;
 using FileDB.ViewModels.Search;
 using FileDB.ViewModels.Search.File;
 using FileDB.ViewModels.Search.Filters;
+using FileDBInterface.DatabaseAccess.SQLite;
 using Microsoft.Extensions.Logging;
 using NReco.Logging.File;
 using System;
@@ -77,6 +78,7 @@ public static class Bootstrapper
         ServiceLocator.RegisterTransient<AddTagViewModel>();
 
         ServiceLocator.RegisterSingleton<IImageLoader, ImageLoader>();
+        ServiceLocator.RegisterSingleton<IDatabaseCreator, SqLiteDatabaseCreator>();
 
         ServiceLocator.RegisterTransient<ExportSearchResultViewModel>();
 

@@ -4,17 +4,24 @@ using Dapper;
 
 namespace FileDBInterface.DatabaseAccess.SQLite;
 
-public static class SqLiteDatabaseCreator
+public class SqLiteDatabaseCreator : IDatabaseCreator
 {
-    public static void CreateDatabase(string databasePath)
+    public void CreateDatabase(string databasePath)
     {
         SQLiteConnection.CreateFile(databasePath);
         using var connection = CreateConnection(databasePath);
         connection.Query(DatabaseCreationSql);
-        
-        // Set initial database version to 2 (current supported version)
-        using var setupConnection = CreateConnection(databasePath);
-        setupConnection.Execute($"pragma user_version = {SqLiteDatabaseMigrator.SupportedVersion};");
+        connection.Execute($"pragma user_version = {SqLiteDatabaseMigrator.SupportedVersion};");
+    }
+
+    public IDbConnection CreateInMemory()
+    {
+        var connectionString = "Data Source=:memory:;foreign keys=true";
+        var connection = new SQLiteConnection(connectionString);
+        connection.Open();
+        connection.Query(DatabaseCreationSql);
+        connection.Execute($"pragma user_version = {SqLiteDatabaseMigrator.SupportedVersion};");
+        return connection;
     }
 
     internal static IDbConnection CreateConnection(string database)

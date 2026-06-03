@@ -4,6 +4,7 @@ using FileDB.Notifications;
 using FileDB.ViewModels;
 using FileDB.Dialogs;
 using FileDB.Model;
+using FileDBInterface.DatabaseAccess.SQLite;
 using FileDBInterface.FilesystemAccess;
 using FileDBInterface.Model;
 using FileDB.Services;
@@ -19,11 +20,12 @@ public class ToolsViewModelTests
     private readonly System.IO.Abstractions.IFileSystem fileSystem = A.Fake<System.IO.Abstractions.IFileSystem>();
     private readonly IClipboardService clipboardService = A.Fake<IClipboardService>();
     private readonly INotificationManagement notificationManagement = A.Fake<INotificationManagement>();
+    private readonly IDatabaseCreator databaseCreator = A.Fake<IDatabaseCreator>();
     private readonly IConfigUpdater configUpdater = A.Fake<IConfigUpdater>();
 
     private ToolsViewModel CreateViewModel()
     {
-        return new ToolsViewModel(configProvider, dbAccessProvider, filesystemAccessProvider, dialogs, fileSystem, clipboardService, notificationManagement, configUpdater);
+        return new ToolsViewModel(configProvider, dbAccessProvider, filesystemAccessProvider, dialogs, fileSystem, clipboardService, notificationManagement, configUpdater, databaseCreator);
     }
 
     private void SetupFilePaths(string filesRootDir = "/files", string dbPath = "/db.db")
@@ -63,6 +65,7 @@ public class ToolsViewModelTests
     {
         SetupFilePaths();
         A.CallTo(() => fileSystem.File.Exists("/db.db")).Returns(true);
+        A.CallTo(() => databaseCreator.CreateDatabase(A<string>._)).DoesNothing();
 
         var viewModel = CreateViewModel();
         viewModel.CreateDatabaseCommand.Execute(null);
@@ -76,6 +79,7 @@ public class ToolsViewModelTests
         SetupFilePaths();
         A.CallTo(() => fileSystem.File.Exists(A<string>._)).Returns(false);
         A.CallTo(() => dialogs.ShowConfirmDialogAsync(A<string>._)).Returns(false);
+        A.CallTo(() => databaseCreator.CreateDatabase(A<string>._)).DoesNothing();
 
         var viewModel = CreateViewModel();
         viewModel.CreateDatabaseCommand.Execute(null);

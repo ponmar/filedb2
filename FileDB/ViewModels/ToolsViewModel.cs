@@ -48,8 +48,9 @@ public partial class ToolsViewModel : ObservableObject
     private readonly IClipboardService clipboardService;
     private readonly INotificationManagement notificationManagement;
     private readonly IConfigUpdater configUpdater;
+    private readonly IDatabaseCreator databaseCreator;
 
-    public ToolsViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IDialogs dialogs, IFileSystem fileSystem, IClipboardService clipboardService, INotificationManagement notificationManagement, IConfigUpdater configUpdater)
+    public ToolsViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IDialogs dialogs, IFileSystem fileSystem, IClipboardService clipboardService, INotificationManagement notificationManagement, IConfigUpdater configUpdater, IDatabaseCreator databaseCreator)
     {
         this.configProvider = configProvider;
         this.dbAccessProvider = dbAccessProvider;
@@ -59,6 +60,7 @@ public partial class ToolsViewModel : ObservableObject
         this.clipboardService = clipboardService;
         this.notificationManagement = notificationManagement;
         this.configUpdater = configUpdater;
+        this.databaseCreator = databaseCreator;
         ScanBackupFiles();
     }
 
@@ -77,7 +79,7 @@ public partial class ToolsViewModel : ObservableObject
         {
             try
             {
-                SqLiteDatabaseCreator.CreateDatabase(databasePath);
+                databaseCreator.CreateDatabase(databasePath);
                 await dialogs.ShowInfoDialogAsync(string.Format(Strings.ToolsCreateDatabaseCreated, databasePath));
                 Messenger.Send<CloseModalDialogRequest>();
                 notificationManagement.DismissNotifications<DatabaseMissingNotification>();
