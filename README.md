@@ -35,7 +35,6 @@ The following search filters are available. Multiple filters can be added and co
 | File Type | Filter by file type (e.g., image, video) |
 | Location | Filter by assigned location (can be negated) |
 | No Date/Time | Files that have no date/time metadata |
-| No Meta Data | Files that have no meta-data (no persons, locations or tags) |
 | Num Persons | Filter by the number of persons tagged in the file |
 | Person | Filter by a specific person (can be negated) |
 | Person Age | Filter by the age of tagged persons at the time of the file (age range) |
@@ -49,6 +48,7 @@ The following search filters are available. Multiple filters can be added and co
 | Tags | Filter by a group of tags, with an option to allow additional tags in the file |
 | Text | Search by text in file descriptions, and optionally in person names/descriptions, location names/descriptions, and tag names |
 | Time | Filter by time-of-day range |
+| Uncategorized | Files that have no persons, locations or tags |
 
 ### Prerequisites
 
