@@ -123,17 +123,11 @@
   <data name="SearchBrowseButton" xml:space="preserve">
     <value>Bläddra...</value>
   </data>
-  <data name="SearchAllFromCurrentDirectoryButton" xml:space="preserve">
-    <value>Allt från nuvarande katalog</value>
-  </data>
   <data name="SearchFromCurrentFileButton" xml:space="preserve">
     <value>Tilldela från nuvarande fil</value>
   </data>
   <data name="SearchForFilesWithinSelectedDirectoryToolTip" xml:space="preserve">
     <value>Sök efter filer i den valda katalogen</value>
-  </data>
-  <data name="SearchAllFilesWithinCurrentFileDirectoryToolTip" xml:space="preserve">
-    <value>Sök alla filer i aktuell filkatalog (rekursiv)</value>
   </data>
   <data name="SearchRandomFilesToolTip" xml:space="preserve">
     <value>Antal slumpmässiga filer</value>
@@ -161,24 +155,6 @@
   </data>
   <data name="SearchOpenButton" xml:space="preserve">
     <value>Öppna</value>
-  </data>
-  <data name="SearchBasicLabel" xml:space="preserve">
-    <value>Grundläggande</value>
-  </data>
-  <data name="SearchRandomFilesLabel" xml:space="preserve">
-    <value>Slumpmässiga filer:</value>
-  </data>
-  <data name="SearchCombineLabel" xml:space="preserve">
-    <value>Kombinera</value>
-  </data>
-  <data name="SearchCombineSearch1Label" xml:space="preserve">
-    <value>Sök 1:</value>
-  </data>
-  <data name="SearchCombineSearch2Label" xml:space="preserve">
-    <value>Sök 2:</value>
-  </data>
-  <data name="SearchCombineResultLabel" xml:space="preserve">
-    <value>Resultat:</value>
   </data>
   <data name="HelpTitle" xml:space="preserve">
     <value>Om</value>
@@ -276,15 +252,6 @@
   <data name="RipTitle" xml:space="preserve">
     <value>Vila i fred</value>
   </data>
-  <data name="BrowseDirectoriesSelectYourDirectoryLabel" xml:space="preserve">
-    <value>Välj din katalog:</value>
-  </data>
-  <data name="BrowseDirectoriesSelectButton" xml:space="preserve">
-    <value>Välj</value>
-  </data>
-  <data name="BrowseDirectoriesSelectToolTip" xml:space="preserve">
-    <value>Sök efter filer i den valda katalogen</value>
-  </data>
   <data name="ExportTitle" xml:space="preserve">
     <value>Exportera sökresultat</value>
   </data>
@@ -303,14 +270,14 @@
   <data name="ExportSearchResultFilesLabel" xml:space="preserve">
     <value>Filer</value>
   </data>
+  <data name="ExportSelfContainedHtmlLabel" xml:space="preserve">
+    <value>Självständigt HTML (enskild fil, bilder inbäddade)</value>
+  </data>
   <data name="ExportM3UPlaylistLabel" xml:space="preserve">
     <value>M3U spellista</value>
   </data>
   <data name="ExportHTMLWithMetaDataAndSearchResultFilesLabel" xml:space="preserve">
     <value>HTML med filer och metadata</value>
-  </data>
-  <data name="ExportSearchResultFilesWithMetaDataLabel" xml:space="preserve">
-    <value>Bilder med metadata</value>
   </data>
   <data name="ExportSearchResultMetaDataJSONLabel" xml:space="preserve">
     <value>Metadata (JSON)</value>
@@ -738,27 +705,6 @@
   <data name="CategorizationUpdateTitle" xml:space="preserve">
     <value>Metadata</value>
   </data>
-  <data name="CategorizationAddSelectedPersonToFileToolTip" xml:space="preserve">
-    <value>Lägg till vald person till filen</value>
-  </data>
-  <data name="CategorizationAddSelectedLocationToFileToolTip" xml:space="preserve">
-    <value>Lägg till vald plats till filen</value>
-  </data>
-  <data name="CategorizationAddSelectedTagToFileToolTip" xml:space="preserve">
-    <value>Lägg till vald etikett till fil</value>
-  </data>
-  <data name="CategorizationRemoveSelectedPersonFromFileToolTip" xml:space="preserve">
-    <value>Ta bort vald person från filen</value>
-  </data>
-  <data name="CategorizationRemoveSelectedLocationFromFileToolTip" xml:space="preserve">
-    <value>Ta bort vald plats från filen</value>
-  </data>
-  <data name="CategorizationRemoveSelectedTagFromFileToolTip" xml:space="preserve">
-    <value>Ta bort vald etikett från filen</value>
-  </data>
-  <data name="CategorizationNewButton" xml:space="preserve">
-    <value>Ny...</value>
-  </data>
   <data name="CategorizationCreateANewPersonAndAddItToCurrentFile" xml:space="preserve">
     <value>Skapa en ny person och lägg till den till aktuell fil...</value>
   </data>
@@ -781,9 +727,6 @@
 ÅÅÅÅ-MM-DD
 ÅÅÅÅ-MM-DDTHH:MM:SS</value>
   </data>
-  <data name="CategorizationApplyMetaDataFromLastEditButton" xml:space="preserve">
-    <value>Lägg till från senaste editerade filen</value>
-  </data>
   <data name="CategorizationApplyMetaDataFromLastEditToolTip" xml:space="preserve">
     <value>Tillämpa kategorisering (personer, platser och etiketter) från senaste förändringen</value>
   </data>
@@ -795,9 +738,6 @@
   </data>
   <data name="CategorizationRotate90DegreesCounterClockwiseToolTip" xml:space="preserve">
     <value>Rotera 90 grader moturs</value>
-  </data>
-  <data name="CategorizationReloadOrientationToolTip" xml:space="preserve">
-    <value>Ladda om orientering från Exif-data</value>
   </data>
   <data name="FileTypePicture" xml:space="preserve">
     <value>Bild</value>
@@ -946,14 +886,8 @@
   <data name="ExportDestinationDirectoryIsNotEmpty" xml:space="preserve">
     <value>Destinationskatalogen är inte tom</value>
   </data>
-  <data name="ExportError" xml:space="preserve">
-    <value>Fel vid export: {0}</value>
-  </data>
   <data name="ExportExporting" xml:space="preserve">
     <value>Exporterar...</value>
-  </data>
-  <data name="ExportFinishedSuccessfully" xml:space="preserve">
-    <value>Exporten slutfördes framgångsrikt.</value>
   </data>
   <data name="ExportNothingToExport" xml:space="preserve">
     <value>Inget att exportera</value>
@@ -1003,9 +937,6 @@
   <data name="FilterTypeNumPersons" xml:space="preserve">
     <value>Antal personer</value>
   </data>
-  <data name="SearchFiltersLabel" xml:space="preserve">
-    <value>Filter</value>
-  </data>
   <data name="SearchFilterDateTimeStart" xml:space="preserve">
     <value>Start</value>
   </data>
@@ -1050,6 +981,9 @@
   </data>
   <data name="SearchImageLoadingError" xml:space="preserve">
     <value>Bildladdningsfel:</value>
+  </data>
+  <data name="SearchTextLoadingError" xml:space="preserve">
+    <value>Textfil-laddningsfel:</value>
   </data>
   <data name="SearchFileTypeNotSupported" xml:space="preserve">
     <value>Filtyp stöds ej.</value>
@@ -1334,6 +1268,9 @@ Lägg till nya filer i '{0}'.</value>
   <data name="SearchFilterDateSelectFromCurrentFile" xml:space="preserve">
     <value>Nuvarande fil</value>
   </data>
+  <data name="SearchFilterDateSelectFromSwedishHoliday" xml:space="preserve">
+    <value>Svensk högtid</value>
+  </data>
   <data name="SearchFilterTimeSelectFromNow" xml:space="preserve">
     <value>Nuvarande tid</value>
   </data>
@@ -1388,6 +1325,9 @@ Lägg till nya filer i '{0}'.</value>
   <data name="CategorizationOrientationToolTip" xml:space="preserve">
     <value>Riktning</value>
   </data>
+  <data name="CategorizationPlaceBoundingBoxToolTip" xml:space="preserve">
+    <value>Placera rektangel för person i bilden (endast bildfiler).</value>
+  </data>
   <data name="CategorizationSaveButton" xml:space="preserve">
     <value>Spara</value>
   </data>
@@ -1403,41 +1343,11 @@ Lägg till nya filer i '{0}'.</value>
   <data name="SearchToggleToolTipExclude" xml:space="preserve">
     <value>Exkludera '{0}'</value>
   </data>
-  <data name="CategorizationUpdatePersonsTitle" xml:space="preserve">
-    <value>Personer ({0} / {1})</value>
-  </data>
-  <data name="CategorizationUpdateLocationsTitle" xml:space="preserve">
-    <value>Platser ({0} / {1})</value>
-  </data>
-  <data name="CategorizationUpdateTagsTitle" xml:space="preserve">
-    <value>Etiketter ({0} / {1})</value>
-  </data>
-  <data name="CategorizationUpdatePersonsNoPersons" xml:space="preserve">
-    <value>Inga personer tillgängliga.</value>
-  </data>
-  <data name="CategorizationUpdateLocationsNoLocations" xml:space="preserve">
-    <value>Inga platser tillgängliga.</value>
-  </data>
-  <data name="CategorizationUpdateTagsNoTags" xml:space="preserve">
-    <value>Inga etiketter tillgängliga.</value>
-  </data>
   <data name="CategorizationUpdateAddAllToolTip" xml:space="preserve">
     <value>Markera alla synliga</value>
   </data>
-  <data name="CategorizationUpdateLocationsAddAllToolTip" xml:space="preserve">
-    <value>Markera alla synliga platser</value>
-  </data>
-  <data name="CategorizationUpdateTagsAddAllToolTip" xml:space="preserve">
-    <value>Markera alla synliga etiketter</value>
-  </data>
   <data name="CategorizationUpdateRemoveAllToolTip" xml:space="preserve">
     <value>Avmarkera alla synliga</value>
-  </data>
-  <data name="CategorizationUpdateLocationsRemoveAllToolTip" xml:space="preserve">
-    <value>Avmarkera alla synliga platser</value>
-  </data>
-  <data name="CategorizationUpdateTagsRemoveAllToolTip" xml:space="preserve">
-    <value>Avmarkera alla synliga etiketter</value>
   </data>
   <data name="CategorizationItemSearchToolTip" xml:space="preserve">
     <value>Kommaseparerad lista med sökningar. Tryck Enter för att lägga till alla synliga objekt.</value>
@@ -1465,9 +1375,6 @@ Lägg till nya filer i '{0}'.</value>
   </data>
   <data name="ToolsReloadExifProgress" xml:space="preserve">
     <value>Uppdaterar {0}/{1} (id {2})</value>
-  </data>
-  <data name="ToolsReloadExifNoValidFileIds" xml:space="preserve">
-    <value>Inga giltiga fil-id angivna.</value>
   </data>
   <data name="ToolsReloadExifUpdatedSummary" xml:space="preserve">
     <value>Uppdaterade {0}/{1} filer.</value>

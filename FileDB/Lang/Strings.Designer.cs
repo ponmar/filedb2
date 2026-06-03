@@ -412,69 +412,6 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select.
-        /// </summary>
-        public static string BrowseDirectoriesSelectButton {
-            get {
-                return ResourceManager.GetString("BrowseDirectoriesSelectButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Search for files within selected directory.
-        /// </summary>
-        public static string BrowseDirectoriesSelectToolTip {
-            get {
-                return ResourceManager.GetString("BrowseDirectoriesSelectToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select your directory:.
-        /// </summary>
-        public static string BrowseDirectoriesSelectYourDirectoryLabel {
-            get {
-                return ResourceManager.GetString("BrowseDirectoriesSelectYourDirectoryLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add selected location to file.
-        /// </summary>
-        public static string CategorizationAddSelectedLocationToFileToolTip {
-            get {
-                return ResourceManager.GetString("CategorizationAddSelectedLocationToFileToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add selected person to file.
-        /// </summary>
-        public static string CategorizationAddSelectedPersonToFileToolTip {
-            get {
-                return ResourceManager.GetString("CategorizationAddSelectedPersonToFileToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add selected tag to file.
-        /// </summary>
-        public static string CategorizationAddSelectedTagToFileToolTip {
-            get {
-                return ResourceManager.GetString("CategorizationAddSelectedTagToFileToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Apply from last edited file.
-        /// </summary>
-        public static string CategorizationApplyMetaDataFromLastEditButton {
-            get {
-                return ResourceManager.GetString("CategorizationApplyMetaDataFromLastEditButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Apply categorization (persons, locations and tags) from last edit.
         /// </summary>
         public static string CategorizationApplyMetaDataFromLastEditToolTip {
@@ -542,7 +479,7 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Comma separated list of searches.
+        ///   Looks up a localized string similar to Comma separated list of searches. Press Enter to add all visible items..
         /// </summary>
         public static string CategorizationItemSearchToolTip {
             get {
@@ -565,15 +502,6 @@ namespace FileDB.Lang {
         public static string CategorizationMarkButtonToolTip {
             get {
                 return ResourceManager.GetString("CategorizationMarkButtonToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to New....
-        /// </summary>
-        public static string CategorizationNewButton {
-            get {
-                return ResourceManager.GetString("CategorizationNewButton", resourceCulture);
             }
         }
         
@@ -601,6 +529,15 @@ namespace FileDB.Lang {
         public static string CategorizationPersonDeceased {
             get {
                 return ResourceManager.GetString("CategorizationPersonDeceased", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Place person bounding box in image (image files only)..
+        /// </summary>
+        public static string CategorizationPlaceBoundingBoxToolTip {
+            get {
+                return ResourceManager.GetString("CategorizationPlaceBoundingBoxToolTip", resourceCulture);
             }
         }
         
@@ -641,47 +578,11 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Reload orientation from Exif data.
-        /// </summary>
-        public static string CategorizationReloadOrientationToolTip {
-            get {
-                return ResourceManager.GetString("CategorizationReloadOrientationToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Remove item from update history.
         /// </summary>
         public static string CategorizationRemoveItemFromUpdateHistory {
             get {
                 return ResourceManager.GetString("CategorizationRemoveItemFromUpdateHistory", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Remove selected location from file.
-        /// </summary>
-        public static string CategorizationRemoveSelectedLocationFromFileToolTip {
-            get {
-                return ResourceManager.GetString("CategorizationRemoveSelectedLocationFromFileToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Remove selected person from file.
-        /// </summary>
-        public static string CategorizationRemoveSelectedPersonFromFileToolTip {
-            get {
-                return ResourceManager.GetString("CategorizationRemoveSelectedPersonFromFileToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Remove selected tag from file.
-        /// </summary>
-        public static string CategorizationRemoveSelectedTagFromFileToolTip {
-            get {
-                return ResourceManager.GetString("CategorizationRemoveSelectedTagFromFileToolTip", resourceCulture);
             }
         }
         
@@ -749,42 +650,6 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select all visible locations.
-        /// </summary>
-        public static string CategorizationUpdateLocationsAddAllToolTip {
-            get {
-                return ResourceManager.GetString("CategorizationUpdateLocationsAddAllToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No locations available..
-        /// </summary>
-        public static string CategorizationUpdateLocationsNoLocations {
-            get {
-                return ResourceManager.GetString("CategorizationUpdateLocationsNoLocations", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Deselect all visible locations.
-        /// </summary>
-        public static string CategorizationUpdateLocationsRemoveAllToolTip {
-            get {
-                return ResourceManager.GetString("CategorizationUpdateLocationsRemoveAllToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Locations ({0} / {1}).
-        /// </summary>
-        public static string CategorizationUpdateLocationsTitle {
-            get {
-                return ResourceManager.GetString("CategorizationUpdateLocationsTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to No items available..
         /// </summary>
         public static string CategorizationUpdateNoItems {
@@ -794,65 +659,11 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No persons available..
-        /// </summary>
-        public static string CategorizationUpdatePersonsNoPersons {
-            get {
-                return ResourceManager.GetString("CategorizationUpdatePersonsNoPersons", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Persons ({0} / {1}).
-        /// </summary>
-        public static string CategorizationUpdatePersonsTitle {
-            get {
-                return ResourceManager.GetString("CategorizationUpdatePersonsTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Deselect all visible.
         /// </summary>
         public static string CategorizationUpdateRemoveAllToolTip {
             get {
                 return ResourceManager.GetString("CategorizationUpdateRemoveAllToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select all visible tags.
-        /// </summary>
-        public static string CategorizationUpdateTagsAddAllToolTip {
-            get {
-                return ResourceManager.GetString("CategorizationUpdateTagsAddAllToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No tags available..
-        /// </summary>
-        public static string CategorizationUpdateTagsNoTags {
-            get {
-                return ResourceManager.GetString("CategorizationUpdateTagsNoTags", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Deselect all visible tags.
-        /// </summary>
-        public static string CategorizationUpdateTagsRemoveAllToolTip {
-            get {
-                return ResourceManager.GetString("CategorizationUpdateTagsRemoveAllToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tags ({0} / {1}).
-        /// </summary>
-        public static string CategorizationUpdateTagsTitle {
-            get {
-                return ResourceManager.GetString("CategorizationUpdateTagsTitle", resourceCulture);
             }
         }
         
@@ -1028,15 +839,6 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Export error: {0}.
-        /// </summary>
-        public static string ExportError {
-            get {
-                return ResourceManager.GetString("ExportError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Export....
         /// </summary>
         public static string ExportExportButton {
@@ -1051,15 +853,6 @@ namespace FileDB.Lang {
         public static string ExportExporting {
             get {
                 return ResourceManager.GetString("ExportExporting", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Export finished successfully..
-        /// </summary>
-        public static string ExportFinishedSuccessfully {
-            get {
-                return ResourceManager.GetString("ExportFinishedSuccessfully", resourceCulture);
             }
         }
         
@@ -1091,15 +884,6 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Self-contained HTML (single file, images embedded).
-        /// </summary>
-        public static string ExportSelfContainedHtmlLabel {
-            get {
-                return ResourceManager.GetString("ExportSelfContainedHtmlLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to M3U playlist.
         /// </summary>
         public static string ExportM3UPlaylistLabel {
@@ -1123,15 +907,6 @@ namespace FileDB.Lang {
         public static string ExportSearchResultFilesLabel {
             get {
                 return ResourceManager.GetString("ExportSearchResultFilesLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Pictures with meta-data.
-        /// </summary>
-        public static string ExportSearchResultFilesWithMetaDataLabel {
-            get {
-                return ResourceManager.GetString("ExportSearchResultFilesWithMetaDataLabel", resourceCulture);
             }
         }
         
@@ -1168,6 +943,15 @@ namespace FileDB.Lang {
         public static string ExportSelectYourDestinationDirectory {
             get {
                 return ResourceManager.GetString("ExportSelectYourDestinationDirectory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Self-contained HTML (single file, images embedded).
+        /// </summary>
+        public static string ExportSelfContainedHtmlLabel {
+            get {
+                return ResourceManager.GetString("ExportSelfContainedHtmlLabel", resourceCulture);
             }
         }
         
@@ -1788,15 +1572,6 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Uncategorized.
-        /// </summary>
-        public static string FilterTypeUncategorized {
-            get {
-                return ResourceManager.GetString("FilterTypeUncategorized", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Number of persons.
         /// </summary>
         public static string FilterTypeNumPersons {
@@ -1910,6 +1685,15 @@ namespace FileDB.Lang {
         public static string FilterTypeTime {
             get {
                 return ResourceManager.GetString("FilterTypeTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uncategorized.
+        /// </summary>
+        public static string FilterTypeUncategorized {
+            get {
+                return ResourceManager.GetString("FilterTypeUncategorized", resourceCulture);
             }
         }
         
@@ -2355,33 +2139,6 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search all files within current file directory (recursive).
-        /// </summary>
-        public static string SearchAllFilesWithinCurrentFileDirectoryToolTip {
-            get {
-                return ResourceManager.GetString("SearchAllFilesWithinCurrentFileDirectoryToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to All from current directory.
-        /// </summary>
-        public static string SearchAllFromCurrentDirectoryButton {
-            get {
-                return ResourceManager.GetString("SearchAllFromCurrentDirectoryButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Basic.
-        /// </summary>
-        public static string SearchBasicLabel {
-            get {
-                return ResourceManager.GetString("SearchBasicLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Browse....
         /// </summary>
         public static string SearchBrowseButton {
@@ -2396,42 +2153,6 @@ namespace FileDB.Lang {
         public static string SearchButton {
             get {
                 return ResourceManager.GetString("SearchButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Combine.
-        /// </summary>
-        public static string SearchCombineLabel {
-            get {
-                return ResourceManager.GetString("SearchCombineLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Result:.
-        /// </summary>
-        public static string SearchCombineResultLabel {
-            get {
-                return ResourceManager.GetString("SearchCombineResultLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Search 1:.
-        /// </summary>
-        public static string SearchCombineSearch1Label {
-            get {
-                return ResourceManager.GetString("SearchCombineSearch1Label", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Search 2:.
-        /// </summary>
-        public static string SearchCombineSearch2Label {
-            get {
-                return ResourceManager.GetString("SearchCombineSearch2Label", resourceCulture);
             }
         }
         
@@ -2706,15 +2427,6 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Filters.
-        /// </summary>
-        public static string SearchFiltersLabel {
-            get {
-                return ResourceManager.GetString("SearchFiltersLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to +.
         /// </summary>
         public static string SearchFilterTagsInclusive {
@@ -2787,15 +2499,6 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Text file loading error:.
-        /// </summary>
-        public static string SearchTextLoadingError {
-            get {
-                return ResourceManager.GetString("SearchTextLoadingError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Intersection.
         /// </summary>
         public static string SearchIntersectionButton {
@@ -2855,15 +2558,6 @@ namespace FileDB.Lang {
         public static string SearchOpenPresentationWindowButtonToolTip {
             get {
                 return ResourceManager.GetString("SearchOpenPresentationWindowButtonToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Random files:.
-        /// </summary>
-        public static string SearchRandomFilesLabel {
-            get {
-                return ResourceManager.GetString("SearchRandomFilesLabel", resourceCulture);
             }
         }
         
@@ -3026,6 +2720,15 @@ namespace FileDB.Lang {
         public static string SearchResultToggleSlideshowToolTip {
             get {
                 return ResourceManager.GetString("SearchResultToggleSlideshowToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text file loading error:.
+        /// </summary>
+        public static string SearchTextLoadingError {
+            get {
+                return ResourceManager.GetString("SearchTextLoadingError", resourceCulture);
             }
         }
         
@@ -3615,24 +3318,6 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Persons (Low - High).
-        /// </summary>
-        public static string SortMethodNumPersons {
-            get {
-                return ResourceManager.GetString("SortMethodNumPersons", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Persons (High - Low).
-        /// </summary>
-        public static string SortMethodNumPersonsDesc {
-            get {
-                return ResourceManager.GetString("SortMethodNumPersonsDesc", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Directory + Date (A-Z, Old-New).
         /// </summary>
         public static string SortMethodDirectoryDate {
@@ -3647,6 +3332,24 @@ namespace FileDB.Lang {
         public static string SortMethodDirectoryDateDesc {
             get {
                 return ResourceManager.GetString("SortMethodDirectoryDateDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persons (Low - High).
+        /// </summary>
+        public static string SortMethodNumPersons {
+            get {
+                return ResourceManager.GetString("SortMethodNumPersons", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Persons (High - Low).
+        /// </summary>
+        public static string SortMethodNumPersonsDesc {
+            get {
+                return ResourceManager.GetString("SortMethodNumPersonsDesc", resourceCulture);
             }
         }
         
@@ -4146,15 +3849,6 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No valid file ids specified..
-        /// </summary>
-        public static string ToolsReloadExifNoValidFileIds {
-            get {
-                return ResourceManager.GetString("ToolsReloadExifNoValidFileIds", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Updating {0}/{1} (id {2}).
         /// </summary>
         public static string ToolsReloadExifProgress {
@@ -4277,24 +3971,6 @@ namespace FileDB.Lang {
         public static string WindowModeNormal {
             get {
                 return ResourceManager.GetString("WindowModeNormal", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Place person bounding box in image (image files only).
-        /// </summary>
-        public static string CategorizationPlaceBoundingBoxToolTip {
-            get {
-                return ResourceManager.GetString("CategorizationPlaceBoundingBoxToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0} (ID: {1}).
-        /// </summary>
-        public static string FileViewBoundingBoxPersonTooltip {
-            get {
-                return ResourceManager.GetString("FileViewBoundingBoxPersonTooltip", resourceCulture);
             }
         }
     }
