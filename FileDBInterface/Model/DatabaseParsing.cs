@@ -75,6 +75,7 @@ public class DatabaseParsing
 
     public static string? PathToFilesDatetime(string path)
     {
+        path = path.Replace('\\', '/');
         var filenameDateTime = Path.GetFileNameWithoutExtension(path)!;
         if (filenameDateTime.EndsWith("-1"))
         {
@@ -83,6 +84,16 @@ public class DatabaseParsing
         if (DateTime.TryParseExact(filenameDateTime, "yyyyMMdd_HHmmss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var dateFromFilename))
         {
             return DateTakenToFilesDatetime(dateFromFilename);
+        }
+
+        if (filenameDateTime.StartsWith("IMG_"))
+        {
+            var filenameParts = filenameDateTime.Split("_");
+            if (filenameParts.Length == 3 &&
+                DateTime.TryParseExact($"{filenameParts[1]}_{filenameParts[2]}", "yyyyMMdd_HHmmss", CultureInfo.InvariantCulture, DateTimeStyles.None, out dateFromFilename))
+            {
+                return DateTakenToFilesDatetime(dateFromFilename);
+            }
         }
 
         if (filenameDateTime.StartsWith("IMG-"))

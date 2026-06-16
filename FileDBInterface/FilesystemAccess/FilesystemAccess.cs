@@ -87,7 +87,7 @@ public class FilesystemAccess : IFilesystemAccess
 
     public IEnumerable<string> ListAllFilesystemDirectories()
     {
-        var dirs = FileSystem.Directory.GetDirectories(filesRootDirectory, "*.*", SearchOption.AllDirectories);
+        var dirs = FileSystem.Directory.GetDirectories(filesRootDirectory, "*", SearchOption.AllDirectories);
         return dirs.Select(p => ToInternalFilesPath(p));
     }
 
@@ -104,8 +104,18 @@ public class FilesystemAccess : IFilesystemAccess
 
     public string ToAbsolutePath(string internalPath)
     {
-        var path = Path.Join(filesRootDirectory, internalPath);
-        return path.Replace('\\', '/');
+        var rootDirectory = NormalizePath(filesRootDirectory).TrimEnd('/');
+        var relativePath = NormalizePath(internalPath).TrimStart('/');
+
+        return string.IsNullOrEmpty(relativePath)
+            ? $"{rootDirectory}/"
+            : $"{rootDirectory}/{relativePath}";
+    }
+
+    private static string NormalizePath(string path)
+    {
+        path = path.Replace('\\', '/');
+        return path.Length > 1 && path[1] == ':' ? path[2..] : path;
     }
 
     private string ToInternalFilesPath(string path)
