@@ -67,7 +67,7 @@ public class DatabaseJsonExporterTests
     public void Export_OutputIsFormattedJson()
     {
         Export(MakeData());
-        Assert.Contains('\n', capturedJson);
+        Assert.Contains('\n', capturedJson!);
     }
 
     // --- Content ---
@@ -76,7 +76,7 @@ public class DatabaseJsonExporterTests
     public void Export_VersionInJson()
     {
         Export(MakeData());
-        Assert.Contains("1.0", capturedJson);
+        Assert.Contains("1.0", capturedJson!);
     }
 
     [Fact]

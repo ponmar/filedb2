@@ -358,6 +358,33 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Turned {0} today!.
+        /// </summary>
+        public static string PersonBirthdayViewModelTurnedToday {
+            get {
+                return ResourceManager.GetString("PersonBirthdayViewModelTurnedToday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turns {0} tomorrow!.
+        /// </summary>
+        public static string PersonBirthdayViewModelTurnsTomorrow {
+            get {
+                return ResourceManager.GetString("PersonBirthdayViewModelTurnsTomorrow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turns {0} in {1} days.
+        /// </summary>
+        public static string PersonBirthdayViewModelTurnsInDays {
+            get {
+                return ResourceManager.GetString("PersonBirthdayViewModelTurnsInDays", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Today is the birthday for {0}!.
         /// </summary>
         public static string BirthdayNotifierTodayIsTheBirthdayFor {

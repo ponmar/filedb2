@@ -687,6 +687,15 @@
   <data name="BirthdayNotifierHappyBirthday" xml:space="preserve">
     <value>Grattis på födelsedagen {0}!</value>
   </data>
+  <data name="PersonBirthdayViewModelTurnedToday" xml:space="preserve">
+    <value>Fyllde {0} idag!</value>
+  </data>
+  <data name="PersonBirthdayViewModelTurnsTomorrow" xml:space="preserve">
+    <value>Fyller {0} imorgon!</value>
+  </data>
+  <data name="PersonBirthdayViewModelTurnsInDays" xml:space="preserve">
+    <value>Fyller {0} om {1} dagar</value>
+  </data>
   <data name="RestInPeaceNotifierRestInPeace" xml:space="preserve">
     <value>Vila i fred {0}!</value>
   </data>

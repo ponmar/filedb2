@@ -1,6 +1,4 @@
 using FakeItEasy;
-using System;
-using System.Linq;
 using FileDB.ViewModels.Search.Filters;
 using FileDBInterface.DatabaseAccess;
 using Xunit;

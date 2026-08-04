@@ -1,4 +1,3 @@
-using System;
 using FileDB.Extensions;
 using FileDBInterface.Model;
 using Xunit;

@@ -217,10 +217,11 @@ public partial class FileCategorizationViewModel : ObservableValidator
         else
         {
             // currently not included -> add
+            var added = true;
             switch (item.Type)
             {
                 case CombinedItemType.Person:
-                    await AddFilePersonToCurrentFileAsync(item.Id);
+                    added = await AddFilePersonToCurrentFileAsync(item.Id);
                     break;
                 case CombinedItemType.Location:
                     AddFileLocationToCurrentFile(item.Id);
@@ -229,7 +230,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
                     AddFileTagToCurrentFile(item.Id);
                     break;
             }
-            item.IsChecked = true;
+            item.IsChecked = added;
         }
     }
 
@@ -516,7 +517,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
         }
     }
 
-    private async Task AddFilePersonToCurrentFileAsync(int personId)
+    private async Task<bool> AddFilePersonToCurrentFileAsync(int personId)
     {
         if (SelectedFile is not null)
         {
@@ -532,7 +533,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
                     if (fileDatetime < dateOfBirth &&
                         !await dialogs.ShowConfirmDialogAsync(string.Format(Strings.FileCetagorizationPersonNotBornInFile, person.FullName)))
                     {
-                        return;
+                        return false;
                     }
                 }
 
@@ -542,7 +543,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
                     if (fileDatetime > deceased &&
                         !await dialogs.ShowConfirmDialogAsync(Strings.CategorizationPersonDeceased))
                     {
-                        return;
+                        return false;
                     }
                 }
             }
@@ -559,7 +560,10 @@ public partial class FileCategorizationViewModel : ObservableValidator
             UpdateItemsChecked(CombinedItemType.Person, personId, true);
             AddUpdateHistoryItem(CombinedItemType.Person, personId, person.FullName, true);
             SetEditedFile();
+            return true;
         }
+
+        return false;
     }
 
     private void RemoveFilePersonFromCurrentFile(int personId)
@@ -784,8 +788,7 @@ public partial class FileCategorizationViewModel : ObservableValidator
                 }
                 else
                 {
-                    await AddFilePersonToCurrentFileAsync(personId);
-                    historyItem.IsChecked = true;
+                    historyItem.IsChecked = await AddFilePersonToCurrentFileAsync(personId);
                 }
                 break;
 
@@ -886,8 +889,12 @@ public partial class FileCategorizationViewModel : ObservableValidator
         {
             if (item.HasBoundingBox)
             {
-                // Toggle OFF - delete bounding box
-                RemoveFilePersonFromCurrentFile(item.Id);
+                dbAccessProvider.DbAccess.UpdateFilePersonBoundingBox(SelectedFile.Id, item.Id, null);
+                item.HasBoundingBox = false;
+                OnPropertyChanged(nameof(CategorizationHeader));
+                OnPropertyChanged(nameof(CategorizationHeaderToolTip));
+                SetEditedFile();
+                Messenger.Send(new BoundingBoxStateChanged(SelectedFile.Id, item.Id, false));
             }
             else
             {

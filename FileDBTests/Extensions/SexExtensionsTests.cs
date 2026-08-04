@@ -1,5 +1,4 @@
-﻿using System;
-using FileDB.Extensions;
+﻿using FileDB.Extensions;
 using FileDBInterface.Extensions;
 using FileDBInterface.Model;
 using Xunit;

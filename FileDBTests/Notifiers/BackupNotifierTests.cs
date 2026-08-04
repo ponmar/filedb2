@@ -1,7 +1,4 @@
-using System;
-using System.IO;
 using System.IO.Abstractions.TestingHelpers;
-using System.Linq;
 using FileDB.Lang;
 using FileDB.Notifications;
 using FileDB.Notifiers;

@@ -1,5 +1,4 @@
 using FakeItEasy;
-using System.Linq;
 using FileDB.Dialogs;
 using FileDB.Model;
 using FileDB.ViewModels.Search.Filters;

@@ -65,6 +65,6 @@ public partial class PersonAgeViewModel : ObservableValidator, IFilterViewModel
             }
         }
 
-        return result;
+        return result.DistinctBy(x => x.Id);
     }
 }

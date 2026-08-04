@@ -8,6 +8,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Extensions;
 using FileDB.Infrastructure;
+using FileDB.Lang;
 using FileDB.Model;
 using FileDB.Services;
 using FileDBInterface.Model;
@@ -56,15 +57,15 @@ public partial class PersonBirthdayViewModel : ObservableObject
 
         if (DaysLeft == 0)
         {
-            DaysLeftStr = $"Turned {Age} today!";
+            DaysLeftStr = string.Format(Strings.PersonBirthdayViewModelTurnedToday, Age);
         }
         else if (DaysLeft == 1)
         {
-            DaysLeftStr = $"Turns {Age + 1} tomorrow!";
+            DaysLeftStr = string.Format(Strings.PersonBirthdayViewModelTurnsTomorrow, Age + 1);
         }
         else if (DaysLeft <= 14)
         {
-            DaysLeftStr = $"Turns {Age + 1} in {DaysLeft} days";
+            DaysLeftStr = string.Format(Strings.PersonBirthdayViewModelTurnsInDays, Age + 1, DaysLeft);
         }
         else
         {

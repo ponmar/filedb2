@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Infrastructure;
 using FileDB.Model;
+using FileDB.Validators;
 using FileDBInterface.DatabaseAccess;
 using FileDBInterface.Model;
 
@@ -16,6 +17,8 @@ public partial class TagsViewModel : ObservableValidator, IFilterViewModel
     public partial ObservableCollection<TagForSearch> Tags { get; set; } = [];
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
+    [MinCount(1)]
     public partial ObservableCollection<TagForSearch> SelectedTags { get; set; } = [];
 
     [ObservableProperty]

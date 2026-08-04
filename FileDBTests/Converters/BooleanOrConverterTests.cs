@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using FileDB.Converters;
 using Xunit;
 

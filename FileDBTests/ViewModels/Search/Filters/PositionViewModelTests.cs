@@ -1,8 +1,6 @@
 using FakeItEasy;
-using System.Linq;
 using FileDB.ViewModels.Search.Filters;
 using FileDBInterface.DatabaseAccess;
-using FileDBInterface.Model;
 using Xunit;
 
 namespace FileDBTests.ViewModels.Search.Filters;
@@ -57,5 +55,30 @@ public class PositionViewModelTests
         var result = viewModel.ApplyFilter(dbAccess).ToList();
 
         Assert.Equal(2, result.Count);
+    }
+
+    [Fact]
+    public void ApplyFilter_DeduplicatesMatchingFiles()
+    {
+        var file = SearchFilterViewModelTestHelpers.CreateFile(1, "near-file.jpg");
+        var dbAccess = A.Fake<IDatabaseAccess>();
+        A.CallTo(() => dbAccess.SearchFilesNearGpsPosition(34.123, 75.321, 500)).Returns([file]);
+        A.CallTo(() => dbAccess.SearchLocationsNearGpsPosition(34.123, 75.321, 500)).Returns([
+            SearchFilterViewModelTestHelpers.CreateLocation(2, "Near location", "1 2"),
+        ]);
+        A.CallTo(() => dbAccess.SearchFilesWithLocations(A<IEnumerable<int>>.That.Matches(ids => ids.SequenceEqual(new[] { 2 })))).Returns([file]);
+
+        var viewModel = new PositionViewModel(
+            SearchFilterViewModelTestHelpers.CreateLocationsRepository([]),
+            SearchFilterViewModelTestHelpers.CreateDatabaseAccessProvider(dbAccess),
+            SearchFilterViewModelTestHelpers.CreateFileSelector())
+        {
+            PositionText = "34.123 75.321",
+            Radius = 500,
+        };
+
+        var result = viewModel.ApplyFilter(dbAccess).ToList();
+
+        Assert.Single(result);
     }
 }

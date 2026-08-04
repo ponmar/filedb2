@@ -306,6 +306,55 @@ public class FileCategorizationViewModelTests
         A.CallTo(() => dbAccessProvider.DbAccess.InsertFileTag(A<int>._, A<int>._)).MustNotHaveHappened();
     }
 
+    [Fact]
+    public async Task ToggleCombinedCommand_PersonAddCancelled_DoesNotCheckItem()
+    {
+        // Arrange
+        var person = new PersonModel { Id = 1, ShortName = "Alice", FullName = "Alice Smith", DateOfBirth = "2025-01-01" };
+        persons.Add(person);
+        A.CallTo(() => dbAccessProvider.DbAccess.GetPersonById(person.Id)).Returns(person);
+        A.CallTo(() => dbAccessProvider.DbAccess.GetPersonsFromFile(A<int>._)).Returns([]);
+        A.CallTo(() => dialogs.ShowConfirmDialogAsync(A<string>._)).Returns(false);
+
+        var viewModel = CreateViewModel();
+        LoadAFile(datetime: "2020-01-01");
+        var item = viewModel.Items.First(x => x.Type == CombinedItemType.Person && x.Id == person.Id);
+
+        // Act
+        await viewModel.ToggleCombinedCommand.ExecuteAsync(item);
+
+        // Assert
+        A.CallTo(() => dbAccessProvider.DbAccess.InsertFilePerson(A<int>._, A<int>._)).MustNotHaveHappened();
+        Assert.False(item.IsChecked);
+        eventRecorder.AssertNoEventsRecorded();
+    }
+
+    [Fact]
+    public void PlaceBoundingBox_WhenBoxExists_ClearsOnlyBoundingBox()
+    {
+        // Arrange
+        var person = new PersonModel { Id = 1, ShortName = "Alice", FullName = "Alice Smith" };
+        persons.Add(person);
+        A.CallTo(() => dbAccessProvider.DbAccess.GetPersonsFromFile(A<int>._)).Returns([person]);
+        A.CallTo(() => dbAccessProvider.DbAccess.GetFilePersonBoundingBoxes(A<int>._)).Returns([(person.Id, new PersonBoundingBox(0.1, 0.2, 0.3, 0.4))]);
+        A.CallTo(() => dbAccessProvider.DbAccess.GetPersonById(person.Id)).Returns(person);
+
+        var viewModel = CreateViewModel();
+        LoadAFile();
+        var item = viewModel.Items.First(x => x.Type == CombinedItemType.Person && x.Id == person.Id);
+        Assert.True(item.IsChecked);
+        Assert.True(item.HasBoundingBox);
+
+        // Act
+        viewModel.PlaceBoundingBoxCommand.Execute(item);
+
+        // Assert
+        A.CallTo(() => dbAccessProvider.DbAccess.UpdateFilePersonBoundingBox(1, person.Id, null)).MustHaveHappenedOnceExactly();
+        A.CallTo(() => dbAccessProvider.DbAccess.DeleteFilePerson(A<int>._, A<int>._)).MustNotHaveHappened();
+        Assert.True(item.IsChecked);
+        Assert.False(item.HasBoundingBox);
+    }
+
     private FileCategorizationViewModel CreateViewModel()
     {
         return new FileCategorizationViewModel(configProvider, dbAccessProvider, dialogs, filesystemAccessProvider, personsRepository, locationsRepository, tagsRepository, fileSelector, fileRotator);
@@ -325,9 +374,9 @@ public class FileCategorizationViewModelTests
         tags.Add(new() { Id = 1, Name = "Favorites" });
     }
 
-    private void LoadAFile(int fileId = 1)
+    private void LoadAFile(int fileId = 1, string? datetime = null)
     {
-        A.CallTo(() => fileSelector.SelectedFile).Returns(new FileModel() { Id = fileId, Path = "file.jpg", });
+        A.CallTo(() => fileSelector.SelectedFile).Returns(new FileModel() { Id = fileId, Path = "file.jpg", Datetime = datetime });
         Messenger.Send<FileSelectionChanged>();
     }
 }

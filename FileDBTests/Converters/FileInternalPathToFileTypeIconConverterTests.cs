@@ -1,8 +1,6 @@
-using System;
 using System.Globalization;
 using FileDB.Converters;
 using FileDB.Extensions;
-using FileDB.Model;
 using FileDBInterface.Model;
 using Xunit;
 

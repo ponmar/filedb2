@@ -70,7 +70,7 @@ public class JsonExporterTests
     {
         Export(MakeData());
         // Formatted (indented) JSON contains newlines
-        Assert.Contains('\n', capturedJson);
+        Assert.Contains('\n', capturedJson!);
     }
 
     // --- Content ---
@@ -79,7 +79,7 @@ public class JsonExporterTests
     public void Export_CollectionNameInJson()
     {
         Export(MakeData(name: "My Collection"));
-        Assert.Contains("My Collection", capturedJson);
+        Assert.Contains("My Collection", capturedJson!);
     }
 
     [Fact]
@@ -87,7 +87,7 @@ public class JsonExporterTests
     {
         var file = new ExportedFile(1, "Files/1.jpg", "photo.jpg", FileType.Picture, "A sunset", "2020-06-15", null, null, [], [], []);
         Export(MakeData(files: [file]));
-        Assert.Contains("photo.jpg", capturedJson);
+        Assert.Contains("photo.jpg", capturedJson!);
         Assert.Contains("A sunset", capturedJson);
         Assert.Contains("2020-06-15", capturedJson);
     }

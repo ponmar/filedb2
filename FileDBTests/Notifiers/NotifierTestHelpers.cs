@@ -1,5 +1,3 @@
-using System;
-using System.IO;
 using FakeItEasy;
 using FileDB.Model;
 using FileDBInterface.Model;

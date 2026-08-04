@@ -1,6 +1,4 @@
 using FakeItEasy;
-using System;
-using System.Linq;
 using FileDB.ViewModels.Search.Filters;
 using FileDBInterface.DatabaseAccess;
 using Xunit;
@@ -52,5 +50,22 @@ public class PersonAgeViewModelTests
 
         Assert.Single(result);
         Assert.Equal(file, result[0]);
+    }
+
+    [Fact]
+    public void ApplyFilter_DeduplicatesMatchingFiles()
+    {
+        var file = SearchFilterViewModelTestHelpers.CreateFile(10, "photo.jpg", "2020-01-01");
+        var dbAccess = A.Fake<IDatabaseAccess>();
+        A.CallTo(() => dbAccess.GetPersons()).Returns([
+            SearchFilterViewModelTestHelpers.CreatePerson(1, "Alice", "2000-01-01"),
+            SearchFilterViewModelTestHelpers.CreatePerson(2, "Bob", "2000-01-01"),
+        ]);
+        A.CallTo(() => dbAccess.SearchFilesWithPersons(A<IEnumerable<int>>._)).Returns([file]);
+        var viewModel = new PersonAgeViewModel { PersonAgeFrom = 18, PersonAgeTo = 30 };
+
+        var result = viewModel.ApplyFilter(dbAccess).ToList();
+
+        Assert.Single(result);
     }
 }

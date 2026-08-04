@@ -690,6 +690,15 @@
   <data name="BirthdayNotifierHappyBirthday" xml:space="preserve">
     <value>Happy Birthday {0}!</value>
   </data>
+  <data name="PersonBirthdayViewModelTurnedToday" xml:space="preserve">
+    <value>Turned {0} today!</value>
+  </data>
+  <data name="PersonBirthdayViewModelTurnsTomorrow" xml:space="preserve">
+    <value>Turns {0} tomorrow!</value>
+  </data>
+  <data name="PersonBirthdayViewModelTurnsInDays" xml:space="preserve">
+    <value>Turns {0} in {1} days</value>
+  </data>
   <data name="RestInPeaceNotifierRestInPeace" xml:space="preserve">
     <value>Rest in Peace {0}!</value>
   </data>

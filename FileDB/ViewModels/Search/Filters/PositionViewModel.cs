@@ -89,6 +89,6 @@ public partial class PositionViewModel : ObservableValidator, IFilterViewModel
         var result = dbAccess.SearchFilesNearGpsPosition(lat, lon, Radius).ToList();
         var nearLocations = dbAccess.SearchLocationsNearGpsPosition(lat, lon, Radius);
         result.AddRange(dbAccess.SearchFilesWithLocations(nearLocations.Select(x => x.Id)));
-        return result;
+        return result.DistinctBy(x => x.Id);
     }
 }

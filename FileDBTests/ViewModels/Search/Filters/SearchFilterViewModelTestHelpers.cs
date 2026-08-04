@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using FakeItEasy;
 using FileDB.Model;
 using FileDB.ViewModels.Search;
