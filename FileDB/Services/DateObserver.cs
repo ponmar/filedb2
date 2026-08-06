@@ -7,12 +7,15 @@ namespace FileDB.Services;
 
 public class DateObserver : IDisposable
 {
-    private DateTime date = DateTime.Now;
+    private DateTime date;
+    private readonly IDateTimeProvider dateTimeProvider;
 
     private readonly DispatcherTimer dateCheckerTimer;
 
-    public DateObserver()
+    public DateObserver(IDateTimeProvider dateTimeProvider)
     {
+        this.dateTimeProvider = dateTimeProvider;
+        date = dateTimeProvider.Now;
         dateCheckerTimer = new DispatcherTimer
         {
             Interval = TimeSpan.FromMinutes(1)
@@ -26,13 +29,18 @@ public class DateObserver : IDisposable
         dateCheckerTimer.Stop();
     }
 
-    private void DateCheckerTimer_Tick(object? sender, EventArgs e)
+    public void CheckDate()
     {
-        var now = DateTime.Now;
+        var now = dateTimeProvider.Now;
         if (date.Date != now.Date)
         {
             date = now;
             Messenger.Send<DateChanged>();
         }
+    }
+
+    private void DateCheckerTimer_Tick(object? sender, EventArgs e)
+    {
+        CheckDate();
     }
 }

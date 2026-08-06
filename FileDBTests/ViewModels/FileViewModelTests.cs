@@ -342,4 +342,62 @@ public class FileViewModelTests : IDisposable
 
         Assert.Equal(string.Empty, vm.InternalPath);
     }
+
+    [Fact]
+    public void Maximize_SendsFullscreenBrowsingRequested()
+    {
+        var recorder = new SingleEventRecorder<FullscreenBrowsingRequested>();
+        var vm = CreateViewModel();
+
+        vm.Maximize = true;
+
+        var message = recorder.AssertEventRecorded();
+        Assert.True(message.Fullscreen);
+    }
+
+    [Fact]
+    public void OpenFileLocationCommand_OpensExistingFile()
+    {
+        A.CallTo(() => fakeFileSystem.File.Exists(AbsolutePath)).Returns(true);
+        var vm = CreateViewModel();
+        SelectFile(new FileModel { Id = 1, Path = "photo.jpg" });
+
+        vm.OpenFileLocationCommand.Execute(null);
+
+        A.CallTo(() => fakeProcessUtils.SelectFileInExplorer(AbsolutePath)).MustHaveHappenedOnceExactly();
+    }
+
+    [Fact]
+    public void OpenFileWithDefaultAppCommand_OpensExistingFile()
+    {
+        A.CallTo(() => fakeFileSystem.File.Exists(AbsolutePath)).Returns(true);
+        var vm = CreateViewModel();
+        SelectFile(new FileModel { Id = 1, Path = "photo.jpg" });
+
+        vm.OpenFileWithDefaultAppCommand.Execute(null);
+
+        A.CallTo(() => fakeProcessUtils.OpenFileWithDefaultApp(AbsolutePath)).MustHaveHappenedOnceExactly();
+    }
+
+    [Fact]
+    public void CopyFileIdCommand_CopiesSelectedFile()
+    {
+        var vm = CreateViewModel();
+        SelectFile(new FileModel { Id = 1, Path = "photo.jpg" });
+
+        vm.CopyFileIdCommand.Execute(null);
+
+        A.CallTo(() => fakeClipboardService.SetTextAsync(A<string>.That.Contains("1"))).MustHaveHappenedOnceExactly();
+    }
+
+    [Fact]
+    public void RemoveFileFromCurrentSearchResultCommand_RemovesSelectedFile()
+    {
+        var vm = CreateViewModel();
+        SelectFile(new FileModel { Id = 1, Path = "photo.jpg" });
+
+        vm.RemoveFileFromCurrentSearchResultCommand.Execute(null);
+
+        A.CallTo(() => fakeSearchResultRepoManagement.RemoveFileFromRepo(A<FileModel>.That.Matches(x => x.Id == 1))).MustHaveHappenedOnceExactly();
+    }
 }

@@ -28,6 +28,7 @@ public static class Bootstrapper
         ServiceLocator.RegisterSingleton<IProcessUtils, ProcessUtils>();
         ServiceLocator.RegisterSingleton<INotifierFactory, NotifierFactory>();
         ServiceLocator.RegisterSingleton<ISpeeker, Speeker>();
+        ServiceLocator.RegisterSingleton<IDateTimeProvider, DateTimeProvider>();
         ServiceLocator.RegisterSingleton<DateObserver>();
         ServiceLocator.RegisterSingleton<IClipboardService, ClipboardService>();
 

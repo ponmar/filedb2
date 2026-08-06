@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Linq;
+using System.IO.Abstractions;
 using System.Threading;
 using Avalonia.Media.Imaging;
 using FileDB.Infrastructure;
@@ -22,14 +23,16 @@ public class ImageLoadResult
 public class ImageLoader : IImageLoader
 {
     private readonly Random random = new();
+    private readonly IFileSystem fileSystem;
 
     public ConcurrentDictionary<string, ImageLoadResult> ImageCache { get; } = new();
 
     private readonly IConfigProvider configProvider;
 
-    public ImageLoader(IConfigProvider configProvider)
+    public ImageLoader(IConfigProvider configProvider, IFileSystem fileSystem)
     {
         this.configProvider = configProvider;
+        this.fileSystem = fileSystem;
     }
 
     public void LoadImage(string filePath)
@@ -59,7 +62,7 @@ public class ImageLoader : IImageLoader
 
         ImageCache[filePath] = new ImageLoadResult();
 
-        var thread = new Thread(new ThreadStart(new SingleImageLoader(this, filePath).Load));
+        var thread = new Thread(new ThreadStart(new SingleImageLoader(this, filePath, fileSystem).Load));
         thread.Start();
     }
 }
@@ -68,11 +71,13 @@ public class SingleImageLoader
 {
     private readonly ImageLoader imageLoader;
     private readonly string filePath;
+    private readonly IFileSystem fileSystem;
 
-    public SingleImageLoader(ImageLoader imageLoader, string filePath)
+    public SingleImageLoader(ImageLoader imageLoader, string filePath, IFileSystem fileSystem)
     {
         this.imageLoader = imageLoader;
         this.filePath = filePath;
+        this.fileSystem = fileSystem;
     }
 
     public void Load()
@@ -81,7 +86,8 @@ public class SingleImageLoader
 
         try
         {
-            loadResult.Image = new Bitmap(filePath);
+            using var stream = fileSystem.File.OpenRead(filePath);
+            loadResult.Image = new Bitmap(stream);
             Messenger.Send(new ImageLoaded(filePath, loadResult.Image));
         }
         catch (Exception e)

@@ -54,6 +54,16 @@ public class NotificationsViewModelTests
         Assert.Equal(notifications.Count, viewModel.Notifications.Count);
     }
 
+    [Fact]
+    public void ClearNotificationsCommand_DismissesAllNotifications()
+    {
+        var viewModel = new NotificationsViewModel(fakeNotificationManagement, fakeNotificationRepo);
+
+        viewModel.ClearNotificationsCommand.Execute(null);
+
+        A.CallTo(() => fakeNotificationManagement.DismissNotifications()).MustHaveHappenedOnceExactly();
+    }
+
     private static List<INotification> SomeNotifications()
     {
         return

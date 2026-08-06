@@ -1,6 +1,7 @@
 using FakeItEasy;
 using FileDB.Configuration;
 using FileDB.Dialogs;
+using FileDB.Infrastructure;
 using FileDB.Model;
 using FileDB.Services;
 using FileDB.ViewModels.Search;
@@ -204,6 +205,19 @@ public class ResultViewModelTests
         Assert.DoesNotContain(vm.SearchResultHistory, r => r.Files[0].Id == 1);
     }
 
+    [Fact]
+    public void SearchResultHistorySelection_UsesSelectedHistory()
+    {
+        var vm = CreateViewModel();
+        vm.PopulateRepo(SomeFiles());
+        var historyEntry = vm.SearchResultHistory[0];
+
+        vm.SearchResultHistorySelection = historyEntry;
+
+        Assert.Same(historyEntry, vm.SearchResultHistorySelection);
+        Assert.Equal(historyEntry.Files.Count, vm.SearchNumberOfHits);
+    }
+
     // --- Navigation ---
 
     [Fact]
@@ -267,6 +281,39 @@ public class ResultViewModelTests
 
         // Assert
         Assert.True(vm.NextFileAvailable);
+    }
+
+    [Fact]
+    public void SlideshowDelayChange_UpdatesTimerInterval()
+    {
+        var vm = CreateViewModel();
+
+        vm.SlideshowDelay = 7;
+
+        Assert.Equal(TimeSpan.FromSeconds(7), GetTimerInterval(vm));
+    }
+
+    [Fact]
+    public void SpeekActive_True_UsesSpeeker()
+    {
+        var vm = CreateViewModel();
+        vm.PopulateRepo([new FileModel { Id = 1, Path = "a.jpg", Description = "hello" }]);
+
+        vm.SpeekActive = true;
+
+        A.CallTo(() => fakeSpeeker.Speek("hello")).MustHaveHappenedOnceExactly();
+    }
+
+    [Fact]
+    public void SpeekActive_False_CancelsSpeek()
+    {
+        var vm = CreateViewModel();
+        vm.PopulateRepo([new FileModel { Id = 1, Path = "a.jpg", Description = "hello" }]);
+        vm.SpeekActive = true;
+
+        vm.SpeekActive = false;
+
+        A.CallTo(() => fakeSpeeker.CancelSpeek()).MustHaveHappened();
     }
 
     // --- Sort ---
@@ -427,6 +474,19 @@ public class ResultViewModelTests
         Assert.Equal(3, vm.SearchNumberOfHits);
     }
 
+    [Fact]
+    public void ConfigUpdated_ReappliesSlideshowDelay()
+    {
+        var vm = CreateViewModel();
+        vm.PopulateRepo(SomeFiles());
+        vm.SlideshowDelay = 2;
+
+        SetupConfig(slideshowDelay: 9);
+        Messenger.Send<ConfigUpdated>();
+
+        Assert.Equal(TimeSpan.FromSeconds(9), GetTimerInterval(vm));
+    }
+
     // --- ISearchResultRepository ---
 
     [Fact]
@@ -450,5 +510,34 @@ public class ResultViewModelTests
 
         // Assert
         Assert.Equal(3, vm.Files.Count());
+    }
+
+    [Fact]
+    public void CopyFileListCommand_CopiesCurrentFiles()
+    {
+        var vm = CreateViewModel();
+        vm.PopulateRepo(SomeFiles());
+
+        vm.CopyFileListCommand.Execute(null);
+
+        A.CallTo(() => fakeClipboardService.SetTextAsync(A<string>._)).MustHaveHappenedOnceExactly();
+    }
+
+    [Fact]
+    public async Task ExportFileListCommand_ShowsDialog()
+    {
+        var vm = CreateViewModel();
+        vm.PopulateRepo(SomeFiles());
+
+        await vm.ExportFileListCommand.ExecuteAsync(null);
+
+        A.CallTo(() => fakeDialogs.ShowExportSearchResultDialogAsync(A<SearchResult>._)).MustHaveHappenedOnceExactly();
+    }
+
+    private static TimeSpan GetTimerInterval(ResultViewModel vm)
+    {
+        var field = typeof(ResultViewModel).GetField("slideshowTimer", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!;
+        var timer = (Avalonia.Threading.DispatcherTimer)field.GetValue(vm)!;
+        return timer.Interval;
     }
 }

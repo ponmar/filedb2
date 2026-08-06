@@ -7,7 +7,7 @@ namespace FileDB.Infrastructure;
 
 public class ServiceLocator
 {
-    private static WindsorContainer Container { get; } = new();
+    private static WindsorContainer Container { get; set; } = new();
 
     public static void RegisterSingleton<T>() where T : class
     {
@@ -70,5 +70,11 @@ public class ServiceLocator
             { key, value }
         };
         return Container.Resolve<T>(a);
+    }
+
+    public static void Reset()
+    {
+        Container.Dispose();
+        Container = new WindsorContainer();
     }
 }

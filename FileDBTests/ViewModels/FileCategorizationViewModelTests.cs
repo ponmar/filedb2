@@ -31,6 +31,12 @@ public class FileCategorizationViewModelTests
 
     public FileCategorizationViewModelTests()
     {
+        A.CallTo(() => configProvider.Config).Returns(new ConfigBuilder
+        {
+            ReadOnly = false,
+            ShortItemNameMaxLength = 15,
+        }.Build());
+
         persons.Clear();
         locations.Clear();
         tags.Clear();
@@ -72,6 +78,16 @@ public class FileCategorizationViewModelTests
     {
         _ = CreateViewModel();
         LoadAFile();
+    }
+
+    [Fact]
+    public void Constructor_ReadOnly_DisablesCategorization()
+    {
+        A.CallTo(() => configProvider.Config).Returns(new ConfigBuilder { ReadOnly = true }.Build());
+        var viewModel = CreateViewModel();
+
+        Assert.True(viewModel.ReadOnly);
+        Assert.False(viewModel.CanCategorize);
     }
 
     [Fact]
@@ -330,6 +346,136 @@ public class FileCategorizationViewModelTests
     }
 
     [Fact]
+    public async Task ToggleCombinedCommand_PersonAddSucceeded_AddsItem()
+    {
+        var person = new PersonModel { Id = 1, ShortName = "Alice", FullName = "Alice Smith", DateOfBirth = "2025-01-01" };
+        persons.Add(person);
+        A.CallTo(() => dbAccessProvider.DbAccess.GetPersonById(person.Id)).Returns(person);
+        A.CallTo(() => dbAccessProvider.DbAccess.GetPersonsFromFile(A<int>._)).Returns([]);
+
+        var viewModel = CreateViewModel();
+        LoadAFile(datetime: null);
+        var item = viewModel.Items.First(x => x.Type == CombinedItemType.Person && x.Id == person.Id);
+
+        await viewModel.ToggleCombinedCommand.ExecuteAsync(item);
+
+        A.CallTo(() => dbAccessProvider.DbAccess.InsertFilePerson(1, 1)).MustHaveHappenedOnceExactly();
+        Assert.True(item.IsChecked);
+        Assert.Single(viewModel.UpdateHistoryItems);
+    }
+
+    [Fact]
+    public async Task ToggleCombinedCommand_TagRemove_RemovesItem()
+    {
+        var tag = new TagModel { Id = 1, Name = "Favorites" };
+        tags.Add(tag);
+        A.CallTo(() => dbAccessProvider.DbAccess.GetTagById(tag.Id)).Returns(tag);
+        A.CallTo(() => dbAccessProvider.DbAccess.GetTagsFromFile(A<int>._)).Returns([tag]);
+
+        var viewModel = CreateViewModel();
+        LoadAFile();
+        var item = viewModel.Items.First(x => x.Type == CombinedItemType.Tag && x.Id == tag.Id);
+
+        await viewModel.ToggleCombinedCommand.ExecuteAsync(item);
+
+        A.CallTo(() => dbAccessProvider.DbAccess.DeleteFileTag(1, 1)).MustHaveHappenedOnceExactly();
+        Assert.False(item.IsChecked);
+    }
+
+    [Fact]
+    public async Task AddItemsCommand_AddsVisibleUncheckedItems()
+    {
+        PopulateRepositories();
+        var person = new PersonModel { Id = 1, ShortName = "Alice", FullName = "Alice Smith", DateOfBirth = "2025-01-01" };
+        var location = new LocationModel { Id = 1, Name = "Home" };
+        var tag = new TagModel { Id = 1, Name = "Favorites" };
+        A.CallTo(() => dbAccessProvider.DbAccess.GetPersonById(person.Id)).Returns(person);
+        A.CallTo(() => dbAccessProvider.DbAccess.GetLocationById(location.Id)).Returns(location);
+        A.CallTo(() => dbAccessProvider.DbAccess.GetTagById(tag.Id)).Returns(tag);
+        A.CallTo(() => dbAccessProvider.DbAccess.GetPersonsFromFile(A<int>._)).Returns([]);
+        A.CallTo(() => dbAccessProvider.DbAccess.GetLocationsFromFile(A<int>._)).Returns([]);
+        A.CallTo(() => dbAccessProvider.DbAccess.GetTagsFromFile(A<int>._)).Returns([]);
+
+        var viewModel = CreateViewModel();
+        LoadAFile(datetime: null);
+        foreach (var item in viewModel.Items)
+        {
+            item.IsVisible = false;
+        }
+        viewModel.Items.First(x => x.Type == CombinedItemType.Person && x.Id == 1).IsVisible = true;
+        viewModel.Items.First(x => x.Type == CombinedItemType.Location && x.Id == 1).IsVisible = true;
+        viewModel.Items.First(x => x.Type == CombinedItemType.Tag && x.Id == 1).IsVisible = true;
+
+        await viewModel.AddItemsCommand.ExecuteAsync(null);
+
+        A.CallTo(() => dbAccessProvider.DbAccess.InsertFilePerson(1, 1)).MustHaveHappenedOnceExactly();
+        A.CallTo(() => dbAccessProvider.DbAccess.InsertFileLocation(1, 1)).MustHaveHappenedOnceExactly();
+        A.CallTo(() => dbAccessProvider.DbAccess.InsertFileTag(1, 1)).MustHaveHappenedOnceExactly();
+    }
+
+    [Fact]
+    public void RemoveItemsCommand_RemovesVisibleCheckedItems()
+    {
+        PopulateRepositories();
+        var person = new PersonModel { Id = 1, ShortName = "Alice", FullName = "Alice Smith" };
+        var location = new LocationModel { Id = 1, Name = "Home" };
+        var tag = new TagModel { Id = 1, Name = "Favorites" };
+        A.CallTo(() => dbAccessProvider.DbAccess.GetPersonById(person.Id)).Returns(person);
+        A.CallTo(() => dbAccessProvider.DbAccess.GetLocationById(location.Id)).Returns(location);
+        A.CallTo(() => dbAccessProvider.DbAccess.GetTagById(tag.Id)).Returns(tag);
+        A.CallTo(() => dbAccessProvider.DbAccess.GetPersonsFromFile(A<int>._)).Returns([person]);
+        A.CallTo(() => dbAccessProvider.DbAccess.GetLocationsFromFile(A<int>._)).Returns([location]);
+        A.CallTo(() => dbAccessProvider.DbAccess.GetTagsFromFile(A<int>._)).Returns([tag]);
+
+        var viewModel = CreateViewModel();
+        LoadAFile();
+        foreach (var item in viewModel.Items)
+        {
+            item.IsVisible = false;
+        }
+        viewModel.Items.First(x => x.Type == CombinedItemType.Person && x.Id == 1).IsVisible = true;
+        viewModel.Items.First(x => x.Type == CombinedItemType.Location && x.Id == 1).IsVisible = true;
+        viewModel.Items.First(x => x.Type == CombinedItemType.Tag && x.Id == 1).IsVisible = true;
+
+        viewModel.RemoveItemsCommand.Execute(null);
+
+        A.CallTo(() => dbAccessProvider.DbAccess.DeleteFilePerson(1, 1)).MustHaveHappenedOnceExactly();
+        A.CallTo(() => dbAccessProvider.DbAccess.DeleteFileLocation(1, 1)).MustHaveHappenedOnceExactly();
+        A.CallTo(() => dbAccessProvider.DbAccess.DeleteFileTag(1, 1)).MustHaveHappenedOnceExactly();
+    }
+
+    [Fact]
+    public void ReloadCommand_UserDeclines_DoesNotUpdate()
+    {
+        A.CallTo(() => dialogs.ShowConfirmDialogAsync(A<string>._)).Returns(false);
+        var viewModel = CreateViewModel();
+        LoadAFile();
+
+        viewModel.ReloadCommand.Execute(null);
+
+        A.CallTo(() => dbAccessProvider.DbAccess.UpdateFileFromMetaData(A<int>._, A<IFilesystemAccess>._)).MustNotHaveHappened();
+    }
+
+    [Fact]
+    public void PlaceBoundingBox_WhenMissing_StartsPlacement()
+    {
+        var person = new PersonModel { Id = 1, ShortName = "Alice", FullName = "Alice Smith" };
+        persons.Add(person);
+        A.CallTo(() => dbAccessProvider.DbAccess.GetPersonsFromFile(A<int>._)).Returns([]);
+        A.CallTo(() => dbAccessProvider.DbAccess.GetFilePersonBoundingBoxes(A<int>._)).Returns([]);
+        A.CallTo(() => dbAccessProvider.DbAccess.GetPersonById(person.Id)).Returns(person);
+        var recorder = new SingleEventRecorder<StartPersonBoundingBoxPlacement>();
+
+        var viewModel = CreateViewModel();
+        LoadAFile();
+        var item = viewModel.Items.First(x => x.Type == CombinedItemType.Person && x.Id == person.Id);
+
+        viewModel.PlaceBoundingBoxCommand.Execute(item);
+
+        recorder.AssertEventRecorded();
+    }
+
+    [Fact]
     public void PlaceBoundingBox_WhenBoxExists_ClearsOnlyBoundingBox()
     {
         // Arrange
@@ -353,6 +499,80 @@ public class FileCategorizationViewModelTests
         A.CallTo(() => dbAccessProvider.DbAccess.DeleteFilePerson(A<int>._, A<int>._)).MustNotHaveHappened();
         Assert.True(item.IsChecked);
         Assert.False(item.HasBoundingBox);
+    }
+
+    [Fact]
+    public void MarkPrevEditedFileCommand_SetsPreviousFile()
+    {
+        var viewModel = CreateViewModel();
+        LoadAFile();
+
+        viewModel.MarkPrevEditedFileCommand.Execute(null);
+
+        Assert.Equal(1, viewModel.PrevEditedFileId);
+    }
+
+    [Fact]
+    public async Task RemoveHistoryItemCommand_RemovesItem()
+    {
+        var person = new PersonModel { Id = 1, ShortName = "Alice", FullName = "Alice Smith" };
+        persons.Add(person);
+        A.CallTo(() => dbAccessProvider.DbAccess.GetPersonsFromFile(A<int>._)).Returns([]);
+        A.CallTo(() => dbAccessProvider.DbAccess.GetLocationsFromFile(A<int>._)).Returns([]);
+        A.CallTo(() => dbAccessProvider.DbAccess.GetTagsFromFile(A<int>._)).Returns([]);
+        A.CallTo(() => dbAccessProvider.DbAccess.GetFilePersonBoundingBoxes(A<int>._)).Returns([]);
+        A.CallTo(() => dbAccessProvider.DbAccess.GetPersonById(person.Id)).Returns(person);
+
+        var viewModel = CreateViewModel();
+        LoadAFile();
+        var item = viewModel.Items.First(x => x.Type == CombinedItemType.Person && x.Id == person.Id);
+        await viewModel.ToggleCombinedCommand.ExecuteAsync(item);
+        Assert.NotEmpty(viewModel.UpdateHistoryItems);
+
+        var itemToRemove = viewModel.UpdateHistoryItems[0];
+        viewModel.RemoveHistoryItemCommand.Execute(itemToRemove);
+
+        Assert.Empty(viewModel.UpdateHistoryItems);
+    }
+
+    [Fact]
+    public void RotateFileClockwiseCommand_UpdatesRotation()
+    {
+        var person = new PersonModel { Id = 1, ShortName = "Alice", FullName = "Alice Smith" };
+        persons.Add(person);
+        A.CallTo(() => dbAccessProvider.DbAccess.GetPersonsFromFile(A<int>._)).Returns([]);
+        A.CallTo(() => dbAccessProvider.DbAccess.GetLocationsFromFile(A<int>._)).Returns([]);
+        A.CallTo(() => dbAccessProvider.DbAccess.GetTagsFromFile(A<int>._)).Returns([]);
+        A.CallTo(() => dbAccessProvider.DbAccess.GetFilePersonBoundingBoxes(A<int>._)).Returns([]);
+        A.CallTo(() => dbAccessProvider.DbAccess.GetPersonById(person.Id)).Returns(person);
+        A.CallTo(() => fileRotator.Rotate(A<FileModel>._, A<int>._, RotationDirection.Clockwise)).Returns(90);
+
+        var viewModel = CreateViewModel();
+        LoadAFile();
+
+        viewModel.RotateFileClockwiseCommand.Execute(null);
+
+        A.CallTo(() => fileRotator.Rotate(A<FileModel>._, A<int>._, RotationDirection.Clockwise)).MustHaveHappenedOnceExactly();
+    }
+
+    [Fact]
+    public void RotateFileCounterClockwiseCommand_UpdatesRotation()
+    {
+        var person = new PersonModel { Id = 1, ShortName = "Alice", FullName = "Alice Smith" };
+        persons.Add(person);
+        A.CallTo(() => dbAccessProvider.DbAccess.GetPersonsFromFile(A<int>._)).Returns([]);
+        A.CallTo(() => dbAccessProvider.DbAccess.GetLocationsFromFile(A<int>._)).Returns([]);
+        A.CallTo(() => dbAccessProvider.DbAccess.GetTagsFromFile(A<int>._)).Returns([]);
+        A.CallTo(() => dbAccessProvider.DbAccess.GetFilePersonBoundingBoxes(A<int>._)).Returns([]);
+        A.CallTo(() => dbAccessProvider.DbAccess.GetPersonById(person.Id)).Returns(person);
+        A.CallTo(() => fileRotator.Rotate(A<FileModel>._, A<int>._, RotationDirection.CounterClockwise)).Returns(270);
+
+        var viewModel = CreateViewModel();
+        LoadAFile();
+
+        viewModel.RotateFileCounterClockwiseCommand.Execute(null);
+
+        A.CallTo(() => fileRotator.Rotate(A<FileModel>._, A<int>._, RotationDirection.CounterClockwise)).MustHaveHappenedOnceExactly();
     }
 
     private FileCategorizationViewModel CreateViewModel()

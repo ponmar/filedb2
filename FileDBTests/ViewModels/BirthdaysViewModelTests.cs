@@ -58,6 +58,23 @@ public class BirthdaysViewModelTests
     }
 
     [Fact]
+    public void Constructor_PersonWithProfilePicture_LoadsImage()
+    {
+        A.CallTo(() => fakePersonsRepo.Persons).Returns([
+            new PersonModel { Id = 1, ShortName = "Alice", FullName = "Alice Andersson", DateOfBirth = "2000-01-01", ProfileFileId = 10 },
+        ]);
+        A.CallTo(() => fakeDbAccess.GetFileById(10)).Returns(new FileModel { Id = 10, Path = "photos/a.jpg" });
+        A.CallTo(() => fakeFilsystemAccess.ToAbsolutePath("photos/a.jpg")).Returns("/abs/photos/a.jpg");
+        var config = new ConfigBuilder().Build();
+        A.CallTo(() => fakeConfigRepo.Config).Returns(config);
+
+        var viewModel = new BirthdaysViewModel(fakePersonsRepo, fakeFilsystemAccessProvider, fakeDbAccessRepo, fakeImageLoader, fakeCriteriaViewModel);
+
+        A.CallTo(() => fakeImageLoader.LoadImage("/abs/photos/a.jpg")).MustHaveHappenedOnceExactly();
+        Assert.Single(viewModel.Persons);
+    }
+
+    [Fact]
     public void ConfigUpdated()
     {
         // Arrange
@@ -143,6 +160,20 @@ public class BirthdaysViewModelTests
 
         // Assert
         Assert.Equal(2, viewModel.Persons.Count);
+    }
+
+    [Fact]
+    public void FilterText_NoMatches_EmptiesList()
+    {
+        A.CallTo(() => fakePersonsRepo.Persons).Returns(SomePersons());
+        var config = new ConfigBuilder().Build();
+        A.CallTo(() => fakeConfigRepo.Config).Returns(config);
+
+        var viewModel = new BirthdaysViewModel(fakePersonsRepo, fakeFilsystemAccessProvider, fakeDbAccessRepo, fakeImageLoader, fakeCriteriaViewModel);
+
+        viewModel.FilterText = "zzz";
+
+        Assert.Empty(viewModel.Persons);
     }
 
     [Fact]
