@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -145,15 +145,22 @@ public partial class BirthdaysViewModel : ObservableObject
 
         this.RegisterForEvent<ImageLoaded>((x) =>
         {
-            Dispatcher.UIThread.Invoke(() =>
+            try
             {
-                foreach (var personVm in allPersons.Where(p => p.ProfilePictureAbsPath == x.FilePath))
+                Dispatcher.UIThread.Invoke(() =>
                 {
-                    var profileFile = dbAccessProvider.DbAccess.GetFileById(personVm.Person.ProfileFileId!.Value);
-                    personVm.ProfilePictureRotation = -DatabaseParsing.OrientationToDegrees(profileFile!.Orientation ?? 0);
-                    personVm.ProfilePicture = x.Image;
-                }
-            });
+                    foreach (var personVm in allPersons.Where(p => p.ProfilePictureAbsPath == x.FilePath))
+                    {
+                        var profileFile = dbAccessProvider.DbAccess.GetFileById(personVm.Person.ProfileFileId!.Value);
+                        personVm.ProfilePictureRotation = -DatabaseParsing.OrientationToDegrees(profileFile!.Orientation ?? 0);
+                        personVm.ProfilePicture = x.Image;
+                    }
+                });
+            }
+            catch (Exception)
+            {
+                // Ignore: application is shutting down
+            }
         });
 
         UpdatePersons();
@@ -196,3 +203,7 @@ public partial class BirthdaysViewModel : ObservableObject
     [RelayCommand]
     private void ClearFilterText() => FilterText = string.Empty;
 }
+
+
+
+

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -92,19 +92,36 @@ public partial class AddPersonViewModel : ObservableObject
 
         this.RegisterForEvent<ImageLoaded>((x) =>
         {
-            Dispatcher.UIThread.Invoke(() =>
+            try
             {
-                if (ProfilePictureFile is not null && x.FilePath == filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(ProfilePictureFile.Path))
+                Dispatcher.UIThread.Invoke(() =>
                 {
-                    ProfilePicture = x.Image;
-                }
-            });
+                    if (ProfilePictureFile is not null && x.FilePath == filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(ProfilePictureFile.Path))
+                    {
+                        ProfilePicture = x.Image;
+                    }
+                });
+            }
+            catch (Exception)
+            {
+                // Ignore: application is shutting down
+            }
         });
 
         this.RegisterForEvent<ImageLoadError>(x =>
         {
-            ProfilePicture = null;
-            // TODO: show load error?
+            try
+            {
+                Dispatcher.UIThread.Invoke(() =>
+                {
+                    ProfilePicture = null;
+                    // TODO: show load error?
+                });
+            }
+            catch (Exception)
+            {
+                // Ignore: application is shutting down
+            }
         });
 
 
@@ -188,3 +205,7 @@ public partial class AddPersonViewModel : ObservableObject
         ProfilePictureFile = null;
     }
 }
+
+
+
+

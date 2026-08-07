@@ -1,4 +1,4 @@
-﻿using FileDBInterface.Model;
+using FileDBInterface.Model;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
@@ -147,30 +147,44 @@ public partial class FileViewModel : ObservableObject
 
         this.RegisterForEvent<ImageLoaded>((x) =>
         {
-            Dispatcher.UIThread.Invoke(() =>
+            try
             {
-                if (x.FilePath == absolutePath)
+                Dispatcher.UIThread.Invoke(() =>
                 {
-                    Image = x.Image;
-                    if (x.Image is not null)
+                    if (x.FilePath == absolutePath)
                     {
-                        ImageWidth = x.Image.PixelSize.Width;
-                        ImageHeight = x.Image.PixelSize.Height;
+                        Image = x.Image;
+                        if (x.Image is not null)
+                        {
+                            ImageWidth = x.Image.PixelSize.Width;
+                            ImageHeight = x.Image.PixelSize.Height;
+                        }
                     }
-                }
-            });
+                });
+            }
+            catch (Exception)
+            {
+                // Ignore: application is shutting down
+            }
         });
 
         this.RegisterForEvent<ImageLoadError>((x) =>
         {
-            Dispatcher.UIThread.Invoke(() =>
+            try
             {
-                if (x.FilePath == absolutePath)
+                Dispatcher.UIThread.Invoke(() =>
                 {
-                    FileLoadError = Strings.SearchImageLoadingError + $"\n{x.Exception.Message}";
-                    Image = null;
-                }
-            });
+                    if (x.FilePath == absolutePath)
+                    {
+                        FileLoadError = Strings.SearchImageLoadingError + $"\n{x.Exception.Message}";
+                        Image = null;
+                    }
+                });
+            }
+            catch (Exception)
+            {
+                // Ignore: application is shutting down
+            }
         });
 
         this.RegisterForEvent<StartPersonBoundingBoxPlacement>((msg) =>
@@ -445,3 +459,7 @@ public partial class FileViewModel : ObservableObject
         criteriaViewModel.AddTimeSearchFilter(time);
     }
 }
+
+
+
+

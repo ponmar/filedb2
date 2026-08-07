@@ -35,7 +35,9 @@ public record SelectLastFile;
 public record SelectFileInNextDirectory;
 public record SelectFileInPrevDirectory;
 
+// Sent from a background thread — receivers must dispatch to the UI thread
 public record ImageLoaded(string FilePath, Bitmap Image);
+// Sent from a background thread — receivers must dispatch to the UI thread
 public record ImageLoadError(string FilePath, Exception Exception);
 
 public record CloseModalDialogRequest;
