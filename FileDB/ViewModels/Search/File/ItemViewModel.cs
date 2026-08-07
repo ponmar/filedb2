@@ -21,10 +21,14 @@ public partial class ItemViewModel : ObservableObject
     public partial bool IsVisible { get; set; }
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(IsCheckedForBoundingBox))]
     public partial bool HasBoundingBox { get; set; }
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(IsCheckedForBoundingBox))]
     public partial bool IsPlacingBoundingBox { get; set; }
+
+    public bool IsCheckedForBoundingBox => HasBoundingBox || IsPlacingBoundingBox;
 
     private readonly string nameForFilters;
 

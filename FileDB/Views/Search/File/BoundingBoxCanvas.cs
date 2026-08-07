@@ -23,10 +23,10 @@ public class BoundingBoxCanvas : Canvas
     private Point dragStartPoint = new();
     private Rect? previewBoundingBox;
 
-    public static readonly StyledProperty<IEnumerable<(int PersonId, PersonBoundingBox BBox)>> BoundingBoxesProperty =
-        AvaloniaProperty.Register<BoundingBoxCanvas, IEnumerable<(int PersonId, PersonBoundingBox BBox)>>(
+    public static readonly StyledProperty<IEnumerable<(PersonModel Person, PersonBoundingBox BBox)>> BoundingBoxesProperty =
+        AvaloniaProperty.Register<BoundingBoxCanvas, IEnumerable<(PersonModel Person, PersonBoundingBox BBox)>>(
             nameof(BoundingBoxes),
-            Array.Empty<(int, PersonBoundingBox)>()
+            Array.Empty<(PersonModel, PersonBoundingBox)>()
         );
 
     public static readonly StyledProperty<bool> IsPlacingBoundingBoxProperty =
@@ -65,7 +65,7 @@ public class BoundingBoxCanvas : Canvas
             false
         );
 
-    public IEnumerable<(int PersonId, PersonBoundingBox BBox)> BoundingBoxes
+    public IEnumerable<(PersonModel Person, PersonBoundingBox BBox)> BoundingBoxes
     {
         get => GetValue(BoundingBoxesProperty);
         set => SetValue(BoundingBoxesProperty, value);
@@ -251,7 +251,7 @@ public class BoundingBoxCanvas : Canvas
         // Draw existing bounding boxes - show if ForceShowBoundingBoxes is true
         if (ForceShowBoundingBoxes)
         {
-            foreach (var (personId, bbox) in BoundingBoxes)
+            foreach (var (person, bbox) in BoundingBoxes)
             {
                 var pixelRect = NormalizationToPixels(bbox);
                 var rectangle = new Rectangle
@@ -272,8 +272,27 @@ public class BoundingBoxCanvas : Canvas
                 Canvas.SetTop(rectangle, pixelRect.Y);
                 rectangle.Width = pixelRect.Width;
                 rectangle.Height = pixelRect.Height;
-                
                 Children.Add(rectangle);
+
+                var label = new TextBlock
+                {
+                    Text = person.FullName,
+                    Foreground = new SolidColorBrush(Colors.White),
+                    FontSize = 12,
+                    Width = pixelRect.Width,
+                    TextAlignment = Avalonia.Media.TextAlignment.Center,
+                    Effect = new DropShadowEffect
+                    {
+                        BlurRadius = 4,
+                        Color = Colors.Black,
+                        Opacity = 0.9,
+                        OffsetX = 1,
+                        OffsetY = 1
+                    }
+                };
+                Canvas.SetLeft(label, pixelRect.X);
+                Canvas.SetTop(label, pixelRect.Bottom + 2);
+                Children.Add(label);
             }
         }
 

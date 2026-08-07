@@ -97,7 +97,7 @@ public partial class FileViewModel : ObservableObject
     public partial double ImageHeight { get; set; } = 1.0;
 
     [ObservableProperty]
-    public partial List<(int PersonId, PersonBoundingBox BBox)> FilePersonBoundingBoxes { get; set; } = [];
+    public partial List<(PersonModel Person, PersonBoundingBox BBox)> FilePersonBoundingBoxes { get; set; } = [];
 
     private string absolutePath = string.Empty;
 
@@ -323,10 +323,11 @@ public partial class FileViewModel : ObservableObject
     public virtual void LoadFilePersonBoundingBoxes(int fileId)
     {
         var bboxes = dbAccessProvider.DbAccess.GetFilePersonBoundingBoxes(fileId);
-        var newList = new List<(int PersonId, PersonBoundingBox BBox)>();
+        var newList = new List<(PersonModel Person, PersonBoundingBox BBox)>();
         foreach (var (personId, bbox) in bboxes)
         {
-            newList.Add((personId, bbox));
+            var person = dbAccessProvider.DbAccess.GetPersonById(personId);
+            newList.Add((person, bbox));
         }
         FilePersonBoundingBoxes = newList;
     }

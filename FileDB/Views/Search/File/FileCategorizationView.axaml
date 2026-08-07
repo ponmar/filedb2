@@ -51,14 +51,7 @@
                         <DataTemplate x:DataType="vm:ItemViewModel">
                             <StackPanel Orientation="Horizontal" IsVisible="{Binding IsVisible}" Margin="0,2,0,2">
                                 <ToggleButton Command="{Binding $parent[ItemsControl].DataContext.ToggleCombinedCommand}" CommandParameter="{Binding}" Classes="ColoredToggleButton" Content="{Binding DisplayName}" IsChecked="{Binding IsChecked, Mode=OneWay}" ToolTip.Tip="{Binding ToolTip}" />
-                                <ToggleButton Margin="5,0,0,0" Content="📦" Command="{Binding $parent[ItemsControl].DataContext.PlaceBoundingBoxCommand}" CommandParameter="{Binding}" IsEnabled="{Binding $parent[ItemsControl].DataContext.CanPlaceBoundingBox}" ToolTip.Tip="{x:Static lang:Strings.CategorizationPlaceBoundingBoxToolTip}" IsVisible="{Binding IsPerson}">
-                                    <ToggleButton.IsChecked>
-                                        <MultiBinding Converter="{StaticResource BooleanOrConverter}" Mode="OneWay">
-                                            <Binding Path="HasBoundingBox"/>
-                                            <Binding Path="IsPlacingBoundingBox"/>
-                                        </MultiBinding>
-                                    </ToggleButton.IsChecked>
-                                </ToggleButton>
+                                <ToggleButton Margin="5,0,0,0" Content="📦" IsChecked="{Binding IsCheckedForBoundingBox, Mode=OneWay}" Command="{Binding $parent[ItemsControl].DataContext.PlaceBoundingBoxCommand}" CommandParameter="{Binding}" IsEnabled="{Binding $parent[ItemsControl].DataContext.CanPlaceBoundingBox}" ToolTip.Tip="{x:Static lang:Strings.CategorizationPlaceBoundingBoxToolTip}" IsVisible="{Binding IsPerson}"/>
                             </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
