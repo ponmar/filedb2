@@ -1545,6 +1545,33 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Text file content.
+        /// </summary>
+        public static string FilterTypeTextFileContent {
+            get {
+                return ResourceManager.GetString("FilterTypeTextFileContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text to search for in file content.
+        /// </summary>
+        public static string TextFileContentSearchTextToolTip {
+            get {
+                return ResourceManager.GetString("TextFileContentSearchTextToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File extensions to search (space-separated, e.g. .txt .md).
+        /// </summary>
+        public static string TextFileContentExtensionsToolTip {
+            get {
+                return ResourceManager.GetString("TextFileContentExtensionsToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date.
         /// </summary>
         public static string FilterTypeDateTime {

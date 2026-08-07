@@ -1238,6 +1238,15 @@ This operation can be slow for a large collection of files or if the media acces
   <data name="FilterTypeCombine" xml:space="preserve">
     <value>Combine</value>
   </data>
+  <data name="FilterTypeTextFileContent" xml:space="preserve">
+    <value>Text file content</value>
+  </data>
+  <data name="TextFileContentSearchTextToolTip" xml:space="preserve">
+    <value>Text to search for in file content</value>
+  </data>
+  <data name="TextFileContentExtensionsToolTip" xml:space="preserve">
+    <value>File extensions to search (space-separated, e.g. .txt .md)</value>
+  </data>
   <data name="SearchFilterCombineResultToolTip" xml:space="preserve">
     <value>Result</value>
   </data>

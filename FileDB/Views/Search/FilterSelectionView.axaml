@@ -96,6 +96,9 @@
 				<DataTemplate x:DataType="filterVms:TextViewModel">
 					<filters:TextView/>
 				</DataTemplate>
+				<DataTemplate x:DataType="filterVms:TextFileContentViewModel">
+					<filters:TextFileContentView/>
+				</DataTemplate>
 				<DataTemplate x:DataType="filterVms:TimeViewModel">
 					<filters:TimeView/>
 				</DataTemplate>

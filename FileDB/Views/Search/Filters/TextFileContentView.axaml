@@ -1,0 +1,13 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:FileDB.ViewModels.Search.Filters"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:lang="clr-namespace:FileDB.Lang"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:DataType="vm:TextFileContentViewModel" x:Class="FileDB.Views.Search.Filters.TextFileContentView">
+	<StackPanel Orientation="Horizontal">
+		<TextBox Margin="0 0 3 0" Text="{Binding SearchText}" Width="120" VerticalAlignment="Center" ToolTip.Tip="{x:Static lang:Strings.TextFileContentSearchTextToolTip}"/>
+		<TextBox Margin="0 0 0 0" Text="{Binding FileExtensions}" Width="80" VerticalAlignment="Center" ToolTip.Tip="{x:Static lang:Strings.TextFileContentExtensionsToolTip}"/>
+	</StackPanel>
+</UserControl>
