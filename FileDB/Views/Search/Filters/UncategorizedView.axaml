@@ -6,5 +6,5 @@
 		 xmlns:lang="clr-namespace:FileDB.Lang"
 		 xmlns:converters="clr-namespace:FileDB.Converters"
              mc:Ignorable="d"
-             x:CompileBindings="False" x:Class="FileDB.Views.Search.Filters.UncategorizedView">
+             x:DataType="vm:UncategorizedViewModel" x:Class="FileDB.Views.Search.Filters.UncategorizedView">
 </UserControl>

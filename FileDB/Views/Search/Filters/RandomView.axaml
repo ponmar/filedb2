@@ -6,8 +6,8 @@
 			 xmlns:lang="clr-namespace:FileDB.Lang"
 			 xmlns:converters="clr-namespace:FileDB.Converters"
              mc:Ignorable="d"
-             x:CompileBindings="False" x:Class="FileDB.Views.Search.Filters.RandomView">
-    <StackPanel Orientation="Horizontal" DataContext="{Binding FilterViewModel}">
+             x:DataType="vm:RandomViewModel" x:Class="FileDB.Views.Search.Filters.RandomView">
+    <StackPanel Orientation="Horizontal">
         <NumericUpDown
             MinWidth="100"
             VerticalAlignment="Center"

@@ -1,6 +1,7 @@
 <UserControl xmlns="https://github.com/avaloniaui"
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:vm="clr-namespace:FileDB.ViewModels.Search"
+			 xmlns:filterVms="clr-namespace:FileDB.ViewModels.Search.Filters"
 			 xmlns:model="clr-namespace:FileDB.Model"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -10,7 +11,6 @@
 			 x:Class="FileDB.Views.Search.FilterSelectionView"
 			 x:DataType="vm:FilterSelectionViewModel">
 	<UserControl.Resources>
-		<converters:FilterTypeToVisibilityConverter x:Key="FilterTypeToVisibilityConverter"/>
 		<converters:FilterTypeToStringConverter x:Key="FilterTypeToStringConverter"/>
 		<converters:CombineMethodToStringConverter x:Key="CombineMethodToStringConverter"/>
 	</UserControl.Resources>
@@ -31,30 +31,78 @@
 			</ComboBox.ItemTemplate>
 		</ComboBox>
 
-		<Grid>
-			<filters:DateView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Date}}"/>
-			<filters:UncategorizedView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Uncategorized}}"/>
-			<filters:NoDateTimeView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.NoDateTime}}"/>
-			<filters:TextView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Text}}"/>
-			<filters:FileListView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.FileList}}"/>
-			<filters:DirectoryView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Directory}}"/>
-			<filters:FileTypeView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.FileType}}"/>
-			<filters:PersonView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Person}}"/>
-			<filters:PersonAgeView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.PersonAge}}"/>
-			<filters:PersonSexView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.PersonSex}}"/>
-			<filters:PersonGroupView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.PersonGroup}}"/>
-			<filters:PersonProfileFilesView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.PersonProfileFiles}}"/>
-			<filters:LocationView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Location}}"/>
-			<filters:TagView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Tag}}"/>
-			<filters:TagsView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Tags}}"/>
-			<filters:PositionView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Position}}"/>
-			<filters:NumPersonsView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.NumPersons}}"/>
-			<filters:SeasonView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Season}}"/>
-			<filters:AnnualDateView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.AnnualDate}}"/>
-			<filters:TimeView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Time}}"/>
-			<filters:AllFilesView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.AllFiles}}"/>
-			<filters:RandomView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Random}}"/>
-			<filters:CombineView IsVisible="{Binding SelectedFilterType, Converter={StaticResource FilterTypeToVisibilityConverter}, ConverterParameter={x:Static model:FilterType.Combine}}"/>
-		</Grid>
+		<ContentControl Content="{Binding FilterViewModel}">
+			<ContentControl.DataTemplates>
+				<DataTemplate x:DataType="filterVms:AllFilesViewModel">
+					<filters:AllFilesView/>
+				</DataTemplate>
+				<DataTemplate x:DataType="filterVms:AnnualDateViewModel">
+					<filters:AnnualDateView/>
+				</DataTemplate>
+				<DataTemplate x:DataType="filterVms:CombineViewModel">
+					<filters:CombineView/>
+				</DataTemplate>
+				<DataTemplate x:DataType="filterVms:DateViewModel">
+					<filters:DateView/>
+				</DataTemplate>
+				<DataTemplate x:DataType="filterVms:DirectoryViewModel">
+					<filters:DirectoryView/>
+				</DataTemplate>
+				<DataTemplate x:DataType="filterVms:FileListViewModel">
+					<filters:FileListView/>
+				</DataTemplate>
+				<DataTemplate x:DataType="filterVms:FileTypeViewModel">
+					<filters:FileTypeView/>
+				</DataTemplate>
+				<DataTemplate x:DataType="filterVms:LocationViewModel">
+					<filters:LocationView/>
+				</DataTemplate>
+				<DataTemplate x:DataType="filterVms:NoDateTimeViewModel">
+					<filters:NoDateTimeView/>
+				</DataTemplate>
+				<DataTemplate x:DataType="filterVms:NumPersonsViewModel">
+					<filters:NumPersonsView/>
+				</DataTemplate>
+				<DataTemplate x:DataType="filterVms:PersonAgeViewModel">
+					<filters:PersonAgeView/>
+				</DataTemplate>
+				<DataTemplate x:DataType="filterVms:PersonGroupViewModel">
+					<filters:PersonGroupView/>
+				</DataTemplate>
+				<DataTemplate x:DataType="filterVms:PersonProfileFilesViewModel">
+					<filters:PersonProfileFilesView/>
+				</DataTemplate>
+				<DataTemplate x:DataType="filterVms:PersonSexViewModel">
+					<filters:PersonSexView/>
+				</DataTemplate>
+				<DataTemplate x:DataType="filterVms:PersonViewModel">
+					<filters:PersonView/>
+				</DataTemplate>
+				<DataTemplate x:DataType="filterVms:PositionViewModel">
+					<filters:PositionView/>
+				</DataTemplate>
+				<DataTemplate x:DataType="filterVms:RandomViewModel">
+					<filters:RandomView/>
+				</DataTemplate>
+				<DataTemplate x:DataType="filterVms:SeasonViewModel">
+					<filters:SeasonView/>
+				</DataTemplate>
+				<DataTemplate x:DataType="filterVms:TagViewModel">
+					<filters:TagView/>
+				</DataTemplate>
+				<DataTemplate x:DataType="filterVms:TagsViewModel">
+					<filters:TagsView/>
+				</DataTemplate>
+				<DataTemplate x:DataType="filterVms:TextViewModel">
+					<filters:TextView/>
+				</DataTemplate>
+				<DataTemplate x:DataType="filterVms:TimeViewModel">
+					<filters:TimeView/>
+				</DataTemplate>
+				<DataTemplate x:DataType="filterVms:UncategorizedViewModel">
+					<filters:UncategorizedView/>
+				</DataTemplate>
+			</ContentControl.DataTemplates>
+		</ContentControl>
 	</StackPanel>
 </UserControl>

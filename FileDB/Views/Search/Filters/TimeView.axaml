@@ -6,8 +6,8 @@
 			 xmlns:lang="clr-namespace:FileDB.Lang"
 			 xmlns:converters="clr-namespace:FileDB.Converters"
              mc:Ignorable="d"
-             x:CompileBindings="False" x:Class="FileDB.Views.Search.Filters.TimeView">
-	<StackPanel Orientation="Horizontal" DataContext="{Binding FilterViewModel}">
+             x:DataType="vm:TimeViewModel" x:Class="FileDB.Views.Search.Filters.TimeView">
+	<StackPanel Orientation="Horizontal">
 		<TimePicker Margin="0 0 3 0" ClockIdentifier="24HourClock" VerticalAlignment="Center" SelectedTime="{Binding StartTime}"/>
 		<Button Margin="0 0 3 0" Content="..." VerticalAlignment="Center" ToolTip.Tip="{x:Static lang:Strings.SearchFilterDateSelectFromTooltip}">
 			<Button.Flyout>

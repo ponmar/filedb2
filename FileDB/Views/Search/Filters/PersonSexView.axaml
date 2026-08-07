@@ -7,14 +7,14 @@
 			 xmlns:lang="clr-namespace:FileDB.Lang"
 			 xmlns:converters="clr-namespace:FileDB.Converters"
              mc:Ignorable="d"
-             x:CompileBindings="False" x:Class="FileDB.Views.Search.Filters.PersonSexView">
+             x:DataType="vm:PersonSexViewModel" x:Class="FileDB.Views.Search.Filters.PersonSexView">
 	<UserControl.Resources>
 		<converters:SexToStringConverter x:Key="SexToStringConverter"/>
 	</UserControl.Resources>
-	<StackPanel Orientation="Horizontal" DataContext="{Binding FilterViewModel}">
+	<StackPanel Orientation="Horizontal">
 		<ComboBox Grid.Column="0" ItemsSource="{Binding PersonSexValues}" SelectedItem="{Binding SelectedPersonSex}" ToolTip.Tip="{x:Static lang:Strings.SearchFilterPersonSexTooltip}" VerticalAlignment="Center">
 			<ComboBox.ItemTemplate>
-				<DataTemplate>
+				<DataTemplate x:DataType="model:Sex">
 					<TextBlock Text="{Binding Path=., Converter={StaticResource SexToStringConverter}}" />
 				</DataTemplate>
 			</ComboBox.ItemTemplate>

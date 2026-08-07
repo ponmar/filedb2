@@ -6,8 +6,8 @@
 			 xmlns:lang="clr-namespace:FileDB.Lang"
 			 xmlns:converters="clr-namespace:FileDB.Converters"
              mc:Ignorable="d"
-             x:CompileBindings="False" x:Class="FileDB.Views.Search.Filters.TagsView">
-	<StackPanel Orientation="Horizontal" DataContext="{Binding FilterViewModel}">
+             x:DataType="vm:TagsViewModel" x:Class="FileDB.Views.Search.Filters.TagsView">
+	<StackPanel Orientation="Horizontal">
 		<ListBox MaxHeight="150" ItemsSource="{Binding Tags}" SelectionMode="Multiple,Toggle" SelectedItems="{Binding SelectedTags}"/>
 		<Button Margin="3 0 3 0" Content="..." VerticalAlignment="Center">
 			<Button.Flyout>

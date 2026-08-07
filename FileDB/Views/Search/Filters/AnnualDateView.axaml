@@ -6,16 +6,16 @@
 			 xmlns:lang="clr-namespace:FileDB.Lang"
 			 xmlns:converters="clr-namespace:FileDB.Converters"
              mc:Ignorable="d"
-             x:CompileBindings="False" x:Class="FileDB.Views.Search.Filters.AnnualDateView">
+             x:DataType="vm:AnnualDateViewModel" x:Class="FileDB.Views.Search.Filters.AnnualDateView">
 	<UserControl.Resources>
 		<converters:NumberToMonthConverter x:Key="NumberToMonthConverter"/>
 	</UserControl.Resources>
-	<StackPanel Orientation="Horizontal" DataContext="{Binding FilterViewModel}">
+	<StackPanel Orientation="Horizontal">
 		<CheckBox Margin="0 0 3 0" Content="{x:Static lang:Strings.SearchFilterRange}" IsChecked="{Binding AnnualDateIsRange}"/>
 		<ComboBox Margin="0 0 3 0" ItemsSource="{Binding Days}" SelectedItem="{Binding SelectedAnnualDayStart}" VerticalAlignment="Center"/>
 		<ComboBox Margin="0 0 3 0" ItemsSource="{Binding Months}" SelectedItem="{Binding SelectedAnnualMonthStart}" VerticalAlignment="Center">
 			<ComboBox.ItemTemplate>
-				<DataTemplate>
+				<DataTemplate x:CompileBindings="False">
 					<TextBlock Text="{Binding Path=., Converter={StaticResource NumberToMonthConverter}}"/>
 				</DataTemplate>
 			</ComboBox.ItemTemplate>
@@ -27,7 +27,7 @@
 					<MenuItem Header="{x:Static lang:Strings.SearchFilterDateSelectFromCurrentFile}" IsEnabled="{Binding CurrentFileHasDateTime}" Command="{Binding SetStartDateFromCurrentFileCommand}"/>
 					<MenuItem Header="{x:Static lang:Strings.SearchFilterDateSelectFromSwedishHoliday}" ItemsSource="{Binding SwedishFixedHolidays}">
 						<MenuItem.ItemContainerTheme>
-							<ControlTheme TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+							<ControlTheme x:CompileBindings="False" TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
 								<Setter Property="Header" Value="{Binding Name}"/>
 								<Setter Property="Command" Value="{Binding $parent[StackPanel].DataContext.SetStartDateFromHolidayCommand}"/>
 								<Setter Property="CommandParameter" Value="{Binding}"/>
@@ -42,7 +42,7 @@
 			<ComboBox Margin="0 0 3 0" ItemsSource="{Binding Days}" SelectedItem="{Binding SelectedAnnualDayEnd}" VerticalAlignment="Center"/>
 			<ComboBox Margin="0 0 3 0" ItemsSource="{Binding Months}" SelectedItem="{Binding SelectedAnnualMonthEnd}" VerticalAlignment="Center">
 				<ComboBox.ItemTemplate>
-					<DataTemplate>
+					<DataTemplate x:CompileBindings="False">
 						<TextBlock Text="{Binding Path=., Converter={StaticResource NumberToMonthConverter}}"/>
 					</DataTemplate>
 				</ComboBox.ItemTemplate>
@@ -54,7 +54,7 @@
 						<MenuItem Header="{x:Static lang:Strings.SearchFilterDateSelectFromCurrentFile}" IsEnabled="{Binding CurrentFileHasDateTime}" Command="{Binding SetEndDateFromCurrentFileCommand}"/>
 						<MenuItem Header="{x:Static lang:Strings.SearchFilterDateSelectFromSwedishHoliday}" ItemsSource="{Binding SwedishFixedHolidays}">
 							<MenuItem.ItemContainerTheme>
-								<ControlTheme TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+								<ControlTheme x:CompileBindings="False" TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
 									<Setter Property="Header" Value="{Binding Name}"/>
 									<Setter Property="Command" Value="{Binding $parent[StackPanel].DataContext.SetEndDateFromHolidayCommand}"/>
 									<Setter Property="CommandParameter" Value="{Binding}"/>

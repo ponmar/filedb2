@@ -6,8 +6,8 @@
 			 xmlns:lang="clr-namespace:FileDB.Lang"
 			 xmlns:converters="clr-namespace:FileDB.Converters"
              mc:Ignorable="d"
-             x:CompileBindings="False" x:Class="FileDB.Views.Search.Filters.PersonGroupView">
-	<StackPanel Orientation="Horizontal" DataContext="{Binding FilterViewModel}">
+             x:DataType="vm:PersonGroupViewModel" x:Class="FileDB.Views.Search.Filters.PersonGroupView">
+	<StackPanel Orientation="Horizontal">
 		<ListBox MaxHeight="150" ItemsSource="{Binding Persons}" SelectionMode="Multiple,Toggle" SelectedItems="{Binding SelectedPersons}"/>
 		<Button Margin="3 0 3 0" Content="..." VerticalAlignment="Center">
 			<Button.Flyout>

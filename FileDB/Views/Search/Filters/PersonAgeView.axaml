@@ -6,8 +6,8 @@
 			 xmlns:lang="clr-namespace:FileDB.Lang"
 			 xmlns:converters="clr-namespace:FileDB.Converters"
              mc:Ignorable="d"
-             x:CompileBindings="False" x:Class="FileDB.Views.Search.Filters.PersonAgeView">
-	<StackPanel Orientation="Horizontal" DataContext="{Binding FilterViewModel}">
+             x:DataType="vm:PersonAgeViewModel" x:Class="FileDB.Views.Search.Filters.PersonAgeView">
+	<StackPanel Orientation="Horizontal">
 		<NumericUpDown Margin="0 0 3 0" Minimum="0" Maximum="200" Increment="1" Value="{Binding PersonAgeFrom}" MinWidth="100" VerticalAlignment="Center" ToolTip.Tip="{x:Static lang:Strings.SearchFilterPersonAgeFrom}"/>
 		<TextBlock Margin="0 0 3 0" Text="-" VerticalAlignment="Center" />
 		<NumericUpDown Value="{Binding PersonAgeTo}" Minimum="0" Maximum="200" Increment="1" MinWidth="100" VerticalAlignment="Center" ToolTip.Tip="{x:Static lang:Strings.SearchFilterPersonAgeTo}"/>

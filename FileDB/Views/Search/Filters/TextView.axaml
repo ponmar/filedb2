@@ -6,8 +6,8 @@
 			 xmlns:converters="clr-namespace:FileDB.Converters"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:CompileBindings="False" x:Class="FileDB.Views.Search.Filters.TextView">
-	<StackPanel Orientation="Horizontal" DataContext="{Binding FilterViewModel}">
+             x:DataType="vm:TextViewModel" x:Class="FileDB.Views.Search.Filters.TextView">
+	<StackPanel Orientation="Horizontal">
 		<TextBox Margin="0 0 3 0" Text="{Binding TextFilterSearchPattern}" Width="100" ToolTip.Tip="{x:Static lang:Strings.SearchFilterTextInputToolTip}" VerticalAlignment="Center"/>
 		<ToggleButton Margin="0 0 3 0" Classes="ColoredToggleButton" IsChecked="{Binding TextFilterCaseSensitive}" Content="&#x1F5DA;" ToolTip.Tip="{x:Static lang:Strings.TextFilterCaseSensitive}"/>
 		<ToggleButton Margin="0 0 3 0" Classes="ColoredToggleButton" IsChecked="{Binding TextFilterPersons}" Content="&#x1F6B6;" ToolTip.Tip="{x:Static lang:Strings.TextFilterIncludePersons}"/>

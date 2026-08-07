@@ -6,8 +6,8 @@
 			 xmlns:lang="clr-namespace:FileDB.Lang"
 			 xmlns:converters="clr-namespace:FileDB.Converters"
              mc:Ignorable="d"
-             x:CompileBindings="False" x:Class="FileDB.Views.Search.Filters.LocationView">
-	<StackPanel Orientation="Horizontal" DataContext="{Binding FilterViewModel}">
+             x:DataType="vm:LocationViewModel" x:Class="FileDB.Views.Search.Filters.LocationView">
+	<StackPanel Orientation="Horizontal">
 		<ComboBox Margin="0 0 3 0" Grid.Column="0" ItemsSource="{Binding Locations}" SelectedItem="{Binding SelectedLocation}" VerticalAlignment="Center"/>
 		<ToggleButton Classes="ColoredToggleButton" Content="!" IsChecked="{Binding Negate}" ToolTip.Tip="{x:Static lang:Strings.FilterNegateTooltip}"/>
 	</StackPanel>

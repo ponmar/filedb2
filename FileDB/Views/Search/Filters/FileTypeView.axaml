@@ -1,20 +1,20 @@
 <UserControl xmlns="https://github.com/avaloniaui"
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:vm="clr-namespace:FileDB.ViewModels.Search.Filters"
-			 xmlns:model="clr-namespace:FileDB.Model"
+			 xmlns:model="clr-namespace:FileDBInterface.Model;assembly=FileDBInterface"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:lang="clr-namespace:FileDB.Lang"
 			 xmlns:converters="clr-namespace:FileDB.Converters"
              mc:Ignorable="d"
-             x:CompileBindings="False" x:Class="FileDB.Views.Search.Filters.FileTypeView">
+             x:DataType="vm:FileTypeViewModel" x:Class="FileDB.Views.Search.Filters.FileTypeView">
 	<UserControl.Resources>
 		<converters:FileTypeToStringConverter x:Key="FileTypeToStringConverter"/>
 	</UserControl.Resources>
-	<StackPanel Orientation="Horizontal" DataContext="{Binding FilterViewModel}">
+	<StackPanel Orientation="Horizontal">
 		<ComboBox ItemsSource="{Binding FileTypes}" SelectedItem="{Binding SelectedFileType}" ToolTip.Tip="File type" VerticalAlignment="Center">
 			<ComboBox.ItemTemplate>
-				<DataTemplate>
+				<DataTemplate x:DataType="model:FileType">
 					<TextBlock Text="{Binding Path=., Converter={StaticResource FileTypeToStringConverter}}"/>
 				</DataTemplate>
 			</ComboBox.ItemTemplate>

@@ -6,8 +6,8 @@
 			 xmlns:lang="clr-namespace:FileDB.Lang"
 			 xmlns:converters="clr-namespace:FileDB.Converters"
              mc:Ignorable="d"
-             x:CompileBindings="False" x:Class="FileDB.Views.Search.Filters.DirectoryView">
-	<StackPanel Orientation="Horizontal" DataContext="{Binding FilterViewModel}">
+             x:DataType="vm:DirectoryViewModel" x:Class="FileDB.Views.Search.Filters.DirectoryView">
+	<StackPanel Orientation="Horizontal">
 		<TextBox Text="{Binding DirectoryPath}" Margin="0 0 3 0" VerticalAlignment="Center" IsReadOnly="True" IsEnabled="False"/>
 		<Button
 			VerticalAlignment="Center"
