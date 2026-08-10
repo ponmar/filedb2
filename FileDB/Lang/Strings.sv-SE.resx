@@ -1436,4 +1436,16 @@ Lägg till nya filer i '{0}'.</value>
   <data name="ConfigValidatorInvalidLanguage" xml:space="preserve">
     <value>Ogiltigt språk</value>
   </data>
+  <data name="FilterTypeTextFileContent" xml:space="preserve">
+    <value>Textfilsinnehåll</value>
+  </data>
+  <data name="TextFileContentSearchTextToolTip" xml:space="preserve">
+    <value>Text att söka efter i filinnehållet</value>
+  </data>
+  <data name="TextFileContentExtensionsToolTip" xml:space="preserve">
+    <value>Filtillägg att söka (blankstegsavgränsat, t.ex. .txt .md)</value>
+  </data>
+  <data name="TextFileContentCaseSensitive" xml:space="preserve">
+    <value>Skiftlägeskänslig</value>
+  </data>
 </root>

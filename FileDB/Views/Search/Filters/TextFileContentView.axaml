@@ -8,6 +8,7 @@
              x:DataType="vm:TextFileContentViewModel" x:Class="FileDB.Views.Search.Filters.TextFileContentView">
 	<StackPanel Orientation="Horizontal">
 		<TextBox Margin="0 0 3 0" Text="{Binding SearchText}" Width="120" VerticalAlignment="Center" ToolTip.Tip="{x:Static lang:Strings.TextFileContentSearchTextToolTip}"/>
+		<ToggleButton Margin="0 0 3 0" Classes="ColoredToggleButton" IsChecked="{Binding CaseSensitive}" Content="&#x1F5DA;" ToolTip.Tip="{x:Static lang:Strings.TextFileContentCaseSensitive}"/>
 		<TextBox Margin="0 0 0 0" Text="{Binding FileExtensions}" Width="80" VerticalAlignment="Center" ToolTip.Tip="{x:Static lang:Strings.TextFileContentExtensionsToolTip}"/>
 	</StackPanel>
 </UserControl>

@@ -1247,6 +1247,9 @@ This operation can be slow for a large collection of files or if the media acces
   <data name="TextFileContentExtensionsToolTip" xml:space="preserve">
     <value>File extensions to search (space-separated, e.g. .txt .md)</value>
   </data>
+  <data name="TextFileContentCaseSensitive" xml:space="preserve">
+    <value>Case sensitive</value>
+  </data>
   <data name="SearchFilterCombineResultToolTip" xml:space="preserve">
     <value>Result</value>
   </data>

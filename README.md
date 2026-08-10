@@ -47,7 +47,7 @@ The following search filters are available. Multiple filters can be added and co
 | Tag | Filter by a specific tag (can be negated) |
 | Tags | Filter by a group of tags, with an option to allow additional tags in the file |
 | Text | Search by text in file descriptions, and optionally in person names/descriptions, location names/descriptions, and tag names |
-| Text file content | Search within the actual content of files in the database — specify file extensions (e.g. `.txt .md`) and a search string |
+| Text file content | Search within the actual content of files in the database — specify file extensions (e.g. `.txt .md`) and a search string; toggle case-sensitive matching |
 | Time | Filter by time-of-day range |
 | Uncategorized | Files that have no persons, locations or tags |
 

@@ -1572,6 +1572,15 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Case sensitive.
+        /// </summary>
+        public static string TextFileContentCaseSensitive {
+            get {
+                return ResourceManager.GetString("TextFileContentCaseSensitive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date.
         /// </summary>
         public static string FilterTypeDateTime {

@@ -22,6 +22,9 @@ public partial class TextFileContentViewModel : ObservableValidator, IFilterView
     [Required(ErrorMessage = "Required")]
     public partial string FileExtensions { get; set; } = ".txt .md";
 
+    [ObservableProperty]
+    public partial bool CaseSensitive { get; set; } = false;
+
     private readonly IFilesystemAccess filesystemAccess;
 
     public TextFileContentViewModel(IFilesystemAccessProvider filesystemAccessProvider)
@@ -50,7 +53,8 @@ public partial class TextFileContentViewModel : ObservableValidator, IFilterView
             {
                 var absolutePath = filesystemAccess.ToAbsolutePath(file.Path);
                 var content = filesystemAccess.FileSystem.File.ReadAllText(absolutePath);
-                if (content.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase))
+                var comparison = CaseSensitive ? StringComparison.CurrentCulture : StringComparison.CurrentCultureIgnoreCase;
+                if (content.Contains(SearchText, comparison))
                 {
                     result.Add(file);
                 }
