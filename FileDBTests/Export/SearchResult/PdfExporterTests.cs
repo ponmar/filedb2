@@ -37,8 +37,8 @@ public class PdfExporterTests
             .Invokes(call => capturedBytes = (byte[])call.Arguments[1]!);
     }
 
-    private PdfExporter CreateExporter(QuestPDF.Helpers.PageSize? pageSize = null) =>
-        new(fakeFileSystem, fakeFilesystemAccessProvider, pageSize ?? QuestPDF.Helpers.PageSizes.A4, fakeConfigProvider);
+    private PdfExporter CreateExporter() =>
+        new(fakeFileSystem, fakeFilesystemAccessProvider, fakeConfigProvider);
 
     private static ExportedFile MakePictureFile(
         string? datetime = null,
@@ -54,19 +54,19 @@ public class PdfExporterTests
     private static ExportedFile MakeNonPictureFile(FileType fileType = FileType.Document) =>
         new(2, "notes.txt", "notes.txt", fileType, null, null, null, null, [], [], []);
 
-    private static SearchResultExport MakeData(
+    private static RichExportData MakeData(
         List<ExportedFile>? files = null,
         List<PersonModel>? persons = null,
         List<LocationModel>? locations = null,
         List<TagModel>? tags = null) =>
-        new("My Collection", "1.0", new DateTime(2024, 1, 15, 10, 0, 0), string.Empty,
+        new("My Collection", "1.0", new DateTime(2024, 1, 15, 10, 0, 0),
+            "https://github.com/ponmar/filedb2",
             files ?? [],
             persons ?? [],
             locations ?? [],
-            tags ?? [],
-            "https://github.com/ponmar/filedb2");
+            tags ?? []);
 
-    private void Export(SearchResultExport data) => CreateExporter().Export(data, DestFile);
+    private void Export(RichExportData data) => CreateExporter().Export(data, DestFile);
 
     // --- Output file ---
 

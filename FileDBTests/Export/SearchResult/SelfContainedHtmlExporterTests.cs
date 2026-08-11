@@ -46,19 +46,19 @@ public class SelfContainedHtmlExporterTests
         new(1, originalPath, originalPath, fileType, description, datetime, position, null,
             personIds ?? [], locationIds ?? [], tagIds ?? []);
 
-    private static SearchResultExport MakeData(
+    private static RichExportData MakeData(
         ExportedFile? file = null,
         List<PersonModel>? persons = null,
         List<LocationModel>? locations = null,
         List<TagModel>? tags = null) =>
-        new("My Collection", "1.0", new DateTime(2024, 1, 15, 10, 0, 0), string.Empty,
+        new("My Collection", "1.0", new DateTime(2024, 1, 15, 10, 0, 0),
+            "https://github.com/ponmar/filedb2",
             file is null ? [] : [file],
             persons ?? [],
             locations ?? [],
-            tags ?? [],
-            "https://github.com/ponmar/filedb2");
+            tags ?? []);
 
-    private void Export(SearchResultExport data) => CreateExporter().Export(data, DestFile);
+    private void Export(RichExportData data) => CreateExporter().Export(data, DestFile);
 
     // --- Export: writes to specified file path ---
 
@@ -295,7 +295,7 @@ public class SelfContainedHtmlExporterTests
         A.CallTo(() => fakeFilesystemAccessProvider.FilesystemAccess.ToAbsolutePath("photo2.jpg")).Returns("/collection/photo2.jpg");
         A.CallTo(() => fakeFileSystem.File.Exists("/collection/photo2.jpg")).Returns(true);
         A.CallTo(() => fakeFileSystem.File.ReadAllBytes("/collection/photo2.jpg")).Returns([0xFF, 0xD8, 0xFF]);
-        var data = new SearchResultExport("Name", "1.0", DateTime.Now, string.Empty, [MakeFile(), file2], [], [], [], "https://example.com");
+        var data = new RichExportData("Name", "1.0", DateTime.Now, "https://example.com", [MakeFile(), file2], [], [], []);
         Export(data);
         Assert.Contains("1 / 2", capturedHtml);
         Assert.Contains("2 / 2", capturedHtml);

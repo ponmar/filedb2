@@ -22,20 +22,19 @@ public class JsonExporterTests
 
     private JsonExporter CreateExporter() => new(fakeFileSystem);
 
-    private static SearchResultExport MakeData(
+    private static JsonExportData MakeData(
         string name = "My Collection",
         List<ExportedFile>? files = null,
         List<PersonModel>? persons = null,
         List<LocationModel>? locations = null,
         List<TagModel>? tags = null) =>
-        new(name, "1.0", new DateTime(2024, 1, 15, 10, 0, 0), string.Empty,
+        new(name, "1.0", new DateTime(2024, 1, 15, 10, 0, 0), "https://github.com/ponmar/filedb2", string.Empty,
             files ?? [],
             persons ?? [],
             locations ?? [],
-            tags ?? [],
-            "https://github.com/ponmar/filedb2");
+            tags ?? []);
 
-    private void Export(SearchResultExport data) => CreateExporter().Export(data, DestFile);
+    private void Export(JsonExportData data) => CreateExporter().Export(data, DestFile);
 
     // --- Output file ---
 

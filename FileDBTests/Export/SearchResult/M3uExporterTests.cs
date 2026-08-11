@@ -28,12 +28,12 @@ public class M3uExporterTests
         FileType fileType = FileType.Picture) =>
         new(1, exportedPath, originalPath, fileType, null, null, null, null, [], [], []);
 
-    private static SearchResultExport MakeData(
+    private static M3uExportData MakeData(
         string name = "My Collection",
         params ExportedFile[] files) =>
-        new(name, "1.0", DateTime.Now, string.Empty, [.. files], [], [], [], "https://example.com");
+        new(name, [.. files]);
 
-    private void Export(SearchResultExport data) => CreateExporter().Export(data, DestFile);
+    private void Export(M3uExportData data) => CreateExporter().Export(data, DestFile);
 
     // --- Output file ---
 

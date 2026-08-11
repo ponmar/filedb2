@@ -280,7 +280,7 @@
     <value>HTML with files and meta-data</value>
   </data>
   <data name="ExportSelfContainedHtmlLabel" xml:space="preserve">
-    <value>Self-contained HTML (single file, images embedded)</value>
+    <value>Self-contained HTML</value>
   </data>
   <data name="ExportSearchResultMetaDataJSONLabel" xml:space="preserve">
     <value>Meta-data (JSON)</value>
@@ -903,6 +903,33 @@ YYYY-MM-DDTHH:MM:SS</value>
   </data>
   <data name="ExportNothingToExport" xml:space="preserve">
     <value>Nothing to export</value>
+  </data>
+  <data name="ExportDestinationFileLabel" xml:space="preserve">
+    <value>Destination file:</value>
+  </data>
+  <data name="ExportSaveAsButton" xml:space="preserve">
+    <value>Save as...</value>
+  </data>
+  <data name="ExportSelectDestinationFile" xml:space="preserve">
+    <value>Select destination file</value>
+  </data>
+  <data name="ExportFilesDescription" xml:space="preserve">
+    <value>Copies the search result files to the destination directory.</value>
+  </data>
+  <data name="ExportM3uDescription" xml:space="preserve">
+    <value>Copies the search result files to the destination directory and generates an M3U playlist file.</value>
+  </data>
+  <data name="ExportHtmlDescription" xml:space="preserve">
+    <value>Generates an HTML gallery with meta-data. Files are copied into the export directory.</value>
+  </data>
+  <data name="ExportSelfContainedHtmlDescription" xml:space="preserve">
+    <value>Generates a single self-contained HTML file with all images embedded and meta-data included.</value>
+  </data>
+  <data name="ExportJsonDescription" xml:space="preserve">
+    <value>Exports meta-data for all files in the search result as a JSON file.</value>
+  </data>
+  <data name="ExportPdfDescription" xml:space="preserve">
+    <value>Generates a PDF document with files and meta-data.</value>
   </data>
   <data name="ExportSelectedData" xml:space="preserve">
     <value>Export selected data for {0} files to {1}?</value>

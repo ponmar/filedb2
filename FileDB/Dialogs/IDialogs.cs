@@ -22,6 +22,7 @@ public interface IDialogs
     Task<string?> ShowBrowseExistingDirectoryDialogAsync(string title);
     Task<string?> ShowBrowseExistingDirectoryDialogAsync(string title, string initialDirectory);
     Task<string?> ShowBrowseExistingSubDirectoryDialogAsync(string title, string rootDirectory);
+    Task<string?> ShowSaveFileDialogAsync(string title, string suggestedFileName, string extension, string extensionDescription);
     Task<PersonModel?> ShowAddPersonDialogAsync(int? personId = null, string? personName = null);
     Task<LocationModel?> ShowAddLocationDialogAsync(int? locationId = null, string? locationName = null);
     Task<TagModel?> ShowAddTagDialogAsync(int? tagId = null, string? tagName = null);

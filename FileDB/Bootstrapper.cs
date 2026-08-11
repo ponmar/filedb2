@@ -1,4 +1,6 @@
 ﻿using FileDB.Dialogs;
+using FileDB.Export;
+using FileDB.Export.SearchResult;
 using FileDB.Infrastructure;
 using FileDB.Model;
 using FileDB.Notifications;
@@ -82,6 +84,21 @@ public static class Bootstrapper
         ServiceLocator.RegisterSingleton<IDatabaseCreator, SqLiteDatabaseCreator>();
 
         ServiceLocator.RegisterTransient<ExportSearchResultViewModel>();
+
+        ServiceLocator.RegisterTransient<ISearchResultExportDataBuilder, SearchResultExportDataBuilder>();
+        ServiceLocator.RegisterTransient<IFilesExporter, FilesExporter>();
+        ServiceLocator.RegisterTransient<IM3uExporter, M3uExporter>();
+        ServiceLocator.RegisterTransient<IHtmlExporter, HtmlExporter>();
+        ServiceLocator.RegisterTransient<ISelfContainedHtmlExporter, SelfContainedHtmlExporter>();
+        ServiceLocator.RegisterTransient<IJsonExporter, JsonExporter>();
+        ServiceLocator.RegisterTransient<IPdfExporter, PdfExporter>();
+
+        ServiceLocator.RegisterTransient<FilesExportTabViewModel>();
+        ServiceLocator.RegisterTransient<M3uExportTabViewModel>();
+        ServiceLocator.RegisterTransient<HtmlExportTabViewModel>();
+        ServiceLocator.RegisterTransient<SelfContainedHtmlExportTabViewModel>();
+        ServiceLocator.RegisterTransient<JsonExportTabViewModel>();
+        ServiceLocator.RegisterTransient<PdfExportTabViewModel>();
 
         ServiceLocator.RegisterTransient<FilterSelectionViewModel>();
         ServiceLocator.RegisterTransient<AnnualDateViewModel>();

@@ -3,9 +3,14 @@ using System.IO.Abstractions;
 
 namespace FileDB.Export.SearchResult;
 
-public class M3uExporter(IFileSystem fileSystem) : ISearchResultExporter
+public interface IM3uExporter
 {
-    public void Export(SearchResultExport data, string filename)
+    void Export(M3uExportData data, string filename);
+}
+
+public class M3uExporter(IFileSystem fileSystem) : IM3uExporter
+{
+    public void Export(M3uExportData data, string filename)
     {
         var m3uLinebreak = "\r\n";
         int duration = 10; // Note: VLC ignore the duration information when showing images in a playlist

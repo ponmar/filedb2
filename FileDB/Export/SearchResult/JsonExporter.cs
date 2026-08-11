@@ -4,9 +4,14 @@ using System.IO.Abstractions;
 
 namespace FileDB.Export.SearchResult;
 
-public class JsonExporter(IFileSystem fileSystem) : ISearchResultExporter
+public interface IJsonExporter
 {
-    public void Export(SearchResultExport data, string filename)
+    void Export(JsonExportData data, string filename);
+}
+
+public class JsonExporter(IFileSystem fileSystem) : IJsonExporter
+{
+    public void Export(JsonExportData data, string filename)
     {
         var json = data.ToFormattedJson();
         fileSystem.File.WriteAllText(filename, json);

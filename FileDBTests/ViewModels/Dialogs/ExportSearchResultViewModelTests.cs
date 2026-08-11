@@ -1,103 +1,76 @@
 using FakeItEasy;
 using FileDB.Dialogs;
-using FileDB.Lang;
-using FileDB.Model;
+using FileDB.Export;
+using FileDB.Export.SearchResult;
 using FileDB.ViewModels.Dialogs;
 using FileDB.ViewModels.Search;
 using System.IO.Abstractions;
-using System.IO.Abstractions.TestingHelpers;
 using Xunit;
+using FileDBInterface.Model;
 
 namespace FileDBTests.ViewModels.Dialogs;
 
 public class ExportSearchResultViewModelTests
 {
-    private readonly IDialogs dialogs = A.Fake<IDialogs>();
-    private readonly IDatabaseAccessProvider dbAccessProvider = A.Fake<IDatabaseAccessProvider>();
-    private readonly IFilesystemAccessProvider filesystemAccessProvider = A.Fake<IFilesystemAccessProvider>();
-    private readonly IFileSystem fileSystem = A.Fake<IFileSystem>();
-    private readonly IConfigProvider configProvider = A.Fake<IConfigProvider>();
+    private static FilesExportTabViewModel CreateFilesTab() =>
+        new(A.Fake<IDialogs>(), A.Fake<IFileSystem>(), A.Fake<ISearchResultExportDataBuilder>(), A.Fake<IFilesExporter>());
+
+    private static M3uExportTabViewModel CreateM3uTab() =>
+        new(A.Fake<IDialogs>(), A.Fake<IFileSystem>(), A.Fake<ISearchResultExportDataBuilder>(), A.Fake<IFilesExporter>(), A.Fake<IM3uExporter>());
+
+    private static HtmlExportTabViewModel CreateHtmlTab() =>
+        new(A.Fake<IDialogs>(), A.Fake<IFileSystem>(), A.Fake<ISearchResultExportDataBuilder>(), A.Fake<IHtmlExporter>());
+
+    private static SelfContainedHtmlExportTabViewModel CreateSelfContainedHtmlTab() =>
+        new(A.Fake<IDialogs>(), A.Fake<ISearchResultExportDataBuilder>(), A.Fake<ISelfContainedHtmlExporter>());
+
+    private static JsonExportTabViewModel CreateJsonTab() =>
+        new(A.Fake<IDialogs>(), A.Fake<ISearchResultExportDataBuilder>(), A.Fake<IJsonExporter>());
+
+    private static PdfExportTabViewModel CreatePdfTab() =>
+        new(A.Fake<IDialogs>(), A.Fake<ISearchResultExportDataBuilder>(), A.Fake<IPdfExporter>());
+
+    private static ExportSearchResultViewModel CreateViewModel() =>
+        new(CreateFilesTab(), CreateM3uTab(), CreateHtmlTab(), CreateSelfContainedHtmlTab(), CreateJsonTab(), CreatePdfTab());
 
     [Fact]
-    public void Constructor_DefaultsExportToDisabled()
+    public void SearchResult_Set_PropagatedToAllTabs()
     {
-        var viewModel = new ExportSearchResultViewModel(dialogs, dbAccessProvider, filesystemAccessProvider, fileSystem, configProvider);
+        var filesTab = CreateFilesTab();
+        var m3uTab = CreateM3uTab();
+        var htmlTab = CreateHtmlTab();
+        var selfContainedHtmlTab = CreateSelfContainedHtmlTab();
+        var jsonTab = CreateJsonTab();
+        var pdfTab = CreatePdfTab();
+        var vm = new ExportSearchResultViewModel(filesTab, m3uTab, htmlTab, selfContainedHtmlTab, jsonTab, pdfTab);
 
-        Assert.False(viewModel.ExportEnabled);
-        Assert.False(viewModel.ExportIncludesFiles);
-        Assert.False(viewModel.ExportIncludesM3u);
+        var searchResult = new SearchResult { Files = [new FileModel { Id = 1, Path = "a.jpg" }] };
+        vm.SearchResult = searchResult;
+
+        Assert.Equal(searchResult, filesTab.SearchResult);
+        Assert.Equal(searchResult, m3uTab.SearchResult);
+        Assert.Equal(searchResult, htmlTab.SearchResult);
+        Assert.Equal(searchResult, selfContainedHtmlTab.SearchResult);
+        Assert.Equal(searchResult, jsonTab.SearchResult);
+        Assert.Equal(searchResult, pdfTab.SearchResult);
     }
 
     [Fact]
-    public async Task ExportCommand_WithNoSelections_ShowsError()
+    public void TabProperties_ReturnInjectedInstances()
     {
-        var mockFileSystem = new MockFileSystem();
-        mockFileSystem.AddDirectory("/export");
-        var viewModel = new ExportSearchResultViewModel(dialogs, dbAccessProvider, filesystemAccessProvider, mockFileSystem, configProvider)
-        {
-            SearchResult = new SearchResult { Files = [new() { Id = 1, Path = "a.jpg" }] },
-            ExportFilesDestinationDirectory = "/export",
-        };
+        var filesTab = CreateFilesTab();
+        var m3uTab = CreateM3uTab();
+        var htmlTab = CreateHtmlTab();
+        var selfContainedHtmlTab = CreateSelfContainedHtmlTab();
+        var jsonTab = CreateJsonTab();
+        var pdfTab = CreatePdfTab();
+        var vm = new ExportSearchResultViewModel(filesTab, m3uTab, htmlTab, selfContainedHtmlTab, jsonTab, pdfTab);
 
-        await viewModel.ExportCommand.ExecuteAsync(null);
-
-        A.CallTo(() => dialogs.ShowErrorDialogAsync(A<string>._)).MustHaveHappenedOnceExactly();
-    }
-
-    [Fact]
-    public void ExportIncludesM3u_SetsFilesFlag()
-    {
-        var viewModel = new ExportSearchResultViewModel(dialogs, dbAccessProvider, filesystemAccessProvider, fileSystem, configProvider);
-
-        viewModel.ExportIncludesM3u = true;
-
-        Assert.True(viewModel.ExportIncludesFiles);
-        viewModel.ExportIncludesFiles = false;
-        Assert.False(viewModel.ExportIncludesM3u);
-    }
-
-    [Fact]
-    public async Task BrowseDestinationDirectoryCommand_UsesSelectedDirectory()
-    {
-        A.CallTo(() => dialogs.ShowBrowseExistingDirectoryDialogAsync(A<string>._, A<string>._)).Returns("/export");
-        var viewModel = new ExportSearchResultViewModel(dialogs, dbAccessProvider, filesystemAccessProvider, fileSystem, configProvider);
-
-        await viewModel.BrowseDestinationDirectoryCommand.ExecuteAsync(null);
-
-        Assert.Equal("/export", viewModel.ExportFilesDestinationDirectory);
-    }
-
-    [Fact]
-    public async Task ExportCommand_DirectoryMissing_ShowsError()
-    {
-        A.CallTo(() => fileSystem.Directory.Exists(A<string>._)).Returns(false);
-        var viewModel = new ExportSearchResultViewModel(dialogs, dbAccessProvider, filesystemAccessProvider, fileSystem, configProvider)
-        {
-            SearchResult = new SearchResult { Files = [new() { Id = 1, Path = "a.jpg" }] },
-            ExportFilesDestinationDirectory = "/export",
-            ExportIncludesFiles = true,
-        };
-
-        await viewModel.ExportCommand.ExecuteAsync(null);
-
-        A.CallTo(() => dialogs.ShowErrorDialogAsync(A<string>._)).MustHaveHappenedOnceExactly();
-    }
-
-    [Fact]
-    public async Task ExportCommand_NonEmptyDirectory_ShowsError()
-    {
-        var mockFileSystem = new MockFileSystem();
-        mockFileSystem.AddDirectory("/export");
-        mockFileSystem.AddFile("/export/existing.txt", new MockFileData("x"));
-        var viewModel = new ExportSearchResultViewModel(dialogs, dbAccessProvider, filesystemAccessProvider, mockFileSystem, configProvider)
-        {
-            SearchResult = new SearchResult { Files = [new() { Id = 1, Path = "a.jpg" }] },
-            ExportFilesDestinationDirectory = "/export",
-            ExportIncludesFiles = true,
-        };
-
-        await viewModel.ExportCommand.ExecuteAsync(null);
-
-        A.CallTo(() => dialogs.ShowErrorDialogAsync(Strings.ExportDestinationDirectoryIsNotEmpty)).MustHaveHappenedOnceExactly();
+        Assert.Same(filesTab, vm.FilesTab);
+        Assert.Same(m3uTab, vm.M3uTab);
+        Assert.Same(htmlTab, vm.HtmlTab);
+        Assert.Same(selfContainedHtmlTab, vm.SelfContainedHtmlTab);
+        Assert.Same(jsonTab, vm.JsonTab);
+        Assert.Same(pdfTab, vm.PdfTab);
     }
 }

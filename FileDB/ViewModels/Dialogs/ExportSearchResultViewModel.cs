@@ -1,171 +1,32 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using FileDB.Dialogs;
-using FileDB.Export;
-using FileDB.Lang;
-using FileDB.Model;
 using FileDB.ViewModels.Search;
-using FileDBInterface.Extensions;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.IO.Abstractions;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FileDB.ViewModels.Dialogs;
 
-public partial class ExportSearchResultViewModel : ObservableObject
+public class ExportSearchResultViewModel(
+    FilesExportTabViewModel filesTab,
+    M3uExportTabViewModel m3uTab,
+    HtmlExportTabViewModel htmlTab,
+    SelfContainedHtmlExportTabViewModel selfContainedHtmlTab,
+    JsonExportTabViewModel jsonTab,
+    PdfExportTabViewModel pdfTab)
 {
-    public SearchResult? SearchResult { get; set; }
+    public FilesExportTabViewModel FilesTab { get; } = filesTab;
+    public M3uExportTabViewModel M3uTab { get; } = m3uTab;
+    public HtmlExportTabViewModel HtmlTab { get; } = htmlTab;
+    public SelfContainedHtmlExportTabViewModel SelfContainedHtmlTab { get; } = selfContainedHtmlTab;
+    public JsonExportTabViewModel JsonTab { get; } = jsonTab;
+    public PdfExportTabViewModel PdfTab { get; } = pdfTab;
 
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(ExportEnabled))]
-    public partial string? ExportFilesDestinationDirectory { get; set; }
-
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(ExportEnabled))]
-    public partial string ExportName { get; set; } = "My Files";
-
-    [ObservableProperty]
-    public partial bool ExportIncludesFiles { get; set; } = false;
-
-    public bool ExportEnabled => ExportName.HasContent() && ExportFilesDestinationDirectory.HasContent();
-
-    partial void OnExportIncludesFilesChanged(bool value)
+    public SearchResult? SearchResult
     {
-        if (!value)
+        set
         {
-            ExportIncludesM3u = false;
+            FilesTab.SearchResult = value;
+            M3uTab.SearchResult = value;
+            HtmlTab.SearchResult = value;
+            SelfContainedHtmlTab.SearchResult = value;
+            JsonTab.SearchResult = value;
+            PdfTab.SearchResult = value;
         }
-    }
-
-    [ObservableProperty]
-    public partial bool ExportIncludesHtml { get; set; } = false;
-
-    [ObservableProperty]
-    public partial bool ExportIncludesSelfContainedHtml { get; set; } = false;
-
-    [ObservableProperty]
-    public partial bool ExportIncludesM3u { get; set; } = false;
-
-    partial void OnExportIncludesM3uChanged(bool value)
-    {
-        if (value)
-        {
-            ExportIncludesFiles = true;
-        }
-    }
-
-    [ObservableProperty]
-    public partial bool ExportIncludesJson { get; set; } = false;
-
-    [ObservableProperty]
-    public partial bool ExportIncludesPdf { get; set; } = false;
-
-    private readonly IDialogs dialogs;
-    private readonly IDatabaseAccessProvider dbAccessProvider;
-    private readonly IFilesystemAccessProvider filesystemAccessProvider;
-    private readonly IFileSystem fileSystem;
-    private readonly IConfigProvider configProvider;
-
-    public ExportSearchResultViewModel(IDialogs dialogs, IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IFileSystem fileSystem, IConfigProvider configProvider)
-    {
-        this.dialogs = dialogs;
-        this.dbAccessProvider = dbAccessProvider;
-        this.filesystemAccessProvider = filesystemAccessProvider;
-        this.fileSystem = fileSystem;
-        this.configProvider = configProvider;
-    }
-
-    [RelayCommand]
-    private async Task BrowseDestinationDirectoryAsync()
-    {
-        var initialPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-        var selectedDir = await dialogs.ShowBrowseExistingDirectoryDialogAsync(initialPath, Strings.ExportSelectYourDestinationDirectory);
-        ExportFilesDestinationDirectory = selectedDir ?? string.Empty;
-    }
-
-    [RelayCommand]
-    private async Task ExportAsync()
-    {
-        if (!fileSystem.Directory.Exists(ExportFilesDestinationDirectory))
-        {
-            await dialogs.ShowErrorDialogAsync(Strings.ExportDestinationDirectoryDoesNotExist);
-            return;
-        }
-
-        if (!IsDirectoryEmpty(ExportFilesDestinationDirectory))
-        {
-            await dialogs.ShowErrorDialogAsync(Strings.ExportDestinationDirectoryIsNotEmpty);
-            return;
-        }
-
-        var selections = new List<SearchResultExportType>();
-        if (ExportIncludesFiles)
-        {
-            selections.Add(SearchResultExportType.Files);
-        }
-        if (ExportIncludesHtml)
-        {
-            selections.Add(SearchResultExportType.Html);
-        }
-        if (ExportIncludesSelfContainedHtml)
-        {
-            selections.Add(SearchResultExportType.SelfContainedHtml);
-        }
-        if (ExportIncludesM3u)
-        {
-            selections.Add(SearchResultExportType.M3u);
-        }
-        if (ExportIncludesJson)
-        {
-            selections.Add(SearchResultExportType.Json);
-        }
-        if (ExportIncludesPdf)
-        {
-            selections.Add(SearchResultExportType.Pdf);
-        }
-
-        if (!selections.Any())
-        {
-            await dialogs.ShowErrorDialogAsync(Strings.ExportNothingToExport);
-            return;
-        }
-
-        if (!await dialogs.ShowConfirmDialogAsync(string.Format(Strings.ExportSelectedData, SearchResult!.Count, ExportFilesDestinationDirectory)))
-        {
-            return;
-        }
-
-        Exception? exportError = null;
-        await dialogs.ShowProgressDialogAsync((progress, cancellationToken) =>
-        {
-            progress.Report(Strings.ExportExporting);
-            try
-            {
-                var exporter = new SearchResultExportHandler(dbAccessProvider, filesystemAccessProvider, fileSystem, configProvider);
-                exporter.Export(ExportFilesDestinationDirectory, ExportName, SearchResult.Files, selections, cancellationToken);
-            }
-            catch (OperationCanceledException)
-            {
-                // user cancelled — exit silently
-            }
-            catch (Exception e)
-            {
-                exportError = e;
-            }
-        });
-
-        if (exportError is not null)
-        {
-            await dialogs.ShowErrorDialogAsync(exportError.Message);
-        }
-    }
-
-    private bool IsDirectoryEmpty(string dirPath)
-    {
-        var nonHiddenItemsInDir = fileSystem.DirectoryInfo.New(dirPath).EnumerateFileSystemInfos().Where(f => !f.Attributes.HasFlag(FileAttributes.Hidden));
-        return !nonHiddenItemsInDir.Any();
     }
 }

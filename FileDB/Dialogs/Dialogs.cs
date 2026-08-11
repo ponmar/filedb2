@@ -146,6 +146,37 @@ public class Dialogs : IDialogs
         return subDir;
     }
 
+    public async Task<string?> ShowSaveFileDialogAsync(string title, string suggestedFileName, string extension, string extensionDescription)
+    {
+        var parent = GetParentWindow();
+        if (parent is null)
+        {
+            throw new NotSupportedException();
+        }
+
+        var topLevel = TopLevel.GetTopLevel(parent);
+        if (topLevel is null)
+        {
+            throw new NotSupportedException();
+        }
+
+        var file = await topLevel.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
+        {
+            Title = title,
+            SuggestedFileName = suggestedFileName,
+            DefaultExtension = extension,
+            FileTypeChoices =
+            [
+                new FilePickerFileType(extensionDescription)
+                {
+                    Patterns = [$"*.{extension}"]
+                }
+            ]
+        });
+
+        return file?.Path.LocalPath;
+    }
+
     public async Task<PersonModel?> ShowAddPersonDialogAsync(int? personId = null, string? personName = null)
     {
         var window = new AddPersonWindow(personId, personName);

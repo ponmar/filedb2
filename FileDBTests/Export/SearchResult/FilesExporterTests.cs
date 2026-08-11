@@ -3,6 +3,7 @@ using FileDB.Export.SearchResult;
 using FileDB.Model;
 using FileDB.Model.FileFormats;
 using FileDBInterface.Model;
+using System.Collections.Generic;
 using System.IO.Abstractions;
 using Xunit;
 
@@ -30,24 +31,23 @@ public class FilesExporterTests
         FileType fileType = FileType.Picture) =>
         new(1, exportedPath, originalPath, fileType, null, null, null, null, [], [], []);
 
-    private static SearchResultExport MakeData(params ExportedFile[] files) =>
-        new("Name", "1.0", DateTime.Now, string.Empty, [.. files], [], [], [], "https://example.com");
+    private static List<ExportedFile> MakeFilesList(params ExportedFile[] files) => [.. files];
 
-    private void Export(SearchResultExport data) => CreateExporter().Export(data, DestDir);
+    private void Export(List<ExportedFile> data) => CreateExporter().Export(data, DestDir);
 
     // --- Empty export ---
 
     [Fact]
     public void Export_NoFiles_NothingCopied()
     {
-        Export(MakeData());
+        Export(MakeFilesList());
         A.CallTo(() => fakeFileSystem.File.Copy(A<string>._, A<string>._)).MustNotHaveHappened();
     }
 
     [Fact]
     public void Export_NoFiles_NoDirectoryCreated()
     {
-        Export(MakeData());
+        Export(MakeFilesList());
         A.CallTo(() => fakeFileSystem.Directory.CreateDirectory(A<string>._)).MustNotHaveHappened();
     }
 
@@ -56,14 +56,14 @@ public class FilesExporterTests
     [Fact]
     public void Export_SingleFile_CopiesFromAbsoluteSourcePath()
     {
-        Export(MakeData(MakeFile()));
+        Export(MakeFilesList(MakeFile()));
         A.CallTo(() => fakeFileSystem.File.Copy(AbsPath, A<string>._)).MustHaveHappenedOnceExactly();
     }
 
     [Fact]
     public void Export_SingleFile_CopiesIntoDestinationDirectory()
     {
-        Export(MakeData(MakeFile(exportedPath: "Files/1.jpg")));
+        Export(MakeFilesList(MakeFile(exportedPath: "Files/1.jpg")));
         var expectedDest = Path.Combine(DestDir, "Files/1.jpg");
         A.CallTo(() => fakeFileSystem.File.Copy(A<string>._, expectedDest)).MustHaveHappenedOnceExactly();
     }
@@ -73,14 +73,14 @@ public class FilesExporterTests
     {
         var file2 = new ExportedFile(2, "Files/2.jpg", "photo2.jpg", FileType.Picture, null, null, null, null, [], [], []);
         A.CallTo(() => fakeFilesystemAccessProvider.FilesystemAccess.ToAbsolutePath("photo2.jpg")).Returns("/collection/photo2.jpg");
-        Export(MakeData(MakeFile(), file2));
+        Export(MakeFilesList(MakeFile(), file2));
         A.CallTo(() => fakeFileSystem.File.Copy(A<string>._, A<string>._)).MustHaveHappenedTwiceExactly();
     }
 
     [Fact]
     public void Export_ResolvesAbsolutePathForEachFile()
     {
-        Export(MakeData(MakeFile(originalPath: "sub/photo.jpg")));
+        Export(MakeFilesList(MakeFile(originalPath: "sub/photo.jpg")));
         A.CallTo(() => fakeFilesystemAccessProvider.FilesystemAccess.ToAbsolutePath("sub/photo.jpg"))
             .MustHaveHappenedOnceExactly();
     }
@@ -91,7 +91,7 @@ public class FilesExporterTests
     public void Export_DestinationDirectoryExists_DoesNotCreateDirectory()
     {
         A.CallTo(() => fakeFileSystem.Directory.Exists(A<string>._)).Returns(true);
-        Export(MakeData(MakeFile()));
+        Export(MakeFilesList(MakeFile()));
         A.CallTo(() => fakeFileSystem.Directory.CreateDirectory(A<string>._)).MustNotHaveHappened();
     }
 
@@ -99,7 +99,7 @@ public class FilesExporterTests
     public void Export_DestinationDirectoryMissing_CreatesDirectory()
     {
         A.CallTo(() => fakeFileSystem.Directory.Exists(A<string>._)).Returns(false);
-        Export(MakeData(MakeFile(exportedPath: "Files/1.jpg")));
+        Export(MakeFilesList(MakeFile(exportedPath: "Files/1.jpg")));
         var expectedDir = Path.GetDirectoryName(Path.Combine(DestDir, "Files/1.jpg"))!;
         A.CallTo(() => fakeFileSystem.Directory.CreateDirectory(expectedDir)).MustHaveHappenedOnceExactly();
     }
@@ -108,7 +108,7 @@ public class FilesExporterTests
     public void Export_TwoFilesInSameDirectory_ChecksDirectoryExistenceForEach()
     {
         var file2 = new ExportedFile(2, "Files/2.jpg", "photo2.jpg", FileType.Picture, null, null, null, null, [], [], []);
-        Export(MakeData(MakeFile(exportedPath: "Files/1.jpg"), file2));
+        Export(MakeFilesList(MakeFile(exportedPath: "Files/1.jpg"), file2));
         A.CallTo(() => fakeFileSystem.Directory.Exists(A<string>._)).MustHaveHappenedTwiceExactly();
     }
 
@@ -117,14 +117,14 @@ public class FilesExporterTests
     [Fact]
     public void Export_DocumentFile_IsCopied()
     {
-        Export(MakeData(MakeFile(fileType: FileType.Document)));
+        Export(MakeFilesList(MakeFile(fileType: FileType.Document)));
         A.CallTo(() => fakeFileSystem.File.Copy(AbsPath, A<string>._)).MustHaveHappenedOnceExactly();
     }
 
     [Fact]
     public void Export_MovieFile_IsCopied()
     {
-        Export(MakeData(MakeFile(fileType: FileType.Movie)));
+        Export(MakeFilesList(MakeFile(fileType: FileType.Movie)));
         A.CallTo(() => fakeFileSystem.File.Copy(AbsPath, A<string>._)).MustHaveHappenedOnceExactly();
     }
 }

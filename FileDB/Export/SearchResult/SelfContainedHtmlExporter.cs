@@ -11,9 +11,14 @@ using System.Web;
 
 namespace FileDB.Export.SearchResult;
 
-public class SelfContainedHtmlExporter(IFileSystem fileSystem, IFilesystemAccessProvider filesystemAccessProvider, IConfigProvider configProvider) : ISearchResultExporter
+public interface ISelfContainedHtmlExporter
 {
-    public void Export(SearchResultExport data, string destinationFilePath)
+    void Export(RichExportData data, string destinationFilePath);
+}
+
+public class SelfContainedHtmlExporter(IFileSystem fileSystem, IFilesystemAccessProvider filesystemAccessProvider, IConfigProvider configProvider) : ISelfContainedHtmlExporter
+{
+    public void Export(RichExportData data, string destinationFilePath)
     {
         var documentBase =
 @"<!DOCTYPE html>
@@ -98,7 +103,7 @@ public class SelfContainedHtmlExporter(IFileSystem fileSystem, IFilesystemAccess
         fileSystem.File.WriteAllText(destinationFilePath, html);
     }
 
-    private string BuildFileMetaText(SearchResultExport data, ExportedFile file, int index, int total)
+    private string BuildFileMetaText(RichExportData data, ExportedFile file, int index, int total)
     {
         var pictureDateText = string.Empty;
         if (file.Datetime is not null)

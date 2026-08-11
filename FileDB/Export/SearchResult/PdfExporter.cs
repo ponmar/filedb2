@@ -11,16 +11,23 @@ using System.Linq;
 
 namespace FileDB.Export.SearchResult;
 
-public class PdfExporter(IFileSystem fileSystem, IFilesystemAccessProvider filesystemAccessProvider, PageSize pageSize, IConfigProvider configProvider) : ISearchResultExporter
+public interface IPdfExporter
 {
-    public void Export(SearchResultExport data, string filename)
+    void Export(RichExportData data, string filename);
+}
+
+public class PdfExporter(IFileSystem fileSystem, IFilesystemAccessProvider filesystemAccessProvider, IConfigProvider configProvider) : IPdfExporter
+{
+    private static readonly PageSize PageSize = PageSizes.A4.Landscape();
+
+    public void Export(RichExportData data, string filename)
     {
         var document = Document.Create(document =>
         {
             document.Page(frontPage =>
             {
                 frontPage.Margin(10);
-                frontPage.Size(pageSize);
+                frontPage.Size(PageSize);
                 frontPage.Content().AlignCenter().AlignMiddle().Text(data.Name).SemiBold().FontSize(32).FontColor(Colors.Blue.Darken2);
                 frontPage.Footer().AlignCenter().AlignMiddle().Text(text =>
                 {
@@ -79,7 +86,7 @@ public class PdfExporter(IFileSystem fileSystem, IFilesystemAccessProvider files
                 document.Page(filePage =>
                 {
                     filePage.Margin(10);
-                    filePage.Size(pageSize);
+                    filePage.Size(PageSize);
                     filePage.Header().Column(headerCol =>
                     {
                         headerCol.Item().AlignCenter().Text(fileHeading).SemiBold().FontSize(18).FontColor(Colors.Blue.Darken2);

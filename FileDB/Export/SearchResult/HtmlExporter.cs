@@ -10,9 +10,14 @@ using System.Web;
 
 namespace FileDB.Export.SearchResult;
 
-public class HtmlExporter(IFileSystem fileSystem, IFilesystemAccessProvider filesystemAccessProvider, IConfigProvider configProvider) : ISearchResultExporter
+public interface IHtmlExporter
 {
-    public void Export(SearchResultExport data, string destinationDirPath)
+    void Export(RichExportData data, string destinationDirPath);
+}
+
+public class HtmlExporter(IFileSystem fileSystem, IFilesystemAccessProvider filesystemAccessProvider, IConfigProvider configProvider) : IHtmlExporter
+{
+    public void Export(RichExportData data, string destinationDirPath)
     {
         if (!fileSystem.Directory.Exists(destinationDirPath))
         {

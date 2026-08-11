@@ -271,7 +271,7 @@
     <value>Filer</value>
   </data>
   <data name="ExportSelfContainedHtmlLabel" xml:space="preserve">
-    <value>Självständigt HTML (enskild fil, bilder inbäddade)</value>
+    <value>Självständig HTML</value>
   </data>
   <data name="ExportM3UPlaylistLabel" xml:space="preserve">
     <value>M3U spellista</value>
