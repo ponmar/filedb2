@@ -261,29 +261,20 @@
   <data name="ExportHeaderLabel" xml:space="preserve">
     <value>Header:</value>
   </data>
-  <data name="ExportHeaderToolTip" xml:space="preserve">
-    <value>Copy files to destination directory</value>
-  </data>
-  <data name="ExportDestinationLabel" xml:space="preserve">
-    <value>Destination directory:</value>
-  </data>
-  <data name="ExportBrowseButton" xml:space="preserve">
-    <value>Browse...</value>
-  </data>
   <data name="ExportSearchResultFilesLabel" xml:space="preserve">
-    <value>Files</value>
+    <value>Raw files</value>
   </data>
   <data name="ExportM3UPlaylistLabel" xml:space="preserve">
     <value>M3U playlist</value>
   </data>
   <data name="ExportHTMLWithMetaDataAndSearchResultFilesLabel" xml:space="preserve">
-    <value>HTML with files and meta-data</value>
+    <value>HTML (raw files and meta-data)</value>
   </data>
   <data name="ExportSelfContainedHtmlLabel" xml:space="preserve">
-    <value>Self-contained HTML</value>
+    <value>HTML (self-contained file)</value>
   </data>
   <data name="ExportSearchResultMetaDataJSONLabel" xml:space="preserve">
-    <value>Meta-data (JSON)</value>
+    <value>JSON (meta-data)</value>
   </data>
   <data name="ExportExportButton" xml:space="preserve">
     <value>Export...</value>
@@ -878,7 +869,7 @@ YYYY-MM-DDTHH:MM:SS</value>
     <value>Browse...</value>
   </data>
   <data name="ExportSearchResultPdfLabel" xml:space="preserve">
-    <value>PDF with files and meta-data</value>
+    <value>PDF (files and meta-data)</value>
   </data>
   <data name="ExportDataLabel" xml:space="preserve">
     <value>Data to export:</value>
@@ -904,12 +895,6 @@ YYYY-MM-DDTHH:MM:SS</value>
   <data name="ExportNothingToExport" xml:space="preserve">
     <value>Nothing to export</value>
   </data>
-  <data name="ExportDestinationFileLabel" xml:space="preserve">
-    <value>Destination file:</value>
-  </data>
-  <data name="ExportSaveAsButton" xml:space="preserve">
-    <value>Save as...</value>
-  </data>
   <data name="ExportSelectDestinationFile" xml:space="preserve">
     <value>Select destination file</value>
   </data>
@@ -930,9 +915,6 @@ YYYY-MM-DDTHH:MM:SS</value>
   </data>
   <data name="ExportPdfDescription" xml:space="preserve">
     <value>Generates a PDF document with files and meta-data.</value>
-  </data>
-  <data name="ExportSelectedData" xml:space="preserve">
-    <value>Export selected data for {0} files to {1}?</value>
   </data>
   <data name="ExportExporting" xml:space="preserve">
     <value>Exporting...</value>

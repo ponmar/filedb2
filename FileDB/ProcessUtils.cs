@@ -30,13 +30,13 @@ public class ProcessUtils : IProcessUtils
     public void SelectFileInExplorer(string path)
     {
         var explorerPath = path.Replace("/", @"\");
-        Process.Start("explorer.exe", "/select, " + explorerPath);
+        Process.Start("explorer.exe", $"/n,/select,\"{explorerPath}\"");
     }
 
     public void OpenDirectoryInExplorer(string path)
     {
         var explorerPath = path.Replace("/", @"\");
-        Process.Start("explorer.exe", "/open, " + explorerPath);
+        Process.Start("explorer.exe", $"/n,/open,\"{explorerPath}\"");
     }
 
     public void OpenFileWithDefaultApp(string path)

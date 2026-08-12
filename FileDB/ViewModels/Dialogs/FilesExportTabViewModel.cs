@@ -10,12 +10,14 @@ public class FilesExportTabViewModel(
     IDialogs dialogs,
     IFileSystem fileSystem,
     ISearchResultExportDataBuilder dataBuilder,
-    IFilesExporter filesExporter) : DirectoryExportTabViewModel(dialogs, fileSystem, dataBuilder)
+    IProcessUtils processUtils,
+    IFilesExporter filesExporter) : DirectoryExportTabViewModel(dialogs, fileSystem, dataBuilder, processUtils)
 {
-    protected override void DoExport(CancellationToken cancellationToken)
+    protected override string? DoExport(string destination, CancellationToken cancellationToken)
     {
         var files = DataBuilder.BuildFilesList(SearchResult!.Files, cancellationToken);
         cancellationToken.ThrowIfCancellationRequested();
-        filesExporter.Export(files, DestinationDirectory!);
+        filesExporter.Export(files, destination);
+        return destination;
     }
 }

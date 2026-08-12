@@ -8,15 +8,17 @@ namespace FileDB.ViewModels.Dialogs;
 public class SelfContainedHtmlExportTabViewModel(
     IDialogs dialogs,
     ISearchResultExportDataBuilder dataBuilder,
-    ISelfContainedHtmlExporter selfContainedHtmlExporter) : FileExportTabViewModel(dialogs, dataBuilder)
+    IProcessUtils processUtils,
+    ISelfContainedHtmlExporter selfContainedHtmlExporter) : FileExportTabViewModel(dialogs, dataBuilder, processUtils)
 {
     protected override string FileExtension => "html";
     protected override string FileTypeDescription => "HTML files";
 
-    protected override void DoExport(CancellationToken cancellationToken)
+    protected override string? DoExport(string destination, CancellationToken cancellationToken)
     {
         var richData = DataBuilder.BuildRich(SearchResult!.Files, ExportName, cancellationToken);
         cancellationToken.ThrowIfCancellationRequested();
-        selfContainedHtmlExporter.Export(richData, DestinationFile!);
+        selfContainedHtmlExporter.Export(richData, destination);
+        return destination;
     }
 }

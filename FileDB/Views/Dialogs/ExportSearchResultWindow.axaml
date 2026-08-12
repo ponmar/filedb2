@@ -15,81 +15,61 @@
 	<Border Classes="BorderGroup">
 		<TabControl Margin="10" TabStripPlacement="Left">
 
-			<TabItem Header="{x:Static lang:Strings.ExportSearchResultFilesLabel}">
-				<Grid DataContext="{Binding FilesTab}" x:DataType="dialogs:FilesExportTabViewModel"
-					  Margin="10" ColumnDefinitions="auto,*,auto" RowDefinitions="auto,auto,auto,auto">
-					<TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Classes="PageTextBlock" Margin="3,3,3,10" Text="{x:Static lang:Strings.ExportFilesDescription}" TextWrapping="Wrap" MaxWidth="400"/>
+			<TabItem Header="{x:Static lang:Strings.ExportSelfContainedHtmlLabel}">
+				<Grid DataContext="{Binding SelfContainedHtmlTab}" x:DataType="dialogs:SelfContainedHtmlExportTabViewModel"
+					  Margin="10" ColumnDefinitions="auto,*,auto" RowDefinitions="auto,auto,auto">
+					<TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Classes="PageTextBlock" Margin="3,3,3,10" Text="{x:Static lang:Strings.ExportSelfContainedHtmlDescription}" TextWrapping="Wrap" MaxWidth="400"/>
 					<TextBlock Grid.Row="1" Grid.Column="0" Classes="PageTextBlock" Margin="3" Text="{x:Static lang:Strings.ExportHeaderLabel}" VerticalAlignment="Center"/>
-					<TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Classes="PageTextBox" Margin="3" VerticalAlignment="Center" Text="{Binding ExportName}" ToolTip.Tip="{x:Static lang:Strings.ExportHeaderToolTip}"/>
-					<TextBlock Grid.Row="2" Grid.Column="0" Classes="PageTextBlock" Margin="3" Text="{x:Static lang:Strings.ExportDestinationLabel}" VerticalAlignment="Center"/>
-					<TextBox Grid.Row="2" Grid.Column="1" Margin="3" Classes="PageTextBox" VerticalAlignment="Center" Text="{Binding DestinationDirectory}" ToolTip.Tip="{x:Static lang:Strings.ExportHeaderToolTip}"/>
-					<Button Grid.Row="2" Grid.Column="2" Classes="PageButton" Margin="3" VerticalAlignment="Center" Command="{Binding BrowseDirectoryCommand}" Content="{x:Static lang:Strings.ExportBrowseButton}"/>
-					<Button Grid.Row="3" Grid.Column="2" Classes="PageButton" Margin="3" VerticalAlignment="Center" Command="{Binding ExportToDirectoryCommand}" IsEnabled="{Binding ExportEnabled}" Content="{x:Static lang:Strings.ExportExportButton}"/>
-				</Grid>
-			</TabItem>
-
-			<TabItem Header="{x:Static lang:Strings.ExportM3UPlaylistLabel}">
-				<Grid DataContext="{Binding M3uTab}" x:DataType="dialogs:M3uExportTabViewModel"
-					  Margin="10" ColumnDefinitions="auto,*,auto" RowDefinitions="auto,auto,auto,auto">
-					<TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Classes="PageTextBlock" Margin="3,3,3,10" Text="{x:Static lang:Strings.ExportM3uDescription}" TextWrapping="Wrap" MaxWidth="400"/>
-					<TextBlock Grid.Row="1" Grid.Column="0" Classes="PageTextBlock" Margin="3" Text="{x:Static lang:Strings.ExportHeaderLabel}" VerticalAlignment="Center"/>
-					<TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Classes="PageTextBox" Margin="3" VerticalAlignment="Center" Text="{Binding ExportName}" ToolTip.Tip="{x:Static lang:Strings.ExportHeaderToolTip}"/>
-					<TextBlock Grid.Row="2" Grid.Column="0" Classes="PageTextBlock" Margin="3" Text="{x:Static lang:Strings.ExportDestinationLabel}" VerticalAlignment="Center"/>
-					<TextBox Grid.Row="2" Grid.Column="1" Margin="3" Classes="PageTextBox" VerticalAlignment="Center" Text="{Binding DestinationDirectory}" ToolTip.Tip="{x:Static lang:Strings.ExportHeaderToolTip}"/>
-					<Button Grid.Row="2" Grid.Column="2" Classes="PageButton" Margin="3" VerticalAlignment="Center" Command="{Binding BrowseDirectoryCommand}" Content="{x:Static lang:Strings.ExportBrowseButton}"/>
-					<Button Grid.Row="3" Grid.Column="2" Classes="PageButton" Margin="3" VerticalAlignment="Center" Command="{Binding ExportToDirectoryCommand}" IsEnabled="{Binding ExportEnabled}" Content="{x:Static lang:Strings.ExportExportButton}"/>
+					<TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Classes="PageTextBox" Margin="3" VerticalAlignment="Center" Text="{Binding ExportName}"/>
+					<Button Grid.Row="2" Grid.Column="2" Classes="PageButton" Margin="3" VerticalAlignment="Center" Command="{Binding SelectAndExportCommand}" Content="{x:Static lang:Strings.ExportExportButton}"/>
 				</Grid>
 			</TabItem>
 
 			<TabItem Header="{x:Static lang:Strings.ExportHTMLWithMetaDataAndSearchResultFilesLabel}">
 				<Grid DataContext="{Binding HtmlTab}" x:DataType="dialogs:HtmlExportTabViewModel"
-					  Margin="10" ColumnDefinitions="auto,*,auto" RowDefinitions="auto,auto,auto,auto">
+					  Margin="10" ColumnDefinitions="auto,*,auto" RowDefinitions="auto,auto,auto">
 					<TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Classes="PageTextBlock" Margin="3,3,3,10" Text="{x:Static lang:Strings.ExportHtmlDescription}" TextWrapping="Wrap" MaxWidth="400"/>
 					<TextBlock Grid.Row="1" Grid.Column="0" Classes="PageTextBlock" Margin="3" Text="{x:Static lang:Strings.ExportHeaderLabel}" VerticalAlignment="Center"/>
-					<TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Classes="PageTextBox" Margin="3" VerticalAlignment="Center" Text="{Binding ExportName}" ToolTip.Tip="{x:Static lang:Strings.ExportHeaderToolTip}"/>
-					<TextBlock Grid.Row="2" Grid.Column="0" Classes="PageTextBlock" Margin="3" Text="{x:Static lang:Strings.ExportDestinationLabel}" VerticalAlignment="Center"/>
-					<TextBox Grid.Row="2" Grid.Column="1" Margin="3" Classes="PageTextBox" VerticalAlignment="Center" Text="{Binding DestinationDirectory}" ToolTip.Tip="{x:Static lang:Strings.ExportHeaderToolTip}"/>
-					<Button Grid.Row="2" Grid.Column="2" Classes="PageButton" Margin="3" VerticalAlignment="Center" Command="{Binding BrowseDirectoryCommand}" Content="{x:Static lang:Strings.ExportBrowseButton}"/>
-					<Button Grid.Row="3" Grid.Column="2" Classes="PageButton" Margin="3" VerticalAlignment="Center" Command="{Binding ExportToDirectoryCommand}" IsEnabled="{Binding ExportEnabled}" Content="{x:Static lang:Strings.ExportExportButton}"/>
-				</Grid>
-			</TabItem>
-
-			<TabItem Header="{x:Static lang:Strings.ExportSelfContainedHtmlLabel}">
-				<Grid DataContext="{Binding SelfContainedHtmlTab}" x:DataType="dialogs:SelfContainedHtmlExportTabViewModel"
-					  Margin="10" ColumnDefinitions="auto,*,auto" RowDefinitions="auto,auto,auto,auto">
-					<TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Classes="PageTextBlock" Margin="3,3,3,10" Text="{x:Static lang:Strings.ExportSelfContainedHtmlDescription}" TextWrapping="Wrap" MaxWidth="400"/>
-					<TextBlock Grid.Row="1" Grid.Column="0" Classes="PageTextBlock" Margin="3" Text="{x:Static lang:Strings.ExportHeaderLabel}" VerticalAlignment="Center"/>
-					<TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Classes="PageTextBox" Margin="3" VerticalAlignment="Center" Text="{Binding ExportName}" ToolTip.Tip="{x:Static lang:Strings.ExportHeaderToolTip}"/>
-					<TextBlock Grid.Row="2" Grid.Column="0" Classes="PageTextBlock" Margin="3" Text="{x:Static lang:Strings.ExportDestinationFileLabel}" VerticalAlignment="Center"/>
-					<TextBox Grid.Row="2" Grid.Column="1" Margin="3" Classes="PageTextBox" VerticalAlignment="Center" Text="{Binding DestinationFile}"/>
-					<Button Grid.Row="2" Grid.Column="2" Classes="PageButton" Margin="3" VerticalAlignment="Center" Command="{Binding BrowseFileCommand}" Content="{x:Static lang:Strings.ExportSaveAsButton}"/>
-					<Button Grid.Row="3" Grid.Column="2" Classes="PageButton" Margin="3" VerticalAlignment="Center" Command="{Binding ExportToFileCommand}" IsEnabled="{Binding ExportEnabled}" Content="{x:Static lang:Strings.ExportExportButton}"/>
-				</Grid>
-			</TabItem>
-
-			<TabItem Header="{x:Static lang:Strings.ExportSearchResultMetaDataJSONLabel}">
-				<Grid DataContext="{Binding JsonTab}" x:DataType="dialogs:JsonExportTabViewModel"
-					  Margin="10" ColumnDefinitions="auto,*,auto" RowDefinitions="auto,auto,auto,auto">
-					<TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Classes="PageTextBlock" Margin="3,3,3,10" Text="{x:Static lang:Strings.ExportJsonDescription}" TextWrapping="Wrap" MaxWidth="400"/>
-					<TextBlock Grid.Row="1" Grid.Column="0" Classes="PageTextBlock" Margin="3" Text="{x:Static lang:Strings.ExportHeaderLabel}" VerticalAlignment="Center"/>
-					<TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Classes="PageTextBox" Margin="3" VerticalAlignment="Center" Text="{Binding ExportName}" ToolTip.Tip="{x:Static lang:Strings.ExportHeaderToolTip}"/>
-					<TextBlock Grid.Row="2" Grid.Column="0" Classes="PageTextBlock" Margin="3" Text="{x:Static lang:Strings.ExportDestinationFileLabel}" VerticalAlignment="Center"/>
-					<TextBox Grid.Row="2" Grid.Column="1" Margin="3" Classes="PageTextBox" VerticalAlignment="Center" Text="{Binding DestinationFile}"/>
-					<Button Grid.Row="2" Grid.Column="2" Classes="PageButton" Margin="3" VerticalAlignment="Center" Command="{Binding BrowseFileCommand}" Content="{x:Static lang:Strings.ExportSaveAsButton}"/>
-					<Button Grid.Row="3" Grid.Column="2" Classes="PageButton" Margin="3" VerticalAlignment="Center" Command="{Binding ExportToFileCommand}" IsEnabled="{Binding ExportEnabled}" Content="{x:Static lang:Strings.ExportExportButton}"/>
+					<TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Classes="PageTextBox" Margin="3" VerticalAlignment="Center" Text="{Binding ExportName}"/>
+					<Button Grid.Row="2" Grid.Column="2" Classes="PageButton" Margin="3" VerticalAlignment="Center" Command="{Binding SelectAndExportCommand}" Content="{x:Static lang:Strings.ExportExportButton}"/>
 				</Grid>
 			</TabItem>
 
 			<TabItem Header="{x:Static lang:Strings.ExportSearchResultPdfLabel}">
 				<Grid DataContext="{Binding PdfTab}" x:DataType="dialogs:PdfExportTabViewModel"
-					  Margin="10" ColumnDefinitions="auto,*,auto" RowDefinitions="auto,auto,auto,auto">
+					  Margin="10" ColumnDefinitions="auto,*,auto" RowDefinitions="auto,auto,auto">
 					<TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Classes="PageTextBlock" Margin="3,3,3,10" Text="{x:Static lang:Strings.ExportPdfDescription}" TextWrapping="Wrap" MaxWidth="400"/>
 					<TextBlock Grid.Row="1" Grid.Column="0" Classes="PageTextBlock" Margin="3" Text="{x:Static lang:Strings.ExportHeaderLabel}" VerticalAlignment="Center"/>
-					<TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Classes="PageTextBox" Margin="3" VerticalAlignment="Center" Text="{Binding ExportName}" ToolTip.Tip="{x:Static lang:Strings.ExportHeaderToolTip}"/>
-					<TextBlock Grid.Row="2" Grid.Column="0" Classes="PageTextBlock" Margin="3" Text="{x:Static lang:Strings.ExportDestinationFileLabel}" VerticalAlignment="Center"/>
-					<TextBox Grid.Row="2" Grid.Column="1" Margin="3" Classes="PageTextBox" VerticalAlignment="Center" Text="{Binding DestinationFile}"/>
-					<Button Grid.Row="2" Grid.Column="2" Classes="PageButton" Margin="3" VerticalAlignment="Center" Command="{Binding BrowseFileCommand}" Content="{x:Static lang:Strings.ExportSaveAsButton}"/>
-					<Button Grid.Row="3" Grid.Column="2" Classes="PageButton" Margin="3" VerticalAlignment="Center" Command="{Binding ExportToFileCommand}" IsEnabled="{Binding ExportEnabled}" Content="{x:Static lang:Strings.ExportExportButton}"/>
+					<TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Classes="PageTextBox" Margin="3" VerticalAlignment="Center" Text="{Binding ExportName}"/>
+					<Button Grid.Row="2" Grid.Column="2" Classes="PageButton" Margin="3" VerticalAlignment="Center" Command="{Binding SelectAndExportCommand}" Content="{x:Static lang:Strings.ExportExportButton}"/>
+				</Grid>
+			</TabItem>
+
+			<TabItem Header="{x:Static lang:Strings.ExportSearchResultFilesLabel}">
+				<Grid DataContext="{Binding FilesTab}" x:DataType="dialogs:FilesExportTabViewModel"
+					  Margin="10" ColumnDefinitions="auto,*,auto" RowDefinitions="auto,auto">
+					<TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Classes="PageTextBlock" Margin="3,3,3,10" Text="{x:Static lang:Strings.ExportFilesDescription}" TextWrapping="Wrap" MaxWidth="400"/>
+					<Button Grid.Row="1" Grid.Column="2" Classes="PageButton" Margin="3" VerticalAlignment="Center" Command="{Binding SelectAndExportCommand}" Content="{x:Static lang:Strings.ExportExportButton}"/>
+				</Grid>
+			</TabItem>
+
+			<TabItem Header="{x:Static lang:Strings.ExportSearchResultMetaDataJSONLabel}">
+				<Grid DataContext="{Binding JsonTab}" x:DataType="dialogs:JsonExportTabViewModel"
+					  Margin="10" ColumnDefinitions="auto,*,auto" RowDefinitions="auto,auto,auto">
+					<TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Classes="PageTextBlock" Margin="3,3,3,10" Text="{x:Static lang:Strings.ExportJsonDescription}" TextWrapping="Wrap" MaxWidth="400"/>
+					<TextBlock Grid.Row="1" Grid.Column="0" Classes="PageTextBlock" Margin="3" Text="{x:Static lang:Strings.ExportHeaderLabel}" VerticalAlignment="Center"/>
+					<TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Classes="PageTextBox" Margin="3" VerticalAlignment="Center" Text="{Binding ExportName}"/>
+					<Button Grid.Row="2" Grid.Column="2" Classes="PageButton" Margin="3" VerticalAlignment="Center" Command="{Binding SelectAndExportCommand}" Content="{x:Static lang:Strings.ExportExportButton}"/>
+				</Grid>
+			</TabItem>
+
+			<TabItem Header="{x:Static lang:Strings.ExportM3UPlaylistLabel}">
+				<Grid DataContext="{Binding M3uTab}" x:DataType="dialogs:M3uExportTabViewModel"
+					  Margin="10" ColumnDefinitions="auto,*,auto" RowDefinitions="auto,auto,auto">
+					<TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Classes="PageTextBlock" Margin="3,3,3,10" Text="{x:Static lang:Strings.ExportM3uDescription}" TextWrapping="Wrap" MaxWidth="400"/>
+					<TextBlock Grid.Row="1" Grid.Column="0" Classes="PageTextBlock" Margin="3" Text="{x:Static lang:Strings.ExportHeaderLabel}" VerticalAlignment="Center"/>
+					<TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Classes="PageTextBox" Margin="3" VerticalAlignment="Center" Text="{Binding ExportName}"/>
+					<Button Grid.Row="2" Grid.Column="2" Classes="PageButton" Margin="3" VerticalAlignment="Center" Command="{Binding SelectAndExportCommand}" Content="{x:Static lang:Strings.ExportExportButton}"/>
 				</Grid>
 			</TabItem>
 

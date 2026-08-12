@@ -1,4 +1,5 @@
 using FakeItEasy;
+using FileDB;
 using FileDB.Dialogs;
 using FileDB.Export;
 using FileDB.Export.SearchResult;
@@ -12,23 +13,25 @@ namespace FileDBTests.ViewModels.Dialogs;
 
 public class ExportSearchResultViewModelTests
 {
+    private static IProcessUtils FakeProcessUtils() => A.Fake<IProcessUtils>();
+
     private static FilesExportTabViewModel CreateFilesTab() =>
-        new(A.Fake<IDialogs>(), A.Fake<IFileSystem>(), A.Fake<ISearchResultExportDataBuilder>(), A.Fake<IFilesExporter>());
+        new(A.Fake<IDialogs>(), A.Fake<IFileSystem>(), A.Fake<ISearchResultExportDataBuilder>(), FakeProcessUtils(), A.Fake<IFilesExporter>());
 
     private static M3uExportTabViewModel CreateM3uTab() =>
-        new(A.Fake<IDialogs>(), A.Fake<IFileSystem>(), A.Fake<ISearchResultExportDataBuilder>(), A.Fake<IFilesExporter>(), A.Fake<IM3uExporter>());
+        new(A.Fake<IDialogs>(), A.Fake<IFileSystem>(), A.Fake<ISearchResultExportDataBuilder>(), FakeProcessUtils(), A.Fake<IFilesExporter>(), A.Fake<IM3uExporter>());
 
     private static HtmlExportTabViewModel CreateHtmlTab() =>
-        new(A.Fake<IDialogs>(), A.Fake<IFileSystem>(), A.Fake<ISearchResultExportDataBuilder>(), A.Fake<IHtmlExporter>());
+        new(A.Fake<IDialogs>(), A.Fake<IFileSystem>(), A.Fake<ISearchResultExportDataBuilder>(), FakeProcessUtils(), A.Fake<IHtmlExporter>());
 
     private static SelfContainedHtmlExportTabViewModel CreateSelfContainedHtmlTab() =>
-        new(A.Fake<IDialogs>(), A.Fake<ISearchResultExportDataBuilder>(), A.Fake<ISelfContainedHtmlExporter>());
+        new(A.Fake<IDialogs>(), A.Fake<ISearchResultExportDataBuilder>(), FakeProcessUtils(), A.Fake<ISelfContainedHtmlExporter>());
 
     private static JsonExportTabViewModel CreateJsonTab() =>
-        new(A.Fake<IDialogs>(), A.Fake<ISearchResultExportDataBuilder>(), A.Fake<IJsonExporter>());
+        new(A.Fake<IDialogs>(), A.Fake<ISearchResultExportDataBuilder>(), FakeProcessUtils(), A.Fake<IJsonExporter>());
 
     private static PdfExportTabViewModel CreatePdfTab() =>
-        new(A.Fake<IDialogs>(), A.Fake<ISearchResultExportDataBuilder>(), A.Fake<IPdfExporter>());
+        new(A.Fake<IDialogs>(), A.Fake<ISearchResultExportDataBuilder>(), FakeProcessUtils(), A.Fake<IPdfExporter>());
 
     private static ExportSearchResultViewModel CreateViewModel() =>
         new(CreateFilesTab(), CreateM3uTab(), CreateHtmlTab(), CreateSelfContainedHtmlTab(), CreateJsonTab(), CreatePdfTab());

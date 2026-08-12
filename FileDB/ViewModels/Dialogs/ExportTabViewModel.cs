@@ -1,5 +1,4 @@
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using FileDB.Dialogs;
 using FileDB.Export;
 using FileDB.Lang;
@@ -9,29 +8,27 @@ using System.Threading.Tasks;
 
 namespace FileDB.ViewModels.Dialogs;
 
-public abstract partial class ExportTabViewModel(IDialogs dialogs, ISearchResultExportDataBuilder dataBuilder) : ObservableObject
+public abstract partial class ExportTabViewModel(IDialogs dialogs, ISearchResultExportDataBuilder dataBuilder, IProcessUtils processUtils) : ObservableObject
 {
     public SearchResult? SearchResult { get; set; }
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(ExportEnabled))]
     public partial string ExportName { get; set; } = "My Files";
-
-    public abstract bool ExportEnabled { get; }
 
     protected IDialogs Dialogs { get; } = dialogs;
     protected ISearchResultExportDataBuilder DataBuilder { get; } = dataBuilder;
+    protected IProcessUtils ProcessUtils { get; } = processUtils;
 
-    [RelayCommand]
-    public async Task ExportAsync()
+    protected async Task ExportAsync(string destination)
     {
         Exception? exportError = null;
+        string? exportedPath = null;
         await Dialogs.ShowProgressDialogAsync((progress, cancellationToken) =>
         {
             progress.Report(Strings.ExportExporting);
             try
             {
-                DoExport(cancellationToken);
+                exportedPath = DoExport(destination, cancellationToken);
             }
             catch (OperationCanceledException)
             {
@@ -47,7 +44,13 @@ public abstract partial class ExportTabViewModel(IDialogs dialogs, ISearchResult
         {
             await Dialogs.ShowErrorDialogAsync(exportError.Message);
         }
+        else if (exportedPath is not null)
+        {
+            RevealInExplorer(exportedPath);
+        }
     }
 
-    protected abstract void DoExport(System.Threading.CancellationToken cancellationToken);
+    protected abstract string? DoExport(string destination, System.Threading.CancellationToken cancellationToken);
+
+    protected abstract void RevealInExplorer(string path);
 }

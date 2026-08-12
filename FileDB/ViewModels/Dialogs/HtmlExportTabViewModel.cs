@@ -11,12 +11,14 @@ public class HtmlExportTabViewModel(
     IDialogs dialogs,
     IFileSystem fileSystem,
     ISearchResultExportDataBuilder dataBuilder,
-    IHtmlExporter htmlExporter) : DirectoryExportTabViewModel(dialogs, fileSystem, dataBuilder)
+    IProcessUtils processUtils,
+    IHtmlExporter htmlExporter) : DirectoryExportTabViewModel(dialogs, fileSystem, dataBuilder, processUtils)
 {
-    protected override void DoExport(CancellationToken cancellationToken)
+    protected override string? DoExport(string destination, CancellationToken cancellationToken)
     {
         var richData = DataBuilder.BuildRich(SearchResult!.Files, ExportName, cancellationToken);
         cancellationToken.ThrowIfCancellationRequested();
-        htmlExporter.Export(richData, Path.Combine(DestinationDirectory!, "Html"));
+        htmlExporter.Export(richData, Path.Combine(destination, "Html"));
+        return destination;
     }
 }

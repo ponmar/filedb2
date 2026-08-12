@@ -123,6 +123,50 @@ public class HtmlExporterTests
         Assert.Contains("https://github.com/ponmar/filedb2", capturedHtml);
     }
 
+    // --- Export: slideshow structure ---
+
+    [Fact]
+    public void Export_HtmlContainsSlidesArray()
+    {
+        Export(MakeData());
+        Assert.Contains("const slides", capturedHtml);
+    }
+
+    [Fact]
+    public void Export_HtmlContainsShowSlideFunction()
+    {
+        Export(MakeData());
+        Assert.Contains("showSlide", capturedHtml);
+    }
+
+    [Fact]
+    public void Export_HtmlContainsPrevNextButtons()
+    {
+        Export(MakeData());
+        Assert.Contains("btn-prev", capturedHtml);
+        Assert.Contains("btn-next", capturedHtml);
+    }
+
+    [Fact]
+    public void Export_HtmlContainsKeyboardNavigation()
+    {
+        Export(MakeData());
+        Assert.Contains("ArrowRight", capturedHtml);
+        Assert.Contains("ArrowLeft", capturedHtml);
+        Assert.Contains("PageDown", capturedHtml);
+        Assert.Contains("PageUp", capturedHtml);
+        Assert.Contains("Home", capturedHtml);
+        Assert.Contains("End", capturedHtml);
+    }
+
+    [Fact]
+    public void Export_HtmlContainsTouchSupport()
+    {
+        Export(MakeData());
+        Assert.Contains("touchstart", capturedHtml);
+        Assert.Contains("touchend", capturedHtml);
+    }
+
     // --- Export: file filtering ---
 
     [Fact]
@@ -140,24 +184,24 @@ public class HtmlExporterTests
         A.CallTo(() => fakeFileSystem.File.Copy(AbsPath, A<string>.That.Contains("photo.jpg"))).MustHaveHappenedOnceExactly();
     }
 
-    // --- Export: heading content ---
+    // --- Export: metadata in slides JS ---
 
     [Fact]
-    public void Export_FileWithDescription_DescriptionInHeading()
+    public void Export_FileWithDescription_DescriptionInSlidesJs()
     {
         Export(MakeData(MakeFile(description: "Sunset photo")));
         Assert.Contains("Sunset photo", capturedHtml);
     }
 
     [Fact]
-    public void Export_FileWithDatetime_DateInHeading()
+    public void Export_FileWithDatetime_DateInSlidesJs()
     {
         Export(MakeData(MakeFile(datetime: "2020-06-15")));
         Assert.Contains("2020-06-15", capturedHtml);
     }
 
     [Fact]
-    public void Export_FileWithDatetimeAndDescription_BothInHeadingWithSeparator()
+    public void Export_FileWithDatetimeAndDescription_BothPresentWithSeparator()
     {
         Export(MakeData(MakeFile(datetime: "2020-06-15", description: "Sunset")));
         Assert.Contains("2020-06-15", capturedHtml);
@@ -200,7 +244,7 @@ public class HtmlExporterTests
     }
 
     [Fact]
-    public void Export_FileWithNoPersonIds_NoPersonParagraph()
+    public void Export_FileWithNoPersonIds_NoPersonEmoji()
     {
         Export(MakeData(MakeFile()));
         Assert.DoesNotContain("&#128578;", capturedHtml);
@@ -227,7 +271,7 @@ public class HtmlExporterTests
     }
 
     [Fact]
-    public void Export_FileWithNoLocationIds_NoLocationParagraph()
+    public void Export_FileWithNoLocationIds_NoLocationEmoji()
     {
         Export(MakeData(MakeFile()));
         Assert.DoesNotContain("&#127968;", capturedHtml);
@@ -244,7 +288,7 @@ public class HtmlExporterTests
     }
 
     [Fact]
-    public void Export_FileWithNoTagIds_NoTagParagraph()
+    public void Export_FileWithNoTagIds_NoTagEmoji()
     {
         Export(MakeData(MakeFile()));
         Assert.DoesNotContain("&#128278;", capturedHtml);
@@ -268,17 +312,19 @@ public class HtmlExporterTests
         Assert.DoesNotContain("&#x1F6F0;", capturedHtml);
     }
 
-    // --- Export: index counter ---
+    // --- Export: counter rendered by JS, not baked into slides data ---
 
     [Fact]
-    public void Export_TwoFiles_IndexCounterShowsCorrectTotal()
+    public void Export_TwoFiles_SlidesJsArrayContainsBothEntries()
     {
         var file2 = new ExportedFile(2, "photo2.jpg", "photo2.jpg", FileType.Picture, null, null, null, null, [], [], []);
         A.CallTo(() => fakeFilesystemAccessProvider.FilesystemAccess.ToAbsolutePath("photo2.jpg")).Returns("/collection/photo2.jpg");
         A.CallTo(() => fakeFileSystem.File.Exists("/collection/photo2.jpg")).Returns(true);
         var data = new RichExportData("Name", "1.0", DateTime.Now, "https://example.com", [MakeFile(), file2], [], [], []);
         Export(data);
-        Assert.Contains("1 / 2", capturedHtml);
-        Assert.Contains("2 / 2", capturedHtml);
+        // Both filenames appear in the slides JS array
+        Assert.Contains("photo.jpg", capturedHtml);
+        Assert.Contains("photo2.jpg", capturedHtml);
     }
 }
+

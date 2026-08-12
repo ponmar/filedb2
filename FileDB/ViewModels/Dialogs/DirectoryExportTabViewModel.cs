@@ -1,4 +1,3 @@
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Dialogs;
 using FileDB.Export;
@@ -14,43 +13,36 @@ namespace FileDB.ViewModels.Dialogs;
 public abstract partial class DirectoryExportTabViewModel(
     IDialogs dialogs,
     IFileSystem fileSystem,
-    ISearchResultExportDataBuilder dataBuilder) : ExportTabViewModel(dialogs, dataBuilder)
+    ISearchResultExportDataBuilder dataBuilder,
+    IProcessUtils processUtils) : ExportTabViewModel(dialogs, dataBuilder, processUtils)
 {
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(ExportEnabled))]
-    public partial string? DestinationDirectory { get; set; }
-
-    public override bool ExportEnabled => ExportName.HasContent() && DestinationDirectory.HasContent();
-
     [RelayCommand]
-    private async Task BrowseDirectoryAsync()
+    private async Task SelectAndExportAsync()
     {
         var initialPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
         var selected = await Dialogs.ShowBrowseExistingDirectoryDialogAsync(initialPath, Strings.ExportSelectYourDestinationDirectory);
-        DestinationDirectory = selected ?? string.Empty;
-    }
+        if (string.IsNullOrEmpty(selected))
+            return;
 
-    [RelayCommand]
-    private async Task ExportToDirectoryAsync()
-    {
-        if (!fileSystem.Directory.Exists(DestinationDirectory))
+        if (!fileSystem.Directory.Exists(selected))
         {
             await Dialogs.ShowErrorDialogAsync(Strings.ExportDestinationDirectoryDoesNotExist);
             return;
         }
 
-        if (!IsDirectoryEmpty(DestinationDirectory))
+        if (!IsDirectoryEmpty(selected))
         {
             await Dialogs.ShowErrorDialogAsync(Strings.ExportDestinationDirectoryIsNotEmpty);
             return;
         }
 
-        if (!await Dialogs.ShowConfirmDialogAsync(string.Format(Strings.ExportSelectedData, SearchResult!.Count, DestinationDirectory)))
-        {
-            return;
-        }
+        await ExportAsync(selected);
+    }
 
-        await ExportAsync();
+    protected override void RevealInExplorer(string path)
+    {
+        if (ProcessUtils.IsOpenDirectoryInExplorerSupported())
+            ProcessUtils.OpenDirectoryInExplorer(path);
     }
 
     private bool IsDirectoryEmpty(string dirPath)

@@ -1,42 +1,33 @@
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FileDB.Dialogs;
 using FileDB.Export;
 using FileDB.Lang;
-using FileDBInterface.Extensions;
 using System.Threading.Tasks;
 
 namespace FileDB.ViewModels.Dialogs;
 
 public abstract partial class FileExportTabViewModel(
     IDialogs dialogs,
-    ISearchResultExportDataBuilder dataBuilder) : ExportTabViewModel(dialogs, dataBuilder)
+    ISearchResultExportDataBuilder dataBuilder,
+    IProcessUtils processUtils) : ExportTabViewModel(dialogs, dataBuilder, processUtils)
 {
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(ExportEnabled))]
-    public partial string? DestinationFile { get; set; }
-
-    public override bool ExportEnabled => ExportName.HasContent() && DestinationFile.HasContent();
-
     protected abstract string FileExtension { get; }
     protected abstract string FileTypeDescription { get; }
 
     [RelayCommand]
-    private async Task BrowseFileAsync()
+    private async Task SelectAndExportAsync()
     {
         var suggestedName = $"{ExportName}.{FileExtension}";
         var selected = await Dialogs.ShowSaveFileDialogAsync(Strings.ExportSelectDestinationFile, suggestedName, FileExtension, FileTypeDescription);
-        DestinationFile = selected ?? string.Empty;
+        if (string.IsNullOrEmpty(selected))
+            return;
+
+        await ExportAsync(selected);
     }
 
-    [RelayCommand]
-    private async Task ExportToFileAsync()
+    protected override void RevealInExplorer(string path)
     {
-        if (!await Dialogs.ShowConfirmDialogAsync(string.Format(Strings.ExportSelectedData, SearchResult!.Count, DestinationFile)))
-        {
-            return;
-        }
-
-        await ExportAsync();
+        if (ProcessUtils.IsSelectFileInExplorerSupported())
+            ProcessUtils.SelectFileInExplorer(path);
     }
 }
