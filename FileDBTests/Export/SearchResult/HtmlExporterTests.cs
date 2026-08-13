@@ -123,7 +123,67 @@ public class HtmlExporterTests
         Assert.Contains("https://github.com/ponmar/filedb2", capturedHtml);
     }
 
-    // --- Export: slideshow structure ---
+    [Fact]
+    public void Export_HtmlContainsComment()
+    {
+        Export(MakeData());
+        Assert.Contains("<!-- FileDB 1.0", capturedHtml);
+    }
+
+    [Fact]
+    public void Export_HtmlContainsOverlayScaleCssVariable()
+    {
+        Export(MakeData());
+        Assert.Contains("--overlay-scale", capturedHtml);
+    }
+
+    [Fact]
+    public void Export_HtmlContainsMediaQueries()
+    {
+        Export(MakeData());
+        Assert.Contains("@media", capturedHtml);
+        Assert.Contains("599px", capturedHtml);
+        Assert.Contains("1200px", capturedHtml);
+    }
+
+    [Fact]
+    public void Export_HtmlContainsViewportMetaTag()
+    {
+        Export(MakeData());
+        Assert.Contains("viewport", capturedHtml);
+    }
+
+    [Fact]
+    public void Export_HtmlContainsScaleIndicator()
+    {
+        Export(MakeData());
+        Assert.Contains("scale-indicator", capturedHtml);
+    }
+
+    [Fact]
+    public void Export_HtmlContainsKeyboardScaleHandler()
+    {
+        Export(MakeData());
+        Assert.Contains("adjustOverlayScale", capturedHtml);
+        Assert.Contains("ArrowUp", capturedHtml);
+        Assert.Contains("ArrowDown", capturedHtml);
+    }
+
+    [Fact]
+    public void Export_HtmlContainsSessionStorageForScale()
+    {
+        Export(MakeData());
+        Assert.Contains("sessionStorage", capturedHtml);
+        Assert.Contains("overlayScale", capturedHtml);
+    }
+
+    [Fact]
+    public void Export_HtmlContainsVerticalSwipeSupport()
+    {
+        Export(MakeData());
+        Assert.Contains("Math.abs(dy)", capturedHtml);
+        Assert.Contains("0.5, Math.min(2.0", capturedHtml);
+    }
 
     [Fact]
     public void Export_HtmlContainsSlidesArray()
@@ -143,8 +203,8 @@ public class HtmlExporterTests
     public void Export_HtmlContainsPrevNextButtons()
     {
         Export(MakeData());
-        Assert.Contains("btn-prev", capturedHtml);
-        Assert.Contains("btn-next", capturedHtml);
+        Assert.DoesNotContain("btn-prev", capturedHtml);
+        Assert.DoesNotContain("btn-next", capturedHtml);
     }
 
     [Fact]

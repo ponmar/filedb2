@@ -100,6 +100,14 @@ public class SelfContainedHtmlExporterTests
         Assert.Contains("https://github.com/ponmar/filedb2", capturedHtml);
     }
 
+    [Fact]
+    public void Export_HtmlFooterIsComment()
+    {
+        Export(MakeData());
+        Assert.Contains("<!-- FileDB 1.0", capturedHtml);
+        Assert.DoesNotContain("id=\"footer\"", capturedHtml);
+    }
+
     // --- Export: slideshow structure ---
 
     [Fact]
@@ -120,8 +128,8 @@ public class SelfContainedHtmlExporterTests
     public void Export_HtmlContainsPrevNextButtons()
     {
         Export(MakeData());
-        Assert.Contains("btn-prev", capturedHtml);
-        Assert.Contains("btn-next", capturedHtml);
+        Assert.DoesNotContain("btn-prev", capturedHtml);
+        Assert.DoesNotContain("btn-next", capturedHtml);
     }
 
     [Fact]
