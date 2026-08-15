@@ -82,6 +82,7 @@ public static class Bootstrapper
 
         ServiceLocator.RegisterSingleton<IImageLoader, ImageLoader>();
         ServiceLocator.RegisterSingleton<IDatabaseCreator, SqLiteDatabaseCreator>();
+        ServiceLocator.RegisterSingleton<IFileBackup, FileBackup>();
 
         ServiceLocator.RegisterTransient<ExportSearchResultViewModel>();
 

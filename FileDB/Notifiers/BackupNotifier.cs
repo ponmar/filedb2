@@ -1,4 +1,4 @@
-﻿using FileDB.Notifications;
+using FileDB.Notifications;
 using FileDB.Services;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,17 +8,19 @@ namespace FileDB.Notifiers;
 public class BackupNotifier : INotifier
 {
     private readonly int afterDays;
-    private readonly FileBackup fileBackup;
+    private readonly IFileBackup fileBackup;
+    private readonly string filePath;
 
-    public BackupNotifier(FileBackup fileBackup, int afterDays)
+    public BackupNotifier(IFileBackup fileBackup, string filePath, int afterDays)
     {
         this.fileBackup = fileBackup;
+        this.filePath = filePath;
         this.afterDays = afterDays;
     }
 
     public IEnumerable<INotification> Run()
     {
-        var backupFiles = fileBackup.ListAvailableBackupFiles();
+        var backupFiles = fileBackup.ListAvailableBackupFiles(filePath);
         if (backupFiles.Count == 0)
         {
             return [new DatabaseBackupMissingNotification()];
@@ -33,3 +35,4 @@ public class BackupNotifier : INotifier
         return [];
     }
 }
+

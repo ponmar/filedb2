@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -49,8 +49,9 @@ public partial class ToolsViewModel : ObservableObject
     private readonly INotificationManagement notificationManagement;
     private readonly IConfigUpdater configUpdater;
     private readonly IDatabaseCreator databaseCreator;
+    private readonly IFileBackup fileBackup;
 
-    public ToolsViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IDialogs dialogs, IFileSystem fileSystem, IClipboardService clipboardService, INotificationManagement notificationManagement, IConfigUpdater configUpdater, IDatabaseCreator databaseCreator)
+    public ToolsViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IDialogs dialogs, IFileSystem fileSystem, IClipboardService clipboardService, INotificationManagement notificationManagement, IConfigUpdater configUpdater, IDatabaseCreator databaseCreator, IFileBackup fileBackup)
     {
         this.configProvider = configProvider;
         this.dbAccessProvider = dbAccessProvider;
@@ -61,6 +62,7 @@ public partial class ToolsViewModel : ObservableObject
         this.notificationManagement = notificationManagement;
         this.configUpdater = configUpdater;
         this.databaseCreator = databaseCreator;
+        this.fileBackup = fileBackup;
         ScanBackupFiles();
     }
 
@@ -102,7 +104,7 @@ public partial class ToolsViewModel : ObservableObject
             await dialogs.ShowProgressDialogAsync(progress =>
             {
                 progress.Report(Strings.ToolsRunning);
-                new FileBackup(fileSystem, configProvider.FilePaths.DatabasePath).CreateBackup();
+                fileBackup.CreateBackup(configProvider.FilePaths.DatabasePath);
             });
             await dialogs.ShowInfoDialogAsync(Strings.ToolsCreateBackupResult);
             ScanBackupFiles();
@@ -122,7 +124,7 @@ public partial class ToolsViewModel : ObservableObject
 
         if (fileSystem.Directory.Exists(configProvider.FilePaths.FilesRootDir))
         {
-            foreach (var backupFile in new FileBackup(fileSystem, configProvider.FilePaths.DatabasePath).ListAvailableBackupFiles())
+            foreach (var backupFile in fileBackup.ListAvailableBackupFiles(configProvider.FilePaths.DatabasePath))
             {
                 BackupFiles.Add(backupFile);
             }
@@ -363,3 +365,6 @@ public partial class ToolsViewModel : ObservableObject
         await dialogs.ShowInfoDialogAsync(summary);
     }
 }
+
+
+

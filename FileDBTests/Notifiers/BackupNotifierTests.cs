@@ -1,4 +1,4 @@
-using System.IO.Abstractions.TestingHelpers;
+using FakeItEasy;
 using FileDB.Lang;
 using FileDB.Notifications;
 using FileDB.Notifiers;
@@ -9,16 +9,15 @@ namespace FileDBTests.Notifiers;
 
 public class BackupNotifierTests
 {
+    private const string DatabasePath = "/files/filedb.db";
+
     [Fact]
     public void Run_WhenNoBackupsExist_ReturnsMissingNotification()
     {
-        var rootDirectory = Path.Combine(Path.GetTempPath(), "filedb-backup-tests", Guid.NewGuid().ToString("N"));
-        var databasePath = Path.Combine(rootDirectory, "filedb.db");
-        var fileSystem = new MockFileSystem();
-        fileSystem.AddDirectory(rootDirectory);
-        fileSystem.AddFile(databasePath, new MockFileData(""));
+        var fileBackup = A.Fake<IFileBackup>();
+        A.CallTo(() => fileBackup.ListAvailableBackupFiles(DatabasePath)).Returns([]);
 
-        var notifier = new BackupNotifier(new FileBackup(fileSystem, databasePath), afterDays: 30);
+        var notifier = new BackupNotifier(fileBackup, DatabasePath, afterDays: 30);
 
         var result = notifier.Run().ToList();
 
@@ -29,16 +28,11 @@ public class BackupNotifierTests
     [Fact]
     public void Run_WhenLatestBackupIsTooOld_ReturnsWarning()
     {
-        var rootDirectory = Path.Combine(Path.GetTempPath(), "filedb-backup-tests", Guid.NewGuid().ToString("N"));
-        var databasePath = Path.Combine(rootDirectory, "filedb.db");
-        var fileSystem = new MockFileSystem();
-        fileSystem.AddDirectory(rootDirectory);
-        fileSystem.AddFile(databasePath, new MockFileData(""));
+        var fileBackup = A.Fake<IFileBackup>();
+        var oldBackup = new BackupFile("/files/filedb_backup_2026-01-01T000000.db", DateTime.Now.AddDays(-31));
+        A.CallTo(() => fileBackup.ListAvailableBackupFiles(DatabasePath)).Returns([oldBackup]);
 
-        var timestamp = DateTime.Now.AddDays(-31);
-        fileSystem.AddFile(NotifierTestHelpers.CreateBackupFilePath(databasePath, timestamp), new MockFileData(""));
-
-        var notifier = new BackupNotifier(new FileBackup(fileSystem, databasePath), afterDays: 30);
+        var notifier = new BackupNotifier(fileBackup, DatabasePath, afterDays: 30);
 
         var result = notifier.Run().ToList();
 
@@ -50,16 +44,11 @@ public class BackupNotifierTests
     [Fact]
     public void Run_WhenLatestBackupIsRecent_ReturnsNoNotifications()
     {
-        var rootDirectory = Path.Combine(Path.GetTempPath(), "filedb-backup-tests", Guid.NewGuid().ToString("N"));
-        var databasePath = Path.Combine(rootDirectory, "filedb.db");
-        var fileSystem = new MockFileSystem();
-        fileSystem.AddDirectory(rootDirectory);
-        fileSystem.AddFile(databasePath, new MockFileData(""));
+        var fileBackup = A.Fake<IFileBackup>();
+        var recentBackup = new BackupFile("/files/filedb_backup_2026-08-13T000000.db", DateTime.Now.AddDays(-1));
+        A.CallTo(() => fileBackup.ListAvailableBackupFiles(DatabasePath)).Returns([recentBackup]);
 
-        var timestamp = DateTime.Now.AddDays(-1);
-        fileSystem.AddFile(NotifierTestHelpers.CreateBackupFilePath(databasePath, timestamp), new MockFileData(""));
-
-        var notifier = new BackupNotifier(new FileBackup(fileSystem, databasePath), afterDays: 30);
+        var notifier = new BackupNotifier(fileBackup, DatabasePath, afterDays: 30);
 
         var result = notifier.Run().ToList();
 

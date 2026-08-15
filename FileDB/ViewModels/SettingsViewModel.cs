@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO.Abstractions;
@@ -318,13 +318,15 @@ public partial class SettingsViewModel : ObservableObject
     private readonly IConfigUpdater configUpdater;
     private readonly IDialogs dialogs;
     private readonly IFileSystem fileSystem;
+    private readonly IFileBackup fileBackup;
 
-    public SettingsViewModel(IConfigProvider configProvider, IConfigUpdater configUpdater, IDialogs dialogs, IFileSystem fileSystem, IFilesWritePermissionChecker filesWritePermissionChecker)
+    public SettingsViewModel(IConfigProvider configProvider, IConfigUpdater configUpdater, IDialogs dialogs, IFileSystem fileSystem, IFilesWritePermissionChecker filesWritePermissionChecker, IFileBackup fileBackup)
     {
         this.configProvider = configProvider;
         this.configUpdater = configUpdater;
         this.dialogs = dialogs;
         this.fileSystem = fileSystem;
+        this.fileBackup = fileBackup;
 
         HasWritePermission = filesWritePermissionChecker.HasWritePermission;
 
@@ -414,7 +416,7 @@ public partial class SettingsViewModel : ObservableObject
         try
         {
             var configPath = configProvider.FilePaths.ConfigPath;
-            new FileBackup(fileSystem, configPath).CreateBackup();
+            fileBackup.CreateBackup(configPath);
             var json = configToSave.ToJson();
             fileSystem.File.WriteAllText(configPath, json);
 
@@ -428,3 +430,4 @@ public partial class SettingsViewModel : ObservableObject
         }
     }
 }
+

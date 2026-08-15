@@ -373,7 +373,9 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
             var files = new FileModel() { Id = default, Path = internalPath, Description = description, Datetime = fileMetadata.Datetime, Position = fileMetadata.Position, Orientation = fileMetadata.Orientation };
             var sql = "insert into [files] (Path, Description, Datetime, Position, Orientation) values (@Path, @Description, @Datetime, @Position, @Orientation)";
             connection.Execute(sql, files);
-            return (int)connection.ExecuteScalar<long>("select last_insert_rowid()");
+            var newId = (int)connection.ExecuteScalar<long>("select last_insert_rowid()");
+            logger.LogInformation("File imported: Id={Id} Path={Path}", newId, internalPath);
+            return newId;
         }
         catch (SQLiteException e)
         {
@@ -391,6 +393,7 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
             using var connection = SqLiteDatabaseCreator.CreateConnection(database);
             var sql = "update [files] set Datetime = @datetime, Position = @position, Orientation = @orientation where Id = @id";
             connection.Execute(sql, new { datetime = fileMetadata.Datetime, position = fileMetadata.Position, orientation = fileMetadata.Orientation, id });
+            logger.LogInformation("File updated (metadata): Id={Id}", id);
         }
         catch (SQLiteException e)
         {
@@ -410,6 +413,7 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
             using var connection = SqLiteDatabaseCreator.CreateConnection(database);
             var sql = "update [files] set Description = @description where Id = @id";
             connection.Execute(sql, new { description, id });
+            logger.LogInformation("File updated (description): Id={Id}", id);
         }
         catch (SQLiteException e)
         {
@@ -429,6 +433,7 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
             using var connection = SqLiteDatabaseCreator.CreateConnection(database);
             var sql = "update [files] set Datetime = @datetime where Id = @id";
             connection.Execute(sql, new { datetime, id });
+            logger.LogInformation("File updated (datetime): Id={Id}", id);
         }
         catch (SQLiteException e)
         {
@@ -448,6 +453,7 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
             using var connection = SqLiteDatabaseCreator.CreateConnection(database);
             var sql = "update [files] set Orientation = @orientation where Id = @id";
             connection.Execute(sql, new { orientation, id });
+            logger.LogInformation("File updated (orientation): Id={Id}", id);
         }
         catch (SQLiteException e)
         {
@@ -457,9 +463,11 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
 
     public void DeleteFile(int id)
     {
+        var file = GetFileById(id);
         using var connection = SqLiteDatabaseCreator.CreateConnection(database);
         var sql = "delete from [files] where Id = @id";
         connection.Execute(sql, new { id });
+        logger.LogInformation("File removed: Id={Id} Path={Path}", id, file.Path);
     }
 
     public void InsertFilePerson(int fileId, int personId)
@@ -603,7 +611,9 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
             connection.Open();
             var sql = "insert into [persons] (ShortName, FullName, Description, DateOfBirth, Deceased, ProfileFileId, Sex) values (@ShortName, @FullName, @Description, @DateOfBirth, @Deceased, @ProfileFileId, @Sex)";
             connection.Execute(sql, person);
-            return (int)connection.ExecuteScalar<long>("select last_insert_rowid()");
+            var newId = (int)connection.ExecuteScalar<long>("select last_insert_rowid()");
+            logger.LogInformation("Person inserted: Id={Id} ShortName={ShortName}", newId, person.ShortName);
+            return newId;
         }
         catch (SQLiteException e)
         {
@@ -625,6 +635,7 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
             using var connection = SqLiteDatabaseCreator.CreateConnection(database);
             var sql = "update [persons] set ShortName = @ShortName, FullName = @FullName, Description = @Description, DateOfBirth = @DateOfBirth, Deceased = @Deceased, ProfileFileId = @ProfileFileId, Sex = @Sex where Id = @Id";
             connection.Execute(sql, person);
+            logger.LogInformation("Person updated: Id={Id} ShortName={ShortName}", person.Id, person.ShortName);
         }
         catch (SQLiteException e)
         {
@@ -637,6 +648,7 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
         using var connection = SqLiteDatabaseCreator.CreateConnection(database);
         var sql = "delete from [persons] where Id = @id";
         connection.Execute(sql, new { id });
+        logger.LogInformation("Person deleted: Id={Id}", id);
     }
 
     #endregion
@@ -688,7 +700,9 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
             connection.Open();
             var sql = "insert into [locations] (Name, Description, Position) values (@Name, @Description, @Position)";
             connection.Execute(sql, location);
-            return (int)connection.ExecuteScalar<long>("select last_insert_rowid()");
+            var newId = (int)connection.ExecuteScalar<long>("select last_insert_rowid()");
+            logger.LogInformation("Location inserted: Id={Id} Name={Name}", newId, location.Name);
+            return newId;
         }
         catch (SQLiteException e)
         {
@@ -711,6 +725,7 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
             using var connection = SqLiteDatabaseCreator.CreateConnection(database);
             var sql = "update [locations] set Name = @Name, Description = @Description, Position = @Position where Id = @Id";
             connection.Execute(sql, location);
+            logger.LogInformation("Location updated: Id={Id} Name={Name}", location.Id, location.Name);
         }
         catch (SQLiteException e)
         {
@@ -723,6 +738,7 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
         using var connection = SqLiteDatabaseCreator.CreateConnection(database);
         var sql = "delete from [locations] where Id = @id";
         connection.Execute(sql, new { id });
+        logger.LogInformation("Location deleted: Id={Id}", id);
     }
 
     #endregion
@@ -774,7 +790,9 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
             connection.Open();
             var sql = "insert into [tags] (Name) values (@Name)";
             connection.Execute(sql, tag);
-            return (int)connection.ExecuteScalar<long>("select last_insert_rowid()");
+            var newId = (int)connection.ExecuteScalar<long>("select last_insert_rowid()");
+            logger.LogInformation("Tag inserted: Id={Id} Name={Name}", newId, tag.Name);
+            return newId;
         }
         catch (SQLiteException e)
         {
@@ -796,6 +814,7 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
             using var connection = SqLiteDatabaseCreator.CreateConnection(database);
             var sql = "update [tags] set Name = @Name where Id = @Id";
             connection.Execute(sql, tag);
+            logger.LogInformation("Tag updated: Id={Id} Name={Name}", tag.Id, tag.Name);
         }
         catch (SQLiteException e)
         {
@@ -808,6 +827,7 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
         using var connection = SqLiteDatabaseCreator.CreateConnection(database);
         var sql = "delete from [tags] where Id = @id";
         connection.Execute(sql, new { id });
+        logger.LogInformation("Tag deleted: Id={Id}", id);
     }
 
     #endregion

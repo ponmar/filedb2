@@ -22,10 +22,11 @@ public class ToolsViewModelTests
     private readonly INotificationManagement notificationManagement = A.Fake<INotificationManagement>();
     private readonly IDatabaseCreator databaseCreator = A.Fake<IDatabaseCreator>();
     private readonly IConfigUpdater configUpdater = A.Fake<IConfigUpdater>();
+    private readonly IFileBackup fileBackup = A.Fake<IFileBackup>();
 
     private ToolsViewModel CreateViewModel()
     {
-        return new ToolsViewModel(configProvider, dbAccessProvider, filesystemAccessProvider, dialogs, fileSystem, clipboardService, notificationManagement, configUpdater, databaseCreator);
+        return new ToolsViewModel(configProvider, dbAccessProvider, filesystemAccessProvider, dialogs, fileSystem, clipboardService, notificationManagement, configUpdater, databaseCreator, fileBackup);
     }
 
     private void SetupFilePaths(string filesRootDir = "/files", string dbPath = "/db.db")
@@ -109,7 +110,7 @@ public class ToolsViewModelTests
     {
         SetupFilePaths(dbPath: "/db.db");
         SetupProgressDialogToExecuteWork();
-        A.CallTo(() => fileSystem.File.Exists("/db.db")).Returns(false); // source doesn't exist → IOException
+        A.CallTo(() => fileBackup.CreateBackup(A<string>._)).Throws(new IOException("File to backup does not exist: /db.db"));
 
         var viewModel = CreateViewModel();
         viewModel.CreateDatabaseBackupCommand.Execute(null);
@@ -362,3 +363,6 @@ public class ToolsViewModelTests
         A.CallTo(() => dialogs.ShowInfoDialogAsync(A<string>._)).MustHaveHappened();
     }
 }
+
+
+

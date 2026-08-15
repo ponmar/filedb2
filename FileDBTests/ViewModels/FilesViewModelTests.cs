@@ -4,6 +4,7 @@ using FileDB.Model;
 using FileDB.ViewModels;
 using FileDBInterface.DatabaseAccess;
 using FileDBInterface.FilesystemAccess;
+using FileDB.Services;
 using System.IO.Abstractions;
 using Xunit;
 
@@ -32,7 +33,7 @@ public class FilesViewModelTests
     [Fact]
     public void Constructor_UsesConfiguredRootDirectory()
     {
-        var viewModel = new FilesViewModel(configProvider, dbAccessProvider, filesystemAccessProvider, dialogs, fileSystem, criteriaViewModel);
+        var viewModel = new FilesViewModel(configProvider, dbAccessProvider, filesystemAccessProvider, dialogs, fileSystem, criteriaViewModel, A.Fake<IFileBackup>());
 
         Assert.Equal("/files", viewModel.SubdirToScan);
         Assert.True(viewModel.FindFileMetadata);
@@ -41,7 +42,7 @@ public class FilesViewModelTests
     [Fact]
     public void SelectAllAndSelectNoneCommands_MoveFilesBetweenCollections()
     {
-        var viewModel = new FilesViewModel(configProvider, dbAccessProvider, filesystemAccessProvider, dialogs, fileSystem, criteriaViewModel);
+        var viewModel = new FilesViewModel(configProvider, dbAccessProvider, filesystemAccessProvider, dialogs, fileSystem, criteriaViewModel, A.Fake<IFileBackup>());
         viewModel.NewFiles.Add(new NewFile("a.jpg", "2025-01-01"));
         viewModel.NewFiles.Add(new NewFile("b.jpg", "2025-01-02"));
 
@@ -59,7 +60,7 @@ public class FilesViewModelTests
     {
         A.CallTo(() => dialogs.ShowBrowseExistingSubDirectoryDialogAsync(A<string>._, A<string>._)).Returns("subdir");
 
-        var viewModel = new FilesViewModel(configProvider, dbAccessProvider, filesystemAccessProvider, dialogs, fileSystem, criteriaViewModel);
+        var viewModel = new FilesViewModel(configProvider, dbAccessProvider, filesystemAccessProvider, dialogs, fileSystem, criteriaViewModel, A.Fake<IFileBackup>());
 
         await viewModel.BrowseSubDirectoryCommand.ExecuteAsync(null);
 
@@ -71,7 +72,7 @@ public class FilesViewModelTests
     {
         A.CallTo(() => dialogs.ShowBrowseExistingSubDirectoryDialogAsync(A<string>._, A<string>._)).Returns((string?)null);
 
-        var viewModel = new FilesViewModel(configProvider, dbAccessProvider, filesystemAccessProvider, dialogs, fileSystem, criteriaViewModel);
+        var viewModel = new FilesViewModel(configProvider, dbAccessProvider, filesystemAccessProvider, dialogs, fileSystem, criteriaViewModel, A.Fake<IFileBackup>());
 
         await viewModel.BrowseSubDirectoryCommand.ExecuteAsync(null);
 
@@ -81,7 +82,7 @@ public class FilesViewModelTests
     [Fact]
     public async Task ScanNewFilesInDirectoryAsync_EmptyDirectory_ShowsError()
     {
-        var viewModel = new FilesViewModel(configProvider, dbAccessProvider, filesystemAccessProvider, dialogs, fileSystem, criteriaViewModel)
+        var viewModel = new FilesViewModel(configProvider, dbAccessProvider, filesystemAccessProvider, dialogs, fileSystem, criteriaViewModel, A.Fake<IFileBackup>())
         {
             SubdirToScan = string.Empty,
         };
@@ -95,7 +96,7 @@ public class FilesViewModelTests
     public async Task ScanNewFilesInDirectoryAsync_DirectoryDoesNotExist_ShowsError()
     {
         A.CallTo(() => fileSystem.Directory.Exists(A<string>._)).Returns(false);
-        var viewModel = new FilesViewModel(configProvider, dbAccessProvider, filesystemAccessProvider, dialogs, fileSystem, criteriaViewModel)
+        var viewModel = new FilesViewModel(configProvider, dbAccessProvider, filesystemAccessProvider, dialogs, fileSystem, criteriaViewModel, A.Fake<IFileBackup>())
         {
             SubdirToScan = "/files/subdir",
         };
@@ -109,7 +110,7 @@ public class FilesViewModelTests
     public async Task ScanNewFilesInDirectoryAsync_DirectoryOutsideRoot_ShowsError()
     {
         A.CallTo(() => fileSystem.Directory.Exists(A<string>._)).Returns(true);
-        var viewModel = new FilesViewModel(configProvider, dbAccessProvider, filesystemAccessProvider, dialogs, fileSystem, criteriaViewModel)
+        var viewModel = new FilesViewModel(configProvider, dbAccessProvider, filesystemAccessProvider, dialogs, fileSystem, criteriaViewModel, A.Fake<IFileBackup>())
         {
             SubdirToScan = @"C:\other",
         };
@@ -123,7 +124,7 @@ public class FilesViewModelTests
     public async Task ScanNewFilesAsync_UserDeclines_DoesNothing()
     {
         A.CallTo(() => dialogs.ShowConfirmDialogAsync(A<string>._)).Returns(false);
-        var viewModel = new FilesViewModel(configProvider, dbAccessProvider, filesystemAccessProvider, dialogs, fileSystem, criteriaViewModel);
+        var viewModel = new FilesViewModel(configProvider, dbAccessProvider, filesystemAccessProvider, dialogs, fileSystem, criteriaViewModel, A.Fake<IFileBackup>());
 
         await viewModel.ScanNewFilesCommand.ExecuteAsync(null);
 
@@ -134,7 +135,7 @@ public class FilesViewModelTests
     public async Task ImportNewFilesAsync_UserDeclines_DoesNothing()
     {
         A.CallTo(() => dialogs.ShowConfirmDialogAsync(A<string>._)).Returns(false);
-        var viewModel = new FilesViewModel(configProvider, dbAccessProvider, filesystemAccessProvider, dialogs, fileSystem, criteriaViewModel);
+        var viewModel = new FilesViewModel(configProvider, dbAccessProvider, filesystemAccessProvider, dialogs, fileSystem, criteriaViewModel, A.Fake<IFileBackup>());
 
         await viewModel.ImportNewFilesCommand.ExecuteAsync(null);
 
@@ -144,7 +145,7 @@ public class FilesViewModelTests
     [Fact]
     public async Task RemoveFileListMethod_InvalidInput_ShowsError()
     {
-        var viewModel = new FilesViewModel(configProvider, dbAccessProvider, filesystemAccessProvider, dialogs, fileSystem, criteriaViewModel)
+        var viewModel = new FilesViewModel(configProvider, dbAccessProvider, filesystemAccessProvider, dialogs, fileSystem, criteriaViewModel, A.Fake<IFileBackup>())
         {
             RemoveFileList = "abc",
         };
@@ -158,7 +159,7 @@ public class FilesViewModelTests
     public async Task RemoveFileListMethod_ValidInput_UserDeclines_DoesNotDelete()
     {
         A.CallTo(() => dialogs.ShowConfirmDialogAsync(A<string>._)).Returns(false);
-        var viewModel = new FilesViewModel(configProvider, dbAccessProvider, filesystemAccessProvider, dialogs, fileSystem, criteriaViewModel)
+        var viewModel = new FilesViewModel(configProvider, dbAccessProvider, filesystemAccessProvider, dialogs, fileSystem, criteriaViewModel, A.Fake<IFileBackup>())
         {
             RemoveFileList = "1;2",
         };
@@ -168,3 +169,8 @@ public class FilesViewModelTests
         A.CallTo(() => dbAccessProvider.DbAccess.DeleteFile(A<int>._)).MustNotHaveHappened();
     }
 }
+
+
+
+
+

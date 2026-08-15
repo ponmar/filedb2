@@ -1,4 +1,4 @@
-﻿using FileDB.Configuration;
+using FileDB.Configuration;
 using FileDB.Infrastructure;
 using FileDB.Model;
 using FileDB.Services;
@@ -45,9 +45,8 @@ public class NotifierFactory : INotifierFactory
 
         if (config.BackupReminder)
         {
-            var fileSystem = ServiceLocator.Resolve<IFileSystem>();
             var configProvider = ServiceLocator.Resolve<IConfigProvider>();
-            notifiers.Add(new BackupNotifier(new FileBackup(fileSystem, configProvider.FilePaths.DatabasePath), 30));
+            notifiers.Add(new BackupNotifier(ServiceLocator.Resolve<IFileBackup>(), configProvider.FilePaths.DatabasePath, 30));
         }
 
         notifiers.Add(new MissingDatabaseNotifier(
@@ -59,3 +58,4 @@ public class NotifierFactory : INotifierFactory
         return notifiers;
     }
 }
+

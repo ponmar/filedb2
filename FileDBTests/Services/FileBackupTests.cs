@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging.Abstractions;
 using System.IO.Abstractions.TestingHelpers;
 using FileDB.Services;
 using Xunit;
@@ -21,9 +22,9 @@ public class FileBackupTests
         fileSystem.AddFile(backup2, new MockFileData(""));
         fileSystem.AddFile(Path.Combine(rootDirectory, "collection_backup_invalid.db"), new MockFileData(""));
 
-        var fileBackup = new FileBackup(fileSystem, databasePath);
+        var fileBackup = new FileBackup(fileSystem, NullLoggerFactory.Instance);
 
-        var result = fileBackup.ListAvailableBackupFiles().ToList();
+        var result = fileBackup.ListAvailableBackupFiles(databasePath).ToList();
 
         Assert.Equal(2, result.Count);
         Assert.Contains(result, x => x.Filename == backup1 && x.Timestamp == new DateTime(2026, 8, 5, 10, 20, 30));
@@ -39,8 +40,8 @@ public class FileBackupTests
         fileSystem.AddDirectory(rootDirectory);
         fileSystem.AddFile(databasePath, new MockFileData("db"));
 
-        var fileBackup = new FileBackup(fileSystem, databasePath);
-        fileBackup.CreateBackup();
+        var fileBackup = new FileBackup(fileSystem, NullLoggerFactory.Instance);
+        fileBackup.CreateBackup(databasePath);
 
         var files = fileSystem.Directory.GetFiles(rootDirectory);
         var backupFile = Assert.Single(files, x => x.Contains("_backup_"));
@@ -55,9 +56,9 @@ public class FileBackupTests
         var fileSystem = new MockFileSystem();
         fileSystem.AddDirectory(rootDirectory);
 
-        var fileBackup = new FileBackup(fileSystem, databasePath);
+        var fileBackup = new FileBackup(fileSystem, NullLoggerFactory.Instance);
 
-        Assert.Throws<IOException>(() => fileBackup.CreateBackup());
+        Assert.Throws<IOException>(() => fileBackup.CreateBackup(databasePath));
     }
 
     private static string CreateBackupFilePath(string databasePath, DateTime timestamp)

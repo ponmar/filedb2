@@ -143,17 +143,20 @@ public partial class App : Application
             {
                 try
                 {
-                    new FileBackup(fileSystem, applicationFilePaths.DatabasePath).CreateBackup();
+                    ServiceLocator.Resolve<IFileBackup>().CreateBackup(applicationFilePaths.DatabasePath);
 
                     var results = dbAccess.Migrate();
+                    var migrationLogger = loggerFactory.CreateLogger<App>();
                     foreach (var dbMigration in results)
                     {
                         if (dbMigration.Exception is null)
                         {
+                            migrationLogger.LogInformation("Database migrated: {FromVersion} -> {ToVersion}", dbMigration.FromVersion, dbMigration.ToVersion);
                             notifications.Add(new DatabaseMigrationNotification(dbMigration.FromVersion, dbMigration.ToVersion));
                         }
                         else
                         {
+                            migrationLogger.LogWarning(dbMigration.Exception, "Database migration failed: {FromVersion} -> {ToVersion}", dbMigration.FromVersion, dbMigration.ToVersion);
                             notifications.Add(new DatabaseMigrationErrorNotification(dbMigration.FromVersion, dbMigration.ToVersion, dbMigration.Exception.Message));
                         }
                     }

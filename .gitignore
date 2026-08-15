@@ -461,3 +461,7 @@ $RECYCLE.BIN/
 
 # Inno Setup installer output
 Installer/Output/*
+
+# VS Code
+.vscode/launch.json
+.vscode/tasks.json

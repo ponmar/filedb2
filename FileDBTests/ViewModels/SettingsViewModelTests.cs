@@ -54,7 +54,7 @@ public class SettingsViewModelTests
     [Fact]
     public void Constructor_LoadsConfigurationValues()
     {
-        var viewModel = new SettingsViewModel(configProvider, configUpdater, dialogs, fileSystem, filesWritePermissionChecker);
+        var viewModel = new SettingsViewModel(configProvider, configUpdater, dialogs, fileSystem, filesWritePermissionChecker, A.Fake<IFileBackup>());
 
         Assert.Equal(3, viewModel.SlideshowDelay);
         Assert.Equal(Theme.Dark, viewModel.Theme);
@@ -65,7 +65,7 @@ public class SettingsViewModelTests
     [Fact]
     public void SetDefaultThemeCommand_ResetsTheme()
     {
-        var viewModel = new SettingsViewModel(configProvider, configUpdater, dialogs, fileSystem, filesWritePermissionChecker);
+        var viewModel = new SettingsViewModel(configProvider, configUpdater, dialogs, fileSystem, filesWritePermissionChecker, A.Fake<IFileBackup>());
         viewModel.Theme = Theme.Light;
 
         viewModel.SetDefaultThemeCommand.Execute(null);
@@ -76,7 +76,7 @@ public class SettingsViewModelTests
     [Fact]
     public async Task SaveConfigurationAsync_ValidationFails_ShowsError()
     {
-        var viewModel = new SettingsViewModel(configProvider, configUpdater, dialogs, fileSystem, filesWritePermissionChecker)
+        var viewModel = new SettingsViewModel(configProvider, configUpdater, dialogs, fileSystem, filesWritePermissionChecker, A.Fake<IFileBackup>())
         {
             SlideshowDelay = 0,
         };
@@ -95,7 +95,7 @@ public class SettingsViewModelTests
         A.CallTo(() => fileSystem.File.Exists(configPath)).Returns(true);
         A.CallTo(() => dialogs.ShowConfirmDialogAsync(A<string>._)).Returns(false);
 
-        var viewModel = new SettingsViewModel(configProvider, configUpdater, dialogs, fileSystem, filesWritePermissionChecker)
+        var viewModel = new SettingsViewModel(configProvider, configUpdater, dialogs, fileSystem, filesWritePermissionChecker, A.Fake<IFileBackup>())
         {
             IsDirty = true,
         };
@@ -111,10 +111,14 @@ public class SettingsViewModelTests
     {
         var recorder = new EventRecorder();
         recorder.Record<SetTheme>();
-        var viewModel = new SettingsViewModel(configProvider, configUpdater, dialogs, fileSystem, filesWritePermissionChecker);
+        var viewModel = new SettingsViewModel(configProvider, configUpdater, dialogs, fileSystem, filesWritePermissionChecker, A.Fake<IFileBackup>());
 
         viewModel.Theme = Theme.Light;
 
         Assert.Equal(2, recorder.GetRecording<SetTheme>().Count());
     }
 }
+
+
+
+

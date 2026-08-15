@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
@@ -55,8 +55,9 @@ public partial class FilesViewModel : ObservableValidator
     private readonly IDialogs dialogs;
     private readonly IFileSystem fileSystem;
     private readonly ICriteriaViewModel criteriaViewModel;
+    private readonly IFileBackup fileBackup;
 
-    public FilesViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IDialogs dialogs, IFileSystem fileSystem, ICriteriaViewModel criteriaViewModel)
+    public FilesViewModel(IConfigProvider configProvider, IDatabaseAccessProvider dbAccessProvider, IFilesystemAccessProvider filesystemAccessProvider, IDialogs dialogs, IFileSystem fileSystem, ICriteriaViewModel criteriaViewModel, IFileBackup fileBackup)
     {
         this.configProvider = configProvider;
         this.dbAccessProvider = dbAccessProvider;
@@ -64,6 +65,7 @@ public partial class FilesViewModel : ObservableValidator
         this.dialogs = dialogs;
         this.fileSystem = fileSystem;
         this.criteriaViewModel = criteriaViewModel;
+        this.fileBackup = fileBackup;
         SubdirToScan = configProvider.FilePaths.FilesRootDir;
 
         this.RegisterForEvent<ConfigUpdated>((x) =>
@@ -180,7 +182,7 @@ public partial class FilesViewModel : ObservableValidator
 
         try
         {
-            new FileBackup(fileSystem, configProvider.FilePaths.DatabasePath).CreateBackup();
+            fileBackup.CreateBackup(configProvider.FilePaths.DatabasePath);
         }
         catch (Exception e)
         {
@@ -280,3 +282,4 @@ public partial class FilesViewModel : ObservableValidator
         return dateModified.ToDateAndTime();
     }
 }
+

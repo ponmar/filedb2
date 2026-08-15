@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions;
+using Microsoft.Extensions.Logging;
 
 namespace FileDB.Services;
 
@@ -20,20 +21,26 @@ public class BackupFile
     }
 }
 
-public class FileBackup
+public interface IFileBackup
+{
+    List<BackupFile> ListAvailableBackupFiles(string filePath);
+    void CreateBackup(string filePath);
+}
+
+public class FileBackup : IFileBackup
 {
     private const string BackupFileTimestampFormat = "yyyy-MM-ddTHHmmss";
 
     private readonly IFileSystem fileSystem;
-    private readonly string filePath;
+    private readonly ILogger<FileBackup> logger;
 
-    public FileBackup(IFileSystem fileSystem, string filePath)
+    public FileBackup(IFileSystem fileSystem, ILoggerFactory loggerFactory)
     {
         this.fileSystem = fileSystem;
-        this.filePath = filePath;
+        this.logger = loggerFactory.CreateLogger<FileBackup>();
     }
 
-    public List<BackupFile> ListAvailableBackupFiles()
+    public List<BackupFile> ListAvailableBackupFiles(string filePath)
     {
         var backupFiles = new List<BackupFile>();
 
@@ -43,16 +50,16 @@ public class FileBackup
 
         if (fileSystem.Directory.Exists(backupDir))
         {
-            foreach (var filePath in fileSystem.Directory.GetFiles(backupDir, backupFilesPattern))
+            foreach (var file in fileSystem.Directory.GetFiles(backupDir, backupFilesPattern))
             {
-                var filenameParts = filePath.Split("_");
+                var filenameParts = file.Split("_");
                 if (filenameParts.Length >= 2)
                 {
                     var timestampString = filenameParts[^1].Replace(fileExtension, "");
                     try
                     {
                         var timestamp = DateTime.ParseExact(timestampString, BackupFileTimestampFormat, null);
-                        backupFiles.Add(new BackupFile(filePath, timestamp));
+                        backupFiles.Add(new BackupFile(file, timestamp));
                     }
                     catch (FormatException)
                     {
@@ -64,7 +71,7 @@ public class FileBackup
         return backupFiles;
     }
 
-    public void CreateBackup()
+    public void CreateBackup(string filePath)
     {
         if (!fileSystem.File.Exists(filePath))
         {
@@ -82,5 +89,6 @@ public class FileBackup
         }
 
         fileSystem.File.Copy(filePath, backupFilePath);
+        logger.LogInformation("Database backup created: {BackupFilePath}", backupFilePath);
     }
 }
