@@ -170,6 +170,10 @@ public partial class App : Application
             var filesystemAccess = new FilesystemAccess(fileSystem, loggerFactory, filesRootDirectory);
 
             var configUpdater = ServiceLocator.Resolve<IConfigUpdater>();
+
+            // InitConfig must be called before resolving FilesWritePermissionChecker, because
+            // the checker's constructor accesses IFilesystemAccessProvider.FilesystemAccess
+            // which is set by InitConfig.
             configUpdater.InitConfig(applicationFilePaths, config, dbAccess, filesystemAccess);
 
             if (!config.ReadOnly && !ServiceLocator.Resolve<IFilesWritePermissionChecker>().HasWritePermission)

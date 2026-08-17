@@ -49,6 +49,11 @@ public partial class FilesViewModel : ObservableValidator
     [ObservableProperty]
     public partial bool FindFileMetadata { get; set; } = true;
 
+    [ObservableProperty]
+    public partial bool ReadOnly { get; set; }
+
+    public bool CanImportNewFiles => !ReadOnly && SelectedFiles.Count > 0;
+
     private readonly IConfigProvider configProvider;
     private readonly IDatabaseAccessProvider dbAccessProvider;
     private readonly IFilesystemAccessProvider filesystemAccessProvider;
@@ -67,13 +72,21 @@ public partial class FilesViewModel : ObservableValidator
         this.criteriaViewModel = criteriaViewModel;
         this.fileBackup = fileBackup;
         SubdirToScan = configProvider.FilePaths.FilesRootDir;
+        ReadOnly = configProvider.Config.ReadOnly;
+        SelectedFiles.CollectionChanged += (_, _) => OnPropertyChanged(nameof(CanImportNewFiles));
 
         this.RegisterForEvent<ConfigUpdated>((x) =>
         {
             SubdirToScan = configProvider.FilePaths.FilesRootDir;
+            ReadOnly = configProvider.Config.ReadOnly;
         });
 
         ValidateAllProperties();
+    }
+
+    partial void OnReadOnlyChanged(bool value)
+    {
+        OnPropertyChanged(nameof(CanImportNewFiles));
     }
 
     [RelayCommand]
@@ -282,4 +295,3 @@ public partial class FilesViewModel : ObservableValidator
         return dateModified.ToDateAndTime();
     }
 }
-

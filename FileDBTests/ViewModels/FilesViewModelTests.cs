@@ -37,6 +37,24 @@ public class FilesViewModelTests
 
         Assert.Equal("/files", viewModel.SubdirToScan);
         Assert.True(viewModel.FindFileMetadata);
+        Assert.False(viewModel.CanImportNewFiles);
+    }
+
+    [Fact]
+    public void CanImportNewFiles_TracksSelectionAndReadonlyState()
+    {
+        var viewModel = new FilesViewModel(configProvider, dbAccessProvider, filesystemAccessProvider, dialogs, fileSystem, criteriaViewModel, A.Fake<IFileBackup>());
+        viewModel.NewFiles.Add(new NewFile("a.jpg", "2025-01-01"));
+
+        Assert.False(viewModel.CanImportNewFiles);
+
+        viewModel.SelectedFiles.Add(viewModel.NewFiles[0]);
+
+        Assert.True(viewModel.CanImportNewFiles);
+
+        viewModel.ReadOnly = true;
+
+        Assert.False(viewModel.CanImportNewFiles);
     }
 
     [Fact]
@@ -169,7 +187,6 @@ public class FilesViewModelTests
         A.CallTo(() => dbAccessProvider.DbAccess.DeleteFile(A<int>._)).MustNotHaveHappened();
     }
 }
-
 
 
 

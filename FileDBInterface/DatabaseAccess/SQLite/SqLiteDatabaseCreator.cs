@@ -32,6 +32,14 @@ public class SqLiteDatabaseCreator : IDatabaseCreator
         return new SQLiteConnection(connectionString);
     }
 
+    internal static IDbConnection CreateReadOnlyConnection(string database)
+    {
+        var connectionString = database.Contains('=')
+            ? database
+            : $"Data Source={database};Mode=ReadOnly;foreign keys = true";
+        return new SQLiteConnection(connectionString);
+    }
+
     public const string DatabaseCreationSql = @"
 create table files(
     Id integer primary key autoincrement not null,

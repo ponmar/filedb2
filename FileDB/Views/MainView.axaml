@@ -27,7 +27,7 @@
 				<views:SearchView Margin="0 0 10 10"/>
 			</TabItem>
 
-			<TabItem HorizontalContentAlignment="Center" IsVisible="{Binding !ReadOnly}">
+			<TabItem HorizontalContentAlignment="Center">
 				<TabItem.Header>
 					<TextBlock Classes="TabIcon" Text="&#x1F4C2;" ToolTip.Tip="{x:Static lang:Strings.FilesTitle}"/>
 				</TabItem.Header>
@@ -76,7 +76,7 @@
 				<views:SettingsView Margin="0 0 10 10"/>
 			</TabItem>
 
-			<TabItem HorizontalContentAlignment="Center" IsVisible="{Binding !ReadOnly}">
+			<TabItem HorizontalContentAlignment="Center">
 				<TabItem.Header>
 					<TextBlock Classes="TabIcon" Text="&#x2692;" ToolTip.Tip="{x:Static lang:Strings.ToolsTitle}"/>
 				</TabItem.Header>

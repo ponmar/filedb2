@@ -48,13 +48,18 @@ public class Model : IConfigProvider, IConfigUpdater, IDatabaseAccessProvider, I
     {
         FilePaths = filePaths;
         Config = config;
-        DbAccess = dbAccess;
+        DbAccess = config.ReadOnly ? new ReadOnlyDatabaseAccess(dbAccess) : dbAccess;
         FilesystemAccess = filesystemAccess;
         Messenger.Send<ConfigUpdated>();
     }
 
     public void UpdateConfig(Config config)
     {
+        if (Config.ReadOnly != config.ReadOnly)
+        {
+            var innerAccess = DbAccess is ReadOnlyDatabaseAccess ro ? ro.Inner : DbAccess;
+            DbAccess = config.ReadOnly ? new ReadOnlyDatabaseAccess(innerAccess) : innerAccess;
+        }
         Config = config;
         Messenger.Send<ConfigUpdated>();
     }

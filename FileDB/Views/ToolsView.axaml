@@ -13,8 +13,8 @@
         <TextBlock DockPanel.Dock="Top" Text="{x:Static lang:Strings.ToolsTitle}" Classes="PageHeader"/>
         <ScrollViewer>
             <StackPanel Orientation="Vertical">
-                <TextBlock Classes="PageSubHeader" Text="{x:Static lang:Strings.ToolsCreateDatabaseTitle}"/>
-                <Border Classes="BorderGroup">
+                <TextBlock Classes="PageSubHeader" Text="{x:Static lang:Strings.ToolsCreateDatabaseTitle}" IsVisible="{Binding !ReadOnly}"/>
+                <Border Classes="BorderGroup" IsVisible="{Binding !ReadOnly}">
                     <StackPanel Orientation="Vertical">
                         <TextBlock Classes="PageTextBlock" TextWrapping="Wrap" Text="{x:Static lang:Strings.ToolsCreateDatabaseDescription}"/>
                         <StackPanel Orientation="Vertical">
@@ -23,8 +23,8 @@
                     </StackPanel>
                 </Border>
 
-                <TextBlock Classes="PageSubHeader" Text="{x:Static lang:Strings.ToolsDatabaseBackupTitle}"/>
-                <Border Classes="BorderGroup">
+                <TextBlock Classes="PageSubHeader" Text="{x:Static lang:Strings.ToolsDatabaseBackupTitle}" IsVisible="{Binding !ReadOnly}"/>
+                <Border Classes="BorderGroup" IsVisible="{Binding !ReadOnly}">
                     <StackPanel Orientation="Vertical">
                         <TextBlock Classes="PageTextBlock" TextWrapping="Wrap" Text="This tool can be used to make a database backup within the files collection directory."/>
                         <Button Classes="Normal" Margin="10" Command="{Binding CreateDatabaseBackupCommand}" HorizontalAlignment="Left" Content="{x:Static lang:Strings.ToolsRunButton}"/>
@@ -49,8 +49,8 @@
                     </StackPanel>
                 </Border>
 
-                <TextBlock Classes="PageSubHeader" Text="{x:Static lang:Strings.ToolsDatabaseExportTitle}"/>
-                <Border Classes="BorderGroup">
+                <TextBlock Classes="PageSubHeader" Text="{x:Static lang:Strings.ToolsDatabaseExportTitle}" IsVisible="{Binding !ReadOnly}"/>
+                <Border Classes="BorderGroup" IsVisible="{Binding !ReadOnly}">
                     <StackPanel Orientation="Vertical">
                         <TextBlock Classes="PageTextBlock" TextWrapping="Wrap" Text="{x:Static lang:Strings.ToolsDatabaseExportInfo}"/>
                         <StackPanel Orientation="Horizontal">
@@ -105,8 +105,8 @@
                 </Border>
 
                 <!-- Reload EXIF for multiple files -->
-                <TextBlock Classes="PageSubHeader" Text="Reload EXIF for files"/>
-                <Border Classes="BorderGroup">
+                <TextBlock Classes="PageSubHeader" Text="Reload EXIF for files" IsVisible="{Binding !ReadOnly}"/>
+                <Border Classes="BorderGroup" IsVisible="{Binding !ReadOnly}">
                     <StackPanel Orientation="Vertical">
                         <TextBlock Classes="PageTextBlock" TextWrapping="Wrap" Text="This tool can be used to reload EXIF metadata (date/time, GPS position and image orientation) for many files."/>
                         <StackPanel Orientation="Horizontal" Margin="10">

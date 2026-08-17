@@ -12,7 +12,7 @@
 		<ScrollViewer>
 			<StackPanel Orientation="Vertical">
 				<TextBlock Text="{x:Static lang:Strings.FilesAddMetaDataTitle}" Classes="PageSubHeader"/>
-				<Border Classes="BorderGroup">
+					<Border Classes="BorderGroup">
 					<StackPanel Orientation="Vertical">
 						<TextBlock Text="{x:Static lang:Strings.FilesInfoText}" Classes="PageTextBlock"/>
 						<WrapPanel Orientation="Horizontal">
@@ -31,7 +31,7 @@
 						<WrapPanel Orientation="Horizontal">
 							<Button Classes="PageButton" IsEnabled="{Binding NewFiles.Count}" Content="{x:Static lang:Strings.FilesSelectAllButton}" Command="{Binding SelectAllCommand}" />
 							<Button Classes="PageButton" IsEnabled="{Binding NewFiles.Count}" Content="{x:Static lang:Strings.FilesDeselectAllButton}" Command="{Binding SelectNoneCommand}"/>
-							<Button Classes="PageButton" Command="{Binding ImportNewFilesCommand}" IsEnabled="{Binding SelectedFiles.Count}" Content="{x:Static lang:Strings.FilesAddMetaDataForSelectedFilesButton}"/>
+							<Button Classes="PageButton" Command="{Binding ImportNewFilesCommand}" IsEnabled="{Binding CanImportNewFiles}" ToolTip.Tip="Import the selected files into the database. Disabled in readonly mode." ToolTip.ShowOnDisabled="True" Content="{x:Static lang:Strings.FilesAddMetaDataForSelectedFilesButton}"/>
 							<Button Classes="PageButton" Command="{Binding SearchImportedFileListCommand}" IsEnabled="{Binding ImportedFileList, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" Content="{x:Static lang:Strings.SearchForAddedFilesButton}"/>
 						</WrapPanel>
 						<TextBlock Classes="PageTextBlock" Text="{Binding ImportResult}" IsVisible="{Binding ImportResult, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
@@ -56,8 +56,8 @@
 					</StackPanel>
 				</Border>
 
-				<TextBlock Text="{x:Static lang:Strings.FilesRemoveMetaDataTitle}" Classes="PageSubHeader"/>
-				<Border Classes="BorderGroup">
+				<TextBlock Text="{x:Static lang:Strings.FilesRemoveMetaDataTitle}" Classes="PageSubHeader" IsVisible="{Binding !ReadOnly}"/>
+					<Border Classes="BorderGroup" IsVisible="{Binding !ReadOnly}">
 					<StackPanel Orientation="Horizontal" Margin="15">
 						<TextBlock Classes="PageTextBlock" Text="{x:Static lang:Strings.FilesFileListLabel}" VerticalAlignment="Center"/>
 						<TextBox Classes="PageTextBox" Width="200" VerticalAlignment="Center" Text="{Binding RemoveFileList}"></TextBox>

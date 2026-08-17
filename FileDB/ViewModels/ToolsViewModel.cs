@@ -40,6 +40,9 @@ public partial class ToolsViewModel : ObservableObject
     [ObservableProperty]
     public partial string DatabaseExportDirectory { get; set; } = string.Empty;
 
+    [ObservableProperty]
+    public partial bool ReadOnly { get; set; }
+
     private readonly IConfigProvider configProvider;
     private readonly IDatabaseAccessProvider dbAccessProvider;
     private readonly IFilesystemAccessProvider filesystemAccessProvider;
@@ -63,6 +66,11 @@ public partial class ToolsViewModel : ObservableObject
         this.configUpdater = configUpdater;
         this.databaseCreator = databaseCreator;
         this.fileBackup = fileBackup;
+        ReadOnly = configProvider.Config.ReadOnly;
+        this.RegisterForEvent<ConfigUpdated>((x) =>
+        {
+            ReadOnly = configProvider.Config.ReadOnly;
+        });
         ScanBackupFiles();
     }
 
