@@ -3,10 +3,8 @@
     <File Path=".github/workflows/dotnet.yml" />
     <File Path=".gitignore" />
     <File Path="CHANGES.txt" />
-    <File Path="Installer/InnoSetupInstaller.iss" />
     <File Path="LICENSE.txt" />
     <File Path="README.md" />
-    <File Path="releaseInstaller.bat" />
     <File Path="releaseZip.bat" />
     <File Path="update_licenses.bat" />
   </Folder>
