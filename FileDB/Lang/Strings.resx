@@ -1193,6 +1193,9 @@ This operation can be slow for a large collection of files or if the media acces
   <data name="AppUnableToCreateDatabaseBackupBeforeMigration" xml:space="preserve">
     <value>Unable to create database backup before database migration</value>
   </data>
+  <data name="AppMigrationRequiredInReadOnlyMode" xml:space="preserve">
+    <value>Database migration is required but read-only mode is enabled. Disable read-only mode and restart the application.</value>
+  </data>
   <data name="CategorizationReloadMetaData" xml:space="preserve">
     <value>Reload date, GPS position and orientation from file meta-data?</value>
   </data>

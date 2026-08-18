@@ -12,7 +12,9 @@ public class SqLiteDatabaseMigrator(string dbPath)
     // Note: add migration code below when the version is increased
     public const int SupportedVersion = 2;
 
-    public bool NeedsMigration => GetDatabaseVersion() < SupportedVersion;
+    public int CurrentVersion => GetDatabaseVersion();
+
+    public bool NeedsMigration => CurrentVersion < SupportedVersion;
 
     public List<DatabaseMigrationResult> Migrate()
     {

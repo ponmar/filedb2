@@ -313,6 +313,15 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Database migration is required but read-only mode is enabled. Disable read-only mode and restart the application..
+        /// </summary>
+        public static string AppMigrationRequiredInReadOnlyMode {
+            get {
+                return ResourceManager.GetString("AppMigrationRequiredInReadOnlyMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No .FileDB file selected! Double click on your .FileDB file or specify its path via a command line argument..
         /// </summary>
         public static string AppNoConfigSelected {

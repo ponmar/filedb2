@@ -18,6 +18,7 @@ namespace FileDBInterface.DatabaseAccess.SQLite;
 public class SqLiteDatabaseAccess : IDatabaseAccess
 {
     public bool NeedsMigration => migrator.NeedsMigration;
+    public int CurrentVersion => migrator.CurrentVersion;
 
     private readonly string database;
     private readonly ILogger logger;

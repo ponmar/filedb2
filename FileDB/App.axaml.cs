@@ -139,32 +139,16 @@ public partial class App : Application
                 new SqLiteDatabaseAccess(databasePath, loggerFactory) :
                 new NoDatabaseAccess();
 
-            if (dbAccess.NeedsMigration)
+            var migrationStartupCoordinator = ServiceLocator.Resolve<IDatabaseMigrationStartupCoordinator>();
+            var migrationCompleted = await migrationStartupCoordinator.TryHandleMigrationAsync(
+                dbAccess,
+                applicationFilePaths.DatabasePath,
+                config.ReadOnly,
+                notifications);
+            if (!migrationCompleted)
             {
-                try
-                {
-                    ServiceLocator.Resolve<IFileBackup>().CreateBackup(applicationFilePaths.DatabasePath);
-
-                    var results = dbAccess.Migrate();
-                    var migrationLogger = loggerFactory.CreateLogger<App>();
-                    foreach (var dbMigration in results)
-                    {
-                        if (dbMigration.Exception is null)
-                        {
-                            migrationLogger.LogInformation("Database migrated: {FromVersion} -> {ToVersion}", dbMigration.FromVersion, dbMigration.ToVersion);
-                            notifications.Add(new DatabaseMigrationNotification(dbMigration.FromVersion, dbMigration.ToVersion));
-                        }
-                        else
-                        {
-                            migrationLogger.LogWarning(dbMigration.Exception, "Database migration failed: {FromVersion} -> {ToVersion}", dbMigration.FromVersion, dbMigration.ToVersion);
-                            notifications.Add(new DatabaseMigrationErrorNotification(dbMigration.FromVersion, dbMigration.ToVersion, dbMigration.Exception.Message));
-                        }
-                    }
-                }
-                catch (Exception e)
-                {
-                    await dialogs.ShowErrorDialogAsync(Strings.AppUnableToCreateDatabaseBackupBeforeMigration, e);
-                }
+                desktop.Shutdown(1);
+                return;
             }
 
             var filesystemAccess = new FilesystemAccess(fileSystem, loggerFactory, filesRootDirectory);
