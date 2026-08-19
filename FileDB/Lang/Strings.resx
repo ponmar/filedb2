@@ -1196,6 +1196,9 @@ This operation can be slow for a large collection of files or if the media acces
   <data name="AppMigrationRequiredInReadOnlyMode" xml:space="preserve">
     <value>Database migration is required but read-only mode is enabled. Disable read-only mode and restart the application.</value>
   </data>
+  <data name="AppDatabaseVersionTooNew" xml:space="preserve">
+    <value>The database version ({0}) is newer than this version of FileDB supports ({1}). Please upgrade FileDB to open this database.</value>
+  </data>
   <data name="CategorizationReloadMetaData" xml:space="preserve">
     <value>Reload date, GPS position and orientation from file meta-data?</value>
   </data>

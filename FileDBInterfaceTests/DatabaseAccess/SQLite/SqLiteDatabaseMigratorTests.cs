@@ -128,4 +128,35 @@ public class SqLiteDatabaseMigratorTests : IDisposable
         Assert.DoesNotContain("BBoxWidth", columns);
         Assert.DoesNotContain("BBoxHeight", columns);
     }
+
+    [Fact]
+    public void IsTooNew_WhenVersionExceedsSupportedVersion_ReturnsTrue()
+    {
+        SQLiteConnection.CreateFile(databasePath);
+        using (var setupConnection = new SQLiteConnection($"Data Source={databasePath};foreign keys=true"))
+        {
+            setupConnection.Open();
+            setupConnection.Execute($"pragma user_version = {SqLiteDatabaseMigrator.SupportedVersion + 1};");
+        }
+
+        var migrator = new SqLiteDatabaseMigrator(databasePath);
+
+        Assert.True(migrator.IsTooNew);
+        Assert.False(migrator.NeedsMigration);
+    }
+
+    [Fact]
+    public void IsTooNew_WhenVersionEqualsOrBelowSupportedVersion_ReturnsFalse()
+    {
+        SQLiteConnection.CreateFile(databasePath);
+        using (var setupConnection = new SQLiteConnection($"Data Source={databasePath};foreign keys=true"))
+        {
+            setupConnection.Open();
+            setupConnection.Execute($"pragma user_version = {SqLiteDatabaseMigrator.SupportedVersion};");
+        }
+
+        var migrator = new SqLiteDatabaseMigrator(databasePath);
+
+        Assert.False(migrator.IsTooNew);
+    }
 }

@@ -13,6 +13,8 @@ public class NoDatabaseAccess : IDatabaseAccess
 
     public bool NeedsMigration => false;
 
+    public bool IsTooNew => false;
+
     public List<DatabaseMigrationResult> Migrate()
     {
         return [];

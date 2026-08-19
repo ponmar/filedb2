@@ -7,5 +7,7 @@ public interface IDatabaseAccess : IPersonAccess, ILocationAccess, ITagAccess, I
 {
     bool NeedsMigration { get; }
 
+    bool IsTooNew { get; }
+
     List<DatabaseMigrationResult> Migrate();
 }

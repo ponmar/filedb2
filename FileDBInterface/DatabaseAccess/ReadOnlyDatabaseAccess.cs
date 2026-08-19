@@ -29,6 +29,8 @@ public class ReadOnlyDatabaseAccess : IDatabaseAccess
 
     public bool NeedsMigration => Inner.NeedsMigration;
 
+    public bool IsTooNew => Inner.IsTooNew;
+
     public List<DatabaseMigrationResult> Migrate() => ThrowReadOnly<List<DatabaseMigrationResult>>();
 
     // ── Files – reads ──────────────────────────────────────────────────────

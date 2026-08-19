@@ -16,6 +16,8 @@ public class SqLiteDatabaseMigrator(string dbPath)
 
     public bool NeedsMigration => CurrentVersion < SupportedVersion;
 
+    public bool IsTooNew => CurrentVersion > SupportedVersion;
+
     public List<DatabaseMigrationResult> Migrate()
     {
         var result = new List<DatabaseMigrationResult>();
@@ -38,14 +40,13 @@ public class SqLiteDatabaseMigrator(string dbPath)
 
     private int GetDatabaseVersion()
     {
-        using var connection = SqLiteDatabaseCreator.CreateConnection(dbPath);
+        using var connection = SqLiteDatabaseCreator.CreateMigrationConnection(dbPath);
         return connection.ExecuteScalar<int>("pragma user_version;");
     }
 
     private void MigrateIteration(int newVersion)
     {
-        using var connection = SqLiteDatabaseCreator.CreateConnection(dbPath);
-        connection.Open();
+        using var connection = SqLiteDatabaseCreator.CreateMigrationConnection(dbPath);
 
         using var transaction = connection.BeginTransaction();
         switch (newVersion)

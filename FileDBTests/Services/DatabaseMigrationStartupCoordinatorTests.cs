@@ -114,4 +114,19 @@ public class DatabaseMigrationStartupCoordinatorTests
         Assert.All(notifications, x => Assert.IsType<DatabaseMigrationNotification>(x));
         A.CallTo(() => dialogs.ShowErrorDialogAsync(A<string>._)).MustNotHaveHappened();
     }
+
+    [Fact]
+    public async Task TryHandleMigrationAsync_DatabaseTooNew_ShowsErrorAndReturnsFalse()
+    {
+        A.CallTo(() => dbAccess.IsTooNew).Returns(true);
+        var notifications = new List<INotification>();
+
+        var result = await sut.TryHandleMigrationAsync(dbAccess, @"C:\db\collection.db", readOnly: false, notifications);
+
+        Assert.False(result);
+        A.CallTo(() => dialogs.ShowErrorDialogAsync(A<string>._)).MustHaveHappenedOnceExactly();
+        A.CallTo(() => fileBackup.CreateBackup(A<string>._)).MustNotHaveHappened();
+        A.CallTo(() => dbAccess.Migrate()).MustNotHaveHappened();
+        Assert.Empty(notifications);
+    }
 }

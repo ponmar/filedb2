@@ -30,6 +30,18 @@ public class DatabaseMigrationStartupCoordinator : IDatabaseMigrationStartupCoor
 
     public async Task<bool> TryHandleMigrationAsync(IDatabaseAccess dbAccess, string databasePath, bool readOnly, IList<INotification> notifications)
     {
+        if (dbAccess.IsTooNew)
+        {
+            var tooNewVersion = dbAccess is SqLiteDatabaseAccess sqLiteAccessTooNew ? sqLiteAccessTooNew.CurrentVersion : (int?)null;
+            logger.LogError(
+                "Database version is too new: {DatabasePath}; CurrentVersion={CurrentVersion}; SupportedVersion={SupportedVersion}",
+                databasePath,
+                tooNewVersion,
+                SqLiteDatabaseMigrator.SupportedVersion);
+            await dialogs.ShowErrorDialogAsync(string.Format(Strings.AppDatabaseVersionTooNew, tooNewVersion, SqLiteDatabaseMigrator.SupportedVersion));
+            return false;
+        }
+
         if (!dbAccess.NeedsMigration)
         {
             return true;

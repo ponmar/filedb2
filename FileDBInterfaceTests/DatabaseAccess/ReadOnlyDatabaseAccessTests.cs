@@ -239,6 +239,14 @@ public class ReadOnlyDatabaseAccessTests
     }
 
     [Fact]
+    public void IsTooNew_DelegatesToInner()
+    {
+        A.CallTo(() => _inner.IsTooNew).Returns(true);
+
+        Assert.True(_sut.IsTooNew);
+    }
+
+    [Fact]
     public void GetFilePersonBoundingBox_DelegatesToInner()
     {
         var bbox = new PersonBoundingBox(0.1, 0.2, 0.3, 0.4);

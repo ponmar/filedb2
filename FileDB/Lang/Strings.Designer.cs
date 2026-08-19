@@ -304,6 +304,15 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The database version ({0}) is newer than this version of FileDB supports ({1}). Please upgrade FileDB to open this database..
+        /// </summary>
+        public static string AppDatabaseVersionTooNew {
+            get {
+                return ResourceManager.GetString("AppDatabaseVersionTooNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Command line argument ({0}) does not have the .FileDB file extension.
         /// </summary>
         public static string AppInvalidCommandLineArgument {

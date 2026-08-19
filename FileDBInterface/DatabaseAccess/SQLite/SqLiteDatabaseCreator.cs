@@ -32,6 +32,16 @@ public class SqLiteDatabaseCreator : IDatabaseCreator
         return new SQLiteConnection(connectionString);
     }
 
+    // Pooling=False ensures the file handle is released immediately on Dispose, which is
+    // required for migration write connections: a pooled handle left open by a previous read
+    // would cause "database is locked" when a write transaction is started.
+    internal static IDbConnection CreateMigrationConnection(string database)
+    {
+        var connection = new SQLiteConnection($"Data Source={database};foreign keys=true;Pooling=False");
+        connection.Open();
+        return connection;
+    }
+
     internal static IDbConnection CreateReadOnlyConnection(string database)
     {
         var connectionString = database.Contains('=')
