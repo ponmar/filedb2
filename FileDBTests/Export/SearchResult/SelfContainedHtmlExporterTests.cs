@@ -128,8 +128,13 @@ public class SelfContainedHtmlExporterTests
     public void Export_HtmlContainsPrevNextButtons()
     {
         Export(MakeData());
-        Assert.DoesNotContain("btn-prev", capturedHtml);
-        Assert.DoesNotContain("btn-next", capturedHtml);
+        Assert.Contains("btn-first", capturedHtml);
+        Assert.Contains("btn-prev", capturedHtml);
+        Assert.Contains("btn-play", capturedHtml);
+        Assert.Contains("btn-next", capturedHtml);
+        Assert.Contains("btn-last", capturedHtml);
+        Assert.Contains("btn-random", capturedHtml);
+        Assert.Contains("btn-repeat", capturedHtml);
     }
 
     [Fact]

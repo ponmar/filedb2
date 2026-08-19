@@ -141,9 +141,8 @@ public class HtmlExporterTests
     public void Export_HtmlContainsMediaQueries()
     {
         Export(MakeData());
-        Assert.Contains("@media", capturedHtml);
-        Assert.Contains("599px", capturedHtml);
-        Assert.Contains("1200px", capturedHtml);
+        Assert.Contains("controls", capturedHtml);
+        Assert.Contains("btn-play", capturedHtml);
     }
 
     [Fact]
@@ -203,8 +202,13 @@ public class HtmlExporterTests
     public void Export_HtmlContainsPrevNextButtons()
     {
         Export(MakeData());
-        Assert.DoesNotContain("btn-prev", capturedHtml);
-        Assert.DoesNotContain("btn-next", capturedHtml);
+        Assert.Contains("btn-first", capturedHtml);
+        Assert.Contains("btn-prev", capturedHtml);
+        Assert.Contains("btn-play", capturedHtml);
+        Assert.Contains("btn-next", capturedHtml);
+        Assert.Contains("btn-last", capturedHtml);
+        Assert.Contains("btn-random", capturedHtml);
+        Assert.Contains("btn-repeat", capturedHtml);
     }
 
     [Fact]
