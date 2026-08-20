@@ -6,6 +6,7 @@ using FileDBInterface.DatabaseAccess.SQLite;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FileDB.Services;
@@ -101,13 +102,13 @@ public class DatabaseMigrationStartupCoordinator : IDatabaseMigrationStartupCoor
             notifications.Add(new DatabaseMigrationErrorNotification(
                 migrationResult.FromVersion,
                 migrationResult.ToVersion,
-                migrationResult.Exception.Message));
+                NormalizeMigrationErrorMessage(migrationResult.Exception.Message)));
 
             var message = string.Format(
                 Strings.NotificationDatabaseMigrationError,
                 migrationResult.FromVersion,
                 migrationResult.ToVersion,
-                migrationResult.Exception.Message);
+                NormalizeMigrationErrorMessage(migrationResult.Exception.Message));
             await dialogs.ShowErrorDialogAsync(message);
             return false;
         }
@@ -117,5 +118,18 @@ public class DatabaseMigrationStartupCoordinator : IDatabaseMigrationStartupCoor
             databasePath,
             SqLiteDatabaseMigrator.SupportedVersion);
         return true;
+    }
+
+    private static string NormalizeMigrationErrorMessage(string message)
+    {
+        var lines = message
+            .Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+        if (lines.Length <= 1)
+        {
+            return message;
+        }
+
+        return string.Join(Environment.NewLine, lines.Distinct(StringComparer.OrdinalIgnoreCase));
     }
 }

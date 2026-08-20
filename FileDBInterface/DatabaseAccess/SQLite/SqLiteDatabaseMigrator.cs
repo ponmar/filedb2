@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Dapper;
 using FileDBInterface.Model;
 
@@ -11,6 +12,7 @@ public class SqLiteDatabaseMigrator(string dbPath)
 {
     // Note: add migration code below when the version is increased
     public const int SupportedVersion = 2;
+    private const int MigrationBusyTimeoutMs = 30000;
 
     public int CurrentVersion => GetDatabaseVersion();
 
@@ -47,6 +49,7 @@ public class SqLiteDatabaseMigrator(string dbPath)
     private void MigrateIteration(int newVersion)
     {
         using var connection = SqLiteDatabaseCreator.CreateMigrationConnection(dbPath);
+        connection.Execute($"pragma busy_timeout = {MigrationBusyTimeoutMs};");
 
         using var transaction = connection.BeginTransaction();
         switch (newVersion)
@@ -59,7 +62,8 @@ public class SqLiteDatabaseMigrator(string dbPath)
                 // Persons table update: replace Firstname and Lastname with Shortname and Fullname
                 connection.Execute("ALTER TABLE Persons RENAME COLUMN Firstname TO ShortName", transaction: transaction);
                 connection.Execute("ALTER TABLE Persons RENAME COLUMN Lastname TO FullName", transaction: transaction);
-                foreach (var person in connection.Query<PersonModel>("select * from [persons]"))
+                var persons = connection.Query<PersonModel>("select * from [persons]", transaction: transaction).ToList();
+                foreach (var person in persons)
                 {
                     person.FullName = $"{person.ShortName} {person.FullName}";
                     var sql = "update [persons] set FullName = @FullName where Id = @Id";

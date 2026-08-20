@@ -98,6 +98,24 @@ public class DatabaseMigrationStartupCoordinatorTests
     }
 
     [Fact]
+    public async Task TryHandleMigrationAsync_MigrationFailureWithDuplicateLines_ShowsDeduplicatedError()
+    {
+        A.CallTo(() => dbAccess.NeedsMigration).Returns(true);
+        A.CallTo(() => dbAccess.Migrate()).Returns([
+            new DatabaseMigrationResult(1, 2, new InvalidOperationException("database is locked\ndatabase is locked"))
+        ]);
+        var notifications = new List<INotification>();
+
+        var result = await sut.TryHandleMigrationAsync(dbAccess, @"C:\db\collection.db", readOnly: false, notifications);
+
+        Assert.False(result);
+        var expectedMessage = string.Format(Strings.NotificationDatabaseMigrationError, 1, 2, "database is locked");
+        Assert.Single(notifications);
+        Assert.Equal(expectedMessage, notifications[0].Message);
+        A.CallTo(() => dialogs.ShowErrorDialogAsync(expectedMessage)).MustHaveHappenedOnceExactly();
+    }
+
+    [Fact]
     public async Task TryHandleMigrationAsync_AllMigrationsSucceed_ReturnsTrueAndAddsNotifications()
     {
         A.CallTo(() => dbAccess.NeedsMigration).Returns(true);
