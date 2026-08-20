@@ -69,7 +69,7 @@ FileDB gives you the possibility to export the internal database and file search
 ## Getting Started
 
 1. Create an empty file in your files collection root directory with the `.FileDB` extension (e.g. `MyFiles.FileDB`). Open the file with the FileDB application.
-2. Create a database for your files collection and adjust your settings (see Tools tab)
+2. Create a database for your files collection and adjust your settings (see Tools and Settings tabs)
 3. Add your files (see Files tab)
 4. Create persons, locations and tags (see Update tabs)
 5. Add persons, locations and tags to your files (see Search tab)
@@ -82,6 +82,19 @@ The release contains the following documentation:
 * This README
 * [Changelog](CHANGES.txt)
 * Main application About page
+
+## Backup and Restore
+
+### Backup
+
+Database backups are automatically created when adding new files. Manual backup can be created via the Tools tab. The backup files are stored in the same directory as the .FileDB and .db files.
+
+The .db files and the .FileDB file should be backed up with the same procedure as for the files in your collection of files.
+
+### Restore
+
+1. Copy the current database file (FileDB.db) to a backup location
+2. Replace the .db file with the wanted backup file available in the same directory as the .db and .FileDB file
 
 ## Developer Information
 
