@@ -9,9 +9,16 @@ echo "Detected version: $version"
 
 dotnet clean FileDB.slnx -c Release
 
-dotnet publish FileDB.Desktop/FileDB.Desktop.csproj -p:Version="${version}.0.0"
+publishDir="FileDB.Desktop/bin/Release/net10.0/release-publish"
+rm -rf "$publishDir"
 
-appDir="FileDB.Desktop/bin/Release/net10.0/publish"
+dotnet publish FileDB.Desktop/FileDB.Desktop.csproj \
+  -c Release \
+  --no-self-contained \
+  -o "$publishDir" \
+  -p:Version="${version}.0.0"
+
+appDir="$publishDir"
 zipDir="FileDB-${version}"
 releaseDir="release/${zipDir}"
 zipFilename="${zipDir}.zip"
