@@ -5,8 +5,8 @@
     <File Path="CHANGES.txt" />
     <File Path="LICENSE.txt" />
     <File Path="README.md" />
-    <File Path="releaseZip.bat" />
-    <File Path="update_licenses.bat" />
+    <File Path="release.sh" />
+    <File Path="update_nuget.sh" />
   </Folder>
   <Folder Name="/Tests/">
     <Project Path="FileDBInterfaceTests/FileDBInterfaceTests.csproj" />
