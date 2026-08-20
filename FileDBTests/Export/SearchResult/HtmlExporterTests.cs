@@ -212,6 +212,29 @@ public class HtmlExporterTests
     }
 
     [Fact]
+    public void Export_HtmlControlsContainKeyBindingTooltips()
+    {
+        Export(MakeData());
+        Assert.Contains("title=\"First (Home)\"", capturedHtml);
+        Assert.Contains("title=\"Previous (PageUp, ArrowLeft)\"", capturedHtml);
+        Assert.Contains("title=\"Play / Pause (Space)\"", capturedHtml);
+        Assert.Contains("title=\"Next (PageDown, ArrowRight)\"", capturedHtml);
+        Assert.Contains("title=\"Last (End)\"", capturedHtml);
+        Assert.Contains("title=\"Random (R)\"", capturedHtml);
+        Assert.Contains("title=\"Repeat (T)\"", capturedHtml);
+    }
+
+    [Fact]
+    public void Export_HtmlControlsUseScaledFixedButtonSizeAndAutoHide()
+    {
+        Export(MakeData());
+        Assert.Contains("left: 50%; transform: translateX(-50%)", capturedHtml);
+        Assert.Contains("font-size: calc(1em * var(--overlay-scale))", capturedHtml);
+        Assert.Contains("width: 2.2em; height: 2.2em", capturedHtml);
+        Assert.Contains("scheduleHideControls(isPlaying ? 250 : 800)", capturedHtml);
+    }
+
+    [Fact]
     public void Export_HtmlContainsKeyboardNavigation()
     {
         Export(MakeData());
@@ -391,4 +414,3 @@ public class HtmlExporterTests
         Assert.Contains("photo2.jpg", capturedHtml);
     }
 }
-

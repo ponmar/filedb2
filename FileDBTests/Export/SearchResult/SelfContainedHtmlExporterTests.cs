@@ -138,15 +138,45 @@ public class SelfContainedHtmlExporterTests
     }
 
     [Fact]
+    public void Export_HtmlControlsContainKeyBindingTooltips()
+    {
+        Export(MakeData());
+        Assert.Contains("title=\"First (Home)\"", capturedHtml);
+        Assert.Contains("title=\"Previous (PageUp, ArrowLeft)\"", capturedHtml);
+        Assert.Contains("title=\"Play / Pause (Space)\"", capturedHtml);
+        Assert.Contains("title=\"Next (PageDown, ArrowRight)\"", capturedHtml);
+        Assert.Contains("title=\"Last (End)\"", capturedHtml);
+        Assert.Contains("title=\"Random (R)\"", capturedHtml);
+        Assert.Contains("title=\"Repeat (T)\"", capturedHtml);
+    }
+
+    [Fact]
+    public void Export_HtmlControlsUseScaledFixedButtonSizeAndAutoHide()
+    {
+        Export(MakeData());
+        Assert.Contains("left: 50%; transform: translateX(-50%)", capturedHtml);
+        Assert.Contains("font-size: calc(1em * var(--overlay-scale))", capturedHtml);
+        Assert.Contains("width: 2.2em; height: 2.2em", capturedHtml);
+        Assert.Contains("#controls.pinned { opacity: 1; }", capturedHtml);
+        Assert.Contains("scheduleHideControls(isPlaying ? 250 : 800)", capturedHtml);
+    }
+
+    [Fact]
     public void Export_HtmlContainsKeyboardNavigation()
     {
         Export(MakeData());
+        Assert.Contains("Enter", capturedHtml);
+        Assert.Contains("NumpadEnter", capturedHtml);
         Assert.Contains("ArrowRight", capturedHtml);
         Assert.Contains("ArrowLeft", capturedHtml);
         Assert.Contains("PageDown", capturedHtml);
         Assert.Contains("PageUp", capturedHtml);
         Assert.Contains("Home", capturedHtml);
         Assert.Contains("End", capturedHtml);
+        Assert.Contains("MediaPlayPause", capturedHtml);
+        Assert.Contains("MediaTrackNext", capturedHtml);
+        Assert.Contains("MediaTrackPrevious", capturedHtml);
+        Assert.Contains("setControlsPinned(true)", capturedHtml);
     }
 
     [Fact]
@@ -155,6 +185,8 @@ public class SelfContainedHtmlExporterTests
         Export(MakeData());
         Assert.Contains("touchstart", capturedHtml);
         Assert.Contains("touchend", capturedHtml);
+        Assert.Contains("Math.abs(dx) < 10 && Math.abs(dy) < 10", capturedHtml);
+        Assert.Contains("showControls(true)", capturedHtml);
     }
 
     // --- Export: file filtering ---
@@ -357,4 +389,3 @@ public class SelfContainedHtmlExporterTests
         Assert.Contains("photo2.jpg", capturedHtml);
     }
 }
-

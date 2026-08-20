@@ -96,12 +96,13 @@ body { background: #000; color: #fff; font-family: sans-serif; overflow: hidden;
 #meta a { color: #adf; }
 #counter { position: absolute; top: 0.5em; right: 0.8em; background: rgba(0,0,0,0.5); padding: 2px 8px; border-radius: 4px; font-size: calc(0.9em * var(--overlay-scale)); }
 #scale-indicator { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.8); color: #fff; padding: 1em 2em; border-radius: 8px; font-size: 2em; pointer-events: none; display: none; z-index: 1000; }
-#controls { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.75); display: flex; align-items: center; justify-content: center; gap: 0.5em; padding: 0.4em 0.8em; opacity: 0; transition: opacity 0.3s; z-index: 500; }
+#controls { position: fixed; bottom: 0.8em; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; gap: 0.5em; padding: 0.35em 0.6em; border-radius: 4px; opacity: 0; transition: opacity 0.3s; z-index: 500; font-size: calc(1em * var(--overlay-scale)); }
 #controls.visible { opacity: 1; }
-#controls button { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: #fff; padding: 0.25em 0.6em; border-radius: 4px; cursor: pointer; font-size: 1em; }
+#controls.pinned { opacity: 1; }
+#controls button { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: #fff; border-radius: 4px; cursor: pointer; font-size: 1em; width: 2.2em; height: 2.2em; padding: 0; display: inline-flex; align-items: center; justify-content: center; }
 #controls button:hover { background: rgba(255,255,255,0.25); }
 #controls button.active { background: rgba(80,160,255,0.45); border-color: #5af; }
-#speed-select { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: #fff; padding: 0.25em 0.4em; border-radius: 4px; font-size: 1em; cursor: pointer; }
+#speed-select { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: #fff; border-radius: 4px; font-size: 1em; cursor: pointer; height: 2.2em; padding: 0 0.4em; }
 #speed-select option { background: #222; }
 </style>
 </head>
@@ -114,13 +115,13 @@ body { background: #000; color: #fff; font-family: sans-serif; overflow: hidden;
   <div id="scale-indicator"></div>
 </div>
 <div id="controls">
-  <button id="btn-first" title="First">&#x21E4;</button>
-  <button id="btn-prev" title="Previous">&#x2B60;</button>
-  <button id="btn-play" title="Play / Pause">&#9654;</button>
-  <button id="btn-next" title="Next">&#x2B62;</button>
-  <button id="btn-last" title="Last">&#x21E5;</button>
-  <button id="btn-random" title="Random">&#128256;</button>
-  <button id="btn-repeat" title="Repeat">&#128257;</button>
+  <button id="btn-first" title="First (Home)">&#x21E4;</button>
+  <button id="btn-prev" title="Previous (PageUp, ArrowLeft)">&#x2B60;</button>
+  <button id="btn-play" title="Play / Pause (Space)">&#9654;</button>
+  <button id="btn-next" title="Next (PageDown, ArrowRight)">&#x2B62;</button>
+  <button id="btn-last" title="Last (End)">&#x21E5;</button>
+  <button id="btn-random" title="Random (R)">&#128256;</button>
+  <button id="btn-repeat" title="Repeat (T)">&#128257;</button>
   <select id="speed-select" title="Slideshow speed">
     <option value="2000">2 s</option>
     <option value="5000" selected>5 s</option>
@@ -189,16 +190,17 @@ function startSlideshow() {
   if (slides.length === 0) return;
   isPlaying = true;
   btnPlay.innerHTML = '&#9646;&#9646;';
-  btnPlay.title = 'Pause';
+  btnPlay.title = 'Play / Pause (Space)';
   const delay = parseInt(speedSelect.value, 10);
   slideshowTimer = setInterval(nextSlide, delay);
+  showControls(true);
 }
 
 function stopSlideshow() {
   if (!isPlaying) return;
   isPlaying = false;
   btnPlay.innerHTML = '&#9654;';
-  btnPlay.title = 'Play';
+  btnPlay.title = 'Play / Pause (Space)';
   clearInterval(slideshowTimer);
   slideshowTimer = null;
 }
@@ -213,17 +215,20 @@ document.getElementById('btn-prev').addEventListener('click', () => move(-1));
 document.getElementById('btn-next').addEventListener('click', () => move(1));
 document.getElementById('btn-last').addEventListener('click', () => { stopSlideshow(); showSlide(slides.length - 1); });
 
-btnRandom.addEventListener('click', () => {
+function toggleRandom() {
   isRandom = !isRandom;
   sessionStorage.setItem('random', isRandom ? '1' : '0');
   updateToggleButtons();
-});
+}
 
-btnRepeat.addEventListener('click', () => {
+function toggleRepeat() {
   isRepeat = !isRepeat;
   sessionStorage.setItem('repeat', isRepeat ? '1' : '0');
   updateToggleButtons();
-});
+}
+
+btnRandom.addEventListener('click', toggleRandom);
+btnRepeat.addEventListener('click', toggleRepeat);
 
 speedSelect.addEventListener('change', () => {
   sessionStorage.setItem('speed', speedSelect.value);
@@ -232,21 +237,38 @@ speedSelect.addEventListener('change', () => {
 
 // Show controls on hover near bottom or during slideshow
 let hideTimer = null;
+let hasPointerOrTouch = false;
+let controlsPinned = false;
+function setControlsPinned(pinned) {
+  controlsPinned = pinned;
+  controls.classList.toggle('pinned', pinned);
+  if (pinned) {
+    clearTimeout(hideTimer);
+    controls.classList.add('visible');
+  }
+}
+function markPointerOrTouchInput() {
+  hasPointerOrTouch = true;
+  if (controlsPinned) setControlsPinned(false);
+}
+function scheduleHideControls(delay) {
+  clearTimeout(hideTimer);
+  if (controlsPinned) return;
+  hideTimer = setTimeout(() => controls.classList.remove('visible'), delay);
+}
 function showControls(temporary) {
   controls.classList.add('visible');
-  if (temporary) {
-    clearTimeout(hideTimer);
-    hideTimer = setTimeout(() => { if (!isPlaying) controls.classList.remove('visible'); }, 2500);
+  if (temporary && !controlsPinned) {
+    scheduleHideControls(isPlaying ? 900 : 2500);
   }
 }
 document.addEventListener('mousemove', e => {
+  markPointerOrTouchInput();
   if (e.clientY > window.innerHeight - 80) showControls(true);
-  else if (!isPlaying) controls.classList.remove('visible');
+  else scheduleHideControls(isPlaying ? 250 : 800);
 });
 controls.addEventListener('mouseenter', () => { clearTimeout(hideTimer); controls.classList.add('visible'); });
-controls.addEventListener('mouseleave', () => {
-  if (!isPlaying) hideTimer = setTimeout(() => controls.classList.remove('visible'), 800);
-});
+controls.addEventListener('mouseleave', () => scheduleHideControls(isPlaying ? 250 : 800));
 
 function adjustOverlayScale(delta) {
   overlayScale = Math.max(0.5, Math.min(2.0, overlayScale + delta));
@@ -265,17 +287,21 @@ function showScaleIndicator(text) {
 document.documentElement.style.setProperty('--overlay-scale', overlayScale.toString());
 
 document.addEventListener('keydown', e => {
-  if (e.key === ' ') { togglePlay(); e.preventDefault(); }
+  if (!hasPointerOrTouch && !controlsPinned) setControlsPinned(true);
+  if (e.key === ' ' || e.key === 'Enter' || e.key === 'NumpadEnter' || e.key === 'MediaPlayPause') { togglePlay(); e.preventDefault(); }
   else if (e.key === 'ArrowUp') { adjustOverlayScale(0.1); e.preventDefault(); }
   else if (e.key === 'ArrowDown') { adjustOverlayScale(-0.1); e.preventDefault(); }
-  else if (e.key === 'ArrowRight' || e.key === 'PageDown') move(1);
-  else if (e.key === 'ArrowLeft' || e.key === 'PageUp') move(-1);
+  else if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === 'MediaTrackNext') move(1);
+  else if (e.key === 'ArrowLeft' || e.key === 'PageUp' || e.key === 'MediaTrackPrevious') move(-1);
   else if (e.key === 'Home') { stopSlideshow(); showSlide(0); }
   else if (e.key === 'End') { stopSlideshow(); showSlide(slides.length - 1); }
+  else if (e.key === 'r' || e.key === 'R') toggleRandom();
+  else if (e.key === 't' || e.key === 'T') toggleRepeat();
 });
 
 let tx = 0, ty = 0, singleTouch = false;
 document.addEventListener('touchstart', e => {
+  markPointerOrTouchInput();
   if (e.touches.length === 1) { tx = e.touches[0].clientX; ty = e.touches[0].clientY; singleTouch = true; }
   else { singleTouch = false; }
 }, { passive: true });
@@ -285,6 +311,7 @@ document.addEventListener('touchend', e => {
   const dy = e.changedTouches[0].clientY - ty;
   if (Math.abs(dy) > 40 && Math.abs(dy) > Math.abs(dx)) { adjustOverlayScale(dy < 0 ? 0.1 : -0.1); }
   else if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) { move(dx < 0 ? 1 : -1); }
+  else if (Math.abs(dx) < 10 && Math.abs(dy) < 10) { showControls(true); }
 });
 
 showSlide(0);
