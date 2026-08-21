@@ -30,7 +30,7 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
         this.database = database;
         this.logger = loggerFactory.CreateLogger<SqLiteDatabaseAccess>();
 
-        migrator = new SqLiteDatabaseMigrator(database);
+        migrator = new SqLiteDatabaseMigrator(database, loggerFactory.CreateLogger<SqLiteDatabaseMigrator>());
     }
 
     public List<DatabaseMigrationResult> Migrate()

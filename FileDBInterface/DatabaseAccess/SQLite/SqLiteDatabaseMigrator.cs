@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SQLite;
+using System.IO;
 using System.Linq;
 using Dapper;
 using FileDBInterface.Model;
+using Microsoft.Extensions.Logging;
 
 namespace FileDBInterface.DatabaseAccess.SQLite;
 
 public record DatabaseMigrationResult(int FromVersion, int ToVersion, Exception? Exception = null);
 
-public class SqLiteDatabaseMigrator(string dbPath)
+public class SqLiteDatabaseMigrator(string dbPath, ILogger? logger = null)
 {
     // Note: add migration code below when the version is increased
     public const int SupportedVersion = 2;
@@ -22,6 +25,12 @@ public class SqLiteDatabaseMigrator(string dbPath)
 
     public List<DatabaseMigrationResult> Migrate()
     {
+        WarnIfStaleLockFiles();
+
+        // Clear all pooled connections in this process so no stale handle can
+        // block the write transaction that migration requires.
+        SQLiteConnection.ClearAllPools();
+
         var result = new List<DatabaseMigrationResult>();
         for (var dbVersion = GetDatabaseVersion(); dbVersion < SupportedVersion; dbVersion++)
         {
@@ -87,5 +96,19 @@ public class SqLiteDatabaseMigrator(string dbPath)
         connection.Execute($"pragma user_version = {newVersion};", transaction: transaction);
 
         transaction.Commit();
+    }
+
+    private void WarnIfStaleLockFiles()
+    {
+        var journalPath = dbPath + "-journal";
+        var walPath = dbPath + "-wal";
+        if (File.Exists(journalPath))
+        {
+            logger?.LogWarning("Stale SQLite journal file found before migration: {JournalPath}. This may indicate an unclean shutdown and could cause locking issues.", journalPath);
+        }
+        if (File.Exists(walPath))
+        {
+            logger?.LogWarning("SQLite WAL file found before migration: {WalPath}. Another process may have the database open in WAL mode.", walPath);
+        }
     }
 }

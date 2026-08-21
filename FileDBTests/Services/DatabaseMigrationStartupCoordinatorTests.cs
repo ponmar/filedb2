@@ -94,7 +94,7 @@ public class DatabaseMigrationStartupCoordinatorTests
         Assert.IsType<DatabaseMigrationNotification>(notifications[0]);
         Assert.IsType<DatabaseMigrationErrorNotification>(notifications[1]);
         A.CallTo(() => dialogs.ShowErrorDialogAsync(
-            string.Format(Strings.NotificationDatabaseMigrationError, 1, 2, "broken migration"))).MustHaveHappenedOnceExactly();
+            string.Format(Strings.NotificationDatabaseMigrationError, 1, 2, "broken migration") + Environment.NewLine + Environment.NewLine + Strings.AppDatabaseMigrationLockedHint)).MustHaveHappenedOnceExactly();
     }
 
     [Fact]
@@ -112,7 +112,7 @@ public class DatabaseMigrationStartupCoordinatorTests
         var expectedMessage = string.Format(Strings.NotificationDatabaseMigrationError, 1, 2, "database is locked");
         Assert.Single(notifications);
         Assert.Equal(expectedMessage, notifications[0].Message);
-        A.CallTo(() => dialogs.ShowErrorDialogAsync(expectedMessage)).MustHaveHappenedOnceExactly();
+        A.CallTo(() => dialogs.ShowErrorDialogAsync(expectedMessage + Environment.NewLine + Environment.NewLine + Strings.AppDatabaseMigrationLockedHint)).MustHaveHappenedOnceExactly();
     }
 
     [Fact]

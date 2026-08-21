@@ -331,6 +331,15 @@ namespace FileDB.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to If the error is &quot;database is locked&quot;, make sure no other application has the database file open..
+        /// </summary>
+        public static string AppDatabaseMigrationLockedHint {
+            get {
+                return ResourceManager.GetString("AppDatabaseMigrationLockedHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No .FileDB file selected! Double click on your .FileDB file or specify its path via a command line argument..
         /// </summary>
         public static string AppNoConfigSelected {

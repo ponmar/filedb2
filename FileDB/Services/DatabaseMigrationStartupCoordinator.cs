@@ -109,7 +109,7 @@ public class DatabaseMigrationStartupCoordinator : IDatabaseMigrationStartupCoor
                 migrationResult.FromVersion,
                 migrationResult.ToVersion,
                 NormalizeMigrationErrorMessage(migrationResult.Exception.Message));
-            await dialogs.ShowErrorDialogAsync(message);
+            await dialogs.ShowErrorDialogAsync(message + Environment.NewLine + Environment.NewLine + Strings.AppDatabaseMigrationLockedHint);
             return false;
         }
 
