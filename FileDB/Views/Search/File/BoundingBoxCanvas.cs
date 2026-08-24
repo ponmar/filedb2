@@ -22,6 +22,7 @@ public class BoundingBoxCanvas : Canvas
 {
     private Point dragStartPoint = new();
     private Rect? previewBoundingBox;
+    private (PersonModel Person, PersonBoundingBox BBox)? hoveredBoundingBox;
 
     public static readonly StyledProperty<IEnumerable<(PersonModel Person, PersonBoundingBox BBox)>> BoundingBoxesProperty =
         AvaloniaProperty.Register<BoundingBoxCanvas, IEnumerable<(PersonModel Person, PersonBoundingBox BBox)>>(
@@ -205,8 +206,27 @@ public class BoundingBoxCanvas : Canvas
             previewBoundingBox = CreateBoundingBoxFromDrag(dragStartPoint, currentPoint);
             RedrawBoundingBoxes();
         }
+        else if (!IsPlacingBoundingBox)
+        {
+            var newHovered = FindBoundingBoxAtPoint(currentPoint);
+            if (newHovered != hoveredBoundingBox)
+            {
+                hoveredBoundingBox = newHovered;
+                RedrawBoundingBoxes();
+            }
+        }
 
         UpdateCursor();
+    }
+
+    protected override void OnPointerExited(PointerEventArgs e)
+    {
+        base.OnPointerExited(e);
+        if (hoveredBoundingBox is not null)
+        {
+            hoveredBoundingBox = null;
+            RedrawBoundingBoxes();
+        }
     }
 
     protected override void OnPointerReleased(PointerReleasedEventArgs e)
@@ -248,52 +268,55 @@ public class BoundingBoxCanvas : Canvas
     {
         Children.Clear();
 
-        // Draw existing bounding boxes - show if ForceShowBoundingBoxes is true
-        if (ForceShowBoundingBoxes)
+        // Draw existing bounding boxes - show if ForceShowBoundingBoxes is true or if hovered
+        foreach (var entry in BoundingBoxes)
         {
-            foreach (var (person, bbox) in BoundingBoxes)
-            {
-                var pixelRect = NormalizationToPixels(bbox);
-                var rectangle = new Rectangle
-                {
-                    Stroke = new SolidColorBrush(Colors.Green),
-                    StrokeThickness = 2,
-                    Fill = null,
-                    Effect = new DropShadowEffect
-                    {
-                        BlurRadius = 4,
-                        Color = Colors.Black,
-                        Opacity = 0.6,
-                        OffsetX = 0,
-                        OffsetY = 0
-                    }
-                };
-                Canvas.SetLeft(rectangle, pixelRect.X);
-                Canvas.SetTop(rectangle, pixelRect.Y);
-                rectangle.Width = pixelRect.Width;
-                rectangle.Height = pixelRect.Height;
-                Children.Add(rectangle);
+            var pixelRect = NormalizationToPixels(entry.BBox);
+            bool isHovered = !IsPlacingBoundingBox && hoveredBoundingBox is not null &&
+                             hoveredBoundingBox.Value.Person.Id == entry.Person.Id;
+            bool shouldShow = ForceShowBoundingBoxes || isHovered;
+            if (!shouldShow)
+                continue;
 
-                var label = new TextBlock
+            var rectangle = new Rectangle
+            {
+                Stroke = new SolidColorBrush(Colors.Green),
+                StrokeThickness = 2,
+                Fill = null,
+                Effect = new DropShadowEffect
                 {
-                    Text = person.FullName,
-                    Foreground = new SolidColorBrush(Colors.White),
-                    FontSize = 12,
-                    Width = pixelRect.Width,
-                    TextAlignment = Avalonia.Media.TextAlignment.Center,
-                    Effect = new DropShadowEffect
-                    {
-                        BlurRadius = 4,
-                        Color = Colors.Black,
-                        Opacity = 0.9,
-                        OffsetX = 1,
-                        OffsetY = 1
-                    }
-                };
-                Canvas.SetLeft(label, pixelRect.X);
-                Canvas.SetTop(label, pixelRect.Bottom + 2);
-                Children.Add(label);
-            }
+                    BlurRadius = 4,
+                    Color = Colors.Black,
+                    Opacity = 0.6,
+                    OffsetX = 0,
+                    OffsetY = 0
+                }
+            };
+            Canvas.SetLeft(rectangle, pixelRect.X);
+            Canvas.SetTop(rectangle, pixelRect.Y);
+            rectangle.Width = pixelRect.Width;
+            rectangle.Height = pixelRect.Height;
+            Children.Add(rectangle);
+
+            var label = new TextBlock
+            {
+                Text = entry.Person.FullName,
+                Foreground = new SolidColorBrush(Colors.White),
+                FontSize = 12,
+                Width = pixelRect.Width,
+                TextAlignment = Avalonia.Media.TextAlignment.Center,
+                Effect = new DropShadowEffect
+                {
+                    BlurRadius = 4,
+                    Color = Colors.Black,
+                    Opacity = 0.9,
+                    OffsetX = 1,
+                    OffsetY = 1
+                }
+            };
+            Canvas.SetLeft(label, pixelRect.X);
+            Canvas.SetTop(label, pixelRect.Bottom + 2);
+            Children.Add(label);
         }
 
         // Draw preview bbox while placing
@@ -372,6 +395,17 @@ public class BoundingBoxCanvas : Canvas
         double height = bbox.Height * visualBounds.Height;
 
         return new Rect(x, y, width, height);
+    }
+
+    private (PersonModel Person, PersonBoundingBox BBox)? FindBoundingBoxAtPoint(Point point)
+    {
+        foreach (var entry in BoundingBoxes)
+        {
+            var pixelRect = NormalizationToPixels(entry.BBox);
+            if (pixelRect.Contains(point))
+                return entry;
+        }
+        return null;
     }
 
     private void UpdateCursor()
