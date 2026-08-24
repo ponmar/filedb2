@@ -44,7 +44,7 @@ public class SelfContainedHtmlExporterTests
         List<int>? locationIds = null,
         List<int>? tagIds = null) =>
         new(1, originalPath, originalPath, fileType, description, datetime, position, null,
-            personIds ?? [], locationIds ?? [], tagIds ?? []);
+            personIds ?? [], locationIds ?? [], tagIds ?? [], []);
 
     private static RichExportData MakeData(
         ExportedFile? file = null,
@@ -378,7 +378,7 @@ public class SelfContainedHtmlExporterTests
     [Fact]
     public void Export_TwoFiles_SlidesJsArrayContainsBothEntries()
     {
-        var file2 = new ExportedFile(2, "photo2.jpg", "photo2.jpg", FileType.Picture, null, null, null, null, [], [], []);
+        var file2 = new ExportedFile(2, "photo2.jpg", "photo2.jpg", FileType.Picture, null, null, null, null, [], [], [], []);
         A.CallTo(() => fakeFilesystemAccessProvider.FilesystemAccess.ToAbsolutePath("photo2.jpg")).Returns("/collection/photo2.jpg");
         A.CallTo(() => fakeFileSystem.File.Exists("/collection/photo2.jpg")).Returns(true);
         A.CallTo(() => fakeFileSystem.File.ReadAllBytes("/collection/photo2.jpg")).Returns([0xFF, 0xD8, 0xFF]);

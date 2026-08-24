@@ -2,6 +2,8 @@ using FileDB.Extensions;
 using FileDB.Model.FileFormats;
 using FileDBInterface.Model;
 using FileDBInterface.Validators;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 
@@ -9,6 +11,24 @@ namespace FileDB.Export.SearchResult;
 
 public static class HtmlExportUtils
 {
+    /// <summary>Serializes bounding boxes to a JS array literal, e.g. [{name:`Alice`,x:0.1,y:0.2,w:0.3,h:0.4}].</summary>
+    public static string BuildBboxesJs(ExportedFile file, IEnumerable<PersonModel> allPersons)
+    {
+        if (file.BoundingBoxes.Count == 0) return "[]";
+        var items = file.BoundingBoxes.Select(b =>
+        {
+            var person = allPersons.FirstOrDefault(p => p.Id == b.PersonId);
+            var name = EscapeJsTemplateLiteral(person?.FullName ?? string.Empty);
+            string F(double v) => v.ToString("G6", CultureInfo.InvariantCulture);
+            return $"{{name:`{name}`,x:{F(b.X)},y:{F(b.Y)},w:{F(b.Width)},h:{F(b.Height)}}}";
+        });
+        return $"[{string.Join(",", items)}]";
+    }
+
+    private static string EscapeJsTemplateLiteral(string value) =>
+        value.Replace("\\", "\\\\").Replace("`", "\\`").Replace("${", "\\${");
+
+
     public static string BuildMetaHtml(RichExportData data, ExportedFile file, string? locationLink)
     {
         var pictureDateText = string.Empty;
@@ -102,13 +122,19 @@ body { background: #000; color: #fff; font-family: sans-serif; overflow: hidden;
 #controls button { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: #fff; border-radius: 4px; cursor: pointer; font-size: 1em; width: 2.2em; height: 2.2em; padding: 0; display: inline-flex; align-items: center; justify-content: center; }
 #controls button:hover { background: rgba(255,255,255,0.25); }
 #controls button.active { background: rgba(80,160,255,0.45); border-color: #5af; }
-#speed-select { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: #fff; border-radius: 4px; font-size: 1em; cursor: pointer; height: 2.2em; padding: 0 0.4em; }
-#speed-select option { background: #222; }
+#speed-select { background: #222; border: 1px solid rgba(255,255,255,0.3); color: #fff; border-radius: 4px; font-size: 1em; cursor: pointer; height: 2.2em; padding: 0 0.4em; }
+#speed-select option { background: #222; color: #fff; }
+#bbox-overlay { position: absolute; inset: 0; pointer-events: none; }
+.bbox { position: absolute; box-sizing: border-box; border: 2px solid transparent; }
+.bbox.hovered { border-color: #00c040; filter: drop-shadow(0 0 4px rgba(0,0,0,0.8)); }
+.bbox-label { display: none; position: absolute; top: calc(100% + 3px); left: 50%; transform: translateX(-50%); white-space: nowrap; color: #fff; font-size: 0.75em; background: rgba(0,0,0,0.7); padding: 1px 5px; border-radius: 3px; pointer-events: none; text-shadow: 0 1px 2px #000; }
+.bbox.hovered .bbox-label { display: block; }
 </style>
 </head>
 <body>
 <div id="viewer">
   <img id="slide-img" src="" alt=""/>
+  <div id="bbox-overlay"></div>
   <div id="slide-card"></div>
   <div id="meta"></div>
   <div id="counter"></div>
@@ -170,7 +196,58 @@ function showSlide(n) {
   }
   document.getElementById('meta').innerHTML = s.meta;
   document.getElementById('counter').textContent = (current + 1) + ' / ' + slides.length;
+  createBboxOverlays();
 }
+
+function createBboxOverlays() {
+  const overlay = document.getElementById('bbox-overlay');
+  overlay.innerHTML = '';
+  const s = slides[current];
+  if (!s.isPicture || !s.bboxes || s.bboxes.length === 0) return;
+  const img = document.getElementById('slide-img');
+  // Wait for image to be sized (may need natural size after load)
+  function build() {
+    const imgRect = img.getBoundingClientRect();
+    const viewerRect = document.getElementById('viewer').getBoundingClientRect();
+    if (imgRect.width === 0 || imgRect.height === 0) return;
+    overlay.innerHTML = '';
+    for (const bbox of s.bboxes) {
+      const div = document.createElement('div');
+      div.className = 'bbox';
+      div.style.left = (imgRect.left - viewerRect.left + bbox.x * imgRect.width) + 'px';
+      div.style.top = (imgRect.top - viewerRect.top + bbox.y * imgRect.height) + 'px';
+      div.style.width = (bbox.w * imgRect.width) + 'px';
+      div.style.height = (bbox.h * imgRect.height) + 'px';
+      const label = document.createElement('span');
+      label.className = 'bbox-label';
+      label.textContent = bbox.name;
+      div.appendChild(label);
+      overlay.appendChild(div);
+    }
+  }
+  if (img.complete && img.naturalWidth > 0) { build(); }
+  else { img.addEventListener('load', build, { once: true }); }
+}
+
+window.addEventListener('resize', () => { if (slides[current]?.isPicture) createBboxOverlays(); });
+
+document.getElementById('viewer').addEventListener('mousemove', e => {
+  const bboxDivs = document.querySelectorAll('.bbox');
+  const viewerRect = document.getElementById('viewer').getBoundingClientRect();
+  const mx = e.clientX - viewerRect.left;
+  const my = e.clientY - viewerRect.top;
+  bboxDivs.forEach(div => {
+    const x = parseFloat(div.style.left);
+    const y = parseFloat(div.style.top);
+    const w = parseFloat(div.style.width);
+    const h = parseFloat(div.style.height);
+    div.classList.toggle('hovered', mx >= x && mx <= x + w && my >= y && my <= y + h);
+  });
+});
+
+document.getElementById('viewer').addEventListener('mouseleave', () => {
+  document.querySelectorAll('.bbox.hovered').forEach(div => div.classList.remove('hovered'));
+});
 
 function nextSlide() {
   if (isRandom) {

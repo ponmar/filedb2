@@ -26,7 +26,7 @@ public class M3uExporterTests
         string originalPath = "photo.jpg",
         string exportedPath = "Files/1.jpg",
         FileType fileType = FileType.Picture) =>
-        new(1, exportedPath, originalPath, fileType, null, null, null, null, [], [], []);
+        new(1, exportedPath, originalPath, fileType, null, null, null, null, [], [], [], []);
 
     private static M3uExportData MakeData(
         string name = "My Collection",
@@ -87,7 +87,7 @@ public class M3uExporterTests
     [Fact]
     public void Export_TwoFiles_BothHaveExtinfEntries()
     {
-        var file2 = new ExportedFile(2, "Files/2.jpg", "other.jpg", FileType.Picture, null, null, null, null, [], [], []);
+        var file2 = new ExportedFile(2, "Files/2.jpg", "other.jpg", FileType.Picture, null, null, null, null, [], [], [], []);
         Export(MakeData(files: [MakeFile(), file2]));
         Assert.Contains("#EXTINF:10,photo.jpg", capturedContent);
         Assert.Contains("#EXTINF:10,other.jpg", capturedContent);
@@ -96,7 +96,7 @@ public class M3uExporterTests
     [Fact]
     public void Export_TwoFiles_BothExportedPathsPresent()
     {
-        var file2 = new ExportedFile(2, "Files/2.jpg", "other.jpg", FileType.Picture, null, null, null, null, [], [], []);
+        var file2 = new ExportedFile(2, "Files/2.jpg", "other.jpg", FileType.Picture, null, null, null, null, [], [], [], []);
         Export(MakeData(files: [MakeFile(exportedPath: "Files/1.jpg"), file2]));
         Assert.Contains("Files/1.jpg", capturedContent);
         Assert.Contains("Files/2.jpg", capturedContent);

@@ -41,8 +41,9 @@ public class HtmlExporter(IFileSystem fileSystem, IFilesystemAccessProvider file
             fileSystem.File.Copy(sourceFilePath, destFilePath);
 
             var metaHtml = HtmlExportUtils.BuildMetaHtml(data, file, configProvider.Config.LocationLink);
+            var bboxesJs = HtmlExportUtils.BuildBboxesJs(file, data.Persons);
             var isPicture = file.FileType == FileType.Picture ? "true" : "false";
-            slidesJs.AppendLine($"  {{ src: {ToJsString(destinationFilename)}, alt: {ToJsString(Path.GetFileName(file.OriginalPath))}, meta: {ToJsString(metaHtml)}, isPicture: {isPicture} }}{(i < existingFiles.Count - 1 ? "," : "")}");
+            slidesJs.AppendLine($"  {{ src: {ToJsString(destinationFilename)}, alt: {ToJsString(Path.GetFileName(file.OriginalPath))}, meta: {ToJsString(metaHtml)}, isPicture: {isPicture}, bboxes: {bboxesJs} }}{(i < existingFiles.Count - 1 ? "," : "")}");
         }
         slidesJs.AppendLine("];");
 

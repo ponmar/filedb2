@@ -49,10 +49,10 @@ public class PdfExporterTests
         List<int>? locationIds = null,
         List<int>? tagIds = null) =>
         new(1, "photo.jpg", "photo.jpg", FileType.Picture, description, datetime, position, orientation,
-            personIds ?? [], locationIds ?? [], tagIds ?? []);
+            personIds ?? [], locationIds ?? [], tagIds ?? [], []);
 
     private static ExportedFile MakeNonPictureFile(FileType fileType = FileType.Document) =>
-        new(2, "notes.txt", "notes.txt", fileType, null, null, null, null, [], [], []);
+        new(2, "notes.txt", "notes.txt", fileType, null, null, null, null, [], [], [], []);
 
     private static RichExportData MakeData(
         List<ExportedFile>? files = null,

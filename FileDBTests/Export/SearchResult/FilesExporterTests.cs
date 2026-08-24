@@ -29,7 +29,7 @@ public class FilesExporterTests
         string originalPath = "photo.jpg",
         string exportedPath = "Files/1.jpg",
         FileType fileType = FileType.Picture) =>
-        new(1, exportedPath, originalPath, fileType, null, null, null, null, [], [], []);
+        new(1, exportedPath, originalPath, fileType, null, null, null, null, [], [], [], []);
 
     private static List<ExportedFile> MakeFilesList(params ExportedFile[] files) => [.. files];
 
@@ -71,7 +71,7 @@ public class FilesExporterTests
     [Fact]
     public void Export_TwoFiles_CopiesEachFile()
     {
-        var file2 = new ExportedFile(2, "Files/2.jpg", "photo2.jpg", FileType.Picture, null, null, null, null, [], [], []);
+        var file2 = new ExportedFile(2, "Files/2.jpg", "photo2.jpg", FileType.Picture, null, null, null, null, [], [], [], []);
         A.CallTo(() => fakeFilesystemAccessProvider.FilesystemAccess.ToAbsolutePath("photo2.jpg")).Returns("/collection/photo2.jpg");
         Export(MakeFilesList(MakeFile(), file2));
         A.CallTo(() => fakeFileSystem.File.Copy(A<string>._, A<string>._)).MustHaveHappenedTwiceExactly();
@@ -107,7 +107,7 @@ public class FilesExporterTests
     [Fact]
     public void Export_TwoFilesInSameDirectory_ChecksDirectoryExistenceForEach()
     {
-        var file2 = new ExportedFile(2, "Files/2.jpg", "photo2.jpg", FileType.Picture, null, null, null, null, [], [], []);
+        var file2 = new ExportedFile(2, "Files/2.jpg", "photo2.jpg", FileType.Picture, null, null, null, null, [], [], [], []);
         Export(MakeFilesList(MakeFile(exportedPath: "Files/1.jpg"), file2));
         A.CallTo(() => fakeFileSystem.Directory.Exists(A<string>._)).MustHaveHappenedTwiceExactly();
     }

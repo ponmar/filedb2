@@ -84,11 +84,22 @@ public class JsonExporterTests
     [Fact]
     public void Export_FileInJson()
     {
-        var file = new ExportedFile(1, "Files/1.jpg", "photo.jpg", FileType.Picture, "A sunset", "2020-06-15", null, null, [], [], []);
+        var file = new ExportedFile(1, "Files/1.jpg", "photo.jpg", FileType.Picture, "A sunset", "2020-06-15", null, null, [], [], [], []);
         Export(MakeData(files: [file]));
         Assert.Contains("photo.jpg", capturedJson!);
         Assert.Contains("A sunset", capturedJson);
         Assert.Contains("2020-06-15", capturedJson);
+    }
+
+    [Fact]
+    public void Export_BoundingBoxInJson()
+    {
+        var bbox = new ExportedPersonBoundingBox(10, 0.1, 0.2, 0.3, 0.4);
+        var file = new ExportedFile(1, "Files/1.jpg", "photo.jpg", FileType.Picture, null, null, null, null, [10], [], [], [bbox]);
+        Export(MakeData(files: [file]));
+        Assert.Contains("BoundingBoxes", capturedJson!);
+        Assert.Contains("PersonId", capturedJson);
+        Assert.Contains("10", capturedJson);
     }
 
     [Fact]

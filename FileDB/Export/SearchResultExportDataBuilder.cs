@@ -38,7 +38,7 @@ public class SearchResultExportDataBuilder(IDatabaseAccessProvider dbAccessProvi
                 file.Datetime,
                 file.Position,
                 file.Orientation,
-                [], [], []));
+                [], [], [], []));
             index++;
         }
         return exportedFiles;
@@ -112,6 +112,8 @@ public class SearchResultExportDataBuilder(IDatabaseAccessProvider dbAccessProvi
                     tags.Add(tag);
             }
 
+            var fileBoundingBoxes = dbAccessProvider.DbAccess.GetFilePersonBoundingBoxes(file.Id).ToList();
+
             var exportedFilePath = Path.Combine(FilesSubdir, $"{index}{Path.GetExtension(file.Path)}");
             exportedFiles.Add(new ExportedFile(
                 file.Id,
@@ -124,7 +126,8 @@ public class SearchResultExportDataBuilder(IDatabaseAccessProvider dbAccessProvi
                 file.Orientation,
                 filePersons.Select(x => x.Id).ToList(),
                 fileLocations.Select(x => x.Id).ToList(),
-                fileTags.Select(x => x.Id).ToList()));
+                fileTags.Select(x => x.Id).ToList(),
+                fileBoundingBoxes.Select(b => new ExportedPersonBoundingBox(b.PersonId, b.BoundingBox.X, b.BoundingBox.Y, b.BoundingBox.Width, b.BoundingBox.Height)).ToList()));
 
             index++;
         }

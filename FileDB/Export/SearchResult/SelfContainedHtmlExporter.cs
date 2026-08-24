@@ -30,6 +30,7 @@ public class SelfContainedHtmlExporter(IFileSystem fileSystem, IFilesystemAccess
         {
             var file = existingFiles[i];
             var metaHtml = HtmlExportUtils.BuildMetaHtml(data, file, configProvider.Config.LocationLink);
+            var bboxesJs = HtmlExportUtils.BuildBboxesJs(file, data.Persons);
             var isPicture = file.FileType == FileType.Picture;
             string srcValue;
             if (isPicture)
@@ -45,7 +46,7 @@ public class SelfContainedHtmlExporter(IFileSystem fileSystem, IFilesystemAccess
                 srcValue = string.Empty;
             }
             var alt = Path.GetFileName(file.OriginalPath);
-            slidesJs.AppendLine($"  {{ src: {ToJsString(srcValue)}, alt: {ToJsString(alt)}, meta: {ToJsString(metaHtml)}, isPicture: {(isPicture ? "true" : "false")} }}{(i < existingFiles.Count - 1 ? "," : "")}");
+            slidesJs.AppendLine($"  {{ src: {ToJsString(srcValue)}, alt: {ToJsString(alt)}, meta: {ToJsString(metaHtml)}, isPicture: {(isPicture ? "true" : "false")}, bboxes: {bboxesJs} }}{(i < existingFiles.Count - 1 ? "," : "")}");
         }
         slidesJs.AppendLine("];");
 

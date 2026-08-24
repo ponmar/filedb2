@@ -4,6 +4,8 @@ using FileDBInterface.Model;
 
 namespace FileDB.Model.FileFormats;
 
+public record ExportedPersonBoundingBox(int PersonId, double X, double Y, double Width, double Height);
+
 public record ExportedFile(
     int Id,
     string ExportedPath,
@@ -15,7 +17,8 @@ public record ExportedFile(
     int? Orientation,
     List<int> PersonIds,
     List<int> LocationIds,
-    List<int> TagIds);
+    List<int> TagIds,
+    List<ExportedPersonBoundingBox> BoundingBoxes);
 
 public record M3uExportData(
     string Name,
