@@ -46,7 +46,8 @@ public class SelfContainedHtmlExporter(IFileSystem fileSystem, IFilesystemAccess
                 srcValue = string.Empty;
             }
             var alt = Path.GetFileName(file.OriginalPath);
-            slidesJs.AppendLine($"  {{ src: {ToJsString(srcValue)}, alt: {ToJsString(alt)}, meta: {ToJsString(metaHtml)}, isPicture: {(isPicture ? "true" : "false")}, bboxes: {bboxesJs} }}{(i < existingFiles.Count - 1 ? "," : "")}");
+            var dir = ToJsString(Path.GetDirectoryName(file.OriginalPath) ?? string.Empty);
+            slidesJs.AppendLine($"  {{ src: {ToJsString(srcValue)}, alt: {ToJsString(alt)}, meta: {ToJsString(metaHtml)}, isPicture: {(isPicture ? "true" : "false")}, bboxes: {bboxesJs}, dir: {dir} }}{(i < existingFiles.Count - 1 ? "," : "")}");
         }
         slidesJs.AppendLine("];");
 

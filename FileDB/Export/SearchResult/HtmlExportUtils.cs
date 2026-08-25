@@ -115,11 +115,12 @@ body { background: #000; color: #fff; font-family: sans-serif; overflow: hidden;
 #meta { position: absolute; top: 0.5em; left: 0.8em; background: rgba(0,0,0,0.5); padding: 2px 8px; border-radius: 4px; pointer-events: auto; font-size: calc(0.9em * var(--overlay-scale)); }
 #meta a { color: #adf; }
 #counter { position: absolute; top: 0.5em; right: 0.8em; background: rgba(0,0,0,0.5); padding: 2px 8px; border-radius: 4px; font-size: calc(0.9em * var(--overlay-scale)); }
-#scale-indicator { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.8); color: #fff; padding: 1em 2em; border-radius: 8px; font-size: 2em; pointer-events: none; display: none; z-index: 1000; }
-#controls { position: fixed; bottom: 0.8em; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; gap: 0.5em; padding: 0.35em 0.6em; border-radius: 4px; opacity: 0; transition: opacity 0.3s; z-index: 500; font-size: calc(1em * var(--overlay-scale)); }
+#scale-indicator { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.5); color: #fff; padding: 2px 8px; border-radius: 4px; font-size: calc(0.9em * var(--overlay-scale)); pointer-events: none; display: none; z-index: 1000; }
+#controls { position: fixed; bottom: 0.8em; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; gap: 0.5em; padding: 0.35em; border-radius: 4px; opacity: 0; transition: opacity 0.3s; z-index: 500; font-size: calc(1em * var(--overlay-scale)); }
 #controls.visible { opacity: 1; }
 #controls.pinned { opacity: 1; }
 #controls button { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: #fff; border-radius: 4px; cursor: pointer; font-size: 1em; width: 2.2em; height: 2.2em; padding: 0; display: inline-flex; align-items: center; justify-content: center; }
+#controls .group-sep { margin-left: 0.8em; }
 #controls button:hover { background: rgba(255,255,255,0.25); }
 #controls button.active { background: rgba(80,160,255,0.45); border-color: #5af; }
 #speed-select { background: #222; border: 1px solid rgba(255,255,255,0.3); color: #fff; border-radius: 4px; font-size: 1em; cursor: pointer; height: 2.2em; padding: 0 0.4em; }
@@ -141,19 +142,23 @@ body { background: #000; color: #fff; font-family: sans-serif; overflow: hidden;
   <div id="scale-indicator"></div>
 </div>
 <div id="controls">
-  <button id="btn-first" title="First (Home)">&#x21E4;</button>
   <button id="btn-prev" title="Previous (PageUp, ArrowLeft)">&#x2B60;</button>
-  <button id="btn-play" title="Play / Pause (Space)">&#9654;</button>
   <button id="btn-next" title="Next (PageDown, ArrowRight)">&#x2B62;</button>
+  <button id="btn-prev-dir" class="group-sep" title="Previous directory (Ctrl+PageUp)">&#x21C7;</button>
+  <button id="btn-next-dir" title="Next directory (Ctrl+PageDown)">&#x21C9;</button>
+  <button id="btn-first" class="group-sep" title="First (Home)">&#x21E4;</button>
   <button id="btn-last" title="Last (End)">&#x21E5;</button>
-  <button id="btn-random" title="Random (R)">&#128256;</button>
-  <button id="btn-repeat" title="Repeat (T)">&#128257;</button>
+  <button id="btn-play" class="group-sep" title="Play / Pause (Space)">&#9654;</button>
   <select id="speed-select" title="Slideshow speed">
     <option value="2000">2 s</option>
     <option value="5000" selected>5 s</option>
     <option value="10000">10 s</option>
     <option value="30000">30 s</option>
   </select>
+  <button id="btn-random" title="Random (R)">&#128256;</button>
+  <button id="btn-repeat" title="Repeat (T)">&#128257;</button>
+  <button id="btn-font-dec" class="group-sep" title="Decrease font size (ArrowDown)">A&#8722;</button>
+  <button id="btn-font-inc" title="Increase font size (ArrowUp)">A+</button>
 </div>
 <script>
 {{slidesJs}}
@@ -261,7 +266,28 @@ function nextSlide() {
   }
 }
 
-function move(delta) { stopSlideshow(); showSlide(current + delta); }
+function move(delta) {
+  stopSlideshow();
+  const n = current + delta;
+  if (n < 0 || n >= slides.length) return;
+  showSlide(n);
+}
+
+function prevDirectory() {
+  stopSlideshow();
+  const currentDir = slides[current].dir;
+  for (let i = current - 1; i >= 0; i--) {
+    if (slides[i].dir !== currentDir) { showSlide(i); return; }
+  }
+}
+
+function nextDirectory() {
+  stopSlideshow();
+  const currentDir = slides[current].dir;
+  for (let i = current + 1; i < slides.length; i++) {
+    if (slides[i].dir !== currentDir) { showSlide(i); return; }
+  }
+}
 
 function startSlideshow() {
   if (slides.length === 0) return;
@@ -290,6 +316,8 @@ btnPlay.addEventListener('click', togglePlay);
 document.getElementById('btn-first').addEventListener('click', () => { stopSlideshow(); showSlide(0); });
 document.getElementById('btn-prev').addEventListener('click', () => move(-1));
 document.getElementById('btn-next').addEventListener('click', () => move(1));
+document.getElementById('btn-prev-dir').addEventListener('click', prevDirectory);
+document.getElementById('btn-next-dir').addEventListener('click', nextDirectory);
 document.getElementById('btn-last').addEventListener('click', () => { stopSlideshow(); showSlide(slides.length - 1); });
 
 function toggleRandom() {
@@ -311,6 +339,9 @@ speedSelect.addEventListener('change', () => {
   sessionStorage.setItem('speed', speedSelect.value);
   if (isPlaying) { stopSlideshow(); startSlideshow(); }
 });
+
+document.getElementById('btn-font-dec').addEventListener('click', () => adjustOverlayScale(-0.1));
+document.getElementById('btn-font-inc').addEventListener('click', () => adjustOverlayScale(0.1));
 
 // Show controls on hover near bottom or during slideshow
 let hideTimer = null;
@@ -336,29 +367,32 @@ function scheduleHideControls(delay) {
 function showControls(temporary) {
   controls.classList.add('visible');
   if (temporary && !controlsPinned) {
-    scheduleHideControls(isPlaying ? 900 : 2500);
+    scheduleHideControls(2500);
   }
 }
 document.addEventListener('mousemove', e => {
   markPointerOrTouchInput();
   if (e.clientY > window.innerHeight - 80) showControls(true);
-  else scheduleHideControls(isPlaying ? 250 : 800);
+  else scheduleHideControls(800);
 });
 controls.addEventListener('mouseenter', () => { clearTimeout(hideTimer); controls.classList.add('visible'); });
-controls.addEventListener('mouseleave', () => scheduleHideControls(isPlaying ? 250 : 800));
+controls.addEventListener('mouseleave', () => scheduleHideControls(800));
 
 function adjustOverlayScale(delta) {
   overlayScale = Math.max(0.5, Math.min(2.0, overlayScale + delta));
   document.documentElement.style.setProperty('--overlay-scale', overlayScale.toString());
   sessionStorage.setItem('overlayScale', overlayScale.toString());
   showScaleIndicator(Math.round(overlayScale * 100) + '%');
+  showControls(true);
 }
 
+let scaleIndicatorTimer = null;
 function showScaleIndicator(text) {
   const indicator = document.getElementById('scale-indicator');
   indicator.textContent = text;
   indicator.style.display = 'block';
-  setTimeout(() => { indicator.style.display = 'none'; }, 1000);
+  clearTimeout(scaleIndicatorTimer);
+  scaleIndicatorTimer = setTimeout(() => { indicator.style.display = 'none'; }, 2500);
 }
 
 document.documentElement.style.setProperty('--overlay-scale', overlayScale.toString());
@@ -368,8 +402,10 @@ document.addEventListener('keydown', e => {
   if (e.key === ' ' || e.key === 'Enter' || e.key === 'NumpadEnter' || e.key === 'MediaPlayPause') { togglePlay(); e.preventDefault(); }
   else if (e.key === 'ArrowUp') { adjustOverlayScale(0.1); e.preventDefault(); }
   else if (e.key === 'ArrowDown') { adjustOverlayScale(-0.1); e.preventDefault(); }
-  else if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === 'MediaTrackNext') move(1);
-  else if (e.key === 'ArrowLeft' || e.key === 'PageUp' || e.key === 'MediaTrackPrevious') move(-1);
+  else if (e.key === 'ArrowRight' || (e.key === 'PageDown' && !e.ctrlKey) || e.key === 'MediaTrackNext') move(1);
+  else if (e.key === 'ArrowLeft' || (e.key === 'PageUp' && !e.ctrlKey) || e.key === 'MediaTrackPrevious') move(-1);
+  else if (e.key === 'PageDown' && e.ctrlKey) { nextDirectory(); e.preventDefault(); }
+  else if (e.key === 'PageUp' && e.ctrlKey) { prevDirectory(); e.preventDefault(); }
   else if (e.key === 'Home') { stopSlideshow(); showSlide(0); }
   else if (e.key === 'End') { stopSlideshow(); showSlide(slides.length - 1); }
   else if (e.key === 'r' || e.key === 'R') toggleRandom();
