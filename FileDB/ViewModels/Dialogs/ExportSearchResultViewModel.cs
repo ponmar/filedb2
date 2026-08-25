@@ -7,15 +7,13 @@ public class ExportSearchResultViewModel(
     M3uExportTabViewModel m3uTab,
     HtmlExportTabViewModel htmlTab,
     SelfContainedHtmlExportTabViewModel selfContainedHtmlTab,
-    JsonExportTabViewModel jsonTab,
-    PdfExportTabViewModel pdfTab)
+    JsonExportTabViewModel jsonTab)
 {
     public FilesExportTabViewModel FilesTab { get; } = filesTab;
     public M3uExportTabViewModel M3uTab { get; } = m3uTab;
     public HtmlExportTabViewModel HtmlTab { get; } = htmlTab;
     public SelfContainedHtmlExportTabViewModel SelfContainedHtmlTab { get; } = selfContainedHtmlTab;
     public JsonExportTabViewModel JsonTab { get; } = jsonTab;
-    public PdfExportTabViewModel PdfTab { get; } = pdfTab;
 
     public SearchResult? SearchResult
     {
@@ -26,7 +24,6 @@ public class ExportSearchResultViewModel(
             HtmlTab.SearchResult = value;
             SelfContainedHtmlTab.SearchResult = value;
             JsonTab.SearchResult = value;
-            PdfTab.SearchResult = value;
         }
     }
 }

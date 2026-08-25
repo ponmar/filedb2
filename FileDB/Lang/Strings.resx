@@ -150,12 +150,6 @@
   <data name="SearchDifferenceButton" xml:space="preserve">
     <value>Difference</value>
   </data>
-  <data name="SearchCopyButton" xml:space="preserve">
-    <value>Copy</value>
-  </data>
-  <data name="SearchOpenButton" xml:space="preserve">
-    <value>Open</value>
-  </data>
   <data name="HelpTitle" xml:space="preserve">
     <value>Help</value>
   </data>
@@ -787,9 +781,6 @@ YYYY-MM-DDTHH:MM:SS</value>
   <data name="WindowModeFullscreen" xml:space="preserve">
     <value>Fullscreen window</value>
   </data>
-  <data name="CategorizationMarkButton" xml:space="preserve">
-    <value>Select</value>
-  </data>
   <data name="CategorizationMarkButtonToolTip" xml:space="preserve">
     <value>Select this file to be used as last edited file</value>
   </data>
@@ -868,12 +859,6 @@ YYYY-MM-DDTHH:MM:SS</value>
   <data name="ToolsDatabaseExportDestinationDirectoryBrowseButton" xml:space="preserve">
     <value>Browse...</value>
   </data>
-  <data name="ExportSearchResultPdfLabel" xml:space="preserve">
-    <value>PDF (files and meta-data)</value>
-  </data>
-  <data name="ExportDataLabel" xml:space="preserve">
-    <value>Data to export:</value>
-  </data>
   <data name="HelpAppVersion" xml:space="preserve">
     <value>Version:</value>
   </data>
@@ -892,9 +877,6 @@ YYYY-MM-DDTHH:MM:SS</value>
   <data name="ExportDestinationDirectoryIsNotEmpty" xml:space="preserve">
     <value>Destination directory is not empty</value>
   </data>
-  <data name="ExportNothingToExport" xml:space="preserve">
-    <value>Nothing to export</value>
-  </data>
   <data name="ExportSelectDestinationFile" xml:space="preserve">
     <value>Select destination file</value>
   </data>
@@ -912,9 +894,6 @@ YYYY-MM-DDTHH:MM:SS</value>
   </data>
   <data name="ExportJsonDescription" xml:space="preserve">
     <value>Exports meta-data for all files in the search result as a JSON file.</value>
-  </data>
-  <data name="ExportPdfDescription" xml:space="preserve">
-    <value>Generates a PDF document with files and meta-data.</value>
   </data>
   <data name="ExportExporting" xml:space="preserve">
     <value>Exporting...</value>
@@ -1038,9 +1017,6 @@ YYYY-MM-DDTHH:MM:SS</value>
   </data>
   <data name="TextFilterCaseSensitive" xml:space="preserve">
     <value>Case sensitive</value>
-  </data>
-  <data name="SearchCombineSearchCurrent" xml:space="preserve">
-    <value>Current</value>
   </data>
   <data name="SearchCombineSearchCurrentMenuItem" xml:space="preserve">
     <value>Set from current search result</value>

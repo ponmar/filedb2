@@ -35,15 +35,7 @@
 				</Grid>
 			</TabItem>
 
-			<TabItem Header="{x:Static lang:Strings.ExportSearchResultPdfLabel}">
-				<Grid DataContext="{Binding PdfTab}" x:DataType="dialogs:PdfExportTabViewModel"
-					  Margin="10" ColumnDefinitions="auto,*,auto" RowDefinitions="auto,auto,auto">
-					<TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Classes="PageTextBlock" Margin="3,3,3,10" Text="{x:Static lang:Strings.ExportPdfDescription}" TextWrapping="Wrap" MaxWidth="400"/>
-					<TextBlock Grid.Row="1" Grid.Column="0" Classes="PageTextBlock" Margin="3" Text="{x:Static lang:Strings.ExportHeaderLabel}" VerticalAlignment="Center"/>
-					<TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Classes="PageTextBox" Margin="3" VerticalAlignment="Center" Text="{Binding ExportName}"/>
-					<Button Grid.Row="2" Grid.Column="2" Classes="PageButton" Margin="3" VerticalAlignment="Center" Command="{Binding SelectAndExportCommand}" Content="{x:Static lang:Strings.ExportExportButton}"/>
-				</Grid>
-			</TabItem>
+
 
 			<TabItem Header="{x:Static lang:Strings.ExportSearchResultFilesLabel}">
 				<Grid DataContext="{Binding FilesTab}" x:DataType="dialogs:FilesExportTabViewModel"

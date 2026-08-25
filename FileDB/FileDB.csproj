@@ -34,7 +34,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="11.0.0-preview.7.26381.103" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.5-beta1" />
     <PackageReference Include="NReco.Logging.File" Version="1.4.0" />
-    <PackageReference Include="QuestPDF" Version="2026.7.3" />
+
     <PackageReference Include="System.Speech" Version="11.0.0-preview.7.26381.103" />
   </ItemGroup>
 

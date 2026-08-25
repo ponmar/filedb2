@@ -93,14 +93,12 @@ public static class Bootstrapper
         ServiceLocator.RegisterTransient<IHtmlExporter, HtmlExporter>();
         ServiceLocator.RegisterTransient<ISelfContainedHtmlExporter, SelfContainedHtmlExporter>();
         ServiceLocator.RegisterTransient<IJsonExporter, JsonExporter>();
-        ServiceLocator.RegisterTransient<IPdfExporter, PdfExporter>();
 
         ServiceLocator.RegisterTransient<FilesExportTabViewModel>();
         ServiceLocator.RegisterTransient<M3uExportTabViewModel>();
         ServiceLocator.RegisterTransient<HtmlExportTabViewModel>();
         ServiceLocator.RegisterTransient<SelfContainedHtmlExportTabViewModel>();
         ServiceLocator.RegisterTransient<JsonExportTabViewModel>();
-        ServiceLocator.RegisterTransient<PdfExportTabViewModel>();
 
         ServiceLocator.RegisterTransient<FilterSelectionViewModel>();
         ServiceLocator.RegisterTransient<AnnualDateViewModel>();

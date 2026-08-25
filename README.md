@@ -64,7 +64,6 @@ FileDB gives you the possibility to export the internal database and file search
 * **HTML** — files and meta-data as a browsable HTML page (images stored alongside)
 * **Self-contained HTML** — single HTML file with images embedded (base64)
 * **M3U** — playlist for media players
-* **PDF** — files and meta-data as a PDF document
 
 ## Getting Started
 

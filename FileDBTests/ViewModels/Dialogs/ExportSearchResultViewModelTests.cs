@@ -30,11 +30,8 @@ public class ExportSearchResultViewModelTests
     private static JsonExportTabViewModel CreateJsonTab() =>
         new(A.Fake<IDialogs>(), A.Fake<ISearchResultExportDataBuilder>(), FakeProcessUtils(), A.Fake<IJsonExporter>());
 
-    private static PdfExportTabViewModel CreatePdfTab() =>
-        new(A.Fake<IDialogs>(), A.Fake<ISearchResultExportDataBuilder>(), FakeProcessUtils(), A.Fake<IPdfExporter>());
-
     private static ExportSearchResultViewModel CreateViewModel() =>
-        new(CreateFilesTab(), CreateM3uTab(), CreateHtmlTab(), CreateSelfContainedHtmlTab(), CreateJsonTab(), CreatePdfTab());
+        new(CreateFilesTab(), CreateM3uTab(), CreateHtmlTab(), CreateSelfContainedHtmlTab(), CreateJsonTab());
 
     [Fact]
     public void SearchResult_Set_PropagatedToAllTabs()
@@ -44,8 +41,7 @@ public class ExportSearchResultViewModelTests
         var htmlTab = CreateHtmlTab();
         var selfContainedHtmlTab = CreateSelfContainedHtmlTab();
         var jsonTab = CreateJsonTab();
-        var pdfTab = CreatePdfTab();
-        var vm = new ExportSearchResultViewModel(filesTab, m3uTab, htmlTab, selfContainedHtmlTab, jsonTab, pdfTab);
+        var vm = new ExportSearchResultViewModel(filesTab, m3uTab, htmlTab, selfContainedHtmlTab, jsonTab);
 
         var searchResult = new SearchResult { Files = [new FileModel { Id = 1, Path = "a.jpg" }] };
         vm.SearchResult = searchResult;
@@ -55,7 +51,6 @@ public class ExportSearchResultViewModelTests
         Assert.Equal(searchResult, htmlTab.SearchResult);
         Assert.Equal(searchResult, selfContainedHtmlTab.SearchResult);
         Assert.Equal(searchResult, jsonTab.SearchResult);
-        Assert.Equal(searchResult, pdfTab.SearchResult);
     }
 
     [Fact]
@@ -66,14 +61,12 @@ public class ExportSearchResultViewModelTests
         var htmlTab = CreateHtmlTab();
         var selfContainedHtmlTab = CreateSelfContainedHtmlTab();
         var jsonTab = CreateJsonTab();
-        var pdfTab = CreatePdfTab();
-        var vm = new ExportSearchResultViewModel(filesTab, m3uTab, htmlTab, selfContainedHtmlTab, jsonTab, pdfTab);
+        var vm = new ExportSearchResultViewModel(filesTab, m3uTab, htmlTab, selfContainedHtmlTab, jsonTab);
 
         Assert.Same(filesTab, vm.FilesTab);
         Assert.Same(m3uTab, vm.M3uTab);
         Assert.Same(htmlTab, vm.HtmlTab);
         Assert.Same(selfContainedHtmlTab, vm.SelfContainedHtmlTab);
         Assert.Same(jsonTab, vm.JsonTab);
-        Assert.Same(pdfTab, vm.PdfTab);
     }
 }

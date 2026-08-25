@@ -18,7 +18,6 @@ using FileDBInterface.DatabaseAccess;
 using FileDBInterface.DatabaseAccess.SQLite;
 using FileDBInterface.FilesystemAccess;
 using Microsoft.Extensions.Logging;
-using QuestPDF.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -63,7 +62,7 @@ public partial class App : Application
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            QuestPDF.Settings.License = LicenseType.Community;
+
             Bootstrapper.Bootstrap();
             Bootstrapper.StartServices();
 

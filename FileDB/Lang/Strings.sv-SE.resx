@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -149,12 +149,6 @@
   </data>
   <data name="SearchDifferenceButton" xml:space="preserve">
     <value>Differens</value>
-  </data>
-  <data name="SearchCopyButton" xml:space="preserve">
-    <value>Kopiera</value>
-  </data>
-  <data name="SearchOpenButton" xml:space="preserve">
-    <value>Öppna</value>
   </data>
   <data name="HelpTitle" xml:space="preserve">
     <value>Om</value>
@@ -784,9 +778,6 @@
   <data name="WindowModeFullscreen" xml:space="preserve">
     <value>Helskärmsfönster</value>
   </data>
-  <data name="CategorizationMarkButton" xml:space="preserve">
-    <value>Markera</value>
-  </data>
   <data name="CategorizationMarkButtonToolTip" xml:space="preserve">
     <value>Markera denna fil för att användas som den senaste editerade filen</value>
   </data>
@@ -865,12 +856,6 @@
   <data name="ToolsNoMissingFilesFound" xml:space="preserve">
     <value>Ingen meta-data för saknade filer hittades.</value>
   </data>
-  <data name="ExportSearchResultPdfLabel" xml:space="preserve">
-    <value>PDF (filer och metadata)</value>
-  </data>
-  <data name="ExportDataLabel" xml:space="preserve">
-    <value>Data att exportera:</value>
-  </data>
   <data name="HelpAppAuthor" xml:space="preserve">
     <value>Skapare:</value>
   </data>
@@ -888,9 +873,6 @@
   </data>
   <data name="ExportExporting" xml:space="preserve">
     <value>Exporterar...</value>
-  </data>
-  <data name="ExportNothingToExport" xml:space="preserve">
-    <value>Inget att exportera</value>
   </data>
   <data name="ExportSelectYourDestinationDirectory" xml:space="preserve">
     <value>Väljd din destinationskatalog</value>
@@ -1014,9 +996,6 @@
   </data>
   <data name="TextFilterCaseSensitive" xml:space="preserve">
     <value>Skiftlägeskänslig</value>
-  </data>
-  <data name="SearchCombineSearchCurrent" xml:space="preserve">
-    <value>Nuvarande</value>
   </data>
   <data name="SearchCombineSearchCurrentMenuItem" xml:space="preserve">
     <value>Tilldela från nuvarande sökresultat</value>
@@ -1435,5 +1414,32 @@ Lägg till nya filer i '{0}'.</value>
   </data>
   <data name="TextFileContentCaseSensitive" xml:space="preserve">
     <value>Skiftlägeskänslig</value>
+  </data>
+  <data name="ExportSelfContainedHtmlDescription" xml:space="preserve">
+    <value>Genererar en fristående HTML-fil med alla bilder inbäddade och metadata inkluderade.</value>
+  </data>
+  <data name="AppMigrationRequiredInReadOnlyMode" xml:space="preserve">
+    <value>Databasmigration krävs men skrivskyddat läge är aktiverat. Inaktivera skrivskyddat läge och starta om programmet.</value>
+  </data>
+  <data name="AppDatabaseMigrationLockedHint" xml:space="preserve">
+    <value>Om felet är "databasen är låst", kontrollera att inget annat program har databasfilen öppen (t.ex. en annan FileDB-instans, DB Browser for SQLite eller en molnsynkroniseringsklient som OneDrive eller Dropbox).</value>
+  </data>
+  <data name="ExportFilesDescription" xml:space="preserve">
+    <value>Kopierar sökresultatsfilerna till målkatalogen.</value>
+  </data>
+  <data name="AppDatabaseVersionTooNew" xml:space="preserve">
+    <value>Databasversionen ({0}) är nyare än vad den här versionen av FileDB stöder ({1}). Uppgradera FileDB för att öppna den här databasen.</value>
+  </data>
+  <data name="ExportJsonDescription" xml:space="preserve">
+    <value>Exporterar metadata för alla filer i sökresultatet som en JSON-fil.</value>
+  </data>
+  <data name="ExportSelectDestinationFile" xml:space="preserve">
+    <value>Välj målfil</value>
+  </data>
+  <data name="ExportM3uDescription" xml:space="preserve">
+    <value>Kopierar sökresultatsfilerna till målkatalogen och genererar en M3U-spellista.</value>
+  </data>
+  <data name="ExportHtmlDescription" xml:space="preserve">
+    <value>Genererar ett HTML-galleri med metadata. Filer kopieras till exportkatalogen.</value>
   </data>
 </root>
