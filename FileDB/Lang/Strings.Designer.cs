@@ -1732,6 +1732,42 @@ namespace FileDB.Lang {
                 return ResourceManager.GetString("FilterTypePersonSex", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Person timeline.
+        /// </summary>
+        public static string FilterTypePersonTimeline {
+            get {
+                return ResourceManager.GetString("FilterTypePersonTimeline", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Age from (inclusive).
+        /// </summary>
+        public static string SearchFilterPersonTimelineAgeFrom {
+            get {
+                return ResourceManager.GetString("SearchFilterPersonTimelineAgeFrom", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Age to (inclusive).
+        /// </summary>
+        public static string SearchFilterPersonTimelineAgeTo {
+            get {
+                return ResourceManager.GetString("SearchFilterPersonTimelineAgeTo", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Files per year of age.
+        /// </summary>
+        public static string SearchFilterPersonTimelineFilesPerYear {
+            get {
+                return ResourceManager.GetString("SearchFilterPersonTimelineFilesPerYear", resourceCulture);
+            }
+        }
         
         /// <summary>
         ///   Looks up a localized string similar to GPS position.

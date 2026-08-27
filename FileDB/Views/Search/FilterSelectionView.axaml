@@ -93,6 +93,9 @@
 				<DataTemplate x:DataType="filterVms:TagsViewModel">
 					<filters:TagsView/>
 				</DataTemplate>
+				<DataTemplate x:DataType="filterVms:PersonTimelineViewModel">
+					<filters:PersonTimelineView/>
+				</DataTemplate>
 				<DataTemplate x:DataType="filterVms:TextViewModel">
 					<filters:TextView/>
 				</DataTemplate>

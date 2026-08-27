@@ -231,7 +231,7 @@ public class HtmlExporterTests
         Assert.Contains("left: 50%; transform: translateX(-50%)", capturedHtml);
         Assert.Contains("font-size: calc(1em * var(--overlay-scale))", capturedHtml);
         Assert.Contains("width: 2.2em; height: 2.2em", capturedHtml);
-        Assert.Contains("scheduleHideControls(isPlaying ? 250 : 800)", capturedHtml);
+        Assert.Contains("scheduleHideControls(800)", capturedHtml);
     }
 
     [Fact]

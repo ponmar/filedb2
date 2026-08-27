@@ -20,16 +20,13 @@ public class RestInPeaceNotifier : INotifier
         var today = DateTime.Today;
         List<INotification> notifications = [];
 
-        foreach (var person in persons.Where(x => x.DateOfBirth is not null))
+        foreach (var person in persons.Where(x => x.Deceased is not null))
         {
-            if (person.Deceased is not null)
+            var deceased = DatabaseParsing.ParsePersonDeceasedDate(person.Deceased!);
+            if (deceased.Month == today.Month &&
+                deceased.Day == today.Day)
             {
-                var deceased = DatabaseParsing.ParsePersonDeceasedDate(person.Deceased);
-                if (deceased.Month == today.Month &&
-                    deceased.Day == today.Day)
-                {
-                    notifications.Add(new PersonRestInPeaceNotification(person.FullName));
-                }
+                notifications.Add(new PersonRestInPeaceNotification(person.FullName));
             }
         }
 

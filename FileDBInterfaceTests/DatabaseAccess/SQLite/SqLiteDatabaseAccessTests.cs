@@ -542,6 +542,31 @@ public class SqLiteDatabaseAccessTests : IDisposable
     }
 
     [Fact]
+    public void GetPersonCountsFromFiles_ReturnsCountPerFile()
+    {
+        var f1 = InsertFileRow("f1.jpg");
+        var f2 = InsertFileRow("f2.jpg");
+        var f3 = InsertFileRow("f3.jpg");
+        var p1 = InsertPersonRow();
+        var p2 = InsertPersonRow();
+        _db.InsertFilePerson(f1, p1);
+        _db.InsertFilePerson(f2, p1);
+        _db.InsertFilePerson(f2, p2);
+
+        var result = _db.GetPersonCountsFromFiles([f1, f2, f3]);
+
+        Assert.Equal(1, result[f1]);
+        Assert.Equal(2, result[f2]);
+        Assert.False(result.ContainsKey(f3));
+    }
+
+    [Fact]
+    public void GetPersonCountsFromFiles_EmptyInput_ReturnsEmptyDictionary()
+    {
+        Assert.Empty(_db.GetPersonCountsFromFiles([]));
+    }
+
+    [Fact]
     public void DeleteFilePerson_RemovesRelation()
     {
         var fileId = InsertFileRow();

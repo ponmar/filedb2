@@ -96,8 +96,9 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
     {
         // Note: 'like' is case insensitive
         using var connection = SqLiteDatabaseCreator.CreateReadOnlyConnection(database);
-        var sql = "select * from [files] where Path like @criteria";
-        return connection.Query<FileModel>(sql, new { criteria = criteria + "%" });
+        var sql = "select * from [files] where Path like @criteria escape '\\'";
+        var escaped = criteria.Replace("\\", "\\\\").Replace("%", "\\%").Replace("_", "\\_");
+        return connection.Query<FileModel>(sql, new { criteria = escaped + "%" });
     }
 
     public IEnumerable<FileModel> SearchFilesByExtension(string extension)
@@ -531,28 +532,28 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
 
     public void InsertFileLocation(int fileId, int locationId)
     {
-        using var connection = SqLiteDatabaseCreator.CreateReadOnlyConnection(database);
+        using var connection = SqLiteDatabaseCreator.CreateConnection(database);
         var sql = "insert into [filelocations] (FileId, LocationId) values (@fileId, @locationId)";
         connection.Execute(sql, new { fileId, locationId });
     }
 
     public void DeleteFileLocation(int fileId, int locationId)
     {
-        using var connection = SqLiteDatabaseCreator.CreateReadOnlyConnection(database);
+        using var connection = SqLiteDatabaseCreator.CreateConnection(database);
         var sql = "delete from [filelocations] where FileId = @fileId and LocationId = @locationId";
         connection.Execute(sql, new { fileId, locationId });
     }
 
     public void InsertFileTag(int fileId, int tagId)
     {
-        using var connection = SqLiteDatabaseCreator.CreateReadOnlyConnection(database);
+        using var connection = SqLiteDatabaseCreator.CreateConnection(database);
         var sql = "insert into [filetags] (FileId, TagId) values (@fileId, @tagId)";
         connection.Execute(sql, new { fileId, tagId });
     }
 
     public void DeleteFileTag(int fileId, int tagId)
     {
-        using var connection = SqLiteDatabaseCreator.CreateReadOnlyConnection(database);
+        using var connection = SqLiteDatabaseCreator.CreateConnection(database);
         var sql = "delete from [filetags] where FileId = @fileId and TagId = @tagId";
         connection.Execute(sql, new { fileId, tagId });
     }
@@ -571,6 +572,18 @@ public class SqLiteDatabaseAccess : IDatabaseAccess
     {
         using var connection = SqLiteDatabaseCreator.CreateReadOnlyConnection(database);
         return connection.Query<PersonModel>("select * from [persons] where Id in (select PersonId from [filepersons] where FileId = @fileid)", new { fileid = fileId });
+    }
+
+    public IReadOnlyDictionary<int, int> GetPersonCountsFromFiles(IEnumerable<int> fileIds)
+    {
+        var ids = fileIds.ToList();
+        if (ids.Count == 0)
+            return new Dictionary<int, int>();
+        using var connection = SqLiteDatabaseCreator.CreateReadOnlyConnection(database);
+        return connection.Query<(int FileId, int Count)>(
+            "select FileId, count(*) as Count from [filepersons] where FileId in @ids group by FileId",
+            new { ids })
+            .ToDictionary(r => r.FileId, r => r.Count);
     }
 
     public int GetPersonCount()

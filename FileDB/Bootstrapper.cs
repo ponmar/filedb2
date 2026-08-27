@@ -125,6 +125,7 @@ public static class Bootstrapper
         ServiceLocator.RegisterTransient<TagsViewModel>();
         ServiceLocator.RegisterTransient<TimeViewModel>();
         ServiceLocator.RegisterTransient<TextFileContentViewModel>();
+        ServiceLocator.RegisterTransient<PersonTimelineViewModel>();
 
         ServiceLocator.RegisterSingleton(loggerFactory);
     }

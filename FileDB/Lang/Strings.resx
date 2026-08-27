@@ -958,6 +958,18 @@ YYYY-MM-DDTHH:MM:SS</value>
   <data name="SearchFilterPersonAgeTo" xml:space="preserve">
     <value>Age to [years]</value>
   </data>
+  <data name="FilterTypePersonTimeline" xml:space="preserve">
+    <value>Person timeline</value>
+  </data>
+  <data name="SearchFilterPersonTimelineAgeFrom" xml:space="preserve">
+    <value>Age from (inclusive)</value>
+  </data>
+  <data name="SearchFilterPersonTimelineAgeTo" xml:space="preserve">
+    <value>Age to (inclusive)</value>
+  </data>
+  <data name="SearchFilterPersonTimelineFilesPerYear" xml:space="preserve">
+    <value>Files per year of age</value>
+  </data>
   <data name="SearchFilterPersonSexTooltip" xml:space="preserve">
     <value>ISO/IEC 5218</value>
   </data>

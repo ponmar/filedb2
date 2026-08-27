@@ -41,6 +41,7 @@ The following search filters are available. Multiple filters can be added and co
 | Person Group | Filter by a group of persons, with an option to allow additional persons in the file |
 | Person Profile Files | Files that are used as a person's profile picture |
 | Person Sex | Filter by the sex of tagged persons |
+| Person Timeline | For a selected person, picks a specified number of files (default 1) per year of age within a given age range (inclusive). Files where the person appears with fewer other people are preferred |
 | Position | Filter by GPS position — specify a coordinate and a search radius in meters |
 | Random | Return a random selection of files |
 | Season | Filter by season (spring, summer, autumn, winter) |

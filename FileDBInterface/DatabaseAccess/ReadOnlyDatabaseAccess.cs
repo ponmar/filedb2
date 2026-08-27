@@ -72,6 +72,7 @@ public class ReadOnlyDatabaseAccess : IDatabaseAccess
     public IEnumerable<FileModel> SearchFilesWithMissingData() => Inner.SearchFilesWithMissingData();
 
     public IEnumerable<PersonModel> GetPersonsFromFile(int fileId) => Inner.GetPersonsFromFile(fileId);
+    public IReadOnlyDictionary<int, int> GetPersonCountsFromFiles(IEnumerable<int> fileIds) => Inner.GetPersonCountsFromFiles(fileIds);
     public IEnumerable<LocationModel> GetLocationsFromFile(int fileId) => Inner.GetLocationsFromFile(fileId);
     public IEnumerable<TagModel> GetTagsFromFile(int fileId) => Inner.GetTagsFromFile(fileId);
 

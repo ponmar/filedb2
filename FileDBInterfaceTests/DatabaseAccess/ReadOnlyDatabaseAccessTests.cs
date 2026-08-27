@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using FakeItEasy;
 using FileDBInterface.DatabaseAccess;
@@ -138,6 +139,19 @@ public class ReadOnlyDatabaseAccessTests
         _sut.GetPersonsFromFile(1);
 
         A.CallTo(() => _inner.GetPersonsFromFile(1)).MustHaveHappenedOnceExactly();
+    }
+
+    [Fact]
+    public void GetPersonCountsFromFiles_DelegatesToInner()
+    {
+        var ids = new[] { 1, 2 };
+        var expected = new Dictionary<int, int> { [1] = 2 };
+        A.CallTo(() => _inner.GetPersonCountsFromFiles(ids)).Returns(expected);
+
+        var result = _sut.GetPersonCountsFromFiles(ids);
+
+        A.CallTo(() => _inner.GetPersonCountsFromFiles(ids)).MustHaveHappenedOnceExactly();
+        Assert.Same(expected, result);
     }
 
     [Fact]

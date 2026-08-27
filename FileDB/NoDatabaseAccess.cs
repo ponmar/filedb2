@@ -258,6 +258,11 @@ public class NoDatabaseAccess : IDatabaseAccess
         return [];
     }
 
+    public IReadOnlyDictionary<int, int> GetPersonCountsFromFiles(IEnumerable<int> fileIds)
+    {
+        return new Dictionary<int, int>();
+    }
+
     public int GetPersonCount()
     {
         return 0;

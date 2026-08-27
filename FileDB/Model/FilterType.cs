@@ -82,6 +82,9 @@ public enum FilterType
 
     [FilterTypeViewModel(typeof(TextFileContentViewModel))]
     TextFileContent,
+
+    [FilterTypeViewModel(typeof(PersonTimelineViewModel))]
+    PersonTimeline,
 }
 
 public static class FilterTypeExtensions
@@ -114,6 +117,7 @@ public static class FilterTypeExtensions
             FilterType.Random => Strings.FilterTypeRandom,
             FilterType.Combine => Strings.FilterTypeCombine,
             FilterType.TextFileContent => Strings.FilterTypeTextFileContent,
+            FilterType.PersonTimeline => Strings.FilterTypePersonTimeline,
             _ => throw new NotImplementedException(),
         };
     }

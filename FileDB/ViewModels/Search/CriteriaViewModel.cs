@@ -186,6 +186,7 @@ public partial class CriteriaViewModel : ObservableObject, ICriteriaViewModel
             filter.IsFirstFilter = FilterSettings.IndexOf(filter) == 0;
         }
         OnPropertyChanged(nameof(FilterCanBeRemoved));
+        EvaluateFilterErrors();
     }
 
     [RelayCommand]

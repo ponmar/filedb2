@@ -1,0 +1,16 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:FileDB.ViewModels.Search.Filters"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:lang="clr-namespace:FileDB.Lang"
+             mc:Ignorable="d"
+             x:DataType="vm:PersonTimelineViewModel" x:Class="FileDB.Views.Search.Filters.PersonTimelineView">
+	<StackPanel Orientation="Horizontal">
+		<ComboBox Margin="0 0 3 0" ItemsSource="{Binding Persons}" SelectedItem="{Binding SelectedPerson}" VerticalAlignment="Center"/>
+		<NumericUpDown Margin="0 0 3 0" Minimum="0" Maximum="200" Increment="1" Value="{Binding AgeFrom}" MinWidth="90" VerticalAlignment="Center" ToolTip.Tip="{x:Static lang:Strings.SearchFilterPersonTimelineAgeFrom}"/>
+		<TextBlock Margin="0 0 3 0" Text="-" VerticalAlignment="Center"/>
+		<NumericUpDown Margin="0 0 3 0" Minimum="0" Maximum="200" Increment="1" Value="{Binding AgeTo}" MinWidth="90" VerticalAlignment="Center" ToolTip.Tip="{x:Static lang:Strings.SearchFilterPersonTimelineAgeTo}"/>
+		<NumericUpDown Minimum="1" Maximum="100" Increment="1" Value="{Binding FilesPerYear}" MinWidth="80" VerticalAlignment="Center" ToolTip.Tip="{x:Static lang:Strings.SearchFilterPersonTimelineFilesPerYear}"/>
+	</StackPanel>
+</UserControl>

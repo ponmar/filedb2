@@ -158,7 +158,7 @@ public class SelfContainedHtmlExporterTests
         Assert.Contains("font-size: calc(1em * var(--overlay-scale))", capturedHtml);
         Assert.Contains("width: 2.2em; height: 2.2em", capturedHtml);
         Assert.Contains("#controls.pinned { opacity: 1; }", capturedHtml);
-        Assert.Contains("scheduleHideControls(isPlaying ? 250 : 800)", capturedHtml);
+        Assert.Contains("scheduleHideControls(800)", capturedHtml);
     }
 
     [Fact]

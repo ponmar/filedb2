@@ -79,8 +79,8 @@ public static class HtmlExportUtils
 
         if (file.TagIds.Count > 0)
         {
-            var tags = data.Tags.Where(x => file.TagIds.Contains(x.Id));
-            var tagsStr = FileTextOverlayCreator.GetTagsText(tags, ", ");
+            var tags = data.Tags.Where(x => file.TagIds.Contains(x.Id)).OrderBy(x => x.Name);
+            var tagsStr = string.Join(", ", tags.Select(t => HttpUtility.HtmlEncode(t.Name)));
             text += $"<p>&#128278; {tagsStr}</p>";
         }
 

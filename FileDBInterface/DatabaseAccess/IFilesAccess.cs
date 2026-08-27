@@ -68,6 +68,7 @@ public interface IFilesAccess
     void DeleteFileTag(int fileId, int tagId);
 
     IEnumerable<PersonModel> GetPersonsFromFile(int fileId);
+    IReadOnlyDictionary<int, int> GetPersonCountsFromFiles(IEnumerable<int> fileIds);
     IEnumerable<LocationModel> GetLocationsFromFile(int fileId);
     IEnumerable<TagModel> GetTagsFromFile(int fileId);
 }

@@ -361,6 +361,7 @@ public partial class SettingsViewModel : ObservableObject
         SelectedLanguage = Languages.FirstOrDefault(x => x.Name == config.Language);
         Theme = config.Theme;
         LoadExifOrientationFromFileWhenMissingInDatabase = config.LoadExifOrientationFromFileWhenMissingInDatabase;
+        InitialSearchFilterType = config.InitialSearchFilterType;
 
         IsDirty = false;
     }

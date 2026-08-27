@@ -907,6 +907,18 @@
   <data name="FilterTypePersonSex" xml:space="preserve">
     <value>Persons kön</value>
   </data>
+  <data name="FilterTypePersonTimeline" xml:space="preserve">
+    <value>Person tidslinje</value>
+  </data>
+  <data name="SearchFilterPersonTimelineAgeFrom" xml:space="preserve">
+    <value>Ålder från (inklusive)</value>
+  </data>
+  <data name="SearchFilterPersonTimelineAgeTo" xml:space="preserve">
+    <value>Ålder till (inklusive)</value>
+  </data>
+  <data name="SearchFilterPersonTimelineFilesPerYear" xml:space="preserve">
+    <value>Filer per levnadsår</value>
+  </data>
   <data name="FilterTypeDateTime" xml:space="preserve">
     <value>Datum</value>
   </data>
