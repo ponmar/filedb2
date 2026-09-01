@@ -8,6 +8,7 @@ using FileDB.Model;
 using System;
 using System.Collections.Generic;
 using FileDB.Infrastructure;
+using System.Diagnostics.CodeAnalysis;
 
 namespace FileDB.Views.Search.File;
 
@@ -18,6 +19,7 @@ namespace FileDB.Views.Search.File;
 /// This canvas displays the current state without applying visual rotations (rotation is pre-applied in the database).
 /// Boxes are rendered with drop shadow effects to ensure visibility on any background color.
 /// </summary>
+[ExcludeFromCodeCoverage]
 public class BoundingBoxCanvas : Canvas
 {
     private Point dragStartPoint = new();

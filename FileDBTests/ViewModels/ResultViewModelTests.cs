@@ -29,7 +29,7 @@ public class ResultViewModelTests
         SetupConfig();
     }
 
-    private void SetupConfig(SortMethod defaultSort = SortMethod.Date, bool keepSelection = false, int searchHistorySize = 10, int slideshowDelay = 3)
+    private void SetupConfig(SortMethod defaultSort = SortMethod.Date, bool keepSelection = false, int searchHistorySize = 10, int slideshowDelay = 3, int numImagesToPreload = 1)
     {
         A.CallTo(() => fakeConfigProvider.Config).Returns(
             new ConfigBuilder
@@ -38,6 +38,7 @@ public class ResultViewModelTests
                 KeepSelectionAfterSort = keepSelection,
                 SearchHistorySize = searchHistorySize,
                 SlideshowDelay = slideshowDelay,
+                NumImagesToPreload = numImagesToPreload,
             }.Build());
     }
 
@@ -487,7 +488,95 @@ public class ResultViewModelTests
         Assert.Equal(TimeSpan.FromSeconds(9), GetTimerInterval(vm));
     }
 
-    // --- ISearchResultRepository ---
+    // --- Image preloading ---
+
+    [Fact]
+    public void LoadFile_NextFileIsPicture_PreloadsImage()
+    {
+        // Arrange
+        SetupConfig(numImagesToPreload: 1);
+        var vm = CreateViewModel();
+        var files = new List<FileModel>
+        {
+            new() { Id = 1, Path = "a.jpg" },
+            new() { Id = 2, Path = "b.jpg" },
+        };
+        A.CallTo(() => fakeFilesystemAccess.ToAbsolutePath("b.jpg")).Returns("/abs/b.jpg");
+
+        // Act: PopulateRepo selects index 0 and preloads index 1 (b.jpg)
+        vm.PopulateRepo(files);
+
+        // Assert
+        A.CallTo(() => fakeImageLoader.LoadImage("/abs/b.jpg")).MustHaveHappenedOnceExactly();
+    }
+
+    [Fact]
+    public void LoadFile_NextFileIsMovie_DoesNotPreloadImage()
+    {
+        // Arrange
+        SetupConfig(numImagesToPreload: 1);
+        var vm = CreateViewModel();
+        var files = new List<FileModel>
+        {
+            new() { Id = 1, Path = "a.jpg" },
+            new() { Id = 2, Path = "b.mp4" },
+        };
+        A.CallTo(() => fakeFilesystemAccess.ToAbsolutePath("b.mp4")).Returns("/abs/b.mp4");
+        vm.PopulateRepo(files);
+
+        // Assert: mp4 must never be sent to the image loader
+        A.CallTo(() => fakeImageLoader.LoadImage("/abs/b.mp4")).MustNotHaveHappened();
+    }
+
+    [Fact]
+    public void LoadFile_PreloadsCorrectNumberOfNextFiles_AccordingToConfig()
+    {
+        // Arrange: config says preload 2, list has 4 files after current
+        SetupConfig(numImagesToPreload: 2);
+        var vm = CreateViewModel();
+        var files = new List<FileModel>
+        {
+            new() { Id = 1, Path = "a.jpg" },
+            new() { Id = 2, Path = "b.jpg" },
+            new() { Id = 3, Path = "c.jpg" },
+            new() { Id = 4, Path = "d.jpg" },
+        };
+        A.CallTo(() => fakeFilesystemAccess.ToAbsolutePath("b.jpg")).Returns("/abs/b.jpg");
+        A.CallTo(() => fakeFilesystemAccess.ToAbsolutePath("c.jpg")).Returns("/abs/c.jpg");
+        A.CallTo(() => fakeFilesystemAccess.ToAbsolutePath("d.jpg")).Returns("/abs/d.jpg");
+
+        // Act: PopulateRepo selects index 0, preloads indices 1 and 2
+        vm.PopulateRepo(files);
+
+        // Assert: exactly b.jpg and c.jpg preloaded; d.jpg must not be preloaded
+        A.CallTo(() => fakeImageLoader.LoadImage("/abs/b.jpg")).MustHaveHappenedOnceExactly();
+        A.CallTo(() => fakeImageLoader.LoadImage("/abs/c.jpg")).MustHaveHappenedOnceExactly();
+        A.CallTo(() => fakeImageLoader.LoadImage("/abs/d.jpg")).MustNotHaveHappened();
+    }
+
+    [Fact]
+    public void LoadFile_NonPictureInBetween_StillPreloadsCorrectNumberOfImages()
+    {
+        // Arrange: preload=2, files: [jpg, mp4, jpg, jpg] — mp4 must not consume a preload slot
+        SetupConfig(numImagesToPreload: 2);
+        var vm = CreateViewModel();
+        var files = new List<FileModel>
+        {
+            new() { Id = 1, Path = "a.jpg" },
+            new() { Id = 2, Path = "b.mp4" },
+            new() { Id = 3, Path = "c.jpg" },
+            new() { Id = 4, Path = "d.jpg" },
+        };
+        A.CallTo(() => fakeFilesystemAccess.ToAbsolutePath("c.jpg")).Returns("/abs/c.jpg");
+        A.CallTo(() => fakeFilesystemAccess.ToAbsolutePath("d.jpg")).Returns("/abs/d.jpg");
+
+        // Act: PopulateRepo selects index 0, must preload 2 *pictures* (c.jpg and d.jpg)
+        vm.PopulateRepo(files);
+
+        // Assert: mp4 skipped without consuming a slot, so both c.jpg and d.jpg are preloaded
+        A.CallTo(() => fakeImageLoader.LoadImage("/abs/c.jpg")).MustHaveHappenedOnceExactly();
+        A.CallTo(() => fakeImageLoader.LoadImage("/abs/d.jpg")).MustHaveHappenedOnceExactly();
+    }
 
     [Fact]
     public void Files_NoSearchResult_ReturnsEmpty()

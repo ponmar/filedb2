@@ -1,9 +1,11 @@
 using Avalonia.Controls;
 using FileDB.Infrastructure;
 using FileDB.ViewModels.Search;
+using System.Diagnostics.CodeAnalysis;
 
 namespace FileDB.Views.Search.File;
 
+[ExcludeFromCodeCoverage]
 public partial class PresentationWindow : Window
 {
     public PresentationWindow()

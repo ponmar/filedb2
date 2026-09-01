@@ -3,9 +3,11 @@ using Avalonia.Controls;
 using FileDB.Infrastructure;
 using FileDB.Model;
 using FileDB.ViewModels.Dialogs;
+using System.Diagnostics.CodeAnalysis;
 
 namespace FileDB.Views.Dialogs;
 
+[ExcludeFromCodeCoverage]
 public partial class AddLocationWindow : Window
 {
     public AddLocationWindow()

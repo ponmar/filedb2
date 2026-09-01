@@ -419,16 +419,16 @@ public partial class ResultViewModel : ObservableObject, ISearchResultRepository
             Messenger.Send<FileSelectionChanged>();
 
             var numImagesToLoad = Math.Max(1, configProvider.Config.NumImagesToPreload);
-            for (int preloadIndex = index + 1; preloadIndex <= index + numImagesToLoad; preloadIndex++)
+            var imagesPreloaded = 0;
+            for (int preloadIndex = index + 1; preloadIndex < SearchResult.Count && imagesPreloaded < numImagesToLoad; preloadIndex++)
             {
-                if (preloadIndex == SearchResult.Count)
-                {
-                    break;
-                }
-
                 var preLoadFile = SearchResult.Files[preloadIndex];
-                var fileAbsolutePath = filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(preLoadFile.Path);
-                imageLoader.LoadImage(fileAbsolutePath);
+                if (FileTypeUtils.GetFileType(preLoadFile.Path) == FileType.Picture)
+                {
+                    var fileAbsolutePath = filesystemAccessProvider.FilesystemAccess.ToAbsolutePath(preLoadFile.Path);
+                    imageLoader.LoadImage(fileAbsolutePath);
+                    imagesPreloaded++;
+                }
             }
 
             SpeekFileDescription();

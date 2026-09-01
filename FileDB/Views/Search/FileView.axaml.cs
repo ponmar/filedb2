@@ -9,9 +9,11 @@ using FileDB.ViewModels.Search.File;
 using FileDBInterface.Model;
 using FileDB.Model;
 using FileDB.Infrastructure;
+using System.Diagnostics.CodeAnalysis;
 
 namespace FileDB.Views.Search;
 
+[ExcludeFromCodeCoverage]
 public partial class FileView : UserControl
 {
     private FileViewModel? viewModel;

@@ -1,10 +1,12 @@
-﻿using Avalonia;
+using Avalonia;
 using Avalonia.Controls;
 using FileDB.Infrastructure;
 using FileDB.ViewModels;
+using System.Diagnostics.CodeAnalysis;
 
 namespace FileDB.Views;
 
+[ExcludeFromCodeCoverage]
 public partial class MainWindow : Window
 {
     public MainWindow()

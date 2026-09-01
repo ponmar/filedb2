@@ -1,8 +1,10 @@
 using Avalonia.Controls;
 using System.Threading;
+using System.Diagnostics.CodeAnalysis;
 
 namespace FileDB.Views.Dialogs;
 
+[ExcludeFromCodeCoverage]
 public partial class SplashWindow : Window
 {
     public SplashWindow()

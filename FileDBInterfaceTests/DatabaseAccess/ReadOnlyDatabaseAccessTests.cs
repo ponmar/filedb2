@@ -244,6 +244,238 @@ public class ReadOnlyDatabaseAccessTests
         A.CallTo(() => _inner.GetTagsFromFile(1)).MustHaveHappenedOnceExactly();
     }
 
+    // ── Remaining read delegations ─────────────────────────────────────────
+
+    [Fact]
+    public void SearchFilesExceptIds_DelegatesToInner()
+    {
+        var ids = new[] { 3, 4 };
+        A.CallTo(() => _inner.SearchFilesExceptIds(ids)).Returns([]);
+        _sut.SearchFilesExceptIds(ids);
+        A.CallTo(() => _inner.SearchFilesExceptIds(ids)).MustHaveHappenedOnceExactly();
+    }
+
+    [Fact]
+    public void SearchFiles_DelegatesToInner()
+    {
+        A.CallTo(() => _inner.SearchFiles("q", true)).Returns([]);
+        _sut.SearchFiles("q", true);
+        A.CallTo(() => _inner.SearchFiles("q", true)).MustHaveHappenedOnceExactly();
+    }
+
+    [Fact]
+    public void SearchFilesBySex_DelegatesToInner()
+    {
+        A.CallTo(() => _inner.SearchFilesBySex(Sex.Female)).Returns([]);
+        _sut.SearchFilesBySex(Sex.Female);
+        A.CallTo(() => _inner.SearchFilesBySex(Sex.Female)).MustHaveHappenedOnceExactly();
+    }
+
+    [Fact]
+    public void SearchFilesByTime_DelegatesToInner()
+    {
+        var start = new TimeOnly(8, 0);
+        var end = new TimeOnly(18, 0);
+        A.CallTo(() => _inner.SearchFilesByTime(start, end)).Returns([]);
+        _sut.SearchFilesByTime(start, end);
+        A.CallTo(() => _inner.SearchFilesByTime(start, end)).MustHaveHappenedOnceExactly();
+    }
+
+    [Fact]
+    public void SearchFilesByDate_SingleDate_DelegatesToInner()
+    {
+        var date = DateTime.Today;
+        A.CallTo(() => _inner.SearchFilesByDate(date)).Returns([]);
+        _sut.SearchFilesByDate(date);
+        A.CallTo(() => _inner.SearchFilesByDate(date)).MustHaveHappenedOnceExactly();
+    }
+
+    [Fact]
+    public void SearchFilesByDate_Range_DelegatesToInner()
+    {
+        var start = DateTime.Today.AddDays(-7);
+        var end = DateTime.Today;
+        A.CallTo(() => _inner.SearchFilesByDate(start, end)).Returns([]);
+        _sut.SearchFilesByDate(start, end);
+        A.CallTo(() => _inner.SearchFilesByDate(start, end)).MustHaveHappenedOnceExactly();
+    }
+
+    [Fact]
+    public void SearchFilesBySeason_DelegatesToInner()
+    {
+        A.CallTo(() => _inner.SearchFilesBySeason(Season.Summer)).Returns([]);
+        _sut.SearchFilesBySeason(Season.Summer);
+        A.CallTo(() => _inner.SearchFilesBySeason(Season.Summer)).MustHaveHappenedOnceExactly();
+    }
+
+    [Fact]
+    public void SearchFilesByAnnualDate_MonthDay_DelegatesToInner()
+    {
+        A.CallTo(() => _inner.SearchFilesByAnnualDate(6, 15)).Returns([]);
+        _sut.SearchFilesByAnnualDate(6, 15);
+        A.CallTo(() => _inner.SearchFilesByAnnualDate(6, 15)).MustHaveHappenedOnceExactly();
+    }
+
+    [Fact]
+    public void SearchFilesByAnnualDate_Range_DelegatesToInner()
+    {
+        A.CallTo(() => _inner.SearchFilesByAnnualDate(6, 1, 8, 31)).Returns([]);
+        _sut.SearchFilesByAnnualDate(6, 1, 8, 31);
+        A.CallTo(() => _inner.SearchFilesByAnnualDate(6, 1, 8, 31)).MustHaveHappenedOnceExactly();
+    }
+
+    [Fact]
+    public void SearchFilesWithoutDate_DelegatesToInner()
+    {
+        A.CallTo(() => _inner.SearchFilesWithoutDate()).Returns([]);
+        _sut.SearchFilesWithoutDate();
+        A.CallTo(() => _inner.SearchFilesWithoutDate()).MustHaveHappenedOnceExactly();
+    }
+
+    [Fact]
+    public void SearchFilesByPath_DelegatesToInner()
+    {
+        A.CallTo(() => _inner.SearchFilesByPath("some/path")).Returns([]);
+        _sut.SearchFilesByPath("some/path");
+        A.CallTo(() => _inner.SearchFilesByPath("some/path")).MustHaveHappenedOnceExactly();
+    }
+
+    [Fact]
+    public void SearchFilesByExtension_DelegatesToInner()
+    {
+        A.CallTo(() => _inner.SearchFilesByExtension(".jpg")).Returns([]);
+        _sut.SearchFilesByExtension(".jpg");
+        A.CallTo(() => _inner.SearchFilesByExtension(".jpg")).MustHaveHappenedOnceExactly();
+    }
+
+    [Fact]
+    public void SearchFilesRandom_DelegatesToInner()
+    {
+        A.CallTo(() => _inner.SearchFilesRandom(5)).Returns([]);
+        _sut.SearchFilesRandom(5);
+        A.CallTo(() => _inner.SearchFilesRandom(5)).MustHaveHappenedOnceExactly();
+    }
+
+    [Fact]
+    public void SearchFilesNearGpsPosition_DelegatesToInner()
+    {
+        A.CallTo(() => _inner.SearchFilesNearGpsPosition(59.0, 18.0, 1000)).Returns([]);
+        _sut.SearchFilesNearGpsPosition(59.0, 18.0, 1000);
+        A.CallTo(() => _inner.SearchFilesNearGpsPosition(59.0, 18.0, 1000)).MustHaveHappenedOnceExactly();
+    }
+
+    [Fact]
+    public void SearchFilesByNumPersons_DelegatesToInner()
+    {
+        var range = 1..3;
+        A.CallTo(() => _inner.SearchFilesByNumPersons(range)).Returns([]);
+        _sut.SearchFilesByNumPersons(range);
+        A.CallTo(() => _inner.SearchFilesByNumPersons(range)).MustHaveHappenedOnceExactly();
+    }
+
+    [Fact]
+    public void SearchFilesWithPersons_DelegatesToInner()
+    {
+        var ids = new[] { 1, 2 };
+        A.CallTo(() => _inner.SearchFilesWithPersons(ids)).Returns([]);
+        _sut.SearchFilesWithPersons(ids);
+        A.CallTo(() => _inner.SearchFilesWithPersons(ids)).MustHaveHappenedOnceExactly();
+    }
+
+    [Fact]
+    public void SearchFilesWithPersonGroup_DelegatesToInner()
+    {
+        var ids = new[] { 1 };
+        A.CallTo(() => _inner.SearchFilesWithPersonGroup(ids)).Returns([]);
+        _sut.SearchFilesWithPersonGroup(ids);
+        A.CallTo(() => _inner.SearchFilesWithPersonGroup(ids)).MustHaveHappenedOnceExactly();
+    }
+
+    [Fact]
+    public void SearchFilesWithPersonGroupOnly_DelegatesToInner()
+    {
+        var ids = new[] { 1 };
+        A.CallTo(() => _inner.SearchFilesWithPersonGroupOnly(ids)).Returns([]);
+        _sut.SearchFilesWithPersonGroupOnly(ids);
+        A.CallTo(() => _inner.SearchFilesWithPersonGroupOnly(ids)).MustHaveHappenedOnceExactly();
+    }
+
+    [Fact]
+    public void SearchFilesWithoutPerson_DelegatesToInner()
+    {
+        A.CallTo(() => _inner.SearchFilesWithoutPerson(1)).Returns([]);
+        _sut.SearchFilesWithoutPerson(1);
+        A.CallTo(() => _inner.SearchFilesWithoutPerson(1)).MustHaveHappenedOnceExactly();
+    }
+
+    [Fact]
+    public void SearchFilesWithLocations_DelegatesToInner()
+    {
+        var ids = new[] { 1 };
+        A.CallTo(() => _inner.SearchFilesWithLocations(ids)).Returns([]);
+        _sut.SearchFilesWithLocations(ids);
+        A.CallTo(() => _inner.SearchFilesWithLocations(ids)).MustHaveHappenedOnceExactly();
+    }
+
+    [Fact]
+    public void SearchFilesWithoutLocation_DelegatesToInner()
+    {
+        A.CallTo(() => _inner.SearchFilesWithoutLocation(1)).Returns([]);
+        _sut.SearchFilesWithoutLocation(1);
+        A.CallTo(() => _inner.SearchFilesWithoutLocation(1)).MustHaveHappenedOnceExactly();
+    }
+
+    [Fact]
+    public void SearchFilesWithTags_DelegatesToInner()
+    {
+        var ids = new[] { 1, 2 };
+        A.CallTo(() => _inner.SearchFilesWithTags(ids)).Returns([]);
+        _sut.SearchFilesWithTags(ids);
+        A.CallTo(() => _inner.SearchFilesWithTags(ids)).MustHaveHappenedOnceExactly();
+    }
+
+    [Fact]
+    public void SearchFilesWithTagGroup_DelegatesToInner()
+    {
+        var ids = new[] { 1 };
+        A.CallTo(() => _inner.SearchFilesWithTagGroup(ids)).Returns([]);
+        _sut.SearchFilesWithTagGroup(ids);
+        A.CallTo(() => _inner.SearchFilesWithTagGroup(ids)).MustHaveHappenedOnceExactly();
+    }
+
+    [Fact]
+    public void SearchFilesWithTagGroupOnly_DelegatesToInner()
+    {
+        var ids = new[] { 1 };
+        A.CallTo(() => _inner.SearchFilesWithTagGroupOnly(ids)).Returns([]);
+        _sut.SearchFilesWithTagGroupOnly(ids);
+        A.CallTo(() => _inner.SearchFilesWithTagGroupOnly(ids)).MustHaveHappenedOnceExactly();
+    }
+
+    [Fact]
+    public void SearchFilesWithoutTag_DelegatesToInner()
+    {
+        A.CallTo(() => _inner.SearchFilesWithoutTag(1)).Returns([]);
+        _sut.SearchFilesWithoutTag(1);
+        A.CallTo(() => _inner.SearchFilesWithoutTag(1)).MustHaveHappenedOnceExactly();
+    }
+
+    [Fact]
+    public void SearchFilesWithMissingData_DelegatesToInner()
+    {
+        A.CallTo(() => _inner.SearchFilesWithMissingData()).Returns([]);
+        _sut.SearchFilesWithMissingData();
+        A.CallTo(() => _inner.SearchFilesWithMissingData()).MustHaveHappenedOnceExactly();
+    }
+
+    [Fact]
+    public void SearchLocationsNearGpsPosition_DelegatesToInner()
+    {
+        A.CallTo(() => _inner.SearchLocationsNearGpsPosition(59.0, 18.0, 500)).Returns([]);
+        _sut.SearchLocationsNearGpsPosition(59.0, 18.0, 500);
+        A.CallTo(() => _inner.SearchLocationsNearGpsPosition(59.0, 18.0, 500)).MustHaveHappenedOnceExactly();
+    }
+
     [Fact]
     public void NeedsMigration_DelegatesToInner()
     {

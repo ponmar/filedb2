@@ -1,24 +1,26 @@
-﻿using FluentValidation.Results;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using MsBox.Avalonia;
 using System.Threading;
 using System.Threading.Tasks;
-using MsBox.Avalonia.Enums;
-using FileDB.Views.Dialogs;
-using System.ComponentModel;
 using Avalonia;
-using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Platform.Storage;
-using FileDB.ViewModels.Search;
 using FileDB.ViewModels.Dialogs;
+using FileDB.ViewModels.Search;
+using FileDB.Views.Dialogs;
 using FileDB.Views.Search.File;
 using FileDBInterface.Model;
+using FluentValidation.Results;
+using MsBox.Avalonia;
+using MsBox.Avalonia.Enums;
 
 namespace FileDB.Dialogs;
 
+[ExcludeFromCodeCoverage]
 public class Dialogs : IDialogs
 {
     public async Task ShowInfoDialogAsync(string message)
