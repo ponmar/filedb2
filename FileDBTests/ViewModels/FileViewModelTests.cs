@@ -333,6 +333,29 @@ public class FileViewModelTests : IDisposable
     }
 
     [Fact]
+    public void FileEdited_RefreshesPersonsLocationsAndTags()
+    {
+        var persons = new List<PersonModel>();
+        var locations = new List<LocationModel>();
+        var tags = new List<TagModel>();
+        A.CallTo(() => fakeDbAccessProvider.DbAccess.GetPersonsFromFile(1)).Returns(persons);
+        A.CallTo(() => fakeDbAccessProvider.DbAccess.GetLocationsFromFile(1)).Returns(locations);
+        A.CallTo(() => fakeDbAccessProvider.DbAccess.GetTagsFromFile(1)).Returns(tags);
+        var vm = CreateViewModel();
+
+        SelectFile(new FileModel { Id = 1, Path = "photo.jpg" });
+
+        persons.Add(new PersonModel { Id = 1, ShortName = "Alice", FullName = "Alice Smith" });
+        locations.Add(new LocationModel { Id = 2, Name = "Home" });
+        tags.Add(new TagModel { Id = 3, Name = "Favorites" });
+        Messenger.Send<FileEdited>();
+
+        Assert.Collection(vm.Persons, person => Assert.Equal("Alice Smith", person.Label));
+        Assert.Collection(vm.Locations, location => Assert.Equal("Home", location.Name));
+        Assert.Collection(vm.Tags, tag => Assert.Equal("Favorites", tag.Name));
+    }
+
+    [Fact]
     public void CloseFile_InternalPathIsCleared()
     {
         var vm = CreateViewModel();

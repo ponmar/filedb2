@@ -215,6 +215,7 @@ public partial class FileViewModel : ObservableObject
         {
             if (SelectedFile is not null)
             {
+                LoadFileCategorization(SelectedFile);
                 LoadFilePersonBoundingBoxes(SelectedFile.Id);
             }
         });
@@ -266,14 +267,7 @@ public partial class FileViewModel : ObservableObject
         Position = FileTextOverlayCreator.GetShortPositionText(selection) ?? string.Empty;
         PositionLink = FileTextOverlayCreator.GetPositionUri(configProvider, selection);
 
-        Persons.Clear();
-        FileTextOverlayCreator.GetPersons(dbAccessProvider.DbAccess, selection).ToList().ForEach(Persons.Add);
-
-        Locations.Clear();
-        FileTextOverlayCreator.GetLocations(configProvider, dbAccessProvider.DbAccess, selection).ToList().ForEach(Locations.Add);
-
-        Tags.Clear();
-        FileTextOverlayCreator.GetTags(dbAccessProvider.DbAccess, selection).ToList().ForEach(Tags.Add);
+        LoadFileCategorization(selection);
 
         FileLoadError = string.Empty;
         Image = null;
@@ -307,6 +301,18 @@ public partial class FileViewModel : ObservableObject
         {
             FileLoadError = Strings.SearchFileTypeNotSupported;
         }
+    }
+
+    private void LoadFileCategorization(FileModel file)
+    {
+        Persons.Clear();
+        FileTextOverlayCreator.GetPersons(dbAccessProvider.DbAccess, file).ToList().ForEach(Persons.Add);
+
+        Locations.Clear();
+        FileTextOverlayCreator.GetLocations(configProvider, dbAccessProvider.DbAccess, file).ToList().ForEach(Locations.Add);
+
+        Tags.Clear();
+        FileTextOverlayCreator.GetTags(dbAccessProvider.DbAccess, file).ToList().ForEach(Tags.Add);
     }
 
     private void CloseFile()
@@ -459,7 +465,6 @@ public partial class FileViewModel : ObservableObject
         criteriaViewModel.AddTimeSearchFilter(time);
     }
 }
-
 
 
 
