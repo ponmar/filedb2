@@ -55,6 +55,7 @@ The following search filters are available. Multiple filters can be added and co
 ### Prerequisites
 
 * A collection of files
+* [.NET 10 Runtime](https://dotnet.microsoft.com/download/dotnet/10.0/runtime)
 * It is strongly recommended to have a backup procedure for your file collection (although FileDB itself does not intentionally modify your files)
 
 ### 3rd Party Software Integrations
