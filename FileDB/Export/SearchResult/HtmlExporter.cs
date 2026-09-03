@@ -2,8 +2,6 @@
 using FileDB.Model;
 using FileDB.Model.FileFormats;
 using FileDBInterface.Model;
-using FileDBInterface.Validators;
-using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions;
 using System.Linq;

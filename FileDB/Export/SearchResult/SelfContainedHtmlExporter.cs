@@ -1,4 +1,3 @@
-using FileDB.Extensions;
 using FileDB.Model;
 using FileDB.Model.FileFormats;
 using FileDBInterface.Model;

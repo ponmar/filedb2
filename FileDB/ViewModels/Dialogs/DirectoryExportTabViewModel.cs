@@ -2,7 +2,6 @@ using CommunityToolkit.Mvvm.Input;
 using FileDB.Dialogs;
 using FileDB.Export;
 using FileDB.Lang;
-using FileDBInterface.Extensions;
 using System;
 using System.IO.Abstractions;
 using System.Linq;

@@ -13,8 +13,8 @@ FileDB is a C# desktop application for storing and managing metadata (persons, l
 - **`FileDB/`** – Main Avalonia UI application (MVVM, all UI logic)
 - **`FileDB.Desktop/`** – Desktop entry point (startup project); pass a `.FileDB` file as a command-line argument to open a collection
 - **`FileDBInterface/`** – Database and filesystem access library; no UI dependencies
-- **`FileDBTests/`** – xUnit tests for `FileDB` (uses FakeItEasy)
-- **`FileDBInterfaceTests/`** – xUnit tests for `FileDBInterface`
+- **`FileDB.Tests/`** – xUnit tests for `FileDB` (uses FakeItEasy)
+- **`FileDBInterface.Tests/`** – xUnit tests for `FileDBInterface`
 - **`MediaFilesHelper2/` + `MediaFilesHelper2.Desktop/`** – Separate helper application, not part of `FileDB.slnx`
 
 ## Build & Test Commands
@@ -27,8 +27,8 @@ dotnet build
 dotnet test
 
 # Run tests for a specific project
-dotnet test FileDBTests
-dotnet test FileDBInterfaceTests
+dotnet test FileDB.Tests
+dotnet test FileDBInterface.Tests
 
 # Run a single test by name
 dotnet test --filter "FullyQualifiedName~BirthdaysViewModelTests"

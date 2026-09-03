@@ -1,0 +1,78 @@
+using FakeItEasy;
+using FileDB.Infrastructure;
+using FileDB.Model;
+using FileDB.Notifications;
+using FileDB.ViewModels;
+using Xunit;
+
+namespace FileDB.Tests.ViewModels;
+
+public class NotificationsViewModelTests
+{
+    private readonly INotificationManagement fakeNotificationManagement = A.Fake<INotificationManagement>();
+    private readonly INotificationRepository fakeNotificationRepo = A.Fake<INotificationRepository>();
+
+    [Fact]
+    public void Constructor_NoNotifications()
+    {
+        // Act
+        var viewModel = new NotificationsViewModel(fakeNotificationManagement, fakeNotificationRepo);
+
+        // Assert
+        Assert.Empty(viewModel.Notifications);
+    }
+
+    [Fact]
+    public void Constructor_SomeNotifications()
+    {
+        // Arrange
+        var initialNotifications = SomeNotifications();
+        A.CallTo(() => fakeNotificationRepo.Notifications).Returns(initialNotifications);
+
+        // Act
+        var viewModel = new NotificationsViewModel(fakeNotificationManagement, fakeNotificationRepo);
+
+        // Assert
+        Assert.Equal(initialNotifications.Count, viewModel.Notifications.Count);
+    }
+
+    [Fact]
+    public void NotificationsUpdated()
+    {
+        // Arrange
+        var notifications = SomeNotifications();
+        A.CallTo(() => fakeNotificationRepo.Notifications).Returns(notifications);
+
+        var viewModel = new NotificationsViewModel(fakeNotificationManagement, fakeNotificationRepo);
+
+        notifications.AddRange(SomeNotifications());
+
+        // Act
+        Messenger.Send<NotificationsUpdated>();
+
+        // Assert
+        Assert.Equal(notifications.Count, viewModel.Notifications.Count);
+    }
+
+    [Fact]
+    public void ClearNotificationsCommand_DismissesAllNotifications()
+    {
+        var viewModel = new NotificationsViewModel(fakeNotificationManagement, fakeNotificationRepo);
+
+        viewModel.ClearNotificationsCommand.Execute(null);
+
+        A.CallTo(() => fakeNotificationManagement.DismissNotifications()).MustHaveHappenedOnceExactly();
+    }
+
+    private static List<INotification> SomeNotifications()
+    {
+        return
+        [
+            new NotificationForTest(NotificationSeverity.Error, $"Error text {Guid.NewGuid()}", DateTime.Now),
+            new NotificationForTest(NotificationSeverity.Warning, $"Warning text {Guid.NewGuid()}", DateTime.Now),
+            new NotificationForTest(NotificationSeverity.Info, $"Info text {Guid.NewGuid()}", DateTime.Now),
+        ];
+    }
+
+    private record NotificationForTest(NotificationSeverity Severity, string Message, DateTime DateTime) : INotification;
+}

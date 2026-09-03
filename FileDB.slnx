@@ -9,8 +9,8 @@
     <File Path="update_nuget.sh" />
   </Folder>
   <Folder Name="/Tests/">
-    <Project Path="FileDBInterfaceTests/FileDBInterfaceTests.csproj" />
-    <Project Path="FileDBTests/FileDBTests.csproj" />
+    <Project Path="FileDBInterface.Tests/FileDBInterface.Tests.csproj" />
+    <Project Path="FileDB.Tests/FileDB.Tests.csproj" />
   </Folder>
   <Project Path="FileDB.Desktop/FileDB.Desktop.csproj" />
   <Project Path="FileDB/FileDB.csproj" />
