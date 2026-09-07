@@ -5,7 +5,9 @@ using FileDB.ViewModels;
 using FileDBInterface.DatabaseAccess;
 using FileDBInterface.FilesystemAccess;
 using FileDB.Services;
+using FileDB.Lang;
 using System.IO.Abstractions;
+using FileDB.Infrastructure;
 using Xunit;
 
 namespace FileDB.Tests.ViewModels;
@@ -186,8 +188,91 @@ public class FilesViewModelTests
 
         A.CallTo(() => dbAccessProvider.DbAccess.DeleteFile(A<int>._)).MustNotHaveHappened();
     }
+
+    [Fact]
+    public void ConfigUpdated_RefreshesDirectoryAndReadonlyState()
+    {
+        var config = new ConfigBuilder().Build();
+        A.CallTo(() => configProvider.Config).Returns(config);
+        var viewModel = new FilesViewModel(configProvider, dbAccessProvider, filesystemAccessProvider, dialogs, fileSystem, criteriaViewModel, A.Fake<IFileBackup>());
+
+        var updatedConfig = new ConfigBuilder { ReadOnly = true }.Build();
+        A.CallTo(() => configProvider.Config).Returns(updatedConfig);
+        A.CallTo(() => configProvider.FilePaths).Returns(new ApplicationFilePaths("/new-files", "/config.json", "/db.db"));
+
+        Messenger.Send<ConfigUpdated>();
+
+        Assert.Equal("/new-files", viewModel.SubdirToScan);
+        Assert.True(viewModel.ReadOnly);
+        Assert.False(viewModel.CanImportNewFiles);
+    }
+
+    [Fact]
+    public async Task ScanNewFilesAsync_ConfirmedWithNoMatches_ShowsInfoAndClearsPreviousResults()
+    {
+        A.CallTo(() => dialogs.ShowConfirmDialogAsync(A<string>._)).Returns(true);
+        A.CallTo(() => dialogs.ShowProgressDialogAsync(A<Action<IProgress<string>>>._))
+            .Invokes((Action<IProgress<string>> work) => work(new Progress<string>(_ => { })))
+            .Returns(Task.CompletedTask);
+        A.CallTo(() => filesystemAccess.ListNewFilesystemFiles(A<string>._, A<IEnumerable<string>>._, A<IEnumerable<string>>._, A<bool>._, A<IDatabaseAccess>._))
+            .Returns([]);
+
+        var viewModel = new FilesViewModel(configProvider, dbAccessProvider, filesystemAccessProvider, dialogs, fileSystem, criteriaViewModel, A.Fake<IFileBackup>());
+        viewModel.NewFiles.Add(new NewFile("old.jpg", "date"));
+        viewModel.ImportResult = "old result";
+        viewModel.ImportedFileList = "1";
+
+        await viewModel.ScanNewFilesAsync("/files");
+
+        Assert.Empty(viewModel.NewFiles);
+        Assert.Equal(string.Empty, viewModel.ImportResult);
+        Assert.Equal(string.Empty, viewModel.ImportedFileList);
+        A.CallTo(() => dialogs.ShowInfoDialogAsync(A<string>._)).MustHaveHappenedOnceExactly();
+    }
+
+    [Fact]
+    public async Task ImportNewFilesAsync_BackupFails_ShowsErrorAndDoesNotInsert()
+    {
+        A.CallTo(() => dialogs.ShowConfirmDialogAsync(A<string>._)).Returns(true);
+        var backup = A.Fake<IFileBackup>();
+        A.CallTo(() => backup.CreateBackup(A<string>._)).Throws(new IOException("backup failed"));
+        var viewModel = new FilesViewModel(configProvider, dbAccessProvider, filesystemAccessProvider, dialogs, fileSystem, criteriaViewModel, backup);
+        viewModel.SelectedFiles.Add(new NewFile("a.jpg", "date"));
+
+        await viewModel.ImportNewFilesCommand.ExecuteAsync(null);
+
+        A.CallTo(() => dialogs.ShowErrorDialogAsync(Strings.FilesUnableToCreateDatabaseBackup, A<Exception>._)).MustHaveHappenedOnceExactly();
+        A.CallTo(() => dbAccess.InsertFile(A<string>._, A<string?>._, A<IFilesystemAccess>._, A<bool>._)).MustNotHaveHappened();
+    }
+
+    [Fact]
+    public async Task RemoveFileListMethod_ValidInput_UserConfirms_DeletesFilesAndShowsInfo()
+    {
+        A.CallTo(() => dialogs.ShowConfirmDialogAsync(A<string>._)).Returns(true);
+        var viewModel = new FilesViewModel(configProvider, dbAccessProvider, filesystemAccessProvider, dialogs, fileSystem, criteriaViewModel, A.Fake<IFileBackup>())
+        {
+            RemoveFileList = "1;2",
+        };
+
+        await viewModel.RemoveFileListMethodCommand.ExecuteAsync(null);
+
+        A.CallTo(() => dbAccess.DeleteFile(1)).MustHaveHappenedOnceExactly();
+        A.CallTo(() => dbAccess.DeleteFile(2)).MustHaveHappenedOnceExactly();
+        A.CallTo(() => dialogs.ShowInfoDialogAsync(A<string>._)).MustHaveHappenedOnceExactly();
+    }
+
+    [Fact]
+    public void SearchImportedFileList_CallsCriteriaWithImportedIds()
+    {
+        var viewModel = new FilesViewModel(configProvider, dbAccessProvider, filesystemAccessProvider, dialogs, fileSystem, criteriaViewModel, A.Fake<IFileBackup>())
+        {
+            ImportedFileList = "1;2",
+        };
+
+        viewModel.SearchImportedFileListCommand.Execute(null);
+
+        A.CallTo(() => criteriaViewModel.SearchForFilesAsync("1;2")).MustHaveHappenedOnceExactly();
+    }
 }
-
-
 
 

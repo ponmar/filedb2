@@ -4,24 +4,14 @@ using Avalonia.Markup.Xaml;
 using Avalonia.Styling;
 using FileDB.Configuration;
 using FileDB.Dialogs;
-using FileDB.Extensions;
 using FileDB.Infrastructure;
 using FileDB.Lang;
-using FileDB.Migrators;
 using FileDB.Model;
 using FileDB.Notifications;
 using FileDB.Services;
-using FileDB.Validators;
 using FileDB.ViewModels;
 using FileDB.Views;
-using FileDBInterface.DatabaseAccess;
-using FileDBInterface.DatabaseAccess.SQLite;
-using FileDBInterface.FilesystemAccess;
-using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.IO.Abstractions;
 using System.Linq;
 
 namespace FileDB;
@@ -29,7 +19,6 @@ namespace FileDB;
 public partial class App : Application
 {
     public const string ConfigFileExtension = ".FileDB";
-    private const string DatabaseFileExtension = ".db";
 
     public override void Initialize()
     {
@@ -66,13 +55,10 @@ public partial class App : Application
             Bootstrapper.Bootstrap();
             Bootstrapper.StartServices();
 
-            var loggerFactory = ServiceLocator.Resolve<ILoggerFactory>();
-
             // Needed to fix sorting with Swedish characters right in comboboxes and datagrids
             //Utils.SetCulture(CultureInfo.GetCultureInfo("sv-SE"));
 
             var dialogs = ServiceLocator.Resolve<IDialogs>();
-            var fileSystem = ServiceLocator.Resolve<IFileSystem>();
 
             if (desktop.Args?.Length != 1)
             {
@@ -81,95 +67,33 @@ public partial class App : Application
                 return;
             }
             
-            var configPath = desktop.Args.First();
-
-            if (!Path.IsPathFullyQualified(configPath))
+            var startupResult = await ServiceLocator.Resolve<IApplicationStartupService>().StartAsync(desktop.Args.First());
+            if (!startupResult.Succeeded)
             {
-                configPath = Path.GetFullPath(configPath);
-            }
+                if (startupResult.ValidationResult is not null)
+                {
+                    await dialogs.ShowErrorDialogAsync(startupResult.ValidationResult);
+                }
+                else if (startupResult.ErrorMessage is not null)
+                {
+                    await dialogs.ShowErrorDialogAsync(startupResult.ErrorMessage);
+                }
 
-            var filesRootDirectory = Path.GetDirectoryName(configPath)!;
-            var databaseFilename = Path.GetFileNameWithoutExtension(configPath) + DatabaseFileExtension;
-            var databasePath = Path.Combine(filesRootDirectory, databaseFilename);
-            var applicationFilePaths = new ApplicationFilePaths(filesRootDirectory, configPath, databasePath);
-
-            if (!configPath.EndsWith(ConfigFileExtension))
-            {
-                await dialogs.ShowErrorDialogAsync(string.Format(Strings.AppInvalidCommandLineArgument, configPath));
                 desktop.Shutdown(1);
                 return;
             }
 
-            var notifications = new List<INotification>();
-
-            Config config;
-            if (fileSystem.File.Exists(configPath))
-            {
-                var parsedConfig = configPath.FromJson<Config>(fileSystem);
-
-                if (parsedConfig is null)
-                {
-                    config = DefaultConfigs.Default;
-                    notifications.Add(new CollectionGetStartedNotification());
-                }
-                else
-                {
-                    config = new ConfigMigrator().Migrate(parsedConfig, DefaultConfigs.Default);
-                }
-            }
-            else
-            {
-                config = DefaultConfigs.Default;
-                notifications.Add(new CollectionGetStartedNotification());
-            }
-
+            var config = startupResult.Config!;
+            var notifications = startupResult.Notifications;
             SetUiCulture(config.Language);
-
-            var validator = new ConfigValidator();
-            var result = validator.Validate(config);
-            if (!result.IsValid)
-            {
-                await dialogs.ShowErrorDialogAsync(result);
-                desktop.Shutdown(1);
-                return;
-            }
-
-            IDatabaseAccess dbAccess = fileSystem.File.Exists(databasePath) ?
-                new SqLiteDatabaseAccess(databasePath, loggerFactory) :
-                new NoDatabaseAccess();
-
-            var migrationStartupCoordinator = ServiceLocator.Resolve<IDatabaseMigrationStartupCoordinator>();
-            var migrationCompleted = await migrationStartupCoordinator.TryHandleMigrationAsync(
-                dbAccess,
-                applicationFilePaths.DatabasePath,
-                config.ReadOnly,
-                notifications);
-            if (!migrationCompleted)
-            {
-                desktop.Shutdown(1);
-                return;
-            }
-
-            var filesystemAccess = new FilesystemAccess(fileSystem, loggerFactory, filesRootDirectory);
-
-            var configUpdater = ServiceLocator.Resolve<IConfigUpdater>();
-
-            // InitConfig must be called before resolving FilesWritePermissionChecker, because
-            // the checker's constructor accesses IFilesystemAccessProvider.FilesystemAccess
-            // which is set by InitConfig.
-            configUpdater.InitConfig(applicationFilePaths, config, dbAccess, filesystemAccess);
-
-            if (!config.ReadOnly && !ServiceLocator.Resolve<IFilesWritePermissionChecker>().HasWritePermission)
-            {
-                config = config with { ReadOnly = true };
-                configUpdater.UpdateConfig(config);
-                notifications.Add(new CollectionNoWritePermissionNotification());
-            }
 
             Messenger.Send(new SetTheme(config.Theme));
 
             var notificationsHandling = ServiceLocator.Resolve<INotificationManagement>();
-            notifications.ForEach(notificationsHandling.AddNotification);
+            foreach (var notification in notifications)
+            {
+                notificationsHandling.AddNotification(notification);
+            }
 
             // Only load views and viewmodels when this method did not called shutdown above
             desktop.MainWindow = new MainWindow();
