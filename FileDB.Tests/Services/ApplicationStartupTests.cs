@@ -6,6 +6,7 @@ using FileDB.Services;
 using FileDBInterface.DatabaseAccess;
 using FileDBInterface.FilesystemAccess;
 using Newtonsoft.Json;
+using System.IO;
 using System.IO.Abstractions;
 using System.IO.Abstractions.TestingHelpers;
 using Xunit;
@@ -24,6 +25,14 @@ public class ApplicationStartupTests
     private readonly IFilesystemAccess filesystemAccess = A.Fake<IFilesystemAccess>();
     private readonly IDatabaseAccess databaseAccess = A.Fake<IDatabaseAccess>();
 
+    // Built with the real System.IO.Path (like ApplicationStartupService does) so the paths
+    // are fully-qualified on the host OS. This keeps the paths registered in MockFileSystem in
+    // sync with what the service computes, on both Windows and Linux.
+    private readonly string collectionsDirectory = Path.Combine(Path.GetTempPath(), "filedb-tests", "collections");
+    private string ConfigPath => Path.Combine(collectionsDirectory, "photos.FileDB");
+    private string DatabasePath => Path.Combine(collectionsDirectory, "photos.db");
+    private string InvalidExtensionPath => Path.Combine(collectionsDirectory, "photos.txt");
+
     public ApplicationStartupTests()
     {
         A.CallTo(() => migrationStartupCoordinator.TryHandleMigrationAsync(
@@ -41,7 +50,7 @@ public class ApplicationStartupTests
     [Fact]
     public async Task StartAsync_MissingConfig_UsesDefaultsAndAddsGetStartedNotification()
     {
-        var result = await CreateService().StartAsync(@"C:\collections\photos.FileDB");
+        var result = await CreateService().StartAsync(ConfigPath);
 
         Assert.True(result.Succeeded);
         Assert.Equal(DefaultConfigs.Default, result.Config);
@@ -57,9 +66,9 @@ public class ApplicationStartupTests
     [Fact]
     public async Task StartAsync_EmptyConfig_UsesDefaultsAndAddsGetStartedNotification()
     {
-        fileSystem.AddFile(@"C:\collections\photos.FileDB", new MockFileData(string.Empty));
+        fileSystem.AddFile(ConfigPath, new MockFileData(string.Empty));
 
-        var result = await CreateService().StartAsync(@"C:\collections\photos.FileDB");
+        var result = await CreateService().StartAsync(ConfigPath);
 
         Assert.True(result.Succeeded);
         Assert.Contains(result.Notifications, x => x is CollectionGetStartedNotification);
@@ -69,16 +78,16 @@ public class ApplicationStartupTests
     public async Task StartAsync_ValidConfig_UsesDatabaseAndFilesystemFactories()
     {
         fileSystem.AddFile(
-            @"C:\collections\photos.FileDB",
+            ConfigPath,
             new MockFileData(JsonConvert.SerializeObject(DefaultConfigs.Default)));
-        fileSystem.AddFile(@"C:\collections\photos.db", new MockFileData(string.Empty));
+        fileSystem.AddFile(DatabasePath, new MockFileData(string.Empty));
 
-        var result = await CreateService().StartAsync(@"C:\collections\photos.FileDB");
+        var result = await CreateService().StartAsync(ConfigPath);
 
         Assert.True(result.Succeeded);
         Assert.Same(databaseAccess, result.DatabaseAccess);
-        A.CallTo(() => databaseAccessFactory.Create(@"C:\collections\photos.db")).MustHaveHappenedOnceExactly();
-        A.CallTo(() => filesystemAccessFactory.Create(@"C:\collections")).MustHaveHappenedOnceExactly();
+        A.CallTo(() => databaseAccessFactory.Create(DatabasePath)).MustHaveHappenedOnceExactly();
+        A.CallTo(() => filesystemAccessFactory.Create(collectionsDirectory)).MustHaveHappenedOnceExactly();
         Assert.DoesNotContain(result.Notifications, x => x is CollectionGetStartedNotification);
     }
 
@@ -87,10 +96,10 @@ public class ApplicationStartupTests
     {
         var invalidConfig = DefaultConfigs.Default with { SlideshowDelay = 0 };
         fileSystem.AddFile(
-            @"C:\collections\photos.FileDB",
+            ConfigPath,
             new MockFileData(JsonConvert.SerializeObject(invalidConfig)));
 
-        var result = await CreateService().StartAsync(@"C:\collections\photos.FileDB");
+        var result = await CreateService().StartAsync(ConfigPath);
 
         Assert.False(result.Succeeded);
         Assert.NotNull(result.ValidationResult);
@@ -111,7 +120,7 @@ public class ApplicationStartupTests
     {
         A.CallTo(() => writePermissionChecker.HasWritePermission).Returns(false);
 
-        var result = await CreateService().StartAsync(@"C:\collections\photos.FileDB");
+        var result = await CreateService().StartAsync(ConfigPath);
 
         Assert.True(result.Succeeded);
         Assert.True(result.Config!.ReadOnly);
@@ -130,7 +139,7 @@ public class ApplicationStartupTests
                 A<IList<INotification>>._))
             .Returns(false);
 
-        var result = await CreateService().StartAsync(@"C:\collections\photos.FileDB");
+        var result = await CreateService().StartAsync(ConfigPath);
 
         Assert.False(result.Succeeded);
         A.CallTo(() => configUpdater.InitConfig(
@@ -152,7 +161,7 @@ public class ApplicationStartupTests
                 notifications.Add(new CollectionGetStartedNotification()))
             .Returns(true);
 
-        var result = await CreateService().StartAsync(@"C:\collections\photos.FileDB");
+        var result = await CreateService().StartAsync(ConfigPath);
 
         Assert.Contains(result.Notifications, x => x is CollectionGetStartedNotification);
     }
@@ -160,7 +169,7 @@ public class ApplicationStartupTests
     [Fact]
     public async Task StartAsync_InvalidExtension_ReturnsErrorWithoutAccessingFiles()
     {
-        var result = await CreateService().StartAsync(@"C:\collections\photos.txt");
+        var result = await CreateService().StartAsync(InvalidExtensionPath);
 
         Assert.False(result.Succeeded);
         Assert.NotNull(result.ErrorMessage);
