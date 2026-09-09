@@ -249,6 +249,21 @@ public class FileTextOverlayCreatorTests
     [Fact]
     public void GetShortPositionText_ValidPosition_ReturnsShortString()
     {
+        Utils.SetInvariantCulture();
+
+        var file = new FileModel { Id = 1, Path = "f", Position = "59.3 18.1" };
+        var result = FileTextOverlayCreator.GetShortPositionText(file);
+        Assert.NotNull(result);
+        Assert.Contains("59.3", result);
+        Assert.Contains("18.1", result);
+    }
+
+    [Fact]
+    public void GetShortPositionText_ValidPosition_SwedishUICulture_ReturnsShortString()
+    {
+        Utils.SetInvariantCulture();
+        Utils.SetUICulture("se");
+
         var file = new FileModel { Id = 1, Path = "f", Position = "59.3 18.1" };
         var result = FileTextOverlayCreator.GetShortPositionText(file);
         Assert.NotNull(result);
