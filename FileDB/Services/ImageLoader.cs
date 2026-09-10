@@ -62,7 +62,10 @@ public class ImageLoader : IImageLoader
 
         ImageCache[filePath] = new ImageLoadResult();
 
-        var thread = new Thread(new ThreadStart(new SingleImageLoader(this, filePath, fileSystem).Load));
+        var thread = new Thread(new ThreadStart(new SingleImageLoader(this, filePath, fileSystem).Load))
+        {
+            IsBackground = true
+        };
         thread.Start();
     }
 }
