@@ -13,7 +13,7 @@ public class NumberToMonthConverter : IValueConverter
             return null;
         }
         var month = (int)value;
-        return new DateTime(2024, month, 1).ToString("MMM");
+        return new DateTime(2024, month, 1).ToString("MMM", culture);
     }
 
     public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)

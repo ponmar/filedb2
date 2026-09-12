@@ -59,9 +59,6 @@ public partial class App : Application
             Bootstrapper.Bootstrap();
             Bootstrapper.StartServices();
 
-            // Needed to fix sorting with Swedish characters right in comboboxes and datagrids
-            //Utils.SetCulture(CultureInfo.GetCultureInfo("sv-SE"));
-
             var dialogs = ServiceLocator.Resolve<IDialogs>();
 
             if (desktop.Args?.Length != 1)
@@ -89,7 +86,6 @@ public partial class App : Application
 
             var config = startupResult.Config!;
             var notifications = startupResult.Notifications;
-            SetUiCulture(config.Language);
 
             Messenger.Send(new SetTheme(config.Theme));
 
@@ -123,14 +119,5 @@ public partial class App : Application
         }
 
         base.OnFrameworkInitializationCompleted();
-    }
-
-    private static void SetUiCulture(string? culture)
-    {
-        // Note: system UI culture will be used as default when no culture specified
-        if (culture is not null)
-        {
-            Utils.SetUICulture(culture);
-        }
     }
 }

@@ -1,6 +1,7 @@
 using FakeItEasy;
 using FileDB.Model;
 using FileDBInterface.Model;
+using System.Globalization;
 using Xunit;
 
 namespace FileDB.Tests;
@@ -249,26 +250,50 @@ public class FileTextOverlayCreatorTests
     [Fact]
     public void GetShortPositionText_ValidPosition_ReturnsShortString()
     {
-        Utils.SetInvariantCulture();
+        var originalCulture = CultureInfo.CurrentCulture;
+        var originalDefaultCulture = CultureInfo.DefaultThreadCurrentCulture;
+        try
+        {
+            Utils.SetInvariantCulture();
 
-        var file = new FileModel { Id = 1, Path = "f", Position = "59.3 18.1" };
-        var result = FileTextOverlayCreator.GetShortPositionText(file);
-        Assert.NotNull(result);
-        Assert.Contains("59.3", result);
-        Assert.Contains("18.1", result);
+            var file = new FileModel { Id = 1, Path = "f", Position = "59.3 18.1" };
+            var result = FileTextOverlayCreator.GetShortPositionText(file);
+            Assert.NotNull(result);
+            Assert.Contains("59.3", result);
+            Assert.Contains("18.1", result);
+        }
+        finally
+        {
+            CultureInfo.CurrentCulture = originalCulture;
+            CultureInfo.DefaultThreadCurrentCulture = originalDefaultCulture;
+        }
     }
 
     [Fact]
     public void GetShortPositionText_ValidPosition_SwedishUICulture_ReturnsShortString()
     {
-        Utils.SetInvariantCulture();
-        Utils.SetUICulture("se");
+        var originalCulture = CultureInfo.CurrentCulture;
+        var originalUiCulture = CultureInfo.CurrentUICulture;
+        var originalDefaultCulture = CultureInfo.DefaultThreadCurrentCulture;
+        var originalDefaultUiCulture = CultureInfo.DefaultThreadCurrentUICulture;
+        try
+        {
+            Utils.SetInvariantCulture();
+            Utils.SetUICulture("se");
 
-        var file = new FileModel { Id = 1, Path = "f", Position = "59.3 18.1" };
-        var result = FileTextOverlayCreator.GetShortPositionText(file);
-        Assert.NotNull(result);
-        Assert.Contains("59.3", result);
-        Assert.Contains("18.1", result);
+            var file = new FileModel { Id = 1, Path = "f", Position = "59.3 18.1" };
+            var result = FileTextOverlayCreator.GetShortPositionText(file);
+            Assert.NotNull(result);
+            Assert.Contains("59.3", result);
+            Assert.Contains("18.1", result);
+        }
+        finally
+        {
+            CultureInfo.CurrentCulture = originalCulture;
+            CultureInfo.CurrentUICulture = originalUiCulture;
+            CultureInfo.DefaultThreadCurrentCulture = originalDefaultCulture;
+            CultureInfo.DefaultThreadCurrentUICulture = originalDefaultUiCulture;
+        }
     }
 
     // --- GetPositionUri (FileModel) ---

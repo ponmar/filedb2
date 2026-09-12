@@ -6,6 +6,7 @@ using FileDB.Services;
 using FileDBInterface.DatabaseAccess;
 using FileDBInterface.FilesystemAccess;
 using Newtonsoft.Json;
+using System.Globalization;
 using System.IO;
 using System.IO.Abstractions;
 using System.IO.Abstractions.TestingHelpers;
@@ -89,6 +90,76 @@ public class ApplicationStartupTests
         A.CallTo(() => databaseAccessFactory.Create(DatabasePath)).MustHaveHappenedOnceExactly();
         A.CallTo(() => filesystemAccessFactory.Create(collectionsDirectory)).MustHaveHappenedOnceExactly();
         Assert.DoesNotContain(result.Notifications, x => x is CollectionGetStartedNotification);
+    }
+
+    [Fact]
+    public async Task StartAsync_ConfiguredLanguage_SetsUiCulture()
+    {
+        var originalUiCulture = CultureInfo.CurrentUICulture;
+        var originalDefaultUiCulture = CultureInfo.DefaultThreadCurrentUICulture;
+        try
+        {
+            var config = DefaultConfigs.Default with { Language = "sv-SE" };
+            fileSystem.AddFile(
+                ConfigPath,
+                new MockFileData(JsonConvert.SerializeObject(config)));
+
+            var result = await CreateService().StartAsync(ConfigPath);
+
+            Assert.True(result.Succeeded);
+            Assert.Equal("sv-SE", CultureInfo.CurrentUICulture.Name);
+            Assert.Equal("sv-SE", CultureInfo.DefaultThreadCurrentUICulture?.Name);
+        }
+        finally
+        {
+            CultureInfo.CurrentUICulture = originalUiCulture;
+            CultureInfo.DefaultThreadCurrentUICulture = originalDefaultUiCulture;
+        }
+    }
+
+    [Fact]
+    public async Task StartAsync_ConfiguredEnglishLanguage_SetsUiCulture()
+    {
+        var originalUiCulture = CultureInfo.CurrentUICulture;
+        var originalDefaultUiCulture = CultureInfo.DefaultThreadCurrentUICulture;
+        try
+        {
+            var config = DefaultConfigs.Default with { Language = "en" };
+            fileSystem.AddFile(
+                ConfigPath,
+                new MockFileData(JsonConvert.SerializeObject(config)));
+
+            var result = await CreateService().StartAsync(ConfigPath);
+
+            Assert.True(result.Succeeded);
+            Assert.Equal("en", CultureInfo.CurrentUICulture.Name);
+            Assert.Equal("en", CultureInfo.DefaultThreadCurrentUICulture?.Name);
+        }
+        finally
+        {
+            CultureInfo.CurrentUICulture = originalUiCulture;
+            CultureInfo.DefaultThreadCurrentUICulture = originalDefaultUiCulture;
+        }
+    }
+
+    [Fact]
+    public async Task StartAsync_NoConfiguredLanguage_LeavesUiCultureUnchanged()
+    {
+        var originalUiCulture = CultureInfo.CurrentUICulture;
+        var originalDefaultUiCulture = CultureInfo.DefaultThreadCurrentUICulture;
+        try
+        {
+            var result = await CreateService().StartAsync(ConfigPath);
+
+            Assert.True(result.Succeeded);
+            Assert.Equal(originalUiCulture.Name, CultureInfo.CurrentUICulture.Name);
+            Assert.Equal(originalDefaultUiCulture?.Name, CultureInfo.DefaultThreadCurrentUICulture?.Name);
+        }
+        finally
+        {
+            CultureInfo.CurrentUICulture = originalUiCulture;
+            CultureInfo.DefaultThreadCurrentUICulture = originalDefaultUiCulture;
+        }
     }
 
     [Fact]

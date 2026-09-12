@@ -1,4 +1,5 @@
 using FileDBInterface.Model;
+using System.Globalization;
 using Xunit;
 
 namespace FileDB.Tests;
@@ -49,20 +50,44 @@ public class UtilsTests
     [Fact]
     public void CreateShortFilePositionString()
     {
-        Utils.SetInvariantCulture();
+        var originalCulture = CultureInfo.CurrentCulture;
+        var originalDefaultCulture = CultureInfo.DefaultThreadCurrentCulture;
+        try
+        {
+            Utils.SetInvariantCulture();
 
-        var result = Utils.CreateShortFilePositionString("50.123456789 49.987654321");
-        Assert.Equal("50.123... 49.988...", result);
+            var result = Utils.CreateShortFilePositionString("50.123456789 49.987654321");
+            Assert.Equal("50.123... 49.988...", result);
+        }
+        finally
+        {
+            CultureInfo.CurrentCulture = originalCulture;
+            CultureInfo.DefaultThreadCurrentCulture = originalDefaultCulture;
+        }
     }
 
     [Fact]
     public void CreateShortFilePositionString_SwedishUICulture()
     {
-        Utils.SetInvariantCulture();
-        Utils.SetUICulture("se");
+        var originalCulture = CultureInfo.CurrentCulture;
+        var originalUiCulture = CultureInfo.CurrentUICulture;
+        var originalDefaultCulture = CultureInfo.DefaultThreadCurrentCulture;
+        var originalDefaultUiCulture = CultureInfo.DefaultThreadCurrentUICulture;
+        try
+        {
+            Utils.SetInvariantCulture();
+            Utils.SetUICulture("se");
 
-        var result = Utils.CreateShortFilePositionString("50.123456789 49.987654321");
-        Assert.Equal("50.123... 49.988...", result);
+            var result = Utils.CreateShortFilePositionString("50.123456789 49.987654321");
+            Assert.Equal("50.123... 49.988...", result);
+        }
+        finally
+        {
+            CultureInfo.CurrentCulture = originalCulture;
+            CultureInfo.CurrentUICulture = originalUiCulture;
+            CultureInfo.DefaultThreadCurrentCulture = originalDefaultCulture;
+            CultureInfo.DefaultThreadCurrentUICulture = originalDefaultUiCulture;
+        }
     }
 
     [Fact]

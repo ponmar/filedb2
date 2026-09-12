@@ -1,5 +1,7 @@
 using Avalonia.Media.Imaging;
+using CommunityToolkit.Mvvm.Messaging;
 using FileDB.Configuration;
+using FileDB.Infrastructure;
 using FileDB.Model;
 using FileDB.Services;
 using System.IO.Abstractions.TestingHelpers;
@@ -39,12 +41,25 @@ public class ImageLoaderTests
         var loader = new ImageLoader(CreateConfigProvider(2), fileSystem);
         loader.ImageCache[firstFilePath] = new ImageLoadResult { Image = CreateBitmapStub() };
         loader.ImageCache[secondFilePath] = new ImageLoadResult { Image = CreateBitmapStub() };
+        using var loadCompleted = new ManualResetEventSlim();
+        WeakReferenceMessenger.Default.Reset();
+        loadCompleted.RegisterForEvent<ImageLoadError>(_ => loadCompleted.Set());
 
-        loader.LoadImage(thirdFilePath);
+        try
+        {
+            loader.LoadImage(thirdFilePath);
 
-        Assert.Equal(2, loader.ImageCache.Count);
-        Assert.True(loader.ImageCache.ContainsKey(thirdFilePath));
-        Assert.True(!loader.ImageCache.ContainsKey(firstFilePath) || !loader.ImageCache.ContainsKey(secondFilePath));
+            Assert.Equal(2, loader.ImageCache.Count);
+            Assert.True(loader.ImageCache.ContainsKey(thirdFilePath));
+            Assert.True(!loader.ImageCache.ContainsKey(firstFilePath) || !loader.ImageCache.ContainsKey(secondFilePath));
+            Assert.True(
+                loadCompleted.Wait(TimeSpan.FromSeconds(5), TestContext.Current.CancellationToken),
+                "Image loading did not complete.");
+        }
+        finally
+        {
+            Messenger.Unregister(loadCompleted);
+        }
     }
 
     [Fact]

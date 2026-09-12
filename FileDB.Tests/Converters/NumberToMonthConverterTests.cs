@@ -38,4 +38,14 @@ public class NumberToMonthConverterTests
 
         Assert.Null(result);
     }
+
+    [Fact]
+    public void Convert_UsesProvidedCulture()
+    {
+        var converter = new NumberToMonthConverter();
+
+        var result = converter.Convert(3, typeof(string), null, CultureInfo.GetCultureInfo("sv-SE"));
+
+        Assert.Equal("mars", result);
+    }
 }

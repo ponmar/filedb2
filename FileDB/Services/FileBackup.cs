@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.IO.Abstractions;
 using Microsoft.Extensions.Logging;
@@ -58,7 +59,7 @@ public class FileBackup : IFileBackup
                     var timestampString = filenameParts[^1].Replace(fileExtension, "");
                     try
                     {
-                        var timestamp = DateTime.ParseExact(timestampString, BackupFileTimestampFormat, null);
+                        var timestamp = DateTime.ParseExact(timestampString, BackupFileTimestampFormat, CultureInfo.InvariantCulture);
                         backupFiles.Add(new BackupFile(file, timestamp));
                     }
                     catch (FormatException)
@@ -78,7 +79,7 @@ public class FileBackup : IFileBackup
             throw new IOException($"File to backup does not exist: {filePath}");
         }
 
-        var timestamp = DateTime.Now.ToString(BackupFileTimestampFormat);
+        var timestamp = DateTime.Now.ToString(BackupFileTimestampFormat, CultureInfo.InvariantCulture);
         var directoryPath = Path.GetDirectoryName(filePath);
         var backupFilename = $"{Path.GetFileNameWithoutExtension(filePath)}_backup_{timestamp}{Path.GetExtension(filePath)}";
         var backupFilePath = Path.Combine(directoryPath!, backupFilename);

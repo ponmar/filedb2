@@ -170,6 +170,12 @@ public class ApplicationStartupService(
             return ApplicationStartupResult.Failure(notifications, validationResult);
         }
 
+        // Apply the configured UI culture before creating migration and permission notifications.
+        if (config.Language is not null)
+        {
+            Utils.SetUICulture(config.Language);
+        }
+
         var databaseAccess = fileSystem.File.Exists(databasePath)
             ? databaseAccessFactory.Create(databasePath)
             : new NoDatabaseAccess();

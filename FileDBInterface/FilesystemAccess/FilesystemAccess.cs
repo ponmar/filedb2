@@ -61,7 +61,8 @@ public class FilesystemAccess : IFilesystemAccess
 
     private static bool PathIsBlacklisted(string internalPath, IEnumerable<string> blacklistedFilePathPatterns)
     {
-        return blacklistedFilePathPatterns.FirstOrDefault(pattern => internalPath.Contains(pattern, StringComparison.CurrentCulture)) is not null;
+        return blacklistedFilePathPatterns.FirstOrDefault(pattern =>
+            internalPath.Contains(pattern, StringComparison.Ordinal)) is not null;
     }
 
     private static bool PathIsWhitelisted(string internalPath, IEnumerable<string> whitelistedFilePathPatterns)
@@ -71,8 +72,8 @@ public class FilesystemAccess : IFilesystemAccess
             return true;
         }
 
-        var pathLower = internalPath.ToLower();
-        return whitelistedFilePathPatterns.FirstOrDefault(pattern => pathLower.EndsWith(pattern)) is not null;
+        return whitelistedFilePathPatterns.FirstOrDefault(pattern =>
+            internalPath.EndsWith(pattern, StringComparison.OrdinalIgnoreCase)) is not null;
     }
 
     private static bool PathIsVisible(string internalPath, bool includeHiddenDirectories)
@@ -82,7 +83,7 @@ public class FilesystemAccess : IFilesystemAccess
 
     private static bool PathIsHidden(string internalPath)
     {
-        return internalPath.StartsWith('.') || internalPath.Contains("/.", StringComparison.CurrentCulture);
+        return internalPath.StartsWith('.') || internalPath.Contains("/.", StringComparison.Ordinal);
     }
 
     public IEnumerable<string> ListAllFilesystemDirectories()

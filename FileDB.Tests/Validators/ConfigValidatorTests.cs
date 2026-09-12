@@ -134,6 +134,14 @@ public class ConfigValidatorTests
     }
 
     [Fact]
+    public void Validate_NeutralEnglishLanguage_Success()
+    {
+        var config = new ConfigBuilder() { Language = "en" }.Build();
+        var result = validator.TestValidate(config);
+        result.ShouldNotHaveValidationErrorFor(x => x.Language);
+    }
+
+    [Fact]
     public void Validate_LanguageNull_Success()
     {
         var config = new ConfigBuilder() { Language = null }.Build();

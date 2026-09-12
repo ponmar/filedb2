@@ -59,7 +59,7 @@ public class ConfigValidator : AbstractValidator<Config>
 
     private bool IsCulture(string cultureName)
     {
-        return CultureInfo.GetCultures(CultureTypes.SpecificCultures).Any(x => x.Name == cultureName);
+        return CultureInfo.GetCultures(CultureTypes.AllCultures).Any(x => x.Name == cultureName);
     }
 
     private bool IsValidUrl(string url)
