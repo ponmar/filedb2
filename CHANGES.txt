@@ -1,3 +1,15 @@
+5.0:
+* Add person timeline search filter
+* Add text file content search filter
+* Improved categorization GUI with option to place person bounding boxes
+* Database format updated to include optional person bounding boxes
+* Improved search result export dialog
+* Remove Windows specific Innosetup installer
+* Add slideshow support to HTML search result export
+* Remove PDF search result export
+* Fix crash during shutdown while still loading images in a background thread
+* Fix for person/location/tag overlay when toggling with function keys
+
 4.19:
 * Add search filter for finding profile files
 * Rename "No meta data" search filter to "Uncategorized"
