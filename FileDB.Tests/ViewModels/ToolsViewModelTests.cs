@@ -362,7 +362,27 @@ public class ToolsViewModelTests
         A.CallTo(() => dbAccessProvider.DbAccess.UpdateFileFromMetaData(2, A<IFilesystemAccess>._)).MustHaveHappened();
         A.CallTo(() => dialogs.ShowInfoDialogAsync(A<string>._)).MustHaveHappened();
     }
+
+    [Fact]
+    public void ReloadExifForFilesCommand_UpdateError_UsesLineBreakInSummary()
+    {
+        A.CallTo(() => dialogs.ShowConfirmDialogAsync(A<string>._)).Returns(true);
+        SetupCancellableProgressDialogToExecuteWork();
+        A.CallTo(() => dbAccessProvider.DbAccess.UpdateFileFromMetaData(1, A<IFilesystemAccess>._))
+            .Throws(new InvalidOperationException("Invalid file id"));
+
+        string? summary = null;
+        A.CallTo(() => dialogs.ShowInfoDialogAsync(A<string>._))
+            .Invokes((string message) => summary = message);
+
+        var viewModel = CreateViewModel();
+        viewModel.FileIdsInput = "1";
+
+        viewModel.ReloadExifForFilesCommand.Execute(null);
+
+        Assert.NotNull(summary);
+        Assert.Contains($"Errors:{Environment.NewLine}", summary);
+        Assert.DoesNotContain(@"Errors:\n", summary);
+    }
 }
-
-
 

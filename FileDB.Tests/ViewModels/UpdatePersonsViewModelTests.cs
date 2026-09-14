@@ -27,13 +27,16 @@ public class UpdatePersonsViewModelTests
     {
         A.CallTo(() => personsRepository.Persons).Returns([
             new PersonModel { Id = 1, ShortName = "Alice", FullName = "Alice Smith", DateOfBirth = "2000-01-01" },
-            new PersonModel { Id = 2, ShortName = "Bob", FullName = "Bob Smith", DateOfBirth = "2000-01-01" },
+            new PersonModel { Id = 2, ShortName = "Bob", FullName = "Bob Smith" },
         ]);
 
         var viewModel = new UpdatePersonsViewModel(configProvider, dbAccessProvider, dialogs, personsRepository);
 
         Assert.Equal(2, viewModel.Persons.Count);
         Assert.False(viewModel.ReadOnly);
+        Assert.True(viewModel.Persons[0].HasAge);
+        Assert.Equal(-1, viewModel.Persons[1].Age);
+        Assert.False(viewModel.Persons[1].HasAge);
     }
 
     [Fact]

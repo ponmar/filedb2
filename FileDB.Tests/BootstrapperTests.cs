@@ -1,6 +1,10 @@
 using FileDB.Infrastructure;
 using Microsoft.Extensions.Logging;
+using FakeItEasy;
+using System;
+using System.IO;
 using System.IO.Abstractions;
+using System.Reflection;
 using Xunit;
 
 namespace FileDB.Tests;
@@ -60,4 +64,25 @@ public class BootstrapperTests : IDisposable
         var second = ServiceLocator.Resolve<IFileSystem>();
         Assert.Same(first, second);
     }
+
+    [Fact]
+    public void EnsureLogDirectory_CreatesApplicationSpecificLogDirectory()
+    {
+        var fileSystem = A.Fake<IFileSystem>();
+        var expectedLogDirectory = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+            Utils.ApplicationName);
+
+        var ensureLogDirectory = typeof(Bootstrapper).GetMethod(
+            "EnsureLogDirectory",
+            BindingFlags.NonPublic | BindingFlags.Static);
+        Assert.NotNull(ensureLogDirectory);
+
+        var logDirectory = Assert.IsType<string>(ensureLogDirectory.Invoke(null, [fileSystem]));
+
+        Assert.Equal(expectedLogDirectory, logDirectory);
+        A.CallTo(() => fileSystem.Directory.CreateDirectory(expectedLogDirectory))
+            .MustHaveHappenedOnceExactly();
+    }
+
 }

@@ -22,11 +22,13 @@ namespace FileDB;
 
 public static class Bootstrapper
 {
-    private static readonly ILoggerFactory loggerFactory = CreateLoggerFactory();
+    private static ILoggerFactory? loggerFactory;
 
     public static void Bootstrap()
     {
         ServiceLocator.RegisterSingleton<IFileSystem, FileSystem>();
+        RegisterLoggerFactory(ServiceLocator.Resolve<IFileSystem>());
+
         ServiceLocator.RegisterSingleton<IDatabaseAccessFactory, DatabaseAccessFactory>();
         ServiceLocator.RegisterSingleton<IFilesystemAccessFactory, FilesystemAccessFactory>();
         ServiceLocator.RegisterSingleton<IFilesWritePermissionCheckerFactory, FilesWritePermissionCheckerFactory>();
@@ -131,7 +133,6 @@ public static class Bootstrapper
         ServiceLocator.RegisterTransient<TextFileContentViewModel>();
         ServiceLocator.RegisterTransient<PersonTimelineViewModel>();
 
-        ServiceLocator.RegisterSingleton(loggerFactory);
     }
 
     public static void StartServices()
@@ -139,7 +140,13 @@ public static class Bootstrapper
         ServiceLocator.Resolve<DateObserver>();
     }
 
-    private static ILoggerFactory CreateLoggerFactory()
+    private static void RegisterLoggerFactory(IFileSystem fileSystem)
+    {
+        loggerFactory ??= CreateLoggerFactory(fileSystem);
+        ServiceLocator.RegisterSingleton(loggerFactory);
+    }
+
+    private static ILoggerFactory CreateLoggerFactory(IFileSystem fileSystem)
     {
         return LoggerFactory.Create(builder =>
         {
@@ -150,8 +157,17 @@ public static class Bootstrapper
                 options.TimestampFormat = "HH:mm:ss ";
             });
 
-            var logfilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), $" {Utils.ApplicationName}.log");
+            var logDirectory = EnsureLogDirectory(fileSystem);
+
+            var logfilePath = Path.Combine(logDirectory, $"{Utils.ApplicationName}.log");
             builder.AddFile(logfilePath);
         });
+    }
+
+    private static string EnsureLogDirectory(IFileSystem fileSystem)
+    {
+        var logDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Utils.ApplicationName);
+        fileSystem.Directory.CreateDirectory(logDirectory);
+        return logDirectory;
     }
 }

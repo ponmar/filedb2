@@ -1,17 +1,29 @@
 ﻿using System.Data.SQLite;
 using System.Data;
 using Dapper;
+using Microsoft.Extensions.Logging;
 
 namespace FileDBInterface.DatabaseAccess.SQLite;
 
 public class SqLiteDatabaseCreator : IDatabaseCreator
 {
+    private readonly ILogger logger;
+
+    public SqLiteDatabaseCreator(ILoggerFactory loggerFactory)
+    {
+        logger = loggerFactory.CreateLogger<SqLiteDatabaseCreator>();
+    }
+
     public void CreateDatabase(string databasePath)
     {
         SQLiteConnection.CreateFile(databasePath);
         using var connection = CreateConnection(databasePath);
         connection.Query(DatabaseCreationSql);
         connection.Execute($"pragma user_version = {SqLiteDatabaseMigrator.SupportedVersion};");
+        logger.LogInformation(
+            "Database created: {DatabasePath} (version: {CurrentVersion})",
+            databasePath,
+            SqLiteDatabaseMigrator.SupportedVersion);
     }
 
     public IDbConnection CreateInMemory()

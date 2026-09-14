@@ -18,6 +18,7 @@ namespace FileDB.ViewModels;
 public class PersonWithAge : PersonModel
 {
     public int Age { get; set; }
+    public bool HasAge => Age != -1;
 }
 
 public partial class UpdatePersonsViewModel : ObservableObject

@@ -1404,7 +1404,8 @@ This operation can be slow for a large collection of files or if the media acces
     <value>Updated {0}/{1} files.</value>
   </data>
   <data name="ToolsReloadExifErrorsHeader" xml:space="preserve">
-    <value>Errors:\n{0}</value>
+    <value>Errors:
+{0}</value>
   </data>
   <data name="CategorizationUpdateCombinedTitle" xml:space="preserve">
     <value>Categorization ({0} / {1})</value>
