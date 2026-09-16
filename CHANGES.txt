@@ -1,3 +1,6 @@
+5.1:
+* Release packaging fixes
+
 5.0:
 * Add person timeline search filter
 * Add text file content search filter
