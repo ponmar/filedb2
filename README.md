@@ -54,8 +54,7 @@ The following search filters are available. Multiple filters can be added and co
 
 ### Prerequisites
 
-* A collection of files
-* [.NET 10 Runtime](https://dotnet.microsoft.com/download/dotnet/10.0/runtime)
+* A collection of files - [demo](https://github.com/ponmar/filedb2_demo/) can be used for testing purposes
 * It is strongly recommended to have a backup procedure for your file collection (although FileDB itself does not intentionally modify your files)
 
 ### 3rd Party Software Integrations
@@ -109,6 +108,16 @@ The main application is a C# [Avalonia UI](https://avaloniaui.net/) desktop appl
 2. Checkout wanted branch
 3. Build FileDB.slnx solution
 4. Start the FileDB.Desktop project with a .FileDB file as command line argument (the [demo](https://github.com/ponmar/filedb2_demo/) can be used)
+
+### Creating Release Packages
+
+Release packages are created with `release.sh`, which supports Linux and Windows.
+
+Prerequisites:
+
+* .NET 10 SDK
+* Git Bash, when creating releases on Windows
+* `zip` or 7-Zip for archive creation
 
 ### Contribute
 
