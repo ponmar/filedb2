@@ -180,15 +180,6 @@ public class ApplicationStartupService(
             ? databaseAccessFactory.Create(databasePath)
             : new NoDatabaseAccess();
 
-        if (!await migrationStartupCoordinator.TryHandleMigrationAsync(
-                databaseAccess,
-                applicationFilePaths.DatabasePath,
-                config.ReadOnly,
-                notifications))
-        {
-            return ApplicationStartupResult.Failure(notifications);
-        }
-
         var filesystemAccess = filesystemAccessFactory.Create(filesRootDirectory);
         configUpdater.InitConfig(applicationFilePaths, config, databaseAccess, filesystemAccess);
 
@@ -197,6 +188,15 @@ public class ApplicationStartupService(
             config = config with { ReadOnly = true };
             configUpdater.UpdateConfig(config);
             notifications.Add(new CollectionNoWritePermissionNotification());
+        }
+
+        if (!await migrationStartupCoordinator.TryHandleMigrationAsync(
+                databaseAccess,
+                applicationFilePaths.DatabasePath,
+                config.ReadOnly,
+                notifications))
+        {
+            return ApplicationStartupResult.Failure(notifications);
         }
 
         return ApplicationStartupResult.Success(

@@ -201,7 +201,26 @@ public class ApplicationStartupTests
     }
 
     [Fact]
-    public async Task StartAsync_MigrationFailure_ReturnsFailureWithoutInitializingModel()
+    public async Task StartAsync_NoWritePermission_PassesReadOnlyToMigrationHandler()
+    {
+        A.CallTo(() => writePermissionChecker.HasWritePermission).Returns(false);
+        var migrationReadOnly = false;
+        A.CallTo(() => migrationStartupCoordinator.TryHandleMigrationAsync(
+                A<IDatabaseAccess>._,
+                A<string>._,
+                A<bool>._,
+                A<IList<INotification>>._))
+            .Invokes((IDatabaseAccess _, string _, bool readOnly, IList<INotification> _) => migrationReadOnly = readOnly)
+            .Returns(true);
+
+        var result = await CreateService().StartAsync(ConfigPath);
+
+        Assert.True(result.Succeeded);
+        Assert.True(migrationReadOnly);
+    }
+
+    [Fact]
+    public async Task StartAsync_MigrationFailure_ReturnsFailureAfterInitializingProviders()
     {
         A.CallTo(() => migrationStartupCoordinator.TryHandleMigrationAsync(
                 A<IDatabaseAccess>._,
@@ -217,7 +236,7 @@ public class ApplicationStartupTests
             A<ApplicationFilePaths>._,
             A<Config>._,
             A<IDatabaseAccess>._,
-            A<IFilesystemAccess>._)).MustNotHaveHappened();
+            A<IFilesystemAccess>._)).MustHaveHappenedOnceExactly();
     }
 
     [Fact]
